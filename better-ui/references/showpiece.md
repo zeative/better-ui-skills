@@ -189,6 +189,18 @@ Where the idea has no particular material, a soft dimensional style works: a fil
 - Use these at 40 to 72px on item cards and tiles, and larger (120 to 200px) as the centre of a hero card or empty state.
 - Keep the simple stroke icons for navigation and small controls.
 
+## A figure or a scene
+
+Consumer apps (fitness, habits, food, learning, travel, wellness, kids) are judged against work that leads with a person: an illustrated athlete, a character, a photograph. Equipment and objects alone, however well drawn, read as cooler and less finished beside it. Give such an app one piece of figure or scene illustration at hero scale.
+
+- **A simple figure, built from bold shapes.** Head as a circle or rounded shape, torso as a rounded block, limbs as thick strokes with round caps (`stroke-linecap: round`, 10 to 18px at a 200px figure) or tapered capsules, hands and feet as small rounded shapes. No facial detail, or two dots and a line. Clothing in the palette's accents, skin in one of several tones.
+- **Pose carries it.** Draw the action the app is about (lifting, running, stretching, cooking, reading) with a clear line of action and some asymmetry. A stiff, symmetrical standing figure looks like a pictogram.
+- **Give it a setting in two or three shapes:** a ground shadow, a big soft colour shape behind, one prop.
+- **Add a few hand-drawn marks** around it in a single stroke weight: stars, sparkles, motion lines, a squiggle, a cloud. They make the scene feel drawn by a person.
+- **Draw it in the idea's language**, the same line weight, palette and level of detail as the icons and objects, and let it overlap the edge of its card.
+- Size: at least a third of the hero card's width; 160 to 280px tall on a phone.
+- Use it once at hero scale, then perhaps once more small (an empty state, a reward). If your environment can generate images or the user supplies photographs, a photograph or render of a person serves the same role.
+
 ## Illustration
 
 When a section needs more than UI:

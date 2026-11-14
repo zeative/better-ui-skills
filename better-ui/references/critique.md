@@ -31,6 +31,7 @@ These are the traits that popular shots in each category share. Hold the work ag
 - Soft layered depth: wide low-opacity shadows, hairlines, a glassy floating tab bar, one dark card set against light ones, the odd overlapping or tilted element.
 - Hierarchy by big jumps: a large display figure or greeting against small quiet labels, often with a type choice that has character.
 - Dense with small designed detail (day chips, progress dots, tags, mini charts, toggles) on a clear grid with consistent radii. Nothing clips, wraps awkwardly or collides.
+- Consumer apps usually lead with a person: an illustrated figure or character, or a photograph. Two or three accents fill whole surfaces.
 - On desktop, a composed multi-column layout, not a phone column in empty space.
 
 ## How to review
