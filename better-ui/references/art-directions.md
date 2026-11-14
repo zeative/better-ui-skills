@@ -6,7 +6,7 @@ Contents: how to choose · how to tune · the directions (`aurora`, `midnight`, 
 
 ## How to choose
 
-Match on audience and mood first, category second. A booking tool for a small studio can be `ivory`, `clinic`, `midnight` or `citrus` depending on whether it should feel premium, trustworthy, sharp or friendly. Shortlist three, with at least one that a competitor in the category would not pick, and deal:
+Match on audience and mood first, category second. A booking tool for a small studio can be `ivory`, `clinic`, `midnight` or `citrus` depending on whether it should feel premium, trustworthy, sharp or friendly. Shortlist three, with at least one that a competitor in the category would not pick, and deal. `aurora` and `ivory` are the two looks people most often recognise as machine-made (the blue-violet tech page, the cream page with a serif headline), so put at most one of them in a shortlist, and if it is dealt, tune it hard:
 
 ```bash
 node scripts/deal.cjs "Product name" ivory clinic citrus
@@ -31,7 +31,7 @@ node scripts/deal.cjs "Product name" ivory clinic citrus
 
 A direction is a starting system. Make it this product's:
 
-1. **Accent.** Move the accent hue toward something from the subject's world (an ingredient, a material, a signal colour the trade uses) while keeping its saturation and lightness, so contrast still holds.
+1. **Accent and lead surface.** Take the colours from the subject's world (an ingredient, a material, a signal colour the trade uses) and from the product's own name and idea, keeping the direction's saturation and lightness so contrast still holds. If the product is called Ember, its lead surface is dark with a warm glow, not the library's default gradient. The colours printed in each direction below are placeholders that prove the system works; shipping them unchanged is what makes a page look like a template.
 2. **Showpiece.** Decide what the hero visual shows from what this product really does (see `showpiece.md`).
 3. **One device of its own.** A motif taken from the subject and repeated two or three times: the perforated edge of a ticket, a route line, a dotted intensity scale, a waveform, a stamp.
 4. **Voice in type.** Keep the pairing, but set the scale for the register: bigger and tighter for persuasion, smaller and denser for tools.
@@ -185,16 +185,16 @@ White ground, vivid gradient cards, big radii, rewards everywhere. Made for thum
 
 ```css
 --bg:#FAF9FF; --surface:#FFFFFF; --surface-2:#F1EEFB; --ink:#17132B; --ink-2:#5B5672; --ink-3:#9A96AE; --line:rgba(23,19,43,.08);
---g-violet:linear-gradient(135deg,#7C3AED,#EC4899); --g-blue:linear-gradient(135deg,#2563EB,#22D3EE);
---g-sun:linear-gradient(135deg,#F97316,#FACC15); --g-leaf:linear-gradient(135deg,#10B981,#A3E635);
---violet:#7C3AED; --blue:#2563EB; --sun:#F97316; --leaf:#10B981; --rose:#EC4899;
---accent:#7C3AED; --accent-ink:#FFFFFF; --r-sm:14px; --r-md:22px; --r-lg:30px; --r-pill:999px;
+--g-lead:linear-gradient(135deg,#F97316,#E11D48); /* the screen's identity: choose it from the subject, see below */
+--g-blue:linear-gradient(135deg,#2563EB,#22D3EE); --g-sun:linear-gradient(135deg,#F59E0B,#FACC15); --g-leaf:linear-gradient(135deg,#10B981,#A3E635); --g-violet:linear-gradient(135deg,#7C3AED,#C026D3);
+--violet:#7C3AED; --blue:#2563EB; --sun:#F97316; --leaf:#10B981; --rose:#E11D48;
+--accent:#E11D48; --accent-ink:#FFFFFF; --r-sm:14px; --r-md:22px; --r-lg:30px; --r-pill:999px;
 ```
 
 - **Type:** `Outfit` 500/600/700/800. Big friendly numerals at 700, `-0.02em`.
 - **Depth:** soft coloured shadows under gradient cards (the card's own hue at 35% opacity, blurred 24px, offset 12px); white cards with soft neutral shadows.
 - **Atmosphere:** clean ground; the gradients live in the cards.
-- **Devices:** one gradient hero card with white text, a progress ring and an illustrated object; items carry dimensional illustrated objects, each in its own hue, while buttons and navigation stay in the single accent; a floating pill tab bar; confetti or sparkle marks on achievements; chunky toggles and check buttons that fill with colour. Pick one of the gradients as the screen's identity and a second as its counter; the others appear only as small marks.
+- **Devices:** one gradient hero card with white text, a progress ring and an illustrated object; items carry dimensional illustrated objects, each in its own hue, while buttons and navigation stay in the single accent; a floating pill tab bar; confetti or sparkle marks on achievements; chunky toggles and check buttons that fill with colour. Choose `--g-lead` from the subject and the product's name: sunrise orange for a morning routine, deep sea blues for a water tracker, leaf greens for a plant app. A violet-to-pink gradient is the stock answer and reads as a template unless the subject truly calls for it. One counter-accent; the other hues appear only as small marks.
 
 ## `clinic` — Clean Clinical
 

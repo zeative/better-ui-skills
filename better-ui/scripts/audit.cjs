@@ -339,6 +339,90 @@ function measure(targetWidth) {
   }
   out.repeatedGraphics = Object.values(repeats).filter((v) => v.length >= 4).map((v) => ({ n: v.length, size: v[0] })).sort((p, q) => q.n - p.n).slice(0, 4);
 
+  /* ---- words that run together: "Yesterday21 orders" ------------- */
+  const glued = [];
+  const edgeRect = (node, last) => {
+    const rg = document.createRange();
+    if (node.nodeType === 3) { const t = node.nodeValue; const i = last ? t.replace(/\s+$/, '').length - 1 : t.search(/\S/); if (i < 0) return null; rg.setStart(node, i); rg.setEnd(node, i + 1); }
+    else rg.selectNodeContents(node);
+    const rs = [...rg.getClientRects()].filter((q) => q.width > 0.5 && q.height > 2);
+    return rs.length ? (last ? rs[rs.length - 1] : rs[0]) : null;
+  };
+  const alnum = /[\p{L}\p{N}]/u;
+  for (const par of document.querySelectorAll('body *')) {
+    if (glued.length > 12 || par.childNodes.length < 2 || par.closest('svg') || !isVisible(par)) continue;
+    const kids = [...par.childNodes].filter((n) => (n.nodeType === 3 && n.nodeValue.trim()) || (n.nodeType === 1 && isVisible(n) && (n.textContent || '').trim() && !n.closest('svg')));
+    for (let i = 1; i < kids.length; i++) {
+      const a1 = kids[i - 1], b1 = kids[i];
+      const ta = (a1.textContent || '').replace(/\s+$/, ''), tb = (b1.textContent || '').replace(/^\s+/, '');
+      if (!ta || !tb || !alnum.test(ta.slice(-1)) || !alnum.test(tb[0])) continue;
+      // a prefix or unit set at a different size (a small currency sign, "kg") is a deliberate pairing
+      const fs1 = parseFloat(getComputedStyle(a1.nodeType === 1 ? a1 : par).fontSize), fs2 = parseFloat(getComputedStyle(b1.nodeType === 1 ? b1 : par).fontSize);
+      if (Math.abs(fs1 - fs2) > Math.max(fs1, fs2) * 0.15) continue;
+      const ra = edgeRect(a1, true), rb = edgeRect(b1, false);
+      if (!ra || !rb) continue;
+      const sameLine = Math.min(ra.bottom, rb.bottom) - Math.max(ra.top, rb.top) > Math.min(ra.height, rb.height) * 0.5;
+      const gap = rb.left - ra.right;
+      if (sameLine && gap > -1 && gap < Math.max(1.5, parseFloat(getComputedStyle(par).fontSize) * 0.12)) glued.push(`"${ta.slice(-14)}${tb.slice(0, 14)}"`);
+    }
+  }
+  out.gluedWords = [...new Set(glued)].slice(0, 8);
+
+  /* ---- cards: empty bands, near-miss tops, flat shadows ---------- */
+  const cardEls = [...document.querySelectorAll('body *')].filter((el) => {
+    if (!isVisible(el) || el.closest('svg')) return false;
+    const r = el.getBoundingClientRect();
+    if (r.width < 220 || r.height < 200 || r.width > vw * 0.92 || r.height > vh * 1.6) return false;
+    const st = getComputedStyle(el), bg = parseColor(st.backgroundColor);
+    const filled = (bg && bg.a > 0.04) || (st.backgroundImage && st.backgroundImage !== 'none');
+    return parseFloat(st.borderTopLeftRadius) >= 6 && (filled || st.boxShadow !== 'none' || parseFloat(st.borderTopWidth) > 0);
+  });
+  const emptyBands = [];
+  for (const card of cardEls) {
+    const cr = card.getBoundingClientRect();
+    // leaf content inside this card: text lines and graphics
+    const boxes = [];
+    for (const d of card.querySelectorAll('*')) {
+      if (!isVisible(d)) continue;
+      const tag = d.tagName.toLowerCase();
+      const isLeafGraphic = tag === 'svg' || tag === 'img' || tag === 'canvas' || (d.children.length === 0 && (getComputedStyle(d).backgroundImage !== 'none' || (parseColor(getComputedStyle(d).backgroundColor) || { a: 0 }).a > 0.2));
+      const hasText = [...d.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim().length > 0);
+      if (!isLeafGraphic && !hasText) continue;
+      if (d.closest('svg') && tag !== 'svg') continue;
+      const q = d.getBoundingClientRect();
+      if (q.height < 2 || q.bottom < cr.top || q.top > cr.bottom) continue;
+      boxes.push([Math.max(q.top, cr.top), Math.min(q.bottom, cr.bottom)]);
+    }
+    if (boxes.length < 3) continue;
+    boxes.sort((p, q) => p[0] - q[0]);
+    let reach = boxes[0][1], worst = 0;
+    for (const [t, btm] of boxes) { if (t - reach > worst) worst = t - reach; if (btm > reach) reach = btm; }
+    const tail = cr.bottom - reach;
+    if (worst >= 72 && worst >= cr.height * 0.18) emptyBands.push(`${describe(card).split(' "')[0]} "${(card.innerText || '').trim().replace(/\s+/g, ' ').slice(0, 28)}" has a ${Math.round(worst)}px empty band in a ${Math.round(cr.height)}px card`);
+    else if (tail >= 110 && tail >= cr.height * 0.25) emptyBands.push(`${describe(card).split(' "')[0]} "${(card.innerText || '').trim().replace(/\s+/g, ' ').slice(0, 28)}" is empty for its last ${Math.round(tail)}px`);
+  }
+  out.emptyBands = emptyBands.slice(0, 8); out.emptyBandCount = emptyBands.length;
+  // sibling cards that sit side by side but start at slightly different heights
+  const nearTops = [];
+  for (const el of document.querySelectorAll('body *')) {
+    const kids = [...el.children].filter((k) => cardEls.includes(k));
+    if (kids.length < 2 || kids.length > 6) continue;
+    const rs = kids.map((k) => k.getBoundingClientRect());
+    // same row: horizontally separate, vertically overlapping
+    if (!rs.every((r, i) => i === 0 || r.left >= rs[i - 1].right - 2)) continue;
+    const tops = rs.map((r) => Math.round(r.top)), spread = Math.max(...tops) - Math.min(...tops);
+    if (spread >= 3 && spread <= 14) nearTops.push(`${describe(el).split(' "')[0]} (${kids.length} cards, tops ${spread}px apart)`);
+  }
+  out.nearTops = nearTops.slice(0, 5);
+  // how many shadows are a single blur?
+  let single = 0, layered = 0;
+  for (const el of cardEls) {
+    const sh = getComputedStyle(el).boxShadow; if (!sh || sh === 'none') continue;
+    const layers = sh.replace(/\([^)]*\)/g, '').split(',').length;
+    if (layers >= 2) layered++; else single++;
+  }
+  out.shadowLayers = { single, layered };
+
   /* ---- covered text: is anything sitting on top of content? ------ */
   const covered = [];
   let probes = 0;
@@ -398,6 +482,23 @@ function measure(targetWidth) {
     }
     if (hidden >= 1) covered.push(`${describe(el)} (under ${describe(by).split(' "')[0]})`);
   }
+  // content hidden under fixed or sticky bars at the very top and the very bottom of the page
+  const underBars = [];
+  const inFixed = (n) => { for (; n && n !== document.body; n = n.parentElement) { const q = getComputedStyle(n).position; if (q === 'fixed' || q === 'sticky') return n; } return null; };
+  const flow = [...seen].filter((el) => !inFixed(el) && (el.textContent || '').trim().length > 2);
+  const probeEnds = (list, where) => {
+    for (const el of list) {
+      const rg = document.createRange(); rg.selectNodeContents(el);
+      const q = [...rg.getClientRects()].find((x) => x.width > 4 && x.height > 4);
+      if (!q || q.bottom < 0 || q.top > window.innerHeight) continue;
+      const top = document.elementFromPoint(Math.min(window.innerWidth - 1, Math.max(0, q.left + q.width / 2)), q.top + q.height / 2);
+      const bar = top && !el.contains(top) && !top.contains(el) ? inFixed(top) : null;
+      if (bar && parseFloat(getComputedStyle(bar).opacity) > 0.05) underBars.push(`${describe(el)} is under ${describe(bar).split(' "')[0]} at the ${where} of the page`);
+    }
+  };
+  window.scrollTo(0, 0); probeEnds(flow.slice(0, 8), 'top');
+  window.scrollTo(0, document.documentElement.scrollHeight); probeEnds(flow.slice(-10), 'bottom');
+  out.underBars = [...new Set(underBars)].slice(0, 6);
   hitStyle.remove();
   window.scrollTo(0, 0);
   out.coveredText = covered.slice(0, 10); out.coveredCount = covered.length;
@@ -699,8 +800,21 @@ function report(results, facts, focus, runtime, args) {
   for (const { width, m } of results) {
     if (m.coveredCount) problem('BROKEN', `${m.coveredCount} piece(s) of text are covered by another element at ${width}px: ${m.coveredText.slice(0, 6).join('; ')}. Floating cards, stamps and tooltips may overlap empty margins and edges, never the content underneath.`);
   }
+  for (const { width, m } of results) {
+    if (m.underBars && m.underBars.length) { problem('BROKEN', `Content is hidden under a fixed bar at ${width}px: ${m.underBars.slice(0, 4).join('; ')}. Give the page top and bottom padding equal to the bar's height plus a gap, so the first and last content can be seen in full.`); break; }
+  }
   const tones = widest.sectionTones || [];
   if (tones.length >= 5 && Math.max(...tones) - Math.min(...tones) < 0.05) problem('RICHNESS', `All ${tones.length} sections share one background tone. A long page needs changes of surface: at least one section in the opposite tone (light on a dark page, dark on a light one) and one tinted band.`);
+  for (const { width, m } of results) {
+    if (m.emptyBandCount) { problem('CRAFT', `${m.emptyBandCount} card(s) are partly empty at ${width}px: ${m.emptyBands.slice(0, 5).join('; ')}. Size the visual to fill its card, add a supporting element, or let the card be smaller; a half-empty tile looks unfinished.`); break; }
+  }
+  for (const { width, m } of results) {
+    if (m.gluedWords && m.gluedWords.length) { problem('BROKEN', `Words run together with no space at ${width}px: ${m.gluedWords.slice(0, 6).join(', ')}. Separate the label and the value with a gap, a line break or real spacing.`); break; }
+  }
+  if (widest.nearTops && widest.nearTops.length) problem('CRAFT', `Cards in one row start at nearly, but not exactly, the same height: ${widest.nearTops.slice(0, 3).join('; ')}. Align their tops, or offset the featured one decisively (24px or more).`);
+  const sl = widest.shadowLayers;
+  if (sl && sl.single >= 3 && sl.single > sl.layered) problem('RICHNESS', `${sl.single} of ${sl.single + sl.layered} shadowed cards use a single blur. Use layered shadows (a tight contact shadow plus a wide ambient one, with a light top edge) so surfaces sit in light (references/polish.md).`);
+  if (R) { const [fw2] = R.foldLargest; if (fw2 >= 260 && fw2 < 540 && widest.docHeight > 2400) problem('RICHNESS', `The largest visual in the first desktop screen is ${fw2}px wide. Hero product visuals at the bar run 600–1000px wide; enlarge it and let it bleed past the fold or the container.`); }
   if (widest.emojiCount > 6) problem('CRAFT', `Emoji appear in UI text ${widest.emojiCount}×. They render differently on every platform; use them as flavour, not as the icon system.`);
 
   // --- output

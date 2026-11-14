@@ -42,7 +42,7 @@ Read `references/art-directions.md`. It is a library of complete directions, eac
    node <this-skill-dir>/scripts/deal.cjs "<product name>" <id> <id> <id>
    ```
    (No Node? Take the one a typical competitor in this category would be least likely to use.)
-3. **Tune it to the subject.** Shift the accent toward a colour from the product's world, decide the showpiece from what this product actually does, and add one device only this product would have. A direction used straight from the library is a template; a tuned one is a design.
+3. **Tune it to the subject.** Replace the library's placeholder colours with ones from the product's world and its name, decide the showpiece from what this product actually does, and add one device only this product would have. A direction used straight from the library is a template; a tuned one is a design. Test: could someone guess the product from the palette and the hero alone?
 4. Write the result as CSS custom properties at the top of the stylesheet, with a short comment naming the direction and what you tuned. Then use only those tokens.
 
 Commit fully. A direction applied timidly (the palette but not the atmosphere, the font but not the scale, the cards but not the depth) produces exactly the bland middle this skill exists to avoid.
@@ -82,7 +82,7 @@ node <this-skill-dir>/scripts/audit.cjs path/to/index.html --out .ui-audit
 node <this-skill-dir>/scripts/audit.cjs http://localhost:5173/ --setup seed.js   # app with state
 ```
 
-The script screenshots the page at 375, 768 and 1440px and prints an inventory plus measured problems: overflow, contrast, focus, tap targets, clipped text, uneven phone gutters, near-miss alignment, awkward wraps, repeated graphics, and a warning when a screen is visually thin. Tall pages are saved as several parts so that details stay legible: open every part, not just the first screen. Fix everything under BROKEN and ACCESSIBILITY, and resolve what is under CRAFT and RICHNESS. For apps, pass `--setup` with a few lines of JS that seed realistic data, because an empty app shows nothing. (No browser available? Say so in the handoff and review the source against `references/critique.md`.)
+The script screenshots the page at 375, 768 and 1440px and prints an inventory plus measured problems: overflow, contrast, focus, tap targets, clipped text, uneven phone gutters, near-miss alignment, awkward wraps, repeated graphics, and a warning when a screen is visually thin. Tall pages are saved as several parts so that details stay legible: open every part, not just the first screen. Fix everything under BROKEN and ACCESSIBILITY, and resolve what is under CRAFT and RICHNESS: each line there is something a demanding reviewer would mark the work down for (text hidden under a floating card, a half-empty tile, clipped strings, uneven margins, cards that almost align). Keep going until the report is clean or each remaining line is a decision you can defend. For apps, pass `--setup` with a few lines of JS that seed realistic data, because an empty app shows nothing. (No browser available? Say so in the handoff and review the source against `references/critique.md`.)
 
 Then **open the screenshots and critique them as an art director would**, using `references/critique.md`. It has the rubric (art direction, showpiece, richness, depth and finish, colour, typography, composition, phone) with what a 5, a 7 and a 9 look like, and the usual fixes for each gap.
 
