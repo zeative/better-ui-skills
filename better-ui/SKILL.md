@@ -24,7 +24,12 @@ Two things stay non-negotiable while you do this: the interface must work (real 
 
 ## 2. Understand the job and write the content
 
-A few lines, for yourself: what the product is, who is looking and in what situation, the one job of this screen, and its register: *persuade* (landing, pricing), *operate* (apps, dashboards, tools), or *read*.
+A few lines, for yourself: what the product is, who is looking and in what situation, the one job of this screen, and its register. The register decides what "rich" means, so get it right:
+
+- *Persuade*: a landing or pricing page for a product. Rich means a detailed product visual, designed sections, layered surfaces.
+- *Operate*: an app, dashboard or tool. Rich means a full shell, data drawn beautifully, imagery in every list. A personal or mobile-first app is the quiet end of this: one focal object and a lot of air.
+- *Showcase*: a portfolio, studio, restaurant, fashion, event or personal site. Rich means large imagery and dramatic type with almost no interface. Cards, pills, glows and product-page sections are wrong here.
+- *Read*: docs and articles. Typography and calm.
 
 Then draft the real content before any layout: the actual headline, labels, numbers, names. Make sample data plausible, internally consistent and right for the locale (currency, language, date formats). Specific content is what makes rich visuals convincing: a product mock filled with believable rows and figures looks real, and one filled with "Item 1" looks like a wireframe.
 
@@ -62,7 +67,8 @@ Every strong shot has one thing that makes people stop: a showpiece. It is where
 
 - **Landing page:** the hero visual. Almost always the product itself, drawn in convincing detail in HTML/CSS/SVG (a real app window with navigation, rows, figures and a chart), with two to four detail cards lifted out and floating over its edges, set in an atmosphere (glow, grid, rings).
 - **Dashboard or admin:** a full app shell with one hero module (the main chart or the key figure on a feature card) and supporting tiles that each carry a small visual of their own.
-- **Mobile-first tool or app:** the core interaction given real character: a hero card with a progress ring or big figure, items with their own colour and icon, a custom control with a satisfying state change.
+- **Mobile-first tool or app:** one focal object that carries the idea and the key figure, at about twice the size that feels sufficient, with a custom control that has a satisfying state change. Few other modules.
+- **Showcase site:** one dominant image interlocked with one enormous line of type.
 
 `references/showpiece.md` explains how to build these in code: product mocks, floating cards, charts, avatars, thumbnails, icons, illustration, device frames and atmospheres. Read it before you start; do not improvise a grey rectangle.
 
@@ -70,6 +76,7 @@ Then compose the rest of the screen around the showpiece, using the patterns for
 
 - `references/marketing.md` for landing and pricing pages.
 - `references/product-ui.md` for dashboards, admin, apps and mobile tools.
+- `references/editorial.md` for showcase sites. Read it before `showpiece.md` and `polish.md`; where they disagree, it wins.
 
 ## 5. Build with depth and finish
 
@@ -89,6 +96,7 @@ You cannot judge a design from its source. Render it:
 ```bash
 node <this-skill-dir>/scripts/audit.cjs path/to/index.html --out .ui-audit
 node <this-skill-dir>/scripts/audit.cjs http://localhost:5173/ --setup seed.js   # app with state
+node <this-skill-dir>/scripts/audit.cjs index.html --register showcase           # portfolio, studio, restaurant
 ```
 
 The script screenshots the page at 375, 768 and 1440px and prints an inventory plus measured problems: overflow, contrast, focus, tap targets, clipped text, uneven phone gutters, near-miss alignment, awkward wraps, repeated graphics, and a warning when a screen is visually thin. Tall pages are saved as several parts so that details stay legible: open every part, not just the first screen. Fix everything under BROKEN and ACCESSIBILITY, and resolve what is under CRAFT and RICHNESS: each line there is something a demanding reviewer would mark the work down for (text hidden under a floating card, a half-empty tile, clipped strings, uneven margins, cards that almost align). Keep going until the report is clean or each remaining line is a decision you can defend. For apps, pass `--setup` with a few lines of JS that seed realistic data, because an empty app shows nothing. (No browser available? Say so in the handoff and review the source against `references/critique.md`.)

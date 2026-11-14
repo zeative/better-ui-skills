@@ -5,7 +5,11 @@
  *
  *   node audit.cjs <file.html | http://localhost:3000/path> [--out <dir>]
  *                  [--widths 375,768,1440] [--dark] [--setup <file.js>]
- *                  [--json] [--no-shots]
+ *                  [--register showcase] [--json] [--no-shots]
+ *
+ * --register showcase is for portfolios, studios, restaurants and other sites
+ * led by imagery and type, where cards, shadows and icon chips are not wanted;
+ * it turns off the checks that ask for them.
  *
  * --setup runs a JS file inside the page after load and before measuring. Use
  * it to put the UI into the state you want to inspect: seed data, open a
@@ -26,13 +30,14 @@ const fs = require('fs');
 const path = require('path');
 
 function parseArgs(argv) {
-  const a = { target: null, out: '.ui-audit', widths: [375, 768, 1440], dark: false, json: false, shots: true, setup: null };
+  const a = { target: null, out: '.ui-audit', widths: [375, 768, 1440], dark: false, json: false, shots: true, setup: null, register: 'product' };
   for (let i = 2; i < argv.length; i++) {
     const v = argv[i];
     if (v === '--out') a.out = argv[++i];
     else if (v === '--widths') a.widths = argv[++i].split(',').map(Number).filter(Boolean);
     else if (v === '--dark') a.dark = true;
     else if (v === '--setup') a.setup = argv[++i];
+    else if (v === '--register') a.register = argv[++i];
     else if (v === '--json') a.json = true;
     else if (v === '--no-shots') a.shots = false;
     else if (!a.target) a.target = v;
@@ -769,7 +774,10 @@ function top(obj, n = 8) { return Object.entries(obj).sort((a, b) => b[1] - a[1]
 function report(results, facts, focus, runtime, args) {
   const L = []; const P = []; // lines, problems
   const widest = results[results.length - 1].m, narrow = results[0].m;
-  const problem = (sev, msg) => P.push({ sev, msg });
+  const showcase = /^(showcase|editorial)$/.test(args.register || '');
+  // checks that ask for surfaces, shadows, icons and colour fields do not apply to image-led editorial sites
+  const SKIP = /sits directly on the page background|Very little imagery|Depth is flat|use a single blur|Everything has equal weight|no large confident field|share one background tone|people are shown as initials/;
+  const problem = (sev, msg) => { if (showcase && sev === 'RICHNESS' && SKIP.test(msg)) return; P.push({ sev, msg }); };
 
   // --- things that are simply broken
   for (const { width, m } of results) {
