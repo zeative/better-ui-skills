@@ -147,7 +147,7 @@ Lists of products, files, places or items need thumbnails. Draw small objects in
 
 Every item gets a visibly different thumbnail. Changing only the tint of one repeated glyph reads as a placeholder, so vary the object too: its shape, its label design, a stripe, a cap, a size, a pattern. Five products should look like five products. Make thumbnails big enough to read (44 to 64px in lists, larger in feature spots). The same approach works for pouches, boxes, books, shoes, plants, documents, devices, playlists and map pins.
 
-If the project already has real product photos or the user supplies images, use those instead: real imagery beats illustration.
+If the project already has real product photos or the user supplies images, use those instead: real imagery beats illustration. The same holds if your environment has an image-generation tool: product shots, portraits and hero scenes made with it, saved as files and graded to the palette, close the one gap that drawn vectors cannot (the top shots in every category use photographs, renders or bespoke illustration). Say in the handoff which images were generated.
 
 **When imagery is the product** (a photographer's portfolio, food, travel, property, fashion), the design depends on photographs you do not have. Build every picture as a real image slot (`<img>` or a background with fixed aspect ratio, `object-fit: cover`, and alt text) and fill it with an art-directed placeholder scene in the page's palette, so the layout is true to the final thing. Design the frames, crops, captions and sequencing as a picture editor would, and tell the user in the handoff exactly which files to drop in and at what sizes. Never hotlink someone else's photographs.
 

@@ -46,7 +46,7 @@ Work it out in writing before any layout:
 1. **Name and world.** If the product has no name, give it one with an image in it. List eight or more things from its world that can be drawn: objects, marks, materials, tools, rituals, the way its trade writes numbers.
 2. **Choose the motif.** Pick the one that is most specific to this product, can be drawn simply, and can carry real data or content. A motif that could decorate any product (blobs, sparkles, generic rings, a stock gradient) is not one.
 3. **Make it the hero device, large.** The showpiece in step 4 is built *from* the motif, at a scale that dominates the first screen, and it shows real content: the actual figures, the actual items. A motif tucked into a logo or a small strip has been wasted.
-4. **Echo it three times, small:** in chart marks, progress bars, dividers, the empty state, the wordmark, a button state.
+4. **Carry it through every module.** The idea must not stop at the hero. Each remaining module (the list, the chart, the breakdown, the form, the pricing) is redrawn in the idea's language: its way of marking data, its material, its edges, its numerals. A striking top card above a stock list and a default donut reads as a template with a costume on. Ask of every module: would this look the same in any other product? If yes, redraw it.
 5. **Commit the palette to it.** A neutral base, one dominant colour used in large confident fields, and one hot accent for the thing that matters most. Take the colours from the motif's world. If items come in kinds, give them tints of one or two hues, not a rainbow.
 6. **Give the type a voice.** The single most important figure or line is by far the largest thing on the screen (often 64 to 120px on desktop), in a face with character, with small quiet labels around it. Dramatic contrast of scale, not six sizes close together.
 7. **Rank the screen.** Decide the first, second and third thing the eye should hit, and give them clearly different size and weight. A screen of equal cards has no idea.
@@ -120,6 +120,7 @@ Tell the user, briefly: the direction you chose and how you tuned it, the assump
 - **No idea.** Well-made cards in a pleasant palette that could belong to any product in the category. Polished and forgettable. Go back to step 3.
 - **Timid execution.** A nice palette on a page that is still heading, paragraph, three boxes. The idea has to reach the composition, the visuals and the details.
 - **An empty hero.** Headline, two buttons and a gradient is not a hero. Build the showpiece.
+- **The idea stops at the hero.** One memorable card, then plain white lists, a stock donut and default bars. Every module has to be drawn in the idea's language.
 - **Shallow visuals.** A product mock made of five grey bars, a chart with no grid, axis or highlighted point. Fill visuals with believable, specific content at real density.
 - **Text on a bare page.** Rows and tables sitting directly on the background with hairlines read as a document. Put content on surfaces, in a shell, with imagery.
 - **No imagery.** Lists without thumbnails, people without avatars, features without illustrations, items without icons. Every repeated item should carry a small visual.

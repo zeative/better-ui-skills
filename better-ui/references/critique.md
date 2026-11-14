@@ -79,6 +79,7 @@ Showcase work has no loose ends. On both the desktop and the phone screenshot, r
 
 - **"There is no idea" or "it reads as a template."** Find the motif in the product's world (SKILL.md step 3), rebuild the hero from it at large scale with real content, echo it in three details, and replace any library-default colours.
 - **"Everything has equal weight."** Make one object dominate the first screen, fold minor tiles into it as chips or shrink them, and vary card size and treatment so the eye has a first, second and third stop.
+- **"The idea stops after the top cards."** Redraw the lower modules (lists, breakdowns, charts) in the idea's material and marks, shorten lists to four or five rows, and remove modules that repeat data already shown.
 - **"The first screen is mostly text."** Build the product visual from `showpiece.md`: an app window or object with real content, floating cards, atmosphere behind.
 - **"The hero is empty" or "it opens on zeros."** Seed the app with sample data in a mid-use state so the showpiece is full and coloured on first load.
 - **"The product mock looks like a wireframe."** Triple its density: navigation with icons, figures with deltas, a real chart, rows with avatars and status pills. Use real names and numbers.
