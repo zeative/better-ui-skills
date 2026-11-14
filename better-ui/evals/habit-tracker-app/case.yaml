@@ -1,0 +1,7 @@
+schema_version: "1.1"
+name: habit-tracker-app
+expected_outcome: |
+  A working habit tracker in one HTML file: add, tick off, edit and delete habits; streaks
+  computed correctly; data persisted across reloads; a helpful empty state; comfortable one-handed
+  use on a phone; visible keyboard focus; and a look that suits a small daily-use tool rather than
+  a generic template.

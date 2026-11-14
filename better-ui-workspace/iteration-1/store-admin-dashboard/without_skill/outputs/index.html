@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ringkasan · Kopi Lereng Admin</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f6f2ec;
+    --surface: #fffdfa;
+    --text: #2a211b;
+    --muted: #75685d;
+    --line: #e6ddd1;
+    --accent: #b4472c;
+    --bar: #d3c6b6;
+    --bar-hover: #b9a995;
+    --up: #23694a;
+    --down: #a03420;
+    --s-amber: #8a5a00;
+    --s-blue: #2a5591;
+    --s-teal: #1b6455;
+    --s-red: #a03420;
+    --shadow: 0 1px 2px rgba(60, 40, 20, .05), 0 4px 16px rgba(60, 40, 20, .04);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161311;
+      --surface: #201c19;
+      --text: #efe8df;
+      --muted: #a69a8d;
+      --line: #342d28;
+      --accent: #e37f63;
+      --bar: #54493f;
+      --bar-hover: #6d6054;
+      --up: #7fcfa4;
+      --down: #ef8f7b;
+      --s-amber: #e5b454;
+      --s-blue: #8db4ea;
+      --s-teal: #6fcab5;
+      --s-red: #ef8f7b;
+      --shadow: none;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.5 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, p { margin: 0; }
+  .num { font-variant-numeric: tabular-nums; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+
+  /* ---------- Kerangka ---------- */
+  .app { display: grid; grid-template-columns: 216px minmax(0, 1fr); min-height: 100vh; }
+
+  .side {
+    border-right: 1px solid var(--line);
+    padding: 24px 14px;
+    position: sticky; top: 0; height: 100vh;
+    display: flex; flex-direction: column; gap: 28px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; padding: 0 10px; }
+  .brand svg { flex: none; color: var(--accent); }
+  .brand b { white-space: nowrap; font: 600 18px/1.1 var(--serif); letter-spacing: -.01em; }
+  .brand span { display: block; font-size: 11px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; margin-top: 3px; }
+
+  .nav { display: flex; flex-direction: column; gap: 2px; }
+  .nav a {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 10px; border-radius: 8px; color: var(--muted); white-space: nowrap;
+  }
+  .nav a:hover { color: var(--text); background: color-mix(in srgb, var(--text) 5%, transparent); }
+  .nav a[aria-current] { color: var(--text); font-weight: 600; background: color-mix(in srgb, var(--text) 7%, transparent); }
+  .nav .count {
+    font-size: 11px; font-weight: 600; min-width: 20px; text-align: center;
+    padding: 1px 6px; border-radius: 99px; color: var(--surface); background: var(--accent);
+  }
+  .side-foot { margin-top: auto; padding: 0 10px; font-size: 12px; color: var(--muted); }
+  .side-foot b { display: block; color: var(--text); font-weight: 600; font-size: 13px; }
+
+  main { padding: 28px 32px 48px; max-width: 1180px; width: 100%; }
+
+  .head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+  .head h1 { font: 600 28px/1.15 var(--serif); letter-spacing: -.015em; }
+  .head p { color: var(--muted); margin-top: 4px; }
+  .live { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); font-size: 13px; }
+  .live i { width: 8px; height: 8px; border-radius: 50%; background: var(--up); box-shadow: 0 0 0 3px color-mix(in srgb, var(--up) 22%, transparent); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+
+  /* ---------- KPI ---------- */
+  .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 14px; }
+  .kpi { padding: 16px 18px 15px; }
+  .kpi .label { color: var(--muted); font-size: 13px; }
+  .kpi .value { font: 600 27px/1.2 var(--serif); letter-spacing: -.015em; margin: 6px 0 6px; white-space: nowrap; }
+  .kpi .value small { font: 500 14px var(--sans); color: var(--muted); letter-spacing: 0; margin-right: 3px; }
+  .kpi .value small.unit { margin: 0 0 0 3px; }
+  .delta { font-size: 12.5px; color: var(--muted); }
+  .delta b { font-weight: 600; }
+  .delta .up { color: var(--up); }
+  .delta .down { color: var(--down); }
+
+  /* ---------- Baris tengah ---------- */
+  .row { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 14px; margin-bottom: 14px; }
+  .panel { padding: 18px 20px 16px; display: flex; flex-direction: column; }
+  .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .panel-head > div:first-child { flex: 1 1 180px; min-width: 0; }
+  .panel h2 { font: 600 16px/1.3 var(--sans); }
+  .panel .sub { color: var(--muted); font-size: 13px; }
+  .link { color: var(--accent); font-size: 13px; font-weight: 600; white-space: nowrap; }
+  .link:hover { text-decoration: underline; }
+
+  .seg { display: inline-flex; padding: 2px; border-radius: 9px; background: color-mix(in srgb, var(--text) 7%, transparent); }
+  .seg button {
+    font: 500 12.5px var(--sans); color: var(--muted);
+    border: 0; background: none; padding: 5px 11px; border-radius: 7px; cursor: pointer;
+  }
+  .seg button[aria-pressed="true"] { background: var(--surface); color: var(--text); font-weight: 600; box-shadow: 0 1px 2px rgba(0, 0, 0, .12); }
+
+  .chart { position: relative; margin-top: 10px; flex: 1 1 250px; min-height: 250px; }
+  .chart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .chart .bar { fill: var(--bar); transition: fill .12s; }
+  .chart g.col:hover .bar, .chart g.col:focus .bar { fill: var(--bar-hover); }
+  .chart g.col.today .bar, .chart g.col.today:hover .bar { fill: var(--accent); }
+  .chart g.col { outline: none; cursor: default; }
+  .chart g.col:focus-visible .hit { stroke: var(--accent); stroke-width: 2; }
+  .chart .hit { fill: transparent; }
+  .chart .val { font: 600 11.5px var(--sans); fill: var(--text); font-variant-numeric: tabular-nums; }
+  .chart .day { font: 500 12px var(--sans); fill: var(--muted); }
+  .chart .date { font: 400 11px var(--sans); fill: var(--muted); }
+  .chart .today .day, .chart .today .date { fill: var(--accent); font-weight: 600; }
+  .chart .base { stroke: var(--line); }
+
+  .tip {
+    position: absolute; pointer-events: none; z-index: 2;
+    background: var(--text); color: var(--bg);
+    padding: 8px 11px; border-radius: 9px; font-size: 12px; line-height: 1.45; white-space: nowrap;
+    transform: translate(-50%, -100%); opacity: 0; transition: opacity .1s;
+  }
+  .tip.on { opacity: 1; }
+  .tip b { display: block; font-size: 13px; }
+  .tip span { opacity: .75; }
+
+  .chart-foot { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+  .chart-foot b { color: var(--text); font-weight: 600; }
+  .key { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; }
+  .key i { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); }
+
+  /* ---------- Produk terlaris ---------- */
+  .products { list-style: none; margin: 12px 0 0; padding: 0; }
+  .products li { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; column-gap: 10px; padding: 11px 0; border-top: 1px solid var(--line); }
+  .products li:first-child { border-top: 0; padding-top: 4px; }
+  .products .rank { color: var(--muted); font: 600 14px var(--serif); padding-top: 1px; }
+  .products .name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .products .meta { color: var(--muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .products .qty { text-align: right; font-weight: 600; }
+  .products .rev { text-align: right; color: var(--muted); font-size: 12px; }
+  .products .track { grid-column: 2 / 4; height: 5px; border-radius: 3px; margin-top: 8px; background: color-mix(in srgb, var(--text) 7%, transparent); }
+  .products .track i { display: block; height: 100%; border-radius: 3px; background: var(--bar-hover); }
+  .products li:first-child .track i { background: var(--accent); }
+
+  /* ---------- Pesanan ---------- */
+  .orders { padding-bottom: 6px; }
+  .table-wrap { overflow-x: auto; margin: 10px -20px 0; }
+  table { width: 100%; min-width: 640px; border-collapse: collapse; }
+  th, td { white-space: nowrap; text-align: left; padding: 11px 12px; border-top: 1px solid var(--line); vertical-align: middle; }
+  th:first-child, td:first-child { padding-left: 20px; }
+  th:last-child, td:last-child { padding-right: 20px; }
+  thead th { border-top: 0; font-size: 12px; font-weight: 500; color: var(--muted); padding-top: 6px; padding-bottom: 8px; }
+  tbody tr:hover { background: color-mix(in srgb, var(--text) 3%, transparent); }
+  td.r, th.r { text-align: right; }
+  .oid { font-weight: 600; }
+  .time, .city { color: var(--muted); font-size: 12px; }
+  .badge {
+    --c: var(--muted);
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px 3px 8px; border-radius: 99px; white-space: nowrap;
+    font-size: 12px; font-weight: 600; color: var(--c);
+    background: color-mix(in srgb, var(--c) 13%, transparent);
+  }
+  .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .badge.baru { --c: var(--s-amber); }
+  .badge.kemas { --c: var(--s-blue); }
+  .badge.kirim { --c: var(--s-teal); }
+  .badge.batal { --c: var(--s-red); }
+
+  /* ---------- Responsif ---------- */
+  @media (max-width: 1020px) {
+    .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .row { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: minmax(0, 1fr); }
+    .side {
+      position: static; height: auto; flex-direction: row; align-items: center; gap: 14px;
+      padding: 10px 14px; border-right: 0; border-bottom: 1px solid var(--line); overflow-x: auto;
+    }
+    .brand { padding: 0; }
+    .brand span, .side-foot { display: none; }
+    .nav { flex-direction: row; }
+    .nav a { gap: 6px; }
+    main { padding: 20px 14px 36px; }
+    .head h1 { font-size: 24px; }
+    .kpi { padding: 14px 14px 13px; }
+    .kpi .value { font-size: 22px; }
+    .panel { padding: 16px 14px 14px; }
+    .table-wrap { margin: 10px -14px 0; }
+    th:first-child, td:first-child { padding-left: 14px; }
+    th:last-child, td:last-child { padding-right: 14px; }
+    .key { margin-left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="side">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+        <ellipse cx="15" cy="15" rx="9.5" ry="12.5" transform="rotate(28 15 15)" fill="currentColor"/>
+        <path d="M10.2 5.6c5.6 3.4-1.6 13.4 9.4 18.6" fill="none" stroke="var(--bg)" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <div><b>Kopi Lereng</b><span>Admin toko</span></div>
+    </div>
+    <nav class="nav" aria-label="Menu utama">
+      <a href="#" aria-current="page">Ringkasan</a>
+      <a href="#pesanan">Pesanan <span class="count" id="navCount" title="Perlu diproses"></span></a>
+      <a href="#produk">Produk</a>
+      <a href="#">Pelanggan</a>
+      <a href="#">Laporan</a>
+      <a href="#">Pengaturan</a>
+    </nav>
+    <div class="side-foot"><b>Laras Wibisono</b>Pemilik toko</div>
+  </aside>
+
+  <main>
+    <header class="head">
+      <div>
+        <h1>Ringkasan hari ini</h1>
+        <p id="todayLabel"></p>
+      </div>
+      <span class="live"><i></i>Toko buka · data contoh</span>
+    </header>
+
+    <section class="kpis" id="kpis" aria-label="Ringkasan penjualan hari ini"></section>
+
+    <div class="row">
+      <section class="card panel" aria-labelledby="chartTitle">
+        <div class="panel-head">
+          <div>
+            <h2 id="chartTitle">Penjualan 7 hari terakhir</h2>
+            <p class="sub" id="chartUnit"></p>
+          </div>
+          <div class="seg" role="group" aria-label="Pilih metrik grafik">
+            <button type="button" data-mode="revenue" aria-pressed="true">Pendapatan</button>
+            <button type="button" data-mode="orders" aria-pressed="false">Pesanan</button>
+          </div>
+        </div>
+        <div class="chart" id="chart">
+          <svg role="group" aria-labelledby="chartTitle"></svg>
+          <div class="tip" id="tip" role="status"></div>
+        </div>
+        <div class="chart-foot">
+          <span>Total <b class="num" id="sumTotal"></b></span>
+          <span>Rata-rata <b class="num" id="sumAvg"></b> / hari</span>
+          <span class="key"><i></i>Hari ini</span>
+        </div>
+      </section>
+
+      <section class="card panel" id="produk" aria-labelledby="prodTitle">
+        <div class="panel-head">
+          <div>
+            <h2 id="prodTitle">Produk terlaris</h2>
+            <p class="sub">Berdasarkan jumlah terjual, 7 hari terakhir</p>
+          </div>
+          <a class="link" href="#produk">Semua produk</a>
+        </div>
+        <ol class="products" id="products"></ol>
+      </section>
+    </div>
+
+    <section class="card panel orders" id="pesanan" aria-labelledby="orderTitle">
+      <div class="panel-head">
+        <div>
+          <h2 id="orderTitle">Pesanan terbaru</h2>
+          <p class="sub" id="orderSub"></p>
+        </div>
+        <a class="link" href="#pesanan">Lihat semua pesanan</a>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Pesanan</th>
+              <th scope="col">Pelanggan</th>
+              <th scope="col">Produk</th>
+              <th scope="col" class="r">Total</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody id="orders"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+/* ================= Data dummy ================= */
+// Urutan: 6 hari lalu … hari ini
+const SALES = [
+  { revenue: 2450000, orders: 14, kg: 6.2 },
+  { revenue: 2910000, orders: 16, kg: 7.4 },
+  { revenue: 2180000, orders: 12, kg: 5.6 },
+  { revenue: 3320000, orders: 18, kg: 8.1 },
+  { revenue: 2760000, orders: 15, kg: 6.9 },
+  { revenue: 3410000, orders: 19, kg: 8.4 },
+  { revenue: 3840000, orders: 21, kg: 9.2 },
+];
+
+const PRODUCTS = [
+  { name: "Gayo Wine Natural",     meta: "Aceh · natural · 200 g",        sold: 48, price: 125000 },
+  { name: "Kintamani Honey",       meta: "Bali · honey · 200 g",          sold: 41, price: 95000 },
+  { name: "Flores Bajawa",         meta: "NTT · full wash · 200 g",       sold: 37, price: 89000 },
+  { name: "Toraja Sapan",          meta: "Sulsel · semi wash · 200 g",    sold: 29, price: 110000 },
+  { name: "House Blend Espresso",  meta: "Campuran · sangrai gelap · 500 g", sold: 26, price: 165000 },
+];
+
+const STATUS = {
+  baru:    "Perlu diproses",
+  kemas:   "Dikemas",
+  kirim:   "Dikirim",
+  selesai: "Selesai",
+  batal:   "Dibatalkan",
+};
+
+const ORDERS = [
+  { id: "KL-1187", time: "14.21", name: "Dimas Prasetyo",   city: "Bandung",     items: "Gayo Wine Natural 200 g × 2",                  total: 250000, status: "baru" },
+  { id: "KL-1186", time: "13.48", name: "Ayu Lestari",      city: "Yogyakarta",  items: "Kintamani Honey 200 g, Flores Bajawa 200 g",   total: 184000, status: "baru" },
+  { id: "KL-1185", time: "12.57", name: "Kedai Sudut Pagi", city: "Jakarta Selatan", items: "House Blend Espresso 500 g × 4",           total: 660000, status: "kemas" },
+  { id: "KL-1184", time: "11.32", name: "Rizky Ananda",     city: "Surabaya",    items: "Toraja Sapan 200 g",                           total: 110000, status: "kemas" },
+  { id: "KL-1183", time: "10.15", name: "Maria Tanuwijaya", city: "Semarang",    items: "Flores Bajawa 200 g × 2",                      total: 178000, status: "kirim" },
+  { id: "KL-1182", time: "09.40", name: "Bagus Santoso",    city: "Denpasar",    items: "Kintamani Honey 200 g × 3",                    total: 285000, status: "kirim" },
+  { id: "KL-1181", time: "08.52", name: "Nadia Putri",      city: "Malang",      items: "Gayo Wine Natural 200 g",                      total: 125000, status: "selesai" },
+  { id: "KL-1180", time: "08.07", name: "Fajar Hidayat",    city: "Medan",       items: "House Blend Espresso 500 g",                   total: 165000, status: "batal" },
+];
+
+/* ================= Util ================= */
+const $ = (s) => document.querySelector(s);
+const nf = new Intl.NumberFormat("id-ID");
+const rp = (v) => "Rp " + nf.format(Math.round(v));
+const dec = (v, d = 1) => v.toLocaleString("id-ID", { minimumFractionDigits: d, maximumFractionDigits: d });
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// Tanggal 7 hari terakhir, relatif terhadap hari ini
+const now = new Date();
+const DAYS = SALES.map((d, i) => {
+  const dt = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (SALES.length - 1 - i));
+  return {
+    ...d,
+    short: dt.toLocaleDateString("id-ID", { weekday: "short" }),
+    long:  dt.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long" }),
+    date:  dt.toLocaleDateString("id-ID", { day: "numeric", month: "short" }),
+    today: i === SALES.length - 1,
+  };
+});
+const today = DAYS[DAYS.length - 1], yesterday = DAYS[DAYS.length - 2];
+
+$("#todayLabel").textContent = now.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+
+/* ================= KPI ================= */
+function delta(cur, prev) {
+  const p = (cur - prev) / prev * 100;
+  const up = p >= 0;
+  return `<p class="delta"><b class="${up ? "up" : "down"}">${up ? "▲" : "▼"} ${dec(Math.abs(p))}%</b> dari kemarin</p>`;
+}
+const aov = (d) => d.revenue / d.orders;
+$("#kpis").innerHTML = [
+  { label: "Penjualan",             value: `<small>Rp</small>${nf.format(today.revenue)}`,       d: delta(today.revenue, yesterday.revenue) },
+  { label: "Pesanan",               value: nf.format(today.orders),                              d: delta(today.orders, yesterday.orders) },
+  { label: "Rata-rata per pesanan", value: `<small>Rp</small>${nf.format(Math.round(aov(today)))}`, d: delta(aov(today), aov(yesterday)) },
+  { label: "Kopi terjual",          value: `${dec(today.kg)}<small class="unit">kg</small>`,     d: delta(today.kg, yesterday.kg) },
+].map((k) => `
+  <article class="card kpi">
+    <div class="label">${k.label}</div>
+    <div class="value num">${k.value}</div>
+    ${k.d}
+  </article>`).join("");
+
+/* ================= Grafik ================= */
+const svg = $("#chart svg"), tip = $("#tip");
+const MODES = {
+  revenue: {
+    unit: "Pendapatan per hari, dalam juta rupiah",
+    get: (d) => d.revenue,
+    short: (v) => dec(v / 1e6, 2),
+    full: rp,
+  },
+  orders: {
+    unit: "Jumlah pesanan per hari",
+    get: (d) => d.orders,
+    short: (v) => nf.format(v),
+    full: (v) => (Number.isInteger(v) ? nf.format(v) : dec(v)) + " pesanan",
+  },
+};
+let mode = "revenue";
+
+function drawChart() {
+  const m = MODES[mode];
+  const W = svg.clientWidth || 600, H = svg.clientHeight || 250;
+  const top = 26, bottom = 44, plotH = H - top - bottom;
+  const band = W / DAYS.length;
+  const barW = Math.min(54, band * 0.58);
+  const vals = DAYS.map(m.get);
+  const max = Math.max(...vals);
+  const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+  const y = (v) => top + plotH - (v / max) * plotH;
+  const baseY = top + plotH;
+
+  let out = `<line class="base" x1="0" x2="${W}" y1="${baseY + .5}" y2="${baseY + .5}"/>`;
+
+  DAYS.forEach((d, i) => {
+    const v = vals[i], cx = band * i + band / 2, by = y(v), h = baseY - by, r = Math.min(6, h / 2);
+    const x0 = cx - barW / 2, x1 = cx + barW / 2;
+    const path = `M${x0},${baseY} V${by + r} Q${x0},${by} ${x0 + r},${by} H${x1 - r} Q${x1},${by} ${x1},${by + r} V${baseY} Z`;
+    const label = `${d.long}${d.today ? " (hari ini)" : ""}: ${rp(d.revenue)}, ${d.orders} pesanan`;
+    out += `
+      <g class="col${d.today ? " today" : ""}" tabindex="0" role="img" aria-label="${esc(label)}" data-i="${i}" data-x="${cx}" data-y="${by}">
+        <rect class="hit" x="${band * i + 2}" y="2" width="${band - 4}" height="${H - 4}" rx="8"/>
+        <path class="bar" d="${path}"/>
+        <text class="val" x="${cx}" y="${by - 7}" text-anchor="middle">${m.short(v)}</text>
+        <text class="day" x="${cx}" y="${baseY + 19}" text-anchor="middle">${esc(d.short)}</text>
+        <text class="date" x="${cx}" y="${baseY + 35}" text-anchor="middle">${esc(band < 52 ? d.date.split(" ")[0] : d.date)}</text>
+      </g>`;
+  });
+
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  svg.innerHTML = out;
+
+  $("#chartUnit").textContent = m.unit;
+  $("#sumTotal").textContent = m.full(vals.reduce((a, b) => a + b, 0));
+  $("#sumAvg").textContent = m.full(mode === "revenue" ? avg : Math.round(avg * 10) / 10);
+}
+
+function showTip(g) {
+  const d = DAYS[+g.dataset.i];
+  tip.innerHTML = `<span>${esc(d.long)}${d.today ? " · hari ini" : ""}</span><b>${rp(d.revenue)}</b>${d.orders} pesanan · ${dec(d.kg)} kg`;
+  const half = tip.offsetWidth / 2, W = svg.clientWidth;
+  const x = Math.max(half, Math.min(W - half, +g.dataset.x));
+  tip.style.left = x + "px";
+  tip.style.top = Math.max(tip.offsetHeight, +g.dataset.y - 26) + "px";
+  tip.classList.add("on");
+}
+const hideTip = () => tip.classList.remove("on");
+
+svg.addEventListener("pointerover", (e) => { const g = e.target.closest("g.col"); if (g) showTip(g); });
+svg.addEventListener("pointerleave", hideTip);
+svg.addEventListener("focusin", (e) => { const g = e.target.closest("g.col"); if (g) showTip(g); });
+svg.addEventListener("focusout", hideTip);
+
+document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => {
+  mode = b.dataset.mode;
+  document.querySelectorAll(".seg button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  hideTip();
+  drawChart();
+}));
+
+new ResizeObserver(() => { hideTip(); drawChart(); }).observe($("#chart"));
+drawChart();
+
+/* ================= Produk terlaris ================= */
+const maxSold = Math.max(...PRODUCTS.map((p) => p.sold));
+$("#products").innerHTML = PRODUCTS.map((p, i) => `
+  <li>
+    <span class="rank">${i + 1}</span>
+    <div>
+      <div class="name">${esc(p.name)}</div>
+      <div class="meta">${esc(p.meta)}</div>
+    </div>
+    <div>
+      <div class="qty num">${p.sold} terjual</div>
+      <div class="rev num">${rp(p.sold * p.price)}</div>
+    </div>
+    <div class="track" aria-hidden="true"><i style="width:${(p.sold / maxSold * 100).toFixed(1)}%"></i></div>
+  </li>`).join("");
+
+/* ================= Pesanan terbaru ================= */
+const pending = ORDERS.filter((o) => o.status === "baru").length;
+$("#navCount").textContent = pending;
+$("#orderSub").textContent = `${ORDERS.length} dari ${today.orders} pesanan hari ini · ${pending} perlu diproses`;
+$("#orders").innerHTML = ORDERS.map((o) => `
+  <tr>
+    <td><div class="oid num">#${o.id}</div><div class="time num">${o.time} WIB</div></td>
+    <td><div>${esc(o.name)}</div><div class="city">${esc(o.city)}</div></td>
+    <td>${esc(o.items)}</td>
+    <td class="r num">${rp(o.total)}</td>
+    <td><span class="badge ${o.status}">${STATUS[o.status]}</span></td>
+  </tr>`).join("");
+</script>
+</body>
+</html>

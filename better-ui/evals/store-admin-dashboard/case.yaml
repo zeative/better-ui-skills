@@ -1,0 +1,8 @@
+schema_version: "1.1"
+name: store-admin-dashboard
+expected_outcome: |
+  A one-screen admin dashboard in Indonesian for a small coffee-bean shop, with believable and
+  internally consistent rupiah figures, a clear answer to "what needs my attention today", a
+  readable 7-day sales chart with labelled values, recent orders and best sellers that are easy to
+  scan, correct locale formatting, sensible behaviour on a phone, and no navigation or controls
+  that pretend to work.

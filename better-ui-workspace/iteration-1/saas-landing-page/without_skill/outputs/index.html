@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ledgerly — Invoicing for freelancers</title>
+<meta name="description" content="Ledgerly is invoicing built for freelancers. Send a polished invoice in a minute, let reminders do the chasing, and get paid online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f1e7;
+    --paper-deep: #ede5d4;
+    --card: #fffdf8;
+    --ink: #1b1a17;
+    --ink-soft: #55514a;
+    --ink-faint: #8b857a;
+    --rule: #d9d0bd;
+    --green: #17603f;
+    --green-deep: #0f4a30;
+    --green-tint: #dfeadf;
+    --amber: #b4560f;
+    --amber-tint: #f6e3cd;
+    --display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --body: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --radius: 14px;
+    --wrap: 1120px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, p, ul, dl, dd { margin: 0; }
+  ul { padding: 0; list-style: none; }
+  a { color: inherit; }
+  button, input { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+
+  .wrap { width: min(100% - 48px, var(--wrap)); margin-inline: auto; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
+  .skip {
+    position: absolute; left: 16px; top: -60px; z-index: 100;
+    background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 8px;
+  }
+  .skip:focus { top: 12px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+  h1, h2 {
+    font-family: var(--display);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+  h2 { font-size: clamp(2rem, 4.2vw, 3.1rem); }
+  h1 em, h2 em { font-style: italic; font-weight: 400; color: var(--green); }
+  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 13px 22px;
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font-weight: 600;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color .15s, border-color .15s, transform .15s;
+  }
+  .btn:hover { background: var(--green-deep); border-color: var(--green-deep); }
+  .btn:active { transform: translateY(1px); }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .btn.small { padding: 9px 16px; font-size: 15px; }
+
+  /* Header */
+  header.site {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 66px; }
+  .logo {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--display); font-size: 23px; font-weight: 600; letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+  .logo svg { width: 26px; height: 26px; flex: none; }
+  .nav ul { display: flex; gap: 30px; }
+  .nav ul a { text-decoration: none; font-size: 15.5px; color: var(--ink-soft); }
+  .nav ul a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero { padding: clamp(48px, 8vw, 96px) 0 clamp(56px, 8vw, 104px); overflow: hidden; }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(32px, 6vw, 80px);
+    align-items: center;
+  }
+  h1 { font-size: clamp(2.7rem, 6.4vw, 4.9rem); margin-top: 18px; }
+  .lede { margin-top: 24px; font-size: clamp(1.05rem, 1.5vw, 1.22rem); color: var(--ink-soft); max-width: 33em; }
+
+  .signup { margin-top: 32px; max-width: 470px; }
+  .signup-row {
+    display: flex; gap: 6px;
+    padding: 6px;
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+  }
+  .signup-row:focus-within { box-shadow: 0 0 0 4px var(--green-tint); }
+  .signup input {
+    flex: 1; min-width: 0;
+    border: 0; background: transparent;
+    padding: 0 8px 0 18px;
+    font-size: 16px;
+  }
+  .signup input::placeholder { color: var(--ink-faint); }
+  .signup input:focus { outline: none; }
+  .form-note { margin-top: 12px; font-size: 14px; color: var(--ink-faint); min-height: 1.5em; }
+  .form-note.error { color: #a3261b; }
+  .form-note.ok { color: var(--green); font-weight: 500; }
+
+  /* Invoice mock */
+  .invoice-stage { position: relative; padding: 20px 10px 54px; }
+  .sheet {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    box-shadow: 0 1px 0 #fff inset, 0 24px 50px -24px rgba(60, 45, 15, .35), 0 2px 6px rgba(60, 45, 15, .08);
+  }
+  .sheet.back {
+    position: absolute; inset: 34px 0 34px 34px;
+    transform: rotate(4deg);
+    background: var(--paper-deep);
+  }
+  .invoice {
+    position: relative;
+    transform: rotate(-1.6deg);
+    padding: 30px 30px 26px;
+    font-size: 14.5px;
+  }
+  .inv-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .inv-title { font-family: var(--display); font-size: 30px; font-weight: 500; letter-spacing: -0.02em; line-height: 1; }
+  .inv-meta { text-align: right; font-family: var(--mono); font-size: 12px; color: var(--ink-soft); line-height: 1.7; }
+  .inv-parties {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin: 24px 0 20px; padding: 16px 0;
+    border-block: 1px solid var(--rule);
+  }
+  .inv-parties dt { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-faint); }
+  .inv-parties dd { margin-top: 4px; font-weight: 500; }
+  .inv-parties dd span { display: block; font-weight: 400; color: var(--ink-soft); font-size: 13.5px; }
+  .lines { width: 100%; border-collapse: collapse; }
+  .lines th {
+    font-family: var(--mono); font-size: 11px; font-weight: 400; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--ink-faint); text-align: left; padding-bottom: 8px;
+  }
+  .lines td { padding: 9px 0; border-top: 1px dashed var(--rule); }
+  .lines th:last-child, .lines td:last-child { text-align: right; }
+  .lines td:last-child { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 13.5px; }
+  .lines td small { display: block; color: var(--ink-faint); font-size: 12.5px; }
+  .inv-total {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-top: 6px; padding-top: 14px;
+    border-top: 1.5px solid var(--ink);
+    font-weight: 600;
+  }
+  .inv-total .num { font-size: 22px; font-weight: 500; }
+  .stamp {
+    position: absolute; left: 40%; bottom: 16px;
+    transform: rotate(-11deg);
+    padding: 5px 14px 4px;
+    border: 3px double var(--green);
+    border-radius: 6px;
+    color: var(--green);
+    font-family: var(--mono); font-weight: 500; font-size: 17px; letter-spacing: .14em;
+    text-align: center; line-height: 1.25;
+    background: color-mix(in srgb, var(--card) 80%, transparent);
+    animation: stamp .5s cubic-bezier(.2, 1.4, .4, 1) .7s both;
+  }
+  .stamp small { display: block; font-size: 10px; letter-spacing: .08em; }
+  @keyframes stamp {
+    from { opacity: 0; transform: rotate(-11deg) scale(1.9); }
+    to   { opacity: 1; transform: rotate(-11deg) scale(1); }
+  }
+  .toast {
+    position: absolute; left: -6px; bottom: 0;
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px 12px 12px;
+    background: var(--ink); color: var(--paper);
+    border-radius: 12px;
+    font-size: 14px; line-height: 1.3;
+    box-shadow: 0 16px 30px -14px rgba(0, 0, 0, .5);
+  }
+  .toast b { display: block; font-weight: 600; }
+  .toast span { color: #c9c2b3; }
+  .toast i {
+    display: grid; place-items: center; flex: none;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #3fae78; color: var(--ink); font-style: normal; font-weight: 700;
+  }
+
+  /* Sections */
+  section { padding: clamp(64px, 9vw, 112px) 0; }
+  .section-head { max-width: 680px; margin-bottom: clamp(36px, 5vw, 56px); }
+  .section-head h2 { margin-top: 14px; }
+  .section-head p { margin-top: 18px; color: var(--ink-soft); font-size: 1.1rem; }
+
+  /* Features */
+  #features { border-top: 1px solid var(--rule); }
+  .features { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 18px; }
+  .feature {
+    grid-column: span 4;
+    display: flex; flex-direction: column;
+    padding: 28px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+  .feature.wide { grid-column: span 7; }
+  .feature.narrow { grid-column: span 5; }
+  .feature.dark { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .feature.dark p { color: #c4bdae; }
+  .feature h3 { font-family: var(--display); font-size: 1.5rem; font-weight: 500; letter-spacing: -0.015em; line-height: 1.15; }
+  .feature p { margin-top: 10px; color: var(--ink-soft); font-size: 16px; }
+  .feature .demo { margin-top: auto; padding-top: 26px; }
+
+  /* demo: reminders timeline */
+  .timeline { display: grid; gap: 0; }
+  .timeline li {
+    display: grid; grid-template-columns: 74px 18px 1fr; gap: 12px; align-items: center;
+    padding: 9px 0; font-size: 14.5px;
+  }
+  .timeline .when { font-family: var(--mono); font-size: 12px; color: var(--ink-faint); text-align: right; }
+  .timeline .dot { position: relative; width: 10px; height: 10px; margin-inline: auto; border-radius: 50%; border: 2px solid var(--ink-faint); }
+  .timeline li:not(:last-child) .dot::after {
+    content: ""; position: absolute; left: 2px; top: 10px; width: 2px; height: 30px; background: var(--rule);
+  }
+  .timeline .done .dot { background: var(--green); border-color: var(--green); }
+  .timeline .paid { font-weight: 600; color: var(--green); }
+
+  /* demo: quick invoice */
+  .quick { display: grid; gap: 8px; }
+  .quick div {
+    display: flex; justify-content: space-between; gap: 12px;
+    padding: 11px 14px;
+    background: #2a2925; border-radius: 9px;
+    font-size: 14.5px;
+  }
+  .quick div span:first-child { color: #a8a193; }
+  .quick .send { background: #3fae78; color: var(--ink); font-weight: 600; justify-content: center; }
+
+  /* demo: chips, timer, bars */
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips span {
+    padding: 6px 12px; border: 1px solid var(--rule); border-radius: 999px;
+    font-family: var(--mono); font-size: 12.5px; background: var(--paper);
+  }
+  .timer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; background: var(--paper); border-radius: 10px; }
+  .timer .num { font-size: 22px; }
+  .timer small { display: block; font-size: 12.5px; color: var(--ink-faint); }
+  .pill { padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 600; background: var(--amber-tint); color: var(--amber); }
+  .bars { display: flex; align-items: flex-end; gap: 7px; height: 64px; }
+  .bars span { flex: 1; background: var(--green-tint); border-radius: 4px 4px 0 0; }
+  .bars span.hi { background: var(--green); }
+
+  /* Pricing */
+  #pricing { background: var(--paper-deep); border-block: 1px solid var(--rule); }
+  .pricing-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: clamp(36px, 5vw, 56px); }
+  .pricing-head .section-head { margin-bottom: 0; }
+  .billing {
+    display: inline-flex; padding: 4px;
+    background: var(--card); border: 1px solid var(--rule); border-radius: 999px;
+  }
+  .billing button {
+    padding: 8px 16px; border: 0; border-radius: 999px; background: transparent;
+    font-size: 14.5px; font-weight: 500; color: var(--ink-soft); cursor: pointer;
+  }
+  .billing button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+  .billing button em { font-style: normal; font-size: 12px; opacity: .75; margin-left: 4px; }
+
+  .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+  .plan {
+    position: relative;
+    display: flex; flex-direction: column;
+    padding: 30px 28px 28px;
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+  }
+  .plan.featured { border: 1.5px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); }
+  .plan .tag {
+    position: absolute; top: -13px; left: 26px;
+    padding: 3px 12px; border-radius: 999px;
+    background: var(--green); color: #fff;
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase;
+  }
+  .plan h3 { font-family: var(--display); font-size: 1.6rem; font-weight: 500; letter-spacing: -0.015em; }
+  .plan .for { margin-top: 4px; color: var(--ink-soft); font-size: 15.5px; }
+  .price { display: flex; align-items: baseline; gap: 8px; margin: 22px 0 4px; }
+  .price .amount { font-family: var(--display); font-size: 3.4rem; font-weight: 500; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .price .per { color: var(--ink-soft); font-size: 15px; }
+  .billed { font-size: 13.5px; color: var(--ink-faint); min-height: 1.5em; }
+  .plan ul { margin: 22px 0 28px; padding-top: 20px; border-top: 1px solid var(--rule); display: grid; gap: 10px; font-size: 15.5px; }
+  .plan li { display: grid; grid-template-columns: 20px 1fr; gap: 8px; }
+  .plan li::before { content: "✓"; color: var(--green); font-weight: 700; }
+  .plan .btn { margin-top: auto; }
+  .pricing-foot { margin-top: 26px; font-size: 14.5px; color: var(--ink-soft); }
+
+  /* CTA */
+  .cta { padding: clamp(64px, 9vw, 112px) 0; }
+  .cta-box {
+    position: relative; overflow: hidden;
+    padding: clamp(40px, 7vw, 84px) clamp(24px, 6vw, 80px);
+    background: var(--green-deep);
+    color: #f4efe3;
+    border-radius: 22px;
+    text-align: center;
+    background-image: repeating-linear-gradient(to bottom, transparent 0 35px, rgba(255, 255, 255, .055) 35px 36px);
+  }
+  .cta-box .eyebrow { color: #9fd3b6; }
+  .cta-box h2 { margin: 14px auto 0; max-width: 15em; font-size: clamp(2.1rem, 5vw, 3.6rem); }
+  .cta-box h2 em { color: #a9e0c1; }
+  .cta-box > p { margin: 18px auto 0; max-width: 34em; color: #cfe1d5; font-size: 1.1rem; }
+  .cta-box .signup { margin-inline: auto; }
+  .cta-box .signup-row { border-color: transparent; }
+  .cta-box .signup-row:focus-within { box-shadow: 0 0 0 4px rgba(169, 224, 193, .4); }
+  .cta-box input { color: var(--ink); }
+  .cta-box .form-note { color: #b5cdbf; }
+  .cta-box .form-note.error { color: #ffc2b8; }
+  .cta-box .form-note.ok { color: #a9e0c1; }
+
+  /* Footer */
+  footer { padding: 0 0 44px; font-size: 14.5px; color: var(--ink-soft); }
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 28px; padding-top: 28px; border-top: 1px solid var(--rule); }
+  .foot ul { display: flex; flex-wrap: wrap; gap: 22px; }
+  .foot a { text-decoration: none; }
+  .foot a:hover { color: var(--ink); text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 920px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .invoice-stage { max-width: 500px; margin-inline: auto; width: 100%; }
+    .feature, .feature.wide, .feature.narrow { grid-column: span 6; }
+    .plans { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
+    .plan.featured { order: -1; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .wrap { width: min(100% - 36px, var(--wrap)); }
+    .nav ul { display: none; }
+    .feature, .feature.wide, .feature.narrow { grid-column: span 12; }
+    .signup-row { flex-direction: column; border-radius: 18px; padding: 8px; }
+    .signup input { padding: 12px 12px; }
+    .invoice { padding: 22px 20px 20px; }
+    .inv-title { font-size: 25px; }
+    .stamp { left: 37%; bottom: 14px; font-size: 12px; padding: 3px 8px 2px; }
+    .stamp small { display: none; }
+    .toast { left: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="#" aria-label="Ledgerly home">
+      <svg viewBox="0 0 26 26" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="24" rx="6" fill="#17603f"/>
+        <path d="M8 7v12h10" stroke="#f6f1e7" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12.5 11.5h5.5M12.5 15h3" stroke="#a9e0c1" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Ledgerly
+    </a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#signup">Sign up</a></li>
+      </ul>
+    </nav>
+    <a class="btn small" href="#signup">Start free</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Invoicing for freelancers</p>
+        <h1>Do the work. <em>Get paid</em> for it.</h1>
+        <p class="lede">Ledgerly turns finished work into a polished invoice in about a minute, follows up so you don't have to, and lets clients pay online the moment they open it.</p>
+
+        <form class="signup" data-signup novalidate>
+          <div class="signup-row">
+            <label class="sr-only" for="hero-email">Email address</label>
+            <input id="hero-email" name="email" type="email" autocomplete="email" placeholder="you@yourstudio.com" required aria-describedby="hero-note">
+            <button class="btn" type="submit">Start free</button>
+          </div>
+          <p class="form-note" id="hero-note" role="status">Free for your first 3 clients. No card required.</p>
+        </form>
+      </div>
+
+      <div class="invoice-stage" aria-hidden="true">
+        <div class="sheet back"></div>
+        <div class="sheet invoice">
+          <div class="inv-head">
+            <div class="inv-title">Invoice</div>
+            <div class="inv-meta">No. 0042<br>Issued 02 Nov 2026<br>Due 16 Nov 2026</div>
+          </div>
+          <dl class="inv-parties">
+            <div><dt>From</dt><dd>Maya Okafor <span>Brand &amp; web design</span></dd></div>
+            <div><dt>Billed to</dt><dd>Northwind Coffee Co. <span>accounts@northwind.example</span></dd></div>
+          </dl>
+          <table class="lines">
+            <thead><tr><th>Description</th><th>Amount</th></tr></thead>
+            <tbody>
+              <tr><td>Brand identity refresh <small>Fixed project fee</small></td><td>$2,400.00</td></tr>
+              <tr><td>Landing page design <small>18.5 hrs × $95</small></td><td>$1,757.50</td></tr>
+              <tr><td>Stock licensing <small>Pass-through expense</small></td><td>$120.00</td></tr>
+            </tbody>
+          </table>
+          <div class="inv-total"><span>Total due</span><span class="num">$4,277.50</span></div>
+          <div class="stamp">PAID<small>04 NOV 2026</small></div>
+        </div>
+        <div class="toast"><i>✓</i><div><b>Northwind paid $4,277.50</b><span>12 days early · by card</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section id="features" aria-labelledby="features-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Features</p>
+        <h2 id="features-title">Everything between <em>"done"</em> and <em>"deposited."</em></h2>
+        <p>No accounting degree, no setup week. Ledgerly covers the handful of things a business of one actually needs, and does them well.</p>
+      </div>
+
+      <div class="features">
+        <article class="feature wide">
+          <h3>Reminders that chase so you don't have to</h3>
+          <p>Set the schedule once. Ledgerly sends polite, on-brand nudges before and after the due date, and stops the second the invoice is paid.</p>
+          <div class="demo">
+            <ul class="timeline">
+              <li class="done"><span class="when">Nov 02</span><span class="dot"></span><span>Invoice sent and opened</span></li>
+              <li class="done"><span class="when">Nov 13</span><span class="dot"></span><span>Friendly heads-up, 3 days before due</span></li>
+              <li class="done"><span class="when">Nov 16</span><span class="dot"></span><span class="paid">Paid in full, reminders cancelled</span></li>
+              <li><span class="when">Nov 23</span><span class="dot"></span><span style="color:var(--ink-faint);text-decoration:line-through">Overdue follow-up</span></li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="feature narrow dark">
+          <h3>An invoice in about a minute</h3>
+          <p>Saved clients, saved rates, and your branding already in place. Pick, confirm, send.</p>
+          <div class="demo">
+            <div class="quick">
+              <div><span>Client</span><span>Northwind Coffee Co.</span></div>
+              <div><span>Terms</span><span>Net 14</span></div>
+              <div><span>Total</span><span class="num">$4,277.50</span></div>
+              <div class="send">Send invoice →</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="feature">
+          <h3>Online payments built in</h3>
+          <p>Every invoice has a pay button. Clients choose how, and you see the money land.</p>
+          <div class="demo">
+            <div class="chips"><span>Card</span><span>Bank transfer</span><span>Apple Pay</span><span>Google Pay</span></div>
+          </div>
+        </article>
+
+        <article class="feature">
+          <h3>Tracked time becomes line items</h3>
+          <p>Run a timer per project, then pull unbilled hours straight into the next invoice.</p>
+          <div class="demo">
+            <div class="timer">
+              <div><span class="num">02:47:13</span><small>Northwind · Landing page</small></div>
+              <span class="pill">Unbilled</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="feature">
+          <h3>Ready when tax season is</h3>
+          <p>Income by client, by month, by currency. Export a tidy summary for your accountant.</p>
+          <div class="demo">
+            <div class="bars">
+              <span style="height:38%"></span><span style="height:55%"></span><span style="height:46%"></span><span style="height:70%"></span><span style="height:62%"></span><span style="height:84%"></span><span class="hi" style="height:100%"></span><span style="height:76%"></span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" aria-labelledby="pricing-title">
+    <div class="wrap">
+      <div class="pricing-head">
+        <div class="section-head">
+          <p class="eyebrow">Pricing</p>
+          <h2 id="pricing-title">Costs less than one <em>late</em> invoice.</h2>
+        </div>
+        <div class="billing" role="group" aria-label="Billing period">
+          <button type="button" data-billing="monthly" aria-pressed="true">Monthly</button>
+          <button type="button" data-billing="yearly" aria-pressed="false">Yearly <em>save 25%</em></button>
+        </div>
+      </div>
+
+      <div class="plans">
+        <article class="plan">
+          <h3>Starter</h3>
+          <p class="for">For your first few clients.</p>
+          <div class="price"><span class="amount">$0</span><span class="per">forever</span></div>
+          <p class="billed"></p>
+          <ul>
+            <li>Up to 3 active clients</li>
+            <li>Unlimited invoices</li>
+            <li>Online payments</li>
+            <li>Ledgerly branding on invoices</li>
+          </ul>
+          <a class="btn ghost" href="#signup">Start free</a>
+        </article>
+
+        <article class="plan featured">
+          <span class="tag">Most popular</span>
+          <h3>Solo</h3>
+          <p class="for">For full-time freelancers.</p>
+          <div class="price"><span class="amount" data-monthly="$12" data-yearly="$9">$12</span><span class="per">/ month</span></div>
+          <p class="billed" data-monthly="Billed monthly. Cancel anytime." data-yearly="Billed $108 yearly.">Billed monthly. Cancel anytime.</p>
+          <ul>
+            <li>Unlimited clients</li>
+            <li>Automatic payment reminders</li>
+            <li>Time tracking and expenses</li>
+            <li>Your logo, colors and domain</li>
+            <li>Recurring invoices</li>
+          </ul>
+          <a class="btn" href="#signup">Try Solo free for 14 days</a>
+        </article>
+
+        <article class="plan">
+          <h3>Studio</h3>
+          <p class="for">For small teams and collectives.</p>
+          <div class="price"><span class="amount" data-monthly="$29" data-yearly="$22">$29</span><span class="per">/ month</span></div>
+          <p class="billed" data-monthly="Billed monthly. Cancel anytime." data-yearly="Billed $264 yearly.">Billed monthly. Cancel anytime.</p>
+          <ul>
+            <li>Everything in Solo</li>
+            <li>Up to 5 team members</li>
+            <li>Multi-currency invoicing</li>
+            <li>Accountant access and exports</li>
+            <li>Priority support</li>
+          </ul>
+          <a class="btn ghost" href="#signup">Try Studio free for 14 days</a>
+        </article>
+      </div>
+      <p class="pricing-foot">Payment processing fees are charged separately by the payment provider. Prices in USD.</p>
+    </div>
+  </section>
+
+  <!-- Signup CTA -->
+  <div class="cta" id="signup">
+    <div class="wrap">
+      <div class="cta-box">
+        <p class="eyebrow">Get started</p>
+        <h2>Send your first invoice <em>today.</em></h2>
+        <p>Create an account, add a client, hit send. It's free until you have more than three clients, which is a good problem to have.</p>
+        <form class="signup" data-signup novalidate>
+          <div class="signup-row">
+            <label class="sr-only" for="cta-email">Email address</label>
+            <input id="cta-email" name="email" type="email" autocomplete="email" placeholder="you@yourstudio.com" required aria-describedby="cta-note">
+            <button class="btn" type="submit">Create free account</button>
+          </div>
+          <p class="form-note" id="cta-note" role="status">No card required. Set up in under two minutes.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© <span id="year">2026</span> Ledgerly. Made for people who work for themselves.</span>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  // Billing toggle
+  const billingButtons = document.querySelectorAll('[data-billing]');
+  billingButtons.forEach(btn => btn.addEventListener('click', () => {
+    const period = btn.dataset.billing;
+    billingButtons.forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    document.querySelectorAll('.plan [data-monthly]').forEach(el => {
+      el.textContent = el.dataset[period];
+    });
+  }));
+
+  // Signup forms. No backend is wired up yet: replace the body of submitEmail()
+  // with a real request to your signup endpoint.
+  function submitEmail(email) {
+    return Promise.resolve(email);
+  }
+
+  document.querySelectorAll('[data-signup]').forEach(form => {
+    const input = form.querySelector('input[type="email"]');
+    const note = form.querySelector('.form-note');
+    const defaultNote = note.textContent;
+
+    input.addEventListener('input', () => {
+      if (note.classList.contains('error')) {
+        note.className = 'form-note';
+        note.textContent = defaultNote;
+        input.removeAttribute('aria-invalid');
+      }
+    });
+
+    form.addEventListener('submit', async event => {
+      event.preventDefault();
+      const email = input.value.trim();
+      if (!email || !input.checkValidity()) {
+        note.className = 'form-note error';
+        note.textContent = email ? 'That email doesn\'t look right. Check it and try again.' : 'Enter your email to get started.';
+        input.setAttribute('aria-invalid', 'true');
+        input.focus();
+        return;
+      }
+      await submitEmail(email);
+      note.className = 'form-note ok';
+      note.textContent = 'You\'re in. Check ' + email + ' for a link to finish setting up.';
+      form.reset();
+    });
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

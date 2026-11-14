@@ -1,0 +1,17 @@
+{
+  "skills_invoked": [
+    "dataviz"
+  ],
+  "skill_files_read": [],
+  "tool_calls": {
+    "Skill": 1,
+    "Write": 1,
+    "Bash": 2,
+    "Read": 4
+  },
+  "permission_denials": [
+    {
+      "skill": "dataviz"
+    }
+  ]
+}
