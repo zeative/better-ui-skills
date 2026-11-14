@@ -36,6 +36,7 @@ Showcase work has no loose ends. On both the desktop and the phone screenshot, r
 
 - **Clipped text.** No string ends in an ellipsis or is cut by its container. Widen the column, shorten the text, or allow two lines.
 - **Collisions and missing spaces.** Labels that run into each other ("ordersToday"), a tag sitting on top of a legend, a caption wrapping to three lines beside a bar.
+- **Covered content.** A floating card, stamp or tooltip hiding the names, figures or chart marks beneath it. Overlaps belong on margins and empty corners.
 - **Gutters.** The left and right page margins are equal on the phone. Cards do not touch or nearly touch one screen edge.
 - **Overlaps.** Stacked avatars and chips do not hide each other's content.
 - **Empty bands.** A sidebar with a void in the middle, a column that ends far above its neighbour, a card that is half empty.
@@ -55,7 +56,8 @@ Showcase work has no loose ends. On both the desktop and the phone screenshot, r
 - **"The colour is monotonous."** Concentrate the accent, add a counter-accent, add one contrast surface.
 - **"The colour is a rainbow."** Too many hues at full strength. Keep one dominant accent and one counter-accent; reduce category hues to small marks.
 - **"The type is generic."** Use the direction's display face, larger and tighter; add eyebrow pills, emphasised phrases, big figures.
-- **"There is dead space."** Enlarge the showpiece, let elements overlap section edges, use the full width on desktop with a multi-column composition, balance column heights.
+- **"There is dead space."** Enlarge the showpiece, let elements overlap section edges, use the full width on desktop with a multi-column composition, balance column heights, size each tile's visual to fill its tile, tighten the gaps between sections.
+- **"The page is monotone."** One tone from top to bottom. Add a section in the opposite tone and a tinted band, raise the contrast between cards and ground, and vary the section recipe.
 - **"The phone version lost the magic."** Recompose the showpiece for narrow screens instead of hiding or shrinking it.
 
 ## Brief for an independent reviewer

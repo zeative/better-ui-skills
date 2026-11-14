@@ -38,11 +38,15 @@ Use what the argument needs, and give each a visual idea. A strong page usually 
 - **FAQ:** an accordion with real buyer questions, in a two-column layout with a short intro or a contact card.
 - **Closing band** (below).
 
-Give unequal things unequal space, and vary the surface between sections (ground, white, tinted, dark) so the page has shape when seen as a thumbnail.
+Give unequal things unequal space, and change the surface between sections so the page has shape when seen as a thumbnail. This is required, not optional: a dark page needs at least one fully light section and a light page at least one dark one, plus a tinted band. A long page in one tone from navigation to footer is monotone however good each section is.
+
+Vary the recipe too. If every section is "small label, headline on the left, paragraph on the right, row of cards", the page reads as stacked blocks. Centre some section headers, run one visual at full width, split another, and let the rhythm of spacing change: closer together where sections belong to one thought, further apart at a change of subject. Avoid stretches of more than about 120px of empty ground between sections.
+
+Size each tile's visual to fill its tile. A mini interface floating in a half-empty card, or clipped awkwardly at the edge, looks unfinished; let tiles have different heights if their content differs.
 
 ## Proof
 
-Show the product working, state specifics, and use placeholder social proof honestly: fictional names and companies, never real logos or real people, and a clear note in the handoff of what to replace. Specific claims persuade ("backed up every 15 minutes, kept for 30 days"); vague ones do not ("smart automated backups").
+Show the product working, state specifics, and use placeholder social proof honestly: fictional names and companies, never real logos or real people, and a clear note in the handoff of what to replace. Put that note in the handoff, not on the page: labels such as "sample customer" printed in the design weaken it and are not what the user will ship. Specific claims persuade ("backed up every 15 minutes, kept for 30 days"); vague ones do not ("smart automated backups").
 
 ## Pricing
 

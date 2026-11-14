@@ -47,7 +47,7 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 
 ## Type finishing
 
-- **Display:** large and tight. `font-size: clamp(40px, 6.5vw, 84px); line-height: 1.02; letter-spacing: -0.035em; text-wrap: balance;`. Headlines of four to eight words, broken so the lines are similar length.
+- **Display:** large and tight. `font-size: clamp(40px, 6.5vw, 84px); line-height: 1.02; letter-spacing: -0.025em; text-wrap: balance;`. Headlines of four to eight words, broken so the lines are similar length. Tightness depends on the face: go as far as -0.04em only if letters still have clear air between them at the rendered size. Touching letters look like a mistake.
 - **One phrase of emphasis** in the headline: the accent colour, an italic, a highlighter block behind it, or a hand-drawn underline. Once per headline, and in keeping with the direction.
 - **Eyebrow pill** above a headline when it carries information: a small pill with a dot or icon and a short label.
 - **Scale with contrast:** a clear jump between levels (for example 72 / 40 / 22 / 16 / 14 / 12). Big figures in dashboards are 28 to 44px at weight 600 to 700 with tight tracking; their labels are 12 to 13px in muted ink.

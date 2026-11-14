@@ -339,6 +339,79 @@ function measure(targetWidth) {
   }
   out.repeatedGraphics = Object.values(repeats).filter((v) => v.length >= 4).map((v) => ({ n: v.length, size: v[0] })).sort((p, q) => q.n - p.n).slice(0, 4);
 
+  /* ---- covered text: is anything sitting on top of content? ------ */
+  const covered = [];
+  let probes = 0;
+  // decorative layers often have pointer-events: none, which would hide them from hit-testing
+  const hitStyle = document.createElement('style'); hitStyle.textContent = '* { pointer-events: auto !important; }'; document.head.appendChild(hitStyle);
+  for (const el of seen) {
+    if (probes > 700) break;
+    const txt = (el.textContent || '').trim();
+    if (txt.length < 3 || getComputedStyle(el).position === 'fixed') continue;
+    // skip text that is deliberately not showing: inside a faded-out or collapsed ancestor
+    let shown = true;
+    for (let n = el; n && n !== document.body; n = n.parentElement) {
+      const ns = getComputedStyle(n);
+      if (parseFloat(ns.opacity) < 0.05 || ns.visibility === 'hidden') { shown = false; break; }
+    }
+    const det = el.closest('details:not([open])');
+    if (det && !el.closest('summary')) shown = false; // content of a closed disclosure
+    if (!shown) continue;
+    el.scrollIntoView({ block: 'center', inline: 'nearest', behavior: 'instant' });
+    const r = el.getBoundingClientRect();
+    if (r.width < 6 || r.height < 6 || r.bottom < 0 || r.top > window.innerHeight) continue;
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    let clippedAway = false;
+    for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) {
+      const ns = getComputedStyle(n);
+      if (ns.overflowX === 'visible' && ns.overflowY === 'visible') continue;
+      const q = n.getBoundingClientRect();
+      if (cx < q.left || cx > q.right || cy < q.top || cy > q.bottom) { clippedAway = true; break; }
+    }
+    if (clippedAway) continue;
+    probes++;
+    // probe along the text itself (its line boxes), not the element's box, which can be much wider
+    const rg = document.createRange(); rg.selectNodeContents(el);
+    const lineRects = [...rg.getClientRects()].filter((q) => q.width > 4 && q.height > 4).slice(0, 4);
+    let hidden = 0; const pts = [];
+    for (const q of lineRects) for (const f of [0.08, 0.3, 0.5, 0.7, 0.92]) pts.push([q.left + q.width * f, q.top + q.height / 2]);
+    let by = null;
+    for (const [x, y] of pts) {
+      if (x < 0 || x >= window.innerWidth) continue;
+      const top = document.elementFromPoint(x, y);
+      if (!top || top === el || el.contains(top) || top.contains(el)) continue;
+      const ts = getComputedStyle(top);
+      if (ts.position === 'fixed' || top.closest('[style*="position: fixed"], [data-ui-audit-ignore]')) continue;
+      // something unrelated is in front; ignore fixed bars, which only overlap because of scrolling
+      let skip = false;
+      for (let n = top; n && n !== document.body; n = n.parentElement) {
+        const ns = getComputedStyle(n);
+        // fixed and sticky bars only overlap because of scrolling; invisible layers (a hidden tooltip) cover nothing
+        if (ns.position === 'fixed' || ns.position === 'sticky' || parseFloat(ns.opacity) < 0.05 || ns.visibility === 'hidden') { skip = true; break; }
+      }
+      if (skip) continue;
+      // a see-through layer with no fill of its own (a wrapper, an overlay grid) does not hide text
+      const tb = parseColor(ts.backgroundColor);
+      const ownText = [...top.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim().length > 1);
+      if ((!tb || tb.a < 0.05) && ts.backgroundImage === 'none' && !ownText && !top.closest('svg') && top.tagName !== 'IMG') continue;
+      hidden++; by = top;
+    }
+    if (hidden >= 1) covered.push(`${describe(el)} (under ${describe(by).split(' "')[0]})`);
+  }
+  hitStyle.remove();
+  window.scrollTo(0, 0);
+  out.coveredText = covered.slice(0, 10); out.coveredCount = covered.length;
+  // tone of the page from top to bottom: does the ground ever change?
+  const tones = [];
+  for (const sec of document.querySelectorAll('body > *, body > main > *, body > div > section, main > section, main > div > section')) {
+    if (!isVisible(sec)) continue;
+    const r = sec.getBoundingClientRect();
+    if (r.height < 260 || r.width < vw * 0.8) continue;
+    const bg = backgroundOf(sec);
+    tones.push(+lum(bg.color).toFixed(3));
+  }
+  out.sectionTones = tones;
+
   /* ---- richness: is there anything to look at? ------------------- */
   const pageH = document.documentElement.scrollHeight;
   const isGraphic = (el) => {
@@ -623,6 +696,11 @@ function report(results, facts, focus, runtime, args) {
   if (clipW) problem('CRAFT', `${clipW.m.clippedCount} text(s) are cut off by their container at ${clipW.width}px: ${clipW.m.clippedText.slice(0, 6).join('; ')}. Widen the column, shorten the text, or allow a second line; showcase work has no truncated strings.`);
   if (narrow.gutters && Math.abs(narrow.gutters[0] - narrow.gutters[1]) > 5 && narrow.overflowPx <= 1) problem('CRAFT', `Uneven page margins at ${results[0].width}px: content starts ${narrow.gutters[0]}px from the left edge and ends ${narrow.gutters[1]}px from the right. Something is wider than its container.`);
   if (widest.repeatedGraphics && widest.repeatedGraphics.length) problem('RICHNESS', `The same graphic is repeated: ${widest.repeatedGraphics.map((g) => `${g.n}× at ${g.size}px`).join(', ')}. Items in a list should each have a visual of their own (a different object or portrait, not one glyph recoloured).`);
+  for (const { width, m } of results) {
+    if (m.coveredCount) problem('BROKEN', `${m.coveredCount} piece(s) of text are covered by another element at ${width}px: ${m.coveredText.slice(0, 6).join('; ')}. Floating cards, stamps and tooltips may overlap empty margins and edges, never the content underneath.`);
+  }
+  const tones = widest.sectionTones || [];
+  if (tones.length >= 5 && Math.max(...tones) - Math.min(...tones) < 0.05) problem('RICHNESS', `All ${tones.length} sections share one background tone. A long page needs changes of surface: at least one section in the opposite tone (light on a dark page, dark on a light one) and one tinted band.`);
   if (widest.emojiCount > 6) problem('CRAFT', `Emoji appear in UI text ${widest.emojiCount}×. They render differently on every platform; use them as flavour, not as the icon system.`);
 
   // --- output

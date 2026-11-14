@@ -53,6 +53,7 @@ Two to four small cards lifted out of the product, overlapping the mock's edges.
 
 - Each card carries real micro-content: a notification with an avatar and a time, a figure with a sparkline and a delta badge, an avatar stack with a count, a status change, a toggle, a tiny progress ring.
 - Offset them clearly past the edge of the mock (24 to 48px) so the overlap reads as intentional. Rotate by at most 3 degrees. Give them a stronger shadow than the mock.
+- **Overlap margins, not content.** A floating card, a stamp or a second object may sit over an empty corner, a border, or a low-information strip. It must never cover the names, figures or chart marks that make the visual convincing. After rendering, look at each overlap: can you still read everything underneath that matters?
 - Different sizes and shapes. Three identical floating cards look like a template.
 - A thin connecting line or a dot on the mock where the card "comes from" ties them together.
 
@@ -82,6 +83,8 @@ The space behind the showpiece is designed, not a flat fill. Combine two or thre
 ```
 
 Keep atmosphere behind visuals and headings, never under paragraphs of body text. On dark directions add a vignette so edges fall away.
+
+Make it strong enough to see. An atmosphere at 3% opacity is a flat fill. The showpiece should visibly sit in light: a bloom you can point at behind it, and a clear difference between the stage and the plain page around it. The product visual itself should stand off the ground (a lighter or darker chrome than the page, a crisp edge, a deep shadow), not dissolve into it.
 
 ## Charts
 

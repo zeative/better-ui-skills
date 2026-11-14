@@ -52,7 +52,7 @@ Bright, cool white with soft colour blooms. The mainstream of modern product des
 --r-sm:10px; --r-md:16px; --r-lg:24px; --r-pill:999px;
 ```
 
-- **Type:** `Geist` (or `Inter Tight`) 400/500/600. Display 600 at `-0.035em`, line-height 1.05. Optional `Geist Mono` for figures.
+- **Type:** `Geist` (or `Inter Tight`) 400/500/600. Display 600 at `-0.03em`, line-height 1.05. Optional `Geist Mono` for figures.
 - **Depth:** white cards on the tinted ground, soft cool layered shadows, 1px line borders.
 - **Atmosphere:** three large blurred blooms behind the hero (`radial-gradient` at different corners), plus faint concentric rings or a dot grid fading out with a mask.
 - **Devices:** a pill badge with a gradient hairline border above the headline; integration or feature chips sitting on orbit rings around the product; a glow under the product mock; buttons in solid ink with the accent used for highlights and charts.
