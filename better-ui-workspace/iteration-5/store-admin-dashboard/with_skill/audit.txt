@@ -1,0 +1,30 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-5/store-admin-dashboard/with_skill/outputs/index.html
+Rendered at 375px (page height 5225px), 768px (page height 3176px), 1440px (page height 1924px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  13px  14px  19px  20px  22px  23px  27px  28px  46px
+  Families     Figtree, Fraunces
+  Weights      400, 500, 600, 700
+  Text colours #5e4a3a #2a1c13 #f6ebd8 #e6d5bd #8a2a1d #c9dcc9 #dccbb4 #dde9da (+12 more)
+  Fills        #fdf9f0 #f3ead9 #fbf6ea #b43a2a #dce8d8 #f6ddd3 #d9a441 #f7e7c0 (+11 more)
+  Radii        999px×51  10px×11  24px×11  12px×10  6px×10  50%×8  9px×7  16px×6
+  Shadows      19 distinct
+  Visuals      5 large graphics, 27 icons, 21 surfaces; largest graphic in the first screen 655×606px
+  Interaction  35 interactive elements; 14 :hover rules, 3 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+BROKEN — fix these, no judgment needed
+  • Words run together with no space at 768px: "3,42jt", "2,18jt", "2,54jt", "2,91jt", "2,36jt", "3,15jt". Separate the label and the value with a gap, a line break or real spacing.
+
+TOUCH — fix unless there is a reason
+  • 11 touch targets under 40px at 375px wide, e.g. button.col.best "3,42 Min, 8 Nov Pendapatan Rp3.420.0" 39×236; button.col "2,18 Sen, 9 Nov Pendapatan Rp2.180.0" 39×236; button.col "2,54 Sel, 10 Nov Pendapatan Rp2.540." 39×236; button.col "2,91 Rab, 11 Nov Pendapatan Rp2.910." 39×236; button.col "2,36 Kam, 12 Nov Pendapatan Rp2.360." 39×236
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 8 different corner radii (999px×51, 10px×11, 24px×11, 12px×10, 6px×10, 50%×8, 9px×7, 16px×6). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
+  • 19 different box-shadows. Use a scale of four or five levels, not one per component.
+  • Columns in different sections start at nearly, but not exactly, the same x at 1440px: 906px (label.search "Cari pesanan /") vs 949px (section#produk.card.products "Produk terlaris 7 hari terakhir · 81"). Put every section on one shared grid so column edges repeat down the page.
+  • 3 short text(s) wrap leaving a stub on the last line at 768px: span.tag.sp "Sangrai terang gelap"; b "Gayo Wine Natural ×2"; b "Kintamani Natural ×3". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+  • A wrapping row leaves one item alone on its last line at 375px: i in div#beans.beans; div "Hari terbaik Min, 8 Nov · 3,42 jt" in div.chart-sum.
+  • 4 links go nowhere (href="#"). Fine for a mock, but say so in your handoff.
+
+This report cannot judge art direction, composition or how good the visuals are. Open the screenshots and score them with references/critique.md.
