@@ -22,6 +22,10 @@ A dashboard is not a place to show everything you have data for. It is the answe
 - Three levels of text emphasis are usually enough: primary (ink), secondary (muted), and tertiary for metadata. Get there with colour and size before weight.
 - De-emphasise labels, emphasise values. In "Open tickets  42" the number is the content; the label is quiet.
 - One primary button per view. Other actions are secondary (outlined or tonal) or tertiary (text). If everything is a filled button, nothing is primary.
+- The action people perform most on this screen is the easiest thing to find and hit: the biggest target, the strongest contrast, in the natural place for a thumb or cursor. If today's task is a small outline at the edge of a row, the design has its priorities backwards.
+- The largest text on the screen is the most useful fact on the screen. A date, a page name or a greeting set bigger than the number the person came for is misplaced emphasis.
+- Things that can be pressed look pressable (a boundary, a fill, an icon, a change on hover) and things at risk look at risk. Do not rely on a line of instructions to reveal what is interactive.
+- Density still needs peaks. After the lead item, keep at least two clearly different levels below it (section headings versus rows, for example) so the lower half of a long screen does not dissolve into text of one weight.
 - Do not give every group a card. Sections on a page are separated by space and a heading; reserve bordered containers for things that are objects.
 - Align numbers on the right, text on the left, and keep column edges consistent down the page.
 
@@ -41,6 +45,8 @@ A dashboard is not a place to show everything you have data for. It is the answe
 - Up is not always green. Colour a change by whether it is good for that metric, and leave neutral facts uncoloured.
 - Use the locale's formats: thousand separators, currency symbol and placement, date order, 24-hour or 12-hour time.
 - Round sensibly. Three significant digits is usually enough at a glance; exact values belong in the table or a tooltip.
+- In a row of figures, the values share a baseline. Keep labels to one line, or reserve the same label height in every item, so one long label cannot push its number out of line.
+- Name each thing once and use that name everywhere. The same product or person spelled two ways in two panels reads as two things.
 
 ## Charts
 
@@ -55,6 +61,7 @@ A dashboard is not a place to show everything you have data for. It is the answe
 ## Tables and lists
 
 - Left-align text, right-align numbers, and use tabular figures. Align headers with their column content.
+- Size columns to their content. A column too narrow for its typical value wraps most rows onto a second line, leaves units stranded, and makes row heights ragged; give it room, shorten the content, or drop a less important column.
 - Row height 40 to 48px for comfortable scanning, 32 to 36px for dense data. Separate rows with a faint rule or generous spacing, not heavy zebra stripes and borders together.
 - Make the whole row the target when a row opens a detail view, and show it on hover and focus.
 - Put the identifying column first and make it the strongest. Truncate long text with an ellipsis and keep the full value reachable.

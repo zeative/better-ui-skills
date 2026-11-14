@@ -1,0 +1,10 @@
+{
+  "skills_invoked": [],
+  "skill_files_read": [],
+  "tool_calls": {
+    "Write": 1,
+    "Bash": 3,
+    "Read": 5
+  },
+  "permission_denials": []
+}

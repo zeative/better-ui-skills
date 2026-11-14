@@ -238,6 +238,94 @@ function measure() {
   out.radii = radii; out.shadows = shadows; out.fills = fills; out.hues = hues;
   out.cards = boxed; out.nestedCards = nestedCards; out.glass = glass; out.gradientFills = gradientFills; out.gradientText = gradientText;
 
+  /* ---- awkward wraps -------------------------------------------- */
+  // (a) short text whose last line is a stub: one small word or unit left alone
+  const stubs = [];
+  for (const el of seen) {
+    const txt = (el.textContent || '').trim();
+    if (txt.length < 8 || txt.length > 90 || el.children.length > 2) continue;
+    const range = document.createRange(); range.selectNodeContents(el);
+    const lines = [];
+    for (const r of range.getClientRects()) {
+      if (r.width < 1) continue;
+      const line = lines.find((l) => Math.abs(l.top - r.top) < r.height * 0.6);
+      if (line) { line.left = Math.min(line.left, r.left); line.right = Math.max(line.right, r.right); } else lines.push({ top: r.top, left: r.left, right: r.right });
+    }
+    if (lines.length < 2 || lines.length > 4) continue;
+    lines.sort((p, q) => p.top - q.top);
+    const widths = lines.map((l) => l.right - l.left), last = widths[widths.length - 1], longest = Math.max(...widths);
+    if (last < longest * 0.28 && last < 70) stubs.push(describe(el));
+  }
+  out.wrapStubs = stubs.slice(0, 8); out.wrapStubCount = stubs.length;
+  // (b) a wrapping row of items that leaves a single item alone on its last line
+  const lonely = [];
+  for (const el of document.querySelectorAll('body *')) {
+    if (el.children.length < 3 || !isVisible(el)) continue;
+    const s = getComputedStyle(el);
+    if (!(s.display.includes('flex') && s.flexWrap !== 'nowrap')) continue;
+    const kids = [...el.children].filter(isVisible); if (kids.length < 3) continue;
+    const rows = {}; kids.forEach((k) => { const t = Math.round(k.getBoundingClientRect().top / 4) * 4; (rows[t] = rows[t] || []).push(k); });
+    const keys = Object.keys(rows).map(Number).sort((p, q) => p - q);
+    if (keys.length >= 2 && rows[keys[keys.length - 1]].length === 1 && rows[keys[0]].length >= 2) {
+      const k = rows[keys[keys.length - 1]][0];
+      if (k.getBoundingClientRect().width < el.getBoundingClientRect().width * 0.6) lonely.push(`${describe(k)} in ${describe(el).split(' "')[0]}`);
+    }
+  }
+  out.lonelyItems = lonely.slice(0, 5);
+  // (c) side-by-side siblings whose main values sit at different heights
+  const uneven = [];
+  for (const el of document.querySelectorAll('body *')) {
+    const kids = [...el.children].filter(isVisible);
+    if (kids.length < 2 || kids.length > 8) continue;
+    const s = getComputedStyle(el);
+    if (!(s.display.includes('flex') || s.display.includes('grid'))) continue;
+    const sig = (k) => k.tagName + '.' + (k.getAttribute('class') || '');
+    if (!kids.every((k) => sig(k) === sig(kids[0]) && k.children.length >= 2)) continue;
+    const tops = kids.map((k) => Math.round(k.getBoundingClientRect().top));
+    if (Math.max(...tops) - Math.min(...tops) > 2) continue; // not one row
+    const valueTop = (k) => {
+      let best = null, size = 0;
+      for (const d of k.querySelectorAll('*')) {
+        if (!isVisible(d) || ![...d.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim())) continue;
+        const px = parseFloat(getComputedStyle(d).fontSize);
+        if (px > size) { size = px; best = d; }
+      }
+      return best ? { y: Math.round(best.getBoundingClientRect().bottom), size } : null;
+    };
+    const vals = kids.map(valueTop).filter(Boolean);
+    if (vals.length !== kids.length || new Set(vals.map((v) => v.size)).size !== 1) continue;
+    const spread = Math.max(...vals.map((v) => v.y)) - Math.min(...vals.map((v) => v.y));
+    if (spread >= 4) uneven.push(`${describe(el).split(' "')[0]} (${kids.length} items, values ${spread}px apart: "${(kids[0].innerText || '').trim().replace(/\s+/g, ' ').slice(0, 30)}"…)`);
+  }
+  out.unevenRows = uneven.slice(0, 5);
+
+  /* ---- column edges: where do top-level blocks start? ------------ */
+  // Blocks that begin a column (not the page's main left edge). Edges that are
+  // close but not equal mean columns were sized per section, not on one grid.
+  const edges = {};
+  if (vw >= 1000) {
+    const blocks = [...document.querySelectorAll('body *')].filter((el) => {
+      if (!isVisible(el) || el.closest('svg') || el.closest('table') && el.tagName !== 'TABLE') return false;
+      const r = el.getBoundingClientRect();
+      if (r.width < 160 || r.height < 40 || r.width > vw * 0.72) return false;
+      const disp = getComputedStyle(el).display;
+      if (disp.startsWith('inline') && disp !== 'inline-block' && disp !== 'inline-flex') return false;
+      const pr = el.parentElement.getBoundingClientRect();
+      if (Math.abs(pr.left - r.left) < 1 && pr.width <= vw * 0.72) return false; // parent already starts this column
+      return true;
+    });
+    const mainLeft = Math.min(...blocks.map((el) => el.getBoundingClientRect().left).concat([vw]));
+    for (const el of blocks) {
+      const r = el.getBoundingClientRect();
+      if (r.left < mainLeft + 120) continue;
+      // skip anything nested inside another counted block: its offset is that block's padding
+      if (blocks.some((o) => o !== el && o.contains(el))) continue;
+      const x = Math.round(r.left);
+      (edges[x] = edges[x] || []).push(describe(el));
+    }
+  }
+  out.columnEdges = Object.entries(edges).map(([x, els]) => ({ x: +x, n: els.length, eg: els[0] })).sort((p, q) => p.x - q.x);
+
   /* ---- interactive elements ------------------------------------- */
   const interactive = [...document.querySelectorAll('a[href], button, input:not([type=hidden]), select, textarea, [role=button], [role=tab], [role=checkbox], [role=switch], [role=menuitem], [tabindex]:not([tabindex="-1"])')].filter(isVisible);
   out.interactiveCount = interactive.length;
@@ -406,6 +494,20 @@ function report(results, facts, focus, runtime, args) {
   if (sh > 4) problem('CRAFT', `${sh} different box-shadows. Elevation should be a 2–3 step scale, not per-component.`);
   const hues = Object.keys(widest.hues).length;
   if (hues > 3) problem('CRAFT', `Saturated colour in ${hues} different hue families (${Object.keys(widest.hues).map((h) => h + '°').join(', ')}). Unless each one encodes meaning (status, data series), this reads as decoration.`);
+  const ce = widest.columnEdges || [], near = [];
+  for (let i = 0; i < ce.length; i++) for (let j = i + 1; j < ce.length; j++) {
+    const d = ce[j].x - ce[i].x;
+    if (d >= 6 && d <= 56) near.push(`${ce[i].x}px (${ce[i].eg}) vs ${ce[j].x}px (${ce[j].eg})`);
+  }
+  if (near.length) problem('CRAFT', `Columns in different sections start at nearly, but not exactly, the same x at ${results[results.length - 1].width}px: ${near.slice(0, 4).join('; ')}. Put every section on one shared grid so column edges repeat down the page.`);
+  for (const { width, m } of results) {
+    if (m.unevenRows && m.unevenRows.length) { problem('CRAFT', `Side-by-side items whose main values do not line up at ${width}px, usually because one label wraps: ${m.unevenRows.slice(0, 3).join('; ')}. Align the values (fixed label height, or values on a shared row).`); break; }
+  }
+  const stubW = results.filter(({ m }) => m.wrapStubCount).sort((p, q) => q.m.wrapStubCount - p.m.wrapStubCount)[0];
+  if (stubW) problem('CRAFT', `${stubW.m.wrapStubCount} short text(s) wrap leaving a stub on the last line at ${stubW.width}px: ${stubW.m.wrapStubs.slice(0, 5).join('; ')}. Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).`);
+  for (const { width, m } of results) {
+    if (m.lonelyItems && m.lonelyItems.length) { problem('CRAFT', `A wrapping row leaves one item alone on its last line at ${width}px: ${m.lonelyItems.slice(0, 3).join('; ')}.`); break; }
+  }
   if (widest.nestedCards) problem('CRAFT', `${widest.nestedCards} card-inside-card nestings. Group with space or a rule before reaching for another box.`);
   if (widest.cards > 12) problem('CRAFT', `${widest.cards} bordered/shadowed boxes on the page. Ask which of them need a container at all.`);
   if (facts.transitionAll) problem('CRAFT', `${facts.transitionAll} rules use "transition: all"; name the properties (it animates layout by accident and costs performance).`);

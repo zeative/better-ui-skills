@@ -14,7 +14,7 @@ Contents: typography · colour · spacing and layout · surfaces · icons and im
 - **Tracking.** Large display type: tighten slightly, -0.01 to -0.03em. Body: leave alone. Uppercase labels: open up, +0.04 to +0.08em, and keep them short.
 - **Alignment.** Left-align paragraphs. Centre only short things: a headline, a one-line subhead. More than three centred lines is hard to read.
 - **Numbers.** `font-variant-numeric: tabular-nums` wherever numbers are compared or change in place (tables, prices, timers, stats). Right-align numeric columns. Use the locale's separators and currency format.
-- **Wrapping.** `text-wrap: balance` on headings, `text-wrap: pretty` on paragraphs. Check that no heading leaves one word alone on a line.
+- **Wrapping.** `text-wrap: balance` on headings, `text-wrap: pretty` on paragraphs. Check that no heading leaves one word alone on a line. Keep a number with its unit and the last two words of a label together with non-breaking spaces or `white-space: nowrap`. In a wrapping row of chips or links, avoid a single item alone on the last line: change the gap, the wording or the count.
 - **Details.** Real quotation marks and apostrophes (’ “ ”), a real ellipsis (…), × for dimensions, a non-breaking space between a number and its unit.
 - **Case.** Sentence case for headings, buttons and labels. Pick one convention and keep it.
 
@@ -35,6 +35,9 @@ Contents: typography · colour · spacing and layout · surfaces · icons and im
 - **Space before boxes.** Reach for distance first, a rule second, a background tint third, and a bordered or shadowed card last. Cards are for things that are objects (a draggable item, a selectable option, a self-contained record), not for every section.
 - **Do not nest cards.** A box inside a box inside a box is a sign the grouping was never decided.
 - **Alignment.** Pick a small number of vertical edges and put everything on them. Text aligns with text: when a container has padding, its neighbours' text should line up with its text, not its border.
+- **One grid per page.** Define the columns once (12 columns with a fixed gutter is the usual choice) and build every section from spans of it, so that a two-column section, a three-column section and a four-column section all share edges. Two edges 30px apart in neighbouring sections look like a mistake.
+- **Rows of like items.** When similar items sit side by side (stats, plans, feature blurbs, cards), their internal parts align across the row: titles on one line, values on one baseline, buttons at one height. Use `grid` with `subgrid`, or fixed heights for the variable part, so one long label does not knock its item out of step.
+- **Balance.** Side-by-side columns should end at roughly the same height. A short column beside a long one leaves a hole.
 - **Width.** Content has a maximum width (roughly 1100 to 1280px for a page, 65ch for prose). Side gutters at least 16px on phones, 24px or more above that.
 - **Responsive.** Design the narrow layout as its own thing: stack, reorder, collapse navigation, turn tables into something readable. Use fluid sizes (`clamp()`) for display type and section spacing. Test 320, 375, 768, 1024, 1440. No horizontal scroll at any of them, except inside a deliberately scrollable region such as a wide table.
 - **Asymmetry is allowed.** Equal columns and centred stacks are the default; a layout that gives the important thing more room usually communicates better.

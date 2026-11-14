@@ -11,7 +11,9 @@ So this skill does not hand you a style. It asks for three things, in this order
 
 1. **Specific** - every visible decision traces back to this product, this user and this content.
 2. **Restrained** - nothing is on the screen unless it carries information or helps someone act. No gimmicks.
-3. **Verified** - you render the result, look at it and measure it, because you cannot see a layout by reading its source.
+3. **Finished** - you render the result, look at it, measure it and fix what you find, because you cannot see a layout by reading its source, and most of what people perceive as quality is in the last round of fixes.
+
+Restrained does not mean plain. Removing decoration is only half the job; the other half is making the things that matter unmistakably larger, heavier or better placed than the things that do not. A page with no decoration and no hierarchy is not minimal, it is unfinished. It reads like documentation.
 
 Scale the process to the task. A new page or app deserves all seven steps. A small change inside an existing screen needs step 1, then 5 to 7.
 
@@ -61,10 +63,13 @@ Type:      <family for text, family for display if different, why; the size scal
 Colour:    <ground, ink, one accent and what it is reserved for, status colours>
 Shape:     <radius set, borders vs shadows, density>
 Signature: <the one element that could only belong to this product>
+Emphasis:  <the two or three places this screen or page spends its contrast, and how>
 Not doing: <the defaults you considered and set aside>
 ```
 
 One signature, not five. Spend distinctiveness in a single place and let everything else be quiet and correct. For tools people use all day, the right amount of personality is often very small, and "calm, dense, familiar" is a legitimate direction as long as you chose it.
+
+Quiet is not the same as uniform. Rank the parts of the page the way you rank elements within a part: decide which two or three moments are the peaks (the opening, the thing that needs attention, the point of decision) and give them clearly more scale, weight, contrast or room than the rest. If every section has the same background, the same heading size and the same two-column split, the page has no shape and the eye has nowhere to go, however clean each section is.
 
 ## 5. Build from a system
 
@@ -83,6 +88,8 @@ Then build the whole thing, not the screenshot of it:
 - **Every width**, from a 320px phone to a wide desktop, with layout that reflows rather than shrinks. Touch targets at least 44px on touch layouts.
 - **Keyboard and assistive tech**: semantic elements, labels on every field, names on icon-only buttons, a visible `:focus-visible` style, one `<h1>`, text contrast of at least 4.5:1 (3:1 for large text).
 - **Interaction that works**: if a control is on screen it does something, or it is not on screen. Data the user enters survives a reload when that is what they would expect.
+- **The main action is the most obvious thing to press.** Whatever the person came to do on this screen should be the largest, highest-contrast control in view, where a thumb or cursor already is. Everything tappable looks tappable without a sentence of instructions to say so.
+- **One grid.** Set the page's columns once and place every section on them, so the same vertical edges recur all the way down. Columns sized section by section end up nearly aligned, which looks worse than not aligned at all.
 
 Detailed, numeric guidance lives in the reference files. Read the ones that apply before building:
 
@@ -99,19 +106,20 @@ node <this-skill-dir>/scripts/audit.cjs path/to/index.html --out .ui-audit
 node <this-skill-dir>/scripts/audit.cjs http://localhost:5173/ --setup seed.js   # app with state
 ```
 
-The script renders the page at 375, 768 and 1440px, saves screenshots, and prints an inventory (every font size, colour, radius and shadow actually in use) plus measured problems: overflow, contrast failures, invisible keyboard focus, small tap targets, unlabelled controls, type-scale and radius sprawl, and common unchosen defaults. For anything with state, pass `--setup` with a few lines of JS that seed realistic data or open the view you want to check: an empty app tells you almost nothing. If the script cannot find a browser it says so; then use whatever browser or screenshot tool you do have, and failing that, walk the checklist in `references/craft.md` against the source.
+The script renders the page at 375, 768 and 1440px, saves screenshots, and prints an inventory (every font size, colour, radius and shadow actually in use) plus measured problems: overflow, contrast failures, invisible keyboard focus, small tap targets, unlabelled controls, type-scale and radius sprawl, columns that nearly align, values that sit at different heights in a row, text that wraps leaving a stub, and common unchosen defaults. For anything with state, pass `--setup` with a few lines of JS that seed realistic data or open the view you want to check: an empty app tells you almost nothing. If the script cannot find a browser it says so; then use whatever browser or screenshot tool you do have, and failing that, walk the checklist in `references/craft.md` against the source.
 
 Then **read the screenshots** (open the image files), phone width first, and go through this in order. Earlier items matter more.
 
-1. **First glance.** What does the eye land on first? Is that the most important thing for the one job? If three things compete, the hierarchy is not decided yet.
-2. **Squint.** Blur your attention: do the groups read as groups, and is there a clear primary action per view? Is anything loud that should be quiet (borders, icons, labels, decoration)?
-3. **Edges and rhythm.** Do things line up on shared edges? Is spacing inside groups clearly tighter than spacing between them? Is anything almost aligned or almost the same size?
-4. **Text.** Is every piece of text comfortable to read at that width: size, line length, contrast, wrapping? Any orphaned words, clipped labels, or numbers that should align and do not?
-5. **Phone.** Did the layout reflow into something designed for a thumb, or just get narrower?
-6. **Subtract.** For each decorative element, each container, each label: would anything be lost if it were removed? If not, remove it.
-7. **Swap test, again**, against the rendered page rather than the plan.
+1. **Thumbnail.** Look at the whole page from far away (the full-page screenshot, small). Can you tell the sections apart and point to the peaks? An even texture from top to bottom means the page is flat: give the moments that matter more scale, weight or a change of surface, and let minor material shrink. Do columns end at similar heights, or is there a hole where one runs out?
+2. **First glance.** On each screenful, what does the eye land on first? Is that the most important thing for the one job? The largest text should be the most useful information on the screen, not a date or a page title nobody needs. If three things compete, the hierarchy is not decided yet.
+3. **Squint.** Blur your attention: do the groups read as groups? Can you find the main action instantly, and does every control look like a control? Is anything loud that should be quiet (borders, icons, labels, decoration)?
+4. **Edges and rhythm.** Do the same vertical edges recur from section to section? Is spacing inside groups clearly tighter than spacing between them? In any row of similar items, do the headings, values and buttons sit at the same height in each item even when one label is longer? Is anything almost aligned or almost the same size?
+5. **Text.** Is every piece of text comfortable to read at that width: size, line length, contrast? Look at every place text wraps: a single word or unit left alone on a line, a label that breaks in a different place from its neighbours, one chip or link pushed onto a row by itself. These small breaks are what make a layout look unfinished; fix each by adjusting the column, the wording or the wrap.
+6. **Phone.** Did the layout reflow into something designed for a thumb, or just get narrower?
+7. **Subtract.** For each decorative element, each container, each label: would anything be lost if it were removed? If not, remove it.
+8. **Swap test, again**, against the rendered page rather than the plan.
 
-Fix what you find and run it again. Treat the report's BROKEN and ACCESSIBILITY sections as bugs. Treat CRAFT as inconsistencies to resolve or justify, and REFLEXES as questions: each is fine when it was chosen and has a reason, and a problem when it merely arrived. Two or three rounds is normal; stop when a round finds nothing you would be embarrassed by. Delete the audit output folder when you are done unless the user wants it.
+Fix what you find and run it again. Treat the report's BROKEN and ACCESSIBILITY sections as bugs. Treat CRAFT as inconsistencies to resolve or justify, and REFLEXES as questions: each is fine when it was chosen and has a reason, and a problem when it merely arrived. Two or three rounds is normal, and the later rounds are not optional polish: the difference between work that looks competent and work that looks finished is almost entirely made here. Stop when a round finds nothing you would be embarrassed by. Delete the audit output folder when you are done unless the user wants it.
 
 You wrote this page, so you will tend to see what you intended rather than what is there. The measurements do not share that bias, which is why they come first. If you are able to hand the screenshots to a fresh reviewer with no context (a subagent given only the images and the brief), that is the best check available for a page that matters.
 

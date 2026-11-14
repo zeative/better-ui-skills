@@ -79,9 +79,17 @@ Proof is the part most often fabricated, and fabricated proof is the fastest way
 
 ## Visual rhythm
 
-- Sections need clear separation, mostly by generous and consistent vertical space. Alternate backgrounds sparingly and for a reason (to set apart a different kind of content), not on every other section.
+A landing page has to hold attention as someone scrolls, and it does that through contrast between sections, not decoration inside them. A page of honest, specific content set as one even column of heading, paragraph and bordered panel on one background reads as documentation, and loses to a shallower page that has shape.
+
+- Decide the peaks: usually the opening, the strongest demonstration, the price, and the final ask. Give each a visibly different weight from what surrounds it: much larger type, a full-width treatment, a change of surface (a tinted or inverted band), or noticeably more room.
+- Use contrast of scale. Somewhere on the page something should be big: the headline, a key number, the product depiction. If the largest and smallest sections differ only slightly, raise the high point rather than adding ornaments.
+- Use contrast of density. Follow a dense, detailed block with an open one. Tight data next to generous space is rhythm; the same medium density everywhere is monotony.
+- Use surface changes sparingly and with purpose: two or three across a page, each marking a real change in the kind of content, is plenty.
+- The price and the final call to action are decision points and deserve presence. They should be among the strongest-looking parts of the page, never the plainest.
+- The brand needs a presence: a wordmark with some character in its type, and one colour or device that recurs. Plain body-font text in the corner is a missing logo.
 - One dominant element per screenful. If two things are the same size and weight, decide which leads.
-- Keep the content width consistent and let a few elements deliberately break it for emphasis.
+- Put every section on the same column grid, so their edges line up down the page, then let one or two elements break it deliberately for emphasis.
+- Fill the layout you chose. A two-column section whose text column ends far above its neighbour leaves a hole; rebalance the columns, add to the short side, or stack them.
 - Body text stays in a readable column even when the page is wide.
 - The footer is part of the design: real links, real legal lines, nothing that leads nowhere.
 
