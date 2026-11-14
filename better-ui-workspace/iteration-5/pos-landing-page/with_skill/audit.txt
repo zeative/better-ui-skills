@@ -1,0 +1,24 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-5/pos-landing-page/with_skill/outputs/index.html
+Rendered at 375px (page height 13926px), 768px (page height 10646px), 1440px (page height 7892px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   11px  12px  13px  14px  16px  18px  22px  24px  32px  44px  52px  84px
+  Families     Figtree, Fraunces
+  Weights      400, 500, 600, 700, 900
+  Text colours #5e4836 #2a1a10 #d3bea2 #fbf1de #f1fbf2 #735d4a #c5e3cb #fff1ea (+13 more)
+  Fills        #fffdf6 #fffaee #2a1a10 #f1e6cf #c4361a #1f5a3a #3a271a #e3a32a (+34 more)
+  Radii        999px×41  12px×26  16px×26  9px×17  24px×16  5px×16  8px×11  50%×10  14px×9  3px×9  10px×8  6px×7
+  Shadows      36 distinct
+  Visuals      21 large graphics, 103 icons, 72 surfaces; largest graphic in the first screen 1180×1180px
+  Interaction  59 interactive elements; 17 :hover rules, 1 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • Text under 12px: small "Kasir: Dimas · Shift pagi" (11px); span.pill "Tersimpan di HP" (11px); small "14 bks" (11px); small.low "sisa 6" (11px); small "48 pcs" (11px)
+  • 12 different corner radii (999px×41, 12px×26, 16px×26, 9px×17, 24px×16, 5px×16, 8px×11, 50%×10, 14px×9, 3px×9, 10px×8, 6px×7). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
+  • 36 different box-shadows. Use a scale of four or five levels, not one per component.
+  • Columns in different sections start at nearly, but not exactly, the same x at 1440px: 292px (div.mock "Warung Bu Sari Kasir: Dimas · Shift ") vs 304px (h2.h2 "Semua yang biasa ditulis di buku, se"); 292px (div.mock "Warung Bu Sari Kasir: Dimas · Shift ") vs 316px (h2.h2 "Dari buku tulis ke HP, tanpa pusing."); 304px (h2.h2 "Semua yang biasa ditulis di buku, se") vs 316px (h2.h2 "Dari buku tulis ke HP, tanpa pusing."); 525px (article.tile.t-qris "PEMBAYARAN Tunai, QRIS, transfer, at") vs 536px (div "PRODUK Kasir Stok barang Kasbon Lapo"). Put every section on one shared grid so column edges repeat down the page.
+  • Side-by-side items whose main values do not line up at 1440px, usually because one label wraps: ol.steps (3 items, values 138px apart: "+62 812 5550 147 4 7 1 1 2 men"…). Align the values (fixed label height, or values on a shared row).
+  • 3 short text(s) wrap leaving a stub on the last line at 1440px: span "Tahu kapan perlu tambah orang jaga d"; span "Karyawan yang jaga, pemilik tetap bi"; small "Tim bantuan membalas tiap hari, 07.0". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+
+This report cannot judge art direction, composition or how good the visuals are. Open the screenshots and score them with references/critique.md.
