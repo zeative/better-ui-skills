@@ -1,0 +1,969 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ledgerly — Invoicing for freelancers who would rather be working</title>
+<meta name="description" content="Ledgerly sends your invoices, chases the late ones and tells you what to set aside for tax. Built for freelancers.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* Direction: Ivory Editorial, tuned for Ledgerly.
+   Tuned: accent moved to rubber-stamp vermilion; deep block is ledger-cover green;
+   own devices = the PAID stamp, ledger ruling (double red margin rule), perforated receipt edge. */
+:root{
+  --bg:#EDE6D6; --surface:#FDFBF5; --surface-2:#E4DCCA; --ink:#171512; --ink-2:#514A41; --ink-3:#625A50;
+  --line:rgba(23,21,18,.14); --line-2:rgba(23,21,18,.08);
+  --accent:#B8361A; --accent-ink:#FFFFFF; --accent-soft:#F4DDD2;
+  --deep:#1C2A22; --deep-2:#26382E; --deep-ink:#EFE9DB; --deep-mute:#A9B5A6;
+  --ok:#2C6B4A; --ok-soft:#DCEBDD; --warn:#8A5A0B; --warn-soft:#F3E4BF; --gold:#C89B3C;
+  --r-sm:6px; --r-md:14px; --r-lg:22px; --r-pill:999px;
+  --sh-1:0 1px 2px rgba(60,40,15,.07),0 1px 1px rgba(60,40,15,.04);
+  --sh-2:0 1px 2px rgba(60,40,15,.06),0 8px 18px -6px rgba(60,40,15,.14);
+  --sh-3:0 2px 4px rgba(60,40,15,.06),0 16px 32px -10px rgba(60,40,15,.2),0 32px 60px -24px rgba(60,40,15,.16);
+  --sh-4:0 4px 8px rgba(60,40,15,.07),0 26px 50px -14px rgba(60,40,15,.26),0 64px 110px -34px rgba(60,40,15,.3);
+  --serif:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --sans:"Instrument Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --pad:clamp(20px,4vw,40px); --sec:clamp(72px,10vw,132px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:400}
+p{margin:0;text-wrap:pretty}
+ul{margin:0;padding:0;list-style:none}
+svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:1200px;margin:0 auto;padding:0 var(--pad)}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:10px 14px;border-radius:8px;z-index:200}
+.skip:focus{left:8px}
+
+/* type */
+.display{font-family:var(--serif);font-size:clamp(44px,6vw,84px);line-height:.98;letter-spacing:-.022em}
+.h2{font-family:var(--serif);font-size:clamp(36px,4.6vw,60px);line-height:1.02;letter-spacing:-.02em}
+.h3{font-family:var(--serif);font-size:28px;line-height:1.08;letter-spacing:-.01em}
+em{font-style:italic;color:var(--accent)}
+.kicker{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:28px;height:1px;background:currentColor}
+.lede{font-size:clamp(17px,1.5vw,19px);color:var(--ink-2);max-width:52ch}
+.mono{font-family:var(--mono)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 22px;border-radius:var(--r-pill);font-weight:600;font-size:15px;border:0;cursor:pointer;white-space:nowrap;
+  background:var(--accent);color:var(--accent-ink);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 1px 2px rgba(80,20,5,.3),0 8px 18px -8px rgba(184,54,26,.7);
+  transition:transform .15s ease-out,box-shadow .15s ease-out,background-color .15s ease-out}
+.btn .arr{width:16px;height:16px;transition:transform .15s ease-out}
+@media(hover:hover){.btn:hover{transform:translateY(-1px);background:#A52F15;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 2px 4px rgba(80,20,5,.3),0 14px 26px -10px rgba(184,54,26,.8)}.btn:hover .arr{transform:translateX(3px)}}
+.btn:active{transform:scale(.98)}
+.btn-ghost{background:var(--surface);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line),var(--sh-1)}
+@media(hover:hover){.btn-ghost:hover{background:#fff;box-shadow:inset 0 0 0 1px var(--line),var(--sh-2)}}
+.btn-dark{background:var(--ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 8px 18px -8px rgba(23,21,18,.6)}
+@media(hover:hover){.btn-dark:hover{background:#000;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 14px 26px -10px rgba(23,21,18,.7)}}
+.btn-sm{height:44px;padding:0 18px;font-size:14px}
+.link{font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:8px;min-height:44px;border-bottom:0}
+.link span{border-bottom:1px solid var(--line)}
+@media(hover:hover){.link:hover span{border-color:var(--ink)}}
+
+/* nav */
+.nav{position:sticky;top:12px;z-index:50;margin-top:16px}
+.nav-in{display:flex;align-items:center;gap:24px;height:64px;padding:0 10px 0 20px;border-radius:var(--r-pill);background:rgba(253,251,245,.82);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);box-shadow:inset 0 0 0 1px var(--line-2),inset 0 1px 0 rgba(255,255,255,.8),var(--sh-2)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:27px;letter-spacing:-.01em;line-height:1;min-height:44px}
+.brand svg{width:28px;height:28px;flex:none}
+.nav-links{display:flex;gap:4px;margin-left:auto}
+.nav-links a{font-size:14.5px;font-weight:500;color:var(--ink-2);padding:0 14px;height:44px;display:flex;align-items:center;border-radius:var(--r-pill);transition:background-color .15s,color .15s}
+@media(hover:hover){.nav-links a:hover{background:rgba(23,21,18,.06);color:var(--ink)}}
+.nav-cta{display:flex;align-items:center;gap:6px}
+.menu-btn{display:none;width:44px;height:44px;border-radius:50%;border:0;background:transparent;cursor:pointer;place-items:center}
+.menu-btn svg{width:22px;height:22px}
+.mobile-menu{display:none}
+
+/* hero */
+.hero{position:relative;padding:clamp(48px,7vw,92px) 0 clamp(64px,8vw,110px)}
+.hero::before{content:"";position:absolute;inset:-140px 0 0;z-index:-1;pointer-events:none;
+  background:radial-gradient(60% 50% at 78% 38%,rgba(253,251,245,.9),transparent 70%),
+  repeating-linear-gradient(180deg,transparent 0 35px,rgba(23,21,18,.055) 35px 36px);
+  -webkit-mask-image:linear-gradient(180deg,#000 55%,transparent);mask-image:linear-gradient(180deg,#000 55%,transparent)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:clamp(32px,5vw,72px);align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;height:34px;padding:0 14px 0 6px;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line),var(--sh-1);font-size:13px;font-weight:500;color:var(--ink-2);margin-bottom:26px}
+.eyebrow b{font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;background:var(--deep);color:var(--deep-ink);padding:6px 9px;border-radius:var(--r-pill)}
+.hero h1{margin-bottom:24px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:32px}
+.assure{margin-top:16px;font-size:13.5px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:6px 18px}
+.assure span{display:inline-flex;align-items:center;gap:7px}
+.assure svg{width:14px;height:14px;color:var(--ok)}
+.proof{display:flex;align-items:center;gap:14px;margin-top:36px;padding-top:24px;border-top:1px solid var(--line)}
+.stack{display:flex}
+.av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font:600 12px/1 var(--sans);color:#fff;box-shadow:0 0 0 2px var(--bg);flex:none}
+.stack .av+.av{margin-left:-10px}
+.av.a{background:linear-gradient(135deg,#B8361A,#D9793F)}.av.b{background:linear-gradient(135deg,#1C2A22,#4B7560)}.av.c{background:linear-gradient(135deg,#8A5A0B,#C89B3C)}.av.d{background:linear-gradient(135deg,#3B4A6B,#7C8FB8)}.av.e{background:linear-gradient(135deg,#6B3A52,#B77C97)}
+.proof p{font-size:14px;color:var(--ink-2);line-height:1.4;max-width:32ch}
+.proof strong{color:var(--ink);font-weight:600}
+
+/* showpiece */
+.stage{position:relative;padding:0 0 70px 0;min-width:0}
+.stage::before{content:"";position:absolute;right:-6%;top:-8%;width:78%;aspect-ratio:1;border-radius:50%;border:1px solid var(--line);box-shadow:0 0 0 46px rgba(253,251,245,.35),0 0 0 47px var(--line-2);z-index:-1}
+.window{background:var(--surface);border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px var(--line-2),inset 0 1px 0 #fff,var(--sh-4);overflow:hidden;margin-left:9%;animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.win-bar{display:flex;align-items:center;gap:12px;height:46px;padding:0 16px;border-bottom:1px solid var(--line-2);background:linear-gradient(180deg,#fff,var(--surface))}
+.dots{display:flex;gap:6px}.dots i{width:10px;height:10px;border-radius:50%;background:var(--surface-2)}
+.win-tabs{display:flex;gap:2px;margin-left:8px;font-size:12.5px;font-weight:500;color:var(--ink-3)}
+.win-tabs span{padding:6px 10px;border-radius:var(--r-pill)}
+.win-tabs .on{background:var(--ink);color:#fff}
+.win-bar .new{margin-left:auto;font-size:12px;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:4px}
+.win-body{padding:18px 18px 20px}
+.kpis{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:10px}
+.kpi{border-radius:var(--r-md);padding:14px;background:#fff;box-shadow:inset 0 0 0 1px var(--line-2)}
+.kpi .lab{font-size:12px;white-space:nowrap;color:var(--ink-3);font-weight:500;display:flex;align-items:center;gap:6px}
+.kpi .val{font-family:var(--serif);font-size:30px;line-height:1.1;margin-top:6px;letter-spacing:-.01em}
+.kpi.deep{background:linear-gradient(160deg,var(--deep-2),var(--deep));color:var(--deep-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.kpi.deep .lab{color:var(--deep-mute)}
+.delta{font:500 12px/1 var(--mono);padding:4px 6px;border-radius:var(--r-pill);background:rgba(255,255,255,.12);color:#CFE6D2}
+.bars{display:flex;align-items:flex-end;gap:4px;height:26px;margin-top:10px}
+.bars i{flex:1;border-radius:2px 2px 0 0;background:rgba(239,233,219,.25)}
+.bars i.hi{background:var(--gold)}
+.meter{height:5px;border-radius:5px;background:var(--surface-2);margin-top:14px;overflow:hidden}
+.meter i{display:block;height:100%;border-radius:5px;background:var(--accent)}
+.meter.ok i{background:var(--ok)}
+.tbl{margin-top:14px;border-radius:var(--r-md);background:#fff;box-shadow:inset 0 0 0 1px var(--line-2);overflow:hidden}
+.tbl-h,.row{display:grid;grid-template-columns:minmax(0,1.6fr) 74px 84px 78px;gap:10px;align-items:center;padding:0 14px}
+.tbl-h{height:34px;font:500 10.5px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);border-bottom:1px solid var(--line-2);background:var(--surface)}
+.row{height:50px;font-size:13px;border-bottom:1px solid var(--line-2)}
+.row:last-child{border-bottom:0}
+.row.sel{background:color-mix(in srgb,var(--accent) 5%,#fff);box-shadow:inset 3px 0 0 var(--accent)}
+.cl{display:flex;align-items:center;gap:10px;min-width:0}
+.cl .tn{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font:600 11px/1 var(--sans);flex:none}
+.cl div{min-width:0}
+.cl b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cl small{display:block;font:400 10.5px/1.3 var(--mono);color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.t1{background:#F4DDD2;color:#8C2A12}.t2{background:#DCEBDD;color:#1F5237}.t3{background:#F3E4BF;color:#6E4708}.t4{background:#DDE3F1;color:#33436B}.t5{background:#EBDCE4;color:#6B3A52}
+.row .due{color:var(--ink-3);font-size:12px}
+.row .amt{text-align:right;font-weight:600}
+.pill{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px;border-radius:var(--r-pill);font-size:11.5px;font-weight:600;white-space:nowrap}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.paid{background:var(--ok-soft);color:var(--ok)}.pill.sent{background:#E3E7F2;color:#33436B}.pill.late{background:var(--accent-soft);color:#8C2A12}.pill.draft{background:var(--surface-2);color:var(--ink-2)}
+
+/* invoice paper */
+.paper{position:absolute;left:0;bottom:0;width:min(300px,56%);background:#FFFEFA;border-radius:4px 4px 0 0;padding:20px 20px 26px;transform:rotate(-4deg);transform-origin:bottom left;
+  box-shadow:0 1px 1px rgba(60,40,15,.1),0 18px 34px -10px rgba(60,40,15,.32),0 44px 70px -30px rgba(60,40,15,.3);
+  animation:rise2 .7s .12s cubic-bezier(.2,.8,.2,1) both;z-index:3}
+.paper::before{content:"";position:absolute;left:14px;top:0;bottom:0;width:4px;border-left:1px solid rgba(184,54,26,.32);border-right:1px solid rgba(184,54,26,.32)}
+.paper::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:8px;background:radial-gradient(circle at 6px 0,#FFFEFA 5.5px,transparent 6px) 0 0/12px 8px repeat-x}
+.paper>*{position:relative;padding-left:10px}
+.p-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.p-head strong{font:400 26px/1 var(--serif)}
+.p-head span{font:400 10px/1.5 var(--mono);color:var(--ink-3);text-align:right}
+.p-to{margin-top:12px;font-size:11.5px;line-height:1.45;color:var(--ink-2)}
+.p-to b{color:var(--ink);font-weight:600}
+.p-lines{margin-top:12px;border-top:1px solid var(--ink)}
+.p-lines li{display:flex;justify-content:space-between;gap:10px;font-size:11.5px;padding:7px 0 7px 10px;border-bottom:1px dotted rgba(23,21,18,.3)}
+.p-lines li span:last-child{font-family:var(--mono);font-size:11px}
+.p-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px}
+.p-total span{font:500 10px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.p-total b{font:400 28px/1 var(--serif)}
+.stamp{position:absolute;right:14px;top:74px;padding:5px 12px 4px!important;border:2.5px solid var(--accent);border-radius:6px;color:var(--accent);font:500 19px/1 var(--mono);letter-spacing:.14em;transform:rotate(-13deg);opacity:.86;mix-blend-mode:multiply;
+  box-shadow:inset 0 0 0 1.5px #FFFEFA,inset 0 0 0 2.5px var(--accent);animation:stamp .45s .9s cubic-bezier(.3,1.6,.5,1) both}
+.stamp small{display:block;font-size:7.5px;letter-spacing:.1em;margin-top:3px;text-align:center}
+
+/* floating cards */
+.float{position:absolute;background:var(--surface);border-radius:var(--r-md);box-shadow:inset 0 0 0 1px var(--line-2),inset 0 1px 0 #fff,var(--sh-3);z-index:4}
+.f-paid{right:-14px;top:-56px;padding:12px 14px;display:flex;gap:12px;align-items:center;animation:rise .7s .25s cubic-bezier(.2,.8,.2,1) both}
+.chip{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:none}
+.chip svg{width:18px;height:18px}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}.chip.red{background:var(--accent-soft);color:var(--accent)}.chip.gold{background:var(--warn-soft);color:var(--warn)}.chip.blue{background:#DDE3F1;color:#33436B}.chip.deep{background:var(--deep);color:var(--deep-ink)}
+.f-paid small{display:block;font-size:11.5px;color:var(--ink-3)}
+.f-paid b{font-size:14px;font-weight:600}
+.f-rem{right:2%;bottom:6px;padding:14px 16px;width:236px;animation:rise .7s .35s cubic-bezier(.2,.8,.2,1) both}
+.f-rem .top{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600}
+.f-rem .top span{font:400 10.5px/1 var(--mono);color:var(--ink-3)}
+.steps{display:flex;align-items:center;margin-top:12px}
+.steps i{width:14px;height:14px;border-radius:50%;background:var(--ok);flex:none;display:grid;place-items:center}
+.steps i svg{width:8px;height:8px;color:#fff}
+.steps i.now{background:var(--surface);box-shadow:0 0 0 2px var(--accent),0 0 0 6px var(--accent-soft)}
+.steps i.next{background:var(--surface-2)}
+.steps u{flex:1;height:2px;background:var(--ok)}.steps u.n{background:var(--surface-2)}
+.f-rem p{font-size:11.5px;color:var(--ink-2);margin-top:10px;line-height:1.4}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes rise2{from{opacity:0;transform:translateY(18px) rotate(-1deg)}to{opacity:1;transform:rotate(-4deg)}}
+@keyframes stamp{from{opacity:0;transform:rotate(-13deg) scale(1.9)}to{opacity:.86;transform:rotate(-13deg) scale(1)}}
+
+/* logo strip */
+.logos{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:26px 0}
+.logos .wrap{display:flex;align-items:center;gap:20px 44px;flex-wrap:wrap;justify-content:space-between}
+.logos p{font:500 11.5px/1.5 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);max-width:20ch}
+.logos ul{display:flex;flex-wrap:wrap;gap:16px 40px;align-items:center;color:var(--ink-2);opacity:.82}
+.logos li{display:flex;align-items:center;gap:8px;font-size:19px;white-space:nowrap}
+.logos li svg{width:18px;height:18px}
+.lg1{font-family:var(--serif);font-style:italic;font-size:24px!important}.lg2{font-weight:600;letter-spacing:-.03em}.lg3{font-family:var(--mono);font-size:15px!important;letter-spacing:.12em;text-transform:uppercase}.lg4{font-family:var(--serif);font-size:23px!important}.lg5{font-weight:500;letter-spacing:.2em;text-transform:uppercase;font-size:14px!important}
+
+/* sections */
+.sec{padding:var(--sec) 0}
+.sec-head{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:24px 64px;align-items:end;margin-bottom:clamp(36px,5vw,60px)}
+.sec-head .kicker{margin-bottom:20px}
+.sec-head .lede{justify-self:end;padding-bottom:8px}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}
+.tile{position:relative;background:var(--surface);border-radius:var(--r-lg);padding:28px 28px 0;box-shadow:inset 0 0 0 1px var(--line-2),inset 0 1px 0 #fff,var(--sh-1);overflow:hidden;display:flex;flex-direction:column;min-height:400px;transition:transform .2s ease-out,box-shadow .2s ease-out}
+@media(hover:hover){.tile:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 1px var(--line-2),inset 0 1px 0 #fff,var(--sh-2)}}
+.tile h3{margin-bottom:8px}
+.tile>p{font-size:15px;color:var(--ink-2);max-width:44ch}
+.tile .tag{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.tile .tag b{color:var(--accent);font-weight:500}
+.tile .viz{margin-top:auto;padding-top:26px;position:relative}
+.s6{grid-column:span 6}.s3{grid-column:span 3}.s2{grid-column:span 2}.s4{grid-column:span 4}
+.tile.dark{background:linear-gradient(165deg,var(--deep-2),var(--deep) 70%);color:var(--deep-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),var(--sh-3)}
+.tile.dark>p{color:var(--deep-mute)}.tile.dark .tag{color:var(--deep-mute)}.tile.dark .tag b{color:var(--gold)}
+.tile.accent{background:linear-gradient(165deg,#C5411F,var(--accent) 60%,#9A2A12);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.2),var(--sh-3)}
+.tile.accent>p{color:#FBE5DC}.tile.accent .tag,.tile.accent .tag b{color:#FBE5DC}
+.tile.tint{background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line-2)}.tile.tint .tag b{color:#9A2A12}
+
+/* tile 1: composer */
+.composer{background:#fff;border-radius:var(--r-md) var(--r-md) 0 0;box-shadow:inset 0 0 0 1px var(--line-2),var(--sh-3);padding:16px 16px 0;margin:0 -6px}
+.composer .to{display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--line-2);font-size:13px}
+.composer .to span{color:var(--ink-3);font:400 11px/1 var(--mono)}
+.tok{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px 0 4px;border-radius:var(--r-pill);background:var(--surface-2);font-weight:600;font-size:12.5px}
+.tok i{width:18px;height:18px;border-radius:50%;background:var(--deep);color:#fff;font:600 9px/18px var(--sans);text-align:center;font-style:normal}
+.composer .timer{margin-left:auto;font:500 11px/1 var(--mono);color:var(--ok);background:var(--ok-soft);padding:6px 8px;border-radius:var(--r-pill)}
+.li{display:grid;grid-template-columns:minmax(0,1fr) 44px 70px;gap:10px;font-size:13px;padding:10px 0;border-bottom:1px dotted rgba(23,21,18,.25);align-items:center}
+.li span:nth-child(2){color:var(--ink-3);font-family:var(--mono);font-size:11.5px}
+.li span:last-child{text-align:right;font-weight:600}
+.li.ghost{color:var(--ink-3);border-bottom:0}
+.li.ghost span:first-child::after{content:"";display:inline-block;width:1.5px;height:14px;background:var(--accent);margin-left:2px;vertical-align:-2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* tile 2: reminders */
+.thread{display:grid;gap:10px;padding-bottom:28px}
+.msg{background:rgba(255,255,255,.07);border-radius:12px;padding:12px 14px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;font-size:13px}
+.msg .d{font:500 10.5px/1 var(--mono);letter-spacing:.05em;color:var(--deep-mute);width:52px}
+.msg b{font-weight:600;display:block}
+.msg small{color:var(--deep-mute);font-size:12px;display:block}
+.msg .st{font:500 10.5px/1 var(--mono);padding:5px 8px;border-radius:var(--r-pill);background:rgba(255,255,255,.1);color:var(--deep-ink)}
+.msg.win{background:var(--deep-ink);color:var(--ink);box-shadow:0 12px 24px -10px rgba(0,0,0,.5)}
+.msg.win .d,.msg.win small{color:var(--ink-3)}.msg.win .st{background:var(--ok-soft);color:var(--ok)}
+
+/* tile 3: pay */
+.paycard{background:#fff;color:var(--ink);border-radius:var(--r-md) var(--r-md) 0 0;padding:18px 18px 22px;box-shadow:0 20px 40px -14px rgba(60,10,0,.55)}
+.paycard .top{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;color:var(--ink-3)}
+.paycard .big{font:400 40px/1.1 var(--serif);margin:4px 0 14px;letter-spacing:-.01em}
+.methods{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px}
+.methods span{height:38px;border-radius:9px;box-shadow:inset 0 0 0 1px var(--line);display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:600}
+.methods span.on{box-shadow:inset 0 0 0 1.5px var(--ink);background:var(--surface)}
+.methods svg{width:14px;height:14px}
+.paybtn{height:42px;border-radius:10px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:13.5px}
+.paybtn svg{width:14px;height:14px}
+
+/* tile 4: tax */
+.tax{display:grid;grid-template-columns:auto minmax(0,1fr);gap:22px;align-items:center;padding-bottom:28px}
+.ring{position:relative;width:116px;height:116px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring div{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
+.ring b{font:400 30px/1 var(--serif)}.ring small{font:500 10px/1.4 var(--mono);letter-spacing:.06em;color:var(--ink-3);text-transform:uppercase}
+.split{display:grid;gap:12px}.split li{padding-left:12px;border-left:3px solid var(--c)}.split small{display:block;font-size:12px;color:var(--ink-2)}.split b{font:400 26px/1.1 var(--serif)}
+.q{display:grid;gap:8px;font-size:13px;grid-column:1/-1}
+.q li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px 10px;border-radius:10px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line-2)}
+.q li span:first-child{font:500 11px/1 var(--mono);color:var(--ink-3)}
+.q li b{font-weight:600}
+.q li.cur{background:var(--ink);color:#fff}.q li.cur span:first-child{color:#CFC7B8}
+.q .pill{height:20px;font-size:10.5px}
+
+/* tile 5: time */
+.week{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:end;height:120px}
+.week div{display:flex;flex-direction:column;justify-content:flex-end;gap:3px;height:100%}
+.week i{border-radius:5px;display:block}
+.week .x{background:var(--accent)}.week .y{background:var(--deep)}.week .z{background:var(--gold)}
+.week-l{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;font:500 10.5px/1 var(--mono);color:var(--ink-3);text-align:center;margin-top:8px}
+.tofoot{display:flex;justify-content:space-between;align-items:center;margin:16px -28px 0;padding:14px 28px;border-top:1px solid var(--line-2);background:#fff;font-size:13px}
+.tofoot b{font-weight:600}
+.tofoot span{display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-weight:600;white-space:nowrap}
+.tofoot svg{width:14px;height:14px}
+
+/* tile 6: currencies */
+.fx{display:grid;gap:8px;padding-bottom:28px}
+.fx li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;background:#fff;border-radius:12px;padding:10px 14px 10px 10px;box-shadow:inset 0 0 0 1px var(--line-2),var(--sh-1);font-size:13.5px}
+.fx .cur{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:400 18px/1 var(--serif)}
+.fx b{font-weight:600;display:block}.fx small{font:400 10.5px/1.3 var(--mono);color:var(--ink-3)}
+.fx .v{text-align:right;font-weight:600}
+.fx{padding-top:28px}.fx li:nth-child(2){margin-left:28px;margin-right:-0px}.fx li:nth-child(3){margin-left:56px}
+
+/* demo: receivables */
+.demo{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.demo-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(32px,6vw,88px);align-items:center}
+.ledger{position:relative;background:#FFFEFA;border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px var(--line-2),var(--sh-4);padding:26px 26px 26px 44px;
+  background-image:repeating-linear-gradient(180deg,transparent 0 43px,rgba(23,21,18,.07) 43px 44px);background-position:0 70px}
+.ledger::before{content:"";position:absolute;left:24px;top:0;bottom:0;width:5px;border-left:1px solid rgba(184,54,26,.35);border-right:1px solid rgba(184,54,26,.35)}
+.ledger-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.ledger-top small{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.ledger-top b{display:block;font:400 clamp(40px,5vw,56px)/1 var(--serif);letter-spacing:-.02em;margin-top:8px}
+.seg{display:flex;padding:3px;border-radius:var(--r-pill);background:var(--surface-2);font-size:12px;font-weight:600}
+.seg span{padding:6px 12px;border-radius:var(--r-pill);color:var(--ink-2)}.seg .on{background:#fff;color:var(--ink);box-shadow:var(--sh-1)}
+.age{display:flex;height:16px;border-radius:8px;overflow:hidden;gap:2px;margin-bottom:10px}
+.age i{display:block;height:100%}
+.age-l{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--ink-2);margin-bottom:18px}
+.age-l span{display:flex;align-items:center;gap:6px}.age-l span::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--c)}
+.owe li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:14px;align-items:center;height:44px;font-size:14px}
+.owe .amt{font-weight:600;min-width:72px;text-align:right}
+.owe .cl .tn{width:26px;height:26px;display:grid!important}
+.owe .cl b{font-size:14px}
+.nudge{position:absolute;right:-18px;bottom:-26px;padding:12px 14px;display:flex;gap:12px;align-items:center;background:var(--deep);color:var(--deep-ink);border-radius:var(--r-md);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),var(--sh-3);font-size:13px;max-width:290px}
+.nudge small{display:block;color:var(--deep-mute);font-size:12px}
+.nudge .chip{background:rgba(255,255,255,.1);color:var(--gold)}
+.points{display:grid;gap:22px;margin-top:32px}
+.points li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px}
+.points h3{font:600 16px/1.3 var(--sans);margin-bottom:4px}
+.points p{font-size:15px;color:var(--ink-2)}
+
+/* steps */
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;counter-reset:s}
+.step{position:relative;padding:26px;border-radius:var(--r-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line-2),var(--sh-1)}
+.step .n{font:italic 400 64px/1 var(--serif);color:var(--accent);display:block;margin-bottom:18px}
+.step h3{font:600 17px/1.3 var(--sans);margin-bottom:6px}
+.step p{font-size:15px;color:var(--ink-2)}
+.step .mini{margin-top:20px;padding:12px;border-radius:12px;background:var(--bg);font-size:12.5px;display:flex;align-items:center;gap:10px;min-height:52px}
+.step .mini .mono{font-size:11px;color:var(--ink-3);margin-left:auto;white-space:nowrap}
+.step:nth-child(2){background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line-2)}
+.step:nth-child(2) .mini{background:var(--surface)}
+.step:nth-child(3){background:var(--deep);color:var(--deep-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),var(--sh-3)}
+.step:nth-child(3) p{color:var(--deep-mute)}.step:nth-child(3) .n{color:var(--gold)}
+.step:nth-child(3) .mini{background:rgba(255,255,255,.08)}.step:nth-child(3) .mini .mono{color:var(--deep-mute)}
+
+/* quotes */
+.quotes{display:grid;grid-template-columns:1.25fr 1fr;gap:18px}
+.quote{border-radius:var(--r-lg);padding:30px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line-2),var(--sh-1);display:flex;flex-direction:column;gap:22px}
+.quote blockquote{margin:0;font-size:16.5px;color:var(--ink-2)}
+.quote.big{grid-row:span 2;background:var(--deep);color:var(--deep-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),var(--sh-3);padding:clamp(28px,4vw,48px);justify-content:space-between}
+.quote.big blockquote{font:400 clamp(28px,3.2vw,42px)/1.12 var(--serif);color:var(--deep-ink);letter-spacing:-.01em}
+.quote.big blockquote em{color:var(--gold)}
+.who{display:flex;align-items:center;gap:12px;font-size:14px;margin-top:auto}
+.who .av{box-shadow:none;width:42px;height:42px;font-size:13px}
+.who b{display:block;font-weight:600}.who small{color:var(--ink-3);font-size:13px}
+.quote.big .who small{color:var(--deep-mute)}
+.result{display:flex;gap:32px;flex-wrap:wrap;padding-top:24px;border-top:1px solid rgba(255,255,255,.14)}
+.result b{display:block;font:400 44px/1 var(--serif);color:var(--gold)}
+.result small{font-size:13px;color:var(--deep-mute)}
+.sample{font:500 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-top:18px;line-height:1.6}
+
+/* pricing */
+.pricing{background:var(--surface-2);border-top:1px solid var(--line);position:relative}
+.price-head{text-align:center;display:grid;justify-items:center;gap:18px;margin-bottom:44px}
+.price-head .kicker::after{content:"";width:28px;height:1px;background:currentColor}
+.toggle{display:inline-flex;padding:4px;border-radius:var(--r-pill);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line),var(--sh-1);margin-top:8px}
+.toggle button{height:44px;padding:0 20px;border:0;background:transparent;border-radius:var(--r-pill);font-weight:600;font-size:14px;color:var(--ink-2);cursor:pointer;display:flex;align-items:center;gap:8px;transition:background-color .15s,color .15s}
+.toggle button[aria-pressed=true]{background:var(--ink);color:#fff}
+.toggle .save{font:500 10.5px/1 var(--mono);padding:4px 7px;border-radius:var(--r-pill);background:var(--ok-soft);color:var(--ok)}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:center}
+.plan{position:relative;border-radius:var(--r-lg);background:var(--surface);padding:30px;box-shadow:inset 0 0 0 1px var(--line-2),inset 0 1px 0 #fff,var(--sh-2);display:flex;flex-direction:column}
+.plan h3{font:400 32px/1 var(--serif)}
+.plan .for{font-size:14px;color:var(--ink-2);margin-top:8px;min-height:44px}
+.plan .price{display:flex;align-items:baseline;gap:8px;margin:18px 0 4px}
+.plan .price b{font:400 68px/1 var(--serif);letter-spacing:-.03em}
+.plan .price span{font-size:14px;color:var(--ink-3)}
+.plan .bill{font:400 11.5px/1.4 var(--mono);color:var(--ink-3);min-height:18px}
+.plan .btn{width:100%;margin:22px 0 24px}
+.plan ul{display:grid;gap:11px;font-size:14.5px;padding-top:22px;border-top:1px dashed var(--line)}
+.plan li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;align-items:start}
+.plan li svg{width:18px;height:18px;margin-top:2px;color:var(--ok)}
+.plan .adds{font:500 11px/1 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);display:block}
+.plan.feat{background:linear-gradient(170deg,var(--deep-2),var(--deep) 60%);color:var(--deep-ink);padding:40px 30px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),var(--sh-4);z-index:1}
+.plan.feat .for,.plan.feat .price span,.plan.feat .bill,.plan.feat .adds{color:var(--deep-mute)}
+.plan.feat ul{border-color:rgba(255,255,255,.2)}.plan.feat li svg{color:var(--gold)}
+.plan.feat::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:8px;background:radial-gradient(circle at 6px 0,var(--deep) 5.5px,transparent 6px) 0 0/12px 8px repeat-x}
+.ribbon{position:absolute;top:-14px;right:22px;transform:rotate(4deg);padding:6px 12px 5px;border:2px solid var(--accent);border-radius:6px;background:var(--surface);color:var(--accent);font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;box-shadow:var(--sh-2)}
+.price-note{text-align:center;margin-top:36px;font-size:14px;color:var(--ink-2);display:flex;flex-wrap:wrap;justify-content:center;gap:8px 24px}
+.price-note span{display:inline-flex;align-items:center;gap:7px}.price-note svg{width:14px;height:14px;color:var(--ok)}
+
+/* faq */
+.faq-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,6vw,88px);align-items:start}
+.faq-card{margin-top:32px;padding:20px;border-radius:var(--r-md);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line-2),var(--sh-1);display:flex;gap:14px;align-items:center;font-size:14.5px;max-width:400px}
+.faq-card small{display:block;color:var(--ink-3);font-size:13px}
+.faq-card a{font-weight:600;border-bottom:1px solid var(--line)}
+details{background:var(--surface);border-radius:var(--r-md);box-shadow:inset 0 0 0 1px var(--line-2),var(--sh-1);margin-bottom:10px}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 20px;font-weight:600;font-size:16.5px;min-height:60px;border-radius:var(--r-md)}
+summary::-webkit-details-marker{display:none}
+summary i{width:28px;height:28px;border-radius:50%;box-shadow:inset 0 0 0 1px var(--line);display:grid;place-items:center;flex:none;transition:transform .2s ease-out,background-color .2s}
+summary i svg{width:12px;height:12px}
+details[open] summary i{transform:rotate(45deg);background:var(--ink);color:#fff}
+details p{padding:0 64px 20px 20px;color:var(--ink-2);font-size:15.5px}
+
+/* closing */
+.close{padding:0 0 var(--sec)}
+.band{position:relative;border-radius:clamp(22px,3vw,36px);background:linear-gradient(160deg,var(--deep-2),var(--deep) 65%);color:var(--deep-ink);padding:clamp(36px,6vw,80px);overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),var(--sh-4);display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:40px;align-items:center}
+.band::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 35px,rgba(239,233,219,.05) 35px 36px);pointer-events:none}
+.band>*{position:relative}
+.band h2 em{color:var(--gold)}
+.band .lede{color:var(--deep-mute);margin-top:18px}
+.signup{margin-top:30px;max-width:480px}
+.signup label{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--deep-mute);display:block;margin-bottom:10px}
+.field{display:flex;gap:6px;padding:6px;border-radius:var(--r-pill);background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);transition:box-shadow .15s}
+.field:focus-within{box-shadow:inset 0 0 0 1.5px var(--gold),0 0 0 4px rgba(200,155,60,.2)}
+.field.err{box-shadow:inset 0 0 0 1.5px #F0937A,0 0 0 4px rgba(240,147,122,.18)}
+.field input{flex:1 0 48px;min-width:0;height:48px;border:0;background:transparent;padding:0 16px;font-size:16px;color:#fff;outline:0}
+.field input::placeholder{color:#93A091}
+.msgline{min-height:22px;margin-top:10px;font-size:13.5px;color:var(--deep-mute)}
+.msgline.err{color:#F6B09C}
+.done{display:none;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--r-md);background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16);font-size:15px}
+.done small{display:block;color:var(--deep-mute);font-size:13.5px}
+.signup.sent .field,.signup.sent .msgline,.signup.sent label{display:none}.signup.sent .done{display:flex}
+.band-art{position:relative;height:340px}
+.band-art .paper{position:absolute;left:auto;right:6%;bottom:-120px;width:min(300px,90%);transform:rotate(6deg);transform-origin:center;animation:none;color:var(--ink)}
+.band-art .stamp{animation:none;top:70px}
+.seal{position:absolute;left:0;top:10px;width:128px;height:128px}.seal .spin{transform-origin:64px 64px;animation:spin 40s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:56px 0 36px}
+.foot{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:40px}
+.foot p:not(.fh){font-size:14.5px;color:var(--ink-2);max-width:32ch;margin-top:14px}
+.foot .fh{margin:0 0 12px;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.foot li a{font-size:14.5px;color:var(--ink-2);display:flex;align-items:center;min-height:44px}
+@media(hover:hover){.foot li a:hover{color:var(--ink)}}
+.legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-3)}
+.status{display:inline-flex;align-items:center;gap:8px}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px var(--ok-soft)}
+
+/* responsive */
+@media(max-width:1080px){
+  .f-paid{right:-6px}
+  .s2,.s4,.s3{grid-column:span 3}
+  .tile.w-full{grid-column:span 6}
+}
+@media(max-width:920px){
+  .nav-links,.nav-cta .login{display:none}
+  .nav-in{padding-left:18px;gap:8px}
+  .nav-cta{margin-left:auto}
+  .menu-btn{display:grid}
+  .mobile-menu.open{display:grid;margin-top:8px;padding:10px;border-radius:var(--r-lg);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line-2),var(--sh-3)}
+  .mobile-menu a{padding:0 14px;height:48px;display:flex;align-items:center;font-weight:500;border-radius:12px}
+  .hero-grid,.demo-grid,.faq-grid,.band,.sec-head{grid-template-columns:minmax(0,1fr)}
+  .sec-head .lede{justify-self:start}
+  .stage{max-width:640px;margin:16px auto 0;width:100%}
+  .how,.quotes{grid-template-columns:minmax(0,1fr)}
+  .plans{grid-template-columns:minmax(0,1fr);max-width:480px;margin:0 auto;gap:26px}
+  .plan.feat{order:-1}
+  .band-art{height:230px}
+  .band-art .paper{right:50%;transform:translateX(50%) rotate(4deg);bottom:-170px}
+  .seal{left:auto;right:0;top:0;width:96px;height:96px}
+  .foot{grid-template-columns:1fr 1fr 1fr}.foot>div:first-child{grid-column:1/-1}
+  .nudge{right:12px}
+}
+@media(max-width:680px){
+  .bento{grid-template-columns:minmax(0,1fr)}
+  .s2,.s3,.s4,.s6,.tile.w-full{grid-column:auto}
+  .tile{min-height:0;padding:24px 22px 0}
+  .tofoot{margin:16px -22px 0;padding:14px 22px}
+  .window{margin-left:0}
+  .win-tabs span:not(.on){display:none}
+  .kpis{grid-template-columns:1fr 1fr}.kpi.deep{grid-column:1/-1}
+  .tbl-h,.row{grid-template-columns:minmax(0,1fr) 70px 64px}
+  .tbl-h span:nth-child(2),.row .due{display:none}
+  .row:nth-child(n+5){display:none}
+  .stage{padding-bottom:190px}
+  .paper{width:230px;left:4px;padding:16px 16px 22px}
+  .f-paid{top:-48px;right:-4px;padding:10px 12px}.stage{margin-top:64px}.win-bar .new{display:none}.cl .tn,.cl small{display:none}.fx .v small{display:block}
+  .f-rem{right:0;bottom:0;width:190px;padding:12px}
+  .f-rem p{display:none}
+  .ledger{padding:22px 16px 22px 34px}.ledger::before{left:16px}
+  .owe li{grid-template-columns:minmax(0,1fr) auto}.owe .pill{display:none}
+  .nudge{position:relative;right:auto;bottom:auto;margin:14px 0 0;max-width:none}
+  
+  .field{flex-direction:column;border-radius:var(--r-lg);padding:8px}
+  .field .btn{width:100%}
+  .foot{grid-template-columns:1fr 1fr}
+  details p{padding-right:20px}
+  .logos ul{gap:12px 26px}
+  .fx li:nth-child(2){margin-left:8px}.fx li:nth-child(3){margin-left:16px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="skip" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-arr" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5l3.2 3.2L13 5"/></symbol>
+    <symbol id="i-checkc" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" fill="currentColor" opacity=".16"/><path d="M5.5 9.3l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5V8a4.5 4.5 0 019 0v4.5l1.2 1.5H3.3l1.2-1.5zM7.5 15.5h3"/></symbol>
+    <symbol id="i-card" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="14" height="10" rx="2"/><path d="M2 7.5h14M5 11h3"/></symbol>
+    <symbol id="i-bank" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7L9 3l6.5 4M4 7.5v5.5M9 7.5v5.5M14 7.5v5.5M2.5 15h13"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="10" height="7" rx="2"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6.5"/><path d="M9 5.5V9l2.5 1.5"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 9S4.5 4 9 4s7.5 5 7.5 5-3 5-7.5 5S1.5 9 1.5 9z"/><circle cx="9" cy="9" r="2.2"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5h12v8H8l-3.5 3v-3H3v-8z"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 1.5v9M1.5 6h9"/></symbol>
+    <symbol id="i-mark" viewBox="0 0 28 28"><rect width="28" height="28" rx="8" fill="#1C2A22"/><path d="M9 7v13.5h10" fill="none" stroke="#EFE9DB" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M13 13.5l2.6 2.6L20.5 10" fill="none" stroke="#E0654A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav wrap">
+  <div class="nav-in">
+    <a class="brand" href="#top" aria-label="Ledgerly home"><svg><use href="#i-mark"/></svg>Ledgerly</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#features">Features</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">Questions</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="nav-links login" href="#signup" style="margin:0"><span style="font-size:14.5px;font-weight:500;color:var(--ink-2);padding:0 14px;height:44px;display:flex;align-items:center">Log in</span></a>
+      <a class="btn btn-dark btn-sm" href="#signup">Start free</a>
+      <button class="menu-btn" aria-label="Open menu" aria-expanded="false" aria-controls="mm"><svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 8h14M4 14h14"/></svg></button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mm" aria-label="Mobile">
+    <a href="#features">Features</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">Questions</a><a href="#signup">Log in</a>
+  </nav>
+</header>
+
+<main id="main">
+<span id="top"></span>
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><b>New</b> Quarterly tax set-asides, built in</div>
+      <h1 class="display">Send the invoice.<br><em>Get paid.</em><br>Get back to work.</h1>
+      <p class="lede">Ledgerly writes your invoices in under a minute, chases the late ones politely, and tells you how much of each payment is actually yours to spend.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#signup">Send your first invoice <svg class="arr"><use href="#i-arr"/></svg></a>
+        <a class="link" href="#pricing"><span>See pricing</span></a>
+      </div>
+      <div class="assure">
+        <span><svg><use href="#i-check"/></svg>Free for 3 clients</span>
+        <span><svg><use href="#i-check"/></svg>No card needed</span>
+        <span><svg><use href="#i-check"/></svg>Set up in 4 minutes</span>
+      </div>
+      <div class="proof">
+        <div class="stack" aria-hidden="true"><span class="av a">MO</span><span class="av b">JT</span><span class="av c">RA</span><span class="av d">KS</span><span class="av e">+</span></div>
+        <p><strong>Paid 11 days sooner</strong> on average, across designers, writers and developers.*</p>
+      </div>
+    </div>
+
+    <div class="stage" aria-label="Preview of the Ledgerly app showing a list of invoices and a paid invoice" role="img">
+      <div class="window">
+        <div class="win-bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <div class="win-tabs"><span class="on">Invoices</span><span>Clients</span><span>Time</span><span>Taxes</span></div>
+          <span class="new"><svg width="11" height="11"><use href="#i-plus"/></svg>New invoice</span>
+        </div>
+        <div class="win-body">
+          <div class="kpis">
+            <div class="kpi deep">
+              <div class="lab">Paid, Nov <span class="delta num" style="margin-left:auto">▲ 18%</span></div>
+              <div class="val num">$8,640</div>
+              <div class="bars"><i style="height:38%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:66%"></i><i style="height:58%"></i><i style="height:74%"></i><i style="height:62%"></i><i style="height:80%"></i><i style="height:70%"></i><i style="height:84%"></i><i class="hi" style="height:100%"></i><i style="height:14%;opacity:.5"></i></div>
+            </div>
+            <div class="kpi">
+              <div class="lab">Outstanding</div>
+              <div class="val num">$5,950</div>
+              <div class="meter"><i style="width:62%"></i></div>
+            </div>
+            <div class="kpi">
+              <div class="lab">Set aside for tax</div>
+              <div class="val num">$2,160</div>
+              <div class="meter ok"><i style="width:78%"></i></div>
+            </div>
+          </div>
+          <div class="tbl">
+            <div class="tbl-h"><span>Client</span><span>Due</span><span>Status</span><span style="text-align:right">Amount</span></div>
+            <div class="row sel"><div class="cl"><span class="tn t1">HC</span><div><b>Halden &amp; Co.</b><small>INV-0142 · Brand refresh</small></div></div><span class="due">Nov 12</span><span><span class="pill paid">Paid</span></span><span class="amt num">$3,200</span></div>
+            <div class="row"><div class="cl"><span class="tn t2">FP</span><div><b>Fernhill Press</b><small>INV-0143 · Editing, 22 h</small></div></div><span class="due">Nov 21</span><span><span class="pill sent">Viewed</span></span><span class="amt num">$1,870</span></div>
+            <div class="row"><div class="cl"><span class="tn t3">OK</span><div><b>Okapi Labs</b><small>INV-0139 · Sprint 14</small></div></div><span class="due">Nov 4</span><span><span class="pill late">9d late</span></span><span class="amt num">$2,400</span></div>
+            <div class="row"><div class="cl"><span class="tn t4">MB</span><div><b>Marrow Bakery</b><small>INV-0144 · Menu photos</small></div></div><span class="due">Nov 28</span><span><span class="pill sent">Sent</span></span><span class="amt num">$1,680</span></div>
+            <div class="row"><div class="cl"><span class="tn t5">TV</span><div><b>Tidewater Vet</b><small>INV-0145 · Site care, Dec</small></div></div><span class="due">—</span><span><span class="pill draft">Draft</span></span><span class="amt num">$450</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="paper">
+        <div class="p-head"><strong>Invoice</strong><span>INV-0142<br>Oct 29, 2026</span></div>
+        <div class="p-to">Billed to <b>Halden &amp; Co.</b><br>From Mira Okafor Design</div>
+        <ul class="p-lines">
+          <li><span>Identity system</span><span class="num">2,100.00</span></li>
+          <li><span>Packaging, 3 SKUs</span><span class="num">840.00</span></li>
+          <li><span>Style guide</span><span class="num">260.00</span></li>
+        </ul>
+        <div class="p-total"><span>Total USD</span><b class="num">$3,200.00</b></div>
+        <div class="stamp">PAID<small>NOV 10 · 2 DAYS EARLY</small></div>
+      </div>
+
+      <div class="float f-paid">
+        <span class="chip ok"><svg><use href="#i-checkc"/></svg></span>
+        <div><small>Payment received · just now</small><b class="num">+$3,200.00 from Halden &amp; Co.</b></div>
+      </div>
+
+      <div class="float f-rem">
+        <div class="top">Okapi Labs reminder <span>3 of 4</span></div>
+        <div class="steps"><i><svg><use href="#i-check"/></svg></i><u></u><i><svg><use href="#i-check"/></svg></i><u></u><i class="now"></i><u class="n"></u><i class="next"></i></div>
+        <p>Firm-but-friendly nudge goes out tomorrow, 9:00 am their time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<section class="logos" aria-label="Example customers">
+  <div class="wrap">
+    <p>Used by independents who bill studios like</p>
+    <ul>
+      <li class="lg1">Halden &amp; Co.</li>
+      <li class="lg2"><svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="8" fill="currentColor"/><circle cx="9" cy="9" r="3.4" fill="#EDE6D6"/></svg>okapi labs</li>
+      <li class="lg3">Fernhill</li>
+      <li class="lg4">Marrow<span style="color:var(--accent)">.</span></li>
+      <li class="lg5">Tidewater</li>
+    </ul>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="sec" id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="kicker">What it does</div><h2 class="h2">The paperwork half of freelancing, <em>handled.</em></h2></div>
+      <p class="lede">You did the work. Ledgerly covers everything between “done” and “money in the bank”, so billing stops eating your Friday afternoons.</p>
+    </div>
+
+    <div class="bento">
+      <article class="tile s3">
+        <div class="tag"><b>01</b> Invoicing</div>
+        <h3 class="h3">From blank page to sent in under a minute</h3>
+        <p>Pick a client, and their rate, terms and last line items are already filled in. Add what is new and send.</p>
+        <div class="viz" aria-hidden="true">
+          <div class="composer">
+            <div class="to"><span>TO</span><span class="tok"><i>F</i>Fernhill Press</span><span class="timer num">0:41</span></div>
+            <div class="li"><span>Developmental edit, ch. 4–9</span><span class="num">22 h</span><span class="num">$1,650</span></div>
+            <div class="li"><span>Style sheet update</span><span class="num">1</span><span class="num">$220</span></div>
+            <div class="li ghost"><span>Proofre</span><span></span><span></span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tile s3 dark">
+        <div class="tag"><b>02</b> Reminders</div>
+        <h3 class="h3">It does the awkward chasing for you</h3>
+        <p>Four escalating reminders in your own voice, sent on a schedule you set once. They stop the moment the client pays.</p>
+        <div class="viz" aria-hidden="true">
+          <div class="thread">
+            <div class="msg"><span class="d">DUE −3</span><div><b>Heads-up</b><small>“A quick note that INV-0139 is due Thursday.”</small></div><span class="st">Opened</span></div>
+            <div class="msg"><span class="d">DUE +7</span><div><b>Friendly nudge</b><small>“This one may have slipped through, link below.”</small></div><span class="st">Opened</span></div>
+            <div class="msg win"><span class="d">DUE +9</span><div><b>Okapi Labs paid $2,400</b><small>Remaining reminders cancelled</small></div><span class="st">Paid</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tile s2 accent">
+        <div class="tag"><b>03</b> Payments</div>
+        <h3 class="h3">A pay button on every invoice</h3>
+        <p>Card, bank transfer or wallet. Clients pay from the email, no account needed.</p>
+        <div class="viz" aria-hidden="true">
+          <div class="paycard">
+            <div class="top"><span>INV-0144 · Marrow Bakery</span><span>Due Nov 28</span></div>
+            <div class="big num">$1,680.00</div>
+            <div class="methods"><span class="on"><svg><use href="#i-card"/></svg>Card</span><span><svg><use href="#i-bank"/></svg>Bank</span><span>Wallet</span></div>
+            <div class="paybtn"><svg><use href="#i-lock"/></svg>Pay $1,680.00</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="tile s2 tint">
+        <div class="tag"><b>04</b> Taxes</div>
+        <h3 class="h3">Know what is yours to spend</h3>
+        <p>Every payment is split into take-home and a set-aside, using the rate you choose.</p>
+        <div class="viz" aria-hidden="true">
+          <div class="tax">
+            <div class="ring">
+              <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(23,21,18,.1)" stroke-width="12"/><circle cx="60" cy="60" r="50" fill="none" stroke="#1C2A22" stroke-width="12" stroke-linecap="round" stroke-dasharray="235.6 314.2"/><circle cx="60" cy="60" r="50" fill="none" stroke="#B8361A" stroke-width="12" stroke-linecap="round" stroke-dasharray="66 314.2" stroke-dashoffset="-244"/></svg>
+              <div><b class="num">25%</b><small>set aside</small></div>
+            </div>
+            <ul class="split">
+              <li style="--c:#1C2A22"><small>Yours to spend</small><b class="num">$6,480</b></li>
+              <li style="--c:#B8361A"><small>Set aside, Q4</small><b class="num">$2,160</b></li>
+            </ul>
+            <ul class="q">
+              <li><span>Q3</span><b class="num">$5,480</b><span class="pill paid">Filed</span></li>
+              <li class="cur"><span>Q4</span><b class="num">$2,160</b><span class="pill late">Due Jan 15</span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="tile s2 w-full">
+        <div class="tag"><b>05</b> Time</div>
+        <h3 class="h3">Tracked hours become line items</h3>
+        <p>Start a timer per project. On Friday, turn the week into an invoice in one click.</p>
+        <div class="viz" aria-hidden="true">
+          <div class="week">
+            <div><i class="z" style="height:18%"></i><i class="x" style="height:46%"></i></div>
+            <div><i class="y" style="height:38%"></i><i class="x" style="height:30%"></i></div>
+            <div><i class="x" style="height:72%"></i></div>
+            <div><i class="z" style="height:24%"></i><i class="y" style="height:44%"></i></div>
+            <div><i class="y" style="height:22%"></i><i class="x" style="height:28%"></i></div>
+          </div>
+          <div class="week-l"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span></div>
+          <div class="tofoot"><b class="num">31 h 20 m this week</b><span>Invoice it <svg><use href="#i-arr"/></svg></span></div>
+        </div>
+      </article>
+
+      <article class="tile s6" style="min-height:0">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px 40px;align-items:center;height:100%">
+          <div style="padding-bottom:28px">
+            <div class="tag"><b>06</b> Currencies</div>
+            <h3 class="h3">Bill in their currency, get paid in yours</h3>
+            <p>Invoice in 34 currencies. Ledgerly shows the converted amount at the day’s rate, and records the rate you were actually paid at.</p>
+          </div>
+          <div class="viz" style="margin-top:0" aria-hidden="true">
+            <ul class="fx">
+              <li><span class="cur t2">€</span><div><b>Atelier Vauclair</b><small>EUR · 1.0862</small></div><span class="v num">€2,750 <small>≈ $2,987</small></span></li>
+              <li><span class="cur t4">£</span><div><b>Penrose Audio</b><small>GBP · 1.2719</small></div><span class="v num">£1,400 <small>≈ $1,781</small></span></li>
+              <li><span class="cur t3">¥</span><div><b>Kumo Works</b><small>JPY · 0.0066</small></div><span class="v num">¥180,000 <small>≈ $1,188</small></span></li>
+            </ul>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section class="sec demo">
+  <div class="wrap demo-grid">
+    <div style="position:relative">
+      <div class="ledger" role="img" aria-label="Receivables view listing who owes money and how late each invoice is">
+        <div class="ledger-top">
+          <div><small>Owed to you</small><b class="num">$5,950.00</b></div>
+          <div class="seg" aria-hidden="true"><span class="on">By age</span><span>By client</span></div>
+        </div>
+        <div class="age" aria-hidden="true"><i style="width:60%;background:#1C2A22"></i><i style="width:40%;background:#B8361A"></i></div>
+        <div class="age-l"><span style="--c:#1C2A22" class="num">Not yet due · $3,550</span><span style="--c:#B8361A" class="num">1–30 days late · $2,400</span><span style="--c:#C89B3C" class="num">30+ days · $0</span></div>
+        <ul class="owe">
+          <li><div class="cl"><span class="tn t3">OK</span><b>Okapi Labs</b></div><span class="pill late">9 days late</span><span class="amt num">$2,400</span></li>
+          <li><div class="cl"><span class="tn t2">FP</span><b>Fernhill Press</b></div><span class="pill sent">Viewed twice</span><span class="amt num">$1,870</span></li>
+          <li><div class="cl"><span class="tn t4">MB</span><b>Marrow Bakery</b></div><span class="pill sent">Due in 14 days</span><span class="amt num">$1,680</span></li>
+          <li style="color:var(--ink-3)"><div class="cl"><span class="tn t1">HC</span><b style="font-weight:500">Halden &amp; Co.</b></div><span class="pill paid">Paid Nov 10</span><span class="amt num" style="text-decoration:line-through;font-weight:500">$3,200</span></li>
+        </ul>
+      </div>
+      <div class="nudge"><span class="chip"><svg><use href="#i-eye"/></svg></span><div><b>Fernhill opened INV-0143</b><small>Second view today, 2:14 pm</small></div></div>
+    </div>
+    <div>
+      <div class="kicker" style="margin-bottom:20px">Receivables</div>
+      <h2 class="h2">One page that answers <em>“who owes me?”</em></h2>
+      <p class="lede" style="margin-top:18px">No more searching your inbox for whether that invoice went out. Everything unpaid sits in one ledger, oldest first.</p>
+      <ul class="points">
+        <li><span class="chip red"><svg><use href="#i-clock"/></svg></span><div><h3>Aged the way an accountant would</h3><p>Not yet due, 1–30 days late, 30+. You see the problem invoices before they become problem clients.</p></div></li>
+        <li><span class="chip gold"><svg><use href="#i-eye"/></svg></span><div><h3>See when it was opened</h3><p>Read receipts on every invoice, so “I never got it” is a short conversation.</p></div></li>
+        <li><span class="chip ok"><svg><use href="#i-bell"/></svg></span><div><h3>Chase in one click, or not at all</h3><p>Reminders run on their own. Pause them per client when the relationship calls for a phone call instead.</p></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="kicker">How it works</div><h2 class="h2">Four minutes to set up. <em>Then it runs.</em></h2></div>
+      <p class="lede">Bring your client list as a CSV or type in the first one. You can send a real invoice before your coffee goes cold.</p>
+    </div>
+    <ol class="how" style="list-style:none;margin:0;padding:0">
+      <li class="step"><span class="n">1</span><h3>Add a client and your rate</h3><p>Name, email, payment terms. Ledgerly remembers them for every invoice after.</p>
+        <div class="mini"><span class="tn t2" style="width:28px;height:28px;border-radius:8px;display:grid;place-items:center;font:600 11px/1 var(--sans)">FP</span><b>Fernhill Press</b><span class="mono">$75/h · Net 14</span></div></li>
+      <li class="step"><span class="n">2</span><h3>Send the invoice</h3><p>By email with a pay link, or as a PDF. Your logo, your numbering, your wording.</p>
+        <div class="mini"><span class="pill sent">Sent</span><b class="num">INV-0143</b><span class="mono">Viewed 2:14 pm</span></div></li>
+      <li class="step"><span class="n">3</span><h3>Get paid, with tax put aside</h3><p>Money lands in your bank in two business days. The set-aside is calculated for you.</p>
+        <div class="mini"><b class="num">$1,870</b><span class="mono">$1,402 yours · $468 tax</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- QUOTES -->
+<section class="sec" style="padding-top:0">
+  <div class="wrap">
+    <div class="quotes">
+      <figure class="quote big" style="margin:0">
+        <blockquote>“I used to lose a morning a month to invoices and guilt-ridden follow-up emails. Now the reminders go out <em>without me flinching</em>.”</blockquote>
+        <div>
+          <div class="result"><div><b class="num">11 days</b><small>faster payment, on average</small></div><div><b class="num">$0</b><small>written off this year</small></div></div>
+          <figcaption class="who" style="margin-top:24px"><span class="av a">MO</span><div><b>Mira Okafor</b><small>Brand designer, six years independent</small></div></figcaption>
+        </div>
+      </figure>
+      <figure class="quote" style="margin:0">
+        <blockquote>“The tax set-aside alone is worth it. April stopped being a surprise.”</blockquote>
+        <figcaption class="who"><span class="av b">JT</span><div><b>Jonas Thackeray</b><small>Freelance developer</small></div></figcaption>
+      </figure>
+      <figure class="quote" style="margin:0;background:var(--accent-soft);box-shadow:inset 0 0 0 1px rgba(184,54,26,.14)">
+        <blockquote style="color:#5A2010">“Clients pay from the email. Two of mine pay the same day now, every time.”</blockquote>
+        <figcaption class="who"><span class="av c">RA</span><div><b>Rosalind Abara</b><small style="color:#7A3A25">Copywriter and editor</small></div></figcaption>
+      </figure>
+    </div>
+    <p class="sample">* Sample testimonials and figures, shown for illustration.</p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec pricing" id="pricing">
+  <div class="wrap">
+    <div class="price-head">
+      <div class="kicker">Pricing</div>
+      <h2 class="h2">Costs less than <em>one late invoice.</em></h2>
+      <p class="lede" style="text-align:center">Start free. Upgrade when you have more than three clients.</p>
+      <div class="toggle" role="group" aria-label="Billing period">
+        <button type="button" data-bill="m" aria-pressed="false">Monthly</button>
+        <button type="button" data-bill="y" aria-pressed="true">Yearly <span class="save">2 months free</span></button>
+      </div>
+    </div>
+
+    <div class="plans">
+      <article class="plan">
+        <h3>Starter</h3>
+        <p class="for">For your first clients, or a side project that bills now and then.</p>
+        <div class="price"><b class="num">$0</b><span>forever</span></div>
+        <div class="bill">No card, no trial clock</div>
+        <a class="btn btn-ghost" href="#signup" data-plan="Starter">Start free</a>
+        <ul>
+          <li><svg><use href="#i-checkc"/></svg>Up to 3 active clients</li>
+          <li><svg><use href="#i-checkc"/></svg>Unlimited invoices and PDFs</li>
+          <li><svg><use href="#i-checkc"/></svg>Card and bank payments</li>
+          <li><svg><use href="#i-checkc"/></svg>One automatic reminder per invoice</li>
+        </ul>
+      </article>
+
+      <article class="plan feat">
+        <span class="ribbon">Most freelancers</span>
+        <h3>Solo</h3>
+        <p class="for">For full-time independents who want billing to run itself.</p>
+        <div class="price"><b class="num" data-m="$12" data-y="$10">$10</b><span>per month</span></div>
+        <div class="bill" data-m="Billed monthly" data-y="$120 billed yearly, save $24">$120 billed yearly, save $24</div>
+        <a class="btn" href="#signup" data-plan="Solo">Try Solo free for 30 days <svg class="arr"><use href="#i-arr"/></svg></a>
+        <ul>
+          <li><span class="adds" style="grid-column:1/-1">Everything in Starter, plus</span></li>
+          <li><svg><use href="#i-checkc"/></svg>Unlimited clients</li>
+          <li><svg><use href="#i-checkc"/></svg>Full reminder schedules, in your voice</li>
+          <li><svg><use href="#i-checkc"/></svg>Tax set-asides and quarterly estimates</li>
+          <li><svg><use href="#i-checkc"/></svg>Time tracking and recurring invoices</li>
+          <li><svg><use href="#i-checkc"/></svg>34 currencies</li>
+        </ul>
+      </article>
+
+      <article class="plan">
+        <h3>Studio</h3>
+        <p class="for">For small teams of two to five who bill under one name.</p>
+        <div class="price"><b class="num" data-m="$29" data-y="$24">$24</b><span>per month</span></div>
+        <div class="bill" data-m="Billed monthly, 5 seats included" data-y="$288 billed yearly, 5 seats included">$288 billed yearly, 5 seats included</div>
+        <a class="btn btn-ghost" href="#signup" data-plan="Studio">Try Studio free for 30 days</a>
+        <ul>
+          <li><span class="adds" style="grid-column:1/-1">Everything in Solo, plus</span></li>
+          <li><svg><use href="#i-checkc"/></svg>5 seats with roles</li>
+          <li><svg><use href="#i-checkc"/></svg>Shared client list and numbering</li>
+          <li><svg><use href="#i-checkc"/></svg>Accountant access, read-only</li>
+          <li><svg><use href="#i-checkc"/></svg>Export to your bookkeeping tool</li>
+        </ul>
+      </article>
+    </div>
+    <div class="price-note">
+      <span><svg><use href="#i-check"/></svg>Cancel any time</span>
+      <span><svg><use href="#i-check"/></svg>Your data exports as CSV and PDF</span>
+      <span><svg><use href="#i-check"/></svg>Payment processing 2.9% + 30¢ on cards</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq">
+  <div class="wrap faq-grid">
+    <div>
+      <div class="kicker" style="margin-bottom:20px">Questions</div>
+      <h2 class="h2">Asked before <em>signing up.</em></h2>
+      <div class="faq-card"><span class="chip deep"><svg><use href="#i-chat"/></svg></span><div>Something else? <a href="mailto:hello@ledgerly.example">Write to us</a><small>A person replies within one working day.</small></div></div>
+    </div>
+    <div>
+      <details open><summary>Is the free plan really free?<i><svg><use href="#i-plus"/></svg></i></summary><p>Yes. Starter has no time limit and no card on file. You pay only the payment processor’s fee when a client pays by card.</p></details>
+      <details><summary>How do my clients pay?<i><svg><use href="#i-plus"/></svg></i></summary><p>Each invoice email carries a pay link. Clients choose card, bank transfer or a wallet and never need a Ledgerly account. Funds reach your bank in about two business days.</p></details>
+      <details><summary>Will the reminders sound like a robot?<i><svg><use href="#i-plus"/></svg></i></summary><p>They are sent from your name, with wording you can edit once and reuse. You choose how many, how far apart, and which clients never get them.</p></details>
+      <details><summary>Does Ledgerly file my taxes?<i><svg><use href="#i-plus"/></svg></i></summary><p>No. It estimates what to set aside from each payment at a rate you choose and gives your accountant a clean export. It is not tax advice.</p></details>
+      <details><summary>Can I bring invoices from my current tool?<i><svg><use href="#i-plus"/></svg></i></summary><p>Import clients and past invoices from a CSV. Your numbering carries on from wherever you left off.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="close" id="signup">
+  <div class="wrap">
+    <div class="band">
+      <div>
+        <h2 class="h2">Your next invoice could be <em style="white-space:nowrap">out the door</em> in four minutes.</h2>
+        <p class="lede">Create a free account, add one client, press send. Upgrade only if it earns its keep.</p>
+        <form class="signup" novalidate>
+          <label for="email">Work email</label>
+          <div class="field">
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@yourstudio.com" aria-describedby="email-msg" required>
+            <button class="btn" type="submit">Create free account <svg class="arr"><use href="#i-arr"/></svg></button>
+          </div>
+          <p class="msgline" id="email-msg" aria-live="polite">Free for 3 clients. No card needed.</p>
+          <div class="done" role="status"><span class="chip" style="background:rgba(255,255,255,.12);color:var(--gold)"><svg><use href="#i-checkc"/></svg></span><div><b>Check your inbox.</b><small>We sent a sign-in link to <span id="sent-to"></span>.</small></div></div>
+        </form>
+      </div>
+      <div class="band-art" aria-hidden="true">
+        <svg class="seal" viewBox="0 0 128 128"><defs><path id="circ" d="M64 64m-48 0a48 48 0 1 1 96 0a48 48 0 1 1 -96 0"/></defs><circle cx="64" cy="64" r="62" fill="none" stroke="#C89B3C" stroke-width="1.5"/><circle cx="64" cy="64" r="34" fill="none" stroke="#C89B3C" stroke-width="1" stroke-dasharray="2 4"/><text class="spin" font-family="IBM Plex Mono,monospace" font-size="10" fill="#C89B3C"><textPath href="#circ" textLength="296" lengthAdjust="spacing">PAID IN FULL · PAID ON TIME · </textPath></text><path d="M50 65l10 10 19-21" fill="none" stroke="#C89B3C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="paper">
+          <div class="p-head"><strong>Invoice</strong><span>INV-0001<br>Today</span></div>
+          <div class="p-to">Billed to <b>Your first client</b><br>From you</div>
+          <ul class="p-lines">
+            <li><span>The work you already did</span><span class="num">1,200.00</span></li>
+            <li><span>The extra they asked for</span><span class="num">350.00</span></li>
+            <li><span>Rush fee</span><span class="num">150.00</span></li>
+          </ul>
+          <div class="p-total"><span>Total USD</span><b class="num">$1,700.00</b></div>
+          <div class="stamp">PAID<small>ON TIME</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a class="brand" href="#top"><svg><use href="#i-mark"/></svg>Ledgerly</a><p>Invoicing for people who work for themselves. Made by a small team that used to chase its own invoices.</p></div>
+      <div><p class="fh">Product</p><ul><li><a href="#features">Features</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#how">How it works</a></li></ul></div>
+      <div><p class="fh">Company</p><ul><li><a href="#">About</a></li><li><a href="#">Blog</a></li><li><a href="mailto:hello@ledgerly.example">Contact</a></li></ul></div>
+      <div><p class="fh">Legal</p><ul><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li><li><a href="#">Security</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Ledgerly. Estimates are not tax advice.</span><span class="status">All systems normal</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // mobile menu
+  var mb=document.querySelector('.menu-btn'),mm=document.getElementById('mm');
+  mb.addEventListener('click',function(){var o=mm.classList.toggle('open');mb.setAttribute('aria-expanded',o);mb.setAttribute('aria-label',o?'Close menu':'Open menu')});
+  mm.addEventListener('click',function(e){if(e.target.tagName==='A'){mm.classList.remove('open');mb.setAttribute('aria-expanded','false')}});
+
+  // billing toggle
+  var tb=document.querySelectorAll('.toggle button');
+  tb.forEach(function(b){b.addEventListener('click',function(){
+    var k=b.dataset.bill;
+    tb.forEach(function(x){x.setAttribute('aria-pressed',x===b)});
+    document.querySelectorAll('[data-m]').forEach(function(el){el.textContent=el.dataset[k]});
+  })});
+
+  // signup
+  var f=document.querySelector('.signup'),inp=f.querySelector('input'),field=f.querySelector('.field'),msg=document.getElementById('email-msg'),def=msg.textContent,plan='';
+  document.querySelectorAll('[data-plan]').forEach(function(a){a.addEventListener('click',function(){plan=a.dataset.plan;if(!f.classList.contains('sent')){def=plan==='Starter'?'Free for 3 clients. No card needed.':plan+' plan, free for 30 days. No card needed.';msg.textContent=def;msg.classList.remove('err');field.classList.remove('err')}setTimeout(function(){inp.focus({preventScroll:true})},500)})});
+  function bad(t){field.classList.add('err');msg.classList.add('err');msg.textContent=t;inp.setAttribute('aria-invalid','true');inp.focus()}
+  inp.addEventListener('input',function(){field.classList.remove('err');msg.classList.remove('err');msg.textContent=def;inp.removeAttribute('aria-invalid')});
+  f.addEventListener('submit',function(e){e.preventDefault();var v=inp.value.trim();
+    if(!v)return bad('Enter your email to create an account.');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v))return bad('That does not look like an email address. Check for a typo.');
+    document.getElementById('sent-to').textContent=v;f.classList.add('sent');
+  });
+})();
+</script>
+</body>
+</html>
