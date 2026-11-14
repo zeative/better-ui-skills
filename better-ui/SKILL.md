@@ -107,7 +107,7 @@ Then **open the screenshots and critique them as an art director would**, using 
 - Any dimension under 8 is unfinished. Fix the reviewer's gaps in order. They are usually: the showpiece is not detailed enough, overlapping elements hide content, sections after the first go flat, imagery is generic or repeated, tiles are half empty, and depth is timid.
 - A score of 6 or lower on a dimension will not be fixed by a tweak. Rework that aspect: recompose the layout, rebuild the palette, redraw the icon set, replace the chart. Small patches after a low score are why work stalls at 7.
 - Render again, run the audit again, and ask a **fresh** reviewer.
-- **Keep going until a fresh reviewer scores the work 8 or higher overall with no dimension under 7.** Two rounds is the minimum, not the target: if the second reviewer still says 7, you are not finished, and stopping there is the most common way this skill falls short. Do a third round and a fourth. Stop after five rounds at the latest and report the last scores honestly in the handoff.
+- **Aim for a fresh reviewer scoring the work 8 or higher overall with no dimension under 7.** Do two rounds at least. If the second reviewer still says 7, do one more, and make it count: pick the reviewer's top two structural complaints (no figure or imagery, the idea stops at the hero, equal-weight layout, timid colour) and rebuild those parts; do not spend the round on small fixes. Stop after three rounds and report the last scores honestly in the handoff. Further rounds of patching do not move the score.
 
 Delete the audit folder when you are done unless the user wants it.
 
