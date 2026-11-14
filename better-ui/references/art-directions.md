@@ -1,6 +1,8 @@
-# Art directions
+# Finish kits
 
-A library of complete visual directions. Shortlist three that fit, let `scripts/deal.cjs` pick one, then tune it to the subject. Each entry gives tokens you can paste, the type pairing, the shape and depth language, a background atmosphere, and the devices that make it recognisable.
+A library of finish kits: each one is a coherent set of surface decisions (type pairing, shape and depth language, background atmosphere, token structure). A kit is **not** the design. The design is the one idea you found in SKILL.md step 3; the kit is how that idea gets finished. Shortlist three that fit the idea, let `scripts/deal.cjs` pick one, then replace its placeholder colours and devices with your idea's.
+
+Used unchanged, any of these reads as a template. Reviewers recognise the stock versions immediately (a violet-to-pink gradient card, pastel tiles in five hues, a dark page with a green glow, cream with a serif headline).
 
 Contents: how to choose · how to tune · the directions (`aurora`, `midnight`, `citrus`, `pastel`, `graphite`, `ivory`, `glass`, `mono`, `roast`, `candy`, `clinic`, `sunset`) · building your own
 
@@ -29,13 +31,14 @@ node scripts/deal.cjs "Product name" ivory clinic citrus
 
 ## How to tune
 
-A direction is a starting system. Make it this product's:
+A kit is a starting system. Make it this product's:
 
 1. **Accent and lead surface.** Take the colours from the subject's world (an ingredient, a material, a signal colour the trade uses) and from the product's own name and idea, keeping the direction's saturation and lightness so contrast still holds. If the product is called Ember, its lead surface is dark with a warm glow, not the library's default gradient. The colours printed in each direction below are placeholders that prove the system works; shipping them unchanged is what makes a page look like a template.
-2. **Showpiece.** Decide what the hero visual shows from what this product really does (see `showpiece.md`).
-3. **One device of its own.** A motif taken from the subject and repeated two or three times: the perforated edge of a ticket, a route line, a dotted intensity scale, a waveform, a stamp.
-4. **Voice in type.** Keep the pairing, but set the scale for the register: bigger and tighter for persuasion, smaller and denser for tools.
-5. Write the tuned tokens at the top of the stylesheet with a comment: `/* Direction: clinic, tuned: accent to pharmacy green, device: dosage-dot scale */`.
+2. **Showpiece.** Build the hero visual from your motif, showing what this product really does (see `showpiece.md`).
+3. **The motif, large and then echoed.** The kit's listed devices are examples of the kind of thing that works with its surfaces. Replace them with your motif: once as the hero device, then two or three small echoes (the perforated edge of a ticket, a route line, a dotted intensity scale, a waveform, a stamp).
+4. **Palette discipline.** Whatever the kit lists, end up with a neutral base, one dominant colour in large fields, and one hot accent. Where a kit offers several tile colours or gradients, choose one as the lead and at most one as counter; use the rest only as small marks, or not at all.
+5. **Voice in type.** Keep the pairing or swap the display face for one that suits the idea better, and push the scale: the key line or figure far larger than anything else.
+6. Write the tuned tokens at the top of the stylesheet with a comment: `/* Idea: doses as a dotted scale. Kit: clinic. Lead: pharmacy green, accent: signal orange */`.
 
 All font families below are on Google Fonts. Load at most two families plus an optional mono, only the weights you use, with `display=swap` and a fallback stack.
 

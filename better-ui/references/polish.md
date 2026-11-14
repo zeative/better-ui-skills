@@ -50,7 +50,8 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 - **Display:** large and tight. `font-size: clamp(40px, 6.5vw, 84px); line-height: 1.02; letter-spacing: -0.025em; text-wrap: balance;`. Headlines of four to eight words, broken so the lines are similar length. Tightness depends on the face: go as far as -0.04em only if letters still have clear air between them at the rendered size. Touching letters look like a mistake.
 - **One phrase of emphasis** in the headline: the accent colour, an italic, a highlighter block behind it, or a hand-drawn underline. Once per headline, and in keeping with the direction.
 - **Eyebrow pill** above a headline when it carries information: a small pill with a dot or icon and a short label.
-- **Scale with contrast:** a clear jump between levels (for example 72 / 40 / 22 / 16 / 14 / 12). Big figures in dashboards are 28 to 44px at weight 600 to 700 with tight tracking; their labels are 12 to 13px in muted ink.
+- **Scale with contrast:** a clear jump between levels (for example 96 / 40 / 22 / 16 / 13 / 11). The one figure or line that matters most is far larger than everything else: 64 to 120px for a hero balance, total or headline on desktop, 44 to 72px on a phone. Supporting figures are 28 to 40px; labels are 11 to 13px in muted ink. A screen where the largest text is 28px has no voice.
+- **Treat key numerals as graphics:** tight tracking, a distinctive weight (very heavy or very light), lighter or smaller decimals and currency signs, tabular figures.
 - **Small labels:** 11 to 12px, medium weight, `letter-spacing: .04em`, uppercase only when short.
 - `font-variant-numeric: tabular-nums` on all figures; `font-feature-settings: "ss01", "cv11"` where the face has nicer alternates.
 - Body text stays calm: 15 to 17px, line-height 1.55, max 65ch, muted ink for secondary copy, and always above 4.5:1 contrast.
@@ -60,7 +61,8 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 - Roughly 60% ground and surfaces, 30% ink and neutrals, 10% accent. The accent is concentrated in a few strong places (primary button, key chart, active state, one feature card), not sprinkled.
 - Derive tints with `color-mix` instead of inventing new colours: 8 to 14% accent on surface for soft fills, 20 to 30% for borders of tinted elements.
 - A **category palette** for things that come in kinds (item types, statuses, team members): four to six hues at matched lightness and saturation, each with a soft tint. Use it in small doses: the item's object or icon tile and its own data marks. Do not also tint the whole card, its border and its button, or the screen turns into a rainbow and loses its identity.
-- **One dominant accent and one counter-accent** define the screen. Viewed as a thumbnail, the page should read as two colours on a neutral base, with category hues as small sparks.
+- **One dominant colour and one hot accent** define the screen. Viewed as a thumbnail, the page should read as two colours on a neutral base, with category hues as small sparks.
+- **Use colour in large confident fields.** A full hero card, a whole section, a big tile in the dominant colour says more than that colour spread thinly as tints over ten tiles. A screen of many pastel tiles in different hues is the generic "friendly dashboard" look.
 - Status colours are separate and always paired with a label or icon.
 - Gradients stay within about 40 degrees of hue (violet to pink, orange to yellow, teal to green) unless the direction is built on a wider one. Use them on a few hero elements, not everywhere.
 - Never grey text on a coloured fill: use white, ink, or a darker tone of that colour.

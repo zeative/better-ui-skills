@@ -18,7 +18,7 @@ Two things stay non-negotiable while you do this: the interface must work (real 
 
 ## 1. Find out whose design this is
 
-- **An existing product** (styles, components, tokens, a Tailwind theme, a brand guide, a screenshot from the user): the direction is already decided. Read the tokens and a few screens, reuse the components, and bring the richness and finish of this skill *within* that system. Do not add a second styling system, font or accent. Skip the direction pick in step 3; use everything else.
+- **An existing product** (styles, components, tokens, a Tailwind theme, a brand guide, a screenshot from the user): the direction is already decided. Read the tokens and a few screens, reuse the components, and bring the richness and finish of this skill *within* that system. Do not add a second styling system, font or accent. In step 3, skip the finish kit and palette; still look for the one idea within the existing brand. Use everything else.
 - **A direction from the user** (a reference, a brand, "make it look like X"): that wins over the library below.
 - **A blank slate**: continue.
 
@@ -32,24 +32,33 @@ When the brief is thin, do not send a questionnaire. Assume specifically, build,
 
 Honesty rule: never use real company logos, real people's names or faces, or invented claims about real results. Sample people, fictional company names and example figures are fine and expected, inside product visuals and in proof sections alike. Where a marketing page needs proof you were not given (testimonials, customer logos, usage numbers), design the section fully with clearly fictional names, and tell the user in the handoff exactly which parts they must replace before publishing.
 
-## 3. Commit to an art direction
+## 3. Find the one idea, then commit to it
 
-Read `references/art-directions.md`. It is a library of complete directions, each with a palette, type pairing, shape and depth language, background atmosphere and signature devices, as ready-to-use tokens.
+Polished work that follows a good template still looks like a template. What lifts a design into the top tier is **one ownable idea**: a visual concept taken from this product's own world, made the hero of the screen, and echoed through the details. A reviewer should be able to name it in a phrase ("departures as a split-flap board", "a playlist as a stack of record sleeves", "doses as a dotted scale on a pharmacy label").
 
-1. Shortlist the three directions that best suit this subject and audience. Include at least one that is not the obvious choice for the category.
-2. Let the script choose among them, so the pick does not default to habit and different products end up looking different:
-   ```bash
-   node <this-skill-dir>/scripts/deal.cjs "<product name>" <id> <id> <id>
-   ```
-   (No Node? Take the one a typical competitor in this category would be least likely to use.)
-3. **Tune it to the subject.** Replace the library's placeholder colours with ones from the product's world and its name, decide the showpiece from what this product actually does, and add one device only this product would have. A direction used straight from the library is a template; a tuned one is a design. Test: could someone guess the product from the palette and the hero alone?
-4. Write the result as CSS custom properties at the top of the stylesheet, with a short comment naming the direction and what you tuned. Then use only those tokens.
+Work it out in writing before any layout:
 
-Commit fully. A direction applied timidly (the palette but not the atmosphere, the font but not the scale, the cards but not the depth) produces exactly the bland middle this skill exists to avoid.
+1. **Name and world.** If the product has no name, give it one with an image in it. List eight or more things from its world that can be drawn: objects, marks, materials, tools, rituals, the way its trade writes numbers.
+2. **Choose the motif.** Pick the one that is most specific to this product, can be drawn simply, and can carry real data or content. A motif that could decorate any product (blobs, sparkles, generic rings, a stock gradient) is not one.
+3. **Make it the hero device, large.** The showpiece in step 4 is built *from* the motif, at a scale that dominates the first screen, and it shows real content: the actual figures, the actual items. A motif tucked into a logo or a small strip has been wasted.
+4. **Echo it three times, small:** in chart marks, progress bars, dividers, the empty state, the wordmark, a button state.
+5. **Commit the palette to it.** A neutral base, one dominant colour used in large confident fields, and one hot accent for the thing that matters most. Take the colours from the motif's world. If items come in kinds, give them tints of one or two hues, not a rainbow.
+6. **Give the type a voice.** The single most important figure or line is by far the largest thing on the screen (often 64 to 120px on desktop), in a face with character, with small quiet labels around it. Dramatic contrast of scale, not six sizes close together.
+7. **Rank the screen.** Decide the first, second and third thing the eye should hit, and give them clearly different size and weight. A screen of equal cards has no idea.
+
+Then choose the finish. Read `references/art-directions.md`: it is a library of finish kits (type pairing, shape and depth language, atmosphere, token structure). Shortlist the three that suit the idea and audience, and let the script deal one so the choice does not default to habit:
+
+```bash
+node <this-skill-dir>/scripts/deal.cjs "<product name>" <id> <id> <id>
+```
+
+Use the kit for its craft and **replace its colours and devices with your idea's**. The colours printed in the library are placeholders; shipping them unchanged is what makes a page look like a template. Write the result as CSS custom properties at the top of the stylesheet, with a comment stating the idea in one phrase, the motif, and the kit. Then use only those tokens.
+
+Commit fully. An idea applied timidly (a motif in the logo, a nice palette on the same three boxes) produces exactly the bland middle this skill exists to avoid.
 
 ## 4. Design the showpiece first
 
-Every strong shot has one thing that makes people stop: a showpiece. Decide what it is before laying out anything else, and give it a third or more of your effort.
+Every strong shot has one thing that makes people stop: a showpiece. It is where your idea from step 3 becomes visible. Decide what it is before laying out anything else, and give it a third or more of your effort.
 
 - **Landing page:** the hero visual. Almost always the product itself, drawn in convincing detail in HTML/CSS/SVG (a real app window with navigation, rows, figures and a chart), with two to four detail cards lifted out and floating over its edges, set in an atmosphere (glow, grid, rings).
 - **Dashboard or admin:** a full app shell with one hero module (the main chart or the key figure on a feature card) and supporting tiles that each carry a small visual of their own.
@@ -86,9 +95,9 @@ The script screenshots the page at 375, 768 and 1440px and prints an inventory p
 
 Then **open the screenshots and critique them as an art director would**, using `references/critique.md`. It has the rubric (art direction, showpiece, richness, depth and finish, colour, typography, composition, phone) with what a 5, a 7 and a 9 look like, and the usual fixes for each gap.
 
-- If you can spawn a subagent, do: give it only the screenshot paths, the one-line brief and the path to `references/critique.md`, and ask for scores and the most damaging gaps. A reviewer who did not build the page sees what is there, not what was intended. Otherwise score it yourself, as harshly as a stranger would.
-- Any dimension under 8 is unfinished. Fix the biggest gaps first. They are usually: the showpiece is not detailed enough, the sections after the first go flat, there is too little imagery and designed detail, and depth is timid.
-- Render again and re-score. **Do at least two full rounds.** Three or four is normal for work that reaches the bar. The later rounds are where a competent page becomes a striking one.
+- **Get an independent review.** If you have any tool that starts a subagent (Task, Agent or similar), use it for this: it is the single most effective step in the skill, and skipping it is the usual reason work stops one notch short. Give the reviewer the brief at the end of `references/critique.md` with the screenshot paths filled in, and nothing about your intentions. A reviewer who did not build the page sees what is there, not what was meant. Only if you truly cannot spawn one, score it yourself, as harshly as a stranger would, and say so in the handoff.
+- Any dimension under 8 is unfinished. Fix the reviewer's gaps in order. They are usually: the showpiece is not detailed enough, overlapping elements hide content, sections after the first go flat, imagery is generic or repeated, tiles are half empty, and depth is timid.
+- Render again, run the audit again, and ask a **fresh** reviewer. **Do at least two full review rounds.** Three is normal for work that reaches the bar. The later rounds are where a competent page becomes a striking one.
 
 Delete the audit folder when you are done unless the user wants it.
 
@@ -98,12 +107,14 @@ Tell the user, briefly: the direction you chose and how you tuned it, the assump
 
 ## Ways this goes wrong
 
-- **Timid execution.** A nice palette on a page that is still heading, paragraph, three boxes. The direction has to reach the composition, the visuals and the details.
+- **No idea.** Well-made cards in a pleasant palette that could belong to any product in the category. Polished and forgettable. Go back to step 3.
+- **Timid execution.** A nice palette on a page that is still heading, paragraph, three boxes. The idea has to reach the composition, the visuals and the details.
 - **An empty hero.** Headline, two buttons and a gradient is not a hero. Build the showpiece.
 - **Shallow visuals.** A product mock made of five grey bars, a chart with no grid, axis or highlighted point. Fill visuals with believable, specific content at real density.
 - **Text on a bare page.** Rows and tables sitting directly on the background with hairlines read as a document. Put content on surfaces, in a shell, with imagery.
 - **No imagery.** Lists without thumbnails, people without avatars, features without illustrations, items without icons. Every repeated item should carry a small visual.
 - **One good screen, then filler.** Each section after the first needs its own visual idea.
-- **Sameness within the page.** Identical tiles, one shadow, one radius, one text size below the headline, one colour used for everything.
+- **Sameness within the page.** Identical tiles of equal weight, one shadow, one radius, one text size below the headline.
+- **A rainbow.** A different pastel on every tile and a different hue on every item. Commit to a base, one dominant colour and one hot accent.
 - **Decoration that fights the content.** Glow behind body text, low-contrast text on a gradient, animation on everything. Richness goes into visuals and surfaces; text stays effortless to read.
 - **Stopping after the first render.** The first render is a draft.

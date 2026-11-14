@@ -1,0 +1,23 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-5/habit-tracker-app/with_skill/outputs/index.html
+Rendered at 375px (page height 1659px), 768px (page height 1952px), 1440px (page height 1405px), after running /home/user/better-ui-skills/better-ui-workspace/tools/seeds/habit-v5.js
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  14px  16px  20px  28px  44px
+  Families     Outfit
+  Weights      400, 500, 600, 700
+  Text colours #131a33 #626a88 #ffffff #4a5372 #fdfeff #b93a08 #c6cce6 #dde1f3 (+1 more)
+  Fills        #ffffff #dce2fe #f0f3fc #c2cbfd #b0bdfd #7c3aed #2563eb #c2410c (+13 more)
+  Radii        50%×36  10px×35  14px×17  999px×15  6px×14  20px×9  22px×9  99px×9  18px×5  16px×5  12px×1  30px×1
+  Shadows      33 distinct
+  Visuals      6 large graphics, 61 icons, 19 surfaces; largest graphic in the first screen 717×354px
+  Interaction  46 interactive elements; 8 :hover rules, 2 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+RICHNESS — below the bar as measured; a page can pass these and still be plain, so look at the screenshots
+  • The same graphic is repeated: 5× at 28px. Items in a list should each have a visual of their own (a different object or portrait, not one glyph recoloured).
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 12 different corner radii (50%×36, 10px×35, 14px×17, 999px×15, 6px×14, 20px×9, 22px×9, 99px×9, 18px×5, 16px×5, 12px×1, 30px×1). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
+  • 33 different box-shadows. Use a scale of four or five levels, not one per component.
+
+This report cannot judge art direction, composition or how good the visuals are. Open the screenshots and score them with references/critique.md.

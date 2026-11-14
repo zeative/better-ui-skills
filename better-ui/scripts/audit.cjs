@@ -333,11 +333,70 @@ function measure(targetWidth) {
     if (!isVisible(el) || el.parentElement.closest('svg')) continue;
     const r = el.getBoundingClientRect();
     if (r.width < 28 || r.height < 28 || r.width > 160) continue;
-    const key2 = el.innerHTML.replace(/\s+/g, ' ').trim();
+    // compare shapes, not colours: the same drawing recoloured is still the same drawing
+    const key2 = el.innerHTML.replace(/\s+/g, ' ').replace(/(fill|stroke|stop-color|style|class|id|opacity|fill-opacity|stroke-opacity)="[^"]*"/g, '').replace(/#[0-9a-fA-F]{3,8}|rgba?\([^)]*\)|var\([^)]*\)|url\([^)]*\)/g, '').trim();
     if (key2.length < 20) continue;
     (repeats[key2] = repeats[key2] || []).push(Math.round(r.width));
   }
   out.repeatedGraphics = Object.values(repeats).filter((v) => v.length >= 4).map((v) => ({ n: v.length, size: v[0] })).sort((p, q) => q.n - p.n).slice(0, 4);
+  // people shown as initials on a disc
+  let initials = 0;
+  for (const el of seen) {
+    const t = (el.textContent || '').trim();
+    if (!/^[\p{Lu}]{1,3}$/u.test(t)) continue;
+    let box = el; const r0 = el.getBoundingClientRect();
+    if (r0.width < 16) box = el.parentElement || el;
+    const st = getComputedStyle(box), r = box.getBoundingClientRect();
+    const round = st.borderTopLeftRadius.endsWith('%') ? parseFloat(st.borderTopLeftRadius) >= 40 : parseFloat(st.borderTopLeftRadius) >= Math.min(r.width, r.height) * 0.4;
+    const bgc3 = parseColor(st.backgroundColor);
+    if (round && r.width >= 20 && r.width <= 72 && Math.abs(r.width - r.height) < 4 && ((bgc3 && bgc3.a > 0.3) || st.backgroundImage !== 'none')) initials++;
+  }
+  out.initialAvatars = initials;
+
+  /* ---- boldness: scale, weight and colour commitment -------------- */
+  {
+    const hueArea = {}, pastel = {}; let foldContrast = 0; const areas = [];
+    const pageLum = lum(backgroundOf(document.body).color);
+    for (const el of document.querySelectorAll('body *')) {
+      if (!isVisible(el) || el.closest('svg')) continue;
+      const st = getComputedStyle(el), r = el.getBoundingClientRect(), area = r.width * r.height;
+      if (area < 5000 || r.width > vw * 0.98 && r.height > vh * 1.5) continue;
+      let c = parseColor(st.backgroundColor);
+      const grad = st.backgroundImage && /gradient\(/.test(st.backgroundImage) ? st.backgroundImage.match(/rgba?\([^)]*\)|#[0-9a-f]{3,8}/i) : null;
+      if ((!c || c.a < 0.5) && grad) c = parseColor(grad[0]);
+      if (!c || c.a < 0.5) continue;
+      const k = hsl(c);
+      if (k.s > 0.28 && k.l > 0.2 && k.l < 0.93) { const bkt = Math.round(k.h / 36) * 36 % 360; hueArea[bkt] = (hueArea[bkt] || 0) + area; }
+      if (k.s > 0.3 && k.l >= 0.78 && k.l < 0.95 && area < vw * vh * 0.5) { const bkt = Math.round(k.h / 36) * 36 % 360; pastel[bkt] = (pastel[bkt] || 0) + area; }
+      // a contrast field: clearly darker or more saturated than the page, and large
+      const top0 = r.top + window.scrollY;
+      if (top0 < vh && area > vw * vh * 0.06 && (Math.abs(lum(c) - pageLum) > 0.35 || (k.s > 0.5 && k.l < 0.7 && k.l > 0.15))) foldContrast = Math.max(foldContrast, area / (vw * vh));
+    }
+    for (const el of cardEls0()) { const r = el.getBoundingClientRect(); areas.push(r.width * r.height); }
+    const tot = Object.values(hueArea).reduce((p, q) => p + q, 0);
+    out.fillHues = Object.entries(hueArea).filter(([, v]) => v > tot * 0.035).map(([h]) => +h);
+    const ptot = Object.values(pastel).reduce((p, q) => p + q, 0);
+    out.pastelHues = Object.entries(pastel).filter(([, v]) => v > ptot * 0.08).map(([h]) => +h);
+    out.foldContrast = +foldContrast.toFixed(2);
+    areas.sort((p, q) => q - p);
+    out.cardAreas = areas.length >= 6 ? { n: areas.length, ratio: +(areas[0] / areas[Math.floor(areas.length / 2)]).toFixed(1) } : null;
+  }
+  function cardEls0() {
+    return [...document.querySelectorAll('body *')].filter((el) => {
+      if (!isVisible(el) || el.closest('svg')) return false;
+      const r = el.getBoundingClientRect();
+      if (r.width < 180 || r.height < 110 || r.width > vw * 0.92 || r.height > vh * 1.6) return false;
+      const st = getComputedStyle(el), bg = parseColor(st.backgroundColor);
+      const filled = (bg && bg.a > 0.04) || (st.backgroundImage && st.backgroundImage !== 'none');
+      if (!(parseFloat(st.borderTopLeftRadius) >= 6 && (filled || st.boxShadow !== 'none' || parseFloat(st.borderTopWidth) > 0))) return false;
+      // outermost cards only
+      for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) {
+        const ps = getComputedStyle(n), q = n.getBoundingClientRect();
+        if (q.width <= vw * 0.92 && q.height <= vh * 1.6 && parseFloat(ps.borderTopLeftRadius) >= 6 && ((parseColor(ps.backgroundColor) || { a: 0 }).a > 0.04 || ps.boxShadow !== 'none')) return false;
+      }
+      return true;
+    });
+  }
 
   /* ---- words that run together: "Yesterday21 orders" ------------- */
   const glued = [];
@@ -796,7 +855,8 @@ function report(results, facts, focus, runtime, args) {
   const clipW = results.filter(({ m }) => m.clippedCount).sort((p, q) => q.m.clippedCount - p.m.clippedCount)[0];
   if (clipW) problem('CRAFT', `${clipW.m.clippedCount} text(s) are cut off by their container at ${clipW.width}px: ${clipW.m.clippedText.slice(0, 6).join('; ')}. Widen the column, shorten the text, or allow a second line; showcase work has no truncated strings.`);
   if (narrow.gutters && Math.abs(narrow.gutters[0] - narrow.gutters[1]) > 5 && narrow.overflowPx <= 1) problem('CRAFT', `Uneven page margins at ${results[0].width}px: content starts ${narrow.gutters[0]}px from the left edge and ends ${narrow.gutters[1]}px from the right. Something is wider than its container.`);
-  if (widest.repeatedGraphics && widest.repeatedGraphics.length) problem('RICHNESS', `The same graphic is repeated: ${widest.repeatedGraphics.map((g) => `${g.n}× at ${g.size}px`).join(', ')}. Items in a list should each have a visual of their own (a different object or portrait, not one glyph recoloured).`);
+  if (widest.repeatedGraphics && widest.repeatedGraphics.length) problem('RICHNESS', `The same drawing is repeated (colour changes do not count): ${widest.repeatedGraphics.map((g) => `${g.n}× at ${g.size}px`).join(', ')}. Items in a list should each have a visual of their own: a different object, pack or portrait, not one glyph recoloured.`);
+  if (widest.initialAvatars >= 3) problem('RICHNESS', `${widest.initialAvatars} people are shown as initials on a disc. Draw illustrated portraits (references/showpiece.md); initials read as a placeholder next to work that shows faces.`);
   for (const { width, m } of results) {
     if (m.coveredCount) problem('BROKEN', `${m.coveredCount} piece(s) of text are covered by another element at ${width}px: ${m.coveredText.slice(0, 6).join('; ')}. Floating cards, stamps and tooltips may overlap empty margins and edges, never the content underneath.`);
   }
@@ -814,6 +874,12 @@ function report(results, facts, focus, runtime, args) {
   if (widest.nearTops && widest.nearTops.length) problem('CRAFT', `Cards in one row start at nearly, but not exactly, the same height: ${widest.nearTops.slice(0, 3).join('; ')}. Align their tops, or offset the featured one decisively (24px or more).`);
   const sl = widest.shadowLayers;
   if (sl && sl.single >= 3 && sl.single > sl.layered) problem('RICHNESS', `${sl.single} of ${sl.single + sl.layered} shadowed cards use a single blur. Use layered shadows (a tight contact shadow plus a wide ambient one, with a light top edge) so surfaces sit in light (references/polish.md).`);
+  const maxSize = Math.max(...Object.keys(widest.fontSizes).map(Number));
+  if (maxSize < 44) problem('RICHNESS', `The type has no voice: the largest text on the desktop page is ${maxSize}px. The one figure or line that matters most should dominate (64–120px for a hero figure or headline), with small quiet labels around it.`);
+  if (widest.cardAreas && widest.cardAreas.ratio < 2.2) problem('RICHNESS', `Everything has equal weight: across ${widest.cardAreas.n} cards the largest is only ${widest.cardAreas.ratio}× the typical one. Let one object dominate the screen and shrink or merge minor tiles, so the eye has a first, second and third stop.`);
+  const rainbow = (widest.pastelHues && widest.pastelHues.length >= 3) ? widest.pastelHues : (widest.fillHues && widest.fillHues.length >= 4 ? widest.fillHues : null);
+  if (rainbow) problem('RICHNESS', `Colour is spread over ${rainbow.length} hue families in large fills (${rainbow.map((h) => h + '°').join(', ')}): tiles or panels each in a different tint. That reads as a pastel rainbow, not a palette. Commit to a neutral base, one dominant colour in large fields and one hot accent; give kinds of item tints of one or two hues.`);
+  if (widest.foldContrast !== undefined && widest.foldContrast < 0.08) problem('RICHNESS', 'The first desktop screen has no large confident field of colour or dark surface. Use the dominant colour boldly on one big element (the hero card, a section, the showpiece), not only as small tints.');
   if (R) { const [fw2] = R.foldLargest; if (fw2 >= 260 && fw2 < 540 && widest.docHeight > 2400) problem('RICHNESS', `The largest visual in the first desktop screen is ${fw2}px wide. Hero product visuals at the bar run 600–1000px wide; enlarge it and let it bleed past the fold or the container.`); }
   if (widest.emojiCount > 6) problem('CRAFT', `Emoji appear in UI text ${widest.emojiCount}×. They render differently on every platform; use them as flavour, not as the icon system.`);
 
