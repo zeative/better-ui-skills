@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seruni Dental · Beranda</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Idea: hari ini sebagai lengkung gigi — 16 janji temu, 16 gigi pada satu rahang.
+   Motif: gigi (tampak oklusal di lengkung, siluet gigi kecil sebagai penanda data).
+   Kit: clinic. Lead: hijau spearmint tua. Accent: koral gusi = pasien menunggu. Gigi: gading. */
+:root{
+  --bg:#DCE8E2; --surface:#FFFFFF; --surface-2:#F1F6F3; --ink:#0B2B29; --ink-2:#405956; --ink-3:#5D7572;
+  --line:rgba(11,43,41,.10); --line-2:rgba(11,43,41,.06);
+  --pine:#082F2C; --teal:#0C6A5F; --teal-2:#0A4F48; --teal-ink:#0A7566; --teal-soft:#DDF1EA; --mint:#8FF0D3;
+  --coral:#F0603F; --coral-btn:#D4442A; --coral-ink:#B93A1F; --coral-soft:#FFE9E1;
+  --ivory:#FFF6E4; --ivory-2:#F3E3C3;
+  --r-sm:10px; --r-md:16px; --r-lg:24px; --r-pill:999px;
+  --sh-1:0 1px 2px rgba(8,47,44,.06),0 1px 1px rgba(8,47,44,.04);
+  --sh-2:0 1px 2px rgba(8,47,44,.06),0 8px 18px -6px rgba(8,47,44,.12);
+  --sh-3:0 2px 4px rgba(8,47,44,.06),0 16px 32px -10px rgba(8,47,44,.18),0 32px 60px -24px rgba(8,47,44,.16);
+  --sh-4:0 4px 8px rgba(8,47,44,.08),0 24px 48px -14px rgba(10,79,72,.38),0 60px 100px -36px rgba(10,79,72,.4);
+  --display:"Bricolage Grotesque","Onest",system-ui,sans-serif;
+  --text:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--text);font-size:14px;line-height:1.45;color:var(--ink);background:var(--bg);
+  background-image:radial-gradient(rgba(11,43,41,.07) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--teal-ink);outline-offset:2px;border-radius:8px}
+.on-dark :focus-visible{outline-color:var(--mint)}
+svg{display:block}
+.av{border-radius:50%;flex:none;display:block}
+.tooth-i{width:14px;height:14px;flex:none}
+
+/* ---------- shell ---------- */
+.app{display:grid;grid-template-columns:236px minmax(0,1fr);min-height:100vh}
+.side{background:#F8FBF9;border-right:1px solid var(--line);color:var(--ink)}
+.side-in{padding:22px 16px 16px;display:flex;flex-direction:column;gap:20px;position:sticky;top:0;height:100vh;min-height:700px}
+.brand{display:flex;align-items:center;gap:10px;padding:0 6px}
+.brand-mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(160deg,#128877,var(--teal-2));display:grid;place-items:center;color:var(--ivory);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 6px 14px -4px rgba(10,79,72,.6)}
+.brand-mark svg{width:22px;height:22px}
+.brand b{font-family:var(--display);font-weight:700;font-size:19px;letter-spacing:-.02em;display:block;line-height:1.1}
+.brand small{font-size:12px;color:var(--ink-3)}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav-label{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);padding:0 10px 6px}
+.nav a{display:flex;align-items:center;gap:11px;height:40px;padding:0 10px;border-radius:12px;color:var(--ink-2);text-decoration:none;font-weight:500;transition:background-color .15s,color .15s}
+.nav a svg{width:18px;height:18px;flex:none}
+.nav a:hover{background:rgba(11,43,41,.06);color:var(--ink)}
+.nav a[aria-current]{background:var(--pine);color:#fff;font-weight:600;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 8px 16px -8px rgba(8,47,44,.7)}
+.nav .count{margin-left:auto;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;background:rgba(11,43,41,.08);color:var(--ink-2)}
+.chairs{margin-top:auto;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-md);padding:14px;box-shadow:var(--sh-1)}
+.chairs h3{font-size:12px;font-weight:600;letter-spacing:.02em;display:flex;justify-content:space-between;margin-bottom:8px}
+.chairs h3 span{color:var(--ink-3);font-weight:500}
+.chair{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:center;padding:7px 0}
+.chair + .chair{border-top:1px dashed var(--line)}
+.chair-n{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-weight:700;font-size:13px;background:var(--teal-soft);color:var(--teal-ink)}
+.chair.free .chair-n{background:transparent;border:1.5px dashed rgba(11,43,41,.35);color:var(--ink-2)}
+.chair b{display:block;font-size:13px;font-weight:600;line-height:1.25}
+.chair small{font-size:12px;color:var(--ink-2)}
+.me{display:flex;align-items:center;gap:10px;padding:10px;border-radius:var(--r-md);background:#EAF1EE}
+.me b{display:block;font-size:13px;line-height:1.2}
+.me small{font-size:12px;color:var(--ink-2)}
+
+.main{padding:22px 28px 40px;min-width:0}
+.top{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.top h1{font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:-.025em;line-height:1.1}
+.top p{color:var(--ink-2);font-size:13px;margin-top:3px;white-space:nowrap}
+.top h1{white-space:nowrap}
+.top .sp{flex:1}
+.top-brand{display:none;flex:none}
+.top-me{display:block;border-radius:50%;box-shadow:0 0 0 2px var(--surface),var(--sh-1)}
+.search{display:flex;align-items:center;gap:8px;height:44px;padding:0 12px;width:270px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-pill);box-shadow:var(--sh-1);color:var(--ink-3)}
+.search:focus-within{border-color:var(--teal-ink);box-shadow:0 0 0 4px var(--teal-soft)}
+.search svg{width:17px;height:17px;flex:none}
+.search input{border:0;outline:0;background:none;flex:1;min-width:0;height:42px;font-size:14px;color:var(--ink)}
+.search input::placeholder{color:var(--ink-3)}
+kbd{font:600 12px var(--text);padding:2px 7px;border-radius:6px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink-2)}
+.icon-btn{width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh-1);display:grid;place-items:center;position:relative;transition:transform .15s,box-shadow .15s}
+.icon-btn:hover{transform:translateY(-1px);box-shadow:var(--sh-2)}
+.icon-btn svg{width:19px;height:19px}
+.icon-btn i{position:absolute;top:10px;right:11px;width:9px;height:9px;border-radius:50%;background:var(--coral);border:2px solid var(--surface)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 18px;border-radius:var(--r-pill);font-weight:600;font-size:14px;background:var(--teal);color:#fff;white-space:nowrap;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 1px 2px rgba(8,47,44,.25),0 8px 18px -8px rgba(12,106,95,.8);transition:transform .15s,box-shadow .15s,background-color .15s}
+.btn:hover{transform:translateY(-1px);background:#0E7669}
+.btn:active{transform:scale(.98)}
+.btn svg{width:16px;height:16px}
+.btn.hot{background:var(--coral-btn);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 1px 2px rgba(80,20,8,.25),0 8px 18px -8px rgba(212,68,42,.9)}
+.btn.hot:hover{background:#C53C23}
+
+/* ---------- grid & cards ---------- */
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:20px;grid-template-rows:auto auto 1fr}
+.card{background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-lg);box-shadow:inset 0 1px 0 #fff,var(--sh-2);padding:22px;min-width:0}
+.card-h{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.card-h h2{font-family:var(--display);font-size:21px;font-weight:700;letter-spacing:-.02em}
+.card-h .sp{flex:1}
+.badge{font-size:12px;font-weight:700;min-width:24px;height:24px;padding:0 8px;border-radius:99px;display:inline-grid;place-items:center;background:var(--surface-2);color:var(--ink-2)}
+.badge.hot{background:var(--coral);color:#2A0D05}
+.muted{color:var(--ink-3)}
+.link{font-size:13px;font-weight:600;color:var(--teal-ink);display:inline-flex;align-items:center;gap:4px;height:32px;padding:0 10px;border-radius:99px;border:1px solid var(--line);background:var(--surface)}
+.link:hover{background:var(--teal-soft)}
+.link svg{width:14px;height:14px}
+
+/* ---------- hero: the arch ---------- */
+.hero{grid-column:span 8;position:relative;overflow:hidden;color:#fff;border:0;padding:24px 16px 20px 28px;
+  background:radial-gradient(70% 90% at 78% 60%,#128877 0%,transparent 70%),linear-gradient(155deg,#0E7366 0%,var(--teal-2) 70%,#083E39 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),var(--sh-4);display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:28px;align-items:stretch}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.09) 1px,transparent 1.4px);background-size:18px 18px;mask-image:linear-gradient(120deg,#000,transparent 55%)}
+.hero > *{position:relative;z-index:1}
+.hero-l{display:flex;flex-direction:column}
+.eyebrow{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;height:28px;padding:0 11px;border-radius:99px;font-size:12px;font-weight:600;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16)}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 3px rgba(143,240,211,.25)}
+.hero-fig{display:flex;align-items:baseline;gap:6px;margin-top:18px;font-family:var(--display);line-height:.86}
+.hero-fig b{font-size:140px;font-weight:800;letter-spacing:-.05em;color:var(--ivory)}
+.hero-fig span{font-size:40px;font-weight:500;letter-spacing:-.03em;color:rgba(255,255,255,.7)}
+.hero-cap{font-size:14px;font-weight:600;margin-top:12px;color:#fff;text-wrap:balance}
+.hero-note{font-size:13px;line-height:1.45;margin-top:8px;color:rgba(255,255,255,.84);text-wrap:pretty}
+.legend{list-style:none;padding:0;margin-top:auto;padding-top:18px;display:grid;gap:2px}
+.legend li{display:flex;align-items:center;gap:9px;font-size:13px;height:28px;color:rgba(255,255,255,.88)}
+.legend li b{margin-left:auto;font-weight:700;color:#fff;font-size:14px}
+.legend li + li{border-top:1px dashed rgba(255,255,255,.14)}
+.lg{width:20px;height:20px;flex:none;overflow:visible}
+
+.arch{position:relative;align-self:center;min-width:0}
+.arch > svg{width:100%;height:auto;overflow:visible}
+.tooth{cursor:pointer;outline:none}
+.tooth .body{filter:drop-shadow(0 3px 3px rgba(4,30,28,.28));transition:transform .18s cubic-bezier(.2,.8,.2,1);transform-box:fill-box;transform-origin:center}
+.tooth:hover .body,.tooth:focus-visible .body{transform:scale(1.1)}
+.tooth .ring{fill:none;stroke:#fff;stroke-width:2;opacity:0;transition:opacity .15s}
+.tooth.sel .ring,.tooth:focus-visible .ring{opacity:1}
+.tooth.done .body{fill:url(#gIvory)} .tooth.done .mk{stroke:var(--teal);stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.tooth.now .body{fill:var(--mint)} .tooth.now .mk{fill:var(--teal-2)}
+.tooth.wait .body{fill:url(#gCoral)}
+.tooth.next .body{fill:rgba(255,255,255,.2);stroke:rgba(255,255,255,.85);stroke-width:1.5}
+.tooth.noshow .body,.tooth.next .body{filter:none}
+.tooth.noshow .body{fill:none;stroke:rgba(255,255,255,.75);stroke-width:1.5;stroke-dasharray:4 4}
+.tooth.noshow .mk{stroke:rgba(255,255,255,.7)}
+.tooth .pulse{fill:none;stroke:var(--mint);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{opacity:.7;transform:scale(1)}100%{opacity:0;transform:scale(1.45)}}
+.tlabel{font:600 13px var(--text);fill:rgba(255,255,255,.88)}
+.tooth.sel + .tlabel,.tlabel.sel{fill:#fff}
+.guide{fill:none;stroke:rgba(255,255,255,.14);stroke-dasharray:2 6}
+.guide.gum{stroke:rgba(255,255,255,.07);stroke-width:78;stroke-dasharray:none;stroke-linecap:round}
+.guide.lead{stroke:#fff;stroke-width:1.5;stroke-dasharray:none;stroke-linecap:round;opacity:.8}
+.guide.brk{stroke:rgba(255,255,255,.6);stroke-dasharray:none;stroke-width:1.5;stroke-linecap:round}
+.focus{position:absolute;left:50%;top:47%;transform:translateX(-50%);width:40%;min-width:204px;background:rgba(6,40,37,.55);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 18px 36px -14px rgba(0,0,0,.5);backdrop-filter:blur(6px)}
+.focus-top{display:flex;align-items:center;gap:10px}
+.focus-top b{font-size:14px;font-weight:600;line-height:1.2;display:block}
+.focus-top small{font-size:12px;color:rgba(255,255,255,.8)}
+.focus p{font-size:13px;color:rgba(255,255,255,.88);margin-top:10px;line-height:1.4}
+.focus-foot{white-space:nowrap;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed rgba(255,255,255,.16);font-size:12px;color:rgba(255,255,255,.82)}
+.pill{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px 0 7px;border-radius:99px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill .tooth-i{width:12px;height:12px}
+.pill.done{background:var(--surface-2);color:var(--teal-ink)}
+.pill.now{background:var(--teal-soft);color:var(--teal-ink)}
+.pill.wait{background:var(--coral-soft);color:var(--coral-ink)}
+.pill.next{border:1px solid var(--line);color:var(--ink-2)}
+.pill.noshow{border:1px dashed rgba(11,43,41,.3);color:var(--ink-3)}
+.on-dark .pill.done{background:var(--ivory);color:var(--pine)}
+.on-dark .pill.now{background:var(--mint);color:var(--pine)}
+.on-dark .pill.wait{background:var(--coral);color:#2A0D05}
+.on-dark .pill.next{border-color:rgba(255,255,255,.4);color:#fff}
+.on-dark .pill.noshow{border-color:rgba(255,255,255,.5);color:#fff}
+.arch-ends{display:none}
+.arch-hint{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);font-size:12px;padding:4px 12px;border-radius:99px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.9);white-space:nowrap}
+
+/* ---------- waiting ---------- */
+.waiting{grid-column:span 4;display:flex;flex-direction:column}
+.wait-sum{font-size:13px;color:var(--ink-2);margin:-8px 0 12px}
+.w-list{display:flex;flex-direction:column;gap:10px;flex:1}
+.w{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px;border-radius:var(--r-md);background:var(--surface-2);border:1px solid var(--line)}
+.w b{display:block;font-weight:600;font-size:14px;line-height:1.25}
+.w small{display:block;font-size:13px;color:var(--ink-2)}
+.w-time{text-align:right;font-family:var(--display);font-weight:700;font-size:24px;letter-spacing:-.03em;line-height:1;color:var(--ink)}
+.w-time span{display:block;font:500 12px var(--text);letter-spacing:0;color:var(--ink-3);margin-top:3px}
+.w-note{grid-column:1/-1;display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);padding-top:10px;border-top:1px dashed var(--line)}
+.w-note svg{width:15px;height:15px;flex:none;color:var(--ink-3)}
+.w.lead{background:linear-gradient(180deg,#FFF1EB,var(--coral-soft));border-color:rgba(240,96,63,.35);box-shadow:inset 0 1px 0 #fff,0 2px 4px rgba(212,68,42,.1),0 16px 28px -12px rgba(212,68,42,.55)}
+.w.lead .w-time{color:var(--coral-ink);font-size:30px}
+.w.lead .w-note{border-top-color:rgba(185,58,31,.25);justify-content:space-between;color:var(--ink);font-weight:500}
+.w.lead .btn{height:40px;padding:0 14px;font-size:13px}
+.empty{flex:1;display:grid;place-items:center;text-align:center;padding:24px;color:var(--ink-2)}
+.empty svg{width:64px;height:64px;margin:0 auto 12px;color:var(--teal)}
+.empty b{display:block;font-family:var(--display);font-size:17px;color:var(--ink)}
+
+/* ---------- schedule ---------- */
+.schedule{grid-column:span 8;grid-row:span 2;display:flex;flex-direction:column}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{height:36px;padding:0 13px;border-radius:99px;font-size:13px;font-weight:600;color:var(--ink-2);border:1px solid var(--line);background:var(--surface);display:inline-flex;align-items:center;gap:7px;transition:background-color .15s,color .15s}
+.chip em{font-style:normal;font-size:12px;font-weight:700;padding:1px 7px;border-radius:99px;background:var(--surface-2);color:var(--ink-2)}
+.chip:hover{background:var(--surface-2)}
+.chip[aria-pressed=true]{background:var(--pine);color:#fff;border-color:var(--pine)}
+.chip[aria-pressed=true] em{background:rgba(255,255,255,.16);color:#fff}
+.rows-head,.row{display:grid;grid-template-columns:56px minmax(0,1fr) 136px 96px 116px;gap:14px;align-items:center}
+.rows-head{font-size:12px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);padding:8px 10px;border-bottom:1px solid var(--line)}
+.rows-head .r{text-align:right}
+.rows{flex:1}
+.row{padding:6px 10px;min-height:60px;border-radius:12px;position:relative;transition:background-color .15s}
+.row + .row::before{content:"";position:absolute;left:10px;right:10px;top:0;border-top:1px solid var(--line-2)}
+.row:hover{background:var(--surface-2)}
+.row.sel{background:var(--ivory);box-shadow:inset 0 0 0 1.5px var(--ivory-2)}
+.row.sel small,.row.sel .m-doc,.row.sel .r-fee.none{color:var(--ink-2)}
+.row.sel::before,.row.sel + .row::before{display:none}
+.row.is-wait .r-time b{color:var(--coral-ink)}
+.row.is-done .r-time b,.row.is-noshow .r-time b{color:var(--ink-3)}
+.row.is-noshow .who b{text-decoration:line-through;color:var(--ink-3)}
+.row.is-done .who b{font-weight:500;color:var(--ink-2)}
+.row.is-done .r-fee{color:var(--ink-2)}
+.row.is-done .av,.row.is-noshow .av{opacity:.75}
+.row.is-now{background:linear-gradient(90deg,var(--teal-soft),transparent 70%)}
+.nowline{display:flex;align-items:center;gap:10px;margin:8px 10px;font-size:12px;font-weight:700;color:var(--pine)}
+.nowline::before,.nowline::after{content:"";flex:1;border-top:1.5px solid var(--pine)}
+.nowline::before{flex:0 0 0}
+.nowline span{background:var(--pine);color:#fff;padding:3px 10px;border-radius:99px}
+.nowline + .row::before{display:none}
+.r-time b{font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.02em;display:block;line-height:1.1}
+.r-time small{font-size:12px;color:var(--ink-3)}
+.who{display:flex;align-items:center;gap:11px;min-width:0}
+.who b{font-weight:600;font-size:14px;display:block;line-height:1.25}
+.who small{font-size:13px;color:var(--ink-2);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.fdi{white-space:nowrap;display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:700;color:var(--teal-ink);background:var(--teal-soft);padding:1px 6px 1px 4px;border-radius:6px}
+.fdi .tooth-i{width:11px;height:11px}
+.r-doc{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;min-width:0}
+.r-doc small{display:block;font-size:12px;color:var(--ink-3);font-weight:400}
+.r-fee{text-align:right;font-size:13px;font-weight:600}
+.r-fee.none{color:var(--ink-3);font-weight:400;font-size:12px}
+.r-st{justify-self:end}
+.m-doc{display:none}
+.sched-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding:12px 14px;border-radius:var(--r-md);background:var(--surface-2);font-size:13px;color:var(--ink-2)}
+.sched-foot b{color:var(--ink);font-size:14px}
+.sched-foot .sp{flex:1}
+.no-rows{padding:40px 10px;text-align:center;color:var(--ink-2)}
+
+/* ---------- doctors ---------- */
+.doctors{grid-column:span 4}
+.doc{display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px;padding:13px 0}
+.doc + .doc{border-top:1px solid var(--line-2)}
+.doc:last-child{padding-bottom:0}
+.doc-av{position:relative;width:52px;height:52px}
+.doc-av i{position:absolute;right:-1px;bottom:-1px;width:15px;height:15px;border-radius:50%;border:3px solid var(--surface);background:var(--teal-ink)}
+.doc.free .doc-av i{background:var(--coral)}
+.doc b{font-weight:600;font-size:14px;line-height:1.25;display:block}
+.doc-meta{font-size:13px;color:var(--ink-2);display:flex;gap:6px;flex-wrap:wrap;white-space:nowrap;align-items:center;margin-top:1px}
+.kursi{font-size:12px;font-weight:700;padding:1px 7px;border-radius:6px;background:var(--pine);color:#fff}
+.doc-now{text-wrap:balance;font-size:13px;margin-top:7px;color:var(--ink);display:flex;gap:7px;align-items:flex-start;line-height:1.35}
+.doc-now::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--teal-ink);margin-top:5px;flex:none}
+.doc-now small{display:block;font-size:13px;color:var(--ink-2);font-weight:400}
+.doc.free .doc-now{font-weight:500}
+.doc.free .doc-now small{color:var(--coral-ink);font-weight:500}
+.doc.free .doc-now::before{background:var(--coral)}
+.doc-teeth{display:flex;align-items:center;gap:3px;margin-top:8px;font-size:12px;color:var(--ink-3)}
+.doc-teeth span{margin-left:auto;font-weight:600;color:var(--ink-2)}
+.t-done{color:var(--teal)} .t-now{color:#35C9A2} .t-wait{color:var(--coral)} .t-next{color:#A9BCB7} .t-noshow{color:#A9BCB7;opacity:.5}
+
+/* ---------- revenue ---------- */
+.revenue{grid-column:span 4;display:flex;flex-direction:column;background:linear-gradient(180deg,#FFF1D2 0,#FFF9EC 120px,#fff 250px)}
+.rev-a{display:flex;flex-direction:column;flex:1}
+.rev-fig{font-family:var(--display);font-weight:800;letter-spacing:-.04em;font-size:50px;line-height:1;display:flex;align-items:baseline;gap:6px}
+.rev-fig small{font-size:20px;font-weight:500;letter-spacing:-.01em;color:var(--ink-2)}
+.rev-sub{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--ink-2);flex-wrap:wrap}
+.delta{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 9px;border-radius:99px;font-weight:700;font-size:12px;background:var(--teal-soft);color:var(--teal-ink)}
+.chart{position:relative;margin-top:30px;flex:1;min-height:210px;display:grid;grid-template-columns:34px 1fr;grid-template-rows:1fr auto;column-gap:8px}
+.yax{position:relative;font-size:12px;color:var(--ink-3)}
+.yax span{position:absolute;right:0;transform:translateY(50%)}
+.plot{position:relative;display:flex;align-items:flex-end;justify-content:space-between;gap:8px;padding:0 4px;border-bottom:1px solid var(--line)}
+.plot .gl{position:absolute;left:0;right:0;border-top:1px dashed var(--line)}
+.plot .tg{position:absolute;left:0;right:0;border-top:1.5px dashed var(--ink);z-index:0;opacity:.55}
+.ch-leg{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px;font-size:12px;color:var(--ink-2)}
+.ch-leg span{display:inline-flex;align-items:center;gap:6px}
+.ch-leg i{width:16px;border-top:2px dashed var(--ink-2)}
+.ch-leg u{width:12px;height:12px;border-radius:4px;background:repeating-linear-gradient(135deg,#0C6A5F 0 2px,transparent 2px 5px),#CDEBE1;box-shadow:inset 0 0 0 1px #0C6A5F}
+.bar{position:relative;flex:1;max-width:44px;border-radius:13px 13px 3px 3px;z-index:1;
+  background:linear-gradient(180deg,#128877,#0C6A5F);box-shadow:inset 0 1px 0 rgba(255,255,255,.25);transition:filter .15s}
+.bar:hover{filter:brightness(.94)}
+.bar b{position:absolute;left:50%;top:9px;transform:translateX(-50%);font-size:12px;font-weight:600;color:#fff;white-space:nowrap}
+.bar.today{background:repeating-linear-gradient(135deg,#0C6A5F 0 2.5px,transparent 2.5px 8px),#CDEBE1;box-shadow:inset 0 0 0 1.5px #0C6A5F}
+.bar.today b{top:-21px;color:var(--ink);font-weight:700}
+.xax{grid-column:2;display:flex;justify-content:space-between;gap:8px;padding:7px 4px 0;font-size:12px;color:var(--ink-3)}
+.xax span{flex:1;max-width:44px;text-align:center}
+.xax .today{color:var(--ink);font-weight:700}
+.target{margin-top:18px;padding:13px 14px;border-radius:var(--r-md);background:var(--surface-2)}
+.target-h{display:flex;justify-content:space-between;font-size:13px;color:var(--ink-2);margin-bottom:8px}
+.target-h b{color:var(--ink)}
+.target-teeth{display:flex;justify-content:space-between}
+.target-teeth .tooth-i{width:5%;height:auto;aspect-ratio:1;max-width:15px}
+.mix{margin-top:18px}
+.mix-h{font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:8px}
+.mix-bar{display:flex;gap:3px;height:12px}
+.mix-bar i{border-radius:4px}
+.mix-bar i:first-child{border-radius:99px 4px 4px 99px}.mix-bar i:last-child{border-radius:4px 99px 99px 4px}
+.mix-in{display:grid;grid-template-columns:118px minmax(0,1fr);gap:14px;align-items:center}
+.donut{position:relative}
+.donut div{position:absolute;inset:0;display:grid;place-content:center;text-align:center;font-size:12px;color:var(--ink-2);line-height:1.1}
+.donut b{display:block;font-family:var(--display);font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-.03em}
+.mix ul{list-style:none;padding:0;display:grid;gap:1px}
+.mix li{display:grid;grid-template-columns:10px 1fr auto 32px;gap:7px;align-items:center;font-size:13px;height:26px;color:var(--ink-2);white-space:nowrap}
+.mix li i{width:10px;height:10px;border-radius:3px}
+.mix li b{color:var(--ink);font-weight:600}
+.mix li span:last-child{text-align:right;color:var(--ink-2)}
+
+.sample{margin-top:22px;padding-bottom:6px;font-size:12px;color:var(--ink-3);text-align:center}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:var(--pine);color:#fff;padding:12px 18px;border-radius:99px;font-size:13px;font-weight:500;box-shadow:var(--sh-3);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50;max-width:calc(100vw - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.tabs{display:none}
+
+.hero,.waiting{animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.waiting{animation-delay:.08s}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ---------- responsive ---------- */
+@media (max-width:1280px){
+  .grid{grid-template-columns:minmax(0,1fr);grid-template-rows:none}
+  .hero,.waiting,.schedule,.doctors,.revenue{grid-column:1;grid-row:auto}
+  .hero{grid-template-columns:minmax(0,250px) minmax(0,1fr)}
+  .arch{max-width:520px;justify-self:center;width:100%}
+}
+@media (min-width:701px) and (max-width:1280px){
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hero,.schedule,.revenue{grid-column:span 2}
+  .waiting,.doctors{grid-column:span 1}
+  .hero{order:1}.waiting{order:2}.doctors{order:3}.schedule{order:4}.revenue{order:5}
+  .focus{top:49%;min-width:196px;width:40%}
+  .arch-hint{display:none}
+  .revenue{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);column-gap:28px}
+  .revenue .card-h{grid-column:span 2}
+  .rev-b .target{margin-top:0}
+  .rev-b{display:flex;flex-direction:column;justify-content:space-between;gap:18px}
+  .mix-in{grid-template-columns:140px minmax(0,1fr);gap:20px}
+  .w.lead .w-note{flex-wrap:wrap}
+}
+@media (max-width:1023px){
+  .search{width:190px}
+  .top-brand{display:grid}
+  .top-me,.hrs{display:none}
+  .top h1{font-size:24px}
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{display:none}
+  .main{padding:16px 20px 104px}
+  .tabs{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:40;background:var(--pine);border-radius:22px;padding:6px;box-shadow:var(--sh-3);justify-content:space-between}
+  .tabs a{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;height:52px;border-radius:16px;color:rgba(255,255,255,.75);text-decoration:none;font-size:12px;font-weight:500}
+  .tabs a svg{width:20px;height:20px}
+  .tabs a[aria-current]{background:var(--ivory);color:var(--pine);font-weight:700}
+  .toast{bottom:92px}
+}
+@media (max-width:700px){
+  .main{padding:14px 16px 104px}
+  .top{flex-wrap:wrap;gap:10px;margin-bottom:16px}
+  .top h1{font-size:21px}
+  .top-me{display:none}
+  .top .sp{display:none}
+  .top-title{flex:1;min-width:0}
+  .search{order:5;width:auto;flex:1 1 100%}
+  .search input{font-size:16px}
+  kbd{display:none}
+  .top .btn span{display:none}
+  .top .btn{width:44px;padding:0}
+  .grid{gap:14px}
+  .card{padding:18px 16px;border-radius:20px}
+  .hero{grid-template-columns:minmax(0,1fr);padding:20px 16px 18px;gap:6px}
+  .hero-l{display:contents}
+  .hrs{display:none}
+  .hero-fig{margin-top:14px}
+  .hero-fig b{font-size:96px}
+  .hero-note{display:block}
+  .legend li:last-child{grid-column:span 2}
+  .hero-fig span{font-size:30px}
+  .arch{order:2;margin-top:-10px}
+  .legend{order:3;margin-top:14px;padding-top:0;grid-template-columns:1fr 1fr;column-gap:18px}
+  .legend li + li{border-top:0}
+  .legend li{border-bottom:1px dashed rgba(255,255,255,.14)}
+  .tlabel,.guide.brk{display:none}
+  .arch-ends{display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:rgba(255,255,255,.88);padding:4px 6% 0}
+  .focus{width:50%;top:47%;padding:9px 10px;border-radius:14px;min-width:0}
+  .focus-top .av{display:none}
+  .focus p{display:none}
+  .focus-top{gap:8px}
+  .focus-top .av{width:30px;height:30px}
+  .focus-top b{font-size:13px}
+  .focus-foot{margin-top:8px;padding-top:8px;flex-wrap:wrap}
+  .arch-hint{display:none}
+  .rows-head{display:none}
+  .row{grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:10px 4px;align-items:start}
+  .row .r-time{order:2;text-align:right;grid-row:1;grid-column:2}
+  .row .r-time small{display:none}
+  .row .r-st{grid-row:1;grid-column:2;align-self:end;margin-top:26px}
+  .row .who{grid-row:1;grid-column:1;align-items:flex-start}
+  .row.is-done,.row.is-noshow{min-height:0}
+  .row + .row::before{left:4px;right:4px}
+  .r-doc,.r-fee{display:none}
+  .m-doc{display:block;width:100%;font-size:12px;color:var(--ink-3)}
+  .chips{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 8px;padding:2px 16px;scrollbar-width:none;mask-image:linear-gradient(90deg,#000 82%,transparent)}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;height:40px}
+  .w.lead .w-note{flex-wrap:wrap}
+  .rev-fig{font-size:44px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="tooth" viewBox="0 0 24 24"><path fill="currentColor" d="M7.5 3C5 3 3 5 3 8c0 2.5 1 4 1.5 6.5.5 2.6.8 6.5 2.5 6.5 1.6 0 1.4-5 5-5s3.4 5 5 5c1.7 0 2-3.9 2.5-6.5C20 12 21 10.500 21 8c0-3-2-5-4.500-5-1.800 0-2.800 1-4.500 1S9.300 3 7.500 3z"/></symbol>
+</svg>
+
+<div class="app">
+  <aside class="side"><div class="side-in">
+    <div class="brand">
+      <div class="brand-mark"><svg><use href="#tooth"/></svg></div>
+      <div><b>Seruni Dental</b><small>Klinik gigi keluarga</small></div>
+    </div>
+    <nav class="nav" aria-label="Navigasi utama">
+      <div class="nav-label">Klinik</div>
+      <a href="#" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg>Beranda</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.500" y="5" width="17" height="15" rx="3"/><path d="M8 3v4M16 3v4M3.500 10h17"/></svg>Jadwal<span class="count" id="navCount">16</span></a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.500"/><path d="M2.500 20c.5-4 3-6 6.500-6s6 2 6.500 6M16 4.500a3.500 3.500 0 0 1 0 7M18 14.500c2 .8 3.200 2.600 3.500 5.500"/></svg>Pasien</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a4 4 0 0 0 8 0V3M10 13v3a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="12" r="2"/></svg>Dokter</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></svg>Tagihan</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8l8-4 8 4v8l-8 4-8-4zM4 8l8 4 8-4M12 12v8"/></svg>Inventaris</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-3"/></svg>Laporan</a>
+    </nav>
+    <nav class="nav" aria-label="Lainnya">
+      <div class="nav-label">Lainnya</div>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.600 5.600l2.100 2.100M16.300 16.300l2.100 2.100M5.600 18.400l2.100-2.100M16.300 7.700l2.100-2.100"/></svg>Pengaturan</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.500"/><path d="M9.500 9.500a2.500 2.500 0 1 1 3.500 2.300c-.7.400-1 1-1 1.700M12 16.500v.2"/></svg>Bantuan</a>
+    </nav>
+    <div class="chairs">
+      <h3>Kursi perawatan <span id="chairSum"></span></h3>
+      <div id="chairs"></div>
+    </div>
+    <div class="me" id="me"></div>
+  </div></aside>
+
+  <main class="main">
+    <header class="top">
+      <div class="brand-mark top-brand" aria-hidden="true"><svg><use href="#tooth"/></svg></div>
+      <div class="top-title">
+        <h1>Selamat siang, Rina</h1>
+        <p>Sabtu, 14 November 2026<span class="hrs"> · buka 09.00–17.00</span></p>
+      </div>
+      <span class="sp"></span>
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.500"/><path d="M16 16l4 4"/></svg>
+        <input id="q" type="search" placeholder="Cari pasien" aria-label="Cari pasien di jadwal hari ini">
+        <kbd>/</kbd>
+      </label>
+      <button class="icon-btn" id="bell" aria-label="Notifikasi, 1 baru"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.500 2h-15zM10 20a2 2 0 0 0 4 0"/></svg><i></i></button>
+      <span class="top-me" id="topMe" title="Rina Kusuma, Resepsionis"></span>
+      <button class="btn" id="newBtn" aria-label="Janji temu baru"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>Janji temu baru</span></button>
+    </header>
+
+    <div class="grid">
+      <!-- HERO -->
+      <section class="card hero on-dark" aria-labelledby="hTitle">
+        <div class="hero-l">
+          <div class="hero-top">
+            <div>
+              <span class="eyebrow"><i></i>Sekarang 13.40 WIB</span>
+              <div class="hero-fig" aria-hidden="true"><b id="hDone">8</b><span>/16</span></div>
+            </div>
+          </div>
+          <p class="hero-cap" id="hTitle">janji temu hari ini sudah selesai</p>
+          <p class="hero-note">Tiap gigi di lengkung adalah satu janji temu, urut jam dari kiri ke kanan.</p>
+          <ul class="legend" id="legend"></ul>
+        </div>
+        <div class="arch">
+          <svg id="archSvg" viewBox="-10 0 540 404" role="group" aria-label="Lengkung gigi: tiap gigi satu janji temu, urut waktu dari kiri ke kanan">
+            <defs>
+              <linearGradient id="gIvory" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F3E3C3"/></linearGradient>
+              <linearGradient id="gCoral" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A66"/><stop offset="1" stop-color="#EE5535"/></linearGradient>
+            </defs>
+          </svg>
+          <div class="focus" id="focus" aria-live="polite"></div>
+          <div class="arch-ends" aria-hidden="true"><span>09.00</span><span>15.15</span></div>
+          <span class="arch-hint">Pilih gigi untuk melihat detailnya</span>
+        </div>
+      </section>
+
+      <!-- WAITING -->
+      <section class="card waiting" aria-labelledby="wTitle">
+        <div class="card-h"><h2 id="wTitle">Ruang tunggu</h2><span class="badge hot" id="wCount">3</span><span class="sp"></span></div>
+        <p class="wait-sum" id="wSum"></p>
+        <div class="w-list" id="wList"></div>
+      </section>
+
+      <!-- SCHEDULE -->
+      <section class="card schedule" aria-labelledby="sTitle">
+        <div class="card-h"><h2 id="sTitle">Jadwal hari ini</h2><span class="sp"></span><button class="link" id="printBtn">Cetak jadwal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+        <div class="chips" id="chips" role="group" aria-label="Saring status"></div>
+        <div class="rows-head"><span>Jam</span><span>Pasien &amp; tindakan</span><span>Dokter</span><span class="r">Biaya</span><span class="r">Status</span></div>
+        <div class="rows" id="rows"></div>
+        <div class="sched-foot" id="sFoot"></div>
+      </section>
+
+      <!-- DOCTORS -->
+      <section class="card doctors" aria-labelledby="dTitle">
+        <div class="card-h"><h2 id="dTitle">Dokter bertugas</h2><span class="badge">3</span><span class="sp"></span></div>
+        <div id="docs"></div>
+      </section>
+
+      <!-- REVENUE -->
+      <section class="card revenue" aria-labelledby="rTitle">
+        <div class="card-h"><h2 id="rTitle">Pendapatan minggu ini</h2><span class="sp"></span><span class="muted" style="font-size:12.5px">9–14 Nov</span></div>
+        <div class="rev-a"><div class="rev-fig"><small>Rp</small><span id="revTotal"></span><small>jt</small></div>
+        <div class="rev-sub"><span class="delta" id="revDelta"></span><span id="revPrev"></span></div>
+        <div class="ch-leg"><span><u></u>Sabtu masih berjalan</span><span><i></i>Target harian Rp 5,83 jt</span></div>
+        <div class="chart">
+          <div class="yax" id="yax"></div>
+          <div class="plot" id="plot"></div>
+          <div class="xax" id="xax"></div>
+        </div>
+        </div><div class="rev-b">
+        <div class="target">
+          <div class="target-h"><span>Target mingguan Rp 35 jt</span><b id="tgPct"></b></div>
+          <div class="target-teeth" id="tgTeeth"></div>
+        </div>
+        <div class="mix">
+          <div class="mix-h">Menurut jenis tindakan</div>
+          <div class="mix-in"><div class="donut"><svg viewBox="0 0 42 42" id="donut" aria-hidden="true"></svg><div><b>38%</b>Konservasi</div></div><ul id="mixList"></ul></div>
+        </div></div>
+      </section>
+    </div>
+    <p class="sample">Semua nama dan angka adalah data contoh.</p>
+  </main>
+</div>
+
+<nav class="tabs" aria-label="Navigasi">
+  <a href="#" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg>Beranda</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3.500" y="5" width="17" height="15" rx="3"/><path d="M8 3v4M16 3v4M3.500 10h17"/></svg>Jadwal</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.500"/><path d="M2.500 20c.5-4 3-6 6.500-6s6 2 6.500 6"/></svg>Pasien</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"/></svg>Tagihan</a>
+  <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-3"/></svg>Laporan</a>
+</nav>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ================= data contoh ================= */
+const NOW = 13*60+40;
+const DOCS = {
+  an:{name:'drg. Anindya Prameswari, Sp.KG', short:'drg. Anindya', spec:'Konservasi gigi', chair:1, hours:'09.00–15.00',
+      av:{bg:'#DDF1EA',skin:'#E8B894',hair:'#2B2118',style:'hijab',top:'#F3E3C3',scarf:'#0C6A5F'}},
+  ba:{name:'drg. Bagus Hartanto', short:'drg. Bagus', spec:'Dokter umum', chair:2, hours:'09.00–17.00',
+      av:{bg:'#E3ECF4',skin:'#C98E62',hair:'#1E1A17',style:'short',top:'#2D4B73',gl:1}},
+  ki:{name:'drg. Kirana Wulandari, Sp.Ort', short:'drg. Kirana', spec:'Ortodonti', chair:3, hours:'10.00–17.00',
+      av:{bg:'#FFF1D6',skin:'#F2D0B5',hair:'#3A2618',style:'bun',top:'#B7791F'}}
+};
+// st: done | noshow | now | wait | next ; arr = menit kedatangan ; start = menit mulai ditangani
+const A = [
+ {t:'09.00',dur:30,name:'Sari Wijayanti',tx:'Scaling & poles',doc:'ba',st:'done',fee:350000},
+ {t:'09.00',dur:45,name:'Dimas Pratama',tx:'Tambal komposit',tooth:36,doc:'an',st:'done',fee:450000},
+ {t:'09.45',dur:30,name:'Maria Lumban Gaol',tx:'Cabut gigi bungsu',tooth:48,doc:'ba',st:'done',fee:400000},
+ {t:'10.00',dur:30,name:'Yoga Saputra',tx:'Kontrol behel',doc:'ki',st:'done',fee:250000},
+ {t:'10.00',dur:60,name:'Putu Ayu Lestari',tx:'Saluran akar (ke-2)',tooth:46,doc:'an',st:'done',fee:900000},
+ {t:'10.30',dur:20,name:'Hendra Gunawan',tx:'Konsultasi',doc:'ba',st:'noshow',fee:0},
+ {t:'10.45',dur:45,name:'Nabila Rahma',tx:'Cetak retainer',doc:'ki',st:'done',fee:1200000},
+ {t:'11.30',dur:45,name:'Fajar Nugroho',tx:'Tambal komposit',tooth:15,doc:'an',st:'done',fee:450000},
+ {t:'11.30',dur:30,name:'Lina Marlina',tx:'Scaling & poles',doc:'ba',st:'done',fee:350000},
+ {t:'13.00',dur:60,name:'Rizky Ramadhan',tx:'Pasang mahkota',tooth:26,doc:'an',st:'now',start:13*60+5},
+ {t:'13.15',dur:30,name:'Agus Setiawan',tx:'Cabut gigi',tooth:28,doc:'ba',st:'now',start:13*60+20},
+ {t:'13.30',dur:30,name:'Citra Maharani',tx:'Kontrol behel',doc:'ki',st:'wait',arr:13*60+18},
+ {t:'13.45',dur:45,name:'Bambang Sutrisno',tx:'Tambal komposit',tooth:47,doc:'ba',st:'wait',arr:13*60+27},
+ {t:'14.00',dur:30,name:'Wayan Adi Putra',tx:'Konsultasi veneer',doc:'an',st:'wait',arr:13*60+34},
+ {t:'14.30',dur:60,name:'Tiara Anggraini',tx:'Pemutihan gigi',doc:'ki',st:'next'},
+ {t:'15.15',dur:30,name:'Yohanes Seran',tx:'Scaling & poles',doc:'ba',st:'next'}
+];
+const SKIN=['#F2D0B5','#E8B894','#C98E62','#A56E44','#E8B894','#C98E62'];
+const HAIR=['#2B2118','#1E1A17','#4A3020','#111418','#6B4A2E','#8C8C8C'];
+const BGS=['#DDF1EA','#FFE9E1','#FFF1D6','#E3ECF4','#EDE6F6','#E4F0D8'];
+const TOPS=['#0C6A5F','#F0603F','#2D4B73','#B7791F','#7A5C9E','#40595E'];
+const STY=['long','short','hijab','curly','bun','peci','bob','side','long','short','curly','hijab','short','side','bob','peci'];
+const GL=[0,1,0,0,0,1,0,0,1,0,0,0,1,0,0,0], MU=[0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,0];
+A.forEach((a,i)=>{a.id=i;a.av={bg:BGS[i%6],skin:SKIN[(i*5+1)%6],hair:HAIR[(i*7+2)%6],style:STY[i],top:TOPS[(i*5+3)%6],scarf:TOPS[(i+2)%6],gl:GL[i],mu:MU[i]};});
+if(A[12]) A[12].av.hair='#8C8C8C';
+
+const WEEK=[['Sen',5150000],['Sel',4200000],['Rab',6350000],['Kam',3900000],['Jum',5800000],['Sab',null]];
+const PREV_WEEK=26900000, TARGET=35000000;
+const MIX=[['Konservasi',11200000,'#0A4F48'],['Ortodonti',8450000,'#12907E'],['Scaling',5600000,'#6CCFB6'],['Bedah',3100000,'#E2B657'],['Lainnya',1400000,'#CFDCD8']];
+
+const ST={done:'Selesai',noshow:'Tidak hadir',now:'Ditangani',wait:'Menunggu',next:'Akan datang'};
+const $=s=>document.querySelector(s);
+const rp=n=>'Rp '+n.toLocaleString('id-ID');
+const hm=m=>String(Math.floor(m/60)).padStart(2,'0')+'.'+String(m%60).padStart(2,'0');
+const first=n=>n.split(' ')[0];
+const tooth=c=>`<svg class="tooth-i ${c||''}" viewBox="0 0 24 24" aria-hidden="true"><use href="#tooth"/></svg>`;
+const IC={done:'<path d="M5 12.500l4.500 4.500L19 7.500"/>',now:'<circle cx="12" cy="12" r="4.500" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="9"/>',wait:'<circle cx="12" cy="12" r="8.500"/><path d="M12 7.500V12l3 2"/>',next:'<circle cx="12" cy="12" r="8.500" stroke-dasharray="3.500 3.500"/>',noshow:'<path d="M7 7l10 10M17 7L7 17"/>'};
+const pill=st=>`<span class="pill ${st}"><svg class="tooth-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.600" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[st]}</svg>${ST[st]}</span>`;
+const txFull=a=>a.tx+(a.tooth?(/gigi$/.test(a.tx)?' ':' gigi ')+a.tooth:'');
+
+function avatar(p,size){
+  const hair={
+    short:`<path d="M12 17c-.5-6 3-10 8-10s8.500 3.500 8 9c-2-3-5-4.500-8-4.500s-6 2-8 5.500z" fill="${p.hair}"/>`,
+    side:`<path d="M12 18c-1-7 3-11 8-11 5.500 0 9 4 8 10-1.500-3-3-5-5-6-3 2-8 3-11 7z" fill="${p.hair}"/>`,
+    bun:`<circle cx="20" cy="6" r="3.600" fill="${p.hair}"/><path d="M12 17c-.5-6 3-10 8-10s8.500 3.500 8 9c-2-3-5-4.500-8-4.500s-6 2-8 5.500z" fill="${p.hair}"/>`,
+    curly:`<g fill="${p.hair}"><circle cx="14" cy="12" r="4"/><circle cx="19" cy="9" r="4.300"/><circle cx="25" cy="10.500" r="4"/><circle cx="28" cy="15" r="3"/><circle cx="12" cy="16" r="3"/></g>`,
+    peci:`<path d="M12.200 15c.3-3 1-5 1.800-6.500h12c.8 1.500 1.500 3.500 1.800 6.500-5-1.800-10.600-1.800-15.600 0z" fill="#15191C"/>`,
+    bob:`<path d="M11 27c-2-9 1-20 9-20s11 11 9 20c-1-5-1.500-9-3-12-2 1-8 1-12 0-1.500 3-2 7-3 12z" fill="${p.hair}"/>`
+  };
+  const body=`<rect width="40" height="40" fill="${p.bg}"/><path d="M5 42c0-9 6-13 15-13s15 4 15 13z" fill="${p.top}"/>`;
+  const inner = p.style==='hijab'
+    ? `${body}<path d="M8 33c-2-13 2-27 12-27s14 14 12 27c-3 2-8 3-12 3s-9-1-12-3z" fill="${p.scarf}"/><ellipse cx="20" cy="18" rx="5.800" ry="6.800" fill="${p.skin}"/><g fill="#1B2A2A"><circle cx="17.700" cy="18.300" r=".85"/><circle cx="22.300" cy="18.300" r=".85"/></g><path d="M18.300 21.300q1.700 1.200 3.400 0" fill="none" stroke="#1B2A2A" stroke-width=".8" stroke-linecap="round" opacity=".7"/>`
+    : `${body}${p.style==='bob'?hair.bob:''}${p.style==='long'?`<path d="M10 34c-3-12 0-27 10-27s13 15 10 27z" fill="${p.hair}"/>`:''}<rect x="17" y="23" width="6" height="7" rx="3" fill="${p.skin}"/><circle cx="20" cy="17" r="7.500" fill="${p.skin}"/>${p.style==='bob'?`<path d="M12.500 16c0-5 3-8.500 7.500-8.500s7.500 3.500 7.500 8c-3-1-6-2.500-8-4.500-1.500 2.500-4 4-7 5z" fill="${p.hair}"/>`:p.style==='long'?`<path d="M12.300 18c-.8-6 2.700-10.500 7.700-10.500s8.500 4.500 7.700 10.500c-1.200-3.500-3-5.500-4.700-6.500-3 .5-8 2-10.700 6.500z" fill="${p.hair}"/>`:hair[p.style]}<g fill="#1B2A2A"><circle cx="17" cy="17.700" r=".9"/><circle cx="23" cy="17.700" r=".9"/></g>${p.mu?'':'<path d="M18.200 21q1.800 1.300 3.600 0" fill="none" stroke="#1B2A2A" stroke-width=".8" stroke-linecap="round" opacity=".7"/>'}${p.gl?'<g fill="none" stroke="#1B2A2A" stroke-width="1.100"><circle cx="16.800" cy="17.500" r="2.600"/><circle cx="23.200" cy="17.500" r="2.600"/><path d="M19.400 17.500h1.200"/></g>':''}${p.mu?`<path d="M17 21.300c1.500-.9 4.500-.9 6 0" fill="none" stroke="${p.hair}" stroke-width="1.500" stroke-linecap="round"/>`:''}`;
+  return `<svg class="av" width="${size}" height="${size}" viewBox="0 0 40 40" aria-hidden="true">${inner}</svg>`;
+}
+
+/* ================= state ================= */
+let sel = null, filter='all', query='';
+const by=st=>A.filter(a=>a.st===st);
+const waitMin=a=>NOW-a.arr;
+const chairBusy=n=>A.find(a=>a.st==='now'&&DOCS[a.doc].chair===n);
+const waitingSorted=()=>by('wait').sort((a,b)=>a.arr-b.arr);
+
+/* ================= arch ================= */
+const W=[55,55,53,43,42,37,37,43,43,37,37,42,43,53,55,55], H=[50,50,48,43,42,38,34,34,34,34,38,42,43,48,50,50];
+const crown=(w,h,i)=>{const a=h/2,b=w/2,k=1.12,m=.86,f=n=>n.toFixed(1);return `M0 ${f(-a+i)}C${f(b*m)} ${f(-a*k)} ${f(b*k)} ${f(-a*m)} ${f(b-i)} 0C${f(b*k)} ${f(a*m)} ${f(b*m)} ${f(a*k)} 0 ${f(a-i)}C${f(-b*m)} ${f(a*k)} ${f(-b*k)} ${f(a*m)} ${f(-b+i)} 0C${f(-b*k)} ${f(-a*m)} ${f(-b*m)} ${f(-a*k)} 0 ${f(-a+i)}Z`;};
+const CX=260, CY=378, RX=194, RY=306;
+function archPoints(){
+  const N=600, t0=Math.PI*176/180, t1=Math.PI*4/180, pts=[]; let L=0, px, py;
+  for(let i=0;i<=N;i++){const t=t0+(t1-t0)*i/N, x=CX+RX*Math.cos(t), y=CY-RY*Math.sin(t); if(i) L+=Math.hypot(x-px,y-py); pts.push({t,L}); px=x; py=y;}
+  const sumW=W.reduce((a,b)=>a+b,0), gap=(L-sumW)/15; let s=0; const out=[];
+  W.forEach((w,i)=>{const c=s+w/2; s+=w+gap; const k=pts.findIndex(p=>p.L>=c), t=pts[Math.max(k,0)].t;
+    let nx=Math.cos(t)/RX, ny=-Math.sin(t)/RY; const m=Math.hypot(nx,ny); nx/=m; ny/=m;
+    out.push({x:CX+RX*Math.cos(t), y:CY-RY*Math.sin(t), nx, ny, rot:Math.atan2(ny,nx)*180/Math.PI+90});});
+  return out;
+}
+const PTS=archPoints();
+function renderArch(){
+  const svg=$('#archSvg'); svg.querySelectorAll('g.tooth,g,text,path.guide').forEach(n=>n.remove());
+  let h=`<path class="guide gum" d="M${CX-RX} ${CY} A${RX} ${RY} 0 0 1 ${CX+RX} ${CY}"/><path class="guide" d="M${CX-RX+46} ${CY} A${RX-46} ${RY-46} 0 0 1 ${CX+RX-46} ${CY}"/>`;
+  if(sel!==null){const p=PTS[sel],a=H[sel]/2; h+=`<path class="guide lead" d="M${(p.x-p.nx*(a+9)).toFixed(1)} ${(p.y-p.ny*(a+9)).toFixed(1)}L${(p.x-p.nx*(a+34)).toFixed(1)} ${(p.y-p.ny*(a+34)).toFixed(1)}"/>`;}
+  A.forEach((a,i)=>{
+    const p=PTS[i], w=W[i], hh=H[i], ind=w>=48?4.5:w>=42?3:1.5, D=crown(w,hh,ind);
+    let mk='';
+    if(a.st==='done') mk=`<g transform="rotate(${(-p.rot).toFixed(1)})"><path class="mk" d="M-5.500 .5l3.800 3.800L5.800 -4"/></g>`;
+    if(a.st==='now') mk=`<circle class="mk" r="4"/>`;
+    if(a.st==='noshow') mk=`<g transform="rotate(${(-p.rot).toFixed(1)})"><path class="mk" d="M-4.500 -4.500L4.500 4.500M4.500 -4.500L-4.500 4.500" fill="none" stroke-width="1.8" stroke-linecap="round"/></g>`;
+    if(a.st==='wait'||a.st==='done'||a.st==='now') mk+=`<ellipse cx="${(-w*.14).toFixed(1)}" cy="${(-hh*.27).toFixed(1)}" rx="${(w*.17).toFixed(1)}" ry="${(hh*.07).toFixed(1)}" fill="#fff" opacity=".55" pointer-events="none"/>`;
+    h+=`<g class="tooth ${a.st}${sel===a.id?' sel':''}" data-id="${a.id}" tabindex="0" role="button" aria-label="${a.t}, ${a.name}, ${a.tx}, ${ST[a.st]}" transform="translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${p.rot.toFixed(1)})">
+      ${a.st==='now'?`<path class="pulse" d="${D}"/>`:''}
+      <rect x="-22" y="-24" width="44" height="48" fill="transparent"/>
+      <path class="ring" d="${crown(w+12,hh+12,ind)}"/>
+      <path class="body" d="${D}"/>${mk}</g>`;
+  });
+  for(let i=0;i<16;){ let k=i; while(k+1<16&&A[k+1].t===A[i].t) k++;
+    const x=(PTS[i].x+PTS[k].x)/2, y=(PTS[i].y+PTS[k].y)/2; let nx=PTS[i].nx+PTS[k].nx, ny=PTS[i].ny+PTS[k].ny; const m=Math.hypot(nx,ny); nx/=m; ny/=m;
+    const d=H[i]/2+13+(k>i?3:0), lx=x+nx*d, ly=y+ny*d, anchor=nx<-.45?'end':nx>.45?'start':'middle';
+    if(k>i) h+=`<path d="M${(PTS[i].x+PTS[i].nx*(H[i]/2+6)).toFixed(1)} ${(PTS[i].y+PTS[i].ny*(H[i]/2+6)).toFixed(1)}L${(PTS[k].x+PTS[k].nx*(H[k]/2+6)).toFixed(1)} ${(PTS[k].y+PTS[k].ny*(H[k]/2+6)).toFixed(1)}" class="guide brk"/>`;
+    h+=`<text class="tlabel${i===0||k===15?' edge':''}" x="${lx.toFixed(1)}" y="${(ly+(anchor==='middle'?0:4)).toFixed(1)}" text-anchor="${anchor}" aria-hidden="true">${A[i].t}</text>`;
+    i=k+1; }
+  svg.insertAdjacentHTML('beforeend',h);
+}
+function renderFocus(id){
+  const a=A[id], d=DOCS[a.doc];
+  let foot = a.st==='wait'?`Tunggu ${waitMin(a)} mnt`: a.st==='now'?`Sisa ${Math.max(5,a.start+a.dur-NOW)} mnt`: a.st==='done'?rp(a.fee): a.st==='next'?`${a.dur} menit`:'Belum dijadwal ulang';
+  $('#focus').innerHTML=`<div class="focus-top">${avatar(a.av,40)}<div><b>${a.name}</b><small>${a.t} · Kursi ${d.chair}</small></div></div>
+   <p>${txFull(a)} · ${d.short}</p>
+   <div class="focus-foot">${pill(a.st)}<span>${foot}</span></div>`;
+}
+function select(id,scroll){
+  sel=id; renderArch(); renderFocus(id);
+  document.querySelectorAll('.row').forEach(r=>r.classList.toggle('sel',+r.dataset.id===id));
+}
+$('#archSvg').addEventListener('click',e=>{const g=e.target.closest('.tooth'); if(g){select(+g.dataset.id); const n=$(`#archSvg .tooth[data-id="${g.dataset.id}"]`); n&&n.focus({preventScroll:true});}});
+$('#archSvg').addEventListener('keydown',e=>{const g=e.target.closest('.tooth'); if(!g) return; const id=+g.dataset.id;
+  if(e.key==='Enter'||e.key===' '){e.preventDefault(); select(id); $(`#archSvg .tooth[data-id="${id}"]`).focus();}
+  if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault(); const n=Math.min(15,Math.max(0,id+(e.key==='ArrowRight'?1:-1))); select(n); $(`#archSvg .tooth[data-id="${n}"]`).focus();}});
+$('#archSvg').addEventListener('mouseover',e=>{const g=e.target.closest('.tooth'); if(g) renderFocus(+g.dataset.id);});
+$('#archSvg').addEventListener('mouseleave',()=>renderFocus(sel));
+
+/* ================= hero numbers ================= */
+function renderHero(){
+  $('#hDone').textContent=by('done').length;
+  const rows=[['now','Ditangani'],['wait','Menunggu'],['next','Akan datang'],['done','Selesai'],['noshow','Tidak hadir']];
+  const sw={done:'<rect x="1" y="1" width="18" height="18" rx="7" fill="#FFF6E4"/><path d="M5.500 10.500l3 3 6-6.500" fill="none" stroke="#0C6A5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+    now:'<rect x="1" y="1" width="18" height="18" rx="7" fill="#8FF0D3"/><circle cx="10" cy="10" r="3" fill="#0A4F48"/>',
+    wait:'<rect x="1" y="1" width="18" height="18" rx="7" fill="#F0603F"/>',
+    next:'<rect x="1.500" y="1.500" width="17" height="17" rx="6.500" fill="rgba(255,255,255,.2)" stroke="rgba(255,255,255,.85)" stroke-width="1.500"/>',
+    noshow:'<rect x="1.500" y="1.500" width="17" height="17" rx="6.500" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.500" stroke-dasharray="3 3"/><path d="M7 7l6 6M13 7l-6 6" stroke="rgba(255,255,255,.8)" stroke-width="1.500" stroke-linecap="round"/>'};
+  $('#legend').innerHTML=rows.map(([k,l])=>`<li><svg class="lg" viewBox="0 0 20 20" aria-hidden="true">${sw[k]}</svg>${l}<b>${by(k).length}</b></li>`).join('');
+}
+
+/* ================= waiting ================= */
+function renderWaiting(){
+  const w=waitingSorted(); $('#wCount').textContent=w.length;
+  if(!w.length){ $('#wSum').textContent=''; $('#wCount').classList.remove('hot');
+    $('#wList').innerHTML=`<div class="empty"><div><svg viewBox="0 0 24 24"><use href="#tooth"/></svg><b>Ruang tunggu kosong</b>Pasien berikutnya dijadwalkan ${by('next')[0]?by('next')[0].t:'besok'}.</div></div>`; return; }
+  const avg=Math.round(w.reduce((s,a)=>s+waitMin(a),0)/w.length);
+  $('#wSum').textContent=`Rata-rata tunggu ${avg} menit · terlama ${waitMin(w[0])} menit`;
+  $('#wList').innerHTML=w.map(a=>{
+    const d=DOCS[a.doc], busy=chairBusy(d.chair), lead=!busy;
+    const note = lead
+      ? `<span class="ready">${d.short} siap</span><button class="btn hot" data-call="${a.id}">Panggil ke Kursi ${d.chair}</button>`
+      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="8.500"/><path d="M12 7.500V12l3 2"/></svg><span>Kursi ${d.chair} kosong sekitar ${Math.max(5,busy.start+busy.dur-NOW)} mnt lagi</span>`;
+    return `<div class="w${lead?' lead':''}">${avatar(a.av,44)}
+      <div><b>${a.name}</b><small>${a.t} · ${a.tx}${a.tooth?` <span class="fdi">${tooth()}${a.tooth}</span>`:''}</small></div>
+      <div class="w-time">${waitMin(a)}<span>menit</span></div>
+      <div class="w-note">${note}</div></div>`;
+  }).join('');
+}
+$('#wList').addEventListener('click',e=>{const b=e.target.closest('[data-call]'); if(!b) return; const a=A[+b.dataset.call];
+  a.st='now'; a.start=NOW; sel=a.id; renderAll(); toast(`${a.name} dipanggil ke Kursi ${DOCS[a.doc].chair}`);});
+
+/* ================= schedule ================= */
+const FILTERS=[['all','Semua'],['wait','Menunggu'],['now','Ditangani'],['next','Akan datang'],['done','Selesai']];
+function renderSchedule(){
+  $('#chips').innerHTML=FILTERS.map(([k,l])=>`<button class="chip" data-f="${k}" aria-pressed="${filter===k}">${l}<em>${k==='all'?A.length:by(k).length}</em></button>`).join('');
+  const list=A.filter(a=>(filter==='all'||a.st===filter)&&a.name.toLowerCase().includes(query));
+  const toMin=t=>+t.slice(0,2)*60+ +t.slice(3); let marked=!(filter==='all'&&!query);
+  $('#rows').innerHTML=list.length?list.map(a=>{const d=DOCS[a.doc]; let pre=''; if(!marked&&toMin(a.t)>NOW){marked=true; pre='<div class="nowline"><span>Sekarang 13.40</span></div>';}
+    return `${pre}<div class="row is-${a.st}${sel===a.id?' sel':''}" data-id="${a.id}">
+      <div class="r-time"><b>${a.t}</b><small>${a.dur} mnt</small></div>
+      <div class="who">${avatar(a.av,38)}<div><b>${a.name}</b><small>${a.tx}${a.tooth?`<span class="fdi">${tooth()}${a.tooth}</span>`:''}<span class="m-doc">${d.short} · Kursi ${d.chair}</span></small></div></div>
+      <div class="r-doc">${avatar(d.av,32)}<div>${d.short}<small>Kursi ${d.chair}</small></div></div>
+      <div class="r-fee${a.st==='done'?'':' none'}">${a.st==='done'?rp(a.fee):'–'}</div>
+      <div class="r-st">${pill(a.st)}</div></div>`;}).join('')
+    :`<div class="no-rows">Tidak ada janji temu yang cocok${query?` dengan “${query}”`:''}.</div>`;
+  const done=by('done'), sum=done.reduce((s,a)=>s+a.fee,0);
+  $('#sFoot').innerHTML=`<span>Tertagih hari ini</span><b>${rp(sum)}</b><span>dari ${done.length} kunjungan selesai</span><span class="sp"></span><span>${by('noshow').length} tidak hadir</span>`;
+  $('#navCount').textContent=A.length;
+}
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip'); if(b){filter=b.dataset.f; renderSchedule(); $(`.chip[data-f="${filter}"]`).focus();}});
+$('#rows').addEventListener('click',e=>{const r=e.target.closest('.row'); if(r) select(+r.dataset.id);});
+$('#q').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase(); renderSchedule();});
+document.addEventListener('keydown',e=>{if(e.key==='/'&&document.activeElement.tagName!=='INPUT'){e.preventDefault(); $('#q').focus();}});
+
+/* ================= doctors & chairs ================= */
+function renderDoctors(){
+  $('#docs').innerHTML=Object.entries(DOCS).map(([k,d])=>{
+    const mine=A.filter(a=>a.doc===k), cur=mine.find(a=>a.st==='now'), nextW=mine.filter(a=>a.st==='wait').sort((a,b)=>a.arr-b.arr)[0], nx=mine.find(a=>a.st==='next');
+    const status=cur?`Menangani ${cur.name}<small>${txFull(cur)}</small>`
+      : nextW?`Kursi kosong<small>${first(nextW.name)} sudah menunggu ${waitMin(nextW)} menit</small>`
+      : nx?`Kosong sampai ${nx.t}`:'Tidak ada pasien lagi hari ini';
+    const doneN=mine.filter(a=>a.st==='done').length;
+    return `<div class="doc${cur?'':' free'}"><div class="doc-av">${avatar(d.av,52)}<i></i></div><div>
+      <b>${d.name}</b><div class="doc-meta"><span class="kursi">Kursi ${d.chair}</span>${d.spec} · ${d.hours}</div>
+      <div class="doc-now"><span>${status}</span></div>
+      <div class="doc-teeth" aria-label="${doneN} dari ${mine.length} pasien selesai">${mine.map(a=>tooth('t-'+a.st)).join('')}<span>${doneN}/${mine.length} pasien</span></div></div></div>`;
+  }).join('');
+  let busyN=0;
+  $('#chairs').innerHTML=Object.values(DOCS).map(d=>{const c=chairBusy(d.chair); if(c) busyN++;
+    return `<div class="chair${c?'':' free'}"><div class="chair-n">${d.chair}</div><div><b>${c?c.name:'Kosong'}</b><small>${c?`Sisa ${Math.max(5,c.start+c.dur-NOW)} mnt`:`${d.short} siap`}</small></div></div>`;}).join('');
+  $('#chairSum').textContent=`${busyN}/3 terisi`;
+}
+
+/* ================= revenue ================= */
+function renderRevenue(){
+  const today=by('done').reduce((s,a)=>s+a.fee,0); WEEK[5][1]=today;
+  const total=WEEK.reduce((s,d)=>s+d[1],0), max=7e6, pct=Math.round(total/TARGET*100), delta=(total/PREV_WEEK-1)*100;
+  $('#revTotal').textContent=(total/1e6).toLocaleString('id-ID',{minimumFractionDigits:2,maximumFractionDigits:2});
+  $('#revDelta').textContent=`▲ ${delta.toLocaleString('id-ID',{maximumFractionDigits:1})}%`;
+  $('#revPrev').textContent=`dari Rp ${(PREV_WEEK/1e6).toLocaleString('id-ID')} jt minggu lalu`;
+  $('#yax').innerHTML=[0,2,4,6].map(v=>`<span style="bottom:${v/7*100}%">${v?v+' jt':'0'}</span>`).join('');
+  const tgDay=TARGET/6;
+  $('#plot').innerHTML=[2,4,6].map(v=>`<i class="gl" style="bottom:${v/7*100}%"></i>`).join('')
+    +`<i class="tg" style="bottom:${tgDay/max*100}%"></i>`
+    +WEEK.map((d,i)=>`<div class="bar${i===5?' today':''}" style="height:${d[1]/max*100}%" title="${d[0]}: ${rp(d[1])}"><b>${(d[1]/1e6).toLocaleString('id-ID',{maximumFractionDigits:2})}</b></div>`).join('');
+  $('#xax').innerHTML=WEEK.map((d,i)=>`<span class="${i===5?'today':''}">${d[0]}</span>`).join('');
+  $('#tgPct').textContent=`${pct}% tercapai`;
+  const filled=Math.round(pct/5);
+  $('#tgTeeth').innerHTML=Array.from({length:20},(_,i)=>tooth(i<filled?'t-done':'t-next')).join('');
+  const msum=MIX.reduce((s,m)=>s+m[1],0);
+  let acc=0; $('#donut').innerHTML=MIX.map(m=>{const v=m[1]/msum*100, r=`<circle cx="21" cy="21" r="15.915" fill="none" stroke="${m[2]}" stroke-width="6.500" stroke-dasharray="${(v-1.2).toFixed(2)} ${(100-v+1.2).toFixed(2)}" stroke-dashoffset="${(25-acc).toFixed(2)}"/>`; acc+=v; return r;}).join('');
+  $('#mixList').innerHTML=MIX.map(m=>`<li><i style="background:${m[2]}"></i><span>${m[0]}</span><b>${(m[1]/1e6).toLocaleString('id-ID')} jt</b><span>${Math.round(m[1]/msum*100)}%</span></li>`).join('');
+}
+
+/* ================= misc ================= */
+let tt; function toast(msg){const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),2600);}
+$('#newBtn').addEventListener('click',()=>toast('Formulir janji temu belum tersedia di contoh ini'));
+$('#bell').addEventListener('click',()=>toast('1 notifikasi: Hendra Gunawan tidak hadir pukul 10.30'));
+$('#printBtn').addEventListener('click',()=>window.print());
+const meAv={bg:'#FFF1D6',skin:'#E8B894',hair:'#2B2118',style:'bob',top:'#F0603F'}; $('#topMe').innerHTML=avatar(meAv,40);
+$('#me').innerHTML=avatar({bg:'#FFF1D6',skin:'#E8B894',hair:'#2B2118',style:'bob',top:'#F0603F'},36)+'<div><b>Rina Kusuma</b><small>Resepsionis</small></div>';
+
+function renderAll(){
+  if(sel===null){const w=waitingSorted()[0]; sel=w?w.id:(by('now')[0]||A[0]).id;}
+  renderHero(); renderArch(); renderFocus(sel); renderWaiting(); renderSchedule(); renderDoctors(); renderRevenue();
+}
+renderAll();
+</script>
+</body>
+</html>

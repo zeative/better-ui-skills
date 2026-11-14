@@ -1,0 +1,68 @@
+{
+  "expectations": [
+    {
+      "text": "The page has no horizontal overflow when rendered at 375px, 768px and 1440px wide.",
+      "passed": true,
+      "evidence": "overflow px: 375→0, 768→0, 1440→0"
+    },
+    {
+      "text": "Every piece of visible text meets WCAG AA contrast (4.5:1, or 3:1 for large text) against its background.",
+      "passed": true,
+      "evidence": "0 text elements below AA"
+    },
+    {
+      "text": "The rendered page uses at most 12 distinct font sizes.",
+      "passed": false,
+      "evidence": "13 sizes: 12, 12.5, 13, 14, 17, 19, 20, 21, 22, 24, 30, 40, 50"
+    },
+    {
+      "text": "The rendered page uses at most 7 distinct corner radii.",
+      "passed": false,
+      "evidence": "10 radii: 12px, 99px, 16px, 9px, 999px, 6px, 50%, 24px, 18px, 13px"
+    },
+    {
+      "text": "Every element reached by pressing Tab shows a visible focus style.",
+      "passed": true,
+      "evidence": "25 elements tabbed, 0 with no visible change"
+    },
+    {
+      "text": "No interactive element is smaller than 24×24px, and at 375px wide no button or control is under 40px in its tappable dimension.",
+      "passed": false,
+      "evidence": "0 under 24px, 8 under 40px at 375px: g.tooth.done \"09.00, Sari Wijayanti, Scaling & pol\" 38×40; g.tooth.noshow \"10.30, Hendra Gunawan, Konsultasi, T\" 40×40; g.tooth.done \"10.45, Nabila Rahma, Cetak retainer,\" 38×37; g.tooth.done \"11.30, Fajar Nugroho, Tambal komposi\" 35×33"
+    },
+    {
+      "text": "The page has a lang attribute, a viewport meta tag, exactly one visible h1, a main landmark, and no skipped heading levels.",
+      "passed": true,
+      "evidence": "lang=id, viewport=True, h1=1, main=True, skips=[]"
+    },
+    {
+      "text": "Every form field has a label and every button or link has an accessible name.",
+      "passed": true,
+      "evidence": "0 unnamed controls, 0 unlabelled fields"
+    },
+    {
+      "text": "The page loads with no console errors and no failed network requests.",
+      "passed": true,
+      "evidence": "0 errors, 0 failed requests"
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 3,
+    "total": 9,
+    "pass_rate": 0.67
+  },
+  "execution_metrics": {
+    "tool_calls": {
+      "Skill": 1,
+      "Bash": 17,
+      "Write": 1,
+      "Read": 36,
+      "Agent": 2
+    },
+    "total_tool_calls": 57
+  },
+  "timing": {
+    "total_duration_seconds": 1104.9
+  }
+}
