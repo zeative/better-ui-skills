@@ -41,12 +41,23 @@ Training prompts (used while designing the skill):
 | Method B.2: the finish a reviewer marks down is measured by the audit | **8** (8 again from a later reviewer) | 7 | 7 |
 | Method C: one ownable idea first, required independent review | **8** (art direction 9) | **8** (art direction 9) | **8** (art direction 9) |
 
-Held-out prompts (never used while designing the skill; first attempt each):
+Held-out prompts (never used while designing the skill when first run):
 
-| Method | POS landing page (Indonesian) | Personal finance app | Photographer portfolio |
+| Prompt | Method | Score | Reviewer's summary |
 |---|---|---|---|
-| Method B.2 | **8** (art direction 9) | 7 (6 from a second reviewer) | not run |
-| Method C | not run | 7 (art direction 8) | 7 (art direction 8) |
+| POS landing page (Indonesian) | B.2 | **8** (art direction 9) | "would pass [...] on the strength of its warung-specific identity" |
+| Dental clinic dashboard (Indonesian) | C.1 | **8** (art direction 9) | "the dental-arch appointment hero [...] more distinctive than most of the set" |
+| Personal finance app | B.2 | 7, later 6 | "a generic pastel fintech dashboard template with no ownable visual idea" |
+| Personal finance app | C (abacus) | 7, 8, 7.5 from three reviewers | "the abacus concept is as distinctive as the best references" |
+| Personal finance app | C.1 (till receipt) | 7 | "dense, evenly weighted three-column layout with flat hard-shadow cards" |
+| Personal finance app | C.2 (banknote), four review rounds | 7 | "the idea is confined to the top two cards and the rest is a plain white dashboard" |
+| Workout tracker app | C.1 | 7 (art direction 8) | "a stronger concept than most of the set", but "a dark, nearly colourless empty state" |
+| Photographer portfolio | C | 7, later 6 | "built from SaaS landing-page components rather than a photo-led editorial layout" |
+| Photographer portfolio | C.1, showcase register | 7 (typography 9) | "would nearly pass [...] illustrated stand-ins replace the real photography" |
+
+By kind of screen: landing pages and dashboards reach 8 on both training and held-out prompts.
+Personal, mobile-first apps sit at 7 to 8 (the training habit tracker at 8, two held-out apps at
+7 to 8). Image-led sites stop at 7 for want of real photographs.
 
 No candidate has scored 9 or 10. Reviewers name one gap that code alone does not close: the
 references use real product photography and real faces, and these pages use vector illustration.
@@ -114,4 +125,19 @@ where the references are photo-led and almost free of interface.
 the idea's own material and line; one shadow language per design; personal apps keep one focal
 object with few modules; and a showcase register (`references/editorial.md`) covers image-led
 sites, with the audit's surface and card checks switched off for it.
+
+**After C.1.** The clinic dashboard, a new prompt, scored 8 on its first attempt. The showcase
+register lifted the portfolio's structure (typography scored 9) but not its score, because the
+pictures are still drawn. A look at the build transcripts showed that the in-skill reviewers are
+well calibrated (second-round overall scores of 6.5 to 7.5, matching the external reviewers) and
+that builders were stopping at the two-round minimum regardless.
+
+**Method C.2** requires review rounds to continue until a fresh reviewer gives 8 overall. The
+first build under it ran four rounds (7, 7, 7, 7.5) and scored 7 externally: more rounds alone
+did not move it, because each round patched details while the lower half of the page stayed a
+stock list and donut.
+
+**Method C.3** (running) therefore requires the idea to reach every module, forbids stock
+modules in personal apps, and names supplied or generated imagery as the way to close the gap to
+photographic references.
 
