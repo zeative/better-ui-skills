@@ -1,0 +1,28 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-6/store-admin-dashboard/with_skill/outputs/index.html
+Rendered at 375px (page height 5353px), 768px (page height 4028px), 1440px (page height 2250px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   11px  12px  13px  14px  16px  20px  30px  32.6592px  34px  90.72px
+  Families     Figtree, Fraunces
+  Weights      400, 500, 600, 700
+  Text colours #5e4a3a #24160e #d3bfa6 #fbf3e4 #8c2a17 #b39c82 #f1f6ec #c5d8c0 (+13 more)
+  Fills        #fdf9f0 #eadfc9 #b93e26 #b0926a #dce6d3 #dda63f #3d271a #22140c (+9 more)
+  Radii        999px×38  5px×26  16px×17  4px×14  50%×12  24px×11  10px×5  12px×4  2px×2
+  Shadows      27 distinct
+  Visuals      6 large graphics, 36 icons, 24 surfaces; largest graphic in the first screen 745×498px
+  Interaction  39 interactive elements; 16 :hover rules, 1 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+TOUCH — fix unless there is a reason
+  • 7 touch targets under 40px at 375px wide, e.g. button.bar-b "3,4 jt 27" 32×190; button.bar-b "2,2 jt 18" 32×190; button.bar-b "2,6 jt 21" 32×190; button.bar-b "2,9 jt 24" 32×190; button.bar-b "3,4 jt 26" 32×190
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • Text under 12px: span.brand-sub "KOPI · ADMIN" (11px); span.yl "1 jt" (11px); span.yl "2 jt" (11px); span.yl "3 jt" (11px); span.yl "4 jt" (11px)
+  • 9 different corner radii (999px×38, 5px×26, 16px×17, 4px×14, 50%×12, 24px×11, 10px×5, 12px×4, 2px×2). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
+  • 27 different box-shadows. Use a scale of four or five levels, not one per component.
+  • Columns in different sections start at nearly, but not exactly, the same x at 1440px: 854px (section.card.kpi "Kopi terjual 8,4kg 36 kantong 32 × 2") vs 909px (label.search "Cari pesanan atau produk /"); 909px (label.search "Cari pesanan atau produk /") vs 950px (section.card.topp "Produk terlaris 7 hari terakhir · me"). Put every section on one shared grid so column edges repeat down the page.
+  • 1 short text(s) wrap leaving a stub on the last line at 375px: span#wk-detail "Jum, 13 Nov · Rp 4.120.000 · 33 pesa". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+  • A wrapping row leaves one item alone on its last line at 375px: span "Stok 27" in span.meta.
+  • 10 links go nowhere (href="#"). Fine for a mock, but say so in your handoff.
+
+This report cannot judge art direction, composition or how good the visuals are. Open the screenshots and score them with references/critique.md.
