@@ -37,14 +37,19 @@ Training prompts (used while designing the skill):
 | No skill (baseline) | 5-6 | 4-5 | 4 |
 | Skill v2: restraint, measured craft | 4 | 3 | 4 |
 | Method B: finish library, showpiece, polish, critique loop | 7 | 7 | 7 |
-| Method B.1: illustrated objects and portraits, colour discipline, finishing pass | 7 | **8** (8 again from a second reviewer) | 7 (6 from a second reviewer) |
-| Method B.2: the finish a reviewer marks down is measured by the audit | **8** | 7 | 7 |
+| Method B.1: illustrated objects and portraits, colour discipline, finishing pass | 7 | **8** (8 again from two later reviewers) | 7 (6 from a second reviewer) |
+| Method B.2: the finish a reviewer marks down is measured by the audit | **8** (8 again from a later reviewer) | 7 | 7 |
+| Method C: one ownable idea first, required independent review | **8** (art direction 9) | **8** (art direction 9) | **8** (art direction 9) |
 
 Held-out prompts (never used while designing the skill; first attempt each):
 
-| Method | POS landing page (Indonesian) | Personal finance app |
-|---|---|---|
-| Method B.2 | **8** (art direction 9) | 7 |
+| Method | POS landing page (Indonesian) | Personal finance app | Photographer portfolio |
+|---|---|---|---|
+| Method B.2 | **8** (art direction 9) | 7 (6 from a second reviewer) | not run |
+| Method C | not run | 7 (art direction 8) | 7 (art direction 8) |
+
+No candidate has scored 9 or 10. Reviewers name one gap that code alone does not close: the
+references use real product photography and real faces, and these pages use vector illustration.
 
 ## What each round taught
 
@@ -83,10 +88,30 @@ things each time: no single ownable visual idea, cards of equal weight, a pastel
 timid type. The dashboard that scored 8 to 9 on art direction got there because its identity
 came out of its subject (roast stamps, kraft bags), not out of the library.
 
-**Method C** (running) rebuilds the art-direction step around that: find one concept in the
+**Method C** rebuilds the art-direction step around that: find one concept in the
 product's own world, make it the hero device at large scale carrying real content, echo it in the
 details, commit the palette to a base, one dominant colour and one hot accent, and give the type
 dramatic scale. The library is demoted to finish kits whose colours are placeholders. An
 independent reviewer becomes a required step. The audit additionally measures initials avatars,
 recoloured repeated drawings, timid type scale, equal-weight cards, rainbow fills and a first
 screen with no confident field of colour.
+
+All three training prompts reached 8 with art direction scored 9: "the yellow-and-black
+chain-link identity is distinctive and consistently executed" (habit tracker), "the huge serif
+total, bean target meter and canister bars give it a stronger identity than most of the set"
+(dashboard), "a distinctive ledger-paper identity and unusually rich product vignettes" (landing
+page). The earlier builds of the same prompts were marked down by the same reviewers as "a
+generic blue-gradient SaaS art direction with no signature visual idea".
+
+The two held-out prompts run under Method C scored 7. The finance app's reviewer wrote that "the
+abacus concept is as distinctive as the best references" and that it was held back by dashboard
+density, emoji-style icons in a different visual language from the beads and wood, and an
+under-finished balance card. The photographer portfolio "has a real concept (contact sheet, film
+rebate, grease pencil)" but contains no photographs and is built from product-landing components
+where the references are photo-led and almost free of interface.
+
+**Method C.1** (running) responds to both: objects, icons and secondary surfaces must be drawn in
+the idea's own material and line; one shadow language per design; personal apps keep one focal
+object with few modules; and a showcase register (`references/editorial.md`) covers image-led
+sites, with the audit's surface and card checks switched off for it.
+

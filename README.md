@@ -1,41 +1,39 @@
 # better-ui
 
-An agent skill that makes AI coding agents build interfaces that are specific to the product, restrained, and finished, instead of the generic look people now recognise as AI-made.
+An agent skill that makes AI coding agents design and build interfaces at the level of popular Dribbble shots, instead of the flat, generic look people recognise as AI-made.
 
-It is a process plus a measuring tool, not a style. It does not tell the agent which fonts or colours to use.
+It is a process, a set of craft references and a measuring tool. It does not hand the agent a style.
 
-## Why it works this way
+## How it works
 
-Research into what developers and designers say about AI-generated UI (sources at the end) kept returning to four points:
+A great shot and generic AI output often use the same ingredients: cards, gradients, rounded corners, a product screenshot. What separates them is one ownable idea and the depth of its execution. The skill forces both:
 
-1. **Generic output comes from nobody deciding.** At every choice the most common answer is the easiest to produce, and a page made of most-common answers looks like every other page.
-2. **Banning a look only moves the problem.** Tell a model to avoid the purple gradient and it lands on the next most common look: cream background, serif headline with one italic word, earthy accent. The baseline runs in this repo show exactly that, on three unrelated products.
-3. **A model cannot see what it built.** Layout problems are invisible in source code. It has to render the page and look.
-4. **A model reviewing its own work shares its own blind spots.** Measurements do not.
-
-So the skill has the agent:
-
-1. Check whether a design already exists, and fit into it if so.
-2. Write down who the screen is for and the one job it has.
-3. Write the real content and data before any layout, with no invented proof.
-4. Choose a direction on purpose: name its default, collect material from the product's own world, draft three different directions, pick one, and test whether the result would fit a different product just as well.
-5. Build from a small set of tokens, with every state, every width, and keyboard access.
-6. Render the page, run the audit script, read the screenshots in a fixed order, fix, and repeat.
-7. Hand off plainly, stating assumptions and anything that is mocked.
+1. **Check whose design it is.** In an existing product, fit into its system.
+2. **Understand the job, write the real content.** The register (product page, app, showcase site, reading) decides what "rich" means.
+3. **Find one idea and commit to it.** A motif from the product's own world, made the hero of the screen at large scale and carrying real content, echoed in three details, with a committed palette (neutral base, one dominant colour, one hot accent) and dramatic type scale. A finish kit is then dealt from a library by script, and its placeholder colours are replaced.
+4. **Build the showpiece first**, in real detail: a product mock with believable content, floating detail cards, atmosphere, charts, distinct illustrated objects and portraits.
+5. **Build with depth and finish:** content on surfaces, layered shadows, variety within sets, every width and state.
+6. **Render, measure, get an independent review, fix.** The audit script screenshots the page and reports what a demanding reviewer would mark down. A second agent that did not build the page then scores the screenshots against a rubric. At least two rounds.
+7. **Hand off plainly:** the idea, the assumptions, what is placeholder.
 
 ## What is in the folder
 
 ```
 better-ui/
-├── SKILL.md                  the process (about 140 lines)
+├── SKILL.md                    the process
 ├── references/
-│   ├── direction.md          how to arrive at a design that belongs to its product
-│   ├── craft.md              numeric rules for type, colour, spacing, states, motion, accessibility
-│   ├── product-ui.md         apps, dashboards, tables, forms, charts
-│   └── marketing.md          landing and pricing pages
+│   ├── art-directions.md       twelve finish kits with tokens, and how to tune them
+│   ├── showpiece.md            building product mocks, charts, objects, portraits, atmospheres in code
+│   ├── polish.md               surfaces, shadows, type, colour, controls, motion
+│   ├── critique.md             what the bar looks like per category, the rubric, the reviewer's brief
+│   ├── marketing.md            landing and pricing pages
+│   ├── product-ui.md           dashboards, admin, apps, mobile-first tools
+│   ├── editorial.md            portfolios, studios, restaurants and other image-led sites
+│   └── craft.md                the floor: contrast, type scale, layout, states, accessibility
 ├── scripts/
-│   └── audit.cjs             renders a page, screenshots it, reports measured problems
-└── evals/                    the three test cases used below
+│   ├── audit.cjs               renders a page, screenshots it, reports measured problems
+│   └── deal.cjs                deals one finish kit from a shortlist
+└── evals/                      three test cases
 ```
 
 ## Install
@@ -52,7 +50,7 @@ or, for one project only:
 mkdir -p .claude/skills && cp -r better-ui .claude/skills/
 ```
 
-The agent picks it up on its own when a request involves building or restyling something visible. You can also ask for it by name.
+A packaged copy is in `dist/better-ui.skill`. The agent picks the skill up on its own when a request involves building or restyling something visible.
 
 ## The audit script
 
@@ -60,72 +58,54 @@ The agent picks it up on its own when a request involves building or restyling s
 node better-ui/scripts/audit.cjs path/to/index.html --out .ui-audit
 ```
 
-It needs Node and a Chromium that Playwright or Puppeteer can drive. Without one it says so and exits, and the skill falls back to a manual checklist.
+It needs Node and a Chromium that Playwright or Puppeteer can drive. It renders at 375, 768 and 1440px, saves screenshots cut into parts that stay legible (plus a whole-page thumbnail), and prints an inventory and a list of measured problems:
 
-It renders at 375, 768 and 1440px, saves screenshots, and prints:
+- **Broken:** horizontal overflow, console errors, failed requests, text covered by another element, content hidden under fixed bars, words that run together.
+- **Accessibility:** text below WCAG AA contrast, no visible keyboard focus, unlabelled fields, unnamed buttons, small targets, heading order.
+- **Richness:** a first screen with no substantial visual, screens with nothing to look at but text, text sitting on a bare page, one drawing recoloured for every item, people shown as initials, flat single-blur shadows, a small hero visual, a page held in one tone, timid type scale, cards of equal weight, a pastel rainbow, no confident field of colour.
+- **Craft:** clipped strings, half-empty cards, cards that nearly align, uneven phone margins, columns that nearly align, values at different heights in a row, text wrapping to a stub, too many type sizes or radii.
 
-- **An inventory** of every font size, family, weight, colour, radius and shadow actually in use.
-- **Broken:** horizontal overflow, console errors, failed requests, broken images, missing viewport tag.
-- **Accessibility:** text below WCAG AA contrast, controls with no visible keyboard focus, unlabelled fields, unnamed buttons, tap targets that are too small, heading order.
-- **Craft:** too many font sizes or radii, lines too long to read, columns in different sections that nearly align, values in a row that sit at different heights, text that wraps leaving a stub, a lone item on a wrapped row.
-- **Reflexes:** gradient text, backdrop blur, emoji as icons, an indigo-to-violet accent, and similar defaults that usually arrive without being chosen. These are reported as questions, not errors.
+Options: `--setup seed.js` runs a script in the page first (seed data, open a dialog), `--register showcase` drops the checks that ask for cards and shadows on image-led sites, `--dark`, `--widths`, `--json`.
 
-Useful options: `--setup seed.js` runs a script in the page first (to seed data or open a dialog), `--dark` renders the dark scheme, `--widths 320,1024` changes the widths, `--json` prints raw measurements.
+Each check exists because a reviewer marked real output down for that fault.
 
 ## Does it work?
 
-Three prompts were each built twice by separate headless agent sessions, each in its own empty folder with no knowledge of this project. The prompts and tool permissions were identical. The only difference was whether the skill was installed in that session's folder. Nothing in the prompt mentioned the skill; in every skill session the agent chose to load it as its first action.
+Every test page was built by a separate headless agent session in its own empty folder, from a one-line prompt that never mentions the skill. In each session the agent chose to load the skill itself.
 
-The prompts:
+Pages are judged against real Dribbble shots: eight from the first page of results for the category, read by a fresh reviewer agent together with the candidate's screenshots. A parity score of 8 means a Dribbble audience would not notice a quality gap; that is the pass mark.
 
-- *"Build a landing page for Ledgerly, an invoicing tool for freelancers…"*
-- *"Bikin halaman dashboard admin untuk toko online kecil yang jualan biji kopi…"*
-- *"make me a habit tracker web app…"*
+| Method | Landing page | Dashboard | Habit tracker |
+|---|---|---|---|
+| No skill | 5-6 | 4-5 | 4 |
+| First version of the skill: restraint and measured craft | 4 | 3 | 4 |
+| Method B: finish library, showpiece, polish | 7 | 7 | 7 |
+| Method B with measured finish | 8 | 7-8 | 7 |
+| Method C, the current skill: one ownable idea first | **8** | **8** | **8** |
 
-Results were then judged two ways.
+Prompts never used while designing the skill, first attempt each: a POS landing page in Indonesian scored **8**, a personal finance app 7, a photographer's portfolio 7.
 
-**Blind review.** A separate reviewer agent per case saw only screenshots labelled A and B and the original prompt. Labels were randomised and re-randomised between rounds.
+The history of what failed and why is in `better-ui-workspace/dribbble-bar.md`. The short version:
 
-| Case | Round 1 (skill v1) | Round 2 (skill v2) |
-|---|---|---|
-| Landing page | skill, narrow (8 vs 7) | skill, moderate (8 vs 7) |
-| Store dashboard | skill, moderate (8 vs 6) | skill, moderate (8 vs 6) |
-| Habit tracker | skill, moderate (7.5 vs 6) | skill, moderate (7 vs 6) |
+- The first version asked for restraint. Against the Dribbble bar it scored below no skill at all: honest, useful pages that reviewers called a wireframe next to the references.
+- A library of directions plus a detailed showpiece moved everything to 7. Turning each recurring finishing complaint into a measurement moved landing pages to 8.
+- What kept app screens at 7 was not finish but the lack of a single ownable idea. Rebuilding the art-direction step around a concept from the product's own world moved all three training prompts to 8, with art direction scored 9.
 
-**Measured checks.** Nine assertions computed by the audit script (overflow, contrast, type scale, radii, keyboard focus, tap targets, document basics, labels, runtime errors).
+### What it does not do
 
-| | With skill | Without |
-|---|---|---|
-| Iteration 1 | 27 of 27 | 18 of 27 |
-| Iteration 2 | 24 of 27 | 18 of 27 |
-
-**Cost.** Skill runs took about twice as long (around 4.5 minutes against 2.5) and cost about 1.6 times as much per page.
-
-### What the reviewers credited
-
-- Content that is specific and adds up. The skill landing page shows the actual reminder email and a ledger whose totals reconcile; the baseline has an invented "Most popular" badge and an unlabelled chart.
-- Layouts built around the task. The skill dashboard opens with what needs doing before the courier arrives; the baseline opens with four equal stat cards and a sidebar of links that go nowhere.
-- A real idea where one fits. In the skill habit tracker, consecutive days join into one bar, so a streak is a shape you see before you read a number.
-- Phone layouts that are redesigned. The baseline dashboard's order table is cut off at phone width with status and total off screen.
-- Every baseline page was called likely AI-generated on sight. The skill pages mostly were not.
-
-### What it does not fix
-
-Stated plainly, because it matters for whether this skill suits you:
-
-- **The skill pages are austere.** Reviewers called them "disciplined rather than delightful". Two of three in round 2 said the baseline looks more attractive or more finished at a five-second glance, and that the skill version wins once you read it. If first-glance appeal is what you need most, this skill does not yet deliver it.
-- **Margins were never large.** Six of six blind comparisons went to the skill, none by a clear margin.
-- **The evidence is thin.** One run per configuration, three prompts, and reviewers from the same model family as the builders, who may share its taste. No human designer has judged these yet.
-- **The measured checks favour the skill by construction**, since the skill ships the script that computes them.
-- **Bugs still get through.** The iteration 2 dashboard overflows by 140px on a phone. The audit script missed it because of a measurement bug, which is now fixed; whether the fixed script leads the agent to catch such cases has not been re-tested.
+- **Nothing has scored 9 or 10.** Reviewers name one gap code does not close: the references use real product photography and real faces, and these pages use vector illustration.
+- **Two kinds of screen are still at 7:** personal mobile-first apps and sites whose product is photography. Changes for both are in the skill; their effect is still being tested.
+- **The judges are AI models, not designers.** The same page moves about a point between reviewers. No human designer has scored these.
+- **One run per configuration.** Results vary from run to run with the same skill.
+- **It is slower and costs more:** 10 to 30 minutes and roughly 4 to 12 dollars per page, against 2 to 3 minutes and about 1.3 dollars without the skill.
+- **Proof on marketing pages is placeholder.** The skill designs testimonial, logo and statistic sections with fictional names and tells the user to replace them; they must not be published as they are.
 - **Only single-file HTML was tested.** Work inside an existing codebase with its own design system, which the skill has instructions for, was not evaluated.
 
-Full details, including every reviewer's reasoning and each page's weaknesses, are in `better-ui-workspace/`:
+### Where the evidence is
 
-- `iteration-1/blind-judging.md` and `iteration-2/blind-judging.md`
-- `iteration-N/review.html`: open in a browser to see all outputs side by side with the measured grades
-- `iteration-N/<case>/<with_skill|without_skill>/outputs/`: the pages themselves and their screenshots
-- `tools/`: the scripts that ran and graded the sessions
+- `better-ui-workspace/dribbble-bar.md`: the judging method, every score, what each round taught.
+- `better-ui-workspace/iteration-N/<case>/with_skill/outputs/`: each page and its screenshots. Iterations 1 and 2 are the first version of the skill (with `blind-judging.md` and `review.html`), 3 to 5 are Method B, 6 onward Method C.
+- `better-ui-workspace/tools/`: the scripts that ran, collected and graded the sessions.
 
 ## Sources
 
@@ -135,19 +115,16 @@ Community descriptions of the problem:
 - Kosta Canatselis, [Spot the slop: a UI designer's guide to fixing AI defaults](https://world.hey.com/kostac/spot-the-slop-a-ui-designer-s-guide-to-fixing-ai-defaults-4c448c9c)
 - The Fountain Institute, [signs of a vibe-coded UI](https://www.thefountaininstitute.com/blog/signs-vibe-coded-ui)
 - codemyspec, [why vibe-coded websites look the same](https://codemyspec.com/blog/vibe-coded-websites-look-the-same)
-- prg.sh, [Why your AI keeps building the same purple gradient website](https://prg.sh/ramblings/Why-Your-AI-Keeps-Building-the-Same-Purple-Gradient-Website)
 - Aaron Ross, [The eyes have it: closing the agentic design loop](https://dev.to/ashmortar/the-eyes-have-it-closing-the-agentic-design-loop-3819)
 - Hacker News threads [47864393](https://news.ycombinator.com/item?id=47864393), [49290499](https://news.ycombinator.com/item?id=49290499), [49867038](https://news.ycombinator.com/item?id=49867038)
 
-Existing skills and guidelines this one learned from:
+Existing skills and writing this one learned from:
 
-- Anthropic, [frontend-design skill](https://github.com/anthropics/skills/tree/main/skills/frontend-design) and [Improving frontend design through Skills](https://claude.com/resources/articles/improving-frontend-design-through-skills)
+- Anthropic, [frontend-design skill](https://github.com/anthropics/skills/tree/main/skills/frontend-design), [Improving frontend design through Skills](https://claude.com/resources/articles/improving-frontend-design-through-skills) and [Harness design for long-running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps)
 - Paul Bakaus, [Impeccable](https://github.com/pbakaus/impeccable)
-- Vercel, [Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines)
-- Emil Kowalski, [design engineering skill](https://github.com/emilkowalski/skills)
-- Jakub Krehel, [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)
 - [taste-skill](https://github.com/Leonxlnx/taste-skill) and [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
-- Matthew Butterick, [Practical Typography: summary of key rules](https://practicaltypography.com/summary-of-key-rules.html)
-- Evil Martians, [OKLCH in CSS](https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl)
+- Vercel, [Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines)
+- Emil Kowalski, [design engineering skill](https://github.com/emilkowalski/skills); Jakub Krehel, [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)
+- Matthew Butterick, [Practical Typography](https://practicaltypography.com/summary-of-key-rules.html); Evil Martians, [OKLCH in CSS](https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl)
 
-What this skill does that those mostly do not: it treats extending an existing product as the first case, covers dense product UI as well as landing pages, gives a fixed order for looking at a rendered page, and ships a measuring script that needs nothing beyond a browser the agent probably already has.
+The reference shots used for judging came from Dribbble search results and are not stored in this repository.
