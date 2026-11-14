@@ -30,12 +30,21 @@ not judged.
 
 ## Scores so far
 
+Training prompts (used while designing the skill):
+
 | Method | Landing page | Dashboard | Habit tracker |
 |---|---|---|---|
 | No skill (baseline) | 5-6 | 4-5 | 4 |
 | Skill v2: restraint, measured craft | 4 | 3 | 4 |
-| Method B: art direction library, showpiece, polish, critique loop | 7 | 7 | 7 |
-| Method B.1: illustrated objects and portraits, colour discipline, finishing pass | 7 | **8** | 7 |
+| Method B: finish library, showpiece, polish, critique loop | 7 | 7 | 7 |
+| Method B.1: illustrated objects and portraits, colour discipline, finishing pass | 7 | **8** (8 again from a second reviewer) | 7 (6 from a second reviewer) |
+| Method B.2: the finish a reviewer marks down is measured by the audit | **8** | 7 | 7 |
+
+Held-out prompts (never used while designing the skill; first attempt each):
+
+| Method | POS landing page (Indonesian) | Personal finance app |
+|---|---|---|
+| Method B.2 | **8** (art direction 9) | 7 |
 
 ## What each round taught
 
@@ -59,9 +68,25 @@ what held them back was finish (a paper invoice covering the table's client name
 bento tiles, pricing cards a few pixels out of line, clipped day pills, a title wrapping to three
 lines) and, on the habit tracker, a lead gradient straight from the library.
 
-**Method B.2** (running) turns each recurring finishing complaint into something the audit
-script measures, so it is found before a reviewer sees it: text covered by another element,
-content under fixed bars, half-empty cards, cards that nearly align, single-blur shadows, a hero
-visual that is too small, clipped strings, words that run together, uneven phone margins,
-repeated graphics, and a page held in one tone. Palettes must be derived from the product's own
-name and world.
+**Method B.2** turns each recurring finishing complaint into something the audit script
+measures, so it is found before a reviewer sees it: text covered by another element, content
+under fixed bars, half-empty cards, cards that nearly align, single-blur shadows, a hero visual
+that is too small, clipped strings, words that run together, uneven phone margins, repeated
+graphics, and a page held in one tone. Both landing pages reached 8, including the held-out one
+on its first attempt ("would pass as a popular Dribbble shot in this category, on the strength of
+its warung-specific identity"). The dashboard run scored 7 this time because that build fell
+back to initials for avatars and one bag glyph recoloured for every product, which the audit did
+not yet measure. The two app-type screens stayed at 7.
+
+At 7, the reviewers' complaint about the app screens was no longer finish. It was the same four
+things each time: no single ownable visual idea, cards of equal weight, a pastel rainbow, and
+timid type. The dashboard that scored 8 to 9 on art direction got there because its identity
+came out of its subject (roast stamps, kraft bags), not out of the library.
+
+**Method C** (running) rebuilds the art-direction step around that: find one concept in the
+product's own world, make it the hero device at large scale carrying real content, echo it in the
+details, commit the palette to a base, one dominant colour and one hot accent, and give the type
+dramatic scale. The library is demoted to finish kits whose colours are placeholders. An
+independent reviewer becomes a required step. The audit additionally measures initials avatars,
+recoloured repeated drawings, timid type scale, equal-weight cards, rainbow fills and a first
+screen with no confident field of colour.
