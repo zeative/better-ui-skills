@@ -105,7 +105,9 @@ Then **open the screenshots and critique them as an art director would**, using 
 
 - **Get an independent review.** If you have any tool that starts a subagent (Task, Agent or similar), use it for this: it is the single most effective step in the skill, and skipping it is the usual reason work stops one notch short. Give the reviewer the brief at the end of `references/critique.md` with the screenshot paths filled in, and nothing about your intentions. A reviewer who did not build the page sees what is there, not what was meant. Only if you truly cannot spawn one, score it yourself, as harshly as a stranger would, and say so in the handoff.
 - Any dimension under 8 is unfinished. Fix the reviewer's gaps in order. They are usually: the showpiece is not detailed enough, overlapping elements hide content, sections after the first go flat, imagery is generic or repeated, tiles are half empty, and depth is timid.
-- Render again, run the audit again, and ask a **fresh** reviewer. **Do at least two full review rounds.** Three is normal for work that reaches the bar. The later rounds are where a competent page becomes a striking one.
+- A score of 6 or lower on a dimension will not be fixed by a tweak. Rework that aspect: recompose the layout, rebuild the palette, redraw the icon set, replace the chart. Small patches after a low score are why work stalls at 7.
+- Render again, run the audit again, and ask a **fresh** reviewer.
+- **Keep going until a fresh reviewer scores the work 8 or higher overall with no dimension under 7.** Two rounds is the minimum, not the target: if the second reviewer still says 7, you are not finished, and stopping there is the most common way this skill falls short. Do a third round and a fourth. Stop after five rounds at the latest and report the last scores honestly in the handoff.
 
 Delete the audit folder when you are done unless the user wants it.
 

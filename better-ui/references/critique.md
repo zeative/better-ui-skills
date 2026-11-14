@@ -111,4 +111,6 @@ Hand the reviewer the screenshots and this brief, and nothing about your intenti
 >
 > Be demanding and concrete. Do not praise. Do not suggest changing the product's content or scope; judge the design.
 
-Act on the list in order. Then render again and ask a **fresh** reviewer, not the same one, because a reviewer who has seen the earlier version grades the improvement instead of the result. Stop when a fresh reviewer scores every dimension 8 or higher and lists no finishing faults, or after four rounds.
+Act on the list in order; where a dimension scored 6 or lower, rework that aspect instead of patching it. Then render again and ask a **fresh** reviewer, not the same one, because a reviewer who has seen the earlier version grades the improvement instead of the result.
+
+Keep going until a fresh reviewer gives 8 or higher overall with no dimension under 7 and lists no finishing faults. Two rounds is a minimum. Most work that reaches the bar takes three or four. Stop after five at the latest, and say in the handoff what the last reviewer scored.
