@@ -1,125 +1,97 @@
-# Product UI: apps, dashboards, admin, tools
+# Product UI: dashboards, admin, apps and mobile tools
 
-For interfaces people work in. The measure of success is how quickly and confidently someone gets their task done on the hundredth visit, not how the first screenshot looks.
+At the bar, product UI is both a pleasure to look at and genuinely useful. The look comes from a full shell, content on surfaces, imagery in every list and data drawn beautifully. The usefulness comes from leading with what the person needs to do.
 
-Contents: what changes in this register · decide what the screen is for · hierarchy in dense screens · navigation · dashboards and numbers · charts · tables and lists · forms · feedback and safety · states are the product · small screens · sample data
+Contents: the shell · lead with what matters · modules · tiles and figures · charts · lists and tables · forms and controls · small apps and mobile-first tools · states · sample data · phone and desktop
 
-## What changes in this register
+## The shell
 
-- Familiarity is a feature. Controls should look and behave like the controls people already know. Spend originality on how well the product fits its task, not on reinventing a dropdown.
-- Density is welcome. People doing real work want to see more at once and scroll less. Tight, well-aligned and well-grouped beats airy.
-- Personality is small and concentrated: the type choice, one accent, the tone of empty states and messages, and at most one signature in how the core object is shown.
-- Decoration costs attention every single day. Remove it.
+A dashboard or admin screen lives in an app shell, on a tinted canvas:
 
-## Decide what the screen is for
+- **Sidebar:** the wordmark with a glyph, grouped navigation items each with an icon, a clear active state (filled pill or accent bar plus tint), counts where useful, and a user or workspace card with an avatar at the bottom. A dark or tinted sidebar often anchors the composition. Full height.
+- **Top bar:** page title with a date or breadcrumb, a search field with a key hint, a date-range or filter control, a notifications button, a primary action, an avatar.
+- **Canvas:** the tinted ground, with all content in cards arranged on a grid (12 columns works), with consistent gaps.
 
-Before laying anything out, answer: what question does a person open this screen to answer, or what action do they come to take? Rank the content by how directly it serves that. The top item gets the most prominent position and the most visual weight. Things that are rarely needed go behind a click.
+Navigation items for areas that are not built are part of the picture, but should not pretend: give them hover states and keep the current page marked. On phones the sidebar becomes a bottom tab bar or a menu.
 
-A dashboard is not a place to show everything you have data for. It is the answer to "do I need to do anything right now, and if so what?" Lead with what needs attention (work waiting, something failing, a threshold crossed), then how things are going, then detail.
+## Lead with what matters
 
-## Hierarchy in dense screens
+Design for the question the person opens this screen to answer. A dashboard is the answer to "how is it going, and do I need to do anything right now?" Put a module near the top that says what needs attention (work waiting, something low, a deadline) with direct actions, alongside the headline figure. This is what separates a useful dashboard from a pretty one, and it is rare in showcase work, so it stands out.
 
-- Three levels of text emphasis are usually enough: primary (ink), secondary (muted), and tertiary for metadata. Get there with colour and size before weight.
-- De-emphasise labels, emphasise values. In "Open tickets  42" the number is the content; the label is quiet.
-- One primary button per view. Other actions are secondary (outlined or tonal) or tertiary (text). If everything is a filled button, nothing is primary.
-- The action people perform most on this screen is the easiest thing to find and hit: the biggest target, the strongest contrast, in the natural place for a thumb or cursor. If today's task is a small outline at the edge of a row, the design has its priorities backwards.
-- The largest text on the screen is the most useful fact on the screen. A date, a page name or a greeting set bigger than the number the person came for is misplaced emphasis.
-- Things that can be pressed look pressable (a boundary, a fill, an icon, a change on hover) and things at risk look at risk. Do not rely on a line of instructions to reveal what is interactive.
-- Density still needs peaks. After the lead item, keep at least two clearly different levels below it (section headings versus rows, for example) so the lower half of a long screen does not dissolve into text of one weight.
-- Do not give every group a card. Sections on a page are separated by space and a heading; reserve bordered containers for things that are objects.
-- Align numbers on the right, text on the left, and keep column edges consistent down the page.
+## Modules
 
-## Navigation
+A rich dashboard has ten or more distinct modules. Draw from these and vary them:
 
-- Show where the person is, at every level.
-- Name items with the user's nouns, not internal ones.
-- Order by frequency of use, not alphabetically or by org chart.
-- Do not add navigation items for sections that do not exist. A sidebar full of dead links is worse than a short honest one. If the task is one screen, build one screen.
-- On phones, primary destinations go in a bottom bar within thumb reach or behind one clearly labelled menu; never a sidebar squeezed to a strip.
+- A **hero module:** the key figure on a contrast surface (dark or accent card) with a delta badge, a sparkline or mini area chart, and a comparison line.
+- A row of **KPI tiles** (below).
+- The **main chart** with a range control, legend and tooltip.
+- A **secondary chart** of a different form (donut by category, bars by channel, a goal gauge, a heatmap).
+- A **needs-attention** list with counts, icon chips and action buttons.
+- A **table or list** of recent items with thumbnails, avatars and status pills.
+- A **ranked list** with thumbnails, a bar for share, and a secondary fact (stock, trend).
+- **Activity or timeline**, **people** (avatars with roles or status), **goal progress** rings, a **calendar strip**, a **promo or tip card** with an illustration, a **quick actions** panel.
 
-## Dashboards and numbers
+Arrange them in a grid with mixed spans so the layout has a clear focal area, not uniform rows.
 
-- Every number needs a unit, a time frame and something to compare it with (yesterday, last week, target). A bare number is not information.
-- Choose the comparison that supports a decision. "12% up on yesterday" matters less than "4 tickets are past their deadline".
-- The row of four equal stat tiles is the default dashboard opening. Use it only if those four numbers really are equally important. Usually one or two matter most and deserve to be bigger, and the others can be a compact line.
-- Up is not always green. Colour a change by whether it is good for that metric, and leave neutral facts uncoloured.
-- Use the locale's formats: thousand separators, currency symbol and placement, date order, 24-hour or 12-hour time.
-- Round sensibly. Three significant digits is usually enough at a glance; exact values belong in the table or a tooltip.
-- In a row of figures, the values share a baseline. Keep labels to one line, or reserve the same label height in every item, so one long label cannot push its number out of line.
-- Name each thing once and use that name everywhere. The same product or person spelled two ways in two panels reads as two things.
+## Tiles and figures
+
+A KPI tile has: an icon chip in its own hue, a small label, a large figure (28 to 40px, weight 600 to 700, tabular), a delta badge in a soft pill coloured by whether the change is good, and a mini visual (sparkline, bar, ring). Give each tile in a row a different hue and a different mini visual.
+
+- Every number has a unit, a period and a comparison.
+- Use the locale's formats for currency, thousands and dates.
+- Up is not always good: colour deltas by meaning.
+- If one figure matters most, make it the hero module and let the others be smaller.
+- Values in a row share a baseline; labels stay on one line.
 
 ## Charts
 
-- Pick the form from the question: change over time is a line (or bars for few discrete periods); comparing categories is horizontal bars sorted by value; part of a whole is a single stacked bar or just numbers. Pie charts and gauges rarely beat a sorted list with bars.
-- Label directly on the chart where possible instead of a separate legend. Always label axes or values so the chart can be read without hovering.
-- One colour for the series, a stronger one for the point you want noticed (today, the selected item). Colour by meaning, not by position.
-- Start bar charts at zero. Keep gridlines faint and few.
-- Provide the same data as text or a table for people who cannot see the chart, and give the chart an accessible name that states the takeaway.
-- A hand-built SVG or CSS chart is often cleaner than a library for a small fixed dataset, and removes a dependency. Use a library when you need real interaction or many series.
-- Tooltips and hover states are extras. The chart must make sense without them, especially on touch.
+See `showpiece.md` for how to draw them. In product UI:
 
-## Tables and lists
+- Choose the form from the question: change over time is a line or area (bars for few periods); comparison is sorted horizontal bars; share is a donut or a single stacked bar.
+- Always include grid lines, axis labels, direct value labels or a tooltip on a highlighted point, and a legend when there is more than one series.
+- Use the accent for the series or point that matters and a muted tone for the rest; category palettes for categories.
+- Show an incomplete period honestly (a lighter or hatched bar, a note).
+- Three or more chart forms across a dashboard.
+- The chart, the totals and the tables are computed from the same sample data.
 
-- Left-align text, right-align numbers, and use tabular figures. Align headers with their column content.
-- Size columns to their content. A column too narrow for its typical value wraps most rows onto a second line, leaves units stranded, and makes row heights ragged; give it room, shorten the content, or drop a less important column.
-- Row height 40 to 48px for comfortable scanning, 32 to 36px for dense data. Separate rows with a faint rule or generous spacing, not heavy zebra stripes and borders together.
-- Make the whole row the target when a row opens a detail view, and show it on hover and focus.
-- Put the identifying column first and make it the strongest. Truncate long text with an ellipsis and keep the full value reachable.
-- Status is a word plus a colour, in a small set of statuses with consistent meaning. If every row has a different coloured pill, the colours stop helping.
-- Decide the sort and say so. If the list is filtered, show how many of how many.
-- Handle zero rows, one row, a thousand rows (pagination or virtualisation), and a failed load.
-- On phones, a table with more than three columns becomes a list of stacked records with the key fields visible, or scrolls horizontally inside its own region with the first column pinned.
+## Lists and tables
 
-## Forms
+- A thumbnail or avatar in the first column of every row. Name in strong ink, a secondary line in muted ink beneath.
+- Status as a pill with a dot, from a small consistent set.
+- Right-aligned tabular figures; row height 52 to 64px with thumbnails; hairline separators or soft zebra; row hover; a row action (button or menu).
+- Columns sized to their content so rows do not wrap raggedly.
+- Filter chips or tabs with counts above the table; a "view all" control as a chip with an arrow.
+- On phones a table becomes stacked cards with the key fields and the action.
 
-- A visible label above every field. Placeholders are examples, never labels.
-- Group related fields, order them the way people think about the task, and ask for nothing you do not need.
-- Size fields to their expected content: a postcode field is short.
-- Use the right input type and `autocomplete`, `inputmode` and `enterkeyhint` attributes so phones show the right keyboard and browsers can fill.
-- Validate when the person leaves a field or submits, not while they are still typing. Put the message next to the field, say how to fix it, keep what they typed, and move focus to the first problem.
-- Mark optional fields rather than required ones when most are required.
-- The submit button says what will happen, shows progress while it happens, and cannot be triggered twice.
-- Enter submits single-field forms. Do not block paste.
+## Forms and controls
 
-## Feedback and safety
+Labels above fields, the right input types, validation with helpful messages beside the field, a primary button that shows progress. Style every control to the direction: inputs, selects, toggles, segmented controls, checkboxes.
 
-- Every action gets a response within about 100ms: a pressed state, then the result or a progress indicator.
-- Confirm success where the user is looking. Use toasts for results of actions whose effect is off screen, and keep them short and dismissible.
-- Destructive actions: prefer undo over a confirmation dialog for things that are easy to reverse; use a confirmation that names the thing being destroyed for things that are not.
-- Never lose the user's input. Persist drafts and state across reloads when a person would expect it (a to-do list that forgets everything on refresh is broken, not minimal).
-- Optimistic updates are good; roll back visibly if the request fails.
+## Small apps and mobile-first tools
 
-## States are the product
+For a tracker, a to-do, a timer, a calculator or any personal tool:
 
-In a tool, people spend most of their time in states the happy-path mock never shows. Build each of these for every data view, and look at each one rendered:
+- **A header with identity:** a wordmark or greeting, the date, an avatar or settings button.
+- **A hero card** on a contrast surface summarising today: a progress ring or big figure, a short encouraging line, perhaps a week strip.
+- **Items with character:** each item on its own card with an icon tile and its own colour from a category palette, a clear name, a secondary line, and the main control.
+- **The main action is unmistakable:** the thing people do every day is the largest, most colourful control on each item, with a satisfying checked state (fill, icon, small bounce), and visibly different from history or decoration.
+- **The key quantity as a designed object:** a count or a run as a large numeral with a badge and a "best" chip; a balance as a big figure with a trend; progress as a ring.
+- **History as a visual:** a week strip of day pills, a month heatmap, a bar chart of the week.
+- **Adding is inviting:** a floating or prominent add button opening a sheet or inline form, with suggestion chips that have icons.
+- **Navigation:** a floating pill tab bar or bottom bar on phones.
+- **First run:** an illustration, a line of encouragement, starter suggestions as tappable chips, and the primary action.
+- **Rewards:** a small celebration on completing something (a burst, a badge, a changed card state).
+- Data persists across reloads.
 
-| State | What it needs |
-|---|---|
-| First run / empty | Say what goes here, show an example or a starter, offer the action |
-| Loading | Skeleton in the shape of the content, no layout jump |
-| Partial | Some data, some still loading or failed |
-| Populated | The normal case, with realistic volume |
-| Overflowing | Long names, big numbers, many items |
-| Error | What failed, whether data is safe, how to retry |
-| Success | Confirmation that does not block the next action |
-| Offline or stale | When the data is from, and that it may be out of date |
+## States
 
-Use the audit script's `--setup` option to put the app into several of these and screenshot each.
-
-## Small screens
-
-- Decide what the phone user came to do. It is usually a subset of the desktop task: check, tick off, reply. Put that first.
-- Primary actions near the bottom, within reach of a thumb. Respect safe areas.
-- Inputs at 16px or larger. Tap targets 44px. Enough space between adjacent targets to avoid mis-taps.
-- Replace hover-only affordances with something visible.
-- Test with the on-screen keyboard open: is the field being typed into still visible?
+Build and look at each: first run or empty (designed, with illustration and an action), loading (skeletons in the shape of the content), populated with realistic volume, overflowing (long names, big numbers), error (what failed, how to retry), success. Use the audit script's `--setup` option to seed data and screenshot the populated state.
 
 ## Sample data
 
-Placeholder content shapes the design, so make it honest.
+Use names, products, places and prices that fit the domain and country. Make numbers reconcile across tiles, charts and tables. Include variety and edge cases. Keep dates relative to today. Say once, discreetly, that the data is sample data.
 
-- Use names, products, places and prices that fit the domain and country.
-- Make the numbers reconcile: line items sum to totals, percentages match their bases, the chart matches the table.
-- Include variety and edge cases: a long name, a cancelled item, a zero, something overdue.
-- Keep dates relative to today so the mock does not look stale.
-- State once, discreetly, that the data is sample data. Do not invent metrics that imply a real business result.
+## Phone and desktop
+
+- **Phone:** bottom navigation, the hero module first, tiles in a two-column grid or a horizontal scroller with snap, charts at full width, tables as cards, primary actions within thumb reach, 44px targets, 16px inputs.
+- **Desktop:** use the width. A small tool that is a single column on a phone becomes a composed layout on desktop: the main list beside a side column of stats, calendar and chart, inside a shell or a framed app container on an atmospheric ground. A phone-width column floating in an empty page is unfinished.

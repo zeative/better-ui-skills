@@ -1,0 +1,131 @@
+# Polish system
+
+Finish is a system, applied everywhere from the start. These recipes assume tokens like those in `art-directions.md`.
+
+Contents: surfaces, not bare pages · shadows · borders and edges · surfaces and glass · type finishing · colour finishing · buttons and controls · micro-details · spacing rhythm · variety within sets · motion · dark directions
+
+## Surfaces, not bare pages
+
+Content sits on surfaces: cards, panels, tiles, a shell. A page of text rows separated by hairlines directly on the background reads as a document, however good the typography. Establish at least three levels: the **ground** (page background, usually tinted), the **surface** (cards, clearly lighter or darker than the ground), and the **raised** level (popovers, floating cards, the featured item). Add one **contrast surface** per screen: a dark or accent-filled card that anchors the composition.
+
+## Shadows
+
+One blur at one opacity looks flat and dated. Use layered shadows: a tight one for the contact edge and one or two wide soft ones for the ambient lift, tinted toward the ink colour, always offset downward.
+
+```css
+--sh-1: 0 1px 2px rgba(16,24,40,.06), 0 1px 1px rgba(16,24,40,.04);
+--sh-2: 0 1px 2px rgba(16,24,40,.05), 0 6px 14px -4px rgba(16,24,40,.10);
+--sh-3: 0 2px 4px rgba(16,24,40,.05), 0 14px 30px -8px rgba(16,24,40,.14), 0 30px 60px -20px rgba(16,24,40,.12);
+--sh-4: 0 4px 8px rgba(16,24,40,.06), 0 24px 48px -12px rgba(16,24,40,.22), 0 60px 110px -30px rgba(16,24,40,.25);
+```
+
+- Tint the shadow colour to the direction: cool navy for cool palettes, warm brown for warm ones, the card's own hue under coloured cards.
+- Use the scale with intent: `--sh-1` for resting cards, `--sh-2` on hover, `--sh-3` for floating cards, `--sh-4` for the showpiece.
+- Add a light top edge to raised surfaces: `box-shadow: inset 0 1px 0 rgba(255,255,255,.7), var(--sh-2)`. On dark surfaces use `rgba(255,255,255,.06)`.
+
+## Borders and edges
+
+- Hairlines are translucent ink (`--line`), not a solid grey, so they adapt to whatever is behind.
+- Pair a hairline with a shadow on light cards for a crisp edge.
+- **Gradient border** for featured items and badges:
+  ```css
+  .gb { border: 1px solid transparent; border-radius: var(--r-md);
+        background: linear-gradient(var(--surface), var(--surface)) padding-box,
+                    linear-gradient(135deg, var(--accent), var(--accent-2), transparent 70%) border-box; }
+  ```
+- **Concentric radii:** inner radius = outer radius − padding. A 24px card with 8px padding holds 16px children.
+- Use the radius scale deliberately: small for controls, medium for cards, large for the showpiece and sections, pill for chips and buttons where the direction wants it.
+
+## Surfaces and glass
+
+- A barely visible vertical gradient makes a card feel lit: `background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 94%, var(--ink)))`.
+- Tinted cards: `color-mix(in srgb, var(--accent) 8%, var(--surface))` with ink text and an accent icon chip.
+- Glass needs something colourful behind it: `background: rgba(255,255,255,.62); backdrop-filter: blur(24px) saturate(1.4); border: 1px solid rgba(255,255,255,.7);` with a soft shadow. Body text on glass needs a strong enough panel to pass contrast.
+- Insets (search fields, code, wells) go one step darker than their card with an inner shadow: `box-shadow: inset 0 1px 2px rgba(16,24,40,.06)`.
+
+## Type finishing
+
+- **Display:** large and tight. `font-size: clamp(40px, 6.5vw, 84px); line-height: 1.02; letter-spacing: -0.035em; text-wrap: balance;`. Headlines of four to eight words, broken so the lines are similar length.
+- **One phrase of emphasis** in the headline: the accent colour, an italic, a highlighter block behind it, or a hand-drawn underline. Once per headline, and in keeping with the direction.
+- **Eyebrow pill** above a headline when it carries information: a small pill with a dot or icon and a short label.
+- **Scale with contrast:** a clear jump between levels (for example 72 / 40 / 22 / 16 / 14 / 12). Big figures in dashboards are 28 to 44px at weight 600 to 700 with tight tracking; their labels are 12 to 13px in muted ink.
+- **Small labels:** 11 to 12px, medium weight, `letter-spacing: .04em`, uppercase only when short.
+- `font-variant-numeric: tabular-nums` on all figures; `font-feature-settings: "ss01", "cv11"` where the face has nicer alternates.
+- Body text stays calm: 15 to 17px, line-height 1.55, max 65ch, muted ink for secondary copy, and always above 4.5:1 contrast.
+
+## Colour finishing
+
+- Roughly 60% ground and surfaces, 30% ink and neutrals, 10% accent. The accent is concentrated in a few strong places (primary button, key chart, active state, one feature card), not sprinkled.
+- Derive tints with `color-mix` instead of inventing new colours: 8 to 14% accent on surface for soft fills, 20 to 30% for borders of tinted elements.
+- A **category palette** for things that come in kinds (habits, product types, statuses, team members): four to six hues at matched lightness and saturation, each with a soft tint. Use it consistently so colour carries meaning.
+- Status colours are separate and always paired with a label or icon.
+- Gradients stay within about 40 degrees of hue (violet to pink, orange to yellow, teal to green) unless the direction is built on a wider one. Use them on a few hero elements, not everywhere.
+- Never grey text on a coloured fill: use white, ink, or a darker tone of that colour.
+
+## Buttons and controls
+
+```css
+.btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: var(--r-pill); font-weight: 600; font-size: 15px;
+  background: var(--accent); color: var(--accent-ink); border: 0; cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 1px 2px rgba(16,24,40,.2), 0 6px 16px -6px color-mix(in srgb, var(--accent) 70%, transparent);
+  transition: transform .15s ease-out, box-shadow .15s ease-out, background-color .15s ease-out; }
+@media (hover: hover) { .btn:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 2px 4px rgba(16,24,40,.2), 0 12px 24px -8px color-mix(in srgb, var(--accent) 80%, transparent); } }
+.btn:active { transform: translateY(0) scale(.98); }
+.btn .arrow { transition: transform .15s ease-out; } .btn:hover .arrow { transform: translateX(3px); }
+.btn-ghost { background: var(--surface); color: var(--ink); border: 1px solid var(--line); box-shadow: var(--sh-1); }
+```
+
+- One primary style, one secondary, one quiet text style. A trailing arrow or icon on the primary action.
+- Inputs: 44px high, surface or inset fill, hairline border, a clear focus ring in the accent (`box-shadow: 0 0 0 4px var(--accent-soft)` plus a border colour change), an icon or label inside where useful.
+- Segmented controls and tabs as pill groups with a sliding or filled active state.
+- Checkboxes, toggles and radio buttons styled to the direction, with a satisfying checked state (fill, icon draw, small scale bounce).
+- `:focus-visible` rings on everything interactive.
+
+## Micro-details
+
+These are what make a screen look designed. Use many, each with a reason:
+
+- **Pills and badges:** status pills with a dot, delta badges (`▲ 12.4%` in a soft green pill), "New" tags, counts in nav items.
+- **Icon chips** beside labels and in tiles (see `showpiece.md`).
+- **Avatars and avatar stacks** wherever a person is implied.
+- **Thumbnails** in every list of items.
+- **Sparklines and mini progress** inside tiles and rows.
+- **Key hints** (`⌘K`, `Enter`) in small bordered keys.
+- **Dividers** as hairlines, dotted leaders between a label and a value, or a small centred ornament.
+- **Meta rows:** a small icon plus text for dates, locations, durations.
+- **Kickers and captions** in the mono or small-caps style.
+- **A designed footer:** columns of links, the wordmark, a small status or locale control, a closing line.
+
+## Spacing rhythm
+
+- 4px base scale: 4, 8, 12, 16, 20, 24, 32, 48, 64, 96, 128.
+- Section padding on marketing pages: `clamp(72px, 10vw, 140px)` top and bottom. Card padding 20 to 28px. Grid gaps 16 to 24px. Tight inside groups, generous between them.
+- Content width 1120 to 1240px with at least 20px side gutters on phones, and a few elements allowed to break out to full bleed.
+- One grid for the whole page so column edges recur down the page.
+- Align the parts of sibling cards (title, value, button) with `grid` and `subgrid` or fixed heights.
+
+## Variety within sets
+
+Sets of similar things must not be clones.
+
+- **Bento grids:** mix tile sizes (one spans two columns, one is tall), and give tiles different treatments: one dark, one accent-filled, one with a big figure, one with a mini chart, one with an illustration.
+- **KPI rows:** different icon chip hues, different mini-visuals (sparkline, ring, bar, avatar stack).
+- **Feature sections:** alternate the side of the visual, the kind of visual, and the surface.
+- **Lists:** vary content length, status and thumbnail colour.
+
+## Motion
+
+- Hover: cards lift 2px with a larger shadow; buttons lift and their arrow moves; rows tint.
+- Press: scale to .98.
+- Showpiece entrance, once on load: the mock fades and rises 16px over 600ms with `cubic-bezier(.2,.8,.2,1)`, floating cards follow staggered by 80ms. Optional gentle float on the cards (`translateY(±4px)` over 6s).
+- Numbers may count up once; charts may draw once. Nothing loops attention-seekingly, nothing blocks reading.
+- Animate only `transform` and `opacity` (and `box-shadow` on hover). Name the properties; never `transition: all`.
+- `@media (prefers-reduced-motion: reduce)` removes movement.
+
+## Dark directions
+
+- The ground is not pure black; surfaces step up in lightness.
+- Shadows are less visible, so use light top edges, hairline borders and glows.
+- Lower the saturation of large fills, keep accents vivid in small areas.
+- Check contrast of muted text: it is the usual failure.
+- A noise overlay at 3 to 5% removes banding in dark gradients.

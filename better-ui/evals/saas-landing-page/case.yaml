@@ -1,8 +1,8 @@
 schema_version: "1.1"
 name: saas-landing-page
 expected_outcome: |
-  A landing page that makes a specific case for this invoicing product to freelancers: a first
-  screen that says what it is and shows it, features presented as evidence rather than an icon
-  grid, honest pricing, a working signup form with validation states, no invented testimonials or
-  statistics, a visual identity that would not fit an unrelated product, and a layout that is
-  designed (not just narrowed) at phone width.
+  A landing page at the level of popular Dribbble shots for SaaS landing pages: a committed art
+  direction, a hero led by a detailed product visual with floating detail cards and atmosphere, a
+  feature section whose tiles each carry their own mini interface, designed pricing with a
+  featured plan, a closing band with a visual, specific and honest copy, and a phone layout that
+  is recomposed and still striking.

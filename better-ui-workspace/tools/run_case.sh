@@ -14,12 +14,12 @@ if [ -n "$SKILL_DIR" ]; then
 fi
 cd "$DIR/work"
 START=$(date +%s)
-timeout 2400 claude -p "$(cat $SP/prompts/$CASE.txt)" \
+timeout 3300 claude -p "$(cat $SP/prompts/$CASE.txt)" \
   --output-format stream-json --verbose \
   --strict-mcp-config --mcp-config $SP/empty-mcp.json \
   --permission-mode acceptEdits \
-  --allowedTools Read Write Edit Glob Grep Bash Skill \
-  --disallowedTools Artifact ArtifactData ArtifactComments DesignSync Task Workflow "Skill(design)" "Skill(slides)" "Skill(whiteboard)" "Skill(dataviz)" "Skill(artifact-diagramming)" "Skill(artifact-capabilities)" \
+  --allowedTools Read Write Edit Glob Grep Bash Skill Task \
+  --disallowedTools Artifact ArtifactData ArtifactComments DesignSync Workflow "Skill(design)" "Skill(slides)" "Skill(whiteboard)" "Skill(dataviz)" "Skill(artifact-diagramming)" "Skill(artifact-capabilities)" \
   < /dev/null > "$DIR/transcript.jsonl" 2> "$DIR/stderr.log"
 echo "exit=$? seconds=$(( $(date +%s) - START ))" > "$DIR/done.txt"
 cat "$DIR/done.txt"; ls -la "$DIR/work"

@@ -1,7 +1,8 @@
 schema_version: "1.1"
 name: habit-tracker-app
 expected_outcome: |
-  A working habit tracker in one HTML file: add, tick off, edit and delete habits; streaks
-  computed correctly; data persisted across reloads; a helpful empty state; comfortable one-handed
-  use on a phone; visible keyboard focus; and a look that suits a small daily-use tool rather than
-  a generic template.
+  A working habit tracker at the level of popular Dribbble habit-app shots: a clear art direction,
+  a hero card summarising today, habits with their own colour and icon, streaks shown as designed
+  objects, history as a visual, an unmistakable daily tick with a satisfying state, an inviting
+  first run, persistence, a composed multi-column desktop layout and a thumb-friendly phone
+  layout.

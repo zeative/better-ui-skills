@@ -301,6 +301,53 @@ function measure(targetWidth) {
   }
   out.unevenRows = uneven.slice(0, 5);
 
+  /* ---- richness: is there anything to look at? ------------------- */
+  const pageH = document.documentElement.scrollHeight;
+  const isGraphic = (el) => {
+    const t = el.tagName.toLowerCase();
+    if (t === 'svg' || t === 'img' || t === 'canvas' || t === 'video' || t === 'picture') return true;
+    const bi = getComputedStyle(el).backgroundImage;
+    return !!bi && bi !== 'none' && /url\(|gradient\(/.test(bi) && el.children.length === 0;
+  };
+  const graphics = [];
+  for (const el of document.querySelectorAll('body *')) {
+    if (!isVisible(el) || !isGraphic(el) || (el.parentElement && el.parentElement.closest('svg'))) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width < 14 || r.height < 14) continue;
+    graphics.push({ top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, w: r.width, h: r.height });
+  }
+  const surfaceEls = [];
+  for (const el of document.querySelectorAll('body *')) {
+    if (!isVisible(el) || el.closest('svg')) continue;
+    const s = getComputedStyle(el), r = el.getBoundingClientRect();
+    if (r.width < 120 || r.height < 48 || r.width * r.height > vw * vh * 1.2) continue;
+    const bg = parseColor(s.backgroundColor);
+    const filled = (bg && bg.a > 0.04) || (s.backgroundImage && s.backgroundImage !== 'none');
+    const edged = s.boxShadow !== 'none' || (parseFloat(s.borderTopWidth) > 0 && parseFloat(s.borderLeftWidth) > 0 && s.borderTopStyle !== 'none');
+    if ((filled && (edged || parseFloat(s.borderTopLeftRadius) >= 6)) || (edged && parseFloat(s.borderTopLeftRadius) >= 6)) {
+      el.setAttribute('data-ui-audit-surface', '1');
+      surfaceEls.push({ top: r.top + window.scrollY, bottom: r.bottom + window.scrollY });
+      // a product mock or designed object built from HTML counts as a visual too
+      if (r.width >= 280 && r.height >= 180 && el.querySelectorAll('*').length >= 15) graphics.push({ top: r.top + window.scrollY, bottom: r.bottom + window.scrollY, w: r.width, h: r.height, composed: true });
+    }
+  }
+  // how much of the text sits directly on the page, outside any surface
+  let onPage = 0, onSurface = 0;
+  for (const el of seen) { const n = (el.textContent || '').trim().length; if (el.closest('[data-ui-audit-surface]')) onSurface += n; else onPage += n; }
+  document.querySelectorAll('[data-ui-audit-surface]').forEach((e) => e.removeAttribute('data-ui-audit-surface'));
+  const bands = [];
+  for (let y = 0; y < pageH - 120; y += vh) {
+    const y2 = Math.min(pageH, y + vh);
+    const g = graphics.filter((q) => q.bottom > y + 10 && q.top < y2 - 10);
+    const big = g.filter((q) => q.w >= 120 && q.h >= 80).length, small = g.length - big;
+    const surf = surfaceEls.filter((q) => q.bottom > y + 10 && q.top < y2 - 10).length;
+    bands.push({ from: Math.round(y), to: Math.round(y2), big, small, surfaces: surf });
+  }
+  const fold = graphics.filter((q) => q.top < vh);
+  const largest = fold.reduce((m, q) => (q.w * q.h > m.w * m.h ? q : m), { w: 0, h: 0 });
+  out.richness = { graphics: graphics.length, bigGraphics: graphics.filter((q) => q.w >= 120 && q.h >= 80).length, icons: graphics.filter((q) => q.w <= 44 && q.h <= 44).length,
+    surfaces: surfaceEls.length, bands, foldLargest: [Math.round(largest.w), Math.round(largest.h)], textOnPage: onPage, textOnSurface: onSurface };
+
   /* ---- column edges: where do top-level blocks start? ------------ */
   // Blocks that begin a column (not the page's main left edge). Edges that are
   // close but not equal mean columns were sized per section, not on one grid.
@@ -487,7 +534,7 @@ function report(results, facts, focus, runtime, args) {
   // --- craft: these are prompts for judgment, each with the number behind it
   const sizeList = top(widest.fontSizes, 20).map(([k]) => +k).sort((a, b) => a - b);
   const allSizes = new Set(); results.forEach(({ m }) => Object.keys(m.fontSizes).forEach((k) => allSizes.add(+k)));
-  if (sizeList.length > 8) problem('CRAFT', `${sizeList.length} distinct font sizes at ${results[results.length - 1].width}px (${sizeList.join(', ')}). A type scale rarely needs more than 6–8; near-duplicates (e.g. 13 and 13.5, 15 and 16) read as accidents.`);
+  if (sizeList.length > 12) problem('CRAFT', `${sizeList.length} distinct font sizes at ${results[results.length - 1].width}px (${sizeList.join(', ')}). Even with a detailed product mock a page rarely needs more than 9–11; near-duplicates (13 and 13.5, 15 and 16) read as accidents.`);
   const fams = Object.keys(widest.fontFamilies);
   if (fams.length > 3) problem('CRAFT', `${fams.length} font families in use (${fams.join(', ')}). More than two or three is usually noise.`);
   if (narrow.smallText.length) problem('CRAFT', `Text under 12px: ${narrow.smallText.slice(0, 5).join('; ')}`);
@@ -497,11 +544,9 @@ function report(results, facts, focus, runtime, args) {
   if (widest.tightLeading.length) problem('CRAFT', `Paragraph line-height under 1.35: ${widest.tightLeading.slice(0, 3).join('; ')}`);
   if (widest.centeredBlocks) problem('CRAFT', `${widest.centeredBlocks} long paragraph(s) are centre-aligned; centred text beyond two or three lines is hard to read.`);
   const rad = top(widest.radii, 12);
-  if (rad.length > 4) problem('CRAFT', `${rad.length} different corner radii (${rad.map(([k, v]) => `${k}×${v}`).join(', ')}). Pick a small set and nest them concentrically (inner = outer − padding).`);
+  if (rad.length > 7) problem('CRAFT', `${rad.length} different corner radii (${rad.map(([k, v]) => `${k}×${v}`).join(', ')}). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).`);
   const sh = Object.keys(widest.shadows).length;
-  if (sh > 4) problem('CRAFT', `${sh} different box-shadows. Elevation should be a 2–3 step scale, not per-component.`);
-  const hues = Object.keys(widest.hues).length;
-  if (hues > 3) problem('CRAFT', `Saturated colour in ${hues} different hue families (${Object.keys(widest.hues).map((h) => h + '°').join(', ')}). Unless each one encodes meaning (status, data series), this reads as decoration.`);
+  if (sh > 9) problem('CRAFT', `${sh} different box-shadows. Use a scale of four or five levels, not one per component.`);
   const ce = widest.columnEdges || [], near = [];
   for (let i = 0; i < ce.length; i++) for (let j = i + 1; j < ce.length; j++) {
     const d = ce[j].x - ce[i].x;
@@ -516,21 +561,27 @@ function report(results, facts, focus, runtime, args) {
   for (const { width, m } of results) {
     if (m.lonelyItems && m.lonelyItems.length) { problem('CRAFT', `A wrapping row leaves one item alone on its last line at ${width}px: ${m.lonelyItems.slice(0, 3).join('; ')}.`); break; }
   }
-  if (widest.nestedCards) problem('CRAFT', `${widest.nestedCards} card-inside-card nestings. Group with space or a rule before reaching for another box.`);
-  if (widest.cards > 12) problem('CRAFT', `${widest.cards} bordered/shadowed boxes on the page. Ask which of them need a container at all.`);
   if (facts.transitionAll) problem('CRAFT', `${facts.transitionAll} rules use "transition: all"; name the properties (it animates layout by accident and costs performance).`);
   if (widest.interactiveCount > 3 && facts.hover === 0) problem('CRAFT', 'No :hover rules at all; interactive elements give no feedback.');
   if (widest.deadLinks > 2) problem('CRAFT', `${widest.deadLinks} links go nowhere (href="#"). Fine for a mock, but say so in your handoff.`);
 
-  // --- reflexes: not wrong by themselves, but each needs a reason
-  if (widest.gradientText) problem('REFLEX', `${widest.gradientText} gradient-filled text element(s).`);
-  if (widest.gradientFills > 2) problem('REFLEX', `${widest.gradientFills} gradient-filled surfaces.`);
-  if (widest.glass) problem('REFLEX', `${widest.glass} element(s) with backdrop blur.`);
-  if (widest.emojiCount) problem('REFLEX', `Emoji used in UI text ${widest.emojiCount}× (${widest.emoji.slice(0, 4).join('; ')}). They render differently per platform and stand in for real icons or real words.`);
-  const purple = Object.keys(widest.hues).some((h) => +h >= 240 && +h <= 290);
-  if (purple) problem('REFLEX', 'Primary/accent colour sits in the indigo–violet range (240–290°), the most common unchosen default.');
-  const defaults = ['Inter', 'Roboto', 'Arial', 'Helvetica', 'system-ui', '-apple-system', 'Space Grotesk', 'Poppins'];
-  if (fams.length && fams.every((f) => defaults.includes(f))) problem('REFLEX', `Typeface is ${fams.join(' / ')} only. Perfectly usable, but confirm it was chosen for this product rather than inherited.`);
+  // --- richness: against the bar, is there enough to look at?
+  const R = widest.richness, Rn = narrow.richness;
+  if (R) {
+    const [fw, fh] = R.foldLargest;
+    if (fw * fh < 260 * 180) problem('RICHNESS', `The first desktop screen has no substantial visual (largest graphic or composed surface is ${fw}×${fh}px). Lead with a showpiece: a detailed product visual, chart or illustration (references/showpiece.md).`);
+    const thin = R.bands.filter((b, i) => i > 0 && b.big === 0 && b.small < 3);
+    if (thin.length) problem('RICHNESS', `${thin.length} of ${R.bands.length} desktop screenfuls have nothing to look at but text (around y=${thin.slice(0, 5).map((b) => b.from).join(', ')}px). Give each section a visual of its own: a mini interface, chart, illustration, thumbnails, icon chips.`);
+    const total = R.textOnPage + R.textOnSurface;
+    if (total > 400 && R.textOnPage / total > 0.6) problem('RICHNESS', `${Math.round(100 * R.textOnPage / total)}% of the text sits directly on the page background. Put content on surfaces (cards, panels, a shell) so the page has levels; text on a bare page reads as a document.`);
+    if (R.icons < 4 && R.bigGraphics < 3) problem('RICHNESS', `Very little imagery: ${R.icons} icon-sized and ${R.bigGraphics} larger graphics on the whole page. Lists want thumbnails or avatars, tiles want icon chips or mini visuals.`);
+    if (Object.keys(widest.shadows).length <= 1 && R.surfaces > 3) problem('RICHNESS', `Depth is flat: ${Object.keys(widest.shadows).length} shadow style across ${R.surfaces} surfaces. Use a layered shadow scale with distinct resting, raised and showpiece levels (references/polish.md).`);
+  }
+  if (Rn) {
+    const [pw, ph] = Rn.foldLargest, firstTwo = Rn.bands.slice(0, 2);
+    if (firstTwo.length && firstTwo.every((b) => b.big === 0)) problem('RICHNESS', `On the phone the first two screens show no substantial visual (largest in the first screen is ${pw}×${ph}px). Recompose the showpiece for narrow screens; do not drop it.`);
+  }
+  if (widest.emojiCount > 6) problem('CRAFT', `Emoji appear in UI text ${widest.emojiCount}×. They render differently on every platform; use them as flavour, not as the icon system.`);
 
   // --- output
   L.push(`UI AUDIT  ${args.target}`);
@@ -545,19 +596,19 @@ function report(results, facts, focus, runtime, args) {
   L.push(`  Fills        ${top(widest.fills, 8).map(([k]) => k).join(' ')}${Object.keys(widest.fills).length > 8 ? ` (+${Object.keys(widest.fills).length - 8} more)` : ''}`);
   L.push(`  Radii        ${rad.map(([k, v]) => `${k}×${v}`).join('  ') || 'none'}`);
   L.push(`  Shadows      ${sh} distinct`);
-  L.push(`  Boxes        ${widest.cards} card-like containers, ${widest.nestedCards} nested`);
+  if (widest.richness) L.push(`  Visuals      ${widest.richness.bigGraphics} large graphics, ${widest.richness.icons} icons, ${widest.richness.surfaces} surfaces; largest graphic in the first screen ${widest.richness.foldLargest.join('×')}px`);
   L.push(`  Interaction  ${widest.interactiveCount} interactive elements; ${facts.hover} :hover rules, ${facts.focusVisible} :focus-visible rules; reduced-motion ${facts.reducedMotion ? 'handled' : 'not handled'}; dark scheme ${facts.darkScheme ? 'defined' : 'not defined'}`);
   if (facts.unreadable) L.push(`  (${facts.unreadable} cross-origin stylesheet(s) could not be inspected)`);
   L.push('');
-  const order = ['BROKEN', 'ACCESS', 'TOUCH', 'CRAFT', 'REFLEX'];
+  const order = ['BROKEN', 'ACCESS', 'TOUCH', 'RICHNESS', 'CRAFT'];
   const titles = {
     BROKEN: 'BROKEN — fix these, no judgment needed',
     ACCESS: 'ACCESSIBILITY — fix these',
     TOUCH: 'TOUCH — fix unless there is a reason',
     CRAFT: 'CRAFT — measured inconsistencies; fix or be able to say why not',
-    REFLEX: 'REFLEXES — common unchosen defaults; keep only if you can state the reason it serves this product',
+    RICHNESS: 'RICHNESS — below the bar as measured; a page can pass these and still be plain, so look at the screenshots',
   };
-  if (!P.length) L.push('No measurable problems found. That is the floor, not the ceiling: now look at the screenshots.');
+  if (!P.length) L.push('No measurable problems found. That is the floor, not the bar: now critique the screenshots.');
   for (const sev of order) {
     const items = P.filter((p) => p.sev === sev);
     if (!items.length) continue;
@@ -565,7 +616,7 @@ function report(results, facts, focus, runtime, args) {
     items.forEach((p) => L.push('  • ' + p.msg));
     L.push('');
   }
-  L.push('This report cannot judge hierarchy, composition, whether the content is specific, or whether the page has a point of view. Read the screenshots for those.');
+  L.push('This report cannot judge art direction, composition or how good the visuals are. Open the screenshots and score them with references/critique.md.');
   return { text: L.join('\n'), problems: P };
 }
 

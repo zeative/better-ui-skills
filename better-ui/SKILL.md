@@ -1,142 +1,109 @@
 ---
 name: better-ui
-description: Design and build user interfaces that are specific to the product, restrained, and verifiably well made instead of generic "AI-looking" output. Use this whenever you create, restyle or review anything a person will look at in a browser or app - landing pages, marketing sites, dashboards, admin panels, web apps, mobile screens, components, forms, HTML prototypes, React/Vue/Svelte/Tailwind UI - including when the user only says "build me a page/app/site/dashboard for X" and never mentions design, and when they ask to make an existing UI look better, cleaner, more polished, more professional, less generic or less like AI made it. Skip it only for work with no visible result (backend, scripts, pure logic).
+description: Design and build user interfaces at the level of the best work on Dribbble - art-directed, visually rich, deeply detailed and polished - instead of flat, generic "AI-looking" output. Use this whenever you create, restyle or review anything a person will look at in a browser or app - landing pages, marketing sites, dashboards, admin panels, web apps, mobile screens, components, forms, HTML prototypes, React/Vue/Svelte/Tailwind UI - including when the user only says "build me a page/app/site/dashboard for X" and never mentions design, and when they ask to make an existing UI look better, more premium, more modern, more polished or less generic. Skip it only for work with no visible result (backend, scripts, pure logic).
 ---
 
 # Better UI
 
-Generic UI is not caused by bad taste. It is caused by nobody deciding. At every choice point (palette, typeface, layout, headline, what goes in the third card) the easiest thing to produce is the most common thing, and a page made entirely of most-common choices looks like every other page. Telling yourself to "avoid the purple gradient" does not fix this: it only moves you to the next most common answer, which today is a cream background, a serif headline with one italic word, and an earthy accent. People spot that one just as fast.
+The bar for this skill is the work that gets attention in design communities: a confident art direction, visuals that are rich and specific, real depth, and a finish where nothing looks accidental. Aim there on every build.
 
-So this skill does not hand you a style. It asks for three things, in this order:
+Generic AI output and a great shot often use the same ingredients: cards, gradients, rounded corners, a product screenshot. What separates them is depth of execution.
 
-1. **Specific** - every visible decision traces back to this product, this user and this content.
-2. **Restrained** - nothing is on the screen unless it carries information or helps someone act. No gimmicks.
-3. **Finished** - you render the result, look at it, measure it and fix what you find, because you cannot see a layout by reading its source, and most of what people perceive as quality is in the last round of fixes.
+- **Generic is shallow.** A flat fill, three icon cards, a grey box labelled "dashboard", one shadow copied everywhere, text sitting on a blank page. Each element is the first version of itself.
+- **Great is deep.** A hero built around a product visual drawn in real detail, with pieces of it lifted out and floating beside it. A palette with a point of view. Type with character and tight control. Surfaces that sit in light. A dozen small designed details on every screen. Every element has been taken two steps past its first version.
 
-Restrained does not mean plain. Removing decoration is only half the job; the other half is making the things that matter unmistakably larger, heavier or better placed than the things that do not. A page with no decoration and no hierarchy is not minimal, it is unfinished. It reads like documentation.
+So the job is neither restraint nor decoration. It is **commitment and detail**: commit to one strong direction, then execute every part of it more thoroughly than seems necessary. Expect to write a lot of markup. A hero visual alone is often 150 to 300 lines, and a dashboard has a dozen distinct modules; that is normal, and it is where the quality comes from. A short file is almost always a plain page.
 
-Scale the process to the task. A new page or app deserves all seven steps. A small change inside an existing screen needs step 1, then 5 to 7.
+Two things stay non-negotiable while you do this: the interface must work (real states, real responsiveness, readable contrast), and the content must be specific and honest. Rich and wrong is still wrong.
 
 ## 1. Find out whose design this is
 
-Before designing anything, look at what already exists.
+- **An existing product** (styles, components, tokens, a Tailwind theme, a brand guide, a screenshot from the user): the direction is already decided. Read the tokens and a few screens, reuse the components, and bring the richness and finish of this skill *within* that system. Do not add a second styling system, font or accent. Skip the direction pick in step 3; use everything else.
+- **A direction from the user** (a reference, a brand, "make it look like X"): that wins over the library below.
+- **A blank slate**: continue.
 
-- **There is an existing product** (a codebase with styles, a component library, a tokens file, a Tailwind theme, a brand guide, or a screenshot the user gave you): the design is already decided and your job is to fit in. Read the tokens and two or three existing screens, reuse the existing components, and express anything new in the project's own values. Do not introduce a second styling system, a new font or a new accent colour. If you believe the existing system is the problem, say so and ask; do not quietly replace it. Skip step 4 and use the rest of this skill for craft.
-- **The user gave a direction** (a reference, a brand, "make it look like X", specific colours): that wins over everything below.
-- **It is a blank slate**: continue.
+## 2. Understand the job and write the content
 
-## 2. Understand the job
+A few lines, for yourself: what the product is, who is looking and in what situation, the one job of this screen, and its register: *persuade* (landing, pricing), *operate* (apps, dashboards, tools), or *read*.
 
-Write down, in a few lines, for yourself:
+Then draft the real content before any layout: the actual headline, labels, numbers, names. Make sample data plausible, internally consistent and right for the locale (currency, language, date formats). Specific content is what makes rich visuals convincing: a product mock filled with believable rows and figures looks real, and one filled with "Item 1" looks like a wireframe.
 
-- **Subject** - what this product actually is, concretely.
-- **Person and moment** - who is looking at it and in what situation (on a phone at the counter between customers; at a desk all day; once, sceptical, arriving from a search).
-- **The one job** of this screen - what the person must be able to see or do first.
-- **Register** - *operate* (a tool people work in: apps, dashboards, admin), *persuade* (a page that must convince: landing, pricing), or *read* (docs, articles). This sets density, how much personality is welcome, and which reference file applies.
+When the brief is thin, do not send a questionnaire. Assume specifically, build, and state your assumptions at the end.
 
-When the brief is thin, do not send back a questionnaire. Make specific assumptions, build on them, and state them when you hand off. Ask first only when a wrong guess would waste the entire build.
+Honesty rule: never use real company logos, real people's names or faces, or invented claims about real results. Sample people, fictional company names and example figures are fine and expected, inside product visuals and in proof sections alike. Where a marketing page needs proof you were not given (testimonials, customer logos, usage numbers), design the section fully with clearly fictional names, and tell the user in the handoff exactly which parts they must replace before publishing.
 
-## 3. Write the content before the layout
+## 3. Commit to an art direction
 
-Layout is the arrangement of content, so there is nothing to arrange until the content exists. Draft the real words and the real data first.
+Read `references/art-directions.md`. It is a library of complete directions, each with a palette, type pairing, shape and depth language, background atmosphere and signature devices, as ready-to-use tokens.
 
-- Write the actual headline, labels, button text, empty-state and error messages. Say what the thing does in plain words a customer would use. If a sentence could sit unchanged on a competitor's site, it is not saying anything yet.
-- Make sample data plausible and internally consistent: totals that add up, dates that fall in order, names and prices that fit the domain and locale (currency format, language, units). Include the awkward cases a real system has: a long name, a zero, a failed item.
-- Never invent proof. Fake testimonials, customer logos, user counts, ratings and "trusted by" rows are fabrications that a real business would then publish. Leave proof out, or mark a clearly labelled placeholder for the user to fill.
-- Buttons are a verb plus an object ("Export report"). Use sentence case. Cut any text that explains what the interface already shows.
+1. Shortlist the three directions that best suit this subject and audience. Include at least one that is not the obvious choice for the category.
+2. Let the script choose among them, so the pick does not default to habit and different products end up looking different:
+   ```bash
+   node <this-skill-dir>/scripts/deal.cjs "<product name>" <id> <id> <id>
+   ```
+   (No Node? Take the one a typical competitor in this category would be least likely to use.)
+3. **Tune it to the subject.** Shift the accent toward a colour from the product's world, decide the showpiece from what this product actually does, and add one device only this product would have. A direction used straight from the library is a template; a tuned one is a design.
+4. Write the result as CSS custom properties at the top of the stylesheet, with a short comment naming the direction and what you tuned. Then use only those tokens.
 
-## 4. Choose a direction on purpose
+Commit fully. A direction applied timidly (the palette but not the atmosphere, the font but not the scale, the cards but not the depth) produces exactly the bland middle this skill exists to avoid.
 
-This is the step that separates a designed page from a generated one. Read `references/direction.md` for the method in full; in short:
+## 4. Design the showpiece first
 
-1. **Name your default.** Write one line describing what you would produce for any brief like this one. That is the prior. It is allowed to win, but only on its merits.
-2. **Collect material from the subject's world**: the artefacts its users already handle, where and how the screen is used, the emotional weight of the task, the conventions of tools they already trust.
-3. **Draft three directions** from that material, one line each, that genuinely differ from each other and from the default (different ground, type classification, density, shape).
-4. **Pick one** and write one sentence on why it fits this audience and job better than the others.
-5. **Run the swap test**: if you replaced the name and copy with a different product's, would the design fit just as well? If yes, it is still generic; go back to the material.
+Every strong shot has one thing that makes people stop: a showpiece. Decide what it is before laying out anything else, and give it a third or more of your effort.
 
-Then record the decisions as a short block (keep it as a comment at the top of the stylesheet or tokens file, so the next person or session inherits it):
+- **Landing page:** the hero visual. Almost always the product itself, drawn in convincing detail in HTML/CSS/SVG (a real app window with navigation, rows, figures and a chart), with two to four detail cards lifted out and floating over its edges, set in an atmosphere (glow, grid, rings).
+- **Dashboard or admin:** a full app shell with one hero module (the main chart or the key figure on a feature card) and supporting tiles that each carry a small visual of their own.
+- **Mobile-first tool or app:** the core interaction given real character: a hero card with a progress ring or big figure, items with their own colour and icon, a custom control with a satisfying state change.
 
-```
-Direction: <one sentence: what it should feel like and why that suits this user>
-Type:      <family for text, family for display if different, why; the size scale>
-Colour:    <ground, ink, one accent and what it is reserved for, status colours>
-Shape:     <radius set, borders vs shadows, density>
-Signature: <the one element that could only belong to this product>
-Emphasis:  <the two or three places this screen or page spends its contrast, and how>
-Not doing: <the defaults you considered and set aside>
-```
+`references/showpiece.md` explains how to build these in code: product mocks, floating cards, charts, avatars, thumbnails, icons, illustration, device frames and atmospheres. Read it before you start; do not improvise a grey rectangle.
 
-One signature, not five. Spend distinctiveness in a single place and let everything else be quiet and correct. For tools people use all day, the right amount of personality is often very small, and "calm, dense, familiar" is a legitimate direction as long as you chose it.
+Then compose the rest of the screen around the showpiece, using the patterns for your register. Read the one that applies:
 
-Quiet is not the same as uniform. Rank the parts of the page the way you rank elements within a part: decide which two or three moments are the peaks (the opening, the thing that needs attention, the point of decision) and give them clearly more scale, weight, contrast or room than the rest. If every section has the same background, the same heading size and the same two-column split, the page has no shape and the eye has nowhere to go, however clean each section is.
+- `references/marketing.md` for landing and pricing pages.
+- `references/product-ui.md` for dashboards, admin, apps and mobile tools.
 
-## 5. Build from a system
+## 5. Build with depth and finish
 
-Define tokens before writing components, and then use nothing else. This is what makes a page look made by one hand; without it you get twenty font sizes and ten corner radii, each one reasonable locally.
+Read `references/polish.md` and apply its system from the first line, not at the end: content on surfaces rather than on the bare page, layered shadows with a light top edge, hairline borders, tinted neutrals, tight display type, a spacing rhythm, and the small details (pills, status dots, icon chips, key hints, sparklines, avatars) that make a screen feel designed. Give repeated elements variety: no row of tiles should be the same tile three times with different words.
 
-- **Type**: at most two families; a scale of roughly 5 to 8 sizes; two or three weights.
-- **Colour**: neutrals tinted slightly toward the brand hue, one accent with a defined job, status colours only for status. Define them as custom properties with role names (`--surface`, `--ink-muted`, `--accent`), not appearance names.
-- **Space**: one scale on a 4px base (4, 8, 12, 16, 24, 32, 48, 64, 96).
-- **Shape**: two or three radii, one elevation approach (rules, or borders, or a small shadow scale).
+Build the whole thing:
 
-When you need a value that is not in the system, either the system is missing a step (add it deliberately) or the value is wrong.
+- **Every width.** The phone layout is designed, not shrunk: the showpiece is recomposed for a narrow screen and stays impressive there. The desktop layout uses its width with a real multi-column composition, never a phone column floating in empty space. No horizontal scroll.
+- **Every state** a real person will meet: hover, focus, pressed, selected, empty, loading, error, long content. Controls that are on screen work.
+- **Motion with purpose:** one composed entrance for the showpiece if it suits the direction, hover and press feedback everywhere, nothing that delays content. Respect `prefers-reduced-motion`.
+- **The floor** in `references/craft.md`: contrast, focus visibility, labels, tap targets, a disciplined type scale, one grid. Richness never excuses unreadable text.
 
-Then build the whole thing, not the screenshot of it:
+## 6. Render, measure, critique against the bar, fix
 
-- **Every state**, because real use is mostly not the happy path: empty, loading, error, one item, many items, long content, disabled, hover, keyboard focus, pressed, selected, success. A feature without its empty and error states is unfinished.
-- **Every width**, from a 320px phone to a wide desktop, with layout that reflows rather than shrinks. Touch targets at least 44px on touch layouts.
-- **Keyboard and assistive tech**: semantic elements, labels on every field, names on icon-only buttons, a visible `:focus-visible` style, one `<h1>`, text contrast of at least 4.5:1 (3:1 for large text).
-- **Interaction that works**: if a control is on screen it does something, or it is not on screen. Data the user enters survives a reload when that is what they would expect.
-- **The main action is the most obvious thing to press.** Whatever the person came to do on this screen should be the largest, highest-contrast control in view, where a thumb or cursor already is. Everything tappable looks tappable without a sentence of instructions to say so.
-- **One grid.** Set the page's columns once and place every section on them, so the same vertical edges recur all the way down. Columns sized section by section end up nearly aligned, which looks worse than not aligned at all.
-
-Detailed, numeric guidance lives in the reference files. Read the ones that apply before building:
-
-- `references/craft.md` - typography, colour, spacing, surfaces, motion, accessibility. Always relevant.
-- `references/product-ui.md` - apps, dashboards, tables, forms, charts, states. Read for the *operate* register.
-- `references/marketing.md` - landing and pricing pages. Read for the *persuade* register.
-
-## 6. Look, measure, fix
-
-You have been working blind. Now render it.
+You cannot judge a design from its source. Render it:
 
 ```bash
 node <this-skill-dir>/scripts/audit.cjs path/to/index.html --out .ui-audit
 node <this-skill-dir>/scripts/audit.cjs http://localhost:5173/ --setup seed.js   # app with state
 ```
 
-The script renders the page at 375, 768 and 1440px, saves screenshots, and prints an inventory (every font size, colour, radius and shadow actually in use) plus measured problems: overflow, contrast failures, invisible keyboard focus, small tap targets, unlabelled controls, type-scale and radius sprawl, columns that nearly align, values that sit at different heights in a row, text that wraps leaving a stub, and common unchosen defaults. For anything with state, pass `--setup` with a few lines of JS that seed realistic data or open the view you want to check: an empty app tells you almost nothing. If the script cannot find a browser it says so; then use whatever browser or screenshot tool you do have, and failing that, walk the checklist in `references/craft.md` against the source.
+The script screenshots the page at 375, 768 and 1440px and prints an inventory plus measured problems: overflow, contrast, focus, tap targets, near-miss alignment, awkward wraps, and a warning when a screen is visually thin. Fix everything under BROKEN and ACCESSIBILITY, and resolve what is under CRAFT and RICHNESS. For apps, pass `--setup` with a few lines of JS that seed realistic data, because an empty app shows nothing. (No browser available? Say so in the handoff and review the source against `references/critique.md`.)
 
-Then **read the screenshots** (open the image files), phone width first, and go through this in order. Earlier items matter more.
+Then **open the screenshots and critique them as an art director would**, using `references/critique.md`. It has the rubric (art direction, showpiece, richness, depth and finish, colour, typography, composition, phone) with what a 5, a 7 and a 9 look like, and the usual fixes for each gap.
 
-1. **Thumbnail.** Look at the whole page from far away (the full-page screenshot, small). Can you tell the sections apart and point to the peaks? An even texture from top to bottom means the page is flat: give the moments that matter more scale, weight or a change of surface, and let minor material shrink. Do columns end at similar heights, or is there a hole where one runs out?
-2. **First glance.** On each screenful, what does the eye land on first? Is that the most important thing for the one job? The largest text should be the most useful information on the screen, not a date or a page title nobody needs. If three things compete, the hierarchy is not decided yet.
-3. **Squint.** Blur your attention: do the groups read as groups? Can you find the main action instantly, and does every control look like a control? Is anything loud that should be quiet (borders, icons, labels, decoration)?
-4. **Edges and rhythm.** Do the same vertical edges recur from section to section? Is spacing inside groups clearly tighter than spacing between them? In any row of similar items, do the headings, values and buttons sit at the same height in each item even when one label is longer? Is anything almost aligned or almost the same size?
-5. **Text.** Is every piece of text comfortable to read at that width: size, line length, contrast? Look at every place text wraps: a single word or unit left alone on a line, a label that breaks in a different place from its neighbours, one chip or link pushed onto a row by itself. These small breaks are what make a layout look unfinished; fix each by adjusting the column, the wording or the wrap.
-6. **Phone.** Did the layout reflow into something designed for a thumb, or just get narrower?
-7. **Subtract.** For each decorative element, each container, each label: would anything be lost if it were removed? If not, remove it.
-8. **Swap test, again**, against the rendered page rather than the plan.
+- If you can spawn a subagent, do: give it only the screenshot paths, the one-line brief and the path to `references/critique.md`, and ask for scores and the most damaging gaps. A reviewer who did not build the page sees what is there, not what was intended. Otherwise score it yourself, as harshly as a stranger would.
+- Any dimension under 8 is unfinished. Fix the biggest gaps first. They are usually: the showpiece is not detailed enough, the sections after the first go flat, there is too little imagery and designed detail, and depth is timid.
+- Render again and re-score. **Do at least two full rounds.** Three or four is normal for work that reaches the bar. The later rounds are where a competent page becomes a striking one.
 
-Fix what you find and run it again. Treat the report's BROKEN and ACCESSIBILITY sections as bugs. Treat CRAFT as inconsistencies to resolve or justify, and REFLEXES as questions: each is fine when it was chosen and has a reason, and a problem when it merely arrived. Two or three rounds is normal, and the later rounds are not optional polish: the difference between work that looks competent and work that looks finished is almost entirely made here. Stop when a round finds nothing you would be embarrassed by. Delete the audit output folder when you are done unless the user wants it.
-
-You wrote this page, so you will tend to see what you intended rather than what is there. The measurements do not share that bias, which is why they come first. If you are able to hand the screenshots to a fresh reviewer with no context (a subagent given only the images and the brief), that is the best check available for a page that matters.
+Delete the audit folder when you are done unless the user wants it.
 
 ## 7. Hand off plainly
 
-Tell the user, briefly: the direction you chose and why, the assumptions you made about audience or content, and anything that is mocked or not wired up (placeholder links, sample data, proof they need to supply). Do not describe the result with adjectives; they can see it.
+Tell the user, briefly: the direction you chose and how you tuned it, the assumptions you made, and what is placeholder or not wired up (sample data, fictional proof to replace, links that go nowhere). No adjectives about the result; they can see it.
 
-## Things that need a reason
+## Ways this goes wrong
 
-None of these is banned. Each is on this list because it usually shows up without anyone having chosen it. Use one when you can say what it does for this product; otherwise leave it out. `references/direction.md` explains where they come from.
-
-- A gradient, glow, blur or glass panel that carries no information.
-- An icon whose only job is to sit above a heading; emoji used as icons.
-- A container (card, box, border) around something that space alone would group.
-- A small uppercase label above a heading; a pill badge above the headline.
-- Colour that is not encoding anything: a different hue per card, coloured stripes on card edges.
-- Animation on load or scroll that does not explain a change the user caused.
-- A section that exists because pages like this usually have one.
-- A number, badge or status that is not backed by real data.
-- Centred everything; three equal columns; every corner the same large radius.
+- **Timid execution.** A nice palette on a page that is still heading, paragraph, three boxes. The direction has to reach the composition, the visuals and the details.
+- **An empty hero.** Headline, two buttons and a gradient is not a hero. Build the showpiece.
+- **Shallow visuals.** A product mock made of five grey bars, a chart with no grid, axis or highlighted point. Fill visuals with believable, specific content at real density.
+- **Text on a bare page.** Rows and tables sitting directly on the background with hairlines read as a document. Put content on surfaces, in a shell, with imagery.
+- **No imagery.** Lists without thumbnails, people without avatars, features without illustrations, items without icons. Every repeated item should carry a small visual.
+- **One good screen, then filler.** Each section after the first needs its own visual idea.
+- **Sameness within the page.** Identical tiles, one shadow, one radius, one text size below the headline, one colour used for everything.
+- **Decoration that fights the content.** Glow behind body text, low-contrast text on a gradient, animation on everything. Richness goes into visuals and surfaces; text stays effortless to read.
+- **Stopping after the first render.** The first render is a draft.
