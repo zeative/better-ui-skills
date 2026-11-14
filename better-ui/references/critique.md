@@ -72,6 +72,8 @@ Showcase work has no loose ends. On both the desktop and the phone screenshot, r
 - **Empty bands.** A sidebar with a void in the middle, a column that ends far above its neighbour, a card that is half empty.
 - **Legends and labels.** Every chart series has a swatch; every figure has a unit.
 - **Repeats.** The same thumbnail, avatar colour or tile used again and again.
+- **Mixed languages.** Glossy emoji-style icons inside a flat outlined design, soft shadows beside hard offset ones, a rendered centrepiece beside a default chart. Everything on the screen should look drawn by the same hand.
+- **One meaning per colour.** The accent that means "done" must not also mean "today" and "missing".
 
 ## The usual gaps and their fixes
 

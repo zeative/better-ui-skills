@@ -149,6 +149,8 @@ Every item gets a visibly different thumbnail. Changing only the tint of one rep
 
 If the project already has real product photos or the user supplies images, use those instead: real imagery beats illustration.
 
+**When imagery is the product** (a photographer's portfolio, food, travel, property, fashion), the design depends on photographs you do not have. Build every picture as a real image slot (`<img>` or a background with fixed aspect ratio, `object-fit: cover`, and alt text) and fill it with an art-directed placeholder scene in the page's palette, so the layout is true to the final thing. Design the frames, crops, captions and sequencing as a picture editor would, and tell the user in the handoff exactly which files to drop in and at what sizes. Never hotlink someone else's photographs.
+
 ## Icons and icon chips
 
 - Use one inline SVG set: 24×24 viewBox, `fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"`. Draw the dozen you need; keep them simple and consistent.
@@ -162,7 +164,11 @@ If the project already has real product photos or the user supplies images, use 
 
 ## Illustrated objects
 
-Thin line icons on tinted squares are the minimum. Where an item deserves presence (a habit, a category, a feature, an achievement, an empty state), draw a small **dimensional object** instead, in the manner of 3D emoji: a filled shape with a gradient, a darker underside, a soft highlight and a contact shadow.
+Thin line icons on tinted squares are the minimum. Where an item deserves presence (a category, a feature, an achievement, an empty state), draw a small **object** with some body to it instead.
+
+**Draw it in the language of your idea.** This matters more than the technique. If the design is flat with thick outlines, the objects are flat with thick outlines. If it is lacquer, brass and wood, they are lacquer, brass and wood. If it is paper and ink, they are stamped or engraved. Glossy emoji-style stickers dropped into a design that has its own material are the most common thing that makes a strong concept look assembled from stock parts. One style, one lighting direction, one level of detail across every icon, object, avatar and chart on the screen.
+
+Where the idea has no particular material, a soft dimensional style works: a filled shape with a gradient, a darker underside, a soft highlight and a contact shadow.
 
 ```html
 <!-- an open book, 56×56, built from filled shapes -->
@@ -179,6 +185,7 @@ Thin line icons on tinted squares are the minimum. Where an item deserves presen
 - Four to eight shapes per object: body, underside or side, a detail or label, a highlight, a contact shadow.
 - Every object in a set is a different thing (a book, a shoe, a droplet, a moon, a dumbbell, a leaf), not one glyph recoloured.
 - Keep one lighting direction (top-left highlight, bottom shadow) across the set.
+- Give the secondary surfaces the same finish as the hero device. A beautifully rendered centrepiece next to a flat gradient card with a default line chart looks half done: carry the material (its sheen, grain, edge, way of marking data) onto the other cards and charts.
 - Use these at 40 to 72px on item cards and tiles, and larger (120 to 200px) as the centre of a hero card or empty state.
 - Keep the simple stroke icons for navigation and small controls.
 

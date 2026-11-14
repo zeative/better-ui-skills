@@ -70,7 +70,10 @@ Labels above fields, the right input types, validation with helpful messages bes
 
 ## Small apps and mobile-first tools
 
-For a tracker, a to-do, a timer, a calculator or any personal tool:
+For a tracker, a to-do, a timer, a calculator, a wallet or any personal tool. These are judged differently from dashboards: the strongest ones show **few things with a lot of air and one focal object per screen**. Do not turn a personal app into an admin grid.
+
+- **One focal object.** The device that carries your idea is the hero, at about twice the size that feels sufficient, and it holds the key figure. Everything else on the screen is clearly secondary: fewer modules, smaller, quieter. If a module repeats information the hero already shows, cut it.
+- **On desktop, stay an app.** Widen into two or three well-spaced columns with the hero still dominant; three to six modules in view, not ten. Lists collapse to their first few rows with a way to see more.
 
 - **A header with identity:** a wordmark or greeting, the date, an avatar or settings button.
 - **A hero card** on a contrast surface summarising today: a progress ring or big figure, a short encouraging line, perhaps a week strip.

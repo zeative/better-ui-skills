@@ -22,6 +22,7 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 - Tint the shadow colour to the direction: cool navy for cool palettes, warm brown for warm ones, the card's own hue under coloured cards.
 - Use the scale with intent: `--sh-1` for resting cards, `--sh-2` on hover, `--sh-3` for floating cards, `--sh-4` for the showpiece.
 - Add a light top edge to raised surfaces: `box-shadow: inset 0 1px 0 rgba(255,255,255,.7), var(--sh-2)`. On dark surfaces use `rgba(255,255,255,.06)`.
+- **One shadow language.** Soft layered shadows, or hard offset shadows with outlines, or flat with rules: choose one for the design and vary its strength, never mix two. Within a hard-edged or flat style, depth still needs tiers: add inner highlights, a subtle grain or gradient on large colour fields, and a clearly different elevation for the feature card.
 - Depth must not be uniform. If every card has the same border and the same blur, the page is flat again. Resting cards are quiet; the focal card, primary buttons and anything floating are clearly lifted, with a brighter top edge and a deeper, wider shadow.
 - Ground and surface need visible separation: a surface that is nearly the same value as the ground disappears. Deepen the ground or brighten the surface until cards read at a glance.
 
@@ -52,6 +53,7 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 - **Eyebrow pill** above a headline when it carries information: a small pill with a dot or icon and a short label.
 - **Scale with contrast:** a clear jump between levels (for example 96 / 40 / 22 / 16 / 13 / 11). The one figure or line that matters most is far larger than everything else: 64 to 120px for a hero balance, total or headline on desktop, 44 to 72px on a phone. Supporting figures are 28 to 40px; labels are 11 to 13px in muted ink. A screen where the largest text is 28px has no voice.
 - **Treat key numerals as graphics:** tight tracking, a distinctive weight (very heavy or very light), lighter or smaller decimals and currency signs, tabular figures.
+- **Few voices, far apart.** Two type roles are usually enough: a display voice for the hero line, the key figures and at most one or two more moments, and a text voice for everything else. A third (mono caps labels) only in one or two places. Avoid a page of mid-sized text: sizes should be either clearly big or clearly small. If every section headline shouts at the same volume, none of them does; let the hero and one other be loud.
 - **Small labels:** 11 to 12px, medium weight, `letter-spacing: .04em`, uppercase only when short.
 - `font-variant-numeric: tabular-nums` on all figures; `font-feature-settings: "ss01", "cv11"` where the face has nicer alternates.
 - Body text stays calm: 15 to 17px, line-height 1.55, max 65ch, muted ink for secondary copy, and always above 4.5:1 contrast.
