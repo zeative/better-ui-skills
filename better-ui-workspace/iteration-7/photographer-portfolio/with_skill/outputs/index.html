@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raka Aditya — Wedding &amp; Portrait Photographer, Bandung</title>
+<meta name="description" content="Raka Aditya is a freelance wedding and portrait photographer based in Bandung, West Java. Quiet, unhurried photographs made in highland light.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=DM+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@1,6..72,300..500&display=swap" rel="stylesheet">
+<style>
+/* ------------------------------------------------------------------
+   Idea:   the contact sheet — every picture is a numbered frame, the
+           wedding day is a strip of film, the pick is ringed in grease pencil.
+   Motif:  frame numbers (▸ 07), exposure notes, film rebate, one red chinagraph ring.
+   Kit:    mono (black, paper, giant Archivo) tuned: block colour reduced to
+           a chinagraph red used in small touches so the photographs carry colour.
+------------------------------------------------------------------- */
+:root{
+  --paper:#F7F6F2; --paper-2:#ECEAE4;
+  --ink:#0C0C0B; --ink-2:#45433F; --ink-3:#6B6862;
+  --line:rgba(12,12,11,.16); --line-strong:#0C0C0B;
+  --black:#0C0C0B; --black-2:#161614; --on-black:#F1EFE9; --on-black-2:#A19D95; --line-black:rgba(241,239,233,.18);
+  --grease:#E4381B; --grease-text:#C42E14; --grease-on-black:#FF6A45;
+  --gut:clamp(20px,2.8vw,40px); --gap:clamp(16px,1.7vw,24px);
+  --sec:clamp(96px,12vw,184px);
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --serif:"Newsreader","Iowan Old Style",Georgia,serif;
+  --mono:"DM Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  /* type scale */
+  --t-label:12px; --t-small:14px; --t-body:16px; --t-lead:20px; --t-h3:28px;
+  --t-h2:clamp(40px,6.2vw,92px); --t-voice:clamp(28px,3.5vw,52px);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;font-family:var(--display);font-size:var(--t-body);line-height:1.55;color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:clip}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--grease);outline-offset:3px}
+.skip{position:absolute;left:var(--gut);top:-60px;background:var(--ink);color:var(--paper);padding:10px 14px;z-index:50;font-size:var(--t-small)}
+.skip:focus{top:10px}
+.mono{font-family:var(--mono);font-size:var(--t-label);letter-spacing:.06em;text-transform:uppercase;font-weight:400}
+.wrap{padding-inline:var(--gut)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap)}
+
+/* ---------- header ---------- */
+.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:72px;padding-inline:var(--gut)}
+.mark{font-weight:800;font-size:var(--t-body);letter-spacing:-.01em;text-transform:uppercase;text-decoration:none;justify-self:start;padding-block:12px}
+.mark span{color:var(--grease-text)}
+.top .where{color:var(--ink-3)}
+.nav{justify-self:end;display:flex;gap:clamp(18px,2.4vw,36px);font-size:var(--t-small);font-weight:500}
+.nav a{text-decoration:none;padding-block:14px;position:relative}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:10px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.nav a:hover::after,.nav a:focus-visible::after{transform:scaleX(1)}
+.nav a:active{opacity:.6}
+.menu-btn{display:none;justify-self:end;background:none;border:0;padding:12px 0 12px 16px;font-size:var(--t-small);font-weight:500;cursor:pointer;min-height:44px}
+
+/* ---------- placeholder photographs ---------- */
+.ph{position:relative;overflow:clip;background:var(--paper-2);margin:0}
+.ph>svg,.ph>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease);filter:blur(.7px)}
+.ph::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1.4 -.2'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E")}
+a.frame-link:hover .ph>svg,a.frame-link:focus-visible .ph>svg,.frame:hover .ph>svg{transform:scale(1.03)}
+
+/* ---------- hero ---------- */
+.hero{--fs:calc((100vw - 2 * var(--gut)) / 6.6)}
+.hero-stage{position:relative;height:clamp(420px,calc(100svh - 72px - var(--fs) * .3 - 32px),920px);margin-bottom:calc(var(--fs) * .3)}
+.hero-img{position:absolute;inset:0;z-index:1;animation:heroIn 1.2s var(--ease) both}
+.hero-name{position:absolute;left:calc(var(--gut) - .035em);bottom:calc(var(--fs) * -.3);margin:0;font-size:var(--fs);line-height:.74;font-weight:800;font-stretch:100%;letter-spacing:-.035em;text-transform:uppercase;white-space:nowrap;color:var(--ink)}
+.hero-name--paper{color:var(--paper);z-index:2}
+.hero-name .w{display:inline-block}
+.hero-foot{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);align-items:start;padding:clamp(28px,3vw,44px) var(--gut) 0}
+.hero-cap{grid-column:1 / span 3;color:var(--ink-3);display:grid;gap:4px}
+.hero-cap b{font-weight:500;color:var(--ink)}
+.voice{font-family:var(--serif);font-style:italic;font-weight:300;font-size:var(--t-voice);line-height:1.08;letter-spacing:-.015em}
+.hero-foot .voice{grid-column:4 / span 6;max-width:21ch}
+.hero-cta{grid-column:10 / span 3;justify-self:end;text-align:right;display:grid;gap:10px;justify-items:end}
+.hero-cta .mono{color:var(--ink-3)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--grease);margin-right:8px;vertical-align:1px}
+.go{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:var(--t-lead);text-decoration:none;border-bottom:2px solid currentColor;padding:6px 0 4px;min-height:44px}
+.go i{font-style:normal;transition:transform .5s var(--ease)}
+.go:hover i,.go:focus-visible i{transform:translateX(6px)}
+.go:active{opacity:.6}
+@keyframes heroIn{from{opacity:0;transform:scale(1.015)}to{opacity:1;transform:none}}
+
+/* ---------- section heads ---------- */
+section{scroll-margin-top:24px}
+.sec{padding-top:var(--sec)}
+.hero+.sec{padding-top:clamp(72px,8vw,116px)}
+.sec-no{display:flex;gap:14px;align-items:baseline;color:var(--ink-3);padding-bottom:14px;border-bottom:1px solid var(--line-strong);margin-bottom:clamp(28px,4vw,56px)}
+.sec-no b{color:var(--ink);font-weight:500}
+.sec-no .r{margin-left:auto}
+.h2{font-size:var(--t-h2);font-weight:800;line-height:.9;letter-spacing:-.04em;text-transform:uppercase}
+
+/* ---------- work ---------- */
+.work-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(40px,4.5vw,64px)}
+.filters{display:flex;gap:clamp(16px,2vw,28px)}
+.filters button{background:none;border:0;padding:12px 0;min-height:44px;cursor:pointer;font-size:var(--t-lead);font-weight:500;color:var(--ink-3);position:relative;transition:color .3s}
+.filters button sup{font-family:var(--mono);font-size:var(--t-label);margin-left:4px;vertical-align:top;position:relative;top:2px}
+.filters button::after{content:"";position:absolute;left:0;right:0;bottom:8px;height:2px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.filters button:hover{color:var(--ink)}
+.filters button:active{opacity:.6}
+.filters button[aria-pressed="true"]{color:var(--ink)}
+.filters button[aria-pressed="true"]::after{transform:scaleX(1)}
+.sheet{row-gap:clamp(72px,10vw,160px);align-items:start}
+.frame{margin:0;transition:opacity .6s var(--ease),filter .6s var(--ease)}
+.frame.dim{opacity:.14;filter:grayscale(1)}
+.frame figcaption{display:grid;grid-template-columns:auto 1fr auto;column-gap:16px;row-gap:2px;padding-top:12px;align-items:baseline}
+.frame .no{font-family:var(--mono);font-size:var(--t-label);letter-spacing:.06em;color:var(--ink-3);grid-row:span 2}
+.frame .t{font-weight:600;font-size:var(--t-body);letter-spacing:-.01em}
+.frame .x{font-family:var(--mono);font-size:var(--t-label);letter-spacing:.04em;color:var(--ink-3);text-align:right;grid-row:span 2;align-self:start;padding-top:3px}
+.frame .m{font-size:var(--t-small);color:var(--ink-3);grid-column:2}
+.r45{aspect-ratio:4/5}.r11{aspect-ratio:1}.r32{aspect-ratio:3/2}.r167{aspect-ratio:16/7}
+.f07{grid-column:1 / span 7}
+.f12{grid-column:10 / span 3;grid-row:1;align-self:end}
+.aside{grid-column:10 / span 3;grid-row:1;align-self:start;color:var(--ink-3);max-width:44ch}
+.f19{grid-column:1 / -1;margin-inline:calc(var(--gut) * -1)}
+.f19 figcaption{padding-inline:var(--gut)}
+.f15{grid-column:1 / span 3;align-self:end}
+.f23{grid-column:5 / span 4}
+.f31{grid-column:9 / -1;margin-top:clamp(96px,11vw,170px);margin-right:calc(var(--gut) * -1)}
+.f31 figcaption{padding-right:var(--gut)}
+.work-end{display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;margin-top:clamp(56px,7vw,104px);padding-top:16px;border-top:1px solid var(--line)}
+.work-end .mono{color:var(--ink-3)}
+
+/* ---------- the strip (dark) ---------- */
+.day{background:var(--black);color:var(--on-black);margin-top:clamp(72px,8vw,120px);padding-block:clamp(72px,8vw,120px) clamp(56px,6vw,88px);overflow:clip}
+.day .sec-no{border-color:var(--line-black);color:var(--on-black-2)}
+.day .sec-no b{color:var(--on-black)}
+.day-head{align-items:end;margin-bottom:clamp(40px,5vw,72px)}
+.day-head .h2{grid-column:1 / span 8}
+.day-head p{grid-column:9 / span 4;padding-bottom:6px;color:var(--on-black-2);max-width:40ch}
+.day-head p em{font-family:var(--serif);font-weight:300;font-size:var(--t-lead);color:var(--on-black)}
+.strip{display:flex;overflow-x:auto;scroll-snap-type:x proximity;padding-inline:var(--gut);scroll-padding-inline:var(--gut);scrollbar-width:thin;scrollbar-color:#3a3936 transparent;padding-bottom:20px}
+.strip:focus-visible{outline-offset:-2px}
+.cell{flex:0 0 clamp(250px,27.2vw,420px);margin:0;scroll-snap-align:start;position:relative}
+.film{background:#050505;padding:26px 6px 44px;position:relative}
+.film::before,.film::after{content:"";position:absolute;left:0;right:0;height:26px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='26'%3E%3Crect x='7' y='8' width='8' height='10' rx='2' fill='%23F1EFE9' fill-opacity='.42'/%3E%3C/svg%3E") repeat-x 0 0}
+.film::before{top:0}.film::after{bottom:0}
+.film .edge{position:absolute;left:8px;right:8px;bottom:25px;z-index:1;display:flex;justify-content:space-between;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--on-black-2);line-height:16px}
+.film .edge::after{content:"RA 400"}
+.cell .ph{aspect-ratio:3/2}
+.cell figcaption{padding:18px 24px 0 0;display:grid;gap:4px}
+.cell time{font-family:var(--mono);font-size:var(--t-small);letter-spacing:.08em;color:var(--on-black-2)}
+.cell .what{font-weight:600;font-size:var(--t-lead);letter-spacing:-.015em;line-height:1.2}
+.cell .note{font-size:var(--t-small);color:var(--on-black-2);max-width:32ch;text-wrap:balance}
+.cell .what{text-wrap:balance}
+.facts dd{text-wrap:balance}
+.ring{position:absolute;left:-8px;right:-6px;top:16px;height:calc(100% - 50px);width:calc(100% + 14px);z-index:3;pointer-events:none;overflow:visible}
+.film{overflow:visible}
+.pick{color:var(--grease-on-black);margin-top:6px}
+.strip-hint{display:flex;justify-content:space-between;gap:16px;color:var(--on-black-2);padding:8px var(--gut) 0}
+
+/* ---------- about ---------- */
+.about{align-items:start}
+.about-pic{grid-column:1 / span 5}
+.about-body{grid-column:7 / span 6}
+.about-body .voice{font-size:var(--t-voice);margin-bottom:clamp(28px,3vw,44px);max-width:19ch}
+.about-body .voice u{text-decoration:none;background:linear-gradient(var(--grease),var(--grease)) 0 92%/100% 2px no-repeat}
+.prose{display:grid;gap:16px;max-width:54ch;color:var(--ink-2)}
+.facts{margin:clamp(36px,4vw,56px) 0 0;padding:0;border-top:1px solid var(--line-strong)}
+.facts div{display:grid;grid-template-columns:minmax(120px,1fr) 2fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--line)}
+.facts dt{font-family:var(--mono);font-size:var(--t-label);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);padding-top:3px}
+.facts dd{margin:0;font-weight:500}
+.about-cap{padding-top:12px;color:var(--ink-3);display:flex;justify-content:space-between;gap:16px}
+
+/* ---------- packages ---------- */
+.pk-head{align-items:end;margin-bottom:clamp(36px,5vw,72px)}
+.pk-head .h2{grid-column:1 / span 8}
+.pk-head .h2 em{font-family:var(--serif);font-weight:300;text-transform:none;letter-spacing:-.02em}
+.pk-head p{grid-column:9 / span 4;color:var(--ink-2);max-width:40ch}
+.pk-group{grid-column:1 / span 2;padding-top:26px;color:var(--ink-3)}
+.pk-list{grid-column:3 / -1;list-style:none;margin:0;padding:0;border-top:1px solid var(--line-strong)}
+.pk{display:grid;grid-template-columns:44px minmax(0,4fr) minmax(0,6fr) 200px;column-gap:var(--gap);align-items:baseline;padding:22px 0 24px;border-bottom:1px solid var(--line)}
+.pk .n{font-family:var(--mono);font-size:var(--t-label);color:var(--ink-3)}
+.pk h3{font-size:var(--t-h3);font-weight:700;letter-spacing:-.025em;line-height:1.1}
+.pk p{font-size:var(--t-small);color:var(--ink-2);max-width:46ch}
+.pk .price{font-size:var(--t-h3);font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.pk .price small{font-family:var(--mono);font-size:var(--t-label);font-weight:400;letter-spacing:.06em;color:var(--ink-3);margin-right:8px}
+.pk-rows{row-gap:clamp(40px,5vw,64px)}
+.pk-note{grid-column:3 / -1;display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:8px 32px;color:var(--ink-3);padding-top:18px}
+
+/* ---------- words ---------- */
+.words-band{margin-top:clamp(72px,8vw,120px)}
+.words-band+.sec{padding-top:clamp(72px,8vw,120px)}
+.words{margin:0;padding-block:clamp(48px,6vw,88px);border-block:1px solid var(--line-strong)}
+.words p{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(40px,7.6vw,124px);line-height:.98;letter-spacing:-.025em}
+.words footer{display:flex;gap:14px;align-items:baseline;margin-top:clamp(28px,3vw,44px);color:var(--ink-3)}
+.words footer b{font-family:var(--display);font-weight:600;font-size:var(--t-body);color:var(--ink);text-transform:none;letter-spacing:0}
+
+/* ---------- questions ---------- */
+.qa{list-style:none;margin:0;padding:0;grid-column:1 / -1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:calc(var(--gap) * 3)}
+.qa li{display:grid;grid-template-columns:44px 1fr;padding:22px 0 26px;border-bottom:1px solid var(--line)}
+.qa li span{font-family:var(--mono);font-size:var(--t-label);color:var(--ink-3);padding-top:5px}
+.qa h3{font-size:var(--t-lead);font-weight:700;letter-spacing:-.015em;line-height:1.25;margin-bottom:8px}
+.qa p{color:var(--ink-2);max-width:52ch}
+.qa-head{margin-bottom:clamp(12px,2vw,24px);align-items:end}
+.rain{margin-bottom:clamp(40px,5vw,72px);margin-inline:calc(var(--gut) * -1)}
+.rain figcaption{padding-inline:var(--gut)}
+.rain h2{position:absolute;left:var(--gut);bottom:clamp(18px,2.4vw,36px);z-index:2;color:var(--paper)}
+.rain .ph{aspect-ratio:21/9}
+.qa-head .h2{grid-column:1 / -1}
+
+/* ---------- enquire ---------- */
+.enq-mail{display:block;font-size:clamp(28px,7.3vw,112px);font-weight:800;letter-spacing:-.045em;line-height:1;text-decoration:none;margin-bottom:clamp(40px,6vw,88px);white-space:nowrap;background:linear-gradient(currentColor,currentColor) 0 100%/0 3px no-repeat;transition:background-size .7s var(--ease);padding-bottom:.08em}
+.enq-mail span{display:inline-block}
+.enq-mail:hover,.enq-mail:focus-visible{background-size:100% 3px}
+.enq-mail:active{opacity:.6}
+.enq-side{grid-column:1 / span 4;display:grid;gap:28px;align-content:start}
+.lead{font-size:var(--t-lead);font-weight:500;line-height:1.35;letter-spacing:-.01em;max-width:26ch}
+.enq-side dl{margin:0;display:grid;gap:0;border-top:1px solid var(--line-strong)}
+.enq-side dl div{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line)}
+.enq-side dt{font-family:var(--mono);font-size:var(--t-label);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.enq-side dd{margin:0;font-weight:500}
+.enq-side dd a{text-underline-offset:3px;display:inline-block;padding-block:2px}
+form{grid-column:6 / -1;display:grid;grid-template-columns:1fr 1fr;gap:28px var(--gap)}
+.fld{display:grid;gap:6px;position:relative}
+.fld.full{grid-column:1 / -1}
+.fld label{font-family:var(--mono);font-size:var(--t-label);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.fld input,.fld select,.fld textarea{appearance:none;-webkit-appearance:none;background:transparent;border:0;border-bottom:1px solid var(--ink-3);border-radius:0;padding:8px 0 12px;font-size:var(--t-lead);font-weight:500;width:100%;min-height:48px;transition:border-color .3s,box-shadow .3s}
+.fld textarea{resize:vertical;min-height:112px;line-height:1.4}
+.fld select{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%230C0C0B' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 4px center;padding-right:28px;cursor:pointer}
+.fld ::placeholder{color:#8C8982;font-weight:400;opacity:1}
+.fld input:hover,.fld select:hover,.fld textarea:hover{border-color:var(--ink)}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:0;border-color:var(--ink);box-shadow:0 2px 0 var(--ink)}
+.fld [aria-invalid="true"]{border-color:var(--grease-text);box-shadow:0 2px 0 var(--grease-text)}
+.err{font-size:var(--t-small);color:var(--grease-text);min-height:0}
+.err:empty{display:none}
+.send-row{grid-column:1 / -1;display:flex;align-items:center;gap:20px 28px;flex-wrap:wrap;padding-top:8px}
+.send{background:var(--ink);color:var(--paper);border:0;padding:18px 26px;min-height:56px;font-weight:600;font-size:var(--t-body);cursor:pointer;display:inline-flex;gap:14px;align-items:center;transition:background .3s}
+.send i{font-style:normal;transition:transform .5s var(--ease)}
+.send:hover{background:#2a2927}.send:hover i{transform:translateX(6px)}
+.send:active{transform:scale(.985)}
+.status{font-size:var(--t-small);color:var(--ink-2);max-width:44ch}
+.status.ok::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--grease);margin-right:8px;vertical-align:1px}
+
+/* ---------- footer ---------- */
+.foot{background:var(--black);color:var(--on-black);margin-top:var(--sec);padding-top:clamp(48px,6vw,88px);overflow:hidden;--fs:calc((100vw - 2 * var(--gut)) / 6.6)}
+.foot-row{align-items:start;row-gap:32px;padding-bottom:clamp(56px,7vw,104px)}
+.foot-row>div{display:grid;gap:6px;align-content:start}
+.foot-row .mono{color:var(--on-black-2);margin-bottom:6px}
+.foot-row a{text-decoration:none;width:fit-content;padding-block:3px;background:linear-gradient(currentColor,currentColor) 0 100%/0 1px no-repeat;transition:background-size .45s var(--ease)}
+.foot-row a:hover,.foot-row a:focus-visible{background-size:100% 1px}
+.foot-row a:active{opacity:.6}
+.fc1{grid-column:1 / span 4}.fc2{grid-column:7 / span 2}.fc3{grid-column:9 / span 2}.fc4{grid-column:11 / span 2}
+
+.foot-name{font-size:var(--fs);line-height:.74;font-weight:800;letter-spacing:-.035em;text-transform:uppercase;white-space:nowrap;margin:0 0 clamp(20px,2.8vw,40px) -.035em}
+.foot-name .w{display:inline-block}
+.foot-legal{display:flex;align-items:baseline;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;color:var(--on-black-2);padding:16px 0 clamp(28px,3vw,44px);border-top:1px solid var(--line-black)}
+.foot-legal a{color:inherit;text-underline-offset:3px}
+
+/* ---------- tablet ---------- */
+@media (max-width:1000px){
+  .top .where{display:none}
+  .top{grid-template-columns:1fr auto}
+  .hero-cap{grid-column:1 / span 4}
+  .hero-foot .voice{grid-column:5 / span 8}
+  .hero-cta{grid-column:5 / span 8;justify-self:start;text-align:left;justify-items:start;margin-top:24px}
+  .f07{grid-column:1 / span 7}.f12{grid-column:9 / span 4}.aside{display:none}
+  .f15{grid-column:1 / span 4}.f23{grid-column:5 / span 4}.f31{grid-column:9 / -1;margin-top:0}
+  .f15,.f23,.f31{align-self:start}
+  .frame figcaption{grid-template-columns:auto 1fr}
+  .frame .x{grid-column:2;grid-row:auto;text-align:left;padding-top:4px}
+  .day-head .h2{grid-column:1 / -1}.day-head p{grid-column:1 / span 8;margin-top:24px}
+  .about-pic{grid-column:1 / span 5}.about-body{grid-column:6 / span 7}
+  .pk-head .h2{grid-column:1 / -1}.pk-head p{grid-column:1 / span 8;margin-top:20px}
+  .pk-group{grid-column:1 / -1;padding:0 0 12px}
+  .pk-list,.pk-note{grid-column:1 / -1}
+  .pk-note{grid-template-columns:1fr;gap:6px}
+  .pk{grid-template-columns:36px minmax(0,1fr) auto}
+  .pk p{grid-column:2 / -1;grid-row:2;margin-top:6px}
+  .enq-side{grid-column:1 / -1;grid-template-columns:1fr 1fr;gap:var(--gap);margin-bottom:48px}
+  form{grid-column:1 / -1}
+  .fc1{grid-column:1 / -1}.fc2{grid-column:1 / span 4}.fc3{grid-column:5 / span 4}.fc4{grid-column:9 / span 4}
+}
+
+/* ---------- phone ---------- */
+@media (max-width:640px){
+  :root{--sec:96px}
+  .top{height:60px}
+  .menu-btn{display:block}
+  .nav{position:fixed;inset:0;z-index:40;background:var(--black);color:var(--on-black);flex-direction:column;justify-content:flex-end;gap:0;padding:0 var(--gut) 40px;font-size:44px;font-weight:800;letter-spacing:-.04em;text-transform:uppercase;line-height:1;visibility:hidden;opacity:0;transition:opacity .35s var(--ease),visibility 0s .35s}
+  .nav a{padding-block:14px;border-top:1px solid var(--line-black)}
+  .nav a::after{display:none}
+  .nav.open{visibility:visible;opacity:1;transition:opacity .35s var(--ease)}
+  .menu-btn[aria-expanded="true"]{position:fixed;right:var(--gut);top:8px;z-index:41;color:var(--on-black)}
+  .hero{--fs:calc((100vw - 2 * var(--gut)) / 3.75)}
+  .hero-stage{height:calc(100svh - 60px - var(--fs) * .3 - 28px);min-height:400px;max-height:700px}
+  .hero-name{line-height:.8}
+  .hero-name .w{display:block}
+  .hero-img>svg{transform:translateX(-10%) scale(1.2)}
+  .hero-foot{display:block;padding-top:28px}
+  .hero-cap{margin-bottom:28px}
+  .hero-cta{justify-items:start;text-align:left;margin-top:28px}
+  .grid{display:block}
+  .work-head{margin-bottom:40px}
+  .filters{width:100%;justify-content:space-between;gap:8px;border-top:1px solid var(--line);margin-top:4px}
+  .filters button{font-size:var(--t-body)}
+  .sheet .frame{margin-bottom:64px}
+  .f12{margin-top:0}
+  .f07 .ph,.f12 .ph,.f31 .ph,.f19 .ph{margin-inline:calc(var(--gut) * -1)}
+  .f19{margin-inline:0}.f19 figcaption{padding-inline:0}
+  .f19 .ph,.rain .ph{aspect-ratio:4/3}
+  .rain{display:flex;flex-direction:column}
+  .rain h2{position:static;color:var(--ink);order:3;padding:36px var(--gut) 0}
+  .rain .ph{display:contents}
+  .rain .ph>svg{position:static;aspect-ratio:4/3;height:auto;order:1}
+  .rain figcaption{order:2}
+  .rain{margin-bottom:8px}
+  .f15{width:68%}
+  .f23{width:68%;margin-left:auto}
+  .f31{margin-left:0;margin-right:0;margin-top:0}
+  .f31 figcaption{padding-right:0}
+  .sheet .frame:last-of-type{margin-bottom:0}
+  .day-head p{margin-top:20px}
+  .cell{flex-basis:62vw}
+  .about .ph{margin-inline:calc(var(--gut) * -1)}
+  .about-cap{margin-bottom:44px}
+  .about-body .voice{max-width:none}
+  .facts div{grid-template-columns:112px 1fr}
+  .pk-head p{margin-top:20px}
+  .pk-list+.pk-group{margin-top:48px}
+  .pk-group{padding-bottom:12px}
+  .pk{grid-template-columns:30px minmax(0,1fr);padding:20px 0}
+  .pk h3{font-size:22px}
+  .pk p{grid-column:2}
+  .pk .price{grid-column:2;grid-row:3;text-align:left;margin-top:12px;font-size:22px}
+  .pk-note{grid-template-columns:1fr;gap:6px}
+  .words footer{display:grid;gap:4px}
+  .qa{display:block}
+  .qa li{grid-template-columns:34px 1fr}
+  .enq-side{display:grid;grid-template-columns:1fr;gap:28px;margin-bottom:48px}
+  form{grid-template-columns:1fr;gap:24px}
+  .fld input,.fld select,.fld textarea{font-size:18px}
+  .send{width:100%;justify-content:space-between}
+  .foot-row>div{margin-bottom:36px}
+  .foot-row{padding-bottom:28px}
+  .foot{--fs:calc((100vw - 2 * var(--gut)) / 3.75)}
+  .foot-name{line-height:.8}
+  .foot-name .w{display:block}
+  .foot-legal{display:grid;gap:4px}
+
+  .foot-row a,.enq-side dd a,.foot-legal a{padding-block:11px}
+  .foot-row>div{display:flex;flex-wrap:wrap;gap:0 22px}
+  .foot-row>div .mono{flex-basis:100%}
+  .enq-mail{padding-block:8px;line-height:.95}
+  .enq-mail .w{display:block}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#work">Skip to the photographs</a>
+
+<!-- shared filters and gradients for the placeholder photographs -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="b2" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="2"/></filter>
+    <filter id="b5" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="b12" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="12"/></filter>
+    <filter id="b24" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="24"/></filter>
+    <filter id="b48" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="48"/></filter>
+    <filter id="mb" x="-40%" y="-10%" width="180%" height="120%"><feGaussianBlur stdDeviation="26 3"/></filter>
+    <filter id="mb2" x="-40%" y="-10%" width="180%" height="120%"><feGaussianBlur stdDeviation="9 1.5"/></filter>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FBE9B0"/><stop offset=".35" stop-color="#C99A3B"/><stop offset=".62" stop-color="#7A5417"/><stop offset="1" stop-color="#EBCB7A"/></linearGradient>
+    <filter id="b06" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation=".7"/></filter>
+    <g id="couple">
+      <path d="M-10 -62 Q0 -67 10 -62 L8.5 -30 L7 0 H1.5 L0 -26 L-1.5 0 H-7 L-8.5 -30Z" fill="var(--suit,#111A15)"/>
+      <ellipse cx="0" cy="-72.5" rx="5.2" ry="6.2" fill="var(--suit,#111A15)"/>
+      <path d="M8 -46 L20 -42" stroke="var(--suit,#111A15)" stroke-width="3.4" stroke-linecap="round"/>
+      <g transform="translate(25,0)">
+        <path d="M-5 -58 Q0 -61 5 -58 L4 -44 Q14 -20 21 0 Q1 5 -17 0 Q-12 -22 -4 -44Z" fill="var(--gown,#F8F2E4)"/>
+        <ellipse cx="0" cy="-66" rx="4.8" ry="5.8" fill="var(--hair,#2B2019)"/><circle cx="3.4" cy="-69.5" r="3.2" fill="var(--hair,#2B2019)"/>
+      </g>
+    </g>
+    <radialGradient id="vig" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".42"/></radialGradient>
+  </defs>
+</svg>
+
+<header class="top">
+  <a class="mark" href="#top" aria-label="Raka Aditya, home">Raka Aditya<span>.</span></a>
+  <span class="where mono">Wedding &amp; portrait — Bandung <span id="clock"></span></span>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+  <nav class="nav" id="nav" aria-label="Sections">
+    <a href="#work">Work</a>
+    <a href="#about">About</a>
+    <a href="#packages">Packages</a>
+    <a href="#enquire">Enquire</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero" aria-label="Introduction">
+  <div class="hero-stage">
+    <h1 class="hero-name hero-name--ink"><span class="fit"><span class="w">Raka</span> <span class="w">Aditya</span></span></h1>
+    <!-- SLOT hero · 16:9 landscape (crops to ~3:4 on phones, keep the subject right of centre) -->
+    <figure class="ph hero-img">
+      <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A bride and groom standing on a ridge of tea fields at first light, mist lying in the valleys behind them">
+        <defs>
+          <linearGradient id="h-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5E7772"/><stop offset=".36" stop-color="#B9BBA2"/><stop offset=".56" stop-color="#F1D49C"/><stop offset="1" stop-color="#E6BC80"/></linearGradient>
+          <linearGradient id="h-r3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A6A55"/><stop offset="1" stop-color="#22362A"/></linearGradient>
+        </defs>
+        <rect width="1600" height="900" fill="url(#h-sky)"/>
+        <circle cx="1120" cy="455" r="300" fill="#FFE7B0" opacity=".8" filter="url(#b48)"/>
+        <circle cx="1120" cy="462" r="44" fill="#FFF8E2" filter="url(#b5)"/>
+        <path d="M0 470 C140 430 260 455 400 425 S640 380 800 430 S1060 400 1210 440 S1480 395 1600 420 V900 H0Z" fill="#A9B5A0" opacity=".75" filter="url(#b5)"/>
+        <ellipse cx="700" cy="505" rx="900" ry="46" fill="#F7EBD0" opacity=".65" filter="url(#b24)"/>
+        <path d="M0 545 C170 500 300 525 470 500 S720 470 880 520 S1160 490 1310 515 S1510 495 1600 510 V900 H0Z" fill="#7C9480" filter="url(#b2)"/>
+        <ellipse cx="420" cy="590" rx="560" ry="34" fill="#F6ECD6" opacity=".7" filter="url(#b24)"/>
+        <ellipse cx="1330" cy="600" rx="360" ry="26" fill="#F9E5BC" opacity=".55" filter="url(#b24)"/>
+        <path id="h-ridge" d="M0 690 C180 650 340 606 560 624 S860 604 1010 588 S1260 602 1400 644 S1540 656 1600 646 V900 H0Z" fill="url(#h-r3)"/>
+        <g fill="none" stroke="#6C8E73" stroke-width="3" opacity=".5">
+          <path d="M0 716 C180 676 340 632 560 650 S860 630 1010 614 S1260 628 1400 670 S1540 682 1600 672"/>
+          <path d="M0 746 C180 706 340 664 560 682 S860 662 1010 646 S1260 660 1400 700 S1540 712 1600 702"/>
+          <path d="M0 780 C180 742 340 700 560 718 S860 698 1010 684 S1260 696 1400 734 S1540 746 1600 736"/>
+        </g>
+        
+        <!-- the couple -->
+        <path d="M1030 530 C1066 512 1110 538 1170 498 C1130 552 1078 560 1034 548Z" fill="#FFFDF4" opacity=".62" filter="url(#b5)"/>
+        <use href="#couple" transform="translate(1004,592) scale(.92)" filter="url(#b2)" style="--suit:#16221B"/>
+        <path d="M0 800 C200 748 420 770 640 790 S1000 812 1200 780 S1480 748 1600 768 V900 H0Z" fill="#14211A"/>
+        <g fill="none" stroke="#2E4736" stroke-width="4" opacity=".8">
+          <path d="M0 826 C200 776 420 798 640 818 S1000 840 1200 808 S1480 776 1600 796"/>
+          <path d="M0 860 C200 812 420 834 640 852 S1000 872 1200 842 S1480 812 1600 830"/>
+        </g>
+        <ellipse cx="90" cy="890" rx="360" ry="130" fill="#0A120E" filter="url(#b24)"/>
+        <ellipse cx="1540" cy="900" rx="320" ry="110" fill="#0A120E" filter="url(#b24)"/>
+        <g fill="#87A383" opacity=".5" filter="url(#b12)"><circle cx="150" cy="770" r="26"/><circle cx="236" cy="812" r="18"/><circle cx="1470" cy="800" r="24"/><circle cx="60" cy="700" r="20"/></g>
+        <rect width="1600" height="900" fill="url(#vig)"/>
+      </svg>
+      <span class="hero-name hero-name--paper" aria-hidden="true"><span class="fit"><span class="w">Raka</span> <span class="w">Aditya</span></span></span>
+    </figure>
+  </div>
+  <div class="hero-foot">
+    <p class="hero-cap mono"><span>▸ 01 &nbsp;Opening frame</span><b>Nadia &amp; Bagas</b><span>Pangalengan, 05:52</span><span>35 mm · f/2 · 1/500</span></p>
+    <p class="voice">Weddings and portraits, photographed in the cool, slow light of the Bandung highlands.</p>
+    <div class="hero-cta">
+      <span class="mono"><span class="dot"></span>Booking dates for 2027</span>
+      <a class="go" href="#enquire">Enquire <i aria-hidden="true">→</i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORK ================= -->
+<section class="sec wrap" id="work" aria-labelledby="work-h">
+  <div class="sec-no mono"><b>▸ 02</b><span>Contact sheet</span><span class="r">2024 — 2026</span></div>
+  <div class="work-head">
+    <h2 class="h2" id="work-h">Selected<br>frames</h2>
+    <div class="filters" role="group" aria-label="Filter the work">
+      <button type="button" data-f="all" aria-pressed="true">All<sup>06</sup></button>
+      <button type="button" data-f="wedding" aria-pressed="false">Weddings<sup>03</sup></button>
+      <button type="button" data-f="portrait" aria-pressed="false">Portraits<sup>03</sup></button>
+    </div>
+  </div>
+
+  <div class="grid sheet">
+    <!-- SLOT 07 · 4:5 -->
+    <figure class="frame f07" data-k="wedding">
+      <div class="ph r45">
+        <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A bride walking alone between tall pine trunks, her veil trailing, low sun coming through the trees">
+          <defs><linearGradient id="p-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E3E2C2"/><stop offset=".5" stop-color="#93A68A"/><stop offset="1" stop-color="#1E2C24"/></linearGradient></defs>
+          <rect width="800" height="1000" fill="url(#p-bg)"/>
+          <circle cx="430" cy="400" r="270" fill="#FFF3C8" opacity=".85" filter="url(#b48)"/>
+          <g fill="#869A86" filter="url(#b5)"><rect x="60" width="18" height="840"/><rect x="170" width="13" height="830"/><rect x="262" width="20" height="840"/><rect x="338" width="11" height="820"/><rect x="528" width="15" height="826"/><rect x="606" width="22" height="840"/><rect x="706" width="13" height="830"/></g>
+          <path d="M540 0 L640 0 L300 1000 L150 1000Z" fill="#FFF6D6" opacity=".2" filter="url(#b12)"/>
+          <path d="M380 0 L430 0 L130 1000 L40 1000Z" fill="#FFF6D6" opacity=".14" filter="url(#b12)"/>
+          <g fill="#3C5142" filter="url(#b2)"><rect x="112" width="30" height="880"/><rect x="474" width="25" height="860"/><rect x="654" width="34" height="890"/></g>
+          <path d="M0 826 C200 792 500 806 800 782 V1000 H0Z" fill="#15211A"/>
+          <ellipse cx="406" cy="826" rx="150" ry="14" fill="#FFE9B0" opacity=".35" filter="url(#b12)"/>
+          <path d="M404 742 C380 760 352 800 318 826 C352 832 384 828 400 824Z" fill="#FFFDF4" opacity=".55" filter="url(#b5)"/>
+          <g transform="translate(406,828) scale(1.25)" filter="url(#b2)"><path d="M-5 -58 Q0 -61 5 -58 L4 -44 Q14 -20 21 0 Q1 5 -17 0 Q-12 -22 -4 -44Z" fill="#F6F0E0"/><ellipse cx="0" cy="-66" rx="4.8" ry="5.8" fill="#2B2019"/></g>
+          <g fill="#0C1410" filter="url(#b5)"><rect x="-30" width="96" height="1000"/><rect x="738" width="110" height="1000"/></g>
+          <g fill="#22352A" filter="url(#b12)"><ellipse cx="120" cy="950" rx="170" ry="50"/><ellipse cx="650" cy="970" rx="210" ry="56"/><ellipse cx="400" cy="-10" rx="460" ry="70" opacity=".8"/></g>
+          <rect width="800" height="1000" fill="url(#vig)"/>
+        </svg>
+      </div>
+      <figcaption><span class="no">07</span><span class="t">Laras, before the vows</span><span class="m">Pine forest, Lembang · 2026</span></figcaption>
+    </figure>
+
+    <p class="aside mono">Frames are numbered as shot. Nothing here was posed for longer than a breath.</p>
+
+    <!-- SLOT 12 · 4:5 · black and white -->
+    <figure class="frame f12" data-k="portrait">
+      <div class="ph r45">
+        <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Black and white portrait of a bride seen from behind at a window, jasmine strands falling from her hair bun">
+          <defs>
+            <linearGradient id="s-bg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#E9E8E3"/><stop offset=".42" stop-color="#8E8D89"/><stop offset="1" stop-color="#191918"/></linearGradient>
+            <linearGradient id="s-body" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#A9A8A3"/><stop offset=".35" stop-color="#4A4A48"/><stop offset="1" stop-color="#141413"/></linearGradient>
+            <linearGradient id="s-hair" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4b4b49"/><stop offset=".3" stop-color="#151514"/><stop offset="1" stop-color="#070707"/></linearGradient>
+          </defs>
+          <rect width="800" height="1000" fill="url(#s-bg)"/>
+          <rect x="-40" y="0" width="270" height="1000" fill="#F7F6F1" opacity=".85" filter="url(#b24)"/>
+          <rect x="96" y="0" width="16" height="1000" fill="#8f8e8a" filter="url(#b12)"/>
+          <rect x="-20" y="430" width="250" height="14" fill="#8f8e8a" filter="url(#b12)"/>
+          <path d="M150 1000 C165 815 270 742 392 712 C420 704 436 668 436 628 L528 628 C528 668 544 704 572 712 C694 742 770 830 782 1000Z" fill="url(#s-body)"/>
+          <path d="M392 712 C440 780 520 780 572 712" fill="none" stroke="#DAD9D4" stroke-width="3" opacity=".55"/>
+          <path d="M436 640 C436 700 528 700 528 640 V600 H436Z" fill="#8a8985"/>
+          <ellipse cx="482" cy="505" rx="98" ry="120" fill="url(#s-hair)"/>
+          <ellipse cx="484" cy="606" rx="80" ry="58" fill="#090909"/>
+          <path d="M388 540 C376 470 400 400 470 386" fill="none" stroke="#F4F3EE" stroke-width="5" opacity=".8" filter="url(#b2)"/>
+          <path d="M168 900 C190 800 280 748 388 716" fill="none" stroke="#F4F3EE" stroke-width="4" opacity=".6" filter="url(#b2)"/>
+          <path d="M430 590 C450 566 520 566 540 592" fill="none" stroke="#5a5a58" stroke-width="5" opacity=".7" filter="url(#b5)"/>
+          <path d="M556 632 C572 700 566 770 578 850" fill="none" stroke="#F3F2EC" stroke-width="12" stroke-linecap="round" stroke-dasharray=".1 18"/>
+          <path d="M540 650 C548 720 540 780 546 880" fill="none" stroke="#DFDED8" stroke-width="11" stroke-linecap="round" stroke-dasharray=".1 18"/>
+          <g stroke="#CFCEC8" stroke-width="2.5" fill="#E9E8E2"><path d="M440 400 V366" /><circle cx="440" cy="360" r="7"/><path d="M482 388 V346"/><circle cx="482" cy="339" r="8"/><path d="M524 400 V366"/><circle cx="524" cy="360" r="7"/></g>
+          <rect width="800" height="1000" fill="url(#vig)"/>
+        </svg>
+      </div>
+      <figcaption><span class="no">12</span><span class="t">Sekar, the morning of</span><span class="m">Window light, Dago · 2025</span></figcaption>
+    </figure>
+
+    <!-- SLOT 19 · 16:7 full bleed (4:3 on phones) -->
+    <figure class="frame f19" data-k="wedding">
+      <div class="ph r167">
+        <svg viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A small wooden boat with a couple on a still lake in heavy mist, hills faint behind">
+          <defs><linearGradient id="l-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#AEBBB4"/><stop offset=".44" stop-color="#DFE2D8"/><stop offset=".5" stop-color="#C9D1C8"/><stop offset="1" stop-color="#7E938A"/></linearGradient></defs>
+          <rect width="1600" height="700" fill="url(#l-bg)"/>
+          <path d="M0 330 C200 250 380 290 560 262 S900 220 1100 276 S1420 240 1600 290 V345 H0Z" fill="#8FA398" opacity=".6" filter="url(#b12)"/>
+          <path d="M1040 345 C1120 268 1260 240 1380 270 S1540 300 1600 290 V345Z" fill="#4D665A" filter="url(#b5)"/>
+          <path d="M1040 345 C1120 410 1260 436 1380 410 S1540 384 1600 392 V345Z" fill="#4D665A" opacity=".3" filter="url(#b12)"/>
+          <g fill="#3F574B" filter="url(#b5)"><rect x="1237" y="216" width="4" height="52"/><ellipse cx="1230" cy="214" rx="22" ry="24"/><ellipse cx="1250" cy="200" rx="18" ry="22"/><ellipse cx="1238" cy="188" rx="14" ry="16"/><rect x="1317" y="228" width="3" height="42"/><ellipse cx="1314" cy="222" rx="16" ry="20"/><ellipse cx="1326" cy="210" rx="12" ry="15"/></g>
+          <ellipse cx="800" cy="345" rx="1000" ry="30" fill="#F1F1E8" opacity=".85" filter="url(#b24)"/>
+          <ellipse cx="300" cy="300" rx="500" ry="50" fill="#F1F1E8" opacity=".55" filter="url(#b48)"/>
+          <!-- boat -->
+          <g filter="url(#b2)">
+            <path d="M560 440 q96 30 200 0 l-16 20 q-84 16 -168 0z" fill="#17211C"/>
+            <rect x="618" y="398" width="15" height="46" rx="6" fill="#17211C"/><circle cx="625.5" cy="388" r="8" fill="#17211C"/>
+            <path d="M676 404 l-14 42 h40 l-12 -42z" fill="#FAF6EA"/><circle cx="684" cy="394" r="7.5" fill="#2B2019"/>
+            <path d="M610 410 L560 470" stroke="#17211C" stroke-width="4" stroke-linecap="round"/>
+          </g>
+          <g opacity=".3" filter="url(#b5)" transform="translate(0,924) scale(1,-1)">
+            <path d="M560 440 q96 30 200 0 l-16 20 q-84 16 -168 0z" fill="#17211C"/>
+            <rect x="618" y="398" width="15" height="46" rx="6" fill="#17211C"/>
+            <path d="M676 404 l-14 42 h40 l-12 -42z" fill="#FAF6EA"/>
+          </g>
+          <g stroke="#F6F6EE" stroke-width="2" opacity=".6" fill="none"><path d="M500 474 h120"/><path d="M700 482 h150"/><path d="M450 498 h90"/><path d="M780 468 h60"/><path d="M560 512 h220"/></g>
+          <path d="M392 190 q10 -10 20 0 q10 -10 20 0" fill="none" stroke="#3B5146" stroke-width="3"/><path d="M460 214 q8 -8 16 0 q8 -8 16 0" fill="none" stroke="#3B5146" stroke-width="2.5"/>
+          <g stroke="#1B2A22" stroke-width="7" stroke-linecap="round" fill="none" filter="url(#b5)"><path d="M1480 700 Q1470 590 1440 520"/><path d="M1520 700 Q1530 570 1560 500"/><path d="M1558 700 Q1550 610 1510 560"/><path d="M60 700 Q70 620 40 560"/><path d="M110 700 Q104 640 132 590"/></g>
+          <rect width="1600" height="700" fill="url(#vig)" opacity=".7"/>
+        </svg>
+      </div>
+      <figcaption><span class="no">19</span><span class="t">Tiara &amp; Fajar</span><span class="m">Prewedding on the lake, Ciwidey · 2026</span></figcaption>
+    </figure>
+
+    <!-- SLOT 15 · 1:1 detail -->
+    <figure class="frame f15" data-k="wedding">
+      <div class="ph r11">
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Two gold wedding rings resting on a brown batik cloth, jasmine buds out of focus in the corner">
+          <defs>
+            <pattern id="kawung" width="120" height="120" patternUnits="userSpaceOnUse" patternTransform="rotate(18)">
+              <rect width="120" height="120" fill="#4A2D1A"/>
+              <g fill="#B5874A"><ellipse cx="60" cy="27" rx="17" ry="25"/><ellipse cx="60" cy="93" rx="17" ry="25"/><ellipse cx="27" cy="60" rx="25" ry="17"/><ellipse cx="93" cy="60" rx="25" ry="17"/></g>
+              <g fill="#4A2D1A"><circle cx="60" cy="27" r="5"/><circle cx="60" cy="93" r="5"/><circle cx="27" cy="60" r="5"/><circle cx="93" cy="60" r="5"/></g>
+              <circle cx="0" cy="0" r="7" fill="#DDBA7A"/><circle cx="120" cy="0" r="7" fill="#DDBA7A"/><circle cx="0" cy="120" r="7" fill="#DDBA7A"/><circle cx="120" cy="120" r="7" fill="#DDBA7A"/>
+            </pattern>
+            <linearGradient id="r-fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#fff"/><stop offset=".78" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+            <mask id="r-mask"><rect width="1000" height="1000" fill="url(#r-fade)"/></mask>
+            <linearGradient id="r-dark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A0E07" stop-opacity=".75"/><stop offset=".5" stop-color="#1A0E07" stop-opacity="0"/><stop offset="1" stop-color="#1A0E07" stop-opacity=".35"/></linearGradient>
+          </defs>
+          <rect width="1000" height="1000" fill="url(#kawung)" filter="url(#b12)"/>
+          <rect width="1000" height="1000" fill="url(#kawung)" mask="url(#r-mask)" filter="url(#b2)"/>
+          <rect width="1000" height="1000" fill="url(#r-dark)"/>
+          <ellipse cx="530" cy="668" rx="250" ry="40" fill="#120904" opacity=".7" filter="url(#b24)"/>
+          <ellipse cx="596" cy="520" rx="104" ry="128" transform="rotate(-22 596 520)" fill="none" stroke="url(#gold)" stroke-width="20"/>
+          <ellipse cx="446" cy="584" rx="140" ry="84" fill="none" stroke="url(#gold)" stroke-width="24"/>
+          <path d="M336 548 C372 512 430 500 480 502" fill="none" stroke="#FFF9E0" stroke-width="6" stroke-linecap="round" opacity=".9" filter="url(#b2)"/>
+          <path d="M520 432 C540 404 580 392 610 396" fill="none" stroke="#FFF9E0" stroke-width="5" stroke-linecap="round" opacity=".85" filter="url(#b2)"/>
+          <g fill="#FBF5E4" filter="url(#b24)" opacity=".92"><circle cx="110" cy="900" r="80"/><circle cx="250" cy="968" r="60"/><circle cx="40" cy="770" r="50"/></g>
+          <rect width="1000" height="1000" fill="url(#vig)"/>
+        </svg>
+      </div>
+      <figcaption><span class="no">15</span><span class="t">Rings, on her grandmother's batik</span><span class="m">Buahbatu · 2025</span></figcaption>
+    </figure>
+
+    <!-- SLOT 23 · 4:5 · black and white -->
+    <figure class="frame f23" data-k="portrait">
+      <div class="ph r45">
+        <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Black and white street portrait: a man in a cap standing in a band of hard sunlight between art deco buildings, his shadow long on the pavement">
+          <rect width="800" height="1000" fill="#D9D8D3"/>
+          <rect x="300" y="0" width="500" height="700" fill="#E9E8E3"/>
+          <g fill="#BDBCB7"><rect x="350" y="0" width="16" height="560"/><rect x="420" y="0" width="16" height="560"/><rect x="490" y="0" width="16" height="560"/><rect x="630" y="0" width="16" height="560"/><rect x="700" y="0" width="16" height="560"/><rect x="770" y="0" width="16" height="560"/></g>
+          <rect x="300" y="556" width="500" height="12" fill="#A9A8A3"/>
+          <path d="M530 700 V470 a50 50 0 0 1 100 0 V700Z" fill="#1A1A19"/>
+          <rect x="0" y="0" width="300" height="760" fill="#1C1C1B"/>
+          <g fill="#353534"><rect x="40" y="70" width="70" height="120"/><rect x="160" y="70" width="70" height="120"/><rect x="40" y="250" width="70" height="120"/><rect x="160" y="250" width="70" height="120"/><rect x="40" y="430" width="70" height="120"/><rect x="160" y="430" width="70" height="120"/></g>
+          <rect x="286" y="0" width="14" height="760" fill="#0D0D0D"/>
+          <path d="M0 690 L800 690 L800 1000 L0 1000Z" fill="#B4B3AE"/>
+          <path d="M0 640 L800 800 L800 1000 L0 1000Z" fill="#161615" opacity=".93"/>
+          <path d="M0 640 L300 700 L300 690 L0 690Z" fill="#161615"/>
+          <!-- shadow of the man -->
+          <path d="M424 742 L470 748 L640 800 L560 800Z" fill="#1E1E1D" opacity=".75"/>
+          <!-- the man -->
+          <g fill="#0E0E0E" filter="url(#b2)">
+            <path d="M420 742 L428 610 H456 L452 742Z"/><path d="M452 746 L456 610 H486 L478 746Z"/>
+            <path d="M412 470 Q452 446 494 470 L490 624 H420Z"/>
+            <path d="M412 474 L396 590 L410 594 L428 500Z"/><path d="M494 474 L510 590 L498 594 L480 500Z"/>
+            <ellipse cx="453" cy="424" rx="24" ry="28"/>
+            <path d="M424 410 Q452 380 482 408 L494 414 L482 418 H426Z"/>
+          </g>
+          <rect x="690" y="100" width="7" height="640" fill="#2A2A29"/><path d="M693 100 q-40 -8 -56 20" fill="none" stroke="#2A2A29" stroke-width="6"/><ellipse cx="634" cy="124" rx="13" ry="7" fill="#2A2A29"/>
+          <rect width="800" height="1000" fill="url(#vig)" opacity=".8"/>
+        </svg>
+      </div>
+      <figcaption><span class="no">23</span><span class="t">Pak Hendra, tailor</span><span class="m">Jalan Braga, 15:10 · 2024</span></figcaption>
+    </figure>
+
+    <!-- SLOT 31 · 4:5 -->
+    <figure class="frame f31" data-k="portrait">
+      <div class="ph r45">
+        <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="A Sundanese dancer mid-turn in a dark studio, her orange sash blurred into arcs by a slow shutter">
+          <defs><radialGradient id="d-bg" cx=".5" cy=".42" r=".8"><stop offset="0" stop-color="#4A2A1F"/><stop offset=".55" stop-color="#1E110D"/><stop offset="1" stop-color="#090605"/></radialGradient></defs>
+          <rect width="800" height="1000" fill="url(#d-bg)"/>
+          <ellipse cx="400" cy="930" rx="330" ry="40" fill="#5A3324" opacity=".55" filter="url(#b24)"/>
+          <g fill="none" stroke-linecap="round" filter="url(#mb)">
+            <path d="M90 620 C240 470 560 450 730 560" stroke="#E7622F" stroke-width="54" opacity=".85"/>
+            <path d="M120 720 C300 820 560 800 720 690" stroke="#F1A85B" stroke-width="30" opacity=".7"/>
+            <path d="M160 380 C300 300 520 300 660 370" stroke="#B7401C" stroke-width="26" opacity=".6"/>
+          </g>
+          <g filter="url(#mb2)">
+            <path d="M330 900 C340 760 350 660 366 560 H438 C456 660 470 760 486 900Z" fill="#7A2E17"/>
+            <path d="M352 580 C340 480 360 400 400 388 C444 400 462 480 448 580Z" fill="#20110C"/>
+            <path d="M366 420 C300 380 250 320 226 250" fill="none" stroke="#C99573" stroke-width="20" stroke-linecap="round"/>
+            <path d="M436 420 C510 400 570 430 612 486" fill="none" stroke="#C99573" stroke-width="20" stroke-linecap="round"/>
+            <ellipse cx="402" cy="330" rx="38" ry="46" fill="#C99573"/>
+            <path d="M362 318 C366 270 440 270 444 318 C430 296 376 296 362 318Z" fill="#140B08"/>
+          </g>
+          <rect width="800" height="1000" fill="url(#vig)"/>
+        </svg>
+      </div>
+      <figcaption><span class="no">31</span><span class="t">Ayu, dancer</span><span class="m">Studio, Cihapit · 2026</span></figcaption>
+    </figure>
+  </div>
+
+  <div class="work-end">
+    <span class="mono">Six of roughly 40,000 frames a year</span>
+    <a class="go" href="#enquire">Ask for a full wedding gallery <i aria-hidden="true">→</i></a>
+  </div>
+</section>
+
+<!-- ================= ONE DAY (the strip) ================= -->
+<section class="day" id="day" aria-labelledby="day-h">
+  <div class="wrap">
+    <div class="sec-no mono"><b>▸ 03</b><span>One roll</span><span class="r">13 June 2026</span></div>
+    <div class="grid day-head">
+      <h2 class="h2" id="day-h">One day,<br>five frames</h2>
+      <p><em class="voice">Nadia &amp; Bagas, Pangalengan.</em><br>Fourteen hours on the clock, from the jasmine being threaded to the last song. This is how a full day reads on the contact sheet.</p>
+    </div>
+  </div>
+
+  <div class="strip" tabindex="0" role="region" aria-label="Five frames from one wedding day, scroll sideways">
+    <!-- SLOT strip 1–5 · 3:2 each -->
+    <figure class="cell">
+      <div class="film"><span class="edge">▸ 2A</span>
+        <div class="ph">
+          <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Jasmine garlands laid out on a dark wooden table">
+            <rect width="600" height="400" fill="#2B1A10"/>
+            <g stroke="#3B2617" stroke-width="2"><path d="M0 90 H600"/><path d="M0 200 H600"/><path d="M0 310 H600"/></g>
+            <ellipse cx="140" cy="80" rx="260" ry="120" fill="#C98F4E" opacity=".3" filter="url(#b48)"/>
+            <g fill="none" stroke-linecap="round" stroke="#F6EFDC">
+              <path d="M40 120 C160 60 300 200 420 130 S560 110 600 150" stroke-width="15" stroke-dasharray=".1 21"/>
+              <path d="M0 250 C120 210 240 320 380 260 S520 240 600 290" stroke-width="15" stroke-dasharray=".1 21"/>
+              <path d="M90 360 C200 330 300 390 420 350" stroke-width="13" stroke-dasharray=".1 19" opacity=".8" filter="url(#b2)"/>
+            </g>
+            <g fill="#D7D0BA"><circle cx="470" cy="330" r="16"/><circle cx="504" cy="318" r="12"/></g>
+            <rect width="600" height="400" fill="url(#vig)"/>
+          </svg>
+        </div>
+      </div>
+      <figcaption><time datetime="05:40">05:40</time><span class="what">Melati, being threaded</span><span class="note">Her aunts start before the sun does.</span></figcaption>
+    </figure>
+
+    <figure class="cell">
+      <div class="film"><span class="edge">▸ 9</span>
+        <div class="ph">
+          <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The akad: bride and groom seated facing each other across a low table in a patch of window light">
+            <rect width="600" height="400" fill="#B9A688"/>
+            <path d="M120 0 H330 L420 290 H140Z" fill="#F3E3BF" opacity=".75" filter="url(#b12)"/>
+            <rect y="290" width="600" height="110" fill="#6B5138"/>
+            <rect y="286" width="600" height="8" fill="#4A3624"/>
+            <rect x="238" y="262" width="124" height="14" fill="#2B1D12"/><rect x="250" y="276" width="8" height="26" fill="#2B1D12"/><rect x="342" y="276" width="8" height="26" fill="#2B1D12"/>
+            <path d="M150 300 C150 230 170 196 200 196 C232 196 246 236 250 300Z" fill="#15110D"/><circle cx="200" cy="172" r="19" fill="#15110D"/><rect x="182" y="148" width="36" height="16" rx="3" fill="#15110D"/>
+            <path d="M350 300 C352 236 372 198 402 198 C434 198 452 240 454 300Z" fill="#F7F1E2"/>
+            <path d="M378 176 C378 150 426 150 426 176 C440 220 444 250 440 270 C420 240 386 240 368 270 C364 244 370 210 378 176Z" fill="#FFFDF6" opacity=".92"/>
+            <path d="M240 244 H300" stroke="#15110D" stroke-width="7" stroke-linecap="round"/><path d="M300 244 H356" stroke="#E7D3B0" stroke-width="7" stroke-linecap="round"/>
+            <g fill="#3A2A1C" filter="url(#b5)"><circle cx="40" cy="330" r="46"/><circle cx="560" cy="340" r="52"/><circle cx="500" cy="372" r="40"/></g>
+            <rect width="600" height="400" fill="url(#vig)"/>
+          </svg>
+        </div>
+      </div>
+      <figcaption><time datetime="08:15">08:15</time><span class="what">Akad</span><span class="note">One breath, one sentence, and the room exhales.</span></figcaption>
+    </figure>
+
+    <figure class="cell">
+      <div class="film"><span class="edge">▸ 14A</span>
+        <div class="ph">
+          <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Both families lined up in front of a Sundanese house with a winged roof">
+            <rect width="600" height="400" fill="#C9D3CC"/>
+            <path d="M0 210 C120 170 260 190 380 168 S540 176 600 160 V300 H0Z" fill="#8FA595" filter="url(#b5)"/>
+            <g filter="url(#b2)"><path d="M150 150 L226 96 H374 L450 150 L420 150 L374 122 H226 L180 150Z" fill="#2A1E15"/>
+            <path d="M226 96 L206 70" stroke="#2A1E15" stroke-width="6" stroke-linecap="round"/><path d="M374 96 L394 70" stroke="#2A1E15" stroke-width="6" stroke-linecap="round"/>
+            <rect x="196" y="150" width="208" height="130" fill="#E8DFC9"/><rect x="278" y="190" width="44" height="90" fill="#4B3525"/>
+            <g fill="#6D5540"><rect x="214" y="180" width="40" height="50"/><rect x="346" y="180" width="40" height="50"/></g></g>
+            <rect y="280" width="600" height="120" fill="#56704F"/>
+            <g filter="url(#b2)">
+              <g fill="#1B1714"><rect x="132" y="232" width="18" height="70" rx="6"/><circle cx="141" cy="222" r="9"/><rect x="176" y="238" width="18" height="66" rx="6"/><circle cx="185" cy="228" r="9"/><rect x="262" y="226" width="19" height="78" rx="6"/><circle cx="271.5" cy="216" r="9.5"/><rect x="398" y="234" width="18" height="70" rx="6"/><circle cx="407" cy="224" r="9"/><rect x="444" y="240" width="17" height="64" rx="6"/><circle cx="452.5" cy="230" r="8.5"/></g>
+              <g fill="#A3553A"><path d="M228 240 l-11 64 h32 l-11 -64z"/><path d="M364 242 l-11 62 h32 l-11 -62z"/></g>
+              <g fill="#2B2019"><circle cx="233" cy="230" r="8.5"/><circle cx="369" cy="232" r="8.5"/><circle cx="318" cy="220" r="8.5"/></g>
+              <path d="M313 230 l-13 74 h36 l-13 -74z" fill="#FAF5E6"/>
+              <g fill="#C9A65E"><rect x="220" y="268" width="14" height="38" rx="5"/><circle cx="227" cy="262" r="6"/></g>
+              <g fill="#1B1714"><rect x="488" y="262" width="13" height="42" rx="5"/><circle cx="494.5" cy="255" r="6.5"/></g>
+            </g>
+            <ellipse cx="300" cy="392" rx="340" ry="30" fill="#2F4330" filter="url(#b12)"/>
+            <rect width="600" height="400" fill="url(#vig)"/>
+          </svg>
+        </div>
+      </div>
+      <figcaption><time datetime="11:30">11:30</time><span class="what">Both families, one frame</span><span class="note">Forty-one people. Nobody blinked on the third.</span></figcaption>
+    </figure>
+
+    <figure class="cell">
+      <div class="film"><span class="edge">▸ 21A</span>
+        <div class="ph">
+          <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The couple in silhouette on a ridge against a huge low sun, her veil streaming in the wind">
+            <defs><linearGradient id="g-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7C4A2C"/><stop offset=".55" stop-color="#E7A358"/><stop offset="1" stop-color="#F6CF8C"/></linearGradient></defs>
+            <rect width="600" height="400" fill="url(#g-sky)"/>
+            <circle cx="330" cy="236" r="150" fill="#FFE9B4" opacity=".7" filter="url(#b24)"/>
+            <circle cx="330" cy="240" r="92" fill="#FFF3CF"/>
+            <path d="M0 300 C120 276 240 310 360 296 S520 270 600 290 V400 H0Z" fill="#1B120B"/>
+            <use href="#couple" transform="translate(300,302) scale(1.4)" style="--suit:#1B120B;--gown:#1B120B;--hair:#1B120B"/>
+            <path d="M340 206 C392 184 440 222 516 176 C472 238 400 250 344 232Z" fill="#FFF7E2" opacity=".55" filter="url(#b5)"/>
+            <g fill="#1B120B"><rect x="92" y="230" width="4" height="60"/><ellipse cx="94" cy="226" rx="30" ry="12"/></g>
+            <rect width="600" height="400" fill="url(#vig)"/>
+          </svg>
+        </div>
+        <svg class="ring" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true"><path d="M30 26 C120 6 300 4 378 24 C398 70 396 232 380 276 C290 296 96 298 22 280 C2 220 6 70 30 26 C60 14 110 10 150 12" fill="none" stroke="#E4381B" stroke-width="3.5" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+      </div>
+      <figcaption><time datetime="16:50">16:50</time><span class="what">Twelve minutes on the ridge</span><span class="note">The only part of the day I ask you to step away for.</span><span class="mono pick">Ringed: the one they framed</span></figcaption>
+    </figure>
+
+    <figure class="cell">
+      <div class="film"><span class="edge">▸ 34</span>
+        <div class="ph">
+          <svg viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="The reception at night: strings of warm lights out of focus above guests, the couple dancing in the middle">
+            <rect width="600" height="400" fill="#0C1411"/>
+            <g fill="none" stroke-linecap="round" stroke="#F4B45C" filter="url(#b5)">
+              <path d="M-20 60 Q150 130 300 70 T620 60" stroke-width="26" stroke-dasharray=".1 46" opacity=".75"/>
+              <path d="M-20 130 Q160 190 320 140 T620 150" stroke-width="20" stroke-dasharray=".1 40" opacity=".6"/>
+            </g>
+            <path d="M-20 20 Q200 70 420 24 T620 30" fill="none" stroke="#FFD794" stroke-linecap="round" stroke-width="34" stroke-dasharray=".1 62" opacity=".35" filter="url(#b12)"/>
+            <ellipse cx="300" cy="300" rx="130" ry="80" fill="#F4B45C" opacity=".35" filter="url(#b24)"/>
+            <use href="#couple" transform="translate(286,306) scale(1.2)" filter="url(#b06)" style="--suit:#060A08"/>
+            <g fill="#040706" filter="url(#b5)"><circle cx="40" cy="356" r="40"/><circle cx="128" cy="372" r="46"/><circle cx="214" cy="392" r="36"/><circle cx="398" cy="390" r="38"/><circle cx="486" cy="368" r="48"/><circle cx="572" cy="352" r="40"/><rect y="372" width="600" height="40"/></g>
+            <rect width="600" height="400" fill="url(#vig)"/>
+          </svg>
+        </div>
+      </div>
+      <figcaption><time datetime="19:40">19:40</time><span class="what">Resepsi, last song</span><span class="note">Flash off. The lights were already right.</span></figcaption>
+    </figure>
+  </div>
+  <div class="strip-hint mono"><span>Five of 36 exposures</span><span>Drag or scroll →</span></div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section class="sec wrap" id="about" aria-labelledby="about-h">
+  <div class="sec-no mono"><b>▸ 04</b><span>About</span><span class="r">Behind the camera</span></div>
+  <div class="grid about">
+    <!-- SLOT portrait of Raka · 4:5 · black and white -->
+    <div class="about-pic">
+    <figure class="ph r45">
+      <svg viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Black and white portrait of Raka Aditya holding a camera up to his eye">
+        <defs>
+          <linearGradient id="a-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#CFCEC9"/><stop offset="1" stop-color="#63625F"/></linearGradient>
+          <linearGradient id="a-body" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2E2E2D"/><stop offset="1" stop-color="#0E0E0E"/></linearGradient>
+          <radialGradient id="a-lens" cx=".38" cy=".34" r=".7"><stop offset="0" stop-color="#8E9aa0"/><stop offset=".35" stop-color="#23282b"/><stop offset="1" stop-color="#040404"/></radialGradient>
+        </defs>
+        <rect width="800" height="1000" fill="url(#a-bg)"/>
+        <ellipse cx="220" cy="300" rx="320" ry="380" fill="#EAE9E4" opacity=".6" filter="url(#b48)"/>
+        <path d="M70 1000 C86 820 190 742 322 716 C350 708 360 680 360 640 H470 C470 680 480 708 508 716 C640 742 730 820 742 1000Z" fill="url(#a-body)"/>
+        <path d="M360 610 H470 V690 C440 720 390 720 360 690Z" fill="#232322"/>
+        <ellipse cx="414" cy="470" rx="118" ry="150" fill="#2B2B2A"/>
+        <path d="M296 452 C280 330 350 286 420 288 C500 290 556 344 532 460 C520 400 480 364 414 364 C350 364 312 400 296 452Z" fill="#141413"/>
+        <ellipse cx="296" cy="486" rx="14" ry="26" fill="#3a3a39"/>
+        <!-- camera -->
+        <path d="M150 770 C230 690 300 640 330 560" fill="none" stroke="#0B0B0B" stroke-width="12"/><path d="M650 790 C590 700 540 640 520 560" fill="none" stroke="#0B0B0B" stroke-width="12"/>
+        <path d="M372 388 L392 362 H452 L472 388Z" fill="#0D0D0D"/>
+        <rect x="302" y="386" width="250" height="150" rx="16" fill="#111110"/>
+        <rect x="302" y="412" width="250" height="8" fill="#2A2A29"/>
+        <circle cx="430" cy="468" r="62" fill="#1D1D1C"/><circle cx="430" cy="468" r="50" fill="#070707"/><circle cx="430" cy="468" r="38" fill="url(#a-lens)"/>
+        <ellipse cx="416" cy="452" rx="10" ry="6" fill="#E9EEF0" opacity=".8" transform="rotate(-30 416 452)"/>
+        <rect x="320" y="372" width="40" height="16" rx="4" fill="#1C1C1B"/><circle cx="520" cy="402" r="7" fill="#C9C8C3"/>
+        <!-- hands -->
+        <path d="M520 400 C566 396 590 430 586 480 C584 520 566 548 536 548 C548 500 546 450 520 400Z" fill="#3A3A39"/>
+        <path d="M300 560 C290 520 296 470 316 440 C330 470 336 520 352 548 C340 566 312 572 300 560Z" fill="#555553"/>
+        <path d="M296 440 C286 520 300 590 356 628" fill="none" stroke="#F1F0EA" stroke-width="5" opacity=".75" filter="url(#b2)"/><path d="M90 960 C110 830 200 760 322 720" fill="none" stroke="#F1F0EA" stroke-width="4" opacity=".5" filter="url(#b2)"/>
+        <rect width="800" height="1000" fill="url(#vig)"/>
+      </svg>
+    </figure>
+    <p class="about-cap mono"><span>▸ 00 &nbsp;Self, in the mirror</span><span>Cihapit · 2026</span></p>
+    </div>
+    <div class="about-body">
+      <h2 class="voice" id="about-h">I photograph people the way Bandung looks at six in the morning: <u>quietly</u>, and a little out of the fog.</h2>
+      <div class="prose">
+        <p>I'm Raka. I grew up in Cihapit, learned to print in a borrowed darkroom on Jalan Braga, and have been photographing weddings and portraits around West Java since 2015.</p>
+        <p>I work alone or with one second shooter, with two small cameras and no lighting crew. I won't ask you to repeat a moment. I'd rather be standing in the right place when it happens the first time.</p>
+        <p>I take on about twenty-four weddings a year so that every gallery is edited by me, frame by frame.</p>
+      </div>
+      <dl class="facts">
+        <div><dt>Based in</dt><dd>Bandung, West Java</dd></div>
+        <div><dt>Since</dt><dd>2015 · about 190 weddings</dd></div>
+        <div><dt>Shoots with</dt><dd>A 35 mm and an 85 mm, digital, plus a roll of film</dd></div>
+        <div><dt>Speaks</dt><dd>Bahasa Indonesia, Basa Sunda, English</dd></div>
+        <div><dt>Travels</dt><dd>Java, Bali and beyond, at cost</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PACKAGES ================= -->
+<section class="sec wrap" id="packages" aria-labelledby="pk-h">
+  <div class="sec-no mono"><b>▸ 05</b><span>Packages</span><span class="r">Price list, in rupiah</span></div>
+  <div class="grid pk-head">
+    <h2 class="h2" id="pk-h">Prices <em>for</em> 2027</h2>
+    <p>Six ways to work together. Each can be bent to fit your day, and the number you see is the number you pay.</p>
+  </div>
+  <div class="grid pk-rows">
+    <p class="pk-group mono">A — Weddings</p>
+    <ul class="pk-list">
+      <li class="pk"><span class="n">A1</span><h3>Akad only</h3><p>Up to 4 hours, one photographer. 250+ edited frames in an online gallery.</p><span class="price"><small>Rp</small>6.500.000</span></li>
+      <li class="pk"><span class="n">A2</span><h3>Full day</h3><p>Preparation to resepsi, up to 10 hours, two photographers. 600+ frames and a 30 × 30 cm linen album.</p><span class="price"><small>Rp</small>14.500.000</span></li>
+      <li class="pk"><span class="n">A3</span><h3>Two days</h3><p>Siraman or pengajian the day before, then the full wedding day. 900+ frames, album, and twenty 5R prints.</p><span class="price"><small>Rp</small>21.000.000</span></li>
+    </ul>
+    <p class="pk-group mono">B — Portraits</p>
+    <ul class="pk-list">
+      <li class="pk"><span class="n">B1</span><h3>Prewedding</h3><p>Half a day, two locations around Bandung. 60 edited frames.</p><span class="price"><small>Rp</small>4.500.000</span></li>
+      <li class="pk"><span class="n">B2</span><h3>Portrait session</h3><p>90 minutes, studio or street. 25 edited frames, colour and black and white.</p><span class="price"><small>Rp</small>1.800.000</span></li>
+      <li class="pk"><span class="n">B3</span><h3>Family &amp; graduation</h3><p>60 minutes at home or on campus, up to eight people. 20 edited frames.</p><span class="price"><small>Rp</small>1.200.000</span></li>
+    </ul>
+    <p class="pk-note mono"><span>30% deposit holds the date</span><span>Travel outside Bandung Raya at cost</span><span>Galleries in four weeks</span></p>
+  </div>
+</section>
+
+<!-- ================= WORDS ================= -->
+<section class="words-band" aria-label="Words from a couple">
+  <div class="wrap">
+    <blockquote class="words">
+      <p>“We forgot he was there until the photographs arrived. Then we remembered everything.”</p>
+      <footer class="mono"><b>Nadia &amp; Bagas</b><span>Frame 01 · Pangalengan, June 2026</span></footer>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ================= QUESTIONS ================= -->
+<section class="sec wrap" aria-labelledby="qa-h">
+  <!-- SLOT 27 · 21:9 · black and white (4:3 on phones) -->
+  <figure class="frame rain">
+    <div class="ph">
+      <h2 class="h2" id="qa-h">Before<br>you write</h2>
+      <svg viewBox="0 0 1600 686" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Black and white: wedding guests crossing a wet courtyard under umbrellas in afternoon rain">
+        <defs><linearGradient id="rn-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8F8E8A"/><stop offset=".6" stop-color="#C9C8C3"/><stop offset=".62" stop-color="#5A5957"/><stop offset="1" stop-color="#1C1C1B"/></linearGradient></defs>
+        <rect width="1600" height="686" fill="url(#rn-bg)"/>
+        <g fill="#5E5D5A" filter="url(#b12)"><rect x="0" y="120" width="420" height="310"/><rect x="1180" y="60" width="420" height="370"/><path d="M420 430 V250 L640 190 L860 250 V430Z"/></g>
+        <ellipse cx="800" cy="330" rx="520" ry="120" fill="#F3F2ED" opacity=".5" filter="url(#b48)"/>
+        <g filter="url(#b2)">
+          <g fill="#111110">
+            
+            <path d="M1040 300 a86 70 0 0 1 172 0Z"/><rect x="1124" y="300" width="4" height="70"/><path d="M1108 350 q18 -8 36 0 l-4 136 h-28Z"/><circle cx="1126" cy="336" r="12"/>
+            <path d="M1330 346 a60 50 0 0 1 120 0Z"/><rect x="1388" y="346" width="4" height="50"/><path d="M1378 384 q12 -6 24 0 l-3 84 h-18Z"/><circle cx="1390" cy="374" r="9"/>
+          </g>
+          <path d="M700 290 a96 78 0 0 1 192 0Z" fill="#F4F3EE"/><rect x="794" y="290" width="4" height="74" fill="#111110"/>
+          <path d="M778 350 q20 -9 40 0 l-4 142 h-32Z" fill="#111110"/><circle cx="798" cy="336" r="13" fill="#111110"/><path d="M822 360 q14 -6 26 0 l16 132 h-52Z" fill="#E9E8E3"/><circle cx="836" cy="348" r="11" fill="#111110"/>
+        </g>
+        <g opacity=".3" filter="url(#b5)" fill="#0c0c0c"><rect x="1112" y="490" width="28" height="110"/><rect x="1380" y="472" width="18" height="70"/><rect x="764" y="496" width="22" height="120"/></g>
+        <rect x="806" y="496" width="42" height="110" fill="#F4F3EE" opacity=".22" filter="url(#b5)"/>
+        <g stroke="#F4F3EE" stroke-width="2" opacity=".35"><path d="M120 0 l-30 120"/><path d="M300 60 l-34 140"/><path d="M520 10 l-30 124"/><path d="M660 120 l-28 110"/><path d="M930 20 l-34 140"/><path d="M1010 150 l-26 104"/><path d="M1260 0 l-32 130"/><path d="M1480 90 l-30 120"/><path d="M1560 240 l-24 96"/><path d="M200 260 l-24 96"/><path d="M590 300 l-20 80"/><path d="M980 380 l-20 80"/><path d="M1280 420 l-18 72"/></g>
+        <g stroke="#F4F3EE" stroke-width="5" opacity=".18" filter="url(#b5)"><path d="M80 200 l-50 200"/><path d="M740 40 l-60 240"/><path d="M1400 180 l-56 220"/><path d="M1100 420 l-50 200"/></g>
+        <rect width="1600" height="686" fill="url(#vig)"/>
+      </svg>
+    </div>
+    <figcaption><span class="no">27</span><span class="t">Rain at three, right on time</span><span class="m">Ciumbuleuit · 2025</span></figcaption>
+  </figure>
+  <ol class="qa">
+    <li><span>01</span><div><h3>How far ahead should we book?</h3><p>Most couples write eight to twelve months before the day. Saturdays between June and September go first.</p></div></li>
+    <li><span>02</span><div><h3>When do we get the photographs?</h3><p>Thirty preview frames within 72 hours, the full gallery in four weeks, the album about six weeks after you choose its pictures.</p></div></li>
+    <li><span>03</span><div><h3>What if it rains?</h3><p>From November to March it usually does, around three. We plan portraits for the morning and keep a covered spot in reserve. Rain photographs well.</p></div></li>
+    <li><span>04</span><div><h3>Do you shoot film?</h3><p>One or two rolls of 35 mm at every wedding, included. They're scanned and delivered with the rest of the gallery.</p></div></li>
+    <li><span>05</span><div><h3>Do you travel?</h3><p>Yes. Outside Bandung Raya I add transport and one night's stay at cost, with nothing on top.</p></div></li>
+    <li><span>06</span><div><h3>How does payment work?</h3><p>A 30% deposit by bank transfer holds the date. The balance is due two weeks before the wedding or on the day of a portrait session.</p></div></li>
+  </ol>
+</section>
+
+<!-- ================= ENQUIRE ================= -->
+<section class="sec wrap" id="enquire" aria-labelledby="enq-h">
+  <div class="sec-no mono"><b>▸ 06</b><span id="enq-h">Enquire</span><span class="r">Replies within two days</span></div>
+  <a class="enq-mail" href="mailto:halo@rakaaditya.com"><span data-fit><span class="w">halo@</span><span class="w">rakaaditya.com</span></span></a>
+  <div class="grid">
+    <div class="enq-side">
+      <p class="lead">The 2027 calendar is open. June and September are filling first.</p>
+      <dl>
+        <div><dt>WhatsApp</dt><dd><a href="https://wa.me/6281200000000">+62 812 0000 0000</a></dd></div>
+        <div><dt>Instagram</dt><dd><a href="#enquire">@rakaaditya.foto</a></dd></div>
+        <div><dt>Studio</dt><dd>Cihapit, Bandung 40114<br>By appointment</dd></div>
+      </dl>
+    </div>
+    <form id="form" novalidate>
+      <div class="fld"><label for="f-name">Your names</label><input id="f-name" name="name" type="text" autocomplete="name" placeholder="Nadia &amp; Bagas" required aria-describedby="e-name"><span class="err" id="e-name" role="alert"></span></div>
+      <div class="fld"><label for="f-contact">Email or WhatsApp</label><input id="f-contact" name="contact" type="text" autocomplete="email" placeholder="you@email.com" required aria-describedby="e-contact"><span class="err" id="e-contact" role="alert"></span></div>
+      <div class="fld"><label for="f-type">What for</label><select id="f-type" name="type"><option>Wedding, full day</option><option>Wedding, akad only</option><option>Wedding, two days</option><option>Prewedding</option><option>Portrait session</option><option>Family or graduation</option><option>Something else</option></select></div>
+      <div class="fld"><label for="f-date">Date or month</label><input id="f-date" name="date" type="text" placeholder="12 September 2027"></div>
+      <div class="fld full"><label for="f-place">Where</label><input id="f-place" name="place" type="text" placeholder="Venue or town, if you know it"></div>
+      <div class="fld full"><label for="f-msg">Tell me about the day</label><textarea id="f-msg" name="msg" rows="3" placeholder="Who will be there, what matters most, anything you're unsure of."></textarea></div>
+      <div class="send-row">
+        <button class="send" type="submit">Send enquiry <i aria-hidden="true">→</i></button>
+        <p class="status" id="status" role="status" aria-live="polite">Opens your email app with everything filled in.</p>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="grid foot-row">
+      <div class="fc1"><p class="lead">Terima kasih for looking.<br>Hatur nuhun.</p></div>
+      <div class="fc2"><span class="mono">Find me</span><a href="#enquire">Instagram</a><a href="https://wa.me/6281200000000">WhatsApp</a><a href="mailto:halo@rakaaditya.com">Email</a></div>
+      <div class="fc3"><span class="mono">Pages</span><a href="#work">Work</a><a href="#about">About</a><a href="#packages">Packages</a></div>
+      <div class="fc4"><span class="mono">Bandung</span><span>6.9175° S</span><span>107.6191° E</span><span>768 m above the sea</span></div>
+    </div>
+    <div class="foot-legal mono"><span>© 2026 Raka Aditya Photography</span><span>All photographs © the photographer</span><a href="#top">Back to frame 01 ↑</a></div>
+      <p class="foot-name" aria-hidden="true"><span class="fit"><span class="w">Raka</span> <span class="w">Aditya</span></span></p>
+</div>
+</footer>
+
+<script>
+(function(){
+  /* fit the giant name to the page width */
+  var phone = window.matchMedia('(max-width:640px)');
+  function fit(host, el){
+    var fitEl = el.querySelector('.fit'); if(!fitEl) return;
+    var target = phone.matches ? fitEl.querySelectorAll('.w')[1] : fitEl;
+    var cur = parseFloat(getComputedStyle(el).fontSize);
+    var w = target.getBoundingClientRect().width; if(!w) return;
+    var gut = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gut')) || 0;
+    var avail = document.documentElement.clientWidth - 2 * (parseFloat(getComputedStyle(document.querySelector('.wrap')).paddingLeft) || gut);
+    host.style.setProperty('--fs', (cur * avail / w * 0.995).toFixed(2) + 'px');
+  }
+  function fitAll(){
+    var hero = document.querySelector('.hero'), foot = document.querySelector('.foot');
+    hero.style.removeProperty('--fs'); foot.style.removeProperty('--fs');
+    fit(hero, hero.querySelector('.hero-name--ink'));
+    fit(foot, foot.querySelector('.foot-name'));
+    document.querySelectorAll('[data-fit]').forEach(function(el){
+      el.parentNode.style.fontSize = '';
+      var cur = parseFloat(getComputedStyle(el).fontSize), w = el.getBoundingClientRect().width, avail = el.parentNode.clientWidth;
+      if(w) el.parentNode.style.fontSize = (cur * avail / w * 0.995).toFixed(2) + 'px';
+    });
+  }
+  fitAll();
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
+  var rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt = setTimeout(fitAll, 80); });
+
+  /* Bandung time */
+  var clock = document.getElementById('clock');
+  function tick(){
+    try{ clock.textContent = '· ' + new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Jakarta'}).format(new Date()) + ' WIB'; }catch(e){}
+  }
+  tick(); setInterval(tick, 30000);
+
+  /* phone menu */
+  var btn = document.querySelector('.menu-btn'), nav = document.getElementById('nav');
+  function setMenu(open){
+    nav.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+    btn.textContent = open ? 'Close' : 'Menu';
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  btn.addEventListener('click', function(){ setMenu(!nav.classList.contains('open')); });
+  nav.addEventListener('click', function(e){ if(e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && nav.classList.contains('open')){ setMenu(false); btn.focus(); } });
+
+  /* work filter: dims the frames that don't match, the sheet keeps its layout */
+  var fbtns = document.querySelectorAll('.filters button'), frames = document.querySelectorAll('.sheet .frame');
+  fbtns.forEach(function(b){
+    b.addEventListener('click', function(){
+      var f = b.dataset.f;
+      fbtns.forEach(function(x){ x.setAttribute('aria-pressed', x === b); });
+      frames.forEach(function(fr){ fr.classList.toggle('dim', f !== 'all' && fr.dataset.k !== f); });
+    });
+  });
+
+  /* enquiry form: validates, then hands over to the visitor's email app */
+  var form = document.getElementById('form'), status = document.getElementById('status');
+  function setErr(id, msg){
+    var input = document.getElementById('f-' + id), err = document.getElementById('e-' + id);
+    err.textContent = msg || '';
+    if(msg) input.setAttribute('aria-invalid','true'); else input.removeAttribute('aria-invalid');
+    return !msg;
+  }
+  form.addEventListener('input', function(e){ if(e.target.getAttribute('aria-invalid')) setErr(e.target.id.slice(2), ''); });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var d = new FormData(form), name = (d.get('name')||'').trim(), contact = (d.get('contact')||'').trim();
+    var okN = setErr('name', name ? '' : 'Please tell me who is writing.');
+    var looks = /^\S+@\S+\.\S+$/.test(contact) || contact.replace(/\D/g,'').length >= 9;
+    var okC = setErr('contact', !contact ? 'An email or a WhatsApp number, so I can reply.' : (looks ? '' : 'That doesn’t look like an email or a phone number.'));
+    if(!okN || !okC){ (okN ? document.getElementById('f-contact') : document.getElementById('f-name')).focus(); status.className = 'status'; status.textContent = 'Two small things to fix above.'; return; }
+    var body = ['Names: ' + name, 'Reply to: ' + contact, 'For: ' + d.get('type'), 'Date: ' + (d.get('date') || 'not sure yet'), 'Where: ' + (d.get('place') || 'not sure yet'), '', (d.get('msg') || '')].join('\n');
+    var href = 'mailto:halo@rakaaditya.com?subject=' + encodeURIComponent('Enquiry: ' + d.get('type') + ' — ' + name) + '&body=' + encodeURIComponent(body);
+    status.className = 'status ok';
+    status.textContent = 'Terima kasih, ' + name.split(/\s|&/)[0] + '. Your email app should now be open with the enquiry ready to send. If it isn’t, write to halo@rakaaditya.com.';
+    window.location.href = href;
+  });
+})();
+</script>
+</body>
+</html>
