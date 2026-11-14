@@ -14,7 +14,9 @@
  *                   setTimeout(() => location.reload(), 0);   // reloads are waited for
  *
  * Output: screenshots in <out>/ (default ./.ui-audit) and a plain-text report
- * on stdout. Exit code is 0 even when problems are found; the report is input
+ * on stdout. Per width: <w>-fold.png (first screen); for tall pages also
+ * <w>-part-N.png (1500px slices) or, at phone width, <w>-sheet-N.png (slices
+ * side by side), plus <w>-thumb.png (the whole page, small) at the widest width. Exit code is 0 even when problems are found; the report is input
  * for judgment, not a gate. Exit code 2 means the page could not be rendered.
  *
  * Needs a Chromium that Playwright (or Puppeteer) can drive. If none is
@@ -301,6 +303,42 @@ function measure(targetWidth) {
   }
   out.unevenRows = uneven.slice(0, 5);
 
+  /* ---- finishing: clipped strings, uneven gutters, repeated graphics */
+  const clipped = [];
+  for (const el of seen) {
+    const st = getComputedStyle(el);
+    const cuts = st.textOverflow === 'ellipsis' || st.overflowX === 'hidden' || st.overflowX === 'clip' || st.webkitLineClamp !== 'none';
+    if (!cuts) continue;
+    if (el.scrollWidth > el.clientWidth + 1 || (st.webkitLineClamp !== 'none' && el.scrollHeight > el.clientHeight + 2)) clipped.push(describe(el));
+  }
+  out.clippedText = clipped.slice(0, 10); out.clippedCount = clipped.length;
+  // page gutters: nearest content to the left and right screen edges
+  let gl = vw, gr = vw;
+  for (const el of seen) {
+    const r = el.getBoundingClientRect();
+    if (r.width < 8 || r.right < 0 || r.left > vw || getComputedStyle(el).position === 'fixed') continue;
+    let box = el, br = r;
+    // measure the outermost surface the text sits in, since that is what forms the visual margin
+    for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) {
+      const s2 = getComputedStyle(n), q = n.getBoundingClientRect();
+      const bgc2 = parseColor(s2.backgroundColor);
+      if (q.width < vw - 2 && ((bgc2 && bgc2.a > 0.04) || s2.boxShadow !== 'none' || parseFloat(s2.borderTopWidth) > 0)) { box = n; br = q; }
+    }
+    if (br.left >= 0 && br.left < gl) gl = br.left;
+    if (vw - br.right >= 0 && vw - br.right < gr) gr = vw - br.right;
+  }
+  out.gutters = [Math.round(gl), Math.round(gr)];
+  const repeats = {};
+  for (const el of document.querySelectorAll('svg')) {
+    if (!isVisible(el) || el.parentElement.closest('svg')) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width < 28 || r.height < 28 || r.width > 160) continue;
+    const key2 = el.innerHTML.replace(/\s+/g, ' ').trim();
+    if (key2.length < 20) continue;
+    (repeats[key2] = repeats[key2] || []).push(Math.round(r.width));
+  }
+  out.repeatedGraphics = Object.values(repeats).filter((v) => v.length >= 4).map((v) => ({ n: v.length, size: v[0] })).sort((p, q) => q.n - p.n).slice(0, 4);
+
   /* ---- richness: is there anything to look at? ------------------- */
   const pageH = document.documentElement.scrollHeight;
   const isGraphic = (el) => {
@@ -581,12 +619,19 @@ function report(results, facts, focus, runtime, args) {
     const [pw, ph] = Rn.foldLargest, firstTwo = Rn.bands.slice(0, 2);
     if (firstTwo.length && firstTwo.every((b) => b.big === 0)) problem('RICHNESS', `On the phone the first two screens show no substantial visual (largest in the first screen is ${pw}×${ph}px). Recompose the showpiece for narrow screens; do not drop it.`);
   }
+  const clipW = results.filter(({ m }) => m.clippedCount).sort((p, q) => q.m.clippedCount - p.m.clippedCount)[0];
+  if (clipW) problem('CRAFT', `${clipW.m.clippedCount} text(s) are cut off by their container at ${clipW.width}px: ${clipW.m.clippedText.slice(0, 6).join('; ')}. Widen the column, shorten the text, or allow a second line; showcase work has no truncated strings.`);
+  if (narrow.gutters && Math.abs(narrow.gutters[0] - narrow.gutters[1]) > 5 && narrow.overflowPx <= 1) problem('CRAFT', `Uneven page margins at ${results[0].width}px: content starts ${narrow.gutters[0]}px from the left edge and ends ${narrow.gutters[1]}px from the right. Something is wider than its container.`);
+  if (widest.repeatedGraphics && widest.repeatedGraphics.length) problem('RICHNESS', `The same graphic is repeated: ${widest.repeatedGraphics.map((g) => `${g.n}× at ${g.size}px`).join(', ')}. Items in a list should each have a visual of their own (a different object or portrait, not one glyph recoloured).`);
   if (widest.emojiCount > 6) problem('CRAFT', `Emoji appear in UI text ${widest.emojiCount}×. They render differently on every platform; use them as flavour, not as the icon system.`);
 
   // --- output
   L.push(`UI AUDIT  ${args.target}`);
   L.push(`Rendered at ${results.map((r) => `${r.width}px (page height ${r.m.docHeight}px)`).join(', ')}${args.dark ? ' in dark scheme' : ''}${args.setup ? `, after running ${args.setup}` : ''}`);
-  if (args.shots) L.push(`Screenshots: ${results.map((r) => r.shots.join(', ')).join(', ')}`);
+  if (args.shots) {
+    L.push('Screenshots (open every one; tall pages are cut into parts so details stay legible, and *-thumb.png is the whole page small):');
+    results.forEach((r) => L.push(`  ${r.width}px: ${r.shots.join('  ')}`));
+  }
   L.push('');
   L.push('INVENTORY (what is actually on the page)');
   L.push(`  Font sizes   ${sizeList.map((s) => s + 'px').join('  ')}`);
@@ -681,13 +726,47 @@ function report(results, facts, focus, runtime, args) {
       const shots = [];
       if (args.shots) {
         const rel = (p) => { const r = path.relative(process.cwd(), p); return r.startsWith('..') ? p : r; };
-        const fold = rel(path.join(args.out, `${width}-fold.png`)), full = rel(path.join(args.out, `${width}-full.png`));
+        const fold = rel(path.join(args.out, `${width}-fold.png`));
         await page.screenshot({ path: fold });
         shots.push(fold);
+        // Tall pages are cut into parts that stay legible when viewed; one huge image would be
+        // scaled down until its text and details cannot be judged.
         if (m.docHeight > height * 1.15) {
-          const clipH = Math.min(m.docHeight, 9000);
-          await page.screenshot({ path: full, fullPage: clipH === m.docHeight, ...(clipH === m.docHeight ? {} : { clip: { x: 0, y: 0, width, height: clipH } }) }).catch(() => {});
-          if (fs.existsSync(full)) shots.push(full);
+          const isPhone = width <= 480, isWide = width === args.widths[args.widths.length - 1];
+          const partH = 1500, shotW = Math.max(width, Math.min(m.overflowPx + width, width * 2));
+          const maxParts = isPhone ? 12 : isWide ? 10 : 3, parts = [];
+          for (let i = 0, y = 0; y < m.docHeight - 40 && i < maxParts; i++, y += partH) {
+            const f = path.join(args.out, `${width}-part-${i + 1}.png`);
+            const ok = await page.screenshot({ path: f, fullPage: true, clip: { x: 0, y, width: shotW, height: Math.min(partH, m.docHeight - y) } }).then(() => true, () => false);
+            if (ok) parts.push(f);
+          }
+          if (isPhone && parts.length) {
+            // phone parts are narrow: lay them side by side, three to a sheet, reading left to right
+            const sheetPage = await (ctx || browser).newPage();
+            for (let i = 0; i < parts.length; i += 3) {
+              const group = parts.slice(i, i + 3), f = rel(path.join(args.out, `${width}-sheet-${i / 3 + 1}.png`));
+              await sheetPage.setViewportSize ? await sheetPage.setViewportSize({ width: group.length * (shotW + 24) + 24, height: partH + 48 }) : await sheetPage.setViewport({ width: group.length * (shotW + 24) + 24, height: partH + 48 });
+              await sheetPage.setContent(`<body style="margin:0;background:#777;display:flex;gap:24px;padding:24px;align-items:flex-start">${group.map((g) => `<img src="file://${path.resolve(g)}" style="width:${shotW}px;display:block">`).join('')}</body>`);
+              await sheetPage.waitForFunction(() => [...document.images].every((im) => im.complete)).catch(() => {});
+              await sheetPage.screenshot({ path: f });
+              shots.push(f);
+            }
+            await sheetPage.close();
+            parts.forEach((f) => fs.rmSync(f, { force: true }));
+          } else parts.forEach((f) => shots.push(rel(f)));
+          if (isWide) {
+            // a small whole-page view, for judging the overall shape of the page
+            const full = path.join(args.out, `${width}-full.tmp.png`), thumb = rel(path.join(args.out, `${width}-thumb.png`));
+            const ok = await page.screenshot({ path: full, fullPage: true }).then(() => true, () => false);
+            if (ok) {
+              const tp = await (ctx || browser).newPage(), tw = 420, th = Math.min(2400, Math.round(m.docHeight * tw / width));
+              await (tp.setViewportSize ? tp.setViewportSize({ width: tw, height: th }) : tp.setViewport({ width: tw, height: th }));
+              await tp.setContent(`<body style="margin:0"><img src="file://${path.resolve(full)}" style="width:${tw}px;display:block"></body>`);
+              await tp.waitForFunction(() => [...document.images].every((im) => im.complete)).catch(() => {});
+              await tp.screenshot({ path: thumb }); await tp.close(); shots.push(thumb);
+              fs.rmSync(full, { force: true });
+            }
+          }
         }
       }
       if (width === args.widths[args.widths.length - 1]) {

@@ -30,16 +30,30 @@ Score each 1 to 10. Anything under 8 is unfinished work.
 
 Also confirm the floor: text is readable everywhere, nothing overflows, controls work. A page that fails the floor is not at the bar whatever it scores.
 
+## Finishing pass
+
+Showcase work has no loose ends. On both the desktop and the phone screenshot, read every string and look at every edge:
+
+- **Clipped text.** No string ends in an ellipsis or is cut by its container. Widen the column, shorten the text, or allow two lines.
+- **Collisions and missing spaces.** Labels that run into each other ("ordersToday"), a tag sitting on top of a legend, a caption wrapping to three lines beside a bar.
+- **Gutters.** The left and right page margins are equal on the phone. Cards do not touch or nearly touch one screen edge.
+- **Overlaps.** Stacked avatars and chips do not hide each other's content.
+- **Empty bands.** A sidebar with a void in the middle, a column that ends far above its neighbour, a card that is half empty.
+- **Legends and labels.** Every chart series has a swatch; every figure has a unit.
+- **Repeats.** The same thumbnail, avatar colour or tile used again and again.
+
 ## The usual gaps and their fixes
 
 - **"The first screen is mostly text."** Build the product visual from `showpiece.md`: an app window or object with real content, floating cards, atmosphere behind.
 - **"The product mock looks like a wireframe."** Triple its density: navigation with icons, figures with deltas, a real chart, rows with avatars and status pills. Use real names and numbers.
 - **"It goes flat after the hero."** Give each section its own visual: a bento of feature tiles with mini interfaces, a large demonstration, a stat band, testimonial cards with portraits, pricing cards with a featured plan, a closing band with a visual.
 - **"Content sits on the bare page."** Wrap it: an app shell with sidebar and top bar, cards on a tinted ground, a dark or accent feature card.
-- **"No imagery."** Thumbnails in lists, avatars for people, icon chips in tiles, illustrations in empty areas, more than one chart form.
+- **"No imagery."** Thumbnails in lists, illustrated portraits for people, dimensional objects on item cards, an illustration at the heart of the hero module, more than one chart form.
+- **"The imagery is generic."** One glyph recoloured for every item, initials for every person, thin line icons everywhere. Draw distinct objects and portraits (`showpiece.md`).
 - **"Everything is the same."** Vary tile sizes and treatments; give categories their own hues; alternate section surfaces.
 - **"Depth is timid."** Increase ground-to-surface contrast, use the layered shadow scale, add light top edges, lift the featured item.
-- **"The colour is monotonous."** Concentrate the accent, add a second accent or category palette, add one contrast surface.
+- **"The colour is monotonous."** Concentrate the accent, add a counter-accent, add one contrast surface.
+- **"The colour is a rainbow."** Too many hues at full strength. Keep one dominant accent and one counter-accent; reduce category hues to small marks.
 - **"The type is generic."** Use the direction's display face, larger and tighter; add eyebrow pills, emphasised phrases, big figures.
 - **"There is dead space."** Enlarge the showpiece, let elements overlap section edges, use the full width on desktop with a multi-column composition, balance column heights.
 - **"The phone version lost the magic."** Recompose the showpiece for narrow screens instead of hiding or shrinking it.

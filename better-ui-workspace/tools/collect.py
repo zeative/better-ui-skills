@@ -44,19 +44,17 @@ def main():
                "permission_denials": [d.get("tool_input") for d in result.get("permission_denials", [])]},
               open(dst / "run_facts.json", "w"), indent=2)
 
-    # screenshots + measurements
-    shots = dst / "shots"
-    cmd = ["node", str(AUDIT), str(out / "index.html"), "--out", str(shots), "--json"]
+    # measurements
+    cmd = ["node", str(AUDIT), str(out / "index.html"), "--json", "--no-shots"]
     if setup: cmd += ["--setup", setup]
     a = json.loads(subprocess.run(cmd, capture_output=True, text=True, check=True, cwd=dst).stdout)
-    text = subprocess.run([c for c in cmd if c != "--json"] + ["--no-shots"], capture_output=True, text=True, cwd=dst).stdout
+    text = subprocess.run([c for c in cmd if c != "--json"], capture_output=True, text=True, cwd=dst).stdout
     (dst / "audit.txt").write_text(text)
-    for w, name in ((1440, "desktop"), (375, "phone")):
-        for kind in ("full", "fold"):
-            p = shots / f"{w}-{kind}.png"
-            if p.exists():
-                shutil.copy(p, out / f"{name}.png"); break
-    shutil.rmtree(shots, ignore_errors=True)
+    # full-page screenshots for people and reviewers
+    pres = ["node", str(Path(__file__).with_name("present.cjs")), str(out / "index.html"), str(out / "shot"), setup or "", "1"]
+    subprocess.run(pres, check=True, cwd=dst)
+    for name in ("desktop", "phone"):
+        os.replace(out / f"shot-{name}.png", out / f"{name}.png")
 
     R = a["results"]; wide, narrow = R[-1]["m"], R[0]["m"]; f = a.get("focus") or {"checked": 0, "invisible": []}
     n_sizes = max(len(r["m"]["fontSizes"]) for r in R)

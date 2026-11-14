@@ -82,7 +82,7 @@ node <this-skill-dir>/scripts/audit.cjs path/to/index.html --out .ui-audit
 node <this-skill-dir>/scripts/audit.cjs http://localhost:5173/ --setup seed.js   # app with state
 ```
 
-The script screenshots the page at 375, 768 and 1440px and prints an inventory plus measured problems: overflow, contrast, focus, tap targets, near-miss alignment, awkward wraps, and a warning when a screen is visually thin. Fix everything under BROKEN and ACCESSIBILITY, and resolve what is under CRAFT and RICHNESS. For apps, pass `--setup` with a few lines of JS that seed realistic data, because an empty app shows nothing. (No browser available? Say so in the handoff and review the source against `references/critique.md`.)
+The script screenshots the page at 375, 768 and 1440px and prints an inventory plus measured problems: overflow, contrast, focus, tap targets, clipped text, uneven phone gutters, near-miss alignment, awkward wraps, repeated graphics, and a warning when a screen is visually thin. Tall pages are saved as several parts so that details stay legible: open every part, not just the first screen. Fix everything under BROKEN and ACCESSIBILITY, and resolve what is under CRAFT and RICHNESS. For apps, pass `--setup` with a few lines of JS that seed realistic data, because an empty app shows nothing. (No browser available? Say so in the handoff and review the source against `references/critique.md`.)
 
 Then **open the screenshots and critique them as an art director would**, using `references/critique.md`. It has the rubric (art direction, showpiece, richness, depth and finish, colour, typography, composition, phone) with what a 5, a 7 and a 9 look like, and the usual fixes for each gap.
 

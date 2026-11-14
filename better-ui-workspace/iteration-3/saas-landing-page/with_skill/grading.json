@@ -1,0 +1,67 @@
+{
+  "expectations": [
+    {
+      "text": "The page has no horizontal overflow when rendered at 375px, 768px and 1440px wide.",
+      "passed": true,
+      "evidence": "overflow px: 375→0, 768→0, 1440→0"
+    },
+    {
+      "text": "Every piece of visible text meets WCAG AA contrast (4.5:1, or 3:1 for large text) against its background.",
+      "passed": true,
+      "evidence": "0 text elements below AA"
+    },
+    {
+      "text": "The rendered page uses at most 12 distinct font sizes.",
+      "passed": true,
+      "evidence": "11 sizes: 10, 11, 12, 13, 14, 16, 18, 22, 32, 52, 64"
+    },
+    {
+      "text": "The rendered page uses at most 7 distinct corner radii.",
+      "passed": false,
+      "evidence": "8 radii: 999px, 14px, 50%, 22px, 8px, 4px, 5px, 32px"
+    },
+    {
+      "text": "Every element reached by pressing Tab shows a visible focus style.",
+      "passed": true,
+      "evidence": "25 elements tabbed, 0 with no visible change"
+    },
+    {
+      "text": "No interactive element is smaller than 24×24px, and at 375px wide no button or control is under 40px in its tappable dimension.",
+      "passed": false,
+      "evidence": "0 under 24px, 4 under 40px at 375px: a \"hello@ledgerly.example\" 159×32; a \"FAQ\" 26×42; a \"About\" 39×42; a \"Terms\" 40×42"
+    },
+    {
+      "text": "The page has a lang attribute, a viewport meta tag, exactly one visible h1, a main landmark, and no skipped heading levels.",
+      "passed": true,
+      "evidence": "lang=en, viewport=True, h1=1, main=True, skips=[]"
+    },
+    {
+      "text": "Every form field has a label and every button or link has an accessible name.",
+      "passed": true,
+      "evidence": "0 unnamed controls, 0 unlabelled fields"
+    },
+    {
+      "text": "The page loads with no console errors and no failed network requests.",
+      "passed": true,
+      "evidence": "0 errors, 0 failed requests"
+    }
+  ],
+  "summary": {
+    "passed": 7,
+    "failed": 2,
+    "total": 9,
+    "pass_rate": 0.78
+  },
+  "execution_metrics": {
+    "tool_calls": {
+      "Skill": 1,
+      "Bash": 9,
+      "Read": 8,
+      "Write": 1
+    },
+    "total_tool_calls": 19
+  },
+  "timing": {
+    "total_duration_seconds": 617.7
+  }
+}

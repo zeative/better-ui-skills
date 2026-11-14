@@ -22,6 +22,8 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 - Tint the shadow colour to the direction: cool navy for cool palettes, warm brown for warm ones, the card's own hue under coloured cards.
 - Use the scale with intent: `--sh-1` for resting cards, `--sh-2` on hover, `--sh-3` for floating cards, `--sh-4` for the showpiece.
 - Add a light top edge to raised surfaces: `box-shadow: inset 0 1px 0 rgba(255,255,255,.7), var(--sh-2)`. On dark surfaces use `rgba(255,255,255,.06)`.
+- Depth must not be uniform. If every card has the same border and the same blur, the page is flat again. Resting cards are quiet; the focal card, primary buttons and anything floating are clearly lifted, with a brighter top edge and a deeper, wider shadow.
+- Ground and surface need visible separation: a surface that is nearly the same value as the ground disappears. Deepen the ground or brighten the surface until cards read at a glance.
 
 ## Borders and edges
 
@@ -57,7 +59,8 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 
 - Roughly 60% ground and surfaces, 30% ink and neutrals, 10% accent. The accent is concentrated in a few strong places (primary button, key chart, active state, one feature card), not sprinkled.
 - Derive tints with `color-mix` instead of inventing new colours: 8 to 14% accent on surface for soft fills, 20 to 30% for borders of tinted elements.
-- A **category palette** for things that come in kinds (habits, product types, statuses, team members): four to six hues at matched lightness and saturation, each with a soft tint. Use it consistently so colour carries meaning.
+- A **category palette** for things that come in kinds (item types, statuses, team members): four to six hues at matched lightness and saturation, each with a soft tint. Use it in small doses: the item's object or icon tile and its own data marks. Do not also tint the whole card, its border and its button, or the screen turns into a rainbow and loses its identity.
+- **One dominant accent and one counter-accent** define the screen. Viewed as a thumbnail, the page should read as two colours on a neutral base, with category hues as small sparks.
 - Status colours are separate and always paired with a label or icon.
 - Gradients stay within about 40 degrees of hue (violet to pink, orange to yellow, teal to green) unless the direction is built on a wider one. Use them on a few hero elements, not everywhere.
 - Never grey text on a coloured fill: use white, ink, or a darker tone of that colour.
@@ -106,7 +109,11 @@ These are what make a screen look designed. Use many, each with a reason:
 
 ## Variety within sets
 
-Sets of similar things must not be clones.
+Sets of similar things must not be clones, and no region of the page should be a column of same-weight white cards.
+
+- **Every column or region has a heavy tile:** a dark or saturated contrast tile, or one markedly larger than its neighbours.
+- **Fill each card.** Content should occupy its card with intent. A wide card holding a title and a small widget in one corner looks unfinished: enlarge the visual, add a secondary element, or make the card smaller.
+- **Break the grid once or twice:** let an element overlap the edge of its card or section (a floating chip, an object that pokes out, a card that straddles two surfaces).
 
 - **Bento grids:** mix tile sizes (one spans two columns, one is tall), and give tiles different treatments: one dark, one accent-filled, one with a big figure, one with a mini chart, one with an illustration.
 - **KPI rows:** different icon chip hues, different mini-visuals (sparkline, ring, bar, avatar stack).

@@ -123,7 +123,7 @@ Dark graphite, dense, crisp. For people who live in the tool.
 Warm paper, a large elegant serif, fine rules, objects photographed or drawn. Premium and human. This look is common, so it must be executed with real imagery and detail to work.
 
 ```css
---bg:#F4F0E6; --surface:#FBF8F0; --surface-2:#ECE6D8; --ink:#161412; --ink-2:#5A534A; --ink-3:#8E867A;
+--bg:#EFE9DB; --surface:#FDFBF5; --surface-2:#E6DFCF; --ink:#161412; --ink-2:#5A534A; --ink-3:#8E867A;
 --line:rgba(22,20,18,.14); --accent:#B4410E; --accent-ink:#FFFFFF; --accent-soft:#F3DDCF; --deep:#1F2B22;
 --r-sm:6px; --r-md:14px; --r-lg:22px; --r-pill:999px;
 ```
@@ -169,7 +169,7 @@ Black, white and one colour block. Giant type does the work.
 Cream, deep brown and forest with one warm accent. Tactile and made by hand.
 
 ```css
---bg:#F2EADB; --surface:#FBF6EB; --surface-2:#E9DEC9; --ink:#2A1C13; --ink-2:#6A5544; --ink-3:#9B8672;
+--bg:#EDE3D0; --surface:#FDF9F0; --surface-2:#E4D8C1; --ink:#2A1C13; --ink-2:#6A5544; --ink-3:#9B8672;
 --line:rgba(42,28,19,.14); --accent:#B8502A; --accent-ink:#FFF8EE; --accent-soft:#F1D9C8; --deep:#2A1C13; --forest:#28412F; --gold:#D9A441;
 --r-sm:10px; --r-md:16px; --r-lg:24px; --r-pill:999px;
 ```
@@ -194,7 +194,7 @@ White ground, vivid gradient cards, big radii, rewards everywhere. Made for thum
 - **Type:** `Outfit` 500/600/700/800. Big friendly numerals at 700, `-0.02em`.
 - **Depth:** soft coloured shadows under gradient cards (the card's own hue at 35% opacity, blurred 24px, offset 12px); white cards with soft neutral shadows.
 - **Atmosphere:** clean ground; the gradients live in the cards.
-- **Devices:** one gradient hero card with white text and a progress ring; every item gets its own colour and an icon tile; a floating pill tab bar; confetti or sparkle marks on achievements; chunky toggles and check buttons that fill with colour.
+- **Devices:** one gradient hero card with white text, a progress ring and an illustrated object; items carry dimensional illustrated objects, each in its own hue, while buttons and navigation stay in the single accent; a floating pill tab bar; confetti or sparkle marks on achievements; chunky toggles and check buttons that fill with colour. Pick one of the gradients as the screen's identity and a second as its counter; the others appear only as small marks.
 
 ## `clinic` — Clean Clinical
 

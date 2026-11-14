@@ -20,5 +20,6 @@ CRAFT — measured inconsistencies; fix or be able to say why not
   • 19 different box-shadows. Use a scale of four or five levels, not one per component.
   • Columns in different sections start at nearly, but not exactly, the same x at 1440px: 928px (div.top-tools "Cari pesanan / Pesanan manual") vs 953px (section.card.attn "Perlu perhatian Tiga hal sebelum kur"). Put every section on one shared grid so column edges repeat down the page.
   • 5 short text(s) wrap leaving a stub on the last line at 768px: span "Sel 10"; span "Rab 11"; span "Kam 12"; span "Jum 13"; span.today "Hari ini 14". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+  • 11 text(s) are cut off by their container at 1440px: span.t2 "14.21 · Bandung · #2418"; span.t2 "13.58 · Surabaya · #2417"; span.t2 "13.40 · Jakarta Selatan · #2416"; span.t2 "13.12 · Yogyakarta · #2415"; span.t1 "Toraja Sapan Full Wash"; span.t2 "12.47 · Semarang · #2413". Widen the column, shorten the text, or allow a second line; showcase work has no truncated strings.
 
 This report cannot judge art direction, composition or how good the visuals are. Open the screenshots and score them with references/critique.md.

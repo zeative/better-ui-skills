@@ -13,8 +13,13 @@ INVENTORY (what is actually on the page)
   Interaction  18 interactive elements; 6 :hover rules, 2 :focus-visible rules; reduced-motion handled; dark scheme not defined
   (1 cross-origin stylesheet(s) could not be inspected)
 
+RICHNESS — below the bar as measured; a page can pass these and still be plain, so look at the screenshots
+  • The same graphic is repeated: 4× at 36px. Items in a list should each have a visual of their own (a different object or portrait, not one glyph recoloured).
+
 CRAFT — measured inconsistencies; fix or be able to say why not
   • 9 different corner radii (28%×112, 22px×11, 14px×10, 999px×7, 18px×6, 12px×5, 4px×5, 50%×2, 30px×1). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
   • 20 different box-shadows. Use a scale of four or five levels, not one per component.
+  • 1 text(s) are cut off by their container at 768px: p.nm "Practice guitar for at least fifteen". Widen the column, shorten the text, or allow a second line; showcase work has no truncated strings.
+  • Uneven page margins at 375px: content starts 16px from the left edge and ends 3px from the right. Something is wider than its container.
 
 This report cannot judge art direction, composition or how good the visuals are. Open the screenshots and score them with references/critique.md.

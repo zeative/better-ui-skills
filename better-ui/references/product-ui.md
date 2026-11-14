@@ -31,7 +31,7 @@ A rich dashboard has ten or more distinct modules. Draw from these and vary them
 - A **ranked list** with thumbnails, a bar for share, and a secondary fact (stock, trend).
 - **Activity or timeline**, **people** (avatars with roles or status), **goal progress** rings, a **calendar strip**, a **promo or tip card** with an illustration, a **quick actions** panel.
 
-Arrange them in a grid with mixed spans so the layout has a clear focal area, not uniform rows.
+Arrange them in a grid with mixed spans so the layout has a clear focal area, not uniform rows. Balance the columns so they end together, leave no empty band in the sidebar (fill it with a compact widget: a status card, a goal, a promo), and size each chart to what it shows: seven bars do not need 400px of height.
 
 ## Tiles and figures
 
@@ -56,7 +56,8 @@ See `showpiece.md` for how to draw them. In product UI:
 
 ## Lists and tables
 
-- A thumbnail or avatar in the first column of every row. Name in strong ink, a secondary line in muted ink beneath.
+- A thumbnail or portrait in the first column of every row, each one visibly different from the others. Name in strong ink, a secondary line in muted ink beneath.
+- No truncated strings. Size columns and shorten metadata so every name, place and code is shown whole.
 - Status as a pill with a dot, from a small consistent set.
 - Right-aligned tabular figures; row height 52 to 64px with thumbnails; hairline separators or soft zebra; row hover; a row action (button or menu).
 - Columns sized to their content so rows do not wrap raggedly.
@@ -73,7 +74,8 @@ For a tracker, a to-do, a timer, a calculator or any personal tool:
 
 - **A header with identity:** a wordmark or greeting, the date, an avatar or settings button.
 - **A hero card** on a contrast surface summarising today: a progress ring or big figure, a short encouraging line, perhaps a week strip.
-- **Items with character:** each item on its own card with an icon tile and its own colour from a category palette, a clear name, a secondary line, and the main control.
+- **Items with character:** each item on its own card with a dimensional illustrated object of its own (see `showpiece.md`), a clear name, a secondary line, and the main control. An item may carry its own hue, in small doses (the object and its data marks), while the screen keeps one dominant accent.
+- **Dense, filled cards:** an item card uses its width. On desktop that can mean the name and control on the left and a full-width history strip with day labels on the right; never a wide card with a small widget in one corner.
 - **The main action is unmistakable:** the thing people do every day is the largest, most colourful control on each item, with a satisfying checked state (fill, icon, small bounce), and visibly different from history or decoration.
 - **The key quantity as a designed object:** a count or a run as a large numeral with a badge and a "best" chip; a balance as a big figure with a trend; progress as a ring.
 - **History as a visual:** a week strip of day pills, a month heatmap, a bar chart of the week.

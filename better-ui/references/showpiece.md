@@ -2,7 +2,7 @@
 
 Everything here is made with HTML, CSS and inline SVG, so it needs no image files and stays sharp at any size. The recipes are starting points: adapt colours to your tokens and fill them with this product's content.
 
-Contents: the rule of detail · product mock · floating detail cards · atmosphere · charts · avatars and people · product thumbnails and objects · icons and icon chips · illustration · logos and proof · frames · on a phone
+Contents: the rule of detail · product mock · floating detail cards · atmosphere · charts · avatars and people · product thumbnails and objects · icons and icon chips · illustrated objects · illustration · logos and proof · frames · on a phone
 
 ## The rule of detail
 
@@ -115,13 +115,20 @@ Compute coordinates from your real sample data (a few lines of JS, or by hand) s
 
 ## Avatars and people
 
-- Default avatar: a circle with a two-tone gradient and initials, each person a different hue.
-  ```css
-  .av { width: 32px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; font-weight: 600; font-size: 12px; color: #fff;
-        background: linear-gradient(135deg, hsl(var(--h) 75% 62%), hsl(calc(var(--h) + 40) 70% 48%)); box-shadow: 0 0 0 2px var(--surface); }
+Initials on a coloured disc are the weakest avatar; a screen full of them looks unfinished next to work that uses portraits. Draw people.
+
+- **Illustrated portrait** (works from 28px to 96px): a tinted circle, shoulders, a head, and a hair shape. Vary background hue, skin tone, hair colour and hair shape per person so no two match.
+  ```html
+  <svg viewBox="0 0 40 40" class="av" style="--bg:#DCEEFF;--skin:#E8B894;--hair:#2B2118;--top:#2F6FED">
+    <defs><clipPath id="c"><circle cx="20" cy="20" r="20"/></clipPath></defs>
+    <g clip-path="url(#c)"><rect width="40" height="40" fill="var(--bg)"/>
+      <path d="M6 42c0-9 6-13 14-13s14 4 14 13z" fill="var(--top)"/><rect x="17" y="23" width="6" height="7" rx="3" fill="var(--skin)"/>
+      <circle cx="20" cy="17" r="7.5" fill="var(--skin)"/>
+      <path d="M12 17c-.5-6 3-10 8-10s8.5 3.5 8 9c-2-3-5-4.5-8-4.5s-6 2-8 5.5z" fill="var(--hair)"/></g></svg>
   ```
-- Avatar stack: overlap by -8px, ring in the surface colour, end with a "+12" chip.
-- For a testimonial or profile at larger size, draw a simple illustrated portrait in SVG (a head and shoulders silhouette in two tones on a tinted circle) rather than leaving initials at 64px.
+  Swap the last path for other hair shapes (a bob reaching the jaw, a top knot, a side sweep, a cap, a headscarf drawn as a path around the face) and reuse one `clipPath` for all avatars. Skin tones: `#F2D0B5 #E8B894 #C98E62 #A56E44 #7A4A2B`.
+- **Avatar stack:** give each avatar a 2px ring in the surface colour and overlap by a quarter of its width (`margin-left: -8px` at 32px). Nothing inside may be clipped by its neighbour. End with a "+12" chip.
+- Initials are acceptable only as a fallback at very small sizes, each in a different hue.
 - Do not hotlink photos of real people.
 
 ## Product thumbnails and objects
@@ -135,7 +142,9 @@ Lists of products, files, places or items need thumbnails. Draw small objects in
   <rect x="18" y="24" width="12" height="9" fill="#fff" fill-opacity=".9"/><path d="M21 17v22" stroke="#fff" stroke-opacity=".3" stroke-width="2" stroke-linecap="round"/></svg>
 ```
 
-Give each item its own colourway through CSS variables so a list of five products shows five distinct thumbnails. The same approach works for pouches, boxes, books, shoes, plants, documents, devices, playlists and map pins.
+Every item gets a visibly different thumbnail. Changing only the tint of one repeated glyph reads as a placeholder, so vary the object too: its shape, its label design, a stripe, a cap, a size, a pattern. Five products should look like five products. Make thumbnails big enough to read (44 to 64px in lists, larger in feature spots). The same approach works for pouches, boxes, books, shoes, plants, documents, devices, playlists and map pins.
+
+If the project already has real product photos or the user supplies images, use those instead: real imagery beats illustration.
 
 ## Icons and icon chips
 
@@ -147,6 +156,28 @@ Give each item its own colourway through CSS variables so a list of five product
   ```
 - Give categories different hues (`--c`) so a column of tiles or a list of habits is colourful with meaning.
 - Navigation items, KPI tiles, feature rows, list items and empty states all take an icon.
+
+## Illustrated objects
+
+Thin line icons on tinted squares are the minimum. Where an item deserves presence (a habit, a category, a feature, an achievement, an empty state), draw a small **dimensional object** instead, in the manner of 3D emoji: a filled shape with a gradient, a darker underside, a soft highlight and a contact shadow.
+
+```html
+<!-- an open book, 56×56, built from filled shapes -->
+<svg viewBox="0 0 56 56" class="obj">
+  <defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#E9E4F7"/></linearGradient>
+        <linearGradient id="cv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#5B21B6"/></linearGradient></defs>
+  <ellipse cx="28" cy="47" rx="19" ry="3.5" fill="#000" opacity=".12"/>
+  <path d="M6 16c8-3 15-2 22 2 7-4 14-5 22-2v26c-8-3-15-2-22 2-7-4-14-5-22-2z" fill="url(#cv)"/>
+  <path d="M9 14c7-2.5 13-1.5 19 2v25c-6-3.5-12-4.5-19-2z" fill="url(#pg)"/><path d="M47 14c-7-2.5-13-1.5-19 2v25c6-3.5 12-4.5 19-2z" fill="url(#pg)"/>
+  <path d="M13 20c4-1 8-.5 11 1M13 25c4-1 8-.5 11 1M32 21c3-1.5 7-2 11-1" stroke="#B9AEDD" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+  <path d="M11 15.5c5-1.5 10-1 15 1.5" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8" fill="none"/></svg>
+```
+
+- Four to eight shapes per object: body, underside or side, a detail or label, a highlight, a contact shadow.
+- Every object in a set is a different thing (a book, a shoe, a droplet, a moon, a dumbbell, a leaf), not one glyph recoloured.
+- Keep one lighting direction (top-left highlight, bottom shadow) across the set.
+- Use these at 40 to 72px on item cards and tiles, and larger (120 to 200px) as the centre of a hero card or empty state.
+- Keep the simple stroke icons for navigation and small controls.
 
 ## Illustration
 
