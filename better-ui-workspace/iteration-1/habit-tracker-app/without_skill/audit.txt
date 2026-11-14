@@ -18,6 +18,7 @@ ACCESSIBILITY — fix these
     4.33:1 (needs 4.5) #6d746f on #f5f3ee, 14px — p#date.date "Saturday, November 14"
 
 CRAFT — measured inconsistencies; fix or be able to say why not
+  • 1 short text(s) wrap leaving a stub on the last line at 375px: div.streak "🔥 5 days · tick today to keep it". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
   • No :hover rules at all; interactive elements give no feedback.
 
 REFLEXES — common unchosen defaults; keep only if you can state the reason it serves this product

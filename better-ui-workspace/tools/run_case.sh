@@ -3,7 +3,7 @@
 # Runs one headless, context-free Claude session in its own folder.
 # The prompt is passed verbatim; nothing about any skill is mentioned.
 set -u
-SP=/tmp/claude-0/-home-user-better-ui-skills/24ac428c-841f-5cac-9b58-426ebfde19dd/scratchpad
+SP=${SP:-$(mktemp -d)}   # folder for prompts/, sandbox/ and empty-mcp.json
 CASE=$1; CONFIG=$2; SKILL_DIR=${3:-}
 DIR=$SP/sandbox/$CASE/$CONFIG
 rm -rf "$DIR"; mkdir -p "$DIR/work"

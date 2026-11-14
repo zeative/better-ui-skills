@@ -1,0 +1,24 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-2/habit-tracker-app/with_skill/outputs/index.html
+Rendered at 375px (page height 1056px), 768px (page height 1057px), 1440px (page height 1057px), after running /home/user/better-ui-skills/better-ui-workspace/tools/seeds/habit-with_skill.js
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  14px  16px  18px  28px
+  Families     system-ui
+  Weights      400, 600, 700
+  Text colours #556074 #141b2b #ffffff #1f4fd1
+  Fills        #1f4fd1 #edf0f6 #fbfcfe #141b2b
+  Radii        6px×70  10px×2
+  Shadows      0 distinct
+  Boxes        0 card-like containers, 0 nested
+  Interaction  77 interactive elements; 8 :hover rules, 3 :focus-visible rules; reduced-motion handled; dark scheme defined
+
+TOUCH — fix unless there is a reason
+  • 30 touch targets under 40px at 375px wide, e.g. button.day.mid "S" 37×48; button.day.mid "M" 37×48; button.day.linked "T" 37×48; button.day.linked "W" 37×48; button.day.linked "T" 37×48
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 5 short text(s) wrap leaving a stub on the last line at 375px: span.streak-unit "days current streak"; span.streak-unit "days current streak"; span.streak-unit "day current streak"; span.streak-unit "days current streak"; span.streak-unit "days current streak". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+
+REFLEXES — common unchosen defaults; keep only if you can state the reason it serves this product
+  • Typeface is system-ui only. Perfectly usable, but confirm it was chosen for this product rather than inherited.
+
+This report cannot judge hierarchy, composition, whether the content is specific, or whether the page has a point of view. Read the screenshots for those.

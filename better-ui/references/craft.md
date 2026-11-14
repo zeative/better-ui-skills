@@ -96,6 +96,7 @@ Motion is for explaining change: where something came from, where it went, that 
 - `lang` on `<html>`, a meaningful `<title>`, a viewport meta tag.
 - Everything works with the keyboard alone, in a sensible order, with visible focus. Dialogs trap focus and close on Escape.
 - Icon-only buttons have `aria-label`. Decorative images and icons are hidden from assistive tech.
+- When you hide content visually for screen readers (a data table behind a chart, for instance), wrap it in a hidden block element. A `table` ignores `overflow: hidden` on itself and will silently widen the page on phones.
 - Do not convey anything by colour alone. Do not rely on placeholder text as a label.
 - Targets at least 24×24px everywhere, 44×44px for touch. Expand the hit area with padding rather than making the visual bigger.
 - Announce dynamic changes that matter (`aria-live` for toasts and inline validation).

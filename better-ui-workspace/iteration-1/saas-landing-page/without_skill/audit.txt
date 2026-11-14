@@ -34,6 +34,9 @@ CRAFT — measured inconsistencies; fix or be able to say why not
   • 20 distinct font sizes at 1440px (10, 11, 11.5, 12, 12.5, 13.5, 14, 14.5, 15, 15.5, 16, 17, 17.6, 19.52, 22, 24, 25.6, 49.6, 57.6, 78.4). A type scale rarely needs more than 6–8; near-duplicates (e.g. 13 and 13.5, 15 and 16) read as accidents.
   • Text under 12px: dt "FROM" (11px); dt "BILLED TO" (11px); th "DESCRIPTION" (11px); th "AMOUNT" (11px); span.tag "MOST POPULAR" (11.5px)
   • 10 different corner radii (999px×16, 14px×8, 4px×8, 9px×4, 6px×3, 8px×1, 12px×1, 50%×1, 10px×1, 22px×1). Pick a small set and nest them concentrically (inner = outer − padding).
+  • Columns in different sections start at nearly, but not exactly, the same x at 1440px: 485px (form.signup "Email address Create free account No") vs 539px (article.feature "Tracked time becomes line items Run "); 786px (div.invoice-stage "Invoice No. 0042 Issued 02 Nov 2026 ") vs 824px (article.feature.narrow "An invoice in about a minute Saved c"). Put every section on one shared grid so column edges repeat down the page.
+  • 4 short text(s) wrap leaving a stub on the last line at 768px: p "Saved clients, saved rates, and your"; p "Every invoice has a pay button. Clie"; h3 "Tracked time becomes line items"; p "Run a timer per project, then pull u". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+  • A wrapping row leaves one item alone on its last line at 768px: span "Google Pay" in div.chips.
   • 3 links go nowhere (href="#"). Fine for a mock, but say so in your handoff.
 
 REFLEXES — common unchosen defaults; keep only if you can state the reason it serves this product

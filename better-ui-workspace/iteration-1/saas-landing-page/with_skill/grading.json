@@ -27,8 +27,8 @@
     },
     {
       "text": "No interactive element is smaller than 24×24px, and at 375px wide no button or control is under 40px in its tappable dimension.",
-      "passed": false,
-      "evidence": "0 under 24px, 2 under 40px at 375px: input 24×24; input 24×24"
+      "passed": true,
+      "evidence": "0 under 24px, 0 under 40px at 375px"
     },
     {
       "text": "The page has a lang attribute, a viewport meta tag, exactly one visible h1, a main landmark, and no skipped heading levels.",
@@ -47,10 +47,10 @@
     }
   ],
   "summary": {
-    "passed": 8,
-    "failed": 1,
+    "passed": 9,
+    "failed": 0,
     "total": 9,
-    "pass_rate": 0.89
+    "pass_rate": 1.0
   },
   "execution_metrics": {
     "tool_calls": {

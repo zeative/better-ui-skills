@@ -1,0 +1,23 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-2/saas-landing-page/with_skill/outputs/index.html
+Rendered at 375px (page height 6841px), 768px (page height 5231px), 1440px (page height 4460px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   13px  15px  17px  21px  26px  44px  52px  76px
+  Families     IBM Plex Sans, IBM Plex Mono
+  Weights      400, 500, 600
+  Text colours #4a5b50 #14231b #a9bcad #0b6b3a #ffffff #edf2ea #a8281e #12261c
+  Fills        #0b6b3a #fbfcf8 #12261c #8fe3ae
+  Radii        2px×9
+  Shadows      1 distinct
+  Boxes        0 card-like containers, 0 nested
+  Interaction  16 interactive elements; 5 :hover rules, 3 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • Columns in different sections start at nearly, but not exactly, the same x at 1440px: 925px (div.figure "Paid in November $2,750.00") vs 951px (nav.site-nav "Features Pricing Start invoicing fre"). Put every section on one shared grid so column edges repeat down the page.
+  • A wrapping row leaves one item alone on its last line at 375px: span "© 2026 Ledgerly" in div.wrap.
+
+REFLEXES — common unchosen defaults; keep only if you can state the reason it serves this product
+  • Emoji used in UI text 1× (span "© 2026 Ledgerly"). They render differently per platform and stand in for real icons or real words.
+
+This report cannot judge hierarchy, composition, whether the content is specific, or whether the page has a point of view. Read the screenshots for those.

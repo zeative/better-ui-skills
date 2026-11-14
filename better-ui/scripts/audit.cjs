@@ -64,9 +64,11 @@ async function launch(driver) {
 /* ------------------------------------------------------------------ */
 /* Everything in measure() runs inside the page.                       */
 /* ------------------------------------------------------------------ */
-function measure() {
+function measure(targetWidth) {
   const out = {};
-  const vw = window.innerWidth, vh = window.innerHeight;
+  // Use the width we asked for, not window.innerWidth: under phone emulation a page that
+  // overflows makes the browser widen its layout viewport, which would hide the overflow.
+  const vw = targetWidth || window.innerWidth, vh = window.innerHeight;
   const isVisible = (el) => {
     const r = el.getBoundingClientRect();
     if (r.width < 3 || r.height < 3) return false; // also skips visually-hidden (sr-only) text
@@ -137,7 +139,7 @@ function measure() {
   };
 
   /* ---- overflow -------------------------------------------------- */
-  const docW = document.documentElement.scrollWidth;
+  const docW = Math.max(document.documentElement.scrollWidth, window.innerWidth);
   out.overflowPx = Math.max(0, docW - vw);
   out.overflowers = [];
   if (out.overflowPx > 1) {
@@ -331,7 +333,13 @@ function measure() {
   out.interactiveCount = interactive.length;
   const smallTargets = [], unnamed = [], unlabeled = [];
   for (const el of interactive) {
-    const r = el.getBoundingClientRect();
+    let r = el.getBoundingClientRect();
+    // a checkbox or radio is as tappable as the label that wraps or names it
+    if (el.tagName === 'INPUT' && ['checkbox', 'radio'].includes(el.type) && el.labels && el.labels.length) {
+      const lr = el.labels[0].getBoundingClientRect();
+      const left = Math.min(r.left, lr.left), top = Math.min(r.top, lr.top);
+      r = { left, top, width: Math.max(r.right, lr.right) - left, height: Math.max(r.bottom, lr.bottom) - top };
+    }
     const inlineLink = el.tagName === 'A' && getComputedStyle(el).display === 'inline' && el.parentElement && el.parentElement.innerText.trim().length > el.innerText.trim().length + 12;
     if (!inlineLink && (r.width < 24 || r.height < 24)) smallTargets.push({ el: describe(el), w: Math.round(r.width), h: Math.round(r.height), hard: true });
     else if (!inlineLink && vw <= 480 && (r.height < 40 || r.width < 40)) smallTargets.push({ el: describe(el), w: Math.round(r.width), h: Math.round(r.height), hard: false });
@@ -618,7 +626,7 @@ function report(results, facts, focus, runtime, args) {
         for (let y = 0; y < h; y += Math.max(300, window.innerHeight * 0.8)) { window.scrollTo(0, y); await new Promise((r) => setTimeout(r, 60)); }
         window.scrollTo(0, 0); await new Promise((r) => setTimeout(r, 250));
       }).catch(() => {});
-      const m = await page.evaluate(`(${measure.toString()})()`);
+      const m = await page.evaluate(`(${measure.toString()})(${width})`);
       const shots = [];
       if (args.shots) {
         const rel = (p) => { const r = path.relative(process.cwd(), p); return r.startsWith('..') ? p : r; };
