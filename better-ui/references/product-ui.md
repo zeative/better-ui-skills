@@ -72,6 +72,7 @@ Labels above fields, the right input types, validation with helpful messages bes
 
 For a tracker, a to-do, a timer, a calculator, a wallet or any personal tool. These are judged differently from dashboards: the strongest ones show **few things with a lot of air and one focal object per screen**. Do not turn a personal app into an admin grid.
 
+- **Open alive.** The first thing anyone sees must be the idea working, not waiting. Ship the app with believable sample data in a mid-use state (some things done, some pending, a week of history), so the hero device is full, coloured and finished on first load. Mark it once as sample data and give a clear way to start fresh. A hero made of empty outlines and zeros reads as a wireframe, however good the concept. The true empty state still gets designed; it is just not the opening view.
 - **One focal object.** The device that carries your idea is the hero, at about twice the size that feels sufficient, and it holds the key figure. Everything else on the screen is clearly secondary: fewer modules, smaller, quieter. If a module repeats information the hero already shows, cut it.
 - **On desktop, stay an app.** Widen into two or three well-spaced columns with the hero still dominant; three to six modules in view, not ten. Lists collapse to their first few rows with a way to see more.
 

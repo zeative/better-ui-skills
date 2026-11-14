@@ -361,21 +361,25 @@ function measure(targetWidth) {
   /* ---- boldness: scale, weight and colour commitment -------------- */
   {
     const hueArea = {}, pastel = {}; let foldContrast = 0; const areas = [];
-    const pageLum = lum(backgroundOf(document.body).color);
+    const pageBg = backgroundOf(document.body).color, pageLum = lum(pageBg), pageHue = hsl(pageBg);
     for (const el of document.querySelectorAll('body *')) {
       if (!isVisible(el) || el.closest('svg')) continue;
       const st = getComputedStyle(el), r = el.getBoundingClientRect(), area = r.width * r.height;
       if (area < 5000 || r.width > vw * 0.98 && r.height > vh * 1.5) continue;
       let c = parseColor(st.backgroundColor);
-      const grad = st.backgroundImage && /gradient\(/.test(st.backgroundImage) ? st.backgroundImage.match(/rgba?\([^)]*\)|#[0-9a-f]{3,8}/i) : null;
-      if ((!c || c.a < 0.5) && grad) c = parseColor(grad[0]);
+      // a gradient counts as a fill by its solid stops; a faint glow layered over a dark card is not a colour field
+      const stops = st.backgroundImage && /gradient\(/.test(st.backgroundImage) ? (st.backgroundImage.match(/rgba?\([^)]*\)|#[0-9a-f]{3,8}/gi) || []).map(parseColor).filter(Boolean) : [];
+      const solid = stops.filter((q) => q.a >= 0.6);
+      if ((!c || c.a < 0.5) && solid.length >= 2) c = { r: (solid[0].r + solid[1].r) / 2, g: (solid[0].g + solid[1].g) / 2, b: (solid[0].b + solid[1].b) / 2, a: 1 };
       if (!c || c.a < 0.5) continue;
       const k = hsl(c);
       if (k.s > 0.28 && k.l > 0.2 && k.l < 0.93) { const bkt = Math.round(k.h / 36) * 36 % 360; hueArea[bkt] = (hueArea[bkt] || 0) + area; }
       if (k.s > 0.3 && k.l >= 0.78 && k.l < 0.95 && area < vw * vh * 0.5) { const bkt = Math.round(k.h / 36) * 36 % 360; pastel[bkt] = (pastel[bkt] || 0) + area; }
       // a contrast field: clearly darker or more saturated than the page, and large
       const top0 = r.top + window.scrollY;
-      if (top0 < vh && area > vw * vh * 0.06 && (Math.abs(lum(c) - pageLum) > 0.35 || (k.s > 0.5 && k.l < 0.7 && k.l > 0.15))) foldContrast = Math.max(foldContrast, area / (vw * vh));
+      const hueGap = Math.min(Math.abs(k.h - pageHue.h), 360 - Math.abs(k.h - pageHue.h));
+      const distinctTint = k.s > 0.3 && k.l > 0.15 && k.l < 0.9 && (pageHue.s < 0.12 || hueGap > 40);
+      if (top0 < vh && area > vw * vh * 0.06 && (Math.abs(lum(c) - pageLum) > 0.35 || (k.s > 0.5 && k.l < 0.7 && k.l > 0.15) || distinctTint)) foldContrast = Math.max(foldContrast, area / (vw * vh));
     }
     for (const el of cardEls0()) { const r = el.getBoundingClientRect(); areas.push(r.width * r.height); }
     const tot = Object.values(hueArea).reduce((p, q) => p + q, 0);
@@ -887,7 +891,7 @@ function report(results, facts, focus, runtime, args) {
   if (widest.cardAreas && widest.cardAreas.ratio < 2.2) problem('RICHNESS', `Everything has equal weight: across ${widest.cardAreas.n} cards the largest is only ${widest.cardAreas.ratio}× the typical one. Let one object dominate the screen and shrink or merge minor tiles, so the eye has a first, second and third stop.`);
   const rainbow = (widest.pastelHues && widest.pastelHues.length >= 3) ? widest.pastelHues : (widest.fillHues && widest.fillHues.length >= 4 ? widest.fillHues : null);
   if (rainbow) problem('RICHNESS', `Colour is spread over ${rainbow.length} hue families in large fills (${rainbow.map((h) => h + '°').join(', ')}): tiles or panels each in a different tint. That reads as a pastel rainbow, not a palette. Commit to a neutral base, one dominant colour in large fields and one hot accent; give kinds of item tints of one or two hues.`);
-  if (widest.foldContrast !== undefined && widest.foldContrast < 0.08) problem('RICHNESS', 'The first desktop screen has no large confident field of colour or dark surface. Use the dominant colour boldly on one big element (the hero card, a section, the showpiece), not only as small tints.');
+  if (widest.foldContrast !== undefined && widest.foldContrast < 0.08) problem('RICHNESS', 'The first desktop screen has no large confident field of colour or contrasting surface: it is one tone (all light, or all dark). Use the dominant colour boldly on one big element (the hero card, a section, the showpiece), not only as small tints or a glow.');
   if (R) { const [fw2] = R.foldLargest; if (fw2 >= 260 && fw2 < 540 && widest.docHeight > 2400) problem('RICHNESS', `The largest visual in the first desktop screen is ${fw2}px wide. Hero product visuals at the bar run 600–1000px wide; enlarge it and let it bleed past the fold or the container.`); }
   if (widest.emojiCount > 6) problem('CRAFT', `Emoji appear in UI text ${widest.emojiCount}×. They render differently on every platform; use them as flavour, not as the icon system.`);
 
