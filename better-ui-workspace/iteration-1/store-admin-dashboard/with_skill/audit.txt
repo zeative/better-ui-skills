@@ -1,0 +1,18 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-1/store-admin-dashboard/with_skill/outputs/index.html
+Rendered at 375px (page height 3542px), 768px (page height 2588px), 1440px (page height 1672px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  14px  16px  20px  32px
+  Families     system-ui
+  Weights      400, 600
+  Text colours #5c554f #1f1a17 #736b64 #a3470f #1e6b45 #b3261e #fbfaf8
+  Fills        #b9b2a8 #efece7 #faede2 #a3470f #1f1a17
+  Radii        2px×21  4px×7
+  Shadows      0 distinct
+  Boxes        0 card-like containers, 0 nested
+  Interaction  8 interactive elements; 1 :hover rules, 1 :focus-visible rules; reduced-motion not handled; dark scheme not defined
+
+REFLEXES — common unchosen defaults; keep only if you can state the reason it serves this product
+  • Typeface is system-ui only. Perfectly usable, but confirm it was chosen for this product rather than inherited.
+
+This report cannot judge hierarchy, composition, whether the content is specific, or whether the page has a point of view. Read the screenshots for those.

@@ -1,0 +1,22 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-1/saas-landing-page/with_skill/outputs/index.html
+Rendered at 375px (page height 7143px), 768px (page height 5800px), 1440px (page height 4641px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   14px  16px  20px  36px  60px
+  Families     IBM Plex Sans, IBM Plex Mono
+  Weights      400, 500, 600
+  Text colours #4a5a52 #14211b #ffffff #0b6b47 #a8261c
+  Fills        #ffffff #0b6b47 #14211b
+  Radii        2px×8  4px×4
+  Shadows      1 distinct
+  Boxes        0 card-like containers, 0 nested
+  Interaction  17 interactive elements; 4 :hover rules, 2 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+TOUCH — fix unless there is a reason
+  • 2 touch targets under 40px at 375px wide, e.g. input 24×24; input 24×24
+
+REFLEXES — common unchosen defaults; keep only if you can state the reason it serves this product
+  • Emoji used in UI text 1× (p "© 2026 Ledgerly"). They render differently per platform and stand in for real icons or real words.
+
+This report cannot judge hierarchy, composition, whether the content is specific, or whether the page has a point of view. Read the screenshots for those.

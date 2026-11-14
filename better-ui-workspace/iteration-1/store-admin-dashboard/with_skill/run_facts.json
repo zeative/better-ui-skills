@@ -1,0 +1,18 @@
+{
+  "skills_invoked": [
+    "better-ui",
+    "dataviz"
+  ],
+  "skill_files_read": [],
+  "tool_calls": {
+    "Skill": 2,
+    "Bash": 6,
+    "Read": 6,
+    "Write": 1
+  },
+  "permission_denials": [
+    {
+      "skill": "dataviz"
+    }
+  ]
+}

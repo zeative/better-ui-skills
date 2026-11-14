@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ringkasan hari ini · Kopi Lereng Admin</title>
+<style>
+/*
+Direction: Papan kerja harian pemilik toko sangrai kecil: tenang, padat, datar. Dibuka beberapa kali
+           sehari di laptop atau HP di sela mengemas, untuk menjawab "ada yang harus saya kerjakan sekarang?"
+Type:      Satu keluarga, font sistem (alat kerja, cepat, akrab). Skala 12 / 14 / 16 / 20 / 32. Bobot 400 & 600.
+           Semua angka tabular.
+Colour:    Netral sedikit hangat. Satu aksen jingga-sangrai (--accent) yang artinya selalu sama:
+           "sekarang / butuh kamu" (hari ini di grafik, pesanan perlu dikemas, stok menipis).
+           Hijau & merah hanya untuk status. Tiga cokelat --roast-* hanya menandai tingkat sangrai.
+Shape:     Datar dengan garis tipis, tanpa kartu & bayangan. Radius 4 (kontrol) dan 2 (batang).
+Signature: Produk dibaca seperti penyangrai membacanya: titik tingkat sangrai, kg terjual, sisa stok dalam kg.
+Not doing: Sidebar berisi menu mati, empat kartu statistik setara, ikon hiasan, gradien, mode gelap.
+*/
+:root {
+  color-scheme: light;
+  --ground: #FBFAF8;
+  --sunken: #EFECE7;
+  --rule: #E2DED7;
+  --ink: #1F1A17;
+  --ink-muted: #5C554F;
+  --ink-subtle: #736B64;
+  --accent: #A3470F;
+  --accent-tint: #FAEDE2;
+  --ok: #1E6B45;
+  --danger: #B3261E;
+  --bar: #B9B2A8;
+  --roast-light: #C68F58;
+  --roast-medium: #8A5A33;
+  --roast-dark: #3A2619;
+
+  --fs-12: 0.75rem; --fs-14: 0.875rem; --fs-16: 1rem; --fs-20: 1.25rem; --fs-32: 2rem;
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px; --s-7: 48px;
+  --r-1: 2px; --r-2: 4px;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font: 400 var(--fs-14)/1.45 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased;
+}
+h1, h2, p, dl, dd, ol, ul { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+button { font: inherit; color: inherit; }
+a { color: var(--accent); text-underline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-2); }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.wrap { max-width: 1200px; margin-inline: auto; padding-inline: var(--s-4); }
+@media (min-width: 720px) { .wrap { padding-inline: var(--s-6); } }
+
+/* Header */
+.top { border-bottom: 1px solid var(--rule); }
+.top .wrap { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); padding-block: var(--s-3); }
+.shop { font-weight: 600; }
+.shop span { font-weight: 400; color: var(--ink-subtle); }
+.updated { color: var(--ink-subtle); font-size: var(--fs-12); text-align: right; }
+
+main { padding-block: var(--s-5) var(--s-7); }
+.title { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--s-1) var(--s-3); margin-bottom: var(--s-4); }
+h1 { font-size: var(--fs-20); font-weight: 600; line-height: 1.2; }
+.title p { color: var(--ink-muted); }
+h2 { font-size: var(--fs-16); font-weight: 600; line-height: 1.25; }
+.sub { color: var(--ink-muted); margin-top: var(--s-1); }
+
+/* Perlu ditangani */
+.todo { background: var(--accent-tint); border-radius: var(--r-2); padding: var(--s-1) var(--s-4); }
+.todo li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-1) var(--s-4); padding-block: var(--s-2); }
+.todo li + li { border-top: 1px solid color-mix(in srgb, var(--accent) 18%, transparent); }
+.todo strong { font-weight: 600; }
+.todo a { font-weight: 600; white-space: nowrap; padding-block: var(--s-3); margin-block: calc(var(--s-2) * -1); }
+
+/* Grid */
+.grid { display: grid; gap: var(--s-6); margin-top: var(--s-6); }
+.grid > section { border-top: 1px solid var(--ink); padding-top: var(--s-4); min-width: 0; }
+@media (min-width: 960px) {
+  .grid { grid-template-columns: 5fr 7fr; column-gap: var(--s-7); }
+  .grid.lower { grid-template-columns: 7fr 4fr; }
+}
+
+/* Hari ini */
+.big { font-size: var(--fs-32); font-weight: 600; line-height: 1.1; letter-spacing: -0.02em; margin-top: var(--s-3); }
+.delta { margin-top: var(--s-2); color: var(--ink-muted); }
+.delta b { font-weight: 600; }
+.delta .up { color: var(--ok); }
+.delta .down { color: var(--danger); }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: var(--s-5); border-top: 1px solid var(--rule); }
+.facts div { padding: var(--s-3) var(--s-3) 0 0; }
+.facts div + div { padding-left: var(--s-3); border-left: 1px solid var(--rule); }
+.facts dt { color: var(--ink-muted); font-size: var(--fs-12); }
+.facts dd { font-size: var(--fs-20); font-weight: 600; line-height: 1.3; }
+.facts small { display: block; font-size: var(--fs-12); font-weight: 400; color: var(--ink-subtle); line-height: 1.4; }
+
+/* Grafik */
+.chart { display: grid; grid-template-columns: repeat(7, 1fr); gap: var(--s-1); margin-top: var(--s-4); }
+@media (min-width: 720px) { .chart { gap: var(--s-4); } }
+.col { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+.plot { height: 152px; width: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; border-bottom: 1px solid var(--ink-subtle); }
+.val { font-size: var(--fs-12); color: var(--ink-muted); white-space: nowrap; margin-bottom: var(--s-1); }
+.barv { width: 100%; max-width: 56px; background: var(--bar); border-radius: var(--r-1) var(--r-1) 0 0; }
+.day { font-size: var(--fs-12); color: var(--ink-muted); margin-top: var(--s-1); text-align: center; line-height: 1.35; white-space: nowrap; }
+.day span { display: block; color: var(--ink-subtle); }
+.col.today .barv { background: var(--accent); }
+.col.today .val, .col.today .day, .col.today .day span { color: var(--accent); font-weight: 600; }
+.note { color: var(--ink-subtle); font-size: var(--fs-12); margin-top: var(--s-3); }
+.key { display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: var(--r-1); margin-right: var(--s-1); }
+
+/* Filter */
+.filters { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-3); }
+.chip { min-height: 32px; padding: 0 var(--s-3); background: transparent; border: 1px solid var(--rule); border-radius: var(--r-2); cursor: pointer; color: var(--ink-muted); }
+.chip b { font-weight: 400; color: var(--ink-subtle); margin-left: var(--s-1); }
+.chip[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--ground); font-weight: 600; }
+.chip[aria-pressed="true"] b { color: var(--ground); }
+.chip:active { background: var(--sunken); }
+.chip[aria-pressed="true"]:active { background: var(--ink-muted); }
+@media (hover: hover) { .chip[aria-pressed="false"]:hover { background: var(--sunken); color: var(--ink); } }
+@media (pointer: coarse) { .chip { min-height: 44px; } }
+.count { color: var(--ink-subtle); font-size: var(--fs-12); margin-top: var(--s-3); }
+
+/* Pesanan */
+table { width: 100%; border-collapse: collapse; margin-top: var(--s-2); }
+th { text-align: left; font-weight: 400; font-size: var(--fs-12); color: var(--ink-subtle); padding: var(--s-2) var(--s-3) var(--s-2) 0; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+td { padding: var(--s-3) var(--s-3) var(--s-3) 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th:last-child, td:last-child { padding-right: 0; }
+.num { text-align: right; }
+.id { white-space: nowrap; }
+.meta { display: block; color: var(--ink-subtle); font-size: var(--fs-12); }
+.buyer { font-weight: 600; overflow-wrap: break-word; }
+@media (min-width: 720px) { .c-buyer { width: 24%; } .c-status { width: 168px; } }
+.buyer .meta { font-weight: 400; }
+.items { color: var(--ink-muted); }
+.total { font-weight: 600; white-space: nowrap; }
+.total.void { font-weight: 400; color: var(--ink-subtle); text-decoration: line-through; }
+.status { white-space: nowrap; color: var(--ink-muted); }
+.status::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 6px; }
+.status.pack { color: var(--accent); font-weight: 600; }
+.status.done { color: var(--ok); }
+.status.cancel { color: var(--danger); }
+.status.wait::before { background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; }
+.status + .meta { white-space: normal; }
+.empty { padding: var(--s-6) 0; color: var(--ink-muted); border-bottom: 1px solid var(--rule); }
+
+@media (max-width: 719px) {
+  thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  tr { display: grid; grid-template-columns: 1fr auto; gap: var(--s-1) var(--s-3); padding-block: var(--s-3); border-bottom: 1px solid var(--rule); }
+  td { display: block; padding: 0; border: 0; }
+  .c-buyer { grid-area: 1 / 1; font-size: var(--fs-16); }
+  .c-total { grid-area: 1 / 2; font-size: var(--fs-16); }
+  .c-items { grid-area: 2 / 1 / 3 / 3; }
+  .c-status { grid-area: 3 / 1; }
+  .c-id { grid-area: 3 / 2; text-align: right; color: var(--ink-subtle); font-size: var(--fs-12); align-self: center; }
+  .c-id .meta { display: inline; }
+  .c-id .meta::before { content: " · "; }
+  .c-status .meta { margin-top: var(--s-1); }
+}
+
+/* Produk */
+.products { margin-top: var(--s-2); }
+.products li { padding-block: var(--s-3); border-bottom: 1px solid var(--rule); }
+.p-head { display: flex; justify-content: space-between; gap: var(--s-3); align-items: baseline; }
+.p-name { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+.p-name i { font-style: normal; font-weight: 400; color: var(--ink-subtle); margin-right: var(--s-2); }
+.p-rev { font-weight: 600; white-space: nowrap; }
+.track { height: 4px; margin-block: var(--s-2); background: var(--sunken); border-radius: var(--r-1); }
+.track div { height: 100%; background: var(--bar); border-radius: var(--r-1); }
+.p-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 var(--s-3); font-size: var(--fs-12); color: var(--ink-muted); }
+.roast::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: var(--c); }
+.stock.low { color: var(--accent); font-weight: 600; }
+
+footer { border-top: 1px solid var(--rule); color: var(--ink-subtle); font-size: var(--fs-12); }
+footer .wrap { padding-block: var(--s-4); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="shop">Kopi Lereng <span>· Admin toko</span></div>
+    <div class="updated">Data sampai pukul <span data-asof></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="title">
+    <h1>Ringkasan hari ini</h1>
+    <p id="today-date"></p>
+  </div>
+
+  <section aria-labelledby="todo-h">
+    <h2 id="todo-h" class="vh">Perlu ditangani</h2>
+    <ul class="todo" id="todo"></ul>
+  </section>
+
+  <div class="grid">
+    <section aria-labelledby="sales-h">
+      <h2 id="sales-h">Penjualan hari ini</h2>
+      <p class="big" id="rev"></p>
+      <p class="delta" id="delta"></p>
+      <dl class="facts" id="facts"></dl>
+    </section>
+
+    <section aria-labelledby="chart-h">
+      <h2 id="chart-h">Penjualan 7 hari terakhir</h2>
+      <p class="sub" id="chart-sub"></p>
+      <div class="chart" id="chart" role="img"></div>
+      <p class="note"><span class="key"></span>Hari ini masih berjalan, angkanya baru sampai pukul <span data-asof></span>.</p>
+      <table class="vh" id="chart-table"></table>
+    </section>
+  </div>
+
+  <div class="grid lower">
+    <section aria-labelledby="orders-h" id="pesanan">
+      <h2 id="orders-h">Pesanan terbaru</h2>
+      <div class="filters" id="filters" role="group" aria-label="Saring pesanan menurut status"></div>
+      <p class="count" id="count" aria-live="polite"></p>
+      <table>
+        <thead>
+          <tr><th>Pesanan</th><th>Pembeli</th><th>Isi</th><th class="num">Total</th><th>Status</th></tr>
+        </thead>
+        <tbody id="orders"></tbody>
+      </table>
+      <p class="empty" id="orders-empty" hidden></p>
+    </section>
+
+    <section aria-labelledby="products-h" id="produk">
+      <h2 id="products-h">Produk terlaris</h2>
+      <p class="sub">7 hari terakhir, urut dari penjualan terbesar</p>
+      <ol class="products" id="products"></ol>
+    </section>
+  </div>
+</main>
+
+<footer><div class="wrap">Semua angka di halaman ini data contoh, bukan penjualan sungguhan. Total belum termasuk ongkos kirim.</div></footer>
+
+<script>
+// ---------- Data contoh ----------
+const AS_OF = '16.05', PICKUP = '17.00';
+const YESTERDAY_SAME_TIME = 2610000;
+const ROAST = {
+  light:  { label: 'Sangrai terang', c: 'var(--roast-light)' },
+  medium: { label: 'Sangrai sedang', c: 'var(--roast-medium)' },
+  dark:   { label: 'Sangrai gelap',  c: 'var(--roast-dark)' },
+};
+// price: [200 g, 1 kg]; prev: unit terjual 6 hari sebelum hari ini [200 g], [1 kg]; stock dalam kg
+const PRODUCTS = {
+  gayo:      { name: 'Gayo Wine Natural', origin: 'Aceh Tengah', roast: 'light', price: [125000, 560000], prev: [[4,3,5,4,6,5],[0,1,0,1,1,1]], stock: 1.2 },
+  kintamani: { name: 'Kintamani Honey', origin: 'Bali', roast: 'light', price: [98000, 440000], prev: [[3,2,3,4,3,4],[0,0,1,0,0,1]], stock: 6.4 },
+  toraja:    { name: 'Toraja Sapan Full Wash', origin: 'Sulawesi Selatan', roast: 'medium', price: [105000, 470000], prev: [[2,3,2,2,3,3],[1,0,0,1,0,0]], stock: 5 },
+  bajawa:    { name: 'Flores Bajawa', origin: 'NTT', roast: 'medium', price: [92000, 410000], prev: [[2,1,2,3,2,2],[0,0,0,0,1,0]], stock: 4.2 },
+  puntang:   { name: 'Puntang Natural', origin: 'Jawa Barat', roast: 'light', price: [115000, 520000], prev: [[3,2,2,1,1,0],[0,0,0,0,0,0]], stock: 0 },
+  blend:     { name: 'Espresso Blend Lereng Pagi (Robusta Temanggung + Arabika Gayo)', short: 'Blend Lereng Pagi', origin: 'Campuran', roast: 'dark', price: [68000, 290000], prev: [[3,4,3,4,5,4],[1,2,1,2,2,2]], stock: 9.6 },
+  dampit:    { name: 'Robusta Dampit', origin: 'Jawa Timur', roast: 'dark', price: [58000, 240000], prev: [[2,2,1,2,2,3],[0,1,0,0,1,0]], stock: 7.8 },
+};
+const PREV_ORDER_COUNT = [9, 8, 8, 10, 12, 11];
+const STATUS = {
+  pack:   { label: 'Perlu dikemas', paid: true },
+  sent:   { label: 'Dikirim', paid: true },
+  done:   { label: 'Selesai', paid: true },
+  wait:   { label: 'Menunggu pembayaran', paid: false },
+  cancel: { label: 'Dibatalkan', paid: false },
+};
+// items: [produk, ukuran (0 = 200 g, 1 = 1 kg), jumlah]
+const ORDERS = [
+  { id: 'KL-2331', time: '15.47', buyer: 'Ayu Pramesti', city: 'Bandung', items: [['gayo',0,2]], status: 'pack' },
+  { id: 'KL-2330', time: '15.12', buyer: 'Kedai Teduh Kopi & Roti', city: 'Yogyakarta', items: [['blend',1,2],['gayo',1,1]], status: 'pack' },
+  { id: 'KL-2329', time: '14.38', buyer: 'Bima Santoso', city: 'Jakarta Selatan', items: [['kintamani',0,1],['toraja',0,1]], status: 'pack' },
+  { id: 'KL-2328', time: '13.55', buyer: 'Rina Kusumawardhani', city: 'Surabaya', items: [['dampit',1,1]], status: 'wait', note: 'Transfer bank, batas bayar 13.55 besok' },
+  { id: 'KL-2327', time: '13.20', buyer: 'Yohanes Tambunan', city: 'Medan', items: [['bajawa',0,2]], status: 'pack' },
+  { id: 'KL-2326', time: '11.48', buyer: 'Made Wirawan', city: 'Denpasar', items: [['kintamani',1,1]], status: 'sent' },
+  { id: 'KL-2325', time: '11.05', buyer: 'Putri Anggraini', city: 'Depok', items: [['puntang',0,1]], status: 'cancel', note: 'Stok habis, dana dikembalikan' },
+  { id: 'KL-2324', time: '10.31', buyer: 'Fajar Nugroho', city: 'Semarang', items: [['blend',0,3]], status: 'sent' },
+  { id: 'KL-2323', time: '09.44', buyer: 'Siti Rahmawati', city: 'Bekasi', items: [['gayo',0,1],['bajawa',0,1]], status: 'sent' },
+  { id: 'KL-2322', time: '08.57', buyer: 'Hendra Wijaya', city: 'Cimahi', items: [['toraja',0,2]], status: 'done', note: 'Kurir instan' },
+  { id: 'KL-2321', time: '08.12', buyer: 'Lukas Sitompul', city: 'Bandung', items: [['dampit',0,1],['blend',0,1]], status: 'done', note: 'Kurir instan' },
+];
+
+// ---------- Hitungan (semua angka diturunkan dari data di atas) ----------
+const KG = [0.2, 1], SIZE = ['200 g', '1 kg'];
+const nf = new Intl.NumberFormat('id-ID');
+const rp = n => 'Rp ' + nf.format(n);
+const jt = n => (n / 1e6).toLocaleString('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' jt';
+const kg = n => n.toLocaleString('id-ID', { maximumFractionDigits: 1 }) + ' kg';
+const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const $ = id => document.getElementById(id);
+
+ORDERS.forEach(o => o.total = o.items.reduce((s, [p, z, q]) => s + PRODUCTS[p].price[z] * q, 0));
+const paid = ORDERS.filter(o => STATUS[o.status].paid);
+const revToday = paid.reduce((s, o) => s + o.total, 0);
+const kgToday = paid.reduce((s, o) => s + o.items.reduce((a, [, z, q]) => a + KG[z] * q, 0), 0);
+
+const dayRev = [0, 1, 2, 3, 4, 5].map(d =>
+  Object.values(PRODUCTS).reduce((s, p) => s + p.prev[0][d] * p.price[0] + p.prev[1][d] * p.price[1], 0));
+dayRev.push(revToday);
+const dayOrders = [...PREV_ORDER_COUNT, paid.length];
+const weekRev = dayRev.reduce((a, b) => a + b, 0);
+
+const now = new Date();
+const days = dayRev.map((_, i) => { const d = new Date(now); d.setDate(d.getDate() - (6 - i)); return d; });
+const fmt = (d, o) => d.toLocaleDateString('id-ID', o);
+
+const ranked = Object.entries(PRODUCTS).map(([key, p]) => {
+  const u = [0, 1].map(z => p.prev[z].reduce((a, b) => a + b, 0) +
+    paid.reduce((s, o) => s + o.items.filter(i => i[0] === key && i[1] === z).reduce((a, i) => a + i[2], 0), 0));
+  return { ...p, rev: u[0] * p.price[0] + u[1] * p.price[1], kg: u[0] * KG[0] + u[1] * KG[1] };
+}).sort((a, b) => b.rev - a.rev);
+
+// ---------- Render ----------
+document.querySelectorAll('[data-asof]').forEach(e => e.textContent = AS_OF);
+$('today-date').textContent = fmt(now, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+const nPack = ORDERS.filter(o => o.status === 'pack').length;
+const out = ranked.filter(p => p.stock === 0), low = ranked.filter(p => p.stock > 0 && p.stock < 2);
+const todo = [];
+if (nPack) todo.push(`<li><span><strong>${nPack} pesanan perlu dikemas</strong> sebelum kurir menjemput pukul ${PICKUP}</span><a href="#pesanan" data-filter="pack">Lihat yang perlu dikemas</a></li>`);
+if (out.length || low.length) {
+  const parts = [...out.map(p => `<strong>${esc(p.short || p.name)} habis</strong>`), ...low.map(p => `${esc(p.short || p.name)} tinggal ${kg(p.stock)}`)];
+  todo.push(`<li><span>${parts.join(', ')}</span><a href="#produk">Lihat stok</a></li>`);
+}
+if (!todo.length) todo.push('<li><span>Tidak ada yang perlu ditangani sekarang. Semua pesanan sudah dikemas dan stok aman.</span></li>');
+$('todo').innerHTML = todo.join('');
+
+$('rev').textContent = rp(revToday);
+const pct = Math.round((revToday - YESTERDAY_SAME_TIME) / YESTERDAY_SAME_TIME * 100);
+$('delta').innerHTML = `<b class="${pct >= 0 ? 'up' : 'down'}">${pct >= 0 ? 'Naik' : 'Turun'} ${Math.abs(pct)}%</b> dari kemarin pada jam yang sama (${rp(YESTERDAY_SAME_TIME)})`;
+const nWait = ORDERS.filter(o => o.status === 'wait').length, nCancel = ORDERS.filter(o => o.status === 'cancel').length;
+$('facts').innerHTML = `
+  <div><dt>Pesanan dibayar</dt><dd>${paid.length}<small>${nWait} menunggu bayar, ${nCancel} batal</small></dd></div>
+  <div><dt>Rata-rata per pesanan</dt><dd>${rp(Math.round(revToday / paid.length / 1000) * 1000)}</dd></div>
+  <div><dt>Biji terjual</dt><dd>${kg(kgToday)}</dd></div>`;
+
+const max = Math.max(...dayRev), avg6 = (weekRev - revToday) / 6;
+$('chart-sub').textContent = `${rp(weekRev)} dari ${dayOrders.reduce((a, b) => a + b, 0)} pesanan. Rata-rata 6 hari sebelumnya ${jt(avg6)} per hari.`;
+$('chart').setAttribute('aria-label', `Grafik batang penjualan harian 7 hari terakhir. Tertinggi ${jt(max)} pada ${fmt(days[dayRev.indexOf(max)], { weekday: 'long' })}, hari ini sejauh ini ${jt(revToday)}.`);
+$('chart').innerHTML = dayRev.map((v, i) => `
+  <div class="col${i === 6 ? ' today' : ''}">
+    <div class="plot"><div class="val">${jt(v)}</div><div class="barv" style="height:${(v / max * 100 * 0.84).toFixed(1)}%"></div></div>
+    <div class="day">${fmt(days[i], { weekday: 'short' })}<span>${fmt(days[i], { day: 'numeric', month: 'numeric' })}</span></div>
+  </div>`).join('');
+$('chart-table').innerHTML = '<caption>Penjualan harian 7 hari terakhir</caption><tr><th>Tanggal</th><th>Penjualan</th><th>Pesanan dibayar</th></tr>' +
+  dayRev.map((v, i) => `<tr><td>${fmt(days[i], { weekday: 'long', day: 'numeric', month: 'long' })}${i === 6 ? ' (hari ini)' : ''}</td><td>${rp(v)}</td><td>${dayOrders[i]}</td></tr>`).join('');
+
+const topRev = ranked[0].rev;
+$('products').innerHTML = ranked.map((p, i) => {
+  const stock = p.stock === 0 ? '<span class="stock low">Stok habis</span>'
+    : p.stock < 2 ? `<span class="stock low">Stok menipis, sisa ${kg(p.stock)}</span>`
+    : `<span class="stock">Stok ${kg(p.stock)}</span>`;
+  return `<li>
+    <div class="p-head"><span class="p-name"><i>${i + 1}</i>${esc(p.name)}</span><span class="p-rev">${rp(p.rev)}</span></div>
+    <div class="track" aria-hidden="true"><div style="width:${(p.rev / topRev * 100).toFixed(1)}%"></div></div>
+    <div class="p-meta"><span class="roast" style="--c:${ROAST[p.roast].c}">${ROAST[p.roast].label} · ${p.origin} · ${kg(p.kg)} terjual</span>${stock}</div>
+  </li>`;
+}).join('');
+
+let filter = 'all';
+function renderOrders() {
+  const keys = ['all', ...Object.keys(STATUS)];
+  $('filters').innerHTML = keys.map(k => {
+    const n = k === 'all' ? ORDERS.length : ORDERS.filter(o => o.status === k).length;
+    return `<button class="chip" type="button" data-filter="${k}" aria-pressed="${k === filter}">${k === 'all' ? 'Semua' : STATUS[k].label}<b>${n}</b></button>`;
+  }).join('');
+  const rows = ORDERS.filter(o => filter === 'all' || o.status === filter);
+  $('count').textContent = `${rows.length} dari ${ORDERS.length} pesanan hari ini, terbaru di atas`;
+  $('orders').innerHTML = rows.map(o => `
+    <tr>
+      <td class="c-id id">${o.id}<span class="meta">${o.time}</span></td>
+      <td class="c-buyer buyer">${esc(o.buyer)}<span class="meta">${o.city}</span></td>
+      <td class="c-items items">${o.items.map(([p, z, q]) => `${q}× ${esc(PRODUCTS[p].short || PRODUCTS[p].name)} ${SIZE[z].replace(' ', ' ')}`).join(', ')}</td>
+      <td class="c-total num total${STATUS[o.status].paid ? '' : ' void'}">${rp(o.total)}</td>
+      <td class="c-status"><span class="status ${o.status}">${STATUS[o.status].label}</span>${o.note ? `<span class="meta">${esc(o.note)}</span>` : ''}</td>
+    </tr>`).join('');
+  $('orders-empty').hidden = rows.length > 0;
+  if (!rows.length) $('orders-empty').textContent = `Belum ada pesanan berstatus “${STATUS[filter].label}” hari ini.`;
+}
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-filter]');
+  if (!t) return;
+  filter = t.dataset.filter;
+  renderOrders();
+  if (t.classList.contains('chip')) $('filters').querySelector(`[data-filter="${filter}"]`).focus();
+});
+renderOrders();
+</script>
+</body>
+</html>

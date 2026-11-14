@@ -10,8 +10,8 @@
  * --setup runs a JS file inside the page after load and before measuring. Use
  * it to put the UI into the state you want to inspect: seed data, open a
  * dialog, submit an invalid form. An empty app tells you almost nothing.
- *   e.g. setup.js:  document.querySelector('#new-habit').value = 'Read';
- *                   document.querySelector('form').requestSubmit();
+ *   e.g. setup.js:  localStorage.setItem('todos', JSON.stringify([...]));
+ *                   setTimeout(() => location.reload(), 0);   // reloads are waited for
  *
  * Output: screenshots in <out>/ (default ./.ui-audit) and a plain-text report
  * on stdout. Exit code is 0 even when problems are found; the report is input
@@ -504,7 +504,11 @@ function report(results, facts, focus, runtime, args) {
       await new Promise((r) => setTimeout(r, 600));
       if (setupSrc) {
         await page.evaluate(`(async () => { ${setupSrc}\n })()`).catch((e) => runtime.errors.push('setup script: ' + String(e.message || e).slice(0, 140)));
-        await new Promise((r) => setTimeout(r, 500));
+        // the setup may have reloaded the page (for example after seeding localStorage)
+        await new Promise((r) => setTimeout(r, 300));
+        if (driver.kind === 'playwright') await page.waitForLoadState('networkidle').catch(() => {});
+        await page.evaluate(() => (document.fonts && document.fonts.ready) || null).catch(() => {});
+        await new Promise((r) => setTimeout(r, 400));
       }
       // scroll through once so scroll-triggered content is in its settled state
       await page.evaluate(async () => {
