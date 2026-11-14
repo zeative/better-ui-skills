@@ -1,0 +1,70 @@
+{
+  "expectations": [
+    {
+      "text": "The page has no horizontal overflow when rendered at 375px, 768px and 1440px wide.",
+      "passed": true,
+      "evidence": "overflow px: 375→0, 768→0, 1440→0"
+    },
+    {
+      "text": "Every piece of visible text meets WCAG AA contrast (4.5:1, or 3:1 for large text) against its background.",
+      "passed": true,
+      "evidence": "0 text elements below AA"
+    },
+    {
+      "text": "The rendered page uses at most 12 distinct font sizes.",
+      "passed": true,
+      "evidence": "6 sizes: 12, 14, 16, 20, 28, 44"
+    },
+    {
+      "text": "The rendered page uses at most 7 distinct corner radii.",
+      "passed": true,
+      "evidence": "6 radii: 999px, 24px, 16px, 50%, 3.5px, 3px"
+    },
+    {
+      "text": "Every element reached by pressing Tab shows a visible focus style.",
+      "passed": true,
+      "evidence": "6 elements tabbed, 0 with no visible change"
+    },
+    {
+      "text": "No interactive element is smaller than 24×24px, and at 375px wide no button or control is under 40px in its tappable dimension.",
+      "passed": true,
+      "evidence": "0 under 24px, 0 under 40px at 375px"
+    },
+    {
+      "text": "The page has a lang attribute, a viewport meta tag, exactly one visible h1, a main landmark, and no skipped heading levels.",
+      "passed": true,
+      "evidence": "lang=en, viewport=True, h1=1, main=True, skips=[]"
+    },
+    {
+      "text": "Every form field has a label and every button or link has an accessible name.",
+      "passed": true,
+      "evidence": "0 unnamed controls, 0 unlabelled fields"
+    },
+    {
+      "text": "The page loads with no console errors and no failed network requests.",
+      "passed": true,
+      "evidence": "0 errors, 0 failed requests"
+    }
+  ],
+  "summary": {
+    "passed": 9,
+    "failed": 0,
+    "total": 9,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "tool_calls": {
+      "Skill": 1,
+      "Bash": 16,
+      "Write": 1,
+      "Read": 24,
+      "Grep": 1,
+      "Agent": 2,
+      "SendUserFile": 1
+    },
+    "total_tool_calls": 46
+  },
+  "timing": {
+    "total_duration_seconds": 729.5
+  }
+}

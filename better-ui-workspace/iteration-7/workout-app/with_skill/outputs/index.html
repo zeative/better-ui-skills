@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E0F11">
+<title>Plated · Today's workout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Idea: every set is a plate you load onto the bar. Motif: barbell + plates (side-on), knurling, plate trees.
+   Kit: graphite. Lead: gym-floor graphite and steel, accent: bumper-plate orange, chalk white for "up next". */
+:root{
+  --bg:#0C0D0F; --surface:#16181C; --surface-2:#1D2025; --surface-3:#282C33;
+  --ink:#F4F1EA; --ink-2:#B0B4BC; --ink-3:#8A8F9A;
+  --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
+  --accent:#FF5B2E; --accent-deep:#C93A12; --accent-ink:#1B0A03; --accent-soft:rgba(255,91,46,.14);
+  --chalk:#F4F1EA;
+  --r-sm:10px; --r-md:16px; --r-lg:24px; --r-pill:999px;
+  --sh-1:inset 0 1px 0 rgba(255,255,255,.05), 0 1px 2px rgba(0,0,0,.4);
+  --sh-2:inset 0 1px 0 rgba(255,255,255,.08), 0 2px 4px rgba(0,0,0,.4), 0 18px 40px -14px rgba(0,0,0,.7);
+  --display:"Barlow Condensed","Roboto Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --text:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --knurl:repeating-linear-gradient(45deg,rgba(255,255,255,.07) 0 1px,transparent 1px 5px),repeating-linear-gradient(-45deg,rgba(255,255,255,.07) 0 1px,transparent 1px 5px);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;font-family:var(--text);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;color:var(--ink);
+  background:radial-gradient(900px 500px at 85% -120px,rgba(255,91,46,.13),transparent 65%),var(--bg);min-height:100dvh}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{text-wrap:balance}
+svg{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--chalk);outline-offset:3px}
+.num{font-family:var(--display);font-variant-numeric:tabular-nums;font-weight:700;letter-spacing:.01em}
+.label{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+.app{max-width:1120px;margin:0 auto;padding:16px 20px calc(104px + env(safe-area-inset-bottom))}
+
+/* header */
+.top{display:flex;align-items:center;justify-content:space-between;padding:4px 0 16px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;font-size:28px;letter-spacing:.06em;text-transform:uppercase;line-height:1}
+.brand svg{width:30px;height:30px}
+.wk{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 12px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);font-size:12px;font-weight:500;color:var(--ink-2);box-shadow:var(--sh-1)}
+.wk i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+.layout{display:grid;gap:16px}
+.side{display:contents}
+.hero{order:1}#sets{order:2}.week{order:3}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-radius:var(--r-lg);padding:20px 20px 16px;border:1px solid var(--line-2);
+  background:radial-gradient(360px 220px at 96% -8%,rgba(255,112,64,.5),transparent 72%),radial-gradient(700px 420px at 100% 0,rgba(255,91,46,.12),transparent 70%),linear-gradient(180deg,#22252B,#17191D);
+  box-shadow:var(--sh-2)}
+.hero::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent)}
+.hero-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.hero h1{font-family:var(--display);font-weight:700;font-size:44px;line-height:1;text-transform:uppercase;letter-spacing:.03em;margin-top:6px}
+.hero .focus{font-size:14px;color:var(--ink-2);margin-top:6px}
+.pill{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:var(--r-pill);font-size:12px;font-weight:600;white-space:nowrap;
+  background:var(--surface-3);color:var(--ink-2);border:1px solid var(--line)}
+.pill.done{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+.pill svg{width:14px;height:14px}
+.count{display:flex;align-items:flex-end;gap:10px;margin-top:14px}
+.count .big{font-size:104px;line-height:.8;letter-spacing:-.01em}
+.count .of{padding-bottom:2px}
+.count .of b{display:block;font-family:var(--display);font-weight:600;font-size:28px;line-height:1;color:var(--ink-2)}
+.count .of span{display:block;margin-top:4px}
+.bar-wrap{margin:14px -8px 4px}
+.bar-wrap svg{width:100%;height:auto;overflow:visible}
+.plate{transform-box:fill-box;transform-origin:center}
+.plate.pop{animation:load .42s cubic-bezier(.2,1.4,.4,1)}
+@keyframes load{from{transform:translateY(-14px) scaleY(.7);opacity:0}to{transform:none;opacity:1}}
+.bar-wrap.full svg{animation:rack .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes rack{0%{transform:translateY(0)}35%{transform:translateY(5px)}100%{transform:none}}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:8px;padding-top:14px}
+.hero-stats div+div{border-left:1px solid var(--line);padding-left:14px}
+.hero-stats b{display:block;font-size:28px;line-height:1}
+.hero-stats b small{font-family:var(--text);font-size:12px;font-weight:500;color:var(--ink-3);margin-left:3px;letter-spacing:0}
+.hero-stats span{display:block;margin-top:6px}
+.next{display:flex;align-items:center;gap:12px;width:100%;min-height:60px;margin-top:16px;padding:8px 14px 8px 10px;text-align:left;border-radius:var(--r-md);border:0;
+  background:linear-gradient(180deg,#FBF9F4,#E4E0D6);color:#131416;box-shadow:inset 0 1px 0 #fff,0 10px 24px -10px rgba(0,0,0,.8);transition:transform .15s}
+.next:active{transform:scale(.985)}
+@media(hover:hover){.next:hover{transform:translateY(-1px)}.next:active{transform:scale(.985)}}
+.next .ring{flex:none;width:40px;height:40px;border-radius:50%;background:#131416;color:var(--chalk);display:grid;place-items:center;font-size:20px}
+.next .t{flex:1;min-width:0}
+.next .t b{display:block;font-size:16px;font-weight:600;line-height:1.25}
+.next .t span{display:block;font-size:12px;color:#4A4D54;font-weight:500}
+.next svg{width:18px;height:18px;color:#4A4D54;flex:none}
+.next:focus-visible{outline-color:var(--accent)}
+
+/* section head */
+.sec{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:12px 0 0}
+.sec h2{font-family:var(--display);font-weight:700;font-size:28px;line-height:1;letter-spacing:.06em;text-transform:uppercase}
+.sec span{font-size:12px;color:var(--ink-3)}
+.knurl{height:6px;border-radius:3px;background:var(--knurl),linear-gradient(180deg,#3A3F48,#23262C);margin:10px 0 12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+
+/* exercises */
+.list{display:grid;gap:12px}
+.ex{position:relative;border-radius:var(--r-lg);padding:16px;background:linear-gradient(180deg,var(--surface-2),var(--surface));border:1px solid var(--line);box-shadow:var(--sh-1);transition:border-color .2s}
+.ex.current{background:linear-gradient(180deg,#30343C,#23262C);border-color:rgba(244,241,234,.4);box-shadow:var(--sh-2)}
+.ex.complete h3{color:var(--ink-2)}
+.ex-head{display:flex;align-items:center;gap:12px}
+.thumb{flex:none;width:56px;height:56px;border-radius:var(--r-md);background:linear-gradient(180deg,#454B56,#2B2F36);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.ex-t{flex:1;min-width:0}
+.ex-t h3{font-size:16px;font-weight:600;line-height:1.25}
+.ex-t p{font-size:14px;color:var(--ink-2);margin-top:2px}
+.ex-t p b{color:var(--ink);font-weight:600}
+.tally{font-size:28px;line-height:1;color:var(--ink-3);white-space:nowrap}
+.tally b{color:var(--ink);font-weight:700}
+.ex.complete .tally,.ex.complete .tally b{color:var(--ink-3)}
+.ex.complete .thumb{opacity:.6}
+.sets{position:relative;display:flex;align-items:flex-start;gap:8px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line-2)}
+.sets::before{content:"";position:absolute;left:-4px;right:-4px;top:39px;height:6px;border-radius:3px;background:var(--knurl),linear-gradient(180deg,#6B727E,#3A3F48);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 2px 4px rgba(0,0,0,.5)}
+.sets::after{content:"";position:absolute;right:14px;top:31px;width:6px;height:22px;border-radius:2px;background:linear-gradient(90deg,#C9CED6,#6B727E)}
+.set{position:relative;flex:0 0 56px;display:grid;justify-items:center;gap:6px;padding:0;border:0;background:none}
+.set .disc{position:relative;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:28px;line-height:1;color:var(--ink);
+  background:radial-gradient(circle at 50% 50%,transparent 0 62%,rgba(255,255,255,.05) 63% 100%),#282C33;
+  border:1.5px dashed rgba(255,255,255,.28);transition:transform .15s ease-out,background-color .2s,border-color .2s}
+.set .disc svg{position:absolute;width:26px;height:26px;opacity:0;transform:scale(.4);transition:opacity .15s,transform .25s cubic-bezier(.2,1.6,.4,1)}
+.set .disc span{transition:opacity .12s}
+.set small{font-size:12px;font-weight:500;color:var(--ink-3);letter-spacing:.02em}
+.set.up .disc{border:2px solid var(--chalk);box-shadow:0 0 0 5px rgba(244,241,234,.08)}
+.set.up small{color:var(--ink)}
+.set[aria-pressed="true"] .disc{color:var(--accent-ink);border:0;
+  background:radial-gradient(circle at 50% 50%,transparent 0 60%,rgba(0,0,0,.14) 61% 66%,transparent 67%),linear-gradient(160deg,#FF8A5C,var(--accent) 45%,var(--accent-deep));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -2px 0 rgba(0,0,0,.2),0 6px 14px -6px rgba(255,91,46,.7)}
+.set[aria-pressed="true"] .disc svg{opacity:1;transform:none}
+.set[aria-pressed="true"] .disc span{opacity:0}
+.set[aria-pressed="true"] small{color:var(--ink-2)}
+.set:active .disc{transform:scale(.92)}
+@media(hover:hover){.set:hover .disc{transform:translateY(-2px)}.set:active .disc{transform:scale(.92)}}
+.load{margin-left:auto;text-align:right;align-self:center;padding-bottom:18px}
+.load b{display:block;font-size:20px;line-height:1;color:var(--ink)}
+.load span{display:block;margin-top:5px;font-size:12px;color:var(--ink-3)}
+.set.pop .disc{animation:tick .4s cubic-bezier(.2,1.6,.4,1)}
+@keyframes tick{0%{transform:scale(.8)}60%{transform:scale(1.1)}100%{transform:none}}
+.set{border-radius:var(--r-sm)}.set:focus-visible{outline:2px solid var(--chalk);outline-offset:4px}
+
+/* rest day */
+.rest{border-radius:var(--r-lg);padding:28px 20px;text-align:center;background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh-1)}
+.rest svg{width:120px;height:120px;margin:0 auto 8px}
+.rest h3{font-family:var(--display);font-size:28px;text-transform:uppercase;letter-spacing:.04em}
+.rest p{color:var(--ink-2);font-size:14px;margin:6px auto 18px;max-width:34ch}
+.btn{display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 20px;border:0;border-radius:var(--r-pill);font-weight:600;font-size:16px;background:var(--accent);color:var(--accent-ink);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 8px 20px -8px rgba(255,91,46,.8);transition:transform .15s}
+.btn:active{transform:scale(.97)}
+
+/* week */
+.week{border-radius:var(--r-lg);padding:20px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--sh-1)}
+.week-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.week-head h2{font-family:var(--display);font-weight:700;font-size:28px;line-height:1;letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
+.sess{text-align:right}
+.sess b{font-size:44px;line-height:.9;display:block}
+.sess b.full{color:var(--accent)}
+.sess b em{font-style:normal;color:var(--ink-3)}
+.cap{margin-top:18px}
+.trees{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px;padding:0 0 0;position:relative}
+.tree{display:grid;justify-items:center;gap:8px}
+.tree .v{font-size:20px;line-height:1;height:20px;color:var(--ink)}
+.tree .v.muted{color:var(--ink-3);font-family:var(--text);font-size:12px;font-weight:500;line-height:20px;letter-spacing:.02em}
+.stack{position:relative;width:100%;max-width:40px;height:140px;display:flex;flex-direction:column-reverse;align-items:center;gap:2px;padding-bottom:6px}
+.stack::before{content:"";position:absolute;left:50%;bottom:0;top:0;width:4px;margin-left:-2px;border-radius:2px 2px 0 0;background:linear-gradient(90deg,#4A505B,#8E95A1 45%,#3A3F48)}
+.stack::after{content:"";position:absolute;left:8%;right:8%;bottom:0;height:4px;border-radius:2px;background:linear-gradient(180deg,#6B727E,#3A3F48)}
+.stack i{position:relative;z-index:1;display:block;height:5px;border-radius:2.5px;flex:none;background:linear-gradient(90deg,#FF8A5C,var(--accent) 40%,var(--accent-deep));box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.stack.off{opacity:.45}
+.stack.off::before{top:55%}
+.stack i.alt{background:linear-gradient(90deg,#E8562B,#C93A12 40%,#8A2608)}
+.stack i.ghost{background:var(--surface);box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.tree .d{display:grid;place-items:center;width:32px;height:28px;border-radius:var(--r-pill);font-size:12px;font-weight:600;color:var(--ink-2)}
+.tree.today .d{background:var(--chalk);color:#111}
+.tree .n{font-size:12px;color:var(--ink-3);margin-top:-6px;white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-size:12px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:16px;height:5px;border-radius:2px;background:var(--accent)}
+.legend i.g{background:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.tile{border-radius:var(--r-md);padding:14px;background:var(--surface-2);border:1px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.tile b{display:block;font-size:28px;line-height:1;margin-top:8px}
+.tile b small{font-family:var(--text);font-size:12px;font-weight:500;color:var(--ink-3);margin-left:4px;letter-spacing:0}
+.meter{height:6px;border-radius:3px;margin-top:12px;background:var(--knurl),#2B2F36;overflow:hidden}
+.meter i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent-deep),var(--accent))}
+.tile .sub{font-size:12px;color:var(--ink-2);margin-top:8px;line-height:1.3}
+.pips{display:flex;gap:5px;margin-top:6px;justify-content:flex-end}
+.pips i{width:5px;height:14px;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.pips i.on{background:linear-gradient(180deg,#FF8A5C,var(--accent-deep));box-shadow:none}
+.note{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding-top:6px;border-top:1px dashed var(--line-2);font-size:12px;color:var(--ink-3)}
+.note button{min-height:44px;padding:0 4px;border:0;background:none;color:var(--ink-2);font-size:12px;font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+
+/* tab bar */
+.tabs{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:10;display:flex;gap:4px;padding:6px;border-radius:var(--r-pill);
+  background:rgba(34,37,43,.94);-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);border:1px solid var(--line-2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 16px 40px -8px rgba(0,0,0,.8)}
+.tabs a{display:flex;align-items:center;gap:8px;height:48px;padding:0 20px;border-radius:var(--r-pill);font-size:14px;font-weight:600;color:var(--ink-2);text-decoration:none;transition:background-color .2s,color .2s}
+.tabs a svg{width:20px;height:20px;flex:none}
+.scrim{position:fixed;left:0;right:0;bottom:0;height:96px;z-index:9;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(12,13,15,.8))}
+.tabs a[aria-current="true"]{background:var(--chalk);color:#111}
+
+@media(min-width:700px){
+  .app{padding:24px 32px 120px}
+  .list{grid-template-columns:1fr 1fr}
+  .count .big{font-size:128px}
+}
+@media(min-width:980px){
+  .app{padding:32px 32px 56px}
+  .tabs,.scrim{display:none}
+  .layout{grid-template-columns:minmax(0,1fr) 348px;gap:24px;align-items:start}
+  .hero{grid-column:1/-1;display:grid;grid-template-columns:340px minmax(0,1fr);column-gap:40px;padding:32px 36px;
+    grid-template-areas:"head bar" "count bar" "stats bar" "next bar"}
+  .hero-head{grid-area:head}.count{grid-area:count;margin-top:24px}.hero-stats{grid-area:stats;margin-top:28px}.next{grid-area:next;margin-top:20px}
+  .hero .bar-wrap{grid-area:bar;align-self:center;margin:0}
+  .count .big{font-size:168px}
+  .hero h1{font-size:44px}
+  .list{grid-template-columns:1fr 1fr;gap:16px}
+  .sec{margin-top:4px}
+  .sets{gap:12px}
+  .week{padding:24px}
+  .stack{height:200px}
+  .stack i{height:7px;border-radius:3.5px}
+  .hero-head{justify-content:flex-start;gap:20px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gP" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FF9468"/><stop offset=".35" stop-color="#FF5B2E"/><stop offset="1" stop-color="#C93A12"/></linearGradient>
+    <linearGradient id="gP2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#EE5F33"/><stop offset=".35" stop-color="#C93A12"/><stop offset="1" stop-color="#84250A"/></linearGradient>
+    <linearGradient id="gS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9CED6"/><stop offset=".45" stop-color="#8A919C"/><stop offset="1" stop-color="#474C55"/></linearGradient>
+    <linearGradient id="gSh" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#C9CED6"/><stop offset=".5" stop-color="#8A919C"/><stop offset="1" stop-color="#474C55"/></linearGradient>
+    <linearGradient id="gI" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8E96A3"/><stop offset="1" stop-color="#4E545E"/></linearGradient>
+    <linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF8A5C"/><stop offset="1" stop-color="#C93A12"/></linearGradient>
+    <pattern id="kn" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 4L4 0M0 0l4 4" stroke="#000" stroke-opacity=".35" stroke-width=".6"/></pattern>
+  </defs>
+</svg>
+
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="14" fill="url(#gA)"/><circle cx="15" cy="15" r="9.5" fill="none" stroke="#1B0A03" stroke-opacity=".35" stroke-width="1.5"/><circle cx="15" cy="15" r="3.5" fill="#0C0D0F"/></svg>
+      Plated
+    </div>
+    <span class="wk" id="wk"></span>
+  </header>
+
+  <main class="layout">
+    <div class="side">
+      <section class="hero" id="today" aria-label="Today's workout"></section>
+      <section class="week" id="week" aria-label="This week"></section>
+    </div>
+    <section id="sets" aria-label="Exercises">
+      <div class="sec"><h2>Exercises</h2><span id="secmeta"></span></div>
+      <div class="knurl" aria-hidden="true"></div>
+      <div class="list" id="list"></div>
+    </section>
+  </main>
+</div>
+
+<div class="scrim" aria-hidden="true"></div>
+<nav class="tabs" aria-label="Sections">
+  <a href="#today" data-tab="today" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M3 12h18M6.5 7v10M17.5 7v10M3.5 9.5v5M20.5 9.5v5"/></svg>Today</a>
+  <a href="#week" data-tab="week"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M6 20V11M12 20V5M18 20v-6M4 20h16"/></svg>Week</a>
+</nav>
+
+<script>
+(() => {
+const KEY = 'plated.v1';
+const WORKOUTS = {
+  push: { name: 'Push day', focus: 'Chest · shoulders · triceps', ex: [
+    { id: 'bench', name: 'Bench press', sets: 4, reps: 8, kg: 70, obj: 'bench' },
+    { id: 'ohp', name: 'Overhead press', sets: 3, reps: 8, kg: 42.5, obj: 'barbell' },
+    { id: 'incline', name: 'Incline dumbbell press', sets: 3, reps: 10, kg: 24, obj: 'dumbbell' },
+    { id: 'fly', name: 'Cable fly', sets: 3, reps: 12, kg: 18, obj: 'cable' },
+    { id: 'pushdown', name: 'Triceps pushdown', sets: 3, reps: 12, kg: 27.5, obj: 'stack' },
+    { id: 'lateral', name: 'Lateral raise', sets: 2, reps: 15, kg: 9, obj: 'kettle' } ] },
+  pull: { name: 'Pull day', focus: 'Back · biceps', ex: [
+    { id: 'dead', name: 'Deadlift', sets: 3, reps: 5, kg: 120, obj: 'plate' },
+    { id: 'pulldown', name: 'Lat pulldown', sets: 4, reps: 10, kg: 59, obj: 'cable' },
+    { id: 'row', name: 'Barbell row', sets: 3, reps: 8, kg: 65, obj: 'barbell' },
+    { id: 'facepull', name: 'Face pull', sets: 3, reps: 15, kg: 20, obj: 'stack' },
+    { id: 'curl', name: 'Hammer curl', sets: 3, reps: 12, kg: 14, obj: 'dumbbell' } ] },
+  legs: { name: 'Leg day', focus: 'Quads · hamstrings · calves', ex: [
+    { id: 'squat', name: 'Back squat', sets: 4, reps: 6, kg: 95, obj: 'bench' },
+    { id: 'rdl', name: 'Romanian deadlift', sets: 3, reps: 8, kg: 80, obj: 'plate' },
+    { id: 'press', name: 'Leg press', sets: 3, reps: 12, kg: 140, obj: 'stack' },
+    { id: 'lunge', name: 'Walking lunge', sets: 3, reps: 12, kg: 20, obj: 'dumbbell' },
+    { id: 'calf', name: 'Calf raise', sets: 3, reps: 15, kg: 60, obj: 'kettle' } ] }
+};
+// Monday-first weekly plan; null is a rest day
+const PLAN = ['push', 'pull', null, 'legs', null, 'push', null];
+const DAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+const DAYNAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+const $ = (s) => document.querySelector(s);
+const ymd = (d) => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+const fmtKg = (n) => Math.round(n).toLocaleString('en-GB');
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+const now = new Date();
+const dow = (now.getDay() + 6) % 7;
+const weekDates = DAYS.map((_, i) => { const d = new Date(now); d.setDate(now.getDate() - dow + i); return ymd(d); });
+const todayKey = weekDates[dow];
+
+let store;
+try { store = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { store = {}; }
+store.log = store.log || {};
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)); } catch (e) {} };
+
+// First run: fill the earlier days of this week so the week view has something to show
+if (!store.seeded) {
+  weekDates.forEach((date, i) => {
+    if (i >= dow || !PLAN[i] || store.log[date]) return;
+    const done = {};
+    WORKOUTS[PLAN[i]].ex.forEach((e) => { done[e.id] = Array(e.sets).fill(1); });
+    if (PLAN[i] === 'legs') done.calf[2] = 0;
+    store.log[date] = { w: PLAN[i], done, sample: true };
+  });
+  store.seeded = true; save();
+}
+
+const entry = (date) => store.log[date];
+function todayEntry(create) {
+  let e = entry(todayKey);
+  if (!e && create) { e = store.log[todayKey] = { w: PLAN[dow], done: {} }; }
+  return e;
+}
+const todayWorkoutId = () => (entry(todayKey) && entry(todayKey).w) || PLAN[dow];
+function nextPlanned() { for (let k = 1; k <= 7; k++) { const id = PLAN[(dow + k) % 7]; if (id) return { id, day: DAYNAMES[(dow + k) % 7] }; } }
+
+// Flat list of sets for a day: [{ex, i, done}]
+function setsFor(wId, e) {
+  const out = [];
+  WORKOUTS[wId].ex.forEach((ex, xi) => { for (let i = 0; i < ex.sets; i++) out.push({ ex, xi, i, done: !!(e && e.done[ex.id] && e.done[ex.id][i]) }); });
+  return out;
+}
+const volume = (sets) => sets.reduce((s, x) => s + (x.done ? x.ex.kg * x.ex.reps : 0), 0);
+
+/* ---------- drawings ---------- */
+const OBJ = {
+  bench: '<ellipse cx="28" cy="48" rx="20" ry="2.5" fill="#000" opacity=".35"/><rect x="13" y="12" width="3.5" height="35" rx="1.5" fill="url(#gSh)"/><rect x="39.5" y="12" width="3.5" height="35" rx="1.5" fill="url(#gSh)"/><rect x="9" y="33" width="38" height="7" rx="3.5" fill="url(#gI)"/><rect x="11" y="34" width="34" height="1.5" rx=".75" fill="#fff" opacity=".18"/><rect x="4" y="17" width="48" height="3" rx="1.5" fill="url(#gS)"/><rect x="5" y="10" width="5" height="17" rx="2" fill="url(#gP)"/><rect x="46" y="10" width="5" height="17" rx="2" fill="url(#gP)"/>',
+  barbell: '<ellipse cx="28" cy="48" rx="19" ry="2.5" fill="#000" opacity=".35"/><g transform="rotate(-24 28 28)"><rect x="2" y="26.5" width="52" height="3" rx="1.5" fill="url(#gS)"/><rect x="22" y="26.5" width="12" height="3" fill="url(#kn)"/><rect x="8" y="14" width="5.5" height="28" rx="2.5" fill="url(#gP)"/><rect x="14.5" y="18" width="4" height="20" rx="2" fill="url(#gP2)"/><rect x="42.5" y="14" width="5.5" height="28" rx="2.5" fill="url(#gP)"/><rect x="37.5" y="18" width="4" height="20" rx="2" fill="url(#gP2)"/></g>',
+  dumbbell: '<ellipse cx="28" cy="46" rx="18" ry="2.5" fill="#000" opacity=".35"/><g transform="rotate(18 28 28)"><rect x="18" y="25.5" width="20" height="5" rx="2" fill="url(#gS)"/><rect x="22" y="25.5" width="12" height="5" fill="url(#kn)"/><path d="M7 21l3-4h7l3 4v14l-3 4h-7l-3-4z" fill="url(#gI)"/><path d="M36 21l3-4h7l3 4v14l-3 4h-7l-3-4z" fill="url(#gI)"/><path d="M10 18.500h7M39 18.500h7" stroke="#fff" stroke-opacity=".3" stroke-width="1.5" stroke-linecap="round"/><rect x="11" y="25" width="5" height="6" rx="1" fill="url(#gA)"/><rect x="40" y="25" width="5" height="6" rx="1" fill="url(#gA)"/></g>',
+  cable: '<rect x="10" y="7" width="36" height="4" rx="2" fill="url(#gI)"/><circle cx="28" cy="17" r="8" fill="url(#gI)"/><circle cx="28" cy="17" r="5.5" fill="none" stroke="url(#gS)" stroke-width="2"/><circle cx="28" cy="17" r="1.8" fill="#C9CED6"/><path d="M36 17v14" stroke="#C9CED6" stroke-width="1.5"/><path d="M20 17v-6" stroke="#C9CED6" stroke-width="1.5"/><path d="M36 31l-7 9h14z" fill="none" stroke="url(#gS)" stroke-width="2" stroke-linejoin="round"/><rect x="27" y="39" width="18" height="6" rx="3" fill="url(#gA)"/><rect x="29" y="40" width="14" height="1.5" rx=".75" fill="#fff" opacity=".35"/>',
+  stack: '<ellipse cx="28" cy="49" rx="17" ry="2.5" fill="#000" opacity=".35"/><rect x="26.5" y="6" width="3" height="42" rx="1.5" fill="url(#gSh)"/><g fill="url(#gI)"><rect x="14" y="14" width="28" height="6" rx="1.5"/><rect x="14" y="21.5" width="28" height="6" rx="1.5"/><rect x="14" y="36.5" width="28" height="6" rx="1.5"/><rect x="14" y="44" width="28" height="4" rx="1.5"/></g><rect x="14" y="29" width="28" height="6" rx="1.5" fill="url(#gA)"/><path d="M16 15.200h24M16 22.700h24M16 30.200h24M16 37.700h24" stroke="#fff" stroke-opacity=".2" stroke-width="1"/><rect x="38" y="30.5" width="9" height="3" rx="1.5" fill="#C9CED6"/><circle cx="47" cy="32" r="2.5" fill="#F4F1EA"/>',
+  kettle: '<ellipse cx="28" cy="48" rx="15" ry="2.5" fill="#000" opacity=".35"/><path d="M19 24c-3-8 1-15 9-15s12 7 9 15" fill="none" stroke="url(#gS)" stroke-width="4" stroke-linecap="round"/><circle cx="28" cy="34" r="14" fill="url(#gI)"/><path d="M18 28c2-4 6-6 10-6" stroke="#fff" stroke-opacity=".3" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="28" cy="35" r="6" fill="url(#gA)"/><circle cx="28" cy="35" r="2" fill="#1B0A03" opacity=".5"/>',
+  plate: '<ellipse cx="28" cy="49" rx="17" ry="2.5" fill="#000" opacity=".35"/><rect x="3" y="26.5" width="50" height="3" rx="1.5" fill="url(#gS)"/><circle cx="28" cy="28" r="20" fill="url(#gA)"/><circle cx="28" cy="28" r="14" fill="none" stroke="#1B0A03" stroke-opacity=".3" stroke-width="1.5"/><circle cx="28" cy="28" r="7" fill="url(#gI)"/><circle cx="28" cy="28" r="2.5" fill="#C9CED6"/><path d="M13 20c3-6 9-9 15-9" stroke="#fff" stroke-opacity=".4" stroke-width="2" stroke-linecap="round" fill="none"/>'
+};
+const thumb = (k) => '<svg class="thumb" viewBox="0 0 56 56" aria-hidden="true">' + OBJ[k] + '</svg>';
+
+// The bar: one plate per set, loaded from the collars outwards, alternating sides
+function barSVG(sets, popIndex) {
+  const W = 340, cy = 70, cL = 114, cR = 226;
+  const per = Math.max(1, Math.ceil(sets.length / 2));
+  const pitch = Math.min(12, 104 / per), pw = pitch - 2.5;
+  const kgs = sets.map((s) => s.ex.kg), lo = Math.min(...kgs), hi = Math.max(...kgs);
+  const firstOpen = sets.findIndex((s) => !s.done);
+  let plates = '';
+  sets.forEach((s, n) => {
+    const k = Math.floor(n / 2), left = n % 2 === 0;
+    const h = 62 + 62 * (hi === lo ? 1 : Math.sqrt((s.ex.kg - lo) / (hi - lo)));
+    const x = left ? cL - 1.5 - (k + 1) * pitch + 1.25 : cR + 1.5 + k * pitch + 1.25;
+    const y = cy - h / 2;
+    if (s.done) {
+      plates += '<g class="plate' + (n === popIndex ? ' pop' : '') + '"><rect x="' + x + '" y="' + y + '" width="' + pw + '" height="' + h + '" rx="3" fill="url(#' + (s.xi % 2 ? 'gP2' : 'gP') + ')"/>' +
+        '<rect x="' + (x + 1.4) + '" y="' + (y + 5) + '" width="1.4" height="' + (h - 10) + '" rx=".7" fill="#fff" opacity=".4"/></g>';
+    } else if (n === firstOpen) {
+      plates += '<rect x="' + x + '" y="' + y + '" width="' + pw + '" height="' + h + '" rx="3" fill="rgba(244,241,234,.1)" stroke="#F4F1EA" stroke-width="1.5"/>';
+    } else {
+      plates += '<rect x="' + x + '" y="' + y + '" width="' + pw + '" height="' + h + '" rx="3" fill="rgba(255,255,255,.025)" stroke="rgba(255,255,255,.34)" stroke-width="1" stroke-dasharray="3 3"/>';
+    }
+  });
+  const done = sets.filter((s) => s.done).length;
+  return '<svg viewBox="0 0 ' + W + ' 146" role="img" aria-label="Barbell with ' + done + ' of ' + sets.length + ' plates loaded">' +
+    '<ellipse cx="170" cy="140" rx="150" ry="4" fill="#000" opacity=".45"/>' +
+    '<rect x="2" y="' + (cy - 4.5) + '" width="336" height="9" rx="3" fill="url(#gS)"/>' +
+    '<rect x="' + (cL + 4) + '" y="' + (cy - 3) + '" width="' + (cR - cL - 8) + '" height="6" fill="url(#gS)"/>' +
+    '<rect x="' + (cL + 4) + '" y="' + (cy - 4.5) + '" width="' + (cR - cL - 8) + '" height="1.5" fill="#17191D"/><rect x="' + (cL + 4) + '" y="' + (cy + 3) + '" width="' + (cR - cL - 8) + '" height="1.5" fill="#17191D"/>' +
+    '<rect x="' + (cL + 14) + '" y="' + (cy - 3) + '" width="30" height="6" fill="url(#kn)"/><rect x="' + (cR - 44) + '" y="' + (cy - 3) + '" width="30" height="6" fill="url(#kn)"/>' +
+    plates +
+    '<rect x="' + (cL - 3) + '" y="' + (cy - 17) + '" width="7" height="34" rx="2.5" fill="url(#gSh)"/><rect x="' + (cR - 4) + '" y="' + (cy - 17) + '" width="7" height="34" rx="2.5" fill="url(#gSh)"/>' +
+    '</svg>';
+}
+
+/* ---------- render ---------- */
+let pop = null; // {kind:'load', n} flat index of the set just ticked
+
+function renderHero() {
+  const wId = todayWorkoutId();
+  const dateStr = now.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+  const el = $('#today');
+  if (!wId) {
+    const nx = nextPlanned();
+    el.innerHTML = '<div class="hero-head"><div><p class="label">' + dateStr + '</p><h1>Rest day</h1></div><span class="pill">Recover</span></div>' +
+      '<div class="bar-wrap">' + barSVG([], -1) + '</div>' +
+      '<p style="font-size:14px;color:var(--ink-2)">The bar stays empty today. Next up is ' + WORKOUTS[nx.id].name.toLowerCase() + ' on ' + nx.day + '.</p>';
+    return;
+  }
+  const w = WORKOUTS[wId], sets = setsFor(wId, entry(todayKey));
+  const done = sets.filter((s) => s.done).length, total = sets.length, all = done === total;
+  const exDone = w.ex.filter((e) => sets.filter((s) => s.ex === e).every((s) => s.done)).length;
+  const nxt = sets.find((s) => !s.done);
+  const full = volume(sets.map((s) => ({ ...s, done: true })));
+  el.innerHTML =
+    '<div class="hero-head"><div><p class="label">' + dateStr + '</p><h1>' + w.name + '</h1><p class="focus">' + w.focus + '</p></div>' +
+    (all ? '<span class="pill done">' + CHECK + 'Racked</span>' : '<span class="pill">' + (done ? 'In progress' : 'Not started') + '</span>') + '</div>' +
+    '<div class="count"><span class="num big">' + done + '</span><span class="of"><b>/ ' + total + '</b><span class="label">sets loaded</span></span></div>' +
+    '<div class="bar-wrap' + (all && pop ? ' full' : '') + '">' + barSVG(sets, pop ? pop.n : -1) + '</div>' +
+    '<div class="hero-stats">' +
+      '<div><b class="num">' + fmtKg(volume(sets)) + '<small>kg</small></b><span class="label">Lifted</span></div>' +
+      '<div><b class="num">' + fmtKg(full - volume(sets)) + '<small>kg</small></b><span class="label">To go</span></div>' +
+      '<div><b class="num">' + exDone + '<small>of ' + w.ex.length + '</small></b><span class="label">Exercises</span></div>' +
+    '</div>' +
+    (nxt ? '<button class="next" id="next" type="button"><span class="ring num">' + nxt.ex.reps + '</span><span class="t"><b>' + nxt.ex.name + '</b><span>Up next · set ' + (nxt.i + 1) + ' of ' + nxt.ex.sets + ' · ' + nxt.ex.reps + ' × ' + nxt.ex.kg + ' kg</span></span>' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>'
+     : '<p style="margin-top:16px;font-size:14px;color:var(--ink-2)">Bar loaded. ' + total + ' sets and ' + fmtKg(full) + ' kg moved today.</p>');
+  const nb = $('#next');
+  if (nb) nb.onclick = () => { const b = document.querySelector('.set.up'); if (b) { b.scrollIntoView({ block: 'center', behavior: 'smooth' }); b.focus({ preventScroll: true }); } };
+}
+
+function renderList() {
+  const wId = todayWorkoutId(), list = $('#list');
+  if (!wId) {
+    const nx = nextPlanned();
+    $('#secmeta').textContent = 'Nothing planned';
+    list.innerHTML = '<div class="rest" style="grid-column:1/-1"><svg viewBox="0 0 56 56" aria-hidden="true">' + OBJ.plate + '</svg><h3>Plates are racked</h3><p>Rest is part of the plan. If you feel like training anyway, pull ' + nx.day + '’s session forward.</p>' +
+      '<button class="btn" id="anyway" type="button">Start ' + WORKOUTS[nx.id].name.toLowerCase() + '</button></div>';
+    $('#anyway').onclick = () => { store.log[todayKey] = { w: nx.id, done: {} }; save(); renderAll(); };
+    return;
+  }
+  const w = WORKOUTS[wId], sets = setsFor(wId, entry(todayKey));
+  const firstOpen = sets.findIndex((s) => !s.done);
+  $('#secmeta').textContent = w.ex.length + ' exercises · tap to tick';
+  let n = 0;
+  list.innerHTML = w.ex.map((ex) => {
+    const mine = sets.filter((s) => s.ex === ex), d = mine.filter((s) => s.done).length;
+    const btns = mine.map((s) => {
+      const idx = n++;
+      return '<button type="button" class="set' + (idx === firstOpen ? ' up' : '') + (pop && pop.n === idx ? ' pop' : '') + '" data-n="' + idx + '" data-ex="' + ex.id + '" data-i="' + s.i + '" aria-pressed="' + s.done + '" aria-label="' + ex.name + ', set ' + (s.i + 1) + ': ' + ex.reps + ' reps at ' + ex.kg + ' kg">' +
+        '<span class="disc num"><span>' + ex.reps + '</span>' + CHECK + '</span><small>Set ' + (s.i + 1) + '</small></button>';
+    }).join('');
+    return '<article class="ex' + (d === ex.sets ? ' complete' : '') + (mine.some((s) => sets.indexOf(s) === firstOpen) ? ' current' : '') + '">' +
+      '<div class="ex-head">' + thumb(ex.obj) + '<div class="ex-t"><h3>' + ex.name + '</h3><p><b>' + ex.sets + ' × ' + ex.reps + '</b> · ' + ex.kg + ' kg</p></div>' +
+      '<span class="tally num" aria-label="' + d + ' of ' + ex.sets + ' sets done"><b>' + d + '</b>/' + ex.sets + '</span></div>' +
+      '<div class="sets">' + btns + '</div></article>';
+  }).join('');
+}
+
+function renderWeek() {
+  const days = weekDates.map((date, i) => {
+    const e = entry(date), wId = (e && e.w) || PLAN[i];
+    const sets = wId ? setsFor(wId, e) : [];
+    return { i, date, wId, sets, done: sets.filter((s) => s.done).length, past: i < dow, today: i === dow };
+  });
+  const goal = PLAN.filter(Boolean).length;
+  const sessions = days.filter((d) => d.today ? d.sets.length && d.done === d.sets.length : d.done > 0).length;
+  const totalSets = days.reduce((s, d) => s + d.done, 0), plannedSets = days.reduce((s, d) => s + d.sets.length, 0);
+  const vol = days.reduce((s, d) => s + volume(d.sets), 0);
+  const hasSample = weekDates.some((d) => entry(d) && entry(d).sample);
+  const maxKg = 140;
+  const trees = days.map((d) => {
+    const plates = d.sets.map((s) => {
+      const wdt = 52 + 48 * Math.sqrt(Math.min(1, s.ex.kg / maxKg));
+      return '<i class="' + (s.done ? (s.xi % 2 ? 'alt' : '') : 'ghost') + '" style="width:' + wdt.toFixed(0) + '%"></i>';
+    }).join('');
+    const label = d.wId ? { push: 'Push', pull: 'Pull', legs: 'Legs' }[d.wId] : 'Rest';
+    return '<div class="tree' + (d.today ? ' today' : '') + '"><span class="v ' + (d.wId ? 'num' : 'muted') + '">' + (d.wId ? d.done : '–') + '</span>' +
+      '<div class="stack' + (d.wId ? '' : ' off') + '">' + plates + '</div><span class="d">' + DAYS[d.i] + '</span><span class="n">' + label + '</span></div>';
+  }).join('');
+  const summary = days.map((d) => DAYNAMES[d.i] + ': ' + (d.wId ? d.done + ' of ' + d.sets.length + ' sets' : 'rest')).join(', ');
+  $('#week').innerHTML =
+    '<div class="week-head"><div><p class="label">' + new Date(weekDates[0] + 'T12:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) + ' – ' + new Date(weekDates[6] + 'T12:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) + '</p><h2>This week</h2></div>' +
+    '<div class="sess"><b class="num' + (sessions >= goal ? ' full' : '') + '">' + sessions + '<em> / ' + goal + '</em></b><p class="label">Sessions</p><div class="pips" aria-hidden="true">' + Array.from({ length: goal }, (_, k) => '<i class="' + (k < sessions ? 'on' : '') + '"></i>').join('') + '</div></div></div>' +
+    '<div class="week-body"><div><p class="label cap">Sets per day</p><div class="trees" role="img" aria-label="Sets completed per day. ' + summary + '">' + trees + '</div>' +
+    '<div class="legend"><span><i></i>Set done</span><span><i class="g"></i>Planned</span></div></div>' +
+    '<div class="tiles">' +
+      '<div class="tile"><span class="label">Sets</span><b class="num">' + totalSets + '<small>of ' + plannedSets + '</small></b><div class="meter"><i style="width:' + (plannedSets ? totalSets / plannedSets * 100 : 0) + '%"></i></div></div>' +
+      '<div class="tile"><span class="label">Volume</span><b class="num">' + (vol / 1000).toFixed(1) + '<small>tonnes</small></b><p class="sub">' + (sessions ? (vol / sessions / 1000).toFixed(1) + ' t per session' : 'No sessions yet') + '</p></div>' +
+    '</div>' +
+    '</div>' + (hasSample ? '<div class="note"><span>Showing a sample week to start.</span><button type="button" id="clear">Clear sample</button></div>' : '');
+  const c = $('#clear');
+  if (c) c.onclick = () => { weekDates.forEach((d) => { if (entry(d) && entry(d).sample) delete store.log[d]; }); save(); renderWeek(); };
+  const wn = (() => { const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())); d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7)); return Math.ceil(((d - Date.UTC(d.getUTCFullYear(), 0, 1)) / 864e5 + 1) / 7); })();
+  $('#wk').innerHTML = '<i></i>Week ' + wn;
+}
+
+function renderAll() { renderHero(); renderList(); renderWeek(); }
+
+$('#list').addEventListener('click', (ev) => {
+  const b = ev.target.closest('.set'); if (!b) return;
+  const wId = todayWorkoutId(), e = todayEntry(true), ex = WORKOUTS[wId].ex.find((x) => x.id === b.dataset.ex), i = +b.dataset.i;
+  const arr = e.done[ex.id] = e.done[ex.id] || Array(ex.sets).fill(0);
+  arr[i] = arr[i] ? 0 : 1;
+  save();
+  pop = arr[i] ? { n: +b.dataset.n } : null;
+  if (arr[i] && navigator.vibrate) navigator.vibrate(12);
+  renderAll();
+  pop = null;
+  const again = document.querySelector('.set[data-n="' + b.dataset.n + '"]');
+  if (again) again.focus({ preventScroll: true });
+});
+
+renderAll();
+
+// tab bar follows scroll
+const tabs = document.querySelectorAll('.tabs a');
+const setTab = (id) => tabs.forEach((a) => a.setAttribute('aria-current', String(a.dataset.tab === id)));
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver((es) => es.forEach((e) => setTab(e.isIntersecting ? 'week' : 'today')), { rootMargin: '-45% 0px -45% 0px' }).observe($('#week'));
+}
+})();
+</script>
+</body>
+</html>

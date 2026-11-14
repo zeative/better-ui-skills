@@ -1,0 +1,19 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-7/workout-app/with_skill/outputs/index.html
+Rendered at 375px (page height 2672px), 768px (page height 2241px), 1440px (page height 1349px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  14px  16px  20px  28px  44px
+  Families     Inter, Barlow Condensed
+  Weights      400, 500, 600, 700
+  Text colours #8a8f9a #f4f1ea #b0b4bc #4a4d54 #131416
+  Fills        #282c33 #16181c #1d2025 #131416 #f4f1ea #2b2f36
+  Radii        3.5px×68  50%×19  24px×8  999px×3  16px×3  3px×2
+  Shadows      10 distinct
+  Visuals      9 large graphics, 2 icons, 11 surfaces; largest graphic in the first screen 1056×494px
+  Interaction  20 interactive elements; 2 :hover rules, 3 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 10 different box-shadows. Use a scale of four or five levels, not one per component.
+
+This report cannot judge art direction, composition or how good the visuals are. Open the screenshots and score them with references/critique.md.
