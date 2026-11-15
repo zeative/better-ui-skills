@@ -45,7 +45,7 @@ Score each 1 to 10 against the bar.
 |---|---|---|---|
 | **Professional** | Default components or obvious template | Clean but missing some standard pieces or finish | Indistinguishable from a shipped product by a good team |
 | **Natural** | Themed, decorative or costume-like; or lifeless | Mostly conventional with one odd choice | Nothing forced; every choice is what a real product would do |
-| **Fit** | A redesign that dropped the product's identity or density; a pro data tool dressed as a consumer dashboard (gradient hero, glow, sparkline tiles, letter-badge logos) | Mostly right, a few template habits | Recognisably the same product, as dense or denser, cleaner and more consistent |
+| **Fit** | A redesign that dropped the product's identity or density; a pro data tool dressed as a consumer dashboard (gradient hero, glow, sparkline tiles, letter-badge logos), or its main table boxed in a padded card so it shows less than the original | Mostly right, a few template habits | Recognisably the same product, as dense or denser, cleaner and more consistent |
 | **Structure** | Missing the standard anatomy (no header, no nav, no summary) | Standard anatomy, some parts thin | Complete, familiar anatomy, clear first/second/third thing |
 | **Visual system** | Mixed fonts, sizes and colours | Mostly consistent | One font, compact scale, one brand colour, consistent radii, shadows and icons |
 | **Content** | Placeholder or stiff | Plausible | Specific, realistic, plain, well-fitted text |

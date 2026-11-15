@@ -10,7 +10,7 @@ A dashboard or admin screen lives in an app shell, on a tinted canvas:
 
 - **Sidebar:** the wordmark with a glyph, grouped navigation items each with an icon, a clear active state (filled pill or accent bar plus tint), counts where useful, and a user or workspace card with an avatar at the bottom. A dark or tinted sidebar often anchors the composition. Full height.
 - **Top bar:** page title with a date or breadcrumb, a search field with a key hint, a date-range or filter control, a notifications button, a primary action, an avatar.
-- **Canvas:** the tinted ground, with all content in cards arranged on a grid (12 columns works), with consistent gaps.
+- **Canvas:** the tinted ground, with all content in cards arranged on a grid (12 columns works), with consistent gaps. (Professional data tools are the exception: their main data surface is flush and edge to edge, see below.)
 
 Navigation items for areas that are not built are part of the picture, but should not pretend: give them hover states and keep the current page marked. On phones the sidebar becomes a bottom tab bar or a menu.
 
@@ -22,7 +22,9 @@ Design for the question the person opens this screen to answer. A dashboard is t
 
 Trading terminals, market data sites, screeners, analytics workbenches, ops consoles, logs, developer tools. Their users are experts who scan, compare and act, often for hours. The best of them (Bloomberg-style terminals, TradingView, Linear, Datadog, Vercel's dashboard) look good because they are **precise, quiet and dense**, not because they are decorated. Everything above about hero modules, ten modules, colourful tiles and imagery is for overview dashboards of business tools; here it produces a template.
 
-- **Density first.** Keep at least as many rows, columns and figures per screen as the product had. Rows 28 to 36px, table text 12 to 13px, panels separated by hairlines or 1px gaps rather than floating rounded cards with big gaps. Whitespace is spent on alignment, not padding.
+- **Density first.** Keep at least as many rows, columns and figures per screen as the product had. Rows 26 to 32px, table text 12 to 13px. Whitespace is spent on alignment, not padding.
+- **The data runs edge to edge.** The main table, chart or heatmap fills the full width and height of the content area: no card around it, no border, no rounded corners, no outer margin or gap between it and the sidebar or header. Every pixel of padding around a table is a column you lose. Panels sit flush against each other, divided by a single 1px line, like a terminal layout, not floating cards on a canvas. Cards and gaps are for overview pages with a few unrelated modules, never for a screen whose job is one big data set.
+- **Toolbars stay flat.** Tabs and filter presets above a table are plain text items with an active underline or a subtle filled background, in one compact row (28 to 32px); not a row of bordered pill chips with counts. A header is one line: title, context, controls.
 - **Tables and lists are the main surface.** Right-aligned tabular or mono figures, sticky headers, sortable columns, compact filter chips. No thumbnails: a ticker or symbol is plain text in strong ink, optionally with the real logo if the product already has one. Never invent letter-badge "logos" for companies, coins or tickers.
 - **Colour means direction or state only.** Green and red for up and down (in the market's convention), one brand accent for selection and focus, everything else neutral. No tinted icon chips, no per-tile hues, no gradient cards, no glows.
 - **One look across the product, dark or light as the product already is.** Flat surfaces in two or three close greys, 4 to 8px radius, no shadows on a dark canvas.
