@@ -1,0 +1,21 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-9/finance-app/with_skill/outputs/index.html
+Rendered at 375px (page height 2445px), 768px (page height 1664px), 1440px (page height 1333px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  13px  15px  21.6px  22px  43.2505px  48px  102.977px
+  Families     Onest, Fraunces
+  Weights      400, 500, 600
+  Text colours #0e1f1b #5c726c #435a54 #4a5750 #f5f0e3 #c9d9d2 #b5300f
+  Fills        #ffffff #fbe4dd
+  Radii        50% 44%×60  50%×13  999px×7  16px×5  22px×3  30px×1  14px×1  3px×1
+  Shadows      20 distinct
+  Visuals      4 large graphics, 50 icons, 10 surfaces; largest graphic in the first screen 727×1121px
+  Interaction  20 interactive elements; 5 :hover rules, 2 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 8 different corner radii (50% 44%×60, 50%×13, 999px×7, 16px×5, 22px×3, 30px×1, 14px×1, 3px×1). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
+  • 20 different box-shadows. Use a scale of four or five levels, not one per component.
+  • 2 short text(s) wrap leaving a stub on the last line at 768px: div#fig.fig "$8,412.60"; p "Dining is $28.00 over its limit.". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+
+This report cannot judge art direction, composition or how good the visuals are. Open the screenshots and score them with references/critique.md.
