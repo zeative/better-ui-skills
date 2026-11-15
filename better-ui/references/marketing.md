@@ -22,6 +22,8 @@ The first screen is the shot. It needs all of these:
 
 A hero without a detailed product visual is the single most common reason a landing page looks cheap.
 
+**Avoid the stock AI hero recipe.** Generated landing pages all share one hero: two blurred colour blobs behind the copy, a "New · feature" pill above a headline whose second line is grey or in the brand colour, three checkmark reassurances under the buttons, an avatar stack with five stars, and a browser-chrome mock with a toast. Each piece is fine on its own; all of them together read as a template. Use at most two of them, and give the hero one decision of its own instead: a strong single colour field behind the product, a product shot cropped and angled with intent, a real piece of the product's content as the headline's proof (an invoice, a receipt, a schedule), or an unusual but legible composition such as the product filling the right half edge to edge. Backgrounds behind a hero are a solid field, a subtle grid, or one soft wash, not scattered blobs.
+
 ## The sections
 
 Use what the argument needs, and give each a visual idea. A strong page usually has five to eight of these:

@@ -349,3 +349,23 @@ flags now rest on two things that are not design: the date shown matching the ju
 sample numbers that add up. Real products show today's date and consistent figures, so the skill
 should not change them; the judge brief now says that dates and arithmetic are not evidence. The
 finance rule is clarified: a chip goes only on a card that stands for one account.
+
+**Scoreboard: the latest build of every case, one line-up each, with the corrected judge brief**
+(dates and arithmetic are not evidence):
+
+| Case | Build | Rank of 9 | Flag |
+|---|---|---|---|
+| Habit tracker | D.7 | **1st** | unlikely |
+| Clinic dashboard (held-out) | D.8 | **1st** | unlikely |
+| Workout app | D.7 | **1st** | possible (two frames showed the same screen) |
+| Warungku POS landing (held-out) | D.8 | **1st** | possible ("suspiciously frictionless") |
+| Store dashboard | D.8 | **1st** | possible ("stock Tailwind/Lucide look") |
+| SaaS landing page | D.8 | 4th | likely ("the stock AI SaaS hero recipe") |
+| Finance app | D.8 | 7th | possible (initials on real merchants, no point of view) |
+
+Five of seven cases, including both held-out prompts, rank first among eight popular Dribbble
+shots of their category, two of them judged genuine outright. **Method D.9** targets the last two:
+marketing.md names the stock AI hero recipe (blur blobs, "New" pill, two-tone headline, three
+checkmarks, star-rated avatar stack, browser mock with toast) and allows at most two of its parts;
+finance gets one rendered 3D object with presence on the home screen, and transaction rows go back
+to category line icons.

@@ -84,6 +84,7 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
 
 **Each category has a signature moment** that popular shots almost always include. Build the one for your product as the summary card or right beneath it, drawn with care:
 - *Finance and banking (personal budgeting too):* a designed payment card. If it stands for one account, it can be the balance card itself (that account's balance, its masked number, a chip). If the top figure is a total across accounts, keep the total card plain and show the cards as a small stack or carousel beneath it; never put a chip on a total (brand gradient or deep solid colour, a subtle pattern or large soft shapes, chip, network mark drawn as simple circles, masked number, name), often slightly stacked over a second card; quick actions as round buttons below it; a category breakdown drawn as something other than a default donut (proportional bubbles, a segmented bar with labels, stacked pills).
+- *Finance, an object with presence:* the popular finance shots almost always include one rendered object (a 3D coin, card, bank, piggy bank or plant) on the home screen or a savings-goal card. Use one Fluent 3D emoji at 96 to 140px (`🪙`, `💳`, `🏦`, `🐷`, `🌱`), placed in the summary area or a goal card, not as list icons.
 - *Fitness and workout:* a large progress visual for today (ring or arc with the key figure), a weekly bar chart with the current bar highlighted, and an activity card with a small route map or a session timeline.
 - *Habits and wellness:* a week strip with per-day completion rings, colour-coded habit rows, and a streak or consistency chart.
 - *Dashboards:* the KPI row and one large chart with a highlighted point and tooltip.
@@ -94,7 +95,7 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
 
 - **Open with data.** Ship believable sample data in a mid-use state (some done, some pending, a week of history) so the first view is full. Offer "Clear sample data" in a settings screen or menu; never put a sample-data note on the main screens. Design the empty state too.
 - **Keep it calm.** One summary card, then white cards. Three to five things on the first screen, not ten. No module repeats information another already shows.
-- **Merchants and people get avatars, not category tiles.** A transaction row leads with the merchant's mark: a circle with its initial or a simple monogram in a colour typical of that merchant, or a person's avatar for transfers. Category icons belong in the category breakdown, not on every row.
+- **Transaction rows lead with a clear mark:** a line icon for the category in a soft chip, or a person's avatar for transfers. Keep one style for every row.
 - **Every item has its own icon.** Two different exercises, categories or accounts never share the same glyph; draw or pick a distinct one for each.
 - **Lists stay compact.** One row per item; details (a full history, settings) belong in a detail view or a bottom sheet opened by tapping the row.
 - **The main action is obvious.** The daily action (tick, log, add) is a clear round control on each row, with a satisfying checked state (fill with the brand or item colour, a check icon, a short scale animation). Completed items stay readable; do not grey them out heavily.
