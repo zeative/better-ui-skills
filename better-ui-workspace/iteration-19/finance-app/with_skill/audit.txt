@@ -1,0 +1,23 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-19/finance-app/with_skill/outputs/index.html
+Rendered at 375px (page height 1826px), 768px (page height 1278px), 1440px (page height 1432px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  13px  14px  15px  16px  18px  20px  22px  24px  30px  40px
+  Families     Urbanist
+  Weights      400, 500, 600, 700
+  Text colours #0d0d0d #5f5f5f #ffffff #bbbbbb #4a3f42 #41463b #9e9e9e #524f5a (+11 more)
+  Fills        #ffffff #0d0d0d #ffdde5 #ffe4d2 #d9ecff #ffd6e0 #f6f6f6 #ddf2c4 (+10 more)
+  Radii        12px×21  999px×9  20px×7  50%×4  4px×2  10px×1  16px×1  28px×1  8px×1
+  Shadows      5 distinct
+  Visuals      4 large graphics, 35 icons, 10 surfaces; largest graphic in the first screen 646×714px
+  Interaction  18 interactive elements; 10 :hover rules, 1 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+RICHNESS — below the bar as measured; a page can pass these and still be plain, so look at the screenshots
+  • Colour is spread over 5 hue families in large fills (0°, 36°, 72°, 216°, 252°): tiles or panels each in a different tint. That reads as a pastel rainbow, not a palette. Commit to a neutral base, one dominant colour in large fields and one hot accent; give kinds of item tints of one or two hues.
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 9 different corner radii (12px×21, 999px×9, 20px×7, 50%×4, 4px×2, 10px×1, 16px×1, 28px×1, 8px×1). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
+  • Columns in different sections start at nearly, but not exactly, the same x at 1440px: 954px (div.col.stack "November budget $937 left $2,313 of ") vs 960px (label.search.desk-only "Search transactions"). Put every section on one shared grid so column edges repeat down the page.
+
+This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.
