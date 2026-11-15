@@ -11,7 +11,7 @@ const path = require('path');
 (async () => {
   const [file, out, kind = 'phone', setup] = process.argv.slice(2);
   const b = await chromium.launch();
-  const phone = kind === 'phone';
+  const phone = kind === 'phone'; const page = kind === 'page';
   const ctx = await b.newContext(phone
     ? { viewport: { width: 375, height: 731 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }
     : { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
@@ -78,12 +78,17 @@ const path = require('path');
     const after = await overlays();
     if (after > before && shots.length >= 3) { shots[2] = (await p.screenshot()).toString('base64'); tops[2] = await topColour(); }
     else if (after > before) { shots.push((await p.screenshot()).toString('base64')); tops.push(await topColour()); }
+  } else if (page) {
+    shots.push((await p.screenshot({ fullPage: true })).toString('base64'));
   } else {
     shots.push((await p.screenshot()).toString('base64'));
   }
   const sp = await b.newPage({ viewport: { width: 1200, height: 900 }, deviceScaleFactor: 1 });
   const img = (s, style) => `<img src="data:image/png;base64,${s}" style="${style}">`;
-  const html = phone
+  const pageHtml = `<body style="margin:0;height:900px;background:${backdrop};display:flex;align-items:flex-start;justify-content:center;gap:36px;padding-top:56px;box-sizing:border-box">
+      <div style="width:520px;height:900px;border-radius:18px 18px 0 0;overflow:hidden;box-shadow:0 30px 70px -25px rgba(0,0,0,.35);background:#fff">${img(shots[0], 'width:520px;display:block')}</div>
+      <div style="width:520px;height:900px;border-radius:18px 18px 0 0;overflow:hidden;box-shadow:0 30px 70px -25px rgba(0,0,0,.35);background:#fff;margin-top:90px"><div style="margin-top:-${Math.round(0.95 * 900 * 1440 / 520 / (1440 / 520))}px">${img(shots[0], 'width:520px;display:block')}</div></div></body>`;
+  const html = page ? pageHtml : phone
     ? `<body style="margin:0;height:900px;background:${backdrop};display:flex;align-items:center;justify-content:center;gap:44px;font-family:-apple-system,'SF Pro Text','Inter',sans-serif">${shots.map((s, i) => `
       <div style="position:relative;width:300px;height:650px;border-radius:50px;background:linear-gradient(145deg,#4a4a50,#1a1a1d 30%,#0e0e10 70%,#3c3c42);padding:11px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),inset 0 0 0 3px #0b0b0d,0 50px 80px -30px rgba(0,0,0,.5),0 12px 24px -10px rgba(0,0,0,.3)">
         <i style="position:absolute;left:-3px;top:120px;width:3px;height:56px;border-radius:2px;background:#2a2a2d"></i><i style="position:absolute;right:-3px;top:150px;width:3px;height:80px;border-radius:2px;background:#2a2a2d"></i>
