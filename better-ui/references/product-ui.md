@@ -86,7 +86,7 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
 
 **Rules:**
 
-- **Open with data.** Ship believable sample data in a mid-use state (some done, some pending, a week of history) so the first view is full. Offer "Clear sample data" in settings or a menu, not as a banner across the main screen. Design the empty state too.
+- **Open with data.** Ship believable sample data in a mid-use state (some done, some pending, a week of history) so the first view is full. Offer "Clear sample data" in a settings screen or menu; never put a sample-data note on the main screens. Design the empty state too.
 - **Keep it calm.** One summary card, then white cards. Three to five things on the first screen, not ten. No module repeats information another already shows.
 - **Lists stay compact.** One row per item; details (a full history, settings) belong in a detail view or a bottom sheet opened by tapping the row.
 - **The main action is obvious.** The daily action (tick, log, add) is a clear round control on each row, with a satisfying checked state (fill with the brand or item colour, a check icon, a short scale animation). Completed items stay readable; do not grey them out heavily.

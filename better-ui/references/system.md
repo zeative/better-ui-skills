@@ -2,11 +2,24 @@
 
 Professional interfaces get their quality from a small, strict system applied everywhere. Write these tokens as CSS custom properties at the top of the stylesheet and use nothing else.
 
-Contents: type · colour · brand colour by category · surfaces and depth · radius and spacing · icons · imagery · starting tokens
+Contents: choose a look · type · colour · brand colour by category · surfaces and depth · radius and spacing · icons · imagery · starting tokens
+
+## Choose a look
+
+A clean system with no point of view reads as a component-library template. Popular shots each have one recognisable, contemporary *look*: a palette and surface treatment, not a theme. Pick the one that suits the product and audience, and apply it consistently. These are styles, not concepts: nothing about the product's world is drawn into the interface.
+
+- **Bright and clean:** white or very light grey canvas, white cards, one saturated brand colour on the summary card, buttons and active states. The safe default for finance, productivity and admin.
+- **Soft tint:** a pale tinted canvas (lilac, periwinkle, mint or peach at 4 to 8% saturation), large white cards with generous radius (24 to 28), a black or deep brand colour for primary buttons and the tab bar, and one fresh accent (lime, coral). Common in wellness, habits and lifestyle.
+- **Colour blocks:** a light canvas where three or four cards are filled with soft colours from one family (lime, lilac, sky, peach), black text on them, one card in black. Common in fitness, habits and personal dashboards.
+- **Dark with one neon:** near-black canvas, dark grey cards, white text, one vivid accent (lime `#C6F432`, orange `#FF6A2B`, electric blue) for the hero figure, chart and primary control. Common in fitness, crypto, music.
+- **Monochrome:** black, white and greys with one small accent; strong type; crisp hairlines. Common in fintech and SaaS.
+- **Fresh gradient:** a soft blue or sky gradient behind the hero or summary card, glass-like white cards with a light blur. Common in banking and SaaS landing pages.
+
+Write the choice as one line in a comment at the top of the stylesheet ("Look: soft tint, lilac canvas, black controls, lime accent").
 
 ## Type
 
-- **One sans-serif family.** Inter, Plus Jakarta Sans, Manrope, DM Sans, Geist, Figtree, or the system stack (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`). Load from Google Fonts with `display=swap`, with the system stack as fallback. A second family only for code (a mono) or when the brand already has a display face.
+- **One sans-serif family** with a little character: Plus Jakarta Sans, Manrope, Outfit, Urbanist, Sora, DM Sans, Figtree, Onest, Geist or Inter, or the system stack (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`). Load from Google Fonts with `display=swap`, with the system stack as fallback. A second family only for code (a mono) or when the brand already has a display face.
 - **Weights 400, 500 and 600.** 700 sparingly for the largest figure. No 800/900 on UI.
 - **A compact scale.** 12 (captions, tab labels), 13, 14 (secondary text, table cells), 16 (body, row titles), 18, 20 (card titles), 24 (section and page titles), 32 (hero figures in apps and dashboards). Landing hero headlines 40 to 56px; never above 64px.
 - **Letter-spacing:** -0.01em to -0.02em on 20px and above; 0 on body; small uppercase labels are rare and lightly tracked (0.04em), not a recurring style.
@@ -53,10 +66,19 @@ Pick one that fits, then vary its exact hue so it is not a stock value:
 
 ## Imagery
 
-- **People:** avatars as small circles. Simple illustrated avatars drawn in SVG (head, hair, shoulders, flat colours) or initials on a soft tint are both normal in real products; keep one style.
-- **Products and places:** thumbnails as rounded squares; draw simple product shapes in SVG or use a tinted chip with an icon. Never a grey box.
+Popular shots always have something to look at besides text: 3D icons, avatars, product pictures, a chart. Draw on these, and keep one style per screen.
+
+- **3D icons for items** in consumer apps (habits, categories, exercises, rewards, empty states): Microsoft's Fluent 3D emoji, MIT licensed, served from a pinned CDN. Put each in a soft tinted chip, 40 to 48px, the image at about 60% of the chip. Fall back to the native emoji if the image fails:
+  ```js
+  const emoji3d = (e) => 'https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/' +
+    [...e].map((c) => c.codePointAt(0).toString(16)).join('-') + '.webp';
+  // <img src="${emoji3d('💧')}" alt="" width="28" height="28" onerror="this.replaceWith('💧')">
+  ```
+  Use the emoji's exact code points: `🏋️` is `1f3cb-fe0f`, `☕` is `2615`. A larger one (96 to 140px) makes a good empty-state or onboarding image.
+- **Avatars:** illustrated avatars from DiceBear's `notionists` or `lorelei` styles (`https://api.dicebear.com/9.x/notionists/svg?seed=<name>&backgroundColor=<hex>`), each on a different soft background, or simple SVG portraits. Initials on a tint are acceptable in dense admin tables.
+- **Products and places:** a 3D emoji (`🎧`, `👟`, `☕`, `🏠`) on a tinted rounded square works as a product thumbnail in dashboards and lists. Never a grey box.
 - **Charts:** clean and minimal (see `showpiece.md`).
-- **Illustration:** at most one simple, flat spot illustration in an empty state or onboarding. Not on the main screen of a product UI.
+- If the network may be unavailable where the page is used, keep the fallbacks: the layout must hold with native emoji and initials.
 
 ## Starting tokens
 

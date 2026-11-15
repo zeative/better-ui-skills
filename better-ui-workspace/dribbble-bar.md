@@ -208,3 +208,23 @@ summary card, a product screenshot), write plain product copy, and review agains
 pass as a real product". The finish-kit library and the dealer are removed; the illustrated
 objects and figure guidance are gone; the audit drops the checks that pushed toward decoration
 and adds checks for textures, serif display faces, extra font families and oversized type.
+
+**Method D, first builds (iteration 10).** Builds took 9 to 11 minutes and $2.6 to $2.9 each,
+about a third of Method C. Two line-ups per app, each a different shuffle:
+
+| App | Rank of 9 (two judges) | Flagged | Reasons given |
+|---|---|---|---|
+| Habit tracker | 5th, 6th | likely, likely | generic indigo-gradient template, "These are sample habits" note, today's date |
+| Finance app | 6th, 7th | likely, likely | component-library look, filler merchant names, plain identical frames, today's date |
+| Workout app | 4th, 4th | likely, likely | made-up brand and default Inter, no visual signature, today's date |
+
+Every judge marked all three professional, and none called them forced or themed: the overdesign
+is gone. What remains is "correct but no point of view". Some tells were the test's, not the
+design's (the date, identical grey presentation), so the presenter now freezes the clock to a
+neutral date, tints the backdrop with the page's brand colour and shows the add sheet as the
+third screen.
+
+**Method D.1** gives the design a point of view without a theme: choose one contemporary look
+(bright and clean, soft tint, colour blocks, dark with one neon, monochrome, fresh gradient), a
+sans with a little character, 3D icons (Fluent 3D emoji, MIT, pinned CDN, native fallback) and
+illustrated avatars; sample data that reads like real life; and no sample-data note on main screens.

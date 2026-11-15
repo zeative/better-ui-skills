@@ -32,7 +32,9 @@ Note for yourself: what the product is, who uses it and where (phone on the go, 
 - *Showcase site* (portfolio, studio, restaurant, event): imagery and type; read `references/editorial.md`.
 - *Docs or reading*: typography and calm.
 
-Then write the real content before any layout: a product name, the headline, labels, numbers, names, dates. Plain product language, the way a good team's app talks: "3 of 5 done today", "$595 left this month", "Best streak 12 days". No metaphors in the copy, no jokes, no notes that describe the interface to the viewer. Sample data is plausible, internally consistent and right for the locale.
+Then write the real content before any layout: a product name, the headline, labels, numbers, names, dates. Plain product language, the way a good team's app talks: "3 of 5 done today", "$595 left this month", "Best streak 12 days". No metaphors in the copy, no jokes, no notes that describe the interface to the viewer. Sample data is plausible, internally consistent and right for the locale, and it reads like real life: transactions from familiar kinds of merchants with ordinary names (a supermarket, a coffee chain, a streaming service, a fuel station; well-known merchant names as transaction text are fine, logos are not), people with ordinary names, habits people actually keep. Invented-sounding filler ("Northwind Studio", "Juniper Café", "Kite Mobile") gives a mock-up away.
+
+Never show a note about sample data on the main screens. Put "Clear sample data" or "Start fresh" in a settings screen or menu, and mention it in the handoff.
 
 When the brief is thin, assume specifically, build, and list your assumptions at the end. Never use real company logos, real people's names or faces, or invented claims about real results; fictional names and example figures are fine.
 
@@ -40,10 +42,11 @@ When the brief is thin, assume specifically, build, and list your assumptions at
 
 Read `references/system.md` and write its tokens at the top of the stylesheet before any component. In short:
 
+- **A look:** pick one contemporary look (bright and clean, soft tint, colour blocks, dark with one neon, monochrome, fresh gradient) to suit the product and audience. It is a palette and surface treatment, not a theme, and it is what keeps a clean system from reading as a component-library default.
 - **Type:** one sans-serif family (Inter, Plus Jakarta Sans, Manrope, DM Sans, Geist or the system UI font), weights 400/500/600, tabular figures for numbers. A compact scale: 12, 13, 14, 16, 18, 20, 24, 32, with 40 to 56 only for a landing hero. Serif or display faces only for showcase sites or when the brand already has one.
 - **Colour:** a light neutral canvas (or a near-black one for a dark app), white or slightly raised surfaces, two text greys, one brand colour chosen to fit the category, and semantic green, amber and red for status. Category colours, if needed, are soft tints used on small icon chips and chart series.
 - **Shape and depth:** one radius scale (for example 8, 12, 16, 24, full), hairline borders or a soft two-layer shadow, never both heavy. Flat and clean; no textures, grain, paper, bevels or glows behind text.
-- **Icons:** one line-icon set at one stroke width, usually inside soft tinted chips. Native emoji or 3D-style emoji are acceptable as item icons in consumer apps, used consistently.
+- **Icons and imagery:** one line-icon set at one stroke width for navigation and controls; 3D icons (Fluent 3D emoji from a pinned CDN, see `system.md`) in soft chips for items in consumer apps; illustrated avatars for people. A screen of text and line icons alone looks unfinished.
 
 ## 4. Use the conventional layout for this kind of screen
 
@@ -89,6 +92,7 @@ Tell the user briefly: what you built, the assumptions you made, and what is pla
 - **Display fonts on product UI.** A serif or condensed display face for app headings and numbers. Use the one sans family; let size and weight do the work.
 - **Clever copy.** Puns, metaphors and narrative labels ("Two to go", "postmark", "links closed"), or text that explains the design to the viewer. Write what a shipped app says.
 - **Too plain.** No brand mark, no header, no tab bar, rows of identical default cards, one colour used for everything, nothing a designer drew. Add the app chrome, a summary card, item icons and one clear visual moment.
+- **A component-library default.** Inter, grey-100 cards, an indigo gradient card, line icons: correct but with no point of view. Choose a look, a font with a little character, and 3D icons or avatars, so the screen is recognisably designed.
 - **Everything styled.** Every card a different colour or treatment, gradients on everything, five accent colours. One brand colour, quiet surfaces, colour where it means something.
 - **Oversized type.** A 96px number on a phone. Hero figures in apps are 28 to 40px; landing headlines 40 to 56px.
 - **Wireframe content.** "Item 1", lorem ipsum, a grey box labelled "chart". Real names, figures and a real chart.

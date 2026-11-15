@@ -1,0 +1,22 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-10/finance-app/with_skill/outputs/index.html
+Rendered at 375px (page height 2520px), 768px (page height 1431px), 1440px (page height 1413px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  13px  14px  15px  16px  18px  20px  22px  24px  28px  38px
+  Families     Inter
+  Weights      400, 500, 600
+  Text colours #5e6b66 #0f1a16 #ffffff #fcfdfd #fdfdfd #0e7046 #fcfcfc #08583f (+3 more)
+  Fills        #ffffff #f5f7f6 #0c7a57 #fbf0e5 #dce9f9 #e7eff9 #f7f2e4 #f0ecf8 (+11 more)
+  Radii        999px×26  12px×17  20px×4  50%×2  10px×1  24px×1
+  Shadows      7 distinct
+  Visuals      6 large graphics, 21 icons, 10 surfaces; largest graphic in the first screen 598×832px
+  Interaction  25 interactive elements; 14 :hover rules, 1 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+TOUCH — fix unless there is a reason
+  • 2 touch targets under 40px at 375px wide, e.g. button "This month" 95×34; button "Last month" 93×34
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 1 short text(s) wrap leaving a stub on the last line at 1440px: div.figure.num "$12,480.35". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+
+This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.

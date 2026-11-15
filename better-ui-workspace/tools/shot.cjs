@@ -15,12 +15,27 @@ const path = require('path');
   const ctx = await b.newContext(phone
     ? { viewport: { width: 375, height: 765 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }
     : { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+  // Freeze the clock to a neutral date: a page showing the judging day's date gives the candidate away.
+  await ctx.clock.install({ time: new Date('2025-05-14T09:41:00') });
   const p = await ctx.newPage();
   await p.goto('file://' + path.resolve(file), { waitUntil: 'networkidle' });
   if (setup) { await p.evaluate(`(async () => { ${fs.readFileSync(setup, 'utf8')}\n })()`); await p.waitForTimeout(400); }
   await p.evaluate(() => document.fonts.ready);
   await p.waitForTimeout(600);
   const shots = [];
+  // The backdrop takes a light tint of the page's brand colour, as most shots do.
+  const brand = await p.evaluate(() => {
+    const score = {};
+    for (const e of document.querySelectorAll('body *')) {
+      const c = getComputedStyle(e).backgroundColor; const m = c.match(/\d+(\.\d+)?/g); if (!m) continue;
+      const [r, g, b, a = 1] = m.map(Number); if (a < 0.9) continue;
+      const mx = Math.max(r, g, b), mn = Math.min(r, g, b); if (mx - mn < 60 || mx < 60) continue;
+      const rect = e.getBoundingClientRect(); score[`${r},${g},${b}`] = (score[`${r},${g},${b}`] || 0) + rect.width * rect.height;
+    }
+    const top = Object.entries(score).sort((x, y) => y[1] - x[1])[0]; return top ? top[0].split(',').map(Number) : null;
+  });
+  const tint = (k) => brand ? `rgb(${brand.map((v) => Math.round(v * k + 255 * (1 - k))).join(',')})` : (k > 0.1 ? '#dfe2e7' : '#eef0f3');
+  const backdrop = `linear-gradient(160deg,${tint(0.08)},${tint(0.22)})`;
   const sbg = await p.evaluate(() => { let e = document.elementFromPoint(187, 2); while (e) { const c = getComputedStyle(e).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; e = e.parentElement; } return 'rgb(255,255,255)'; });
   const [r, g, bl] = (sbg.match(/\d+/g) || [255, 255, 255]).map(Number);
   const ink = (0.299 * r + 0.587 * g + 0.114 * bl) > 140 ? '#000' : '#fff';
@@ -32,13 +47,23 @@ const path = require('path');
       await p.waitForTimeout(350);
       shots.push((await p.screenshot()).toString('base64'));
     }
+    // Real shots show different screens. Try to open the add flow for the last frame.
+    await p.evaluate(() => window.scrollTo(0, 0)); await p.waitForTimeout(250);
+    const before = await p.evaluate(() => document.body.innerText.length);
+    for (const sel of ['[aria-label*="add" i]', '[aria-label*="new" i]', '[aria-label*="log" i]', '.fab', 'button:has-text("+")', 'button:has-text("Add")', 'button:has-text("New")']) {
+      const el = p.locator(sel).filter({ visible: true }).first();
+      if (await el.count()) { try { await el.click({ timeout: 1500 }); } catch (_) { continue; } await p.waitForTimeout(700); break; }
+    }
+    const after = await p.evaluate(() => document.body.innerText.length);
+    if (after !== before && shots.length >= 3) shots[2] = (await p.screenshot()).toString('base64');
+    else if (after !== before) shots.push((await p.screenshot()).toString('base64'));
   } else {
     shots.push((await p.screenshot()).toString('base64'));
   }
   const sp = await b.newPage({ viewport: { width: 1200, height: 900 }, deviceScaleFactor: 1 });
   const img = (s, style) => `<img src="data:image/png;base64,${s}" style="${style}">`;
   const html = phone
-    ? `<body style="margin:0;height:900px;background:linear-gradient(160deg,#eef0f3,#dfe2e7);display:flex;align-items:center;justify-content:center;gap:44px;font-family:-apple-system,'SF Pro Text','Inter',sans-serif">${shots.map((s) => `
+    ? `<body style="margin:0;height:900px;background:${backdrop};display:flex;align-items:center;justify-content:center;gap:44px;font-family:-apple-system,'SF Pro Text','Inter',sans-serif">${shots.map((s) => `
       <div style="position:relative;width:300px;height:650px;border-radius:48px;background:#1d1d1f;padding:10px;box-shadow:inset 0 0 0 1.5px #3a3a3e,inset 0 0 0 4px #0c0c0e,0 40px 70px -28px rgba(0,0,0,.45),0 8px 20px -8px rgba(0,0,0,.25)">
         <i style="position:absolute;left:-3px;top:120px;width:3px;height:56px;border-radius:2px;background:#2a2a2d"></i><i style="position:absolute;right:-3px;top:150px;width:3px;height:80px;border-radius:2px;background:#2a2a2d"></i>
         <div style="position:relative;width:300px;height:650px;border-radius:39px;overflow:hidden;background:#fff">
@@ -48,7 +73,7 @@ const path = require('path');
           ${img(s, 'width:300px;height:612px;display:block;object-fit:cover;object-position:top')}
           <div style="position:absolute;left:50%;bottom:7px;width:110px;height:4px;border-radius:3px;background:${ink};opacity:.85;transform:translateX(-50%)"></div>
         </div></div>`).join('')}</body>`
-    : `<body style="margin:0;height:900px;background:#eceef1;display:flex;align-items:center;justify-content:center"><div style="width:1100px;border-radius:22px;overflow:hidden;box-shadow:0 30px 70px -25px rgba(0,0,0,.35);background:#fff">${img(shots[0], 'width:1100px;display:block')}</div></body>`;
+    : `<body style="margin:0;height:900px;background:${backdrop};display:flex;align-items:center;justify-content:center"><div style="width:1100px;border-radius:22px;overflow:hidden;box-shadow:0 30px 70px -25px rgba(0,0,0,.35);background:#fff">${img(shots[0], 'width:1100px;display:block')}</div></body>`;
   await sp.setContent(html);
   await sp.waitForFunction(() => [...document.images].every((i) => i.complete));
   await sp.screenshot({ path: out });
