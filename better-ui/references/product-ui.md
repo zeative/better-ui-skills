@@ -91,6 +91,8 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
 - **Lists stay compact.** One row per item; details (a full history, settings) belong in a detail view or a bottom sheet opened by tapping the row.
 - **The main action is obvious.** The daily action (tick, log, add) is a clear round control on each row, with a satisfying checked state (fill with the brand or item colour, a check icon, a short scale animation). Completed items stay readable; do not grey them out heavily.
 - **Adding** uses a bottom sheet or a modal with a title, fields, suggestion chips with icons, and a full-width primary button.
+- **No native-looking controls.** A browser date input with its calendar glyph, a default select arrow or a default checkbox instantly reads as an HTML page. Use chips ("Today", "Yesterday", "Pick a date"), segmented controls, a custom-styled select (`appearance: none` with your own chevron, same height and radius as the inputs) and custom checkboxes and toggles.
+- **Every tab is a real screen.** The tabs in the tab bar open designed screens (stats with a chart, a calendar, a profile or settings list), not empty placeholders, because they will be looked at.
 - **Streaks, progress and history** are shown the standard ways: a small flame or trophy icon with "12 days", a progress ring, a row of seven day dots, a monthly heatmap of small rounded squares, a weekly bar chart.
 - **On desktop, stay an app.** A centred column of 420 to 560px with a side panel for stats or a calendar, or a simple two-column layout inside a light shell with a left nav. Never a stretched phone layout and never a phone column alone in empty space.
 - **Data persists** across reloads.

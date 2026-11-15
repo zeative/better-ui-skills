@@ -47,7 +47,21 @@ const path = require('path');
       await p.waitForTimeout(350);
       shots.push((await p.screenshot()).toString('base64'));
     }
-    // Real shots show different screens. Try to open the add flow for the last frame.
+    // Real shots show different screens: use the second tab of the tab bar for the middle frame, if there is one.
+    await p.evaluate(() => window.scrollTo(0, 0)); await p.waitForTimeout(200);
+    const tabs = p.locator('nav a, nav button, [role="tablist"] [role="tab"], .tabbar a, .tabbar button, .tab-bar a, .tab-bar button, .tabs button').filter({ visible: true });
+    const nTabs = await tabs.count();
+    if (nTabs >= 3) {
+      const t0 = await p.evaluate(() => document.body.innerText);
+      try {
+        await tabs.nth(nTabs >= 4 ? 1 : nTabs - 1).click({ timeout: 1500 }); await p.waitForTimeout(600);
+        await p.evaluate(() => window.scrollTo(0, 0)); await p.waitForTimeout(250);
+        const t1 = await p.evaluate(() => document.body.innerText);
+        if (t1 !== t0) shots[1] = (await p.screenshot()).toString('base64');
+        await tabs.nth(0).click({ timeout: 1500 }); await p.waitForTimeout(500);
+      } catch (_) { /* keep the scrolled frame */ }
+    }
+    // Try to open the add flow for the last frame.
     await p.evaluate(() => window.scrollTo(0, 0)); await p.waitForTimeout(250);
     const before = await p.evaluate(() => document.body.innerText.length);
     for (const sel of ['[aria-label*="add" i]', '[aria-label*="new" i]', '[aria-label*="log" i]', '.fab', 'button:has-text("+")', 'button:has-text("Add")', 'button:has-text("New")']) {
