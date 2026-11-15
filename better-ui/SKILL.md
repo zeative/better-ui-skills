@@ -88,9 +88,12 @@ You cannot judge a design from its source. Render it:
 ```bash
 node <this-skill-dir>/scripts/audit.cjs path/to/index.html --out .ui-audit
 node <this-skill-dir>/scripts/audit.cjs http://localhost:5173/ --setup seed.js   # app with state
+node <this-skill-dir>/scripts/audit.cjs screener.html --register dense            # professional data tool
 ```
 
-The script screenshots the page at 375, 768 and 1440px and prints measured problems: overflow, contrast, focus, tap targets, clipped text, uneven gutters, near-miss alignment, awkward wraps. Fix everything under BROKEN and ACCESSIBILITY and resolve the rest. Open every screenshot part.
+The script screenshots the page at 375, 768 and 1440px and prints measured problems: overflow, contrast, focus, tap targets, clipped text, uneven gutters, near-miss alignment, awkward wraps. Fix everything under BROKEN and ACCESSIBILITY and resolve the rest. Open every screenshot part, the phone ones included.
+
+For a site with several pages, audit **every page after the last change**, not a sample, and do not hand off while any page still has a BROKEN item. If subagents build pages, each one audits its own pages, and you run the audit again on all pages at the end, because later fixes to shared CSS break pages that passed earlier. Overlapping text in a tab row or toolbar on a phone is the usual casualty: make such rows scroll sideways with `flex: none` items and `white-space: nowrap`.
 
 Then review the screenshots with `references/critique.md`. The test is the one a designer applies when scrolling Dribbble: **would this pass as a real, professionally made product, among the popular shots of its category?** If you can start a subagent (Task, Agent or similar), have a fresh one review it with the brief at the end of `critique.md` and nothing about your intentions. Fix what it flags in order, render again, and review once more with a fresh reviewer. Two rounds is usually enough; stop after three.
 

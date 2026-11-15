@@ -34,6 +34,8 @@ Trading terminals, market data sites, screeners, analytics workbenches, ops cons
 - **Data never scatters when it wraps.** A strip of stats (breadth, value traded, % above averages) is a set of label-value pairs; when the width runs out it must not flow onto ragged lines with a label on one line and its value or bar on the next. Give it a fixed structure: a grid of equal columns (label above value, each pair aligned with its neighbours), or a single row that scrolls sideways in its own container. Check every strip at 375, 768 and 1440px; a wrapped strip with uneven gaps is a bug, not a responsive layout. Drop redundant figures ("150 of 150") rather than wrapping them.
 - **Phones:** keep the data; collapse columns into two-line rows (symbol and name left, price and change right) and use horizontal scroll for wide tables inside their own container. Stat strips become a 2 or 3 column grid or a scrolling row.
 
+Audit these pages with `--register dense`: the RICHNESS notes (add cards, imagery, a showpiece) are for consumer and marketing work and would push a data tool the wrong way.
+
 Test: put a screenshot beside the real tool it competes with. If yours shows less, or looks more like a template than a terminal, it is wrong.
 
 ## Modules

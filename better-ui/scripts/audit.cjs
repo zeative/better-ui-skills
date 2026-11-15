@@ -5,11 +5,15 @@
  *
  *   node audit.cjs <file.html | http://localhost:3000/path> [--out <dir>]
  *                  [--widths 375,768,1440] [--dark] [--setup <file.js>]
- *                  [--register showcase] [--json] [--no-shots]
+ *                  [--register showcase|dense] [--json] [--no-shots]
  *
  * --register showcase is for portfolios, studios, restaurants and other sites
  * led by imagery and type, where cards, shadows and icon chips are not wanted;
  * it turns off the checks that ask for them.
+ *
+ * --register dense is for professional data tools (terminals, market data,
+ * screeners, consoles); it turns off every RICHNESS note, since those tools
+ * are judged on density and precision rather than imagery and surfaces.
  *
  * --setup runs a JS file inside the page after load and before measuring. Use
  * it to put the UI into the state you want to inspect: seed data, open a
@@ -799,7 +803,9 @@ function report(results, facts, focus, runtime, args) {
   const showcase = /^(showcase|editorial)$/.test(args.register || '');
   // checks that ask for surfaces, shadows, icons and colour fields do not apply to image-led editorial sites
   const SKIP = /sits directly on the page background|Very little imagery|Depth is flat|use a single blur|Everything has equal weight|no large confident field|share one background tone|people are shown as initials/;
-  const problem = (sev, msg) => { if (showcase && sev === 'RICHNESS' && SKIP.test(msg)) return; P.push({ sev, msg }); };
+  // dense professional tools (terminals, market data, consoles) are judged on density and precision, not on imagery and surfaces
+  const dense = /^(dense|pro)$/.test(args.register || '');
+  const problem = (sev, msg) => { if (showcase && sev === 'RICHNESS' && SKIP.test(msg)) return; if (dense && sev === 'RICHNESS') return; P.push({ sev, msg }); };
 
   // --- things that are simply broken
   for (const { width, m } of results) {
@@ -955,7 +961,7 @@ function report(results, facts, focus, runtime, args) {
 
 (async () => {
   const args = parseArgs(process.argv);
-  if (!args.target) { console.error('usage: node audit.cjs <file.html | url> [--out dir] [--widths 375,768,1440] [--dark] [--setup file.js] [--json] [--no-shots]'); process.exit(2); }
+  if (!args.target) { console.error('usage: node audit.cjs <file.html | url> [--out dir] [--widths 375,768,1440] [--dark] [--setup file.js] [--register showcase|dense] [--json] [--no-shots]'); process.exit(2); }
   const driver = loadDriver();
   if (!driver) {
     console.error('audit: no browser driver found (tried playwright, playwright-core, @playwright/test, puppeteer).\nInstall one with `npm i -D playwright && npx playwright install chromium`, or review by hand using the checklist in SKILL.md.');
