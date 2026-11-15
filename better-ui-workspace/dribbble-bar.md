@@ -274,3 +274,19 @@ left is mostly the presentation (device frames judged as CSS-drawn) and two stoc
 **Method D.4**: no emoji in finance, admin, SaaS or productivity (line icons in chips there);
 avoid the default indigo-to-violet gradient. The presenter now shows frameless rounded screens,
 as many real shots do, instead of drawn device frames.
+
+**Method D.4 builds (iteration 14):**
+
+| Case | Ranks of 9 | Flags | Main reasons |
+|---|---|---|---|
+| SaaS landing page | **1st** | likely | copy and sample data "too neat"; a toast clipping the browser bar |
+| Store dashboard | **1st** | possible | only the date matching today |
+| Habit tracker | 6th, 6th | likely, likely | "Saved on this device", "Clear sample data" copy on the Settings screen; indigo template |
+| Finance app | 8th, 5th | likely, possible | a caption explaining the chart; a stepped balance line |
+| Workout app | 4th, 6th | likely, likely | frameless phones "look like an HTML render"; "Rest day" above "Train leg day today" |
+
+The web pages reached the top of their line-ups. The apps fell back from D.3, and the judges named
+two causes: the frameless presentation (judged as a code render, worse than the device frames, so
+the presenter goes back to D.3's frames) and copy that gives a mock-up away. **Method D.5** adds
+copy rules: no captions explaining the interface, no contradictions within a screen, no developer
+phrasing, and a real Settings screen.

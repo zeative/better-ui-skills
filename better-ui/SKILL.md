@@ -34,6 +34,11 @@ Note for yourself: what the product is, who uses it and where (phone on the go, 
 
 Then write the real content before any layout: a product name, the headline, labels, numbers, names, dates. Plain product language, the way a good team's app talks: "3 of 5 done today", "$595 left this month", "Best streak 12 days". No metaphors in the copy, no jokes, no notes that describe the interface to the viewer. Sample data is plausible, internally consistent and right for the locale, and it reads like real life: transactions from familiar kinds of merchants with ordinary names (a supermarket, a coffee chain, a streaming service, a fuel station; well-known merchant names as transaction text are fine, logos are not), people with ordinary names, habits people actually keep. Invented-sounding filler ("Northwind Studio", "Juniper Café", "Kite Mobile") gives a mock-up away.
 
+Copy that gives a mock-up away, and that real products never ship:
+- **Captions that explain the interface** ("Dashed line shows your daily average", "Tap the circle to complete a habit", "Days over $400 are capped"). Labels, legends and axis values do that job; delete the sentence.
+- **Contradictions** between parts of a screen ("Rest day" above a button saying "Train leg day today"). Read each screen top to bottom once as a user would.
+- **Developer phrasing** ("Saved on this device", "Remove the example habits", "Sample data").
+
 Never show a note about sample data on the main screens. Put "Clear sample data" or "Start fresh" in a settings screen or menu, and mention it in the handoff.
 
 When the brief is thin, assume specifically, build, and list your assumptions at the end. Never use real company logos, real people's names or faces, or invented claims about real results; fictional names and example figures are fine.
