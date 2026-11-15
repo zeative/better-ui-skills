@@ -333,3 +333,19 @@ No line-up flagged any build as likely fake. Habit and workout pass both line-up
 in finance, the balance card itself becomes a designed payment card, and transaction rows lead
 with merchant marks instead of category tiles. The presenter now uses the third frame only when a
 sheet or dialog actually opened.
+
+**Method D.8 builds (iteration 18), including two prompts never used while tuning:**
+
+| Case | Ranks of 9 | Flags | Notes |
+|---|---|---|---|
+| Clinic dashboard (held-out, Indonesian) | **1st, 3rd** | likely, possible | flagged for showing today's date and "every detail suspiciously perfect" |
+| Warungku POS landing (held-out, Indonesian) | **1st**, 7th | likely, possible | flagged for today's date and receipt arithmetic that adds up |
+| Store dashboard | **1st** | likely | flagged only for today's date |
+| Finance app | 8th, 4th | likely, likely | an EMV chip on a total-balance card; "too neat" |
+| SaaS landing page | 7th | likely | only the hero is visible; blur blobs |
+
+The held-out prompts rank first among real popular shots on their first attempt. Most "likely"
+flags now rest on two things that are not design: the date shown matching the judging day, and
+sample numbers that add up. Real products show today's date and consistent figures, so the skill
+should not change them; the judge brief now says that dates and arithmetic are not evidence. The
+finance rule is clarified: a chip goes only on a card that stands for one account.
