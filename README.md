@@ -10,7 +10,7 @@ Popular interface work on Dribbble is not exotic. It is familiar patterns execut
 
 1. **Check whose design it is.** In an existing product, fit into its system.
 2. **Understand the job and write the real content** in plain product language.
-3. **Set up the system:** one sans family, a compact type scale, a light canvas, white surfaces, one brand colour chosen for the category, one radius and shadow scale, one icon style.
+3. **Set up the system:** deal a contemporary look for the category (`scripts/look.cjs`), then one sans family, a compact type scale, one brand colour, one radius and shadow scale, one icon style.
 4. **Use the conventional layout for the kind of screen** (native app anatomy, dashboard shell, landing page sections), with one or two designed visual moments such as a brand summary card or a product screenshot.
 5. **Build it properly:** every width, every state, the accessibility floor, the finish.
 6. **Render, audit, review against real products, fix.** The audit script screenshots the page and measures problems, including textures, serif display faces and oversized type. A fresh reviewer agent then asks whether it would pass as a real, professionally made product.
@@ -31,7 +31,8 @@ better-ui/
 │   ├── critique.md             what the bar looks like, the two failures, the reviewer's brief
 │   └── craft.md                the floor: contrast, type scale, layout, states, accessibility
 ├── scripts/
-│   └── audit.cjs               renders a page, screenshots it, reports measured problems
+│   ├── audit.cjs               renders a page, screenshots it, reports measured problems
+│   └── look.cjs                deals a contemporary look (palette, font) per category
 └── evals/                      three test cases
 ```
 
@@ -81,7 +82,19 @@ This test replaced an earlier one in which AI judges scored pages against the re
 | Finance app, abacus theme | 7 | 8th | likely fake: "a theme forced onto every element" |
 | Habit tracker, no skill | 4 | 8th | likely fake: "looks like rendered HTML or a template" |
 
-Results for the current method are recorded in `better-ui-workspace/dribbble-bar.md` as they come in.
+**Current results.** The latest build of each case, one line-up each, against eight popular Dribbble shots of the same category:
+
+| Case | Rank among 9 | Judge's verdict on the build |
+|---|---|---|
+| Habit tracker | **1st** | genuine |
+| Clinic dashboard (prompt never used while tuning) | **1st** | genuine |
+| Workout app | **1st** | possibly AI-made |
+| POS landing page in Indonesian (prompt never used while tuning) | **1st** | possibly AI-made |
+| Store admin dashboard | **1st** | possibly AI-made |
+| SaaS landing page | 4th | likely AI-made (the "stock AI hero recipe"; addressed in the current version) |
+| Personal finance app | 7th | possibly AI-made (generic; addressed in the current version) |
+
+Before the skill, and with the earlier themed-concept method, builds ranked 8th of 9. The full history of every method, every line-up and what each round changed is in `better-ui-workspace/dribbble-bar.md`.
 
 ### Limits
 
