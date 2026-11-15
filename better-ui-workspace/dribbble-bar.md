@@ -320,3 +320,16 @@ lands on the same looks (indigo for habits, emerald for finance), which judges r
 **Method D.7** deals the look from a curated list per category (`scripts/look.cjs`, seeded by the
 product name) instead of leaving it to habit, and requires counts, streaks and percentages to be
 derived from the same sample data.
+
+**Method D.7 builds (iteration 17), with the look dealt by `look.cjs`:**
+
+| App | Ranks of 9 | Flags | Line-ups passed |
+|---|---|---|---|
+| Habit tracker | **1st, 1st** | possible, possible | **2 of 2** |
+| Workout app | **3rd, 3rd** | possible, possible | **2 of 2** |
+| Finance app | 8th, 5th | possible, possible | 0 of 2 ("$592 left" beside "$126 over plan"; generic pastel category tiles) |
+
+No line-up flagged any build as likely fake. Habit and workout pass both line-ups. **Method D.8**:
+in finance, the balance card itself becomes a designed payment card, and transaction rows lead
+with merchant marks instead of category tiles. The presenter now uses the third frame only when a
+sheet or dialog actually opened.

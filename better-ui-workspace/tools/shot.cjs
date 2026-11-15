@@ -65,14 +65,19 @@ const path = require('path');
     }
     // Try to open the add flow for the last frame.
     await p.evaluate(() => window.scrollTo(0, 0)); await p.waitForTimeout(250);
-    const before = await p.evaluate(() => document.body.innerText.length);
+    const overlays = () => p.evaluate(() => [...document.querySelectorAll('body *')].filter((e) => {
+      const st = getComputedStyle(e); if (st.display === 'none' || st.visibility === 'hidden' || +st.opacity < 0.5) return false;
+      const r = e.getBoundingClientRect(); const isLayer = st.position === 'fixed' || e.matches('dialog[open], [role="dialog"], [aria-modal="true"]');
+      return isLayer && r.height > window.innerHeight * 0.4 && r.width > window.innerWidth * 0.8 && r.top < window.innerHeight && r.bottom > 0;
+    }).length);
+    const before = await overlays();
     for (const sel of ['[aria-label*="add" i]', '[aria-label*="new" i]', '[aria-label*="log" i]', '.fab', 'button:has-text("+")', 'button:has-text("Add")', 'button:has-text("New")']) {
       const el = p.locator(sel).filter({ visible: true }).first();
       if (await el.count()) { try { await el.click({ timeout: 1500 }); } catch (_) { continue; } await p.waitForTimeout(700); break; }
     }
-    const after = await p.evaluate(() => document.body.innerText.length);
-    if (after !== before && shots.length >= 3) { shots[2] = (await p.screenshot()).toString('base64'); tops[2] = await topColour(); }
-    else if (after !== before) { shots.push((await p.screenshot()).toString('base64')); tops.push(await topColour()); }
+    const after = await overlays();
+    if (after > before && shots.length >= 3) { shots[2] = (await p.screenshot()).toString('base64'); tops[2] = await topColour(); }
+    else if (after > before) { shots.push((await p.screenshot()).toString('base64')); tops.push(await topColour()); }
   } else {
     shots.push((await p.screenshot()).toString('base64'));
   }
