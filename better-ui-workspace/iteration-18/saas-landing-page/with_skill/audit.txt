@@ -1,0 +1,31 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-18/saas-landing-page/with_skill/outputs/index.html
+Rendered at 375px (page height 10266px), 768px (page height 7790px), 1440px (page height 5885px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   11px  12px  13px  14px  16px  18px  20px  22px  24px  32px  48px  64px
+  Families     Urbanist
+  Weights      400, 500, 600, 700
+  Text colours #0d0d0d #4a4a52 #6e6e77 #bbbbbb #ffffff #4a3f42 #56494c #535353 (+16 more)
+  Fills        #ffffff #0d0d0d #ffd6e0 #e3f5e9 #f7f7f7 #f4f4f4 #ffefb0 #d3e7ff (+4 more)
+  Radii        999px×34  24px×13  50%×11  16px×8  14px×7  12px×7  9px×2  32px×2  7px×1  10px×1  8px×1  6px×1
+  Shadows      16 distinct
+  Visuals      17 large graphics, 65 icons, 38 surfaces; largest graphic in the first screen 1080×572px
+  Interaction  31 interactive elements; 10 :hover rules, 1 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+TOUCH — fix unless there is a reason
+  • 2 touch targets under 40px at 375px wide, e.g. a.logo "Ledgerly" 116×31; a.logo "Ledgerly" 116×31
+
+RICHNESS — below the bar as measured; a page can pass these and still be plain, so look at the screenshots
+  • 1 of 7 desktop screenfuls have nothing to look at but text (around y=5400px). Give each section a visual of its own: a mini interface, chart, illustration, thumbnails, icon chips.
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • Text under 12px: div.meta "2 open invoices" (11px); div.meta "1 invoice · 4 days late" (11px); div.meta "2 invoices" (11px); div.meta "Last 90 days" (11px); span "Last 6 months" (11px)
+  • 12 different corner radii (999px×34, 24px×13, 50%×11, 16px×8, 14px×7, 12px×7, 9px×2, 32px×2, 7px×1, 10px×1, 8px×1, 6px×1). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
+  • 16 different box-shadows. Use a scale of four or five levels, not one per component.
+  • Columns in different sections start at nearly, but not exactly, the same x at 1440px: 180px (aside.m-side "Ledgerly Overview Invoices 2 Clients") vs 228px (div "Send your next invoice with Ledgerly"); 310px (h1 "Send the invoice. Get paid on time.") vs 316px (div.nav-links "Features Customers Pricing Help"); 376px (div.m-main "Good morning, Maya Sunday, 15 Novemb") vs 400px (div.sec-head "Features From finished work to money"); 376px (div.m-main "Good morning, Maya Sunday, 15 Novemb") vs 430px (p.sub "Ledgerly is invoicing built for free"). Put every section on one shared grid so column edges repeat down the page.
+  • 2 short text(s) wrap leaving a stub on the last line at 375px: div.pay-amt "$1,200.00"; div.tax-fig "$3,492.50". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+  • 10 links go nowhere (href="#"). Fine for a mock, but say so in your handoff.
+  • 1 card(s) are partly empty at 1440px: article.tile.t-b "Reminders that follow up for" has a 114px empty band in a 481px card. Size the visual to fill its card, add a supporting element, or let the card be smaller; a half-empty tile looks unfinished.
+
+This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.

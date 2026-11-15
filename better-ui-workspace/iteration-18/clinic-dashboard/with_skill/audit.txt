@@ -1,0 +1,25 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-18/clinic-dashboard/with_skill/outputs/index.html
+Rendered at 375px (page height 4462px), 768px (page height 3027px), 1440px (page height 1757px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  13px  14px  15px  16px  18px  24px  30px  32px
+  Families     Plus Jakarta Sans
+  Weights      400, 500, 600, 700
+  Text colours #5b6b72 #0f1f24 #61717a #fdfefe #ffffff #08635f #1d55c4 #12733a (+10 more)
+  Fills        #ffffff #f7f9fe #ddedec #f6f8f9 #f6e4dd #eef2f4 #e3f4f3 #e8f0fe (+16 more)
+  Radii        999px×32  50%×21  10px×15  16px×9  5px×8  7px×6  6px×5  4px×4  12px×3  11px×1  20px×1
+  Shadows      6 distinct
+  Visuals      7 large graphics, 55 icons, 10 surfaces; largest graphic in the first screen 748×1081px
+  Interaction  31 interactive elements; 15 :hover rules, 3 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+TOUCH — fix unless there is a reason
+  • 8 touch targets under 40px at 375px wide, e.g. button.bar-col "Rp 6,9 jt Sen" 35×146; button.bar-col "Rp 8,2 jt Sel" 35×146; button.bar-col "Rp 5,4 jt Rab" 35×146; button.bar-col "Rp 9,2 jt Kam" 35×146; button.bar-col "Rp 7,6 jt Jum" 35×146
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 11 different corner radii (999px×32, 50%×21, 10px×15, 16px×9, 5px×8, 7px×6, 6px×5, 4px×4, 12px×3, 11px×1, 20px×1). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
+  • Side-by-side items whose main values do not line up at 768px, usually because one label wraps: section.kpis (3 items, values 7px apart: "Janji temu hari ini 16 5 seles"…). Align the values (fixed label height, or values on a shared row).
+  • 2 short text(s) wrap leaving a stub on the last line at 375px: small "Perawatan saluran akar · 38 th"; small "Konsultasi implan · 46 th". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+  • 9 links go nowhere (href="#"). Fine for a mock, but say so in your handoff.
+
+This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.

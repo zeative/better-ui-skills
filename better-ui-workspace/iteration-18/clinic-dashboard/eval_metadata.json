@@ -1,0 +1,5 @@
+{
+  "eval_name": "clinic-dashboard",
+  "prompt": "Buatkan dashboard untuk klinik gigi kecil: jadwal janji temu hari ini, pasien yang sedang menunggu, dokter yang bertugas, dan pendapatan minggu ini. Data dummy. Satu file index.html.",
+  "assertions": []
+}
