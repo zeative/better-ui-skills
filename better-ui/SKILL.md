@@ -32,7 +32,7 @@ Note for yourself: what the product is, who uses it and where (phone on the go, 
 - *Showcase site* (portfolio, studio, restaurant, event): imagery and type; read `references/editorial.md`.
 - *Docs or reading*: typography and calm.
 
-Then write the real content before any layout: a product name, the headline, labels, numbers, names, dates. Plain product language, the way a good team's app talks: "3 of 5 done today", "$595 left this month", "Best streak 12 days". No metaphors in the copy, no jokes, no notes that describe the interface to the viewer. Sample data is plausible, internally consistent and right for the locale, and it reads like real life: transactions from familiar kinds of merchants with ordinary names (a supermarket, a coffee chain, a streaming service, a fuel station; well-known merchant names as transaction text are fine, logos are not), people with ordinary names, habits people actually keep. Invented-sounding filler ("Northwind Studio", "Juniper Café", "Kite Mobile") gives a mock-up away.
+Then write the real content before any layout: a product name, the headline, labels, numbers, names, dates. Plain product language, the way a good team's app talks: "3 of 5 done today", "$595 left this month", "Best streak 12 days". No metaphors in the copy, no jokes, no notes that describe the interface to the viewer. Sample data is plausible, internally consistent and right for the locale, and it reads like real life: transactions from familiar kinds of merchants with ordinary names (a supermarket, a coffee chain, a streaming service, a fuel station; well-known merchant names as transaction text are fine, logos are not), people with ordinary names, habits people actually keep. Invented-sounding filler ("Northwind Studio", "Juniper Café", "Kite Mobile") gives a mock-up away. So does the set every generated finance app reaches for (Blue Bottle Coffee, Trader Joe's, Whole Foods, Starbucks, Chipotle, Uber): pick merchants that fit the user's country and vary them, including a few local or less obvious ones.
 
 Copy that gives a mock-up away, and that real products never ship:
 - **Captions that explain the interface** ("Dashed line shows your daily average", "Tap the circle to complete a habit", "Days over $400 are capped"). Labels, legends and axis values do that job; delete the sentence.
@@ -65,6 +65,8 @@ Popular shots are not novel layouts; they are the standard layout of their kind,
 - `references/product-ui.md` for mobile-first apps, dashboards and admin.
 - `references/marketing.md` for landing and pricing pages.
 - `references/editorial.md` for showcase sites.
+
+Every screen also needs **one signature chart**: the main chart drawn in a form that current shots use rather than the library default. A hatched or striped bar for the current period among plain ones; pill-shaped bars with a value chip above the highlighted one; a category breakdown as proportional bubbles or a segmented pill bar instead of a donut; radial segments; a single gradient-highlighted bar with a tooltip. Plain lines and plain donuts read as a template.
 
 Every screen still needs a clear first, second and third thing to look at, and **one or two visual moments** that a designer clearly made: a summary card on the brand colour with a well-drawn chart, a product screenshot in a clean frame, a ring, a photo, a set of friendly item icons. `references/showpiece.md` explains how to draw these well in HTML, CSS and SVG. One or two, not ten: the rest of the screen stays calm so those moments carry.
 
