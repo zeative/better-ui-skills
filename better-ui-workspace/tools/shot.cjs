@@ -11,7 +11,7 @@ const path = require('path');
 (async () => {
   const [file, out, kind = 'phone', setup] = process.argv.slice(2);
   const b = await chromium.launch();
-  const phone = kind === 'phone'; const page = kind === 'page';
+  const single = kind === 'phone1'; const phone = kind === 'phone' || single; const page = kind === 'page';
   const ctx = await b.newContext(phone
     ? { viewport: { width: 375, height: 731 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }
     : { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
@@ -35,7 +35,7 @@ const path = require('path');
     const top = Object.entries(score).sort((x, y) => y[1] - x[1])[0]; return top ? top[0].split(',').map(Number) : null;
   });
   const tint = (k) => brand ? `rgb(${brand.map((v) => Math.round(v * k + 255 * (1 - k))).join(',')})` : (k > 0.1 ? '#dfe2e7' : '#eef0f3');
-  const backdrop = `linear-gradient(160deg,${tint(0.08)},${tint(0.22)})`;
+  const backdrop = process.env.BG || `linear-gradient(160deg,${tint(0.08)},${tint(0.22)})`;
   const topColour = () => p.evaluate(() => { let e = document.elementFromPoint(187, 1); while (e) { const c = getComputedStyle(e).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; e = e.parentElement; } return getComputedStyle(document.body).backgroundColor || 'rgb(255,255,255)'; });
   const sbg = await p.evaluate(() => { let e = document.elementFromPoint(187, 2); while (e) { const c = getComputedStyle(e).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; e = e.parentElement; } return 'rgb(255,255,255)'; });
   const bbg = await p.evaluate(() => { let e = document.elementFromPoint(187, window.innerHeight - 2); while (e) { const c = getComputedStyle(e).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; e = e.parentElement; } return 'rgb(255,255,255)'; });
@@ -87,7 +87,8 @@ const path = require('path');
   } else {
     shots.push((await p.screenshot()).toString('base64'));
   }
-  const sp = await b.newPage({ viewport: { width: 1200, height: 900 }, deviceScaleFactor: 1 });
+  if (single) shots.splice(1);
+  const sp = await b.newPage({ viewport: { width: single ? 760 : 1200, height: 900 }, deviceScaleFactor: Number(process.env.SCALE || 1) });
   const img = (s, style) => `<img src="data:image/png;base64,${s}" style="${style}">`;
   const pageHtml = `<body style="margin:0;height:900px;background:${backdrop};display:flex;align-items:flex-start;justify-content:center;gap:36px;padding-top:56px;box-sizing:border-box">
       <div style="width:520px;height:900px;border-radius:18px 18px 0 0;overflow:hidden;box-shadow:0 30px 70px -25px rgba(0,0,0,.35);background:#fff">${img(shots[0], 'width:520px;display:block')}</div>
