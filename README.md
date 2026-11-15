@@ -2,19 +2,19 @@
 
 An agent skill that makes AI coding agents design and build interfaces at the level of popular Dribbble shots, instead of the flat, generic look people recognise as AI-made.
 
-It is a process, a set of craft references and a measuring tool. It does not hand the agent a style.
+It is a process, a small design system, craft references and a measuring tool.
 
 ## How it works
 
-A great shot and generic AI output often use the same ingredients: cards, gradients, rounded corners, a product screenshot. What separates them is one ownable idea and the depth of its execution. The skill forces both:
+Popular interface work on Dribbble is not exotic. It is familiar patterns executed with precision: a clean sans-serif, a light neutral canvas, white cards, one brand colour, real content, small consistent icons, and nothing out of place. AI-built interfaces miss that bar in two opposite ways: **too plain** (it reads as rendered HTML) or **too much** (an invented theme, textures and display fonts that read as a costume). The skill aims at the narrow professional middle:
 
 1. **Check whose design it is.** In an existing product, fit into its system.
-2. **Understand the job, write the real content.** The register (product page, app, showcase site, reading) decides what "rich" means.
-3. **Find one idea and commit to it.** A motif from the product's own world, made the hero of the screen at large scale and carrying real content, echoed in three details, with a committed palette (neutral base, one dominant colour, one hot accent) and dramatic type scale. A finish kit is then dealt from a library by script, and its placeholder colours are replaced.
-4. **Build the showpiece first**, in real detail: a product mock with believable content, floating detail cards, atmosphere, charts, distinct illustrated objects and portraits.
-5. **Build with depth and finish:** content on surfaces, layered shadows, variety within sets, every width and state.
-6. **Render, measure, get an independent review, fix.** The audit script screenshots the page and reports what a demanding reviewer would mark down. A second agent that did not build the page then scores the screenshots against a rubric. At least two rounds.
-7. **Hand off plainly:** the idea, the assumptions, what is placeholder.
+2. **Understand the job and write the real content** in plain product language.
+3. **Set up the system:** one sans family, a compact type scale, a light canvas, white surfaces, one brand colour chosen for the category, one radius and shadow scale, one icon style.
+4. **Use the conventional layout for the kind of screen** (native app anatomy, dashboard shell, landing page sections), with one or two designed visual moments such as a brand summary card or a product screenshot.
+5. **Build it properly:** every width, every state, the accessibility floor, the finish.
+6. **Render, audit, review against real products, fix.** The audit script screenshots the page and measures problems, including textures, serif display faces and oversized type. A fresh reviewer agent then asks whether it would pass as a real, professionally made product.
+7. **Hand off plainly.**
 
 ## What is in the folder
 
@@ -22,17 +22,16 @@ A great shot and generic AI output often use the same ingredients: cards, gradie
 better-ui/
 ├── SKILL.md                    the process
 ├── references/
-│   ├── art-directions.md       twelve finish kits with tokens, and how to tune them
-│   ├── showpiece.md            building product mocks, charts, objects, portraits, atmospheres in code
-│   ├── polish.md               surfaces, shadows, type, colour, controls, motion
-│   ├── critique.md             what the bar looks like per category, the rubric, the reviewer's brief
+│   ├── system.md               type, colour, brand colour by category, surfaces, radius, icons, starting tokens
+│   ├── product-ui.md           mobile apps, dashboards, admin
 │   ├── marketing.md            landing and pricing pages
-│   ├── product-ui.md           dashboards, admin, apps, mobile-first tools
 │   ├── editorial.md            portfolios, studios, restaurants and other image-led sites
+│   ├── showpiece.md            summary cards, product mocks, charts, avatars, icons in code
+│   ├── polish.md               surfaces, shadows, type, colour, controls, motion
+│   ├── critique.md             what the bar looks like, the two failures, the reviewer's brief
 │   └── craft.md                the floor: contrast, type scale, layout, states, accessibility
 ├── scripts/
-│   ├── audit.cjs               renders a page, screenshots it, reports measured problems
-│   └── deal.cjs                deals one finish kit from a shortlist
+│   └── audit.cjs               renders a page, screenshots it, reports measured problems
 └── evals/                      three test cases
 ```
 
@@ -62,50 +61,40 @@ It needs Node and a Chromium that Playwright or Puppeteer can drive. It renders 
 
 - **Broken:** horizontal overflow, console errors, failed requests, text covered by another element, content hidden under fixed bars, words that run together.
 - **Accessibility:** text below WCAG AA contrast, no visible keyboard focus, unlabelled fields, unnamed buttons, small targets, heading order.
-- **Richness:** a first screen with no substantial visual, screens with nothing to look at but text, text sitting on a bare page, one drawing recoloured for every item, people shown as initials, flat single-blur shadows, a small hero visual, a page held in one tone, timid type scale, cards of equal weight, a pastel rainbow, no confident field of colour.
-- **Craft:** clipped strings, half-empty cards, cards that nearly align, uneven phone margins, columns that nearly align, values at different heights in a row, text wrapping to a stub, too many type sizes or radii.
+- **Richness:** a first screen with no substantial visual, screens with nothing to look at but text, text sitting on a bare page, a pastel rainbow.
+- **Craft:** textures and noise filters, a serif display face or a second text family on product UI, oversized type, clipped strings, half-empty cards, cards that nearly align, uneven phone margins, text wrapping to a stub, too many type sizes or radii.
 
 Options: `--setup seed.js` runs a script in the page first (seed data, open a dialog), `--register showcase` drops the checks that ask for cards and shadows on image-led sites, `--dark`, `--widths`, `--json`.
 
-Each check exists because a reviewer marked real output down for that fault.
 
 ## Does it work?
 
-Every test page was built by a separate headless agent session in its own empty folder, from a one-line prompt that never mentions the skill. In each session the agent chose to load the skill itself.
+Every test page is built by a separate headless agent session in its own empty folder, from a one-line prompt that never mentions the skill.
 
-Pages are judged against real Dribbble shots: eight from the first page of results for the category, read by a fresh reviewer agent together with the candidate's screenshots. A parity score of 8 means a Dribbble audience would not notice a quality gap; that is the pass mark.
+**How it is tested: the line-up.** The page is presented the way Dribbble presents a design (phone screens in device frames, or a browser window), then shuffled among eight real popular shots of its category. A judge is told only that some shots may be AI-made fakes that tend to look overdesigned, ranks all nine and flags the fakes. A page passes when it is not flagged and ranks in the top half. Tools: `better-ui-workspace/tools/shot.cjs` and `lineup.py`.
 
-| Method | Landing page | Dashboard | Habit tracker |
+This test replaced an earlier one in which AI judges scored pages against the references on a rubric that rewarded "one ownable idea". Under that rubric the skill reached 8/10 with themed concepts (a habit tracker as postal stamps, a budget as an abacus) that a human reviewer found forced and unprofessional. The line-up test agrees with that human judgement:
+
+| Earlier build | Old rubric score | Line-up rank of 9 | Line-up verdict |
 |---|---|---|---|
-| No skill | 5-6 | 4-5 | 4 |
-| First version of the skill: restraint and measured craft | 4 | 3 | 4 |
-| Method B: finish library, showpiece, polish | 7 | 7 | 7 |
-| Method B with measured finish | 8 | 7-8 | 7 |
-| Method C, the current skill: one ownable idea first | **8** | **8** | **8** |
+| Habit tracker, postal theme | 8 | 8th | likely fake: "costume, not function" |
+| Finance app, abacus theme | 7 | 8th | likely fake: "a theme forced onto every element" |
+| Habit tracker, no skill | 4 | 8th | likely fake: "looks like rendered HTML or a template" |
 
-Prompts never used while designing the skill, first attempt each: a POS landing page in Indonesian scored **8**, a personal finance app 7, a photographer's portfolio 7.
+Results for the current method are recorded in `better-ui-workspace/dribbble-bar.md` as they come in.
 
-The history of what failed and why is in `better-ui-workspace/dribbble-bar.md`. The short version:
+### Limits
 
-- The first version asked for restraint. Against the Dribbble bar it scored below no skill at all: honest, useful pages that reviewers called a wireframe next to the references.
-- A library of directions plus a detailed showpiece moved everything to 7. Turning each recurring finishing complaint into a measurement moved landing pages to 8.
-- What kept app screens at 7 was not finish but the lack of a single ownable idea. Rebuilding the art-direction step around a concept from the product's own world moved all three training prompts to 8, with art direction scored 9.
-
-### What it does not do
-
-- **Nothing has scored 9 or 10.** Reviewers name one gap code does not close: the references use real product photography and real faces, and these pages use vector illustration.
-- **Two kinds of screen are still at 7:** personal mobile-first apps and sites whose product is photography. Changes for both are in the skill; their effect is still being tested.
-- **The judges are AI models, not designers.** The same page moves about a point between reviewers. No human designer has scored these.
-- **One run per configuration.** Results vary from run to run with the same skill.
-- **It is slower and costs more:** 10 to 30 minutes and roughly 4 to 12 dollars per page, against 2 to 3 minutes and about 1.3 dollars without the skill.
-- **Proof on marketing pages is placeholder.** The skill designs testimonial, logo and statistic sections with fictional names and tells the user to replace them; they must not be published as they are.
-- **Only single-file HTML was tested.** Work inside an existing codebase with its own design system, which the skill has instructions for, was not evaluated.
+- **The judges are AI models, not designers.** The line-up was checked against one person's judgement on three pages.
+- **It is slower and costs more** than building without it: several minutes of rendering and review per page.
+- **Proof on marketing pages is placeholder.** Testimonials, logos and statistics use fictional names and must be replaced before publishing.
+- **Only single-file HTML was tested.** Work inside an existing codebase was not evaluated.
 
 ### Where the evidence is
 
-- `better-ui-workspace/dribbble-bar.md`: the judging method, every score, what each round taught.
-- `better-ui-workspace/iteration-N/<case>/with_skill/outputs/`: each page and its screenshots. Iterations 1 and 2 are the first version of the skill (with `blind-judging.md` and `review.html`), 3 to 5 are Method B, 6 onward Method C.
-- `better-ui-workspace/tools/`: the scripts that ran, collected and graded the sessions.
+- `better-ui-workspace/dribbble-bar.md`: every method tried, every score, what each round taught.
+- `better-ui-workspace/iteration-N/<case>/`: each page and its screenshots.
+- `better-ui-workspace/tools/`: the scripts that ran, collected, presented and judged the sessions.
 
 ## Sources
 
