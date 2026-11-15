@@ -1,0 +1,68 @@
+{
+  "expectations": [
+    {
+      "text": "The page has no horizontal overflow when rendered at 375px, 768px and 1440px wide.",
+      "passed": true,
+      "evidence": "overflow px: 375→0, 768→0, 1440→0"
+    },
+    {
+      "text": "Every piece of visible text meets WCAG AA contrast (4.5:1, or 3:1 for large text) against its background.",
+      "passed": true,
+      "evidence": "0 text elements below AA"
+    },
+    {
+      "text": "The rendered page uses at most 12 distinct font sizes.",
+      "passed": true,
+      "evidence": "7 sizes: 12, 13, 14, 15, 16, 18, 24"
+    },
+    {
+      "text": "The rendered page uses at most 7 distinct corner radii.",
+      "passed": false,
+      "evidence": "8 radii: 10px, 12px, 16px, 50%, 24px, 3px, 8px, 999px"
+    },
+    {
+      "text": "Every element reached by pressing Tab shows a visible focus style.",
+      "passed": true,
+      "evidence": "24 elements tabbed, 0 with no visible change"
+    },
+    {
+      "text": "No interactive element is smaller than 24×24px, and at 375px wide no button or control is under 40px in its tappable dimension.",
+      "passed": true,
+      "evidence": "0 under 24px, 0 under 40px at 375px"
+    },
+    {
+      "text": "The page has a lang attribute, a viewport meta tag, exactly one visible h1, a main landmark, and no skipped heading levels.",
+      "passed": true,
+      "evidence": "lang=en-GB, viewport=True, h1=1, main=True, skips=[]"
+    },
+    {
+      "text": "Every form field has a label and every button or link has an accessible name.",
+      "passed": true,
+      "evidence": "0 unnamed controls, 0 unlabelled fields"
+    },
+    {
+      "text": "The page loads with no console errors and no failed network requests.",
+      "passed": true,
+      "evidence": "0 errors, 0 failed requests"
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 1,
+    "total": 9,
+    "pass_rate": 0.89
+  },
+  "execution_metrics": {
+    "tool_calls": {
+      "Skill": 1,
+      "Bash": 14,
+      "Write": 1,
+      "Read": 12,
+      "Grep": 1
+    },
+    "total_tool_calls": 29
+  },
+  "timing": {
+    "total_duration_seconds": 591.8
+  }
+}

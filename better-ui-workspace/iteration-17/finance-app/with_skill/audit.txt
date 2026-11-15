@@ -1,0 +1,20 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-17/finance-app/with_skill/outputs/index.html
+Rendered at 375px (page height 2222px), 768px (page height 1268px), 1440px (page height 1261px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  13px  14px  15px  16px  18px  20px  22px  24px  28px  32px  40px
+  Families     Urbanist
+  Weights      400, 500, 600, 700
+  Text colours #121212 #5e6066 #bbbbbb #ffffff #635d5f #595456 #54494c #5e5154 (+10 more)
+  Fills        #ffffff #ffd6e0 #0d0d0d #d3e8ff #fff1b8 #e7e0ff #f5f5f3 #ddf5cf (+7 more)
+  Radii        12px×16  50%×7  999px×6  2px×6  20px×4  10px×3  4px×3  3px×2  24px×2  16px×1  7px×1
+  Shadows      4 distinct
+  Visuals      6 large graphics, 32 icons, 9 surfaces; largest graphic in the first screen 618×556px
+  Interaction  19 interactive elements; 12 :hover rules, 1 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 11 different corner radii (12px×16, 50%×7, 999px×6, 2px×6, 20px×4, 10px×3, 4px×3, 3px×2, 24px×2, 16px×1, 7px×1). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
+  • 1 short text(s) wrap leaving a stub on the last line at 375px: div.budget-fig.num "$584.01left". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+
+This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.

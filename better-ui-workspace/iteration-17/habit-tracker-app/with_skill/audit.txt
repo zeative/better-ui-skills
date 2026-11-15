@@ -1,0 +1,20 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-17/habit-tracker-app/with_skill/outputs/index.html
+Rendered at 375px (page height 957px), 768px (page height 1024px), 1440px (page height 913px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  13px  14px  15px  16px  18px  20px  24px
+  Families     Figtree
+  Weights      400, 500, 600, 700
+  Text colours #16182a #5f6478 #fdfdfe #ffffff #c63e21 #15803d
+  Fills        #ffffff #f3f4f8 #ffd3c7 #f4573a #2b2d42 #e4eefe #efe8fe #fef1dd (+9 more)
+  Radii        999px×14  12px×13  8px×8  16px×8  50%×8  24px×4
+  Shadows      8 distinct
+  Visuals      4 large graphics, 43 icons, 6 surfaces; largest graphic in the first screen 648×350px
+  Interaction  25 interactive elements; 12 :hover rules, 2 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 5 short text(s) wrap leaving a stub on the last line at 375px: span.row-meta "13 days Every day"; span.row-meta "23 days Evening"; span.row-meta "6 days Morning"; span.row-meta "7 days Morning"; span.row-meta "3 days Evening". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+  • The same icon or drawing is repeated (colour changes do not count): 5× at 34px. If these mark different items (exercises, categories, accounts), give each its own icon; the same glyph on different things looks like a placeholder.
+
+This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.
