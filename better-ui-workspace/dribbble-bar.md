@@ -141,3 +141,36 @@ stock list and donut.
 modules in personal apps, and names supplied or generated imagery as the way to close the gap to
 photographic references.
 
+
+**Method C.4** adds a figure or scene illustration to consumer apps, lets two or three accents
+fill whole surfaces, and caps review at three rounds, the third a rebuild. Its first workout
+build scored 6.
+
+**Phone-first judging.** The app references are phone screens, while the candidates had been
+shown mostly as 1440px desktop slices with small phone sheets. The app cases were re-judged with
+the phone at 2x as the primary design (`tools/phonehd.cjs`, `judge_prompt.py --phone-first`).
+From this point the judges, and the builders, run on a different model than before, because of
+a usage limit; earlier and later scores are not strictly comparable.
+
+| Case | Build | Phone-first parity |
+|---|---|---|
+| Habit tracker | C (Unbroken, chain links) | 7 |
+| Habit tracker | C.4 (Daymark, postmark stamp card), cut off mid-review | **8** (art direction 9, typography 8) |
+| Finance app | B.2 | 6 |
+| Finance app | C.2 banknote | 7 |
+| Finance app | C.3 abacus, cut off mid-review | 7 (richness 8, depth 8) |
+| Workout app | C.2 Loaded | 7 |
+| Workout app | C.4 | 6 |
+
+The phone view did not lift app scores across the board, so the gap is in the design, not the
+capture. The three judges described one fault from two sides: the idea stops after the hero
+(banknote: "everything below falls back to generic white list cards and a stock donut"), or it is
+repeated without relief (abacus: "six identical category rods, a days rod, a money rod and a bead
+timeline"; workout: "the exercise list repeats one template six times"). The references show one
+hero with one clean number, then two or three modules of different shapes, with the motif carried
+as material rather than as copies of the object, inactive items collapsed to slim rows, and the
+accent kept for one meaning.
+
+**Method C.5** (running) writes that down: step 4 becomes "carry it as a language, not a copy",
+two new failure modes ("the idea repeated without relief", "one colour meaning everything"), and
+product-ui gains screen rhythm, collapsed lists and a different ink per item.

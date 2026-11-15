@@ -94,6 +94,7 @@ Showcase work has no loose ends. On both the desktop and the phone screenshot, r
 - **"The colour is a rainbow."** Too many hues at full strength. Keep one dominant accent and one counter-accent; reduce category hues to small marks.
 - **"The type is generic."** Use the direction's display face, larger and tighter; add eyebrow pills, emphasised phrases, big figures.
 - **"There is dead space."** Enlarge the showpiece, let elements overlap section edges, use the full width on desktop with a multi-column composition, balance column heights, size each tile's visual to fill its tile, tighten the gaps between sections.
+- **"The motif is everywhere" or "the same card again and again."** Keep the motif whole only in the hero; redraw the other modules as different forms in its material. Collapse repeated items to slim rows with the active one expanded.
 - **"The page is monotone."** One tone from top to bottom. Add a section in the opposite tone and a tinted band, raise the contrast between cards and ground, and vary the section recipe.
 - **"The phone version lost the magic."** Recompose the showpiece for narrow screens instead of hiding or shrinking it.
 
