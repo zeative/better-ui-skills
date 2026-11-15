@@ -281,6 +281,22 @@ function measure(targetWidth) {
     }
   }
   out.lonelyItems = lonely.slice(0, 5);
+  // (b2) a wrapping strip of figures (stats, label-value pairs) that breaks onto ragged lines
+  const ragged = [];
+  for (const el of document.querySelectorAll('body *')) {
+    if (!isVisible(el)) continue;
+    const s = getComputedStyle(el);
+    if (!(s.display.includes('flex') && s.flexWrap !== 'nowrap')) continue;
+    const kids = [...el.children].filter(isVisible); if (kids.length < 4) continue;
+    if (kids.filter((k) => /\d/.test(k.textContent)).length < kids.length / 2) continue;
+    const rows = {}; kids.forEach((k) => { const t = Math.round(k.getBoundingClientRect().top / 6) * 6; (rows[t] = rows[t] || []).push(k); });
+    const keys = Object.keys(rows).map(Number).sort((p, q) => p - q); if (keys.length < 2) continue;
+    const lefts0 = rows[keys[0]].map((k) => k.getBoundingClientRect().left);
+    const later = keys.slice(1).flatMap((t) => rows[t]);
+    const off = later.filter((k) => !lefts0.some((l) => Math.abs(l - k.getBoundingClientRect().left) < 4)).length;
+    if (off >= Math.max(1, later.length / 2)) ragged.push(describe(el));
+  }
+  out.raggedStrips = ragged.slice(0, 5);
   // (c) side-by-side siblings whose main values sit at different heights
   const uneven = [];
   for (const el of document.querySelectorAll('body *')) {
@@ -848,6 +864,7 @@ function report(results, facts, focus, runtime, args) {
   const stubW = results.filter(({ m }) => m.wrapStubCount).sort((p, q) => q.m.wrapStubCount - p.m.wrapStubCount)[0];
   if (stubW) problem('CRAFT', `${stubW.m.wrapStubCount} short text(s) wrap leaving a stub on the last line at ${stubW.width}px: ${stubW.m.wrapStubs.slice(0, 5).join('; ')}. Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).`);
   for (const { width, m } of results) {
+    if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }
     if (m.lonelyItems && m.lonelyItems.length) { problem('CRAFT', `A wrapping row leaves one item alone on its last line at ${width}px: ${m.lonelyItems.slice(0, 3).join('; ')}.`); break; }
   }
   if (facts.transitionAll) problem('CRAFT', `${facts.transitionAll} rules use "transition: all"; name the properties (it animates layout by accident and costs performance).`);
