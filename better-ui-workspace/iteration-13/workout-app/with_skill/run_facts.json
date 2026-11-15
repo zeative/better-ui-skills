@@ -1,0 +1,13 @@
+{
+  "skills_invoked": [
+    "better-ui"
+  ],
+  "skill_files_read": [],
+  "tool_calls": {
+    "Skill": 1,
+    "Bash": 13,
+    "Read": 14,
+    "Write": 1
+  },
+  "permission_denials": []
+}

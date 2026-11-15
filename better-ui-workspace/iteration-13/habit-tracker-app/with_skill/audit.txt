@@ -1,0 +1,19 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-13/habit-tracker-app/with_skill/outputs/index.html
+Rendered at 375px (page height 983px), 768px (page height 1024px), 1440px (page height 942px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  13px  14px  15px  16px  17px  18px  20px  28px
+  Families     Plus Jakarta Sans
+  Weights      400, 500, 600, 700
+  Text colours #16142b #625f78 #fdfdfe #fefefe #5b4cf0 #ffffff #e6e4fd
+  Fills        #ffffff #f6f5fb #5b4cf0 #d1cdfb #e4eefd #2f80ed #fcf1df #e2f3ea (+5 more)
+  Radii        8px×14  12px×13  4px×9  16px×8  6px×8  20px×7  50%×5  999px×1  24px×1
+  Shadows      5 distinct
+  Visuals      3 large graphics, 30 icons, 10 surfaces; largest graphic in the first screen 716×209px
+  Interaction  24 interactive elements; 17 :hover rules, 1 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 9 different corner radii (8px×14, 12px×13, 4px×9, 16px×8, 6px×8, 20px×7, 50%×5, 999px×1, 24px×1). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
+
+This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.
