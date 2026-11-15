@@ -1,0 +1,19 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-16/workout-app/with_skill/outputs/index.html
+Rendered at 375px (page height 1350px), 768px (page height 1326px), 1440px (page height 1290px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  13px  14px  15px  16px  18px  20px  24px  32px
+  Families     Plus Jakarta Sans
+  Weights      400, 500, 600, 700
+  Text colours #63636b #16161a #c2410c #b0b0b1 #bebebf #ffffff #1a0b04 #b9b9bb (+2 more)
+  Fills        #f5f5f2 #ffffff #ff5a1f #ffede4 #ffb596 #ffd3c0 #ede9fd #e2f2eb (+5 more)
+  Radii        12px×23  4px×20  50%×10  24px×10  8px×7  16px×3  999px×1
+  Shadows      5 distinct
+  Visuals      3 large graphics, 21 icons, 28 surfaces; largest graphic in the first screen 656×225px
+  Interaction  32 interactive elements; 7 :hover rules, 1 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 1 short text(s) wrap leaving a stub on the last line at 1440px: p.big.num "29,774 kg". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+
+This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.
