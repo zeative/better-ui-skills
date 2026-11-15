@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ringkasan · Sangrai Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Look: bright and clean — warm off-white canvas, white cards, roasted-orange brand on one summary card, buttons and active states. */
+:root {
+  --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --canvas: #F5F4F1; --surface: #FFFFFF; --surface-2: #F7F6F3; --line: #EAE7E2;
+  --text: #1C1917; --text-2: #6B645D; --text-3: #A39C94;
+  --brand: #B4501D; --brand-600: #9C4417; --brand-tint: #FBEEE6; --on-brand: #FFFFFF;
+  --ok: #137535; --ok-tint: #E7F6EC; --warn: #B45309; --warn-tint: #FEF3E2; --bad: #C2410C; --bad-tint: #FDECEC; --bad-ink: #B91C1C;
+  --info: #1D4ED8; --info-tint: #E8EFFD;
+  --c-plum: #8A3A52; --c-blue: #2F6FDB; --c-green: #2F855A; --c-amber: #C27C0E; --c-violet: #6D4FD1;
+  --r-xs: 6px; --r-sm: 10px; --r-md: 16px; --r-lg: 20px; --r-full: 999px;
+  --sh-1: 0 1px 2px rgba(41,30,20,.05), 0 1px 1px rgba(41,30,20,.03);
+  --sh-2: 0 1px 2px rgba(41,30,20,.05), 0 8px 20px -10px rgba(41,30,20,.14);
+  --sh-float: 0 12px 32px -8px rgba(41,30,20,.22);
+  --sidebar: 248px;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; font-family: var(--font); font-size: 14px; line-height: 1.5; color: var(--text); background: var(--canvas); -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { margin: 0; text-wrap: balance; font-weight: 600; }
+p { margin: 0; }
+img, svg { display: block; max-width: 100%; }
+button, input { font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+.num { font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.ic.sm { width: 16px; height: 16px; }
+
+/* ---------- Shell ---------- */
+.app { display: grid; grid-template-columns: var(--sidebar) 1fr; min-height: 100dvh; background: linear-gradient(to right, var(--surface) calc(var(--sidebar) - 1px), var(--line) calc(var(--sidebar) - 1px), var(--line) var(--sidebar), transparent var(--sidebar)); }
+.sidebar { position: sticky; top: 0; height: 100dvh; background: var(--surface); border-right: 1px solid var(--line); display: flex; flex-direction: column; padding: 20px 16px; gap: 24px; overflow-y: auto; }
+.brandmark { display: flex; align-items: center; gap: 10px; padding: 4px 8px; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; }
+.brandmark .glyph { width: 32px; height: 32px; border-radius: 10px; background: var(--brand); display: grid; place-items: center; box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 4px 10px -4px rgba(180,80,29,.6); }
+.brandmark small { display: block; font-size: 12px; font-weight: 500; color: var(--text-2); letter-spacing: 0; line-height: 1.2; }
+.nav-group { display: grid; gap: 2px; }
+.nav-label { font-size: 12px; font-weight: 500; color: var(--text-2); padding: 0 12px 6px; }
+.nav-item { display: flex; align-items: center; gap: 12px; height: 40px; padding: 0 12px; border-radius: var(--r-sm); color: var(--text-2); font-weight: 500; transition: background-color .15s, color .15s; }
+.nav-item:hover { background: var(--surface-2); color: var(--text); }
+.nav-item[aria-current="page"] { background: var(--brand-tint); color: var(--brand-600); font-weight: 600; }
+.nav-item .count { margin-left: auto; font-size: 12px; font-weight: 600; min-width: 22px; height: 20px; padding: 0 6px; border-radius: var(--r-full); background: var(--brand); color: #fff; display: grid; place-items: center; }
+.nav-item .count.muted { background: var(--surface-2); color: var(--text-2); border: 1px solid var(--line); }
+.store-card { margin-top: auto; border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px; background: var(--surface-2); display: grid; gap: 10px; }
+.store-card .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.store-card .t { font-weight: 600; font-size: 13px; }
+.store-card .s { font-size: 12px; color: var(--text-2); }
+.live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--ok); }
+.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px var(--ok-tint); }
+.meter { height: 6px; border-radius: var(--r-full); background: var(--line); overflow: hidden; }
+.meter i { display: block; height: 100%; border-radius: inherit; background: var(--brand); }
+.user { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: var(--r-sm); }
+.user:hover { background: var(--surface-2); }
+.user .name { font-weight: 600; font-size: 13px; line-height: 1.3; }
+.user .role { font-size: 12px; color: var(--text-2); }
+.avatar { width: 36px; height: 36px; border-radius: 50%; background: #F6E1C9; flex: none; overflow: hidden; display: grid; place-items: center; font-size: 13px; font-weight: 600; color: #7A4A2B; }
+.avatar img { width: 100%; height: 100%; }
+
+.main { min-width: 0; display: flex; flex-direction: column; }
+.topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 12px; padding: 16px 32px; background: color-mix(in srgb, var(--canvas) 88%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid transparent; }
+.topbar .title { min-width: 0; margin-right: auto; }
+.topbar h1 { font-size: 24px; letter-spacing: -0.02em; line-height: 1.25; }
+.topbar .date { font-size: 13px; color: var(--text-2); }
+.search { position: relative; width: 280px; }
+.search .ic { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-3); }
+.search input { width: 100%; height: 40px; padding: 0 52px 0 38px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--surface); outline: none; font-size: 14px; transition: border-color .15s, box-shadow .15s; }
+.search input::placeholder { color: var(--text-3); }
+.search input:focus { border-color: var(--brand); box-shadow: 0 0 0 4px var(--brand-tint); }
+.kbd { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--text-2); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 6px; padding: 0 6px; line-height: 20px; background: var(--surface-2); }
+.icon-btn { position: relative; width: 40px; height: 40px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; color: var(--text-2); cursor: pointer; transition: color .15s, background-color .15s, transform .1s; }
+.icon-btn:hover { color: var(--text); background: var(--surface-2); }
+.icon-btn:active { transform: scale(.96); }
+.icon-btn .dot { position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--brand); box-shadow: 0 0 0 2px var(--surface); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 16px; border-radius: var(--r-sm); font-weight: 600; font-size: 14px; border: 0; cursor: pointer; background: var(--brand); color: var(--on-brand); white-space: nowrap;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(41,30,20,.2), 0 6px 14px -6px rgba(180,80,29,.6); transition: transform .15s ease-out, background-color .15s, box-shadow .15s; }
+.btn:hover { background: var(--brand-600); }
+.btn:active { transform: scale(.98); }
+.btn-ghost { background: var(--surface); color: var(--text); border: 1px solid var(--line); box-shadow: var(--sh-1); }
+.btn-ghost:hover { background: var(--surface-2); }
+.btn-sm { height: 32px; padding: 0 12px; font-size: 13px; }
+.menu-btn { display: none; }
+
+.content { padding: 8px 32px 40px; display: grid; gap: 20px; grid-template-columns: repeat(12, minmax(0, 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--sh-1); padding: 20px; min-width: 0; }
+.card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.card-head h2 { font-size: 16px; line-height: 1.35; }
+.card-head .sub { font-size: 13px; color: var(--text-2); }
+.link { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: var(--brand-600); padding: 6px 10px; margin: -6px -10px; border-radius: var(--r-sm); white-space: nowrap; }
+.link:hover { background: var(--brand-tint); }
+.span-5 { grid-column: span 5; } .span-7 { grid-column: span 7; } .span-8 { grid-column: span 8; } .span-4 { grid-column: span 4; } .span-12 { grid-column: span 12; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; overflow: hidden; color: #fff; border: 0; border-radius: var(--r-lg); padding: 24px;
+  background: radial-gradient(120% 90% at 100% 0%, #D16A31 0%, transparent 55%), linear-gradient(160deg, #B85620, #9A4216);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 2px 4px rgba(120,50,15,.12), 0 20px 40px -20px rgba(150,60,20,.55);
+  display: flex; flex-direction: column; gap: 20px; }
+.hero::after { content: ""; position: absolute; right: -60px; top: -80px; width: 240px; height: 240px; border-radius: 50%; border: 1px solid rgba(255,255,255,.12); box-shadow: 0 0 0 40px rgba(255,255,255,.04); pointer-events: none; }
+.hero .top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.hero .label { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,.92); }
+.hero .label .ic { width: 28px; height: 28px; padding: 6px; border-radius: 8px; background: rgba(255,255,255,.16); }
+.hero .asof { font-size: 12px; color: rgba(255,255,255,.88); background: rgba(0,0,0,.14); padding: 4px 10px; border-radius: var(--r-full); }
+.hero .figure { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+.hero .figure .cur { font-size: 20px; font-weight: 600; color: rgba(255,255,255,.8); margin-right: 4px; }
+.hero .cmp { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; font-size: 13px; color: rgba(255,255,255,.9); }
+.pill-on-brand { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: var(--r-full); background: rgba(255,255,255,.95); color: #166534; }
+.hours { display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; align-items: end; height: 92px; margin-top: auto; }
+.hours .h { display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
+.hours .b { width: 100%; max-width: 28px; border-radius: 6px 6px 3px 3px; background: rgba(255,255,255,.3); min-height: 4px; }
+.hours .h.now .b { background: #fff; }
+.hours .t { font-size: 12px; color: rgba(255,255,255,.85); }
+.hero .foot { display: flex; gap: 0; border-top: 1px solid rgba(255,255,255,.18); padding-top: 16px; }
+.hero .foot > div { flex: 1; }
+.hero .foot > div + div { padding-left: 16px; border-left: 1px solid rgba(255,255,255,.18); }
+.hero .foot .k { font-size: 12px; color: rgba(255,255,255,.85); }
+.hero .foot .v { font-size: 16px; font-weight: 600; }
+
+/* ---------- KPI tiles ---------- */
+.kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.kpi { display: flex; flex-direction: column; gap: 14px; transition: box-shadow .15s, transform .15s; }
+.kpi .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.chip-ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none; background: color-mix(in srgb, var(--c) 13%, var(--surface)); color: var(--c); }
+.kpi .lbl { font-size: 13px; color: var(--text-2); font-weight: 500; }
+.kpi .val { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
+.kpi .val small { font-size: 16px; font-weight: 500; color: var(--text-2); margin-left: 2px; }
+.kpi .bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.kpi .note { font-size: 12px; color: var(--text-2); margin-top: 4px; }
+.delta { display: inline-flex; align-items: center; gap: 2px; font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: var(--r-full); white-space: nowrap; }
+.delta.up { background: var(--ok-tint); color: var(--ok); }
+.delta.down { background: var(--bad-tint); color: var(--bad-ink); }
+.spark { width: 88px; height: 36px; flex: none; overflow: visible; }
+.ring { width: 52px; height: 52px; flex: none; }
+
+/* ---------- Main chart ---------- */
+.seg { display: inline-flex; padding: 3px; border-radius: var(--r-sm); background: var(--surface-2); border: 1px solid var(--line); }
+.seg button { height: 34px; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; font-size: 13px; font-weight: 500; color: var(--text-2); cursor: pointer; transition: background-color .15s, color .15s, box-shadow .15s; }
+.seg button:hover { color: var(--text); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--text); font-weight: 600; box-shadow: var(--sh-1), 0 0 0 1px var(--line); }
+.chart-sum { display: flex; flex-wrap: wrap; gap: 8px 32px; margin-bottom: 20px; }
+.chart-sum .k { font-size: 12px; color: var(--text-2); }
+.chart-sum .v { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; display: flex; align-items: center; gap: 8px; }
+.legend { display: flex; gap: 16px; font-size: 12px; color: var(--text-2); align-items: center; margin-left: auto; align-self: flex-end; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.bars-wrap { position: relative; display: grid; grid-template-columns: 48px 1fr; height: 260px; }
+.yaxis { position: relative; }
+.yaxis span { position: absolute; right: 10px; transform: translateY(50%); font-size: 12px; color: var(--text-2); white-space: nowrap; }
+.plot { position: relative; border-bottom: 1px solid var(--line); }
+.grid-line { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--line); }
+.bars { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(7, 1fr); }
+.bar-col { position: relative; display: flex; align-items: flex-end; justify-content: center; height: 100%; cursor: default; border-radius: 8px; outline-offset: -2px; }
+.bar-col::before { content: ""; position: absolute; inset: 0 6px; border-radius: 10px; background: var(--surface-2); opacity: 0; transition: opacity .15s; }
+.bar-col:hover::before, .bar-col:focus-visible::before { opacity: 1; }
+.bar { position: relative; width: 52%; max-width: 44px; border-radius: 8px 8px 4px 4px; background: color-mix(in srgb, var(--brand) 22%, var(--surface)); transition: height .5s cubic-bezier(.2,.8,.2,1), background-color .15s; }
+.bar-col:hover .bar { background: color-mix(in srgb, var(--brand) 38%, var(--surface)); }
+.bar-col.today .bar { background: var(--brand); }
+.bar-col.today .bar.partial { background: repeating-linear-gradient(135deg, var(--brand) 0 6px, #C9693A 6px 9px); }
+.bar .cap { position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%); font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; }
+.bar-col.today .bar .cap { color: var(--brand-600); }
+.xaxis { display: grid; grid-template-columns: 48px repeat(7, 1fr); margin-top: 10px; }
+.xaxis div { text-align: center; font-size: 12px; color: var(--text-2); line-height: 1.35; }
+.xaxis div b { display: block; font-weight: 600; color: var(--text); font-size: 13px; }
+.xaxis div.today b { color: var(--brand-600); }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: var(--text); color: #fff; border-radius: var(--r-sm); padding: 10px 12px; font-size: 12px; min-width: 150px; box-shadow: var(--sh-float); opacity: 0; transform: translate(-50%, -100%) translateY(-4px); transition: opacity .12s; }
+.tip.show { opacity: 1; }
+.tip .d { color: rgba(255,255,255,.75); margin-bottom: 2px; }
+.tip .v { font-size: 14px; font-weight: 600; }
+.tip .o { color: rgba(255,255,255,.75); }
+
+/* ---------- Attention ---------- */
+.todo { display: grid; gap: 4px; }
+.todo-item { display: flex; align-items: center; gap: 12px; padding: 12px; margin: 0 -12px; border-radius: var(--r-sm); transition: background-color .15s; }
+.todo-item:hover { background: var(--surface-2); }
+.todo-item .txt { min-width: 0; flex: 1; }
+.todo-item .t { font-weight: 600; font-size: 14px; line-height: 1.35; }
+.todo-item .s { font-size: 12px; color: var(--text-2); text-wrap: pretty; }
+.todo-item + .todo-item { border-top: 1px solid var(--line); border-top-left-radius: 0; border-top-right-radius: 0; }
+.attn-total { display: inline-flex; align-items: center; justify-content: center; min-width: 24px; height: 24px; padding: 0 8px; border-radius: var(--r-full); background: var(--brand-tint); color: var(--brand-600); font-size: 12px; font-weight: 700; }
+.ship-cut { margin-top: 12px; display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: var(--r-sm); background: var(--surface-2); border: 1px solid var(--line); font-size: 13px; color: var(--text-2); }
+.ship-cut b { color: var(--text); font-weight: 600; }
+.ship-cut .meter { flex: 1; }
+
+/* ---------- Orders ---------- */
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.tab { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px; border-radius: var(--r-full); border: 1px solid var(--line); background: var(--surface); font-size: 13px; font-weight: 500; color: var(--text-2); cursor: pointer; transition: background-color .15s, color .15s, border-color .15s; }
+.tab:hover { color: var(--text); background: var(--surface-2); }
+.tab .n { font-size: 12px; font-weight: 600; color: var(--text-3); }
+.tab[aria-selected="true"] { background: var(--text); border-color: var(--text); color: #fff; }
+.tab[aria-selected="true"] .n { color: rgba(255,255,255,.7); }
+.table { width: 100%; border-collapse: collapse; }
+.table th { text-align: left; font-size: 12px; font-weight: 500; color: var(--text-2); padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.table td { padding: 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.table tr:last-child td { border-bottom: 0; }
+.table tbody tr { transition: background-color .15s; }
+.table tbody tr:hover { background: var(--surface-2); }
+.table th:first-child, .table td:first-child { padding-left: 0; }
+.table th:last-child, .table td:last-child { padding-right: 0; }
+.table .r { text-align: right; }
+.cust { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.ini { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 13px; font-weight: 600; flex: none; background: color-mix(in srgb, var(--c) 14%, var(--surface)); color: color-mix(in srgb, var(--c) 72%, #000); }
+.cust .n { font-weight: 600; white-space: nowrap; }
+.cust .m { font-size: 12px; color: var(--text-2); white-space: nowrap; }
+.oid { font-weight: 600; font-size: 13px; white-space: nowrap; }
+.otime { font-size: 12px; color: var(--text-2); }
+.items { font-size: 14px; color: var(--text); }
+.items .more { color: var(--text-2); }
+.pay { font-size: 12px; color: var(--text-2); white-space: nowrap; }
+.amt { font-weight: 600; white-space: nowrap; }
+.status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: var(--r-full); white-space: nowrap; }
+.status::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.st-pack { background: var(--brand-tint); color: var(--brand-600); }
+.st-pay { background: var(--warn-tint); color: var(--warn); }
+.st-ship { background: var(--info-tint); color: var(--info); }
+.st-done { background: var(--ok-tint); color: var(--ok); }
+.row-btn { width: 32px; height: 32px; border-radius: 8px; border: 0; background: transparent; color: var(--text-3); display: grid; place-items: center; cursor: pointer; margin-left: auto; }
+.row-btn:hover { background: var(--surface); color: var(--text); box-shadow: var(--sh-1); }
+.empty { text-align: center; padding: 32px 12px; color: var(--text-2); font-size: 13px; }
+
+/* ---------- Top products ---------- */
+.prod-list { display: grid; gap: 4px; }
+.prod { display: grid; grid-template-columns: auto 48px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 10px 0; }
+.prod + .prod { border-top: 1px solid var(--line); }
+.rank { width: 20px; font-size: 13px; font-weight: 600; color: var(--text-3); text-align: center; }
+.prod:first-child .rank { color: var(--brand-600); }
+.thumb { width: 48px; height: 48px; }
+.prod .n { font-weight: 600; font-size: 14px; line-height: 1.3; }
+.prod .m { font-size: 12px; color: var(--text-2); display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.prod .share { margin-top: 6px; height: 4px; border-radius: var(--r-full); background: var(--surface-2); overflow: hidden; }
+.prod .share i { display: block; height: 100%; border-radius: inherit; background: var(--brand); opacity: .85; }
+.prod .rev { text-align: right; }
+.prod .rev .v { font-weight: 600; font-size: 14px; white-space: nowrap; }
+.prod .rev .u { font-size: 12px; color: var(--text-2); white-space: nowrap; }
+.stock-low { color: var(--bad-ink); font-weight: 600; }
+.dotsep { width: 3px; height: 3px; border-radius: 50%; background: var(--text-3); }
+
+.scrim { display: none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1280px) {
+  .search { width: 220px; }
+  .span-5, .span-7 { grid-column: span 12; }
+  .hero { min-height: 0; }
+}
+@media (max-width: 1100px) {
+  .span-8, .span-4 { grid-column: span 12; }
+}
+@media (max-width: 960px) {
+  .app { grid-template-columns: 1fr; background: none; }
+  .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 280px; z-index: 50; transform: translateX(-100%); transition: transform .25s cubic-bezier(.2,.8,.2,1); box-shadow: var(--sh-float); }
+  .app.nav-open .sidebar { transform: none; }
+  .app.nav-open .scrim { display: block; position: fixed; inset: 0; background: rgba(28,25,23,.35); z-index: 40; }
+  .menu-btn { display: grid; }
+  .topbar { padding: 12px 20px; padding-top: max(12px, env(safe-area-inset-top)); }
+  .content { padding: 8px 20px 32px; gap: 16px; }
+  .kpis { gap: 16px; }
+  .search { display: none; }
+}
+@media (max-width: 860px) {
+  .table thead { display: none; }
+  .table, .table tbody { display: block; }
+  .table tr { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .table tr:last-child { border-bottom: 0; }
+  .table td { display: block; padding: 0 !important; border: 0; }
+  .table td.c-cust { grid-column: 1; grid-row: 1; }
+  .table td.c-amt { grid-column: 2; grid-row: 1; text-align: right; }
+  .table td.c-items { grid-column: 1; padding-left: 48px !important; min-width: 0; }
+  .table td.c-items .items { white-space: normal; }
+  .table td.c-status { grid-column: 2; text-align: right; align-self: center; }
+  .table td.c-act { display: none; }
+  .legend { flex-basis: 100%; margin-left: 0; }
+}
+@media (max-width: 720px) {
+  .topbar h1 { font-size: 20px; }
+  .topbar .btn .lbl { display: none; }
+  .topbar .btn { width: 40px; padding: 0; }
+  .content { padding: 4px 16px 28px; gap: 12px; }
+  .kpis { gap: 12px; }
+  .card { padding: 16px; }
+  .kpi .val { font-size: 24px; }
+  .kpi .bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .spark { width: 100%; height: 32px; }
+  .hero { padding: 20px; }
+  .hero .figure { font-size: 32px; }
+  .bars-wrap { height: 200px; grid-template-columns: 40px 1fr; }
+  .xaxis { grid-template-columns: 40px repeat(7, 1fr); }
+  .bar .cap { display: none; }
+  .xaxis .dt { display: none; }
+  .xaxis div b { white-space: nowrap; font-size: 12px; }
+  .bar-col.today .bar .cap { display: block; }
+  .legend { margin-left: 0; }
+  .card-head.wrap { flex-wrap: wrap; }
+  .cust .m { white-space: normal; }
+  .tabs { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px 8px; padding: 0 16px; scrollbar-width: none; }
+  .tab { flex: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-6h4v6"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 0 1 6 0"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5"/><path d="M12 13v8"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.6-3.5 3.3-5.5 6.5-5.5s5.9 2 6.5 5.5"/><path d="M16 4.6a3.5 3.5 0 0 1 0 6.8"/><path d="M18 14.8c2 .6 3.2 2.4 3.5 5.2"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4"/><path d="M4 20h16"/><path d="M8 16v-4"/><path d="M12 16V8"/><path d="M16 16v-6"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9.5v5M18 9.5v5"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M9 8h6M9 12h6"/></symbol>
+  <symbol id="i-scale" viewBox="0 0 24 24"><path d="M5 8h14l1.5 12h-17z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><path d="M12 12v3"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-pack" viewBox="0 0 24 24"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="m7.5 5.3 9 4.5V13"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h3"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.2"/><circle cx="12" cy="12" r="1.2"/><circle cx="19" cy="12" r="1.2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2 6h12v10H2zM14 10h4l3 3v3h-7"/><circle cx="6" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+</svg>
+
+<div class="app" id="app">
+  <aside class="sidebar" id="sidebar" aria-label="Navigasi utama">
+    <a href="#" class="brandmark" aria-label="Sangrai, ke beranda">
+      <span class="glyph" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="12" rx="7" ry="9.5" transform="rotate(30 12 12)" fill="#fff"/><path d="M8.2 18.5c3.2-2.6 1.2-6.4 3.8-9.6 1.3-1.6 2.6-2.6 3.8-3.2" stroke="#B4501D" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </span>
+      <span>Sangrai<small>Roastery · Admin</small></span>
+    </a>
+
+    <nav class="nav-group" aria-label="Menu toko">
+      <div class="nav-label">Toko</div>
+      <a class="nav-item" href="#" aria-current="page"><svg class="ic"><use href="#i-home"/></svg>Ringkasan</a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-bag"/></svg>Pesanan<span class="count">7</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-box"/></svg>Produk<span class="count muted">14</span></a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-users"/></svg>Pelanggan</a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-star"/></svg>Ulasan<span class="count muted">1</span></a>
+    </nav>
+    <nav class="nav-group" aria-label="Menu bisnis">
+      <div class="nav-label">Bisnis</div>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-chart"/></svg>Laporan</a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-tag"/></svg>Diskon & voucher</a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-truck"/></svg>Pengiriman</a>
+      <a class="nav-item" href="#"><svg class="ic"><use href="#i-gear"/></svg>Pengaturan</a>
+    </nav>
+
+    <div class="store-card">
+      <div class="row"><span class="t">Toko buka</span><span class="live">Online</span></div>
+      <div class="s">Target November</div>
+      <div class="meter" aria-hidden="true"><i id="monthMeter"></i></div>
+      <div class="row"><span class="s num" id="monthText"></span><span class="s num" id="monthPct" style="font-weight:600;color:var(--text)"></span></div>
+    </div>
+    <a href="#" class="user">
+      <span class="avatar"><img src="https://api.dicebear.com/9.x/notionists/svg?seed=Laras&backgroundColor=f6e1c9" alt="" width="36" height="36" onerror="this.replaceWith('LP')"></span>
+      <span><span class="name" style="display:block">Laras Pertiwi</span><span class="role">Pemilik toko</span></span>
+    </a>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Buka menu" aria-controls="sidebar" aria-expanded="false"><svg class="ic"><use href="#i-menu"/></svg></button>
+      <div class="title">
+        <h1>Ringkasan</h1>
+        <div class="date" id="today"></div>
+      </div>
+      <label class="search"><span class="sr-only">Cari pesanan, produk atau pelanggan</span>
+        <svg class="ic sm" aria-hidden="true"><use href="#i-search"/></svg>
+        <input type="search" id="searchInput" placeholder="Cari pesanan, produk…"><span class="kbd">/</span>
+      </label>
+      <button class="icon-btn" aria-label="Notifikasi, 3 baru"><svg class="ic"><use href="#i-bell"/></svg><span class="dot"></span></button>
+      <button class="btn"><svg class="ic sm"><use href="#i-plus"/></svg><span class="lbl">Tambah produk</span></button>
+    </header>
+
+    <main class="content">
+      <!-- Hero: today's sales -->
+      <section class="card hero span-5" aria-labelledby="heroLbl">
+        <div class="top">
+          <span class="label" id="heroLbl"><svg class="ic" aria-hidden="true"><use href="#i-cash"/></svg>Penjualan hari ini</span>
+          <span class="asof num" id="asof"></span>
+        </div>
+        <div>
+          <div class="figure num" id="todayRevenue"></div>
+          <div class="cmp"><span class="pill-on-brand num" id="todayDelta"></span><span id="todayCmp"></span></div>
+        </div>
+        <div>
+          <div class="hours" id="hours" role="img"></div>
+        </div>
+        <div class="foot">
+          <div><div class="k">Sudah dibayar</div><div class="v num" id="paidAmt"></div></div>
+          <div><div class="k">Menunggu bayar</div><div class="v num" id="pendingAmt"></div></div>
+        </div>
+      </section>
+
+      <!-- KPI tiles -->
+      <section class="kpis span-7" aria-label="Indikator hari ini" id="kpis"></section>
+
+      <!-- 7-day chart -->
+      <section class="card span-8" aria-labelledby="chartTitle">
+        <div class="card-head wrap">
+          <div>
+            <h2 id="chartTitle">Penjualan 7 hari terakhir</h2>
+            <div class="sub" id="chartRange"></div>
+          </div>
+          <div class="seg" role="group" aria-label="Tampilkan">
+            <button type="button" aria-pressed="true" data-metric="rev">Pendapatan</button>
+            <button type="button" aria-pressed="false" data-metric="ord">Pesanan</button>
+          </div>
+        </div>
+        <div class="chart-sum">
+          <div><div class="k">Total 7 hari</div><div class="v num"><span id="sumVal"></span><span class="delta up num" id="sumDelta"></span></div></div>
+          <div><div class="k" id="avgLbl">Rata-rata per hari</div><div class="v num" id="avgVal"></div></div>
+          <div class="legend"><span><i style="background:color-mix(in srgb,var(--brand) 22%,#fff)"></i>Hari sebelumnya</span><span><i style="background:repeating-linear-gradient(135deg,var(--brand) 0 3px,#C9693A 3px 5px)"></i>Hari ini (berjalan)</span></div>
+        </div>
+        <div style="position:relative">
+          <div class="bars-wrap">
+            <div class="yaxis" id="yaxis" aria-hidden="true"></div>
+            <div class="plot" id="plot"><div class="bars" id="bars"></div></div>
+          </div>
+          <div class="xaxis" id="xaxis" aria-hidden="true"></div>
+          <div class="tip" id="tip" role="status"></div>
+        </div>
+      </section>
+
+      <!-- Needs attention -->
+      <section class="card span-4" aria-labelledby="todoTitle">
+        <div class="card-head">
+          <div><h2 id="todoTitle">Perlu ditindaklanjuti</h2><div class="sub">Pekerjaan yang menunggu hari ini</div></div>
+          <span class="attn-total num" id="todoTotal"></span>
+        </div>
+        <div class="todo" id="todo"></div>
+        <div class="ship-cut">
+          <svg class="ic" style="color:var(--brand)" aria-hidden="true"><use href="#i-clock"/></svg>
+          <div style="flex:1;display:grid;gap:6px">
+            <span style="display:flex;justify-content:space-between;gap:8px;white-space:nowrap"><span>Kurir jemput <b>17.00</b></span><span id="cutLeft"></span></span>
+            <div class="meter" aria-hidden="true"><i id="cutMeter"></i></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent orders -->
+      <section class="card span-8" aria-labelledby="ordTitle">
+        <div class="card-head">
+          <div><h2 id="ordTitle">Pesanan terbaru</h2><div class="sub" id="ordSub"></div></div>
+          <a href="#" class="link">Semua pesanan<svg class="ic sm"><use href="#i-chev"/></svg></a>
+        </div>
+        <div class="tabs" role="tablist" aria-label="Filter status" id="tabs"></div>
+        <table class="table" id="ordersTable">
+          <thead><tr><th>Pelanggan</th><th>Produk</th><th class="r">Total</th><th>Status</th><th><span class="sr-only">Aksi</span></th></tr></thead>
+          <tbody id="orders"></tbody>
+        </table>
+      </section>
+
+      <!-- Top products -->
+      <section class="card span-4" aria-labelledby="topTitle">
+        <div class="card-head">
+          <div><h2 id="topTitle">Produk terlaris</h2><div class="sub">7 hari terakhir, menurut pendapatan</div></div>
+          <a href="#" class="link">Semua<svg class="ic sm"><use href="#i-chev"/></svg></a>
+        </div>
+        <div class="prod-list" id="products"></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+/* ===================== Sample data ===================== */
+const PRODUCTS = {
+  gayo:  { name: 'Arabika Gayo Wine', size: '250 g', price: 145000, kg: .25, stock: 42, sold7: 38, thumb: { type: 'bag', bg: '#F6E6EA', body: '#7A2E45', dark: '#5A1F31', label: 'round' } },
+  esp:   { name: 'Espresso Blend Harian', size: '1 kg', price: 265000, kg: 1, stock: 6, sold7: 17, thumb: { type: 'big', bg: '#EDEAE6', body: '#2B2522', dark: '#171311', label: 'band', accent: '#E07A3F' } },
+  kin:   { name: 'Arabika Kintamani Natural', size: '250 g', price: 128000, kg: .25, stock: 26, sold7: 29, thumb: { type: 'bag', bg: '#FBF0DC', body: '#C98A2E', dark: '#A56F1E', label: 'stripe' } },
+  rob:   { name: 'Robusta Temanggung', size: '500 g', price: 98000, kg: .5, stock: 58, sold7: 31, thumb: { type: 'bag', bg: '#E4F1E8', body: '#2F6B4C', dark: '#1F4D36', label: 'band', accent: '#F3E7C9' } },
+  drip:  { name: 'Drip Bag Toraja', size: 'isi 10', price: 85000, kg: .1, stock: 8, sold7: 34, thumb: { type: 'box', bg: '#E6ECF8', body: '#3559A8', dark: '#22407F' } },
+  flo:   { name: 'Arabika Flores Bajawa', size: '250 g', price: 135000, kg: .25, stock: 4, sold7: 9 },
+  susu:  { name: 'Kopi Susu Blend', size: '500 g', price: 118000, kg: .5, stock: 33, sold7: 14 },
+};
+const C = ['--c-plum','--c-blue','--c-green','--c-amber','--c-violet'];
+// [id, time, name, city, items [[key, qty]], payment, status]
+const ORDERS = [
+  ['SR-1123','15.38','Rina Kartika','Bandung',[['gayo',2]],'QRIS','pack'],
+  ['SR-1122','15.21','Dimas Prasetyo','Jakarta Selatan',[['esp',1],['drip',1]],'Transfer BCA','pay'],
+  ['SR-1121','15.02','Ayu Lestari','Yogyakarta',[['kin',1]],'GoPay','pack'],
+  ['SR-1120','14.47','Bagus Wicaksono','Surabaya',[['rob',2]],'QRIS','pack'],
+  ['SR-1119','14.30','Fitri Handayani','Depok',[['drip',2]],'Transfer Mandiri','pay'],
+  ['SR-1118','14.12','Kevin Tanoto','Medan',[['esp',2]],'QRIS','pack'],
+  ['SR-1117','13.55','Sari Wulandari','Malang',[['gayo',1],['kin',1]],'GoPay','pack'],
+  ['SR-1116','13.31','Yoga Pratama','Bekasi',[['rob',1],['susu',1]],'QRIS','ship'],
+  ['SR-1115','13.08','Nadia Putri','Tangerang',[['flo',2]],'OVO','ship'],
+  ['SR-1114','12.40','Hendra Gunawan','Semarang',[['esp',1]],'Transfer BCA','ship'],
+  ['SR-1113','12.15','Lestari Ningsih','Bogor',[['drip',1]],'QRIS','ship'],
+  ['SR-1112','11.52','Arif Rahman','Makassar',[['gayo',1],['drip',1]],'QRIS','ship'],
+  ['SR-1111','11.20','Maya Anggraini','Denpasar',[['susu',2]],'GoPay','ship'],
+  ['SR-1110','10.58','Fajar Nugroho','Surakarta',[['kin',2]],'QRIS','ship'],
+  ['SR-1109','10.31','Intan Permata','Bandung',[['rob',1]],'Transfer BCA','ship'],
+  ['SR-1108','10.05','Rizky Ramadhan','Jakarta Timur',[['esp',1],['rob',1]],'QRIS','ship'],
+  ['SR-1107','09.40','Dewi Sartika','Cirebon',[['gayo',1]],'GoPay','done'],
+  ['SR-1106','09.12','Andi Saputra','Jakarta Utara',[['drip',2]],'QRIS','done'],
+  ['SR-1105','08.47','Putri Amelia','Jakarta Barat',[['susu',1]],'QRIS','done'],
+  ['SR-1104','08.20','Budi Santoso','Bandung',[['flo',1]],'Transfer BCA','done'],
+  ['SR-1103','07.55','Wulan Sari','Bekasi',[['kin',1]],'QRIS','done'],
+  ['SR-1102','07.31','Agus Setiawan','Sleman',[['rob',1]],'OVO','done'],
+  ['SR-1101','07.12','Citra Dewanti','Jakarta Pusat',[['esp',1],['gayo',1]],'QRIS','done'],
+].map(([id, time, name, city, items, payment, status], i) => ({
+  id, time, name, city, items, payment, status, color: C[i % C.length],
+  total: items.reduce((s, [k, q]) => s + PRODUCTS[k].price * q, 0),
+  kg: items.reduce((s, [k, q]) => s + PRODUCTS[k].kg * q, 0),
+}));
+const STATUS = { pack: ['Perlu dikemas','st-pack'], pay: ['Menunggu bayar','st-pay'], ship: ['Dikirim','st-ship'], done: ['Selesai','st-done'] };
+
+const NOW = new Date(2026, 10, 15, 15, 40); // Minggu, 15 Nov 2026, 15.40
+const todayRev = ORDERS.reduce((s, o) => s + o.total, 0);
+const todayOrders = ORDERS.length;
+// Previous 6 days + today (computed). Last week same day for comparison.
+const DAYS = [
+  { rev: 3420000, ord: 17 }, { rev: 2980000, ord: 15 }, { rev: 3865000, ord: 19 },
+  { rev: 3510000, ord: 17 }, { rev: 4640000, ord: 22 }, { rev: 5275000, ord: 26 },
+  { rev: todayRev, ord: todayOrders },
+].map((d, i) => ({ ...d, date: new Date(2026, 10, 9 + i) }));
+const PREV7 = { rev: 25470000, ord: 128 };
+const LAST_SUN = { rev: 4210000, ord: 20, visitors: 715, kg: 10.4 }; // Minggu, 8 Nov sampai 15.40
+const VISITORS = 742;
+const MONTH = { rev: 71840000, target: 120000000 };
+
+/* ===================== Helpers ===================== */
+const rp = (n) => 'Rp ' + Math.round(n).toLocaleString('id-ID');
+const short = (n) => n >= 1e6 ? (n / 1e6).toLocaleString('id-ID', { maximumFractionDigits: 1 }) + ' jt' : (n / 1e3).toLocaleString('id-ID', { maximumFractionDigits: 0 }) + ' rb';
+const pct = (a, b) => (a - b) / b * 100;
+const fmtPct = (p) => (p >= 0 ? '▲ ' : '▼ ') + Math.abs(p).toLocaleString('id-ID', { maximumFractionDigits: 1, minimumFractionDigits: 1 }) + '%';
+const $ = (id) => document.getElementById(id);
+const dayShort = (d) => d.toLocaleDateString('id-ID', { weekday: 'short' }).replace('.', '');
+const initials = (n) => n.split(' ').map((w) => w[0]).slice(0, 2).join('');
+
+/* ===================== Header + hero ===================== */
+$('today').textContent = NOW.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+$('asof').textContent = 'Hingga 15.40';
+$('todayRevenue').innerHTML = '<span class="cur">Rp</span>' + todayRev.toLocaleString('id-ID');
+const dRev = pct(todayRev, LAST_SUN.rev);
+$('todayDelta').textContent = fmtPct(dRev);
+$('todayCmp').textContent = 'vs Minggu lalu di jam yang sama (' + rp(LAST_SUN.rev) + ')';
+const pending = ORDERS.filter((o) => o.status === 'pay');
+const pendingSum = pending.reduce((s, o) => s + o.total, 0);
+$('paidAmt').textContent = rp(todayRev - pendingSum);
+$('pendingAmt').textContent = rp(pendingSum);
+
+const hours = Array.from({ length: 9 }, (_, i) => 7 + i);
+const byHour = hours.map((h) => ORDERS.filter((o) => +o.time.split('.')[0] === h).reduce((s, o) => s + o.total, 0));
+const maxH = Math.max(...byHour);
+$('hours').setAttribute('aria-label', 'Penjualan per jam hari ini, tertinggi ' + rp(maxH) + ' pada jam ' + String(hours[byHour.indexOf(maxH)]).padStart(2, '0') + '.00');
+$('hours').innerHTML = hours.map((h, i) => `<div class="h${h === 15 ? ' now' : ''}" title="${String(h).padStart(2,'0')}.00 · ${rp(byHour[i])}"><div class="b" style="height:${Math.max(6, byHour[i] / maxH * 64)}px"></div><span class="t">${String(h).padStart(2, '0')}</span></div>`).join('');
+
+/* ===================== KPI tiles ===================== */
+function sparkline(values, color) {
+  const w = 88, h = 36, max = Math.max(...values), min = Math.min(...values);
+  const pts = values.map((v, i) => [i / (values.length - 1) * w, h - 4 - (v - min) / (max - min || 1) * (h - 8)]);
+  const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+  const last = pts[pts.length - 1];
+  const id = 'g' + Math.random().toString(36).slice(2, 7);
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".22"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
+    <path d="${d} L${w} ${h} L0 ${h}Z" fill="url(#${id})"/><path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/><circle cx="${last[0]}" cy="${last[1]}" r="3" fill="#fff" stroke="${color}" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>`;
+}
+function ring(p, color) {
+  const r = 20, c = 2 * Math.PI * r;
+  return `<svg class="ring" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="${r}" fill="none" stroke="var(--surface-2)" stroke-width="6"/><circle cx="26" cy="26" r="${r}" fill="none" stroke="${color}" stroke-width="6" stroke-linecap="round" stroke-dasharray="${(Math.min(p,1) * c).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 26 26)"/><text x="26" y="30" text-anchor="middle" font-size="11" font-weight="600" fill="var(--text)" font-family="inherit">${Math.round(p * 100)}%</text></svg>`;
+}
+function bars7(values, color) {
+  const max = Math.max(...values);
+  return `<svg class="spark" viewBox="0 0 88 36" aria-hidden="true">${values.map((v, i) => `<rect x="${i * 13}" y="${36 - v / max * 34}" width="9" height="${v / max * 34}" rx="2.5" fill="${color}" opacity="${i === values.length - 1 ? 1 : .3}"/>`).join('')}</svg>`;
+}
+const kgToday = ORDERS.reduce((s, o) => s + o.kg, 0);
+const aov = todayRev / todayOrders, aovLast = LAST_SUN.rev / LAST_SUN.ord;
+const conv = todayOrders / VISITORS * 100, convLast = LAST_SUN.ord / LAST_SUN.visitors * 100;
+const KPIS = [
+  { c: '--c-blue', icon: 'i-receipt', lbl: 'Pesanan', val: todayOrders, unit: '', delta: pct(todayOrders, LAST_SUN.ord), note: LAST_SUN.ord + ' pesanan Minggu lalu', viz: bars7(DAYS.map((d) => d.ord), 'var(--c-blue)') },
+  { c: '--c-plum', icon: 'i-cash', lbl: 'Rata-rata belanja', val: rp(aov).replace('Rp ', ''), pre: 'Rp', delta: pct(aov, aovLast), note: rp(aovLast) + ' Minggu lalu', viz: sparkline(DAYS.map((d) => d.rev / d.ord), 'var(--c-plum)') },
+  { c: '--c-green', icon: 'i-scale', lbl: 'Biji kopi terjual', val: kgToday.toLocaleString('id-ID', { maximumFractionDigits: 1 }), unit: 'kg', delta: pct(kgToday, LAST_SUN.kg), note: 'Target harian 20 kg', viz: ring(kgToday / 20, 'var(--c-green)') },
+  { c: '--c-amber', icon: 'i-eye', lbl: 'Konversi toko', val: conv.toLocaleString('id-ID', { maximumFractionDigits: 1 }), unit: '%', delta: pct(conv, convLast), note: VISITORS.toLocaleString('id-ID') + ' pengunjung hari ini', viz: sparkline([2.4, 2.9, 2.6, 2.7, 3.0, 3.3, conv], 'var(--c-amber)') },
+];
+$('kpis').innerHTML = KPIS.map((k) => {
+  const d = `<span class="delta ${k.delta >= 0 ? 'up' : 'down'} num">${fmtPct(k.delta)}</span>`;
+  return `<article class="card kpi">
+    <div class="row"><span class="chip-ic" style="--c:var(${k.c})"><svg class="ic"><use href="#${k.icon}"/></svg></span>${d}</div>
+    <div class="bottom"><div><div class="lbl">${k.lbl}</div><div class="val num">${k.pre ? '<small style="margin:0 4px 0 0">' + k.pre + '</small>' : ''}${k.val}${k.unit ? '<small>' + k.unit + '</small>' : ''}</div><div class="note num">${k.note}</div></div>${k.viz}</div>
+  </article>`;
+}).join('');
+
+/* ===================== 7-day chart ===================== */
+let metric = 'rev';
+const sum7 = (m) => DAYS.reduce((s, d) => s + d[m], 0);
+$('chartRange').textContent = DAYS[0].date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) + ' – ' + DAYS[6].date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+function niceMax(v) { const step = Math.pow(10, Math.floor(Math.log10(v))); const s = [1, 2, 2.5, 5, 10].map((m) => m * step).find((m) => v / m <= 4) || step * 10; return Math.ceil(v / s) * s; }
+function drawChart() {
+  const vals = DAYS.map((d) => d[metric]);
+  const max = niceMax(Math.max(...vals) * 1.08);
+  const ticks = [0, .25, .5, .75, 1].map((f) => f * max);
+  const fmt = metric === 'rev' ? (v) => v === 0 ? '0' : short(v) : (v) => String(Math.round(v));
+  $('yaxis').innerHTML = ticks.map((t) => `<span style="bottom:${t / max * 100}%">${fmt(t)}</span>`).join('');
+  $('plot').querySelectorAll('.grid-line').forEach((g) => g.remove());
+  ticks.slice(1).forEach((t) => { const g = document.createElement('div'); g.className = 'grid-line'; g.style.bottom = t / max * 100 + '%'; $('plot').prepend(g); });
+  $('bars').innerHTML = DAYS.map((d, i) => {
+    const today = i === 6;
+    const label = metric === 'rev' ? short(d.rev) : d.ord;
+    const aria = `${d.date.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' })}: ${rp(d.rev)}, ${d.ord} pesanan${today ? ', hari ini masih berjalan' : ''}`;
+    return `<div class="bar-col${today ? ' today' : ''}" tabindex="0" data-i="${i}" aria-label="${aria}"><div class="bar${today ? ' partial' : ''}" style="height:${d[metric] / max * 100}%"><span class="cap num">${label}</span></div></div>`;
+  }).join('');
+  $('xaxis').innerHTML = '<div></div>' + DAYS.map((d, i) => `<div class="${i === 6 ? 'today' : ''}"><b>${i === 6 ? 'Hari ini' : dayShort(d.date)}</b><span class="dt"> ${d.date.getDate()} Nov</span></div>`).join('');
+  const s = sum7(metric), prev = PREV7[metric];
+  $('sumVal').textContent = metric === 'rev' ? rp(s) : s + ' pesanan';
+  const dp = pct(s, prev);
+  $('sumDelta').className = 'delta num ' + (dp >= 0 ? 'up' : 'down');
+  $('sumDelta').textContent = fmtPct(dp);
+  $('sumDelta').title = 'dibanding 7 hari sebelumnya';
+  $('avgLbl').textContent = metric === 'rev' ? 'Rata-rata per hari' : 'Rata-rata pesanan per hari';
+  $('avgVal').textContent = metric === 'rev' ? rp(s / 7) : (s / 7).toLocaleString('id-ID', { maximumFractionDigits: 1 });
+  $('plot').setAttribute('aria-label', `Grafik ${metric === 'rev' ? 'pendapatan' : 'pesanan'} 7 hari. Tertinggi hari Sabtu, ${metric === 'rev' ? rp(DAYS[5].rev) : DAYS[5].ord + ' pesanan'}.`);
+  $('plot').setAttribute('role', 'img');
+  bindTips();
+}
+function bindTips() {
+  const tip = $('tip'), wrap = tip.parentElement;
+  $('bars').querySelectorAll('.bar-col').forEach((col) => {
+    const show = () => {
+      const d = DAYS[+col.dataset.i], bar = col.querySelector('.bar');
+      const r = bar.getBoundingClientRect(), w = wrap.getBoundingClientRect();
+      tip.innerHTML = `<div class="d">${d.date.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'short' })}${+col.dataset.i === 6 ? ' · hingga 15.40' : ''}</div><div class="v num">${rp(d.rev)}</div><div class="o num">${d.ord} pesanan · ${rp(d.rev / d.ord)}/pesanan</div>`;
+      let x = r.left + r.width / 2 - w.left;
+      x = Math.min(Math.max(x, 90), w.width - 90);
+      tip.style.left = x + 'px'; tip.style.top = (r.top - w.top - 8) + 'px';
+      tip.classList.add('show');
+    };
+    const hide = () => tip.classList.remove('show');
+    col.addEventListener('mouseenter', show); col.addEventListener('focus', show);
+    col.addEventListener('mouseleave', hide); col.addEventListener('blur', hide);
+  });
+}
+document.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => {
+  metric = b.dataset.metric;
+  document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-pressed', x === b));
+  drawChart();
+}));
+drawChart();
+
+/* ===================== Attention ===================== */
+const pack = ORDERS.filter((o) => o.status === 'pack');
+const lowStock = Object.values(PRODUCTS).filter((p) => p.stock <= 10).sort((a, b) => a.stock - b.stock);
+const TODO = [
+  { c: '--brand', icon: 'i-pack', t: `${pack.length} pesanan perlu dikemas`, s: `${pack.reduce((s, o) => s + o.kg, 0).toLocaleString('id-ID')} kg · tertua pukul ${pack[pack.length - 1].time}`, a: 'Proses' },
+  { c: '--c-amber', icon: 'i-card', t: `${pending.length} transfer perlu dicek`, s: `Total ${rp(pendingSum)}`, a: 'Cek' },
+  { c: '--bad-ink', icon: 'i-alert', t: `${lowStock.length} produk stok menipis`, s: lowStock.map((p) => p.name.replace('Arabika ', '').replace(' Blend Harian', '').replace(' Toraja', '') + ' ' + p.stock).join(' · '), a: 'Restok' },
+  { c: '--c-violet', icon: 'i-msg', t: '1 ulasan baru, bintang 3', s: 'Gayo Wine · “Pengiriman agak lama”', a: 'Balas' },
+];
+$('todoTotal').textContent = pack.length + pending.length + lowStock.length + 1;
+$('todo').innerHTML = TODO.map((x) => `<div class="todo-item"><span class="chip-ic" style="--c:var(${x.c})"><svg class="ic"><use href="#${x.icon}"/></svg></span><div class="txt"><div class="t">${x.t}</div><div class="s">${x.s}</div></div><button class="btn btn-ghost btn-sm">${x.a}</button></div>`).join('');
+const openMin = 8 * 60, cutMin = 17 * 60, nowMin = 15 * 60 + 40;
+const left = cutMin - nowMin;
+$('cutLeft').textContent = `sisa ${Math.floor(left / 60)} j ${left % 60} mnt`;
+$('cutMeter').style.width = ((nowMin - openMin) / (cutMin - openMin) * 100) + '%';
+
+/* ===================== Orders ===================== */
+let filter = 'all';
+const TABS = [['all', 'Semua'], ['pack', 'Perlu dikemas'], ['pay', 'Menunggu bayar'], ['ship', 'Dikirim'], ['done', 'Selesai']];
+$('ordSub').textContent = `${todayOrders} pesanan hari ini`;
+function drawTabs() {
+  $('tabs').innerHTML = TABS.map(([k, l]) => `<button class="tab" role="tab" aria-selected="${k === filter}" data-k="${k}">${l}<span class="n num">${k === 'all' ? ORDERS.length : ORDERS.filter((o) => o.status === k).length}</span></button>`).join('');
+  $('tabs').querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => { filter = t.dataset.k; drawTabs(); drawOrders(); }));
+}
+function itemsText(items) {
+  const [k, q] = items[0], p = PRODUCTS[k];
+  return `<div class="items">${p.name}</div><div class="pay num">${p.size} × ${q}${items.length > 1 ? ` · +${items.length - 1} produk lain` : ''}</div>`;
+}
+function drawOrders() {
+  const list = ORDERS.filter((o) => filter === 'all' || o.status === filter).slice(0, 6);
+  if (!list.length) { $('orders').innerHTML = '<tr><td colspan="5" class="empty">Tidak ada pesanan dengan status ini hari ini.</td></tr>'; return; }
+  $('orders').innerHTML = list.map((o) => `<tr>
+    <td class="c-cust"><div class="cust"><span class="ini" style="--c:var(${o.color})">${initials(o.name)}</span><div><div class="n">${o.name}</div><div class="m num">#${o.id} · ${o.time}</div></div></div></td>
+    <td class="c-items">${itemsText(o.items)}</td>
+    <td class="c-amt r"><div class="amt num">${rp(o.total)}</div><div class="pay">${o.payment}</div></td>
+    <td class="c-status"><span class="status ${STATUS[o.status][1]}">${STATUS[o.status][0]}</span></td>
+    <td class="c-act"><button class="row-btn" aria-label="Aksi untuk pesanan ${o.id}"><svg class="ic sm"><use href="#i-dots"/></svg></button></td>
+  </tr>`).join('');
+}
+drawTabs(); drawOrders();
+
+/* ===================== Top products ===================== */
+function thumb(t) {
+  const lbl = '#FFF8EE';
+  if (t.type === 'box') return `<svg class="thumb" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="${t.bg}"/>
+    <path d="M12 16 24 11l12 5v18l-12 5-12-5z" fill="${t.body}"/><path d="M24 21v18l12-5V16z" fill="${t.dark}"/><path d="M12 16l12 5 12-5" fill="none" stroke="#fff" stroke-opacity=".35"/>
+    <rect x="15" y="23" width="6" height="8" rx="1" fill="${lbl}" transform="skewY(22) translate(0 -6)"/></svg>`;
+  const big = t.type === 'big';
+  const x0 = big ? 11 : 14, x1 = big ? 37 : 34, top = big ? 9 : 12;
+  let label = '';
+  if (t.label === 'round') label = `<circle cx="24" cy="28" r="6" fill="${lbl}"/><circle cx="24" cy="28" r="3" fill="none" stroke="${t.body}" stroke-width="1.2"/>`;
+  if (t.label === 'band') label = `<rect x="${x0}" y="25" width="${x1 - x0}" height="9" fill="${t.accent}"/><rect x="${x0 + 4}" y="28" width="${(x1 - x0) / 2}" height="2" rx="1" fill="${t.dark}" opacity=".6"/>`;
+  if (t.label === 'stripe') label = `<rect x="${x0 + 4}" y="22" width="${x1 - x0 - 8}" height="12" rx="2" fill="${lbl}"/><path d="M${x0 + 7} 26h${x1 - x0 - 14}M${x0 + 7} 30h${(x1 - x0 - 14) * .6}" stroke="${t.dark}" stroke-width="1.5" stroke-linecap="round"/>`;
+  return `<svg class="thumb" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="${t.bg}"/>
+    <path d="M${x0 + 1} ${top + 4} L${x0} 40 Q${x0} 41 ${x0 + 1} 41 H${x1 - 1} Q${x1} 41 ${x1} 40 L${x1 - 1} ${top + 4}z" fill="${t.body}"/>
+    <rect x="${x0 + 1}" y="${top}" width="${x1 - x0 - 2}" height="5" rx="1" fill="${t.dark}"/>
+    <path d="M${x1 - 5} ${top + 7} V39" stroke="#fff" stroke-opacity=".18" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="24" cy="${top + 9}" r="1.6" fill="#fff" fill-opacity=".55"/>${label}</svg>`;
+}
+const top5 = Object.values(PRODUCTS).filter((p) => p.thumb).map((p) => ({ ...p, rev: p.price * p.sold7 })).sort((a, b) => b.rev - a.rev);
+const total7 = sum7('rev');
+$('products').innerHTML = top5.map((p, i) => `<div class="prod">
+  <span class="rank num">${i + 1}</span>${thumb(p.thumb)}
+  <div style="min-width:0"><div class="n">${p.name}</div>
+    <div class="m num"><span>${p.size}</span><span class="dotsep"></span><span class="${p.stock <= 10 ? 'stock-low' : ''}">Stok ${p.stock}</span></div>
+    <div class="share" title="${(p.rev / total7 * 100).toFixed(0)}% dari pendapatan 7 hari"><i style="width:${p.rev / top5[0].rev * 100}%"></i></div></div>
+  <div class="rev"><div class="v num">${short(p.rev)}</div><div class="u num">${p.sold7} terjual</div></div>
+</div>`).join('');
+
+/* ===================== Month target ===================== */
+$('monthMeter').style.width = (MONTH.rev / MONTH.target * 100) + '%';
+$('monthText').textContent = short(MONTH.rev) + ' / ' + short(MONTH.target);
+$('monthPct').textContent = Math.round(MONTH.rev / MONTH.target * 100) + '%';
+
+/* ===================== Shell interactions ===================== */
+const app = $('app'), menuBtn = $('menuBtn');
+const setNav = (open) => { app.classList.toggle('nav-open', open); menuBtn.setAttribute('aria-expanded', open); };
+menuBtn.addEventListener('click', () => setNav(!app.classList.contains('nav-open')));
+$('scrim').addEventListener('click', () => setNav(false));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') setNav(false);
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') { e.preventDefault(); $('searchInput').focus(); }
+});
+</script>
+</body>
+</html>

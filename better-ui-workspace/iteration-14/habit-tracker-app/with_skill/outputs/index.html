@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F4F3FA">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<title>Steady · Habit tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Look: soft tint — pale lilac canvas, white cards, one violet brand colour, soft category tints on habit chips. */
+:root {
+  --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --canvas: #F4F3FA; --surface: #FFFFFF; --surface-2: #F7F6FB; --line: #ECEAF3; --line-2: #E2DFEC;
+  --text: #16142B; --text-2: #625E78; --text-3: #8F8BA6;
+  --brand: #5B45E8; --brand-deep: #4430CF; --brand-tint: #EEEBFE; --brand-soft: #D9D2FC; --on-brand: #FFFFFF;
+  --flame: #EA580C;
+  --ok: #15803D; --ok-tint: #E8F7EE; --bad: #DC2626; --bad-tint: #FDECEC;
+  --r-xs: 6px; --r-sm: 12px; --r-md: 16px; --r-lg: 24px; --r-full: 999px;
+  --sh-1: 0 1px 2px rgba(30,24,70,.04), 0 1px 1px rgba(30,24,70,.03);
+  --shadow: 0 1px 2px rgba(30,24,70,.04), 0 8px 24px -12px rgba(30,24,70,.12);
+  --shadow-float: 0 12px 32px -8px rgba(30,24,70,.22);
+  --tab-h: 64px;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; font-family: var(--font); font-size: 16px; line-height: 1.5; color: var(--text); background: var(--canvas);
+  -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; min-height: 100dvh; }
+h1, h2, h3 { margin: 0; text-wrap: balance; font-weight: 600; }
+p { margin: 0; text-wrap: pretty; }
+img, svg { display: block; max-width: 100%; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: 0; padding: 0; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* ---------- shell ---------- */
+.app { min-height: 100dvh; }
+.side { display: none; }
+.main { max-width: 560px; margin: 0 auto;
+  padding: calc(env(safe-area-inset-top) + 16px) 20px calc(var(--tab-h) + env(safe-area-inset-bottom) + 28px); }
+.view[hidden] { display: none; }
+
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; min-height: 48px; }
+.top .eyebrow { font-size: 13px; color: var(--text-2); font-weight: 500; }
+.top h1 { font-size: 24px; letter-spacing: -0.02em; line-height: 1.25; }
+.top-actions { display: flex; gap: 8px; }
+.icon-btn { width: 44px; height: 44px; border-radius: var(--r-full); display: grid; place-items: center; background: var(--surface);
+  color: var(--text); box-shadow: var(--sh-1), inset 0 0 0 1px var(--line); transition: transform .15s, background-color .15s; }
+.icon-btn:hover { background: var(--surface-2); }
+.icon-btn:active { transform: scale(.94); }
+.icon-btn.primary { background: var(--brand); color: var(--on-brand); box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 6px 16px -6px rgba(91,69,232,.7); }
+.icon-btn.primary:hover { background: var(--brand-deep); }
+
+/* brand mark */
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+.brand-glyph { width: 32px; height: 32px; border-radius: var(--r-sm); background: var(--brand); display: grid; place-items: center; color: #fff; }
+.brand-glyph svg { width: 18px; height: 18px; stroke-width: 2.4; }
+.mobile-brand { display: flex; }
+
+/* week strip */
+.week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 16px; }
+.day { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 0 8px; border-radius: var(--r-md);
+  background: var(--surface); box-shadow: var(--sh-1), inset 0 0 0 1px var(--line); min-height: 72px; transition: background-color .15s, transform .15s; }
+.day:hover { background: var(--surface-2); }
+.day:active { transform: scale(.96); }
+.day .dl { font-size: 12px; color: var(--text-2); font-weight: 500; }
+.day .dn { font-size: 16px; font-weight: 600; }
+.day .dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; margin-top: 2px; }
+.day .dot.part { background: var(--brand-soft); }
+.day .dot.full { background: var(--brand); }
+.day.today:not(.sel) .dn { color: var(--brand); }
+.day.sel { background: var(--brand); color: #fff; box-shadow: 0 8px 18px -8px rgba(91,69,232,.8); }
+.day.sel .dl { color: rgba(255,255,255,.85); }
+.day.sel .dot.part { background: rgba(255,255,255,.55); }
+.day.sel .dot.full { background: #fff; }
+
+/* summary card */
+.summary { position: relative; overflow: clip; border-radius: var(--r-lg); padding: 20px; color: #fff;
+  background: radial-gradient(120% 90% at 100% 0%, #7A66F4 0%, transparent 60%), linear-gradient(160deg, #5B45E8, #4A34D6);
+  box-shadow: 0 2px 4px rgba(68,48,207,.12), 0 18px 36px -16px rgba(68,48,207,.6); margin-bottom: 28px; }
+.sum-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.sum-label { font-size: 14px; color: rgba(255,255,255,.85); font-weight: 500; }
+.sum-fig { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin-top: 4px; }
+.sum-fig small { font-size: 20px; font-weight: 500; color: rgba(255,255,255,.8); letter-spacing: -0.01em; }
+.sum-sub { font-size: 14px; color: rgba(255,255,255,.88); margin-top: 2px; }
+.ring { position: relative; width: 88px; height: 88px; flex: none; }
+.ring svg { transform: rotate(-90deg); }
+.ring .pct { position: absolute; inset: 0; display: grid; place-items: center; font-size: 18px; font-weight: 600; }
+.ring .arc { transition: stroke-dasharray .5s cubic-bezier(.2,.8,.2,1); }
+.sum-stats { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.18); }
+.sum-stat { display: flex; align-items: center; gap: 10px; }
+.sum-stat + .sum-stat { padding-left: 16px; border-left: 1px solid rgba(255,255,255,.18); }
+.sum-stat .chip { width: 36px; height: 36px; border-radius: var(--r-sm); background: rgba(255,255,255,.16); display: grid; place-items: center; flex: none; }
+.sum-stat b { display: block; font-size: 16px; font-weight: 600; line-height: 1.3; }
+.sum-stat span { font-size: 12px; color: rgba(255,255,255,.85); }
+
+/* sections + cards */
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; margin: 0 2px 12px; }
+.sec-head h2 { font-size: 18px; letter-spacing: -0.01em; }
+.sec-head .meta { font-size: 13px; color: var(--text-2); font-weight: 500; }
+.link { color: var(--brand); font-size: 14px; font-weight: 600; padding: 8px 4px; margin: -8px -4px; border-radius: var(--r-xs); }
+.link:hover { color: var(--brand-deep); }
+.card { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow), inset 0 0 0 1px var(--line); }
+.card-pad { padding: 20px; }
+.card + .card, .stack > * + * { margin-top: 16px; }
+.card-title { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.card-title h2 { font-size: 16px; letter-spacing: 0; }
+.card-title span { font-size: 13px; color: var(--text-2); }
+
+/* habit list */
+.list { list-style: none; margin: 0; padding: 6px 0; }
+.row { display: flex; align-items: center; gap: 14px; padding: 10px 16px 10px 12px; position: relative; }
+.row + .row::before { content: ""; position: absolute; left: 70px; right: 16px; top: 0; border-top: 1px solid var(--line); }
+.row-main { flex: 1; min-width: 0; display: flex; align-items: center; gap: 14px; text-align: left; padding: 4px; margin: -4px; border-radius: var(--r-sm); }
+.row-main:hover .row-name { color: var(--brand-deep); }
+.hchip { --c: var(--brand); width: 48px; height: 48px; border-radius: var(--r-md); display: grid; place-items: center; flex: none;
+  background: color-mix(in srgb, var(--c) 13%, var(--surface)); font-size: 24px; line-height: 1; }
+.hchip img { width: 30px; height: 30px; }
+.row-text { min-width: 0; }
+.row-name { font-size: 16px; font-weight: 600; line-height: 1.35; transition: color .15s; overflow-wrap: anywhere; }
+.row-sub { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-2); margin-top: 2px; font-weight: 500; }
+.row-sub .ic { width: 15px; height: 15px; color: var(--flame); stroke-width: 2; }
+.row-sub .muted .ic, .row-sub .ic.off { color: var(--text-3); }
+.row-sub .sep { color: var(--text-3); }
+.check { width: 44px; height: 44px; border-radius: 50%; flex: none; display: grid; place-items: center;
+  box-shadow: inset 0 0 0 2px var(--line-2); color: transparent; transition: background-color .2s, box-shadow .2s, transform .15s; }
+.check:hover { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--brand) 55%, var(--line-2)); color: color-mix(in srgb, var(--brand) 45%, transparent); }
+.check:active { transform: scale(.9); }
+.check .ic { width: 22px; height: 22px; stroke-width: 2.6; }
+.check.on { background: var(--brand); box-shadow: 0 6px 14px -6px rgba(91,69,232,.8); color: #fff; }
+.check.pop { animation: pop .35s cubic-bezier(.2,.9,.3,1.4); }
+@keyframes pop { 0% { transform: scale(.8); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+
+/* empty state */
+.empty { text-align: center; padding: 36px 24px 32px; }
+.empty .art { width: 96px; height: 96px; margin: 0 auto 16px; border-radius: var(--r-lg); background: var(--brand-tint); display: grid; place-items: center; font-size: 56px; }
+.empty .art img { width: 60px; height: 60px; }
+.empty h2 { font-size: 18px; margin-bottom: 6px; }
+.empty p { color: var(--text-2); font-size: 15px; max-width: 34ch; margin: 0 auto 20px; }
+.quick-lbl { font-size: 13px; color: var(--text-2); font-weight: 500; margin: 28px 0 10px; }
+.quick { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.quick button { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px 0 10px; border-radius: var(--r-full);
+  background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line); font-size: 14px; font-weight: 500; transition: background-color .15s; }
+.quick button:hover { background: var(--brand-tint); }
+.quick .em { width: 24px; height: 24px; font-size: 18px; line-height: 24px; text-align: center; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; padding: 0 22px; border-radius: var(--r-full);
+  font-weight: 600; font-size: 16px; background: var(--brand); color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(30,24,70,.2), 0 8px 18px -8px rgba(91,69,232,.7);
+  transition: background-color .15s, transform .15s; }
+.btn:hover { background: var(--brand-deep); }
+.btn:active { transform: scale(.98); }
+.btn.block { width: 100%; }
+.btn.ghost { background: var(--surface-2); color: var(--text); box-shadow: inset 0 0 0 1px var(--line); }
+.btn.ghost:hover { background: var(--line); }
+.btn.danger { background: var(--bad); box-shadow: 0 8px 18px -8px rgba(220,38,38,.6); }
+.btn.danger:hover { background: #B91C1C; }
+.btn.danger-soft { background: var(--bad-tint); color: #B91C1C; box-shadow: none; }
+.btn.danger-soft:hover { background: #FAD9D9; }
+.btn .ic { width: 18px; height: 18px; }
+
+/* stats */
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+.tiles > .card { margin: 0; }
+.tile { padding: 14px; border-radius: var(--r-md); }
+.tile .tic { width: 36px; height: 36px; border-radius: var(--r-sm); display: grid; place-items: center; margin-bottom: 12px; }
+.tile .tic .ic { width: 18px; height: 18px; }
+.tile b { display: block; font-size: 22px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.tile b small { font-size: 14px; font-weight: 500; color: var(--text-2); letter-spacing: 0; }
+.tile span { display: block; font-size: 12px; color: var(--text-2); font-weight: 500; margin-top: 2px; line-height: 1.35; }
+
+.bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; align-items: end; height: 150px; position: relative; padding-top: 22px; }
+.bars::before { content: ""; position: absolute; inset: 22px 0 26px; border-bottom: 1px solid var(--line); pointer-events: none;
+  background: repeating-linear-gradient(to bottom, var(--line) 0 1px, transparent 1px calc(50% - .5px)); }
+.bar-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 6px; position: relative; }
+.bar-val { position: absolute; left: 50%; bottom: 100%; transform: translateX(-50%); margin-bottom: 4px; font-size: 12px; font-weight: 600; color: var(--text-2); }
+.bar-track { width: 100%; max-width: 32px; height: 102px; display: flex; align-items: flex-end; }
+.bar { position: relative; width: 100%; border-radius: var(--r-xs); background: #CBC1FB; min-height: 4px; transition: height .4s cubic-bezier(.2,.8,.2,1); }
+.bar-col.now .bar { background: var(--brand); }
+.bar-col.now .bar-val { color: var(--brand); }
+.bar-lbl { font-size: 12px; color: var(--text-2); font-weight: 500; height: 20px; line-height: 20px; }
+.bar-col.now .bar-lbl { color: var(--text); font-weight: 600; }
+
+.heat-wrap { display: grid; grid-template-columns: auto 1fr; gap: 8px; }
+.heat-days { display: grid; grid-template-rows: repeat(7, 1fr); gap: 4px; font-size: 12px; color: var(--text-2); font-weight: 500; }
+.heat-days span { display: flex; align-items: center; height: 100%; line-height: 1; }
+.heat { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 1fr); gap: 4px; }
+.heat i { aspect-ratio: 1; border-radius: var(--r-xs); background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line); }
+.heat i.l1 { background: #E4DEFE; box-shadow: none; } .heat i.l2 { background: #C3B8FA; box-shadow: none; }
+.heat i.l3 { background: #9D8CF5; box-shadow: none; } .heat i.l4 { background: #725CEE; box-shadow: none; } .heat i.l5 { background: var(--brand-deep); box-shadow: none; }
+.heat i.fut { background: transparent; box-shadow: none; }
+.heat i.today { outline: 2px solid var(--brand); outline-offset: 1px; }
+.heat-legend { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 12px; font-size: 12px; color: var(--text-2); }
+.heat-legend i { width: 12px; height: 12px; border-radius: var(--r-xs); display: inline-block; }
+.heat-legend span { margin: 0 4px; }
+
+.streak-list .row { padding: 12px 20px; }
+.streak-list .row + .row::before { left: 82px; right: 20px; }
+.streak-fig { text-align: right; flex: none; }
+.streak-fig b { display: flex; align-items: center; justify-content: flex-end; gap: 4px; font-size: 16px; font-weight: 600; }
+.streak-fig b .ic { width: 16px; height: 16px; color: var(--flame); }
+.streak-fig span { font-size: 12px; color: var(--text-2); font-weight: 500; }
+.meter { height: 6px; border-radius: var(--r-full); background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line); margin-top: 8px; overflow: hidden; max-width: 160px; }
+.meter i { display: block; height: 100%; border-radius: var(--r-full); background: var(--c); }
+
+/* settings */
+.group { list-style: none; margin: 0; padding: 4px 0; }
+.set-row { display: flex; align-items: center; gap: 14px; width: 100%; padding: 12px 16px; text-align: left; min-height: 64px; position: relative; transition: background-color .15s; }
+button.set-row:hover { background: var(--surface-2); }
+.group li:first-child .set-row { border-radius: var(--r-lg) var(--r-lg) 0 0; }
+.group li:last-child .set-row { border-radius: 0 0 var(--r-lg) var(--r-lg); }
+.group li:only-child .set-row { border-radius: var(--r-lg); }
+.group li + li .set-row::before { content: ""; position: absolute; left: 70px; right: 16px; top: 0; border-top: 1px solid var(--line); }
+.set-ic { width: 40px; height: 40px; border-radius: var(--r-sm); display: grid; place-items: center; flex: none; background: var(--brand-tint); color: var(--brand); }
+.set-ic.red { background: var(--bad-tint); color: var(--bad); }
+.set-ic.grey { background: var(--surface-2); color: var(--text-2); box-shadow: inset 0 0 0 1px var(--line); }
+.set-row .t { flex: 1; min-width: 0; }
+.set-row .t b { display: block; font-size: 15px; font-weight: 600; }
+.set-row .t span { display: block; font-size: 13px; color: var(--text-2); margin-top: 1px; }
+.set-row.red .t b { color: #B91C1C; }
+.set-row .chev { color: var(--text-3); }
+.set-row .hchip { width: 40px; height: 40px; border-radius: var(--r-sm); font-size: 20px; }
+.set-row .hchip img { width: 24px; height: 24px; }
+.settings-sec { margin: 24px 4px 10px; font-size: 13px; font-weight: 600; color: var(--text-2); }
+.settings-wrap > .set-col:first-child .settings-sec:first-child { margin-top: 0; }
+
+/* tab bar */
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: rgba(255,255,255,.96); backdrop-filter: blur(16px);
+  border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
+.tabbar-in { max-width: 560px; margin: 0 auto; height: var(--tab-h); display: grid; grid-template-columns: repeat(3, 1fr); }
+.tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 12px; font-weight: 500; color: var(--text-2); transition: color .15s; }
+.tab .ic { width: 22px; height: 22px; }
+.tab:hover { color: var(--text); }
+.tab[aria-current="page"] { color: var(--brand); font-weight: 600; }
+
+/* sheet */
+.backdrop { position: fixed; inset: 0; z-index: 50; background: rgba(22,20,43,.42); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; transition: opacity .2s; }
+.backdrop.open { opacity: 1; }
+.backdrop[hidden] { display: none; }
+.sheet:focus { outline: none; }
+.sheet { width: 100%; max-width: 560px; max-height: calc(100dvh - 40px); overflow: auto; background: var(--surface);
+  border-radius: 28px 28px 0 0; padding: 10px 20px calc(env(safe-area-inset-bottom) + 20px); box-shadow: var(--shadow-float);
+  transform: translateY(24px); transition: transform .25s cubic-bezier(.2,.8,.2,1); overscroll-behavior: contain; }
+.backdrop.open .sheet { transform: none; }
+.grabber { width: 40px; height: 5px; border-radius: var(--r-full); background: var(--line-2); margin: 0 auto 14px; }
+.sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.sheet-head h2 { font-size: 20px; letter-spacing: -0.01em; }
+.sheet-head .icon-btn { width: 40px; height: 40px; box-shadow: none; background: var(--surface-2); }
+.sheet-head .icon-btn:hover { background: var(--line); }
+
+.field { margin-bottom: 20px; }
+.field > label, .field > .lbl { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+.input { width: 100%; height: 52px; border-radius: var(--r-md); border: 0; background: var(--surface-2); padding: 0 16px; font-size: 16px;
+  box-shadow: inset 0 0 0 1px var(--line-2); transition: box-shadow .15s, background-color .15s; }
+.input::placeholder { color: var(--text-3); }
+.input:focus { outline: none; background: #fff; box-shadow: inset 0 0 0 2px var(--brand), 0 0 0 4px var(--brand-tint); }
+.input.err { box-shadow: inset 0 0 0 2px var(--bad); }
+.err-msg { color: #B91C1C; font-size: 13px; margin-top: 6px; font-weight: 500; }
+.sugg { display: flex; gap: 8px; overflow-x: auto; margin: 0 -20px 22px; padding: 2px 20px 4px; scrollbar-width: none; }
+.sugg::-webkit-scrollbar { display: none; }
+.sugg { mask-image: linear-gradient(90deg, transparent 0, #000 20px, #000 calc(100% - 28px), transparent); }
+.sugg button { flex: none; display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 14px 0 8px; border-radius: var(--r-full);
+  background: var(--surface); box-shadow: inset 0 0 0 1px var(--line-2); font-size: 14px; font-weight: 500; white-space: nowrap; transition: background-color .15s; }
+.sugg button:hover { background: var(--surface-2); }
+.sugg button img, .sugg button .em { width: 24px; height: 24px; font-size: 18px; line-height: 24px; text-align: center; }
+.emojis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.emojis button { aspect-ratio: 1; border-radius: var(--r-sm); background: var(--surface-2); display: grid; place-items: center; font-size: 22px; min-height: 44px;
+  box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow .15s, background-color .15s; }
+.emojis button img { width: 28px; height: 28px; }
+.emojis button:hover { background: var(--brand-tint); }
+.emojis button[aria-pressed="true"] { background: var(--brand-tint); box-shadow: inset 0 0 0 2px var(--brand); }
+.colors { display: grid; grid-template-columns: repeat(6, 44px); justify-content: space-between; }
+.colors button { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; transition: transform .15s; }
+.colors button span { width: 32px; height: 32px; border-radius: 50%; background: var(--c); display: grid; place-items: center; color: #fff; }
+.colors button[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--c); }
+.colors button span .ic { width: 16px; height: 16px; stroke-width: 3; opacity: 0; }
+.colors button[aria-pressed="true"] span .ic { opacity: 1; }
+.colors button:active { transform: scale(.92); }
+.sheet-actions { display: flex; gap: 10px; margin-top: 8px; }
+.sheet-actions .btn { flex: 1; }
+
+/* detail */
+.detail-hero { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.detail-hero .hchip { width: 56px; height: 56px; border-radius: 16px; }
+.detail-hero .hchip img { width: 34px; height: 34px; }
+.detail-hero h2 { font-size: 20px; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.detail-hero p { font-size: 14px; color: var(--text-2); }
+.dtiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 20px; }
+.dtile { background: var(--surface-2); border-radius: var(--r-md); padding: 12px; box-shadow: inset 0 0 0 1px var(--line); }
+.dtile b { display: block; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+.dtile span { font-size: 12px; color: var(--text-2); font-weight: 500; }
+.cal-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.cal-head h3 { font-size: 15px; }
+.cal-head span { font-size: 12px; color: var(--text-2); }
+.cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-bottom: 12px; }
+.cal-hint { font-size: 13px; color: var(--text-2); margin-bottom: 20px; }
+.cal .wd { font-size: 11px; color: var(--text-3); text-align: center; font-weight: 600; }
+.cal button { aspect-ratio: 1; min-height: 36px; border-radius: var(--r-sm); font-size: 13px; font-weight: 600; color: var(--text-2);
+  background: var(--surface); box-shadow: inset 0 0 0 1px var(--line-2); transition: background-color .15s, transform .15s; }
+.cal button:hover:not(:disabled) { box-shadow: inset 0 0 0 2px var(--brand); }
+.cal button:active:not(:disabled) { transform: scale(.92); }
+.cal button.on { background: var(--brand-soft); color: var(--brand-deep); box-shadow: inset 0 0 0 1px var(--brand-soft); }
+.cal button.on.today { background: var(--brand); color: #fff; box-shadow: none; }
+.cal button.today { outline: 2px solid var(--brand); outline-offset: 2px; }
+.cal button:disabled { background: transparent; box-shadow: none; color: var(--text-3); cursor: default; opacity: .6; }
+.confirm-ic { width: 56px; height: 56px; border-radius: 18px; display: grid; place-items: center; background: var(--bad-tint); color: var(--bad); margin-bottom: 14px; }
+.confirm-ic .ic { width: 26px; height: 26px; }
+.confirm p { color: var(--text-2); font-size: 15px; margin: 6px 0 20px; }
+
+/* toast */
+.toast { position: fixed; left: 50%; bottom: calc(var(--tab-h) + env(safe-area-inset-bottom) + 16px); z-index: 60; transform: translate(-50%, 16px);
+  display: flex; align-items: center; gap: 16px; background: var(--text); color: #fff; padding: 6px 6px 6px 20px; border-radius: var(--r-full);
+  font-size: 14px; font-weight: 500; box-shadow: var(--shadow-float); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; white-space: nowrap; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.toast button { color: #C9C0FF; font-weight: 600; padding: 0 14px; height: 44px; border-radius: var(--r-full); }
+.toast button:hover { background: rgba(255,255,255,.1); }
+
+.desk-only { display: none; }
+.btn-label { display: none; }
+@media (min-width: 720px) and (max-width: 1023px) {
+  .main { max-width: 680px; }
+  .tabbar-in { max-width: 680px; }
+  .desk-only { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; align-items: start; }
+  .desk-only.stack > * + * { margin-top: 0; }
+}
+
+/* ---------- desktop ---------- */
+@media (min-width: 1024px) {
+  .app { display: grid; grid-template-columns: 256px 1fr; }
+  .side { display: flex; flex-direction: column; position: sticky; top: 0; height: 100dvh; padding: 24px 16px; background: var(--surface); border-right: 1px solid var(--line); }
+  .side .brand { padding: 4px 10px 28px; }
+  .nav { display: grid; gap: 4px; }
+  .nav button { display: flex; align-items: center; gap: 12px; height: 44px; padding: 0 12px; border-radius: var(--r-sm); font-size: 15px; font-weight: 500; color: var(--text-2); transition: background-color .15s, color .15s; }
+  .nav button:hover { background: var(--surface-2); color: var(--text); }
+  .nav button[aria-current="page"] { background: var(--brand-tint); color: var(--brand-deep); font-weight: 600; }
+  .side-card { margin-top: auto; padding: 16px; border-radius: var(--r-md); background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line); }
+  .side-card .lbl { font-size: 13px; color: var(--text-2); font-weight: 500; }
+  .side-card b { display: flex; align-items: center; gap: 4px; font-size: 18px; font-weight: 600; }
+  .side-card b .ic { width: 18px; height: 18px; color: var(--flame); }
+  .side-top { display: flex; align-items: center; gap: 12px; }
+  .side-top .hchip { width: 40px; height: 40px; border-radius: var(--r-sm); }
+  .side-top .hchip img { width: 24px; height: 24px; }
+  .side-note { font-size: 13px; color: var(--text-2); margin-top: 10px; }
+  .tabbar, .mobile-brand { display: none; }
+  .main { max-width: 1180px; width: 100%; padding: 32px 40px 48px; margin: 0; }
+  .top { margin-bottom: 24px; }
+  .top h1 { font-size: 28px; }
+  .today-grid { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+  .today-grid.solo { grid-template-columns: minmax(0, 720px); }
+  .desk-only { display: block; }
+  .icon-btn.primary.has-label { width: auto; padding: 0 20px 0 16px; gap: 8px; display: inline-flex; align-items: center; font-weight: 600; font-size: 15px; }
+  .has-label .btn-label { display: inline; }
+  .stats-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px; align-items: start; }
+  .stats-grid > div > * + * { margin-top: 24px; }
+  .tiles { gap: 16px; margin-bottom: 24px; }
+  .tile { padding: 20px; display: grid; grid-template-columns: 48px 1fr; column-gap: 16px; align-items: center; }
+  .tile .tic { width: 48px; height: 48px; margin: 0; grid-row: span 2; border-radius: var(--r-md); }
+  .tile .tic .ic { width: 22px; height: 22px; }
+  .tile b { font-size: 28px; }
+  .tile span { margin-top: 0; }
+  .tile span { font-size: 13px; }
+  .settings-wrap { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 24px; align-items: start; max-width: 1040px; }
+  .set-col .settings-sec:first-child { margin-top: 0; }
+  .backdrop { align-items: center; }
+  .sheet { max-width: 460px; border-radius: 28px; padding: 24px; transform: translateY(12px) scale(.98); }
+  .grabber { display: none; }
+  .sugg { flex-wrap: wrap; overflow: visible; margin: 0 0 22px; padding: 0; mask-image: none; }
+  .toast { bottom: 32px; }
+}
+@media (min-width: 1280px) { .today-grid:not(.solo) { grid-template-columns: minmax(0, 1fr) 380px; gap: 32px; } }
+@media (max-width: 360px) {
+  .main { padding-left: 16px; padding-right: 16px; }
+  .week { gap: 4px; }
+  .tiles { gap: 8px; } .tile { padding: 12px; } .tile b { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side" aria-label="Sidebar">
+    <div class="brand"><span class="brand-glyph" aria-hidden="true"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Steady</div>
+    <nav class="nav" aria-label="Main">
+      <button data-tab="today"><svg class="ic" viewBox="0 0 24 24"><use href="#i-today"/></svg>Today</button>
+      <button data-tab="stats"><svg class="ic" viewBox="0 0 24 24"><use href="#i-chart"/></svg>Stats</button>
+      <button data-tab="settings"><svg class="ic" viewBox="0 0 24 24"><use href="#i-settings"/></svg>Settings</button>
+    </nav>
+    <div class="side-card" id="side-card"></div>
+  </aside>
+
+  <main class="main" id="main">
+    <section class="view" id="view-today" aria-labelledby="t-today"></section>
+    <section class="view" id="view-stats" aria-labelledby="t-stats" hidden></section>
+    <section class="view" id="view-settings" aria-labelledby="t-settings" hidden></section>
+  </main>
+
+  <nav class="tabbar" aria-label="Main">
+    <div class="tabbar-in">
+      <button class="tab" data-tab="today"><svg class="ic" viewBox="0 0 24 24"><use href="#i-today"/></svg>Today</button>
+      <button class="tab" data-tab="stats"><svg class="ic" viewBox="0 0 24 24"><use href="#i-chart"/></svg>Stats</button>
+      <button class="tab" data-tab="settings"><svg class="ic" viewBox="0 0 24 24"><use href="#i-settings"/></svg>Settings</button>
+    </div>
+  </nav>
+</div>
+
+<div class="backdrop" id="backdrop" hidden>
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" tabindex="-1"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toast-msg"></span><button id="toast-btn" type="button">Undo</button></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-today" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/><path d="M9 15l2 2 4-4"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16"/><rect x="5.5" y="11" width="3" height="6" rx="1"/><rect x="10.5" y="6" width="3" height="11" rx="1"/><rect x="15.5" y="13" width="3" height="4" rx="1"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 21c-3.9 0-7-2.7-7-6.6 0-2.6 1.4-4.6 2.9-6.1.5 1.6 1.4 2.6 2.4 2.9C10.1 7.6 12 4.5 14.5 3c-.3 2.6.9 4.5 2.3 6 1.3 1.4 2.2 3 2.2 5.2C19 18.2 15.9 21 12 21z"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20h7M10 17h4"/></symbol>
+  <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r=".8"/></symbol>
+  <symbol id="i-checks" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 12.5l2.8 2.8L16.5 9"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></symbol>
+  <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5"/><path d="M4 4v4.5h4.5"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
+</svg>
+
+<script>
+(() => {
+  'use strict';
+  const KEY = 'steady.v1';
+  const COLORS = ['#5B45E8', '#1D6FE0', '#087A4B', '#0E7C86', '#C2570C', '#C11574'];
+  const EMOJIS = ['💧', '📚', '👟', '🧘', '🌙', '🥗', '💊', '📝', '🎸', '🪴', '🍎', '🦷'];
+  const SUGGESTIONS = [
+    ['Drink 2L of water', '💧', '#1D6FE0'], ['Read 20 minutes', '📚', '#5B45E8'], ['Walk 8,000 steps', '👟', '#087A4B'],
+    ['Meditate 10 minutes', '🧘', '#0E7C86'], ['Lights out by 11pm', '🌙', '#C2570C'], ['Eat a salad at lunch', '🥗', '#087A4B'],
+    ['Take vitamins', '💊', '#C11574'], ['Journal for 5 minutes', '📝', '#C11574'], ['Practise guitar', '🎸', '#C2570C'],
+    ['Water the plants', '🪴', '#087A4B'], ['Floss', '🦷', '#1D6FE0'],
+  ];
+  const DAY_LETTER = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+  /* ---------- dates ---------- */
+  const pad = (n) => String(n).padStart(2, '0');
+  const keyOf = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const parse = (k) => { const [y, m, d] = k.split('-').map(Number); return new Date(y, m - 1, d); };
+  const addDays = (k, n) => { const d = parse(k); d.setDate(d.getDate() + n); return keyOf(d); };
+  const todayKey = () => keyOf(new Date());
+  const fmt = (k, o) => parse(k).toLocaleDateString(undefined, o);
+
+  /* ---------- helpers ---------- */
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const icon = (id, cls = '') => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-${id}"/></svg>`;
+  const emojiUrl = (e) => 'https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/' +
+    [...e].filter((c) => c.codePointAt(0) !== 0xfe0f).map((c) => c.codePointAt(0).toString(16)).join('-') + '.webp';
+  const emo = (e, size) => `<img src="${emojiUrl(e)}" alt="" width="${size}" height="${size}" loading="lazy" data-e="${esc(e)}">`;
+  document.addEventListener('error', (ev) => {
+    const t = ev.target;
+    if (t.tagName === 'IMG' && t.dataset.e) t.replaceWith(document.createTextNode(t.dataset.e));
+  }, true);
+  const uid = () => Math.random().toString(36).slice(2, 10);
+
+  /* ---------- state ---------- */
+  let state = load();
+  let tab = 'today';
+  let sel = todayKey();
+  let lastPop = null;
+
+  function load() {
+    try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && Array.isArray(s.habits)) return s; } catch (e) {}
+    return sample();
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  function sample() {
+    let seed = 7;
+    const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const t = todayKey();
+    const start = addDays(t, -150);
+    // [name, emoji, colour, adherence, current run before today, done today]
+    const defs = [
+      ['Drink 2L of water', '💧', '#1D6FE0', .9, 14, true],
+      ['Read 20 minutes', '📚', '#5B45E8', .8, 8, true],
+      ['Walk 8,000 steps', '👟', '#087A4B', .72, 3, false],
+      ['Meditate 10 minutes', '🧘', '#0E7C86', .6, 0, true],
+      ['Lights out by 11pm', '🌙', '#C2570C', .55, 5, false],
+    ];
+    const habits = [], log = {};
+    const offDays = new Set([12, 23, 31, 47, 52, 66, 71, 80, 94, 103, 117, 125, 138]);
+    defs.forEach(([name, emoji, color, rate, run, today], i) => {
+      const id = 'h' + (i + 1);
+      habits.push({ id, name, emoji, color, created: start });
+      const days = log[id] = {};
+      for (let n = 150; n >= 1; n--) {
+        const k = addDays(t, -n);
+        if (n <= run || n === 2 || n === 5) days[k] = true;
+        else if (n === run + 1) continue;
+        else if (offDays.has(n)) continue;
+        else if (rnd() < rate) days[k] = true;
+      }
+      if (today) days[t] = true;
+    });
+    return { habits, log, sample: true };
+  }
+
+  const done = (h, k) => !!(state.log[h.id] && state.log[h.id][k]);
+  function setDone(h, k, v) {
+    const d = state.log[h.id] || (state.log[h.id] = {});
+    if (v) d[k] = true; else delete d[k];
+    save();
+  }
+  function streak(h) {
+    const t = todayKey();
+    let k = done(h, t) ? t : addDays(t, -1), n = 0;
+    while (done(h, k)) { n++; k = addDays(k, -1); }
+    return n;
+  }
+  function best(h) {
+    const keys = Object.keys(state.log[h.id] || {}).sort();
+    let b = 0, run = 0, prev = null;
+    for (const k of keys) { run = prev && addDays(prev, 1) === k ? run + 1 : 1; b = Math.max(b, run); prev = k; }
+    return b;
+  }
+  function rate(h, days = 30) {
+    const t = todayKey();
+    const span = Math.max(1, Math.min(days, Math.round((parse(t) - parse(h.created || t)) / 864e5) + 1));
+    let c = 0; for (let i = 0; i < span; i++) if (done(h, addDays(t, -i))) c++;
+    return c / span;
+  }
+  const dayFrac = (k) => state.habits.length ? state.habits.filter((h) => done(h, k)).length / state.habits.length : 0;
+
+  /* ---------- pieces ---------- */
+  function ringSvg(frac, size = 88) {
+    const r = 36, c = 2 * Math.PI * r;
+    return `<svg viewBox="0 0 88 88" width="${size}" height="${size}" aria-hidden="true">
+      <circle cx="44" cy="44" r="${r}" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="9"/>
+      <circle class="arc" cx="44" cy="44" r="${r}" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"
+        stroke-dasharray="${(frac * c).toFixed(1)} ${c.toFixed(1)}" ${frac === 0 ? 'opacity="0"' : ''}/></svg>`;
+  }
+
+  function weekChart() {
+    const t = todayKey(), n = state.habits.length;
+    const cols = [];
+    for (let i = 6; i >= 0; i--) {
+      const k = addDays(t, -i), c = state.habits.filter((h) => done(h, k)).length;
+      cols.push({ k, c, h: n ? c / n : 0 });
+    }
+    const total = cols.reduce((s, x) => s + x.c, 0);
+    const label = `Check-ins over the last 7 days: ${cols.map((x) => `${fmt(x.k, { weekday: 'short' })} ${x.c}`).join(', ')}`;
+    return `<div class="card card-pad">
+      <div class="card-title"><h2>Last 7 days</h2><span class="num">${total} of ${n * 7} check-ins</span></div>
+      <div class="bars" role="img" aria-label="${esc(label)}">
+        ${cols.map((x) => `<div class="bar-col ${x.k === t ? 'now' : ''}">
+          <div class="bar-track"><div class="bar" style="height:${Math.max(4, x.h * 100)}%"><span class="bar-val num">${x.c}</span></div></div>
+          <span class="bar-lbl">${DAY_LETTER[parse(x.k).getDay()]}</span></div>`).join('')}
+      </div></div>`;
+  }
+
+  function heatmap(weeks = 12) {
+    const t = todayKey(), td = parse(t);
+    const mondayOffset = (td.getDay() + 6) % 7;
+    const start = addDays(t, -mondayOffset - (weeks - 1) * 7);
+    let cells = '', active = 0;
+    for (let i = 0; i < weeks * 7; i++) {
+      const k = addDays(start, i);
+      if (k > t) { cells += '<i class="fut"></i>'; continue; }
+      const f = dayFrac(k);
+      if (f > 0) active++;
+      const l = f === 0 ? '' : f <= .2 ? 'l1' : f <= .4 ? 'l2' : f <= .6 ? 'l3' : f < 1 ? 'l4' : 'l5';
+      cells += `<i class="${l} ${k === t ? 'today' : ''}" title="${esc(fmt(k, { day: 'numeric', month: 'short' }))}: ${Math.round(f * 100)}%"></i>`;
+    }
+    return `<div class="card card-pad">
+      <div class="card-title"><h2>Last ${weeks} weeks</h2><span class="num">${active} active days</span></div>
+      <div class="heat-wrap" role="img" aria-label="Daily completion heatmap for the last ${weeks} weeks, ${active} active days">
+        <div class="heat-days" aria-hidden="true"><span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span>Sun</span></div>
+        <div class="heat" aria-hidden="true">${cells}</div>
+      </div>
+      <div class="heat-legend" aria-hidden="true">Less<span></span><i style="background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line)"></i><i style="background:#E4DEFE"></i><i style="background:#C3B8FA"></i><i style="background:#9D8CF5"></i><i style="background:#725CEE"></i><i style="background:var(--brand-deep)"></i><span></span>More</div>
+    </div>`;
+  }
+
+  function subline(h) {
+    const s = streak(h), b = best(h);
+    if (!s) return `${icon('flame', 'off')}<span>No streak yet</span>${b ? `<span class="sep">·</span><span>Best ${b}</span>` : ''}`;
+    return `${icon('flame')}<span class="num">${s}-day streak</span><span class="sep">·</span><span class="num">Best ${b}</span>`;
+  }
+
+  /* ---------- views ---------- */
+  function renderToday() {
+    const t = todayKey();
+    const isToday = sel === t;
+    const n = state.habits.length;
+    const c = state.habits.filter((h) => done(h, sel)).length;
+    const frac = n ? c / n : 0;
+    const topStreak = state.habits.reduce((m, h) => Math.max(m, streak(h)), 0);
+    let wk = 0; for (let i = 0; i < 7; i++) wk += dayFrac(addDays(t, -i));
+    const weekPct = Math.round((wk / 7) * 100);
+
+    let days = '';
+    for (let i = 6; i >= 0; i--) {
+      const k = addDays(t, -i), f = dayFrac(k), d = parse(k);
+      const dot = f === 0 ? '' : f === 1 ? 'full' : 'part';
+      days += `<button class="day ${k === t ? 'today' : ''} ${k === sel ? 'sel' : ''}" data-day="${k}" aria-pressed="${k === sel}"
+        aria-label="${esc(fmt(k, { weekday: 'long', day: 'numeric', month: 'long' }))}, ${Math.round(f * 100)}% done">
+        <span class="dl">${DAY_LETTER[d.getDay()]}</span><span class="dn num">${d.getDate()}</span><span class="dot ${dot}"></span></button>`;
+    }
+
+    const sub = !n ? 'Add a habit to get started' : c === n ? 'Everything done. Nice work.' : `${n - c} left ${isToday ? 'for today' : 'on this day'}`;
+    const list = n ? `<div class="card"><ul class="list">${state.habits.map((h) => {
+      const on = done(h, sel);
+      return `<li class="row">
+        <button class="row-main" data-open="${h.id}" aria-label="${esc(h.name)} details">
+          <span class="hchip" style="--c:${h.color}">${emo(h.emoji, 30)}</span>
+          <span class="row-text"><span class="row-name">${esc(h.name)}</span><span class="row-sub">${subline(h)}</span></span>
+        </button>
+        <button class="check ${on ? 'on' : ''} ${lastPop === h.id ? 'pop' : ''}" data-toggle="${h.id}"
+          aria-pressed="${on}" aria-label="Mark ${esc(h.name)} done">${icon('check')}</button></li>`;
+    }).join('')}</ul></div>` : `<div class="card empty">
+        <div class="art">${emo('🌱', 72)}</div>
+        <h2>No habits yet</h2>
+        <p>Pick something small you want to do every day. You can add more later.</p>
+        <button class="btn" data-add>${icon('plus')}Add your first habit</button>
+        <div class="quick-lbl">Or start with one of these</div>
+        <div class="quick">${SUGGESTIONS.slice(0, 4).map((x, i) => `<button data-quick="${i}"><span class="em">${emo(x[1], 24)}</span>${esc(x[0])}</button>`).join('')}</div></div>`;
+
+    $('#view-today').innerHTML = `
+      <header class="top">
+        <div>
+          <div class="eyebrow">${esc(fmt(t, { weekday: 'long', day: 'numeric', month: 'long' }))}</div>
+          <h1 id="t-today">${isToday ? 'Today' : esc(fmt(sel, { weekday: 'long' }))}</h1>
+        </div>
+        <div class="top-actions">
+          ${!isToday ? `<button class="icon-btn" data-day="${t}" aria-label="Back to today">${icon('today')}</button>` : ''}
+          <button class="icon-btn primary has-label" data-add aria-label="Add habit">${icon('plus')}<span class="btn-label" aria-hidden="true">New habit</span></button>
+        </div>
+      </header>
+      <div class="today-grid ${n ? '' : 'solo'}">
+        <div>
+          <div class="week" role="group" aria-label="Pick a day">${days}</div>
+          ${n ? `<div class="summary">
+            <div class="sum-row">
+              <div>
+                <div class="sum-label">${isToday ? 'Daily progress' : esc(fmt(sel, { weekday: 'short', day: 'numeric', month: 'short' }))}</div>
+                <div class="sum-fig num">${c}<small> of ${n} done</small></div>
+                <div class="sum-sub">${sub}</div>
+              </div>
+              <div class="ring">${ringSvg(frac)}<span class="pct num">${Math.round(frac * 100)}%</span></div>
+            </div>
+            <div class="sum-stats">
+              <div class="sum-stat"><span class="chip">${icon('flame')}</span><div><b class="num">${topStreak} ${topStreak === 1 ? 'day' : 'days'}</b><span>Top streak</span></div></div>
+              <div class="sum-stat"><span class="chip">${icon('target')}</span><div><b class="num">${weekPct}%</b><span>Last 7 days</span></div></div>
+            </div>
+          </div>` : ''}
+          <div class="sec-head"><h2>Habits</h2><span class="meta num">${n ? `${c}/${n} ${isToday ? 'today' : 'that day'}` : ''}</span></div>
+          ${list}
+        </div>
+        ${n ? `<div class="desk-only stack">${weekChart()}${heatmap(12)}</div>` : ''}
+      </div>`;
+  }
+
+  function renderStats() {
+    const n = state.habits.length;
+    const total = Object.values(state.log).reduce((s, d) => s + Object.keys(d).length, 0);
+    const avg = n ? Math.round(state.habits.reduce((s, h) => s + rate(h), 0) / n * 100) : 0;
+    const bestAll = state.habits.reduce((m, h) => Math.max(m, best(h)), 0);
+    const ranked = [...state.habits].sort((a, b) => streak(b) - streak(a) || best(b) - best(a));
+    const tile = (ic, col, val, unit, label) => `<div class="card tile"><span class="tic" style="background:color-mix(in srgb, ${col} 13%, #fff);color:${col}">${icon(ic)}</span>
+      <b class="num">${val}${unit ? `<small>${unit === '%' ? '' : ' '}${unit}</small>` : ''}</b><span>${label}</span></div>`;
+
+    $('#view-stats').innerHTML = `
+      <header class="top"><div><div class="eyebrow">${n} ${n === 1 ? 'habit' : 'habits'}</div><h1 id="t-stats">Stats</h1></div></header>
+      ${!n ? `<div class="card empty"><div class="art">${emo('📊', 72)}</div><h2>Nothing to show yet</h2><p>Your streaks and history appear here once you start ticking off habits.</p><button class="btn" data-add>${icon('plus')}Add a habit</button></div>` : `
+      <div class="tiles">
+        ${tile('target', '#5B45E8', avg, '%', '30-day rate')}
+        ${tile('checks', '#087A4B', total, '', 'Check-ins')}
+        ${tile('trophy', '#C2570C', bestAll, bestAll === 1 ? 'day' : 'days', 'Best streak')}
+      </div>
+      <div class="stats-grid">
+        <div>${weekChart()}${heatmap(wide() ? 20 : 12)}</div>
+        <div><div class="card streak-list">
+          <div class="card-pad" style="padding-bottom:4px"><div class="card-title" style="margin-bottom:4px"><h2>Streaks</h2><span>Current streak</span></div></div>
+          <ul class="list" style="padding-top:0">${ranked.map((h) => {
+            const s = streak(h), r = Math.round(rate(h) * 100);
+            return `<li class="row"><button class="row-main" data-open="${h.id}" aria-label="${esc(h.name)} details">
+              <span class="hchip" style="--c:${h.color}">${emo(h.emoji, 30)}</span>
+              <span class="row-text" style="flex:1"><span class="row-name">${esc(h.name)}</span>
+                <span class="row-sub num">${r}% in 30 days · Best ${best(h)}</span>
+                <span class="meter" style="--c:${h.color}"><i style="width:${r}%"></i></span></span></button>
+              <div class="streak-fig"><b class="num">${s ? icon('flame') : ''}${s} ${s === 1 ? 'day' : 'days'}</b></div></li>`;
+          }).join('')}</ul></div></div>
+      </div>`}`;
+  }
+
+  function renderSettings() {
+    const habitRows = state.habits.map((h) => `<li><button class="set-row" data-edit="${h.id}">
+      <span class="hchip" style="--c:${h.color}">${emo(h.emoji, 24)}</span>
+      <span class="t"><b>${esc(h.name)}</b><span>${streak(h) ? `${streak(h)}-day streak` : 'No streak yet'} · Best ${best(h)}</span></span>${icon('chev', 'chev')}</button></li>`).join('');
+    $('#view-settings').innerHTML = `
+      <header class="top"><div><div class="eyebrow">Saved on this device</div><h1 id="t-settings">Settings</h1></div></header>
+      <div class="settings-wrap">
+        <div class="set-col">
+        <h2 class="settings-sec">Your habits</h2>
+        <div class="card"><ul class="group">${habitRows}
+          <li><button class="set-row" data-add><span class="set-ic">${icon('plus')}</span><span class="t"><b>Add a habit</b><span>Tick it off once a day</span></span>${icon('chev', 'chev')}</button></li></ul></div>
+        </div><div class="set-col">
+        <h2 class="settings-sec">Data</h2>
+        <div class="card"><ul class="group">
+          ${state.sample ? `<li><button class="set-row" data-clear-sample><span class="set-ic">${icon('reset')}</span><span class="t"><b>Clear sample data</b><span>Remove the example habits</span></span>${icon('chev', 'chev')}</button></li>` : ''}
+          <li><button class="set-row" data-export><span class="set-ic grey">${icon('download')}</span><span class="t"><b>Export backup</b><span>Download a JSON file</span></span>${icon('chev', 'chev')}</button></li>
+          <li><button class="set-row red" data-wipe><span class="set-ic red">${icon('trash')}</span><span class="t"><b>Delete all data</b><span>Removes every habit and its history</span></span>${icon('chev', 'chev')}</button></li>
+        </ul></div>
+        <h2 class="settings-sec">About</h2>
+        <div class="card"><ul class="group"><li><div class="set-row"><span class="set-ic grey">${icon('phone')}</span>
+          <span class="t"><b>Saved on this device</b><span>Your data stays in this browser. Add the page to your home screen to use it like an app.</span></span></div></li></ul></div>
+      </div></div>`;
+  }
+
+  function renderSide() {
+    const top = [...state.habits].sort((a, b) => streak(b) - streak(a))[0];
+    const s = top ? streak(top) : 0;
+    $('#side-card').innerHTML = s ? `<div class="side-top"><span class="hchip" style="--c:${top.color}">${emo(top.emoji, 24)}</span>
+      <div><div class="lbl">Top streak</div><b class="num">${icon('flame')}${s} ${s === 1 ? 'day' : 'days'}</b></div></div>
+      <p class="side-note">${esc(top.name)}</p>` : `<div class="lbl">No streaks yet</div><p class="side-note">Tick off a habit to start one.</p>`;
+  }
+
+  function render() {
+    if (sel > todayKey()) sel = todayKey();
+    ['today', 'stats', 'settings'].forEach((v) => { $('#view-' + v).hidden = v !== tab; });
+    document.querySelectorAll('[data-tab]').forEach((b) => { if (b.dataset.tab === tab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+    if (tab === 'today') renderToday(); else if (tab === 'stats') renderStats(); else renderSettings();
+    renderSide();
+    lastPop = null;
+  }
+  function $(s) { return document.querySelector(s); }
+  const mqWide = window.matchMedia('(min-width: 1024px)');
+  const wide = () => mqWide.matches;
+  mqWide.addEventListener('change', () => render());
+
+  /* ---------- sheet ---------- */
+  let lastFocus = null;
+  function openSheet(html, focusSel) {
+    lastFocus = document.activeElement;
+    const bd = $('#backdrop'), sh = $('#sheet');
+    sh.innerHTML = `<div class="grabber" aria-hidden="true"></div>${html}`;
+    bd.hidden = false;
+    requestAnimationFrame(() => bd.classList.add('open'));
+    const f = focusSel && sh.querySelector(focusSel);
+    setTimeout(() => (f || sh).focus({ preventScroll: true }), 60);
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSheet() {
+    const bd = $('#backdrop');
+    if (bd.hidden) return;
+    bd.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(() => { bd.hidden = true; $('#sheet').innerHTML = ''; }, 200);
+    if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+  }
+  const sheetHead = (title) => `<div class="sheet-head"><h2 id="sheet-title">${title}</h2><button class="icon-btn" data-close aria-label="Close">${icon('x')}</button></div>`;
+
+  let form = null;
+  function openForm(h) {
+    form = h ? { id: h.id, name: h.name, emoji: h.emoji, color: h.color } : { id: null, name: '', emoji: '💧', color: COLORS[0] };
+    const existing = new Set(state.habits.map((x) => x.name.toLowerCase()));
+    const sugg = h ? '' : SUGGESTIONS.filter((s) => !existing.has(s[0].toLowerCase())).slice(0, 8);
+    openSheet(`${sheetHead(h ? 'Edit habit' : 'New habit')}
+      <form id="habit-form" novalidate>
+        ${sugg && sugg.length ? `<div class="field" style="margin-bottom:0"><span class="lbl">Popular</span></div>
+          <div class="sugg">${sugg.map((s, i) => `<button type="button" data-sugg="${i}"><span class="em">${emo(s[1], 24)}</span>${esc(s[0])}</button>`).join('')}</div>` : ''}
+        <div class="field"><label for="f-name">Name</label>
+          <input class="input" id="f-name" name="name" maxlength="40" autocomplete="off" placeholder="e.g. Stretch for 10 minutes" value="${esc(form.name)}">
+          <div class="err-msg" id="f-err" hidden>Give your habit a name.</div></div>
+        <div class="field"><span class="lbl" id="l-icon">Icon</span><div class="emojis" role="group" aria-labelledby="l-icon">
+          ${EMOJIS.map((e) => `<button type="button" data-emoji="${e}" aria-pressed="${e === form.emoji}" aria-label="${e}">${emo(e, 28)}</button>`).join('')}</div></div>
+        <div class="field"><span class="lbl" id="l-col">Colour</span><div class="colors" role="group" aria-labelledby="l-col">
+          ${COLORS.map((c) => `<button type="button" data-color="${c}" aria-pressed="${c === form.color}" aria-label="Colour ${c}" style="--c:${c}"><span>${icon('check')}</span></button>`).join('')}</div></div>
+        <div class="sheet-actions">
+          ${h ? `<button type="button" class="btn danger-soft" data-del="${h.id}">${icon('trash')}Delete</button>` : ''}
+          <button type="submit" class="btn">${h ? 'Save changes' : 'Add habit'}</button>
+        </div>
+      </form>`);
+    $('#sheet').dataset.sugg = JSON.stringify(sugg || []);
+  }
+
+  function openDetail(id) {
+    const h = state.habits.find((x) => x.id === id); if (!h) return;
+    const t = todayKey(), td = parse(t);
+    const start = addDays(t, -((td.getDay() + 6) % 7) - 28);
+    let cells = ['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d) => `<span class="wd" aria-hidden="true">${d}</span>`).join('');
+    for (let i = 0; i < 35; i++) {
+      const k = addDays(start, i), d = parse(k), fut = k > t, on = done(h, k);
+      cells += `<button ${fut ? 'disabled' : ''} class="${on ? 'on' : ''} ${k === t ? 'today' : ''} num" data-cal="${k}" aria-pressed="${on}"
+        aria-label="${esc(fmt(k, { weekday: 'long', day: 'numeric', month: 'long' }))}${on ? ', done' : ''}">${d.getDate()}</button>`;
+    }
+    const s = streak(h), r = Math.round(rate(h) * 100);
+    openSheet(`<div class="sheet-head detail-hero"><span class="hchip" style="--c:${h.color}">${emo(h.emoji, 34)}</span>
+        <div style="flex:1;min-width:0"><h2 id="sheet-title">${esc(h.name)}</h2><p>Every day · since ${esc(fmt(h.created, { day: 'numeric', month: 'short' }))}</p></div>
+        <button class="icon-btn" data-close aria-label="Close">${icon('x')}</button></div>
+      <div class="dtiles">
+        <div class="dtile"><b class="num">${s}</b><span>Current streak</span></div>
+        <div class="dtile"><b class="num">${best(h)}</b><span>Best streak</span></div>
+        <div class="dtile"><b class="num">${r}%</b><span>Last 30 days</span></div>
+      </div>
+      <div class="cal-head"><h3>Last 5 weeks</h3><span>${esc(fmt(start, { day: 'numeric', month: 'short' }))} – ${esc(fmt(t, { day: 'numeric', month: 'short' }))}</span></div>
+      <div class="cal" style="--c:${h.color}" data-habit="${h.id}">${cells}</div>
+      <p class="cal-hint">Tap a day to mark it done or not done.</p>
+      <div class="sheet-actions"><button class="btn ghost" data-edit="${h.id}">${icon('edit')}Edit habit</button></div>`);
+  }
+
+  function openConfirm(title, text, action, label) {
+    openSheet(`<div class="confirm"><div class="confirm-ic">${icon('trash')}</div><h2 id="sheet-title" style="font-size:20px">${title}</h2><p>${text}</p>
+      <div class="sheet-actions"><button class="btn ghost" data-close>Cancel</button><button class="btn danger" data-confirm="${action}">${label}</button></div></div>`);
+  }
+
+  /* ---------- toast ---------- */
+  let toastTimer, undoFn = null;
+  function toast(msg, undo) {
+    $('#toast-msg').textContent = msg; undoFn = undo || null;
+    $('#toast-btn').hidden = !undo;
+    $('#toast').classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => $('#toast').classList.remove('show'), 5000);
+  }
+  $('#toast-btn').addEventListener('click', () => { if (undoFn) undoFn(); undoFn = null; $('#toast').classList.remove('show'); });
+
+  /* ---------- actions ---------- */
+  function deleteHabit(id) {
+    const i = state.habits.findIndex((x) => x.id === id); if (i < 0) return;
+    const h = state.habits[i], log = state.log[id];
+    state.habits.splice(i, 1); delete state.log[id]; save(); closeSheet(); render();
+    toast(`Deleted “${h.name.length > 22 ? h.name.slice(0, 21) + '…' : h.name}”`, () => {
+      state.habits.splice(i, 0, h); if (log) state.log[id] = log; save(); render();
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('button, [data-close]');
+    if (e.target.id === 'backdrop') return closeSheet();
+    if (!b) return;
+    const d = b.dataset;
+    if (d.tab) { tab = d.tab; render(); window.scrollTo(0, 0); return; }
+    if (d.day) { sel = d.day; render(); return; }
+    if (d.toggle) {
+      const h = state.habits.find((x) => x.id === d.toggle);
+      const v = !done(h, sel); setDone(h, sel, v);
+      lastPop = v ? h.id : null; render();
+      const nb = document.querySelector(`[data-toggle="${h.id}"]`); if (nb) nb.focus({ preventScroll: true });
+      return;
+    }
+    if (d.open) return openDetail(d.open);
+    if ('add' in d) { closeSheetNow(); return openForm(null); }
+    if (d.edit) { closeSheetNow(); return openForm(state.habits.find((x) => x.id === d.edit)); }
+    if ('close' in d) return closeSheet();
+    if (d.cal) {
+      const id = b.closest('.cal').dataset.habit, h = state.habits.find((x) => x.id === id);
+      const v = !done(h, d.cal); setDone(h, d.cal, v); render();
+      b.classList.toggle('on', v); b.setAttribute('aria-pressed', v);
+      const s = streak(h), tiles = document.querySelectorAll('.dtile b');
+      tiles[0].textContent = s; tiles[1].textContent = best(h); tiles[2].textContent = Math.round(rate(h) * 100) + '%';
+      return;
+    }
+    if (d.emoji) { form.emoji = d.emoji; b.parentElement.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b)); return; }
+    if (d.color) { form.color = d.color; b.parentElement.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', x === b)); return; }
+    if (d.sugg) {
+      const s = JSON.parse($('#sheet').dataset.sugg)[+d.sugg];
+      form.name = s[0]; form.emoji = s[1]; form.color = s[2];
+      $('#f-name').value = s[0]; $('#f-name').classList.remove('err'); $('#f-err').hidden = true;
+      document.querySelectorAll('[data-emoji]').forEach((x) => x.setAttribute('aria-pressed', x.dataset.emoji === s[1]));
+      document.querySelectorAll('[data-color]').forEach((x) => x.setAttribute('aria-pressed', x.dataset.color === s[2]));
+      return;
+    }
+    if (d.quick) {
+      const x = SUGGESTIONS[+d.quick], id = uid();
+      state.habits.push({ id, name: x[0], emoji: x[1], color: x[2], created: todayKey() }); state.log[id] = {};
+      save(); render(); toast('Habit added'); return;
+    }
+    if (d.del) return deleteHabit(d.del);
+    if ('clearSample' in d) return openConfirm('Clear sample data?', 'This removes the five example habits and their history so you can start with your own.', 'sample', 'Clear');
+    if ('wipe' in d) return openConfirm('Delete all data?', 'Every habit and all of its history will be removed from this device. This can’t be undone.', 'wipe', 'Delete all');
+    if (d.confirm) {
+      state = { habits: [], log: {}, sample: false }; save(); sel = todayKey(); closeSheet(); tab = 'today'; render();
+      toast(d.confirm === 'sample' ? 'Sample data cleared' : 'All data deleted');
+      return;
+    }
+    if ('export' in d) {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `steady-backup-${todayKey()}.json`;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+      toast('Backup downloaded');
+    }
+  });
+  function closeSheetNow() {
+    const bd = $('#backdrop'); if (bd.hidden) return;
+    bd.classList.remove('open'); bd.hidden = true; document.body.style.overflow = '';
+  }
+
+  document.addEventListener('input', (e) => {
+    if (e.target.id === 'f-name') { form.name = e.target.value; e.target.classList.remove('err'); $('#f-err').hidden = true; }
+  });
+  document.addEventListener('submit', (e) => {
+    if (e.target.id !== 'habit-form') return;
+    e.preventDefault();
+    const name = form.name.trim();
+    if (!name) { $('#f-name').classList.add('err'); $('#f-err').hidden = false; $('#f-name').focus(); return; }
+    if (form.id) Object.assign(state.habits.find((x) => x.id === form.id), { name, emoji: form.emoji, color: form.color });
+    else { const id = uid(); state.habits.push({ id, name, emoji: form.emoji, color: form.color, created: todayKey() }); state.log[id] = {}; }
+    save(); closeSheet(); render();
+    toast(form.id ? 'Changes saved' : 'Habit added');
+  });
+  document.addEventListener('keydown', (e) => {
+    const bd = $('#backdrop'); if (bd.hidden) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeSheet(); }
+    if (e.key === 'Tab') {
+      const f = [...$('#sheet').querySelectorAll('button:not([disabled]), input')];
+      if (!f.length) return;
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) render(); });
+
+  render();
+})();
+</script>
+</body>
+</html>
