@@ -12,7 +12,7 @@ Before layout, write the case in five or six plain sentences: who this is for, w
 
 The first screen is the shot. It needs all of these:
 
-- **Navigation** with a designed wordmark (name in the display face plus a small glyph), four or five links, and a primary button. Often a floating pill or a glass bar.
+- **Navigation** with a designed wordmark (name in the UI sans at weight 600 plus a small glyph), four or five links, and a primary button. Often a floating pill or a glass bar.
 - **An eyebrow** when it carries real information (what is new, who it is for).
 - **A headline** of four to eight words that says what the product does or what the visitor gets, set large and tight, with one phrase emphasised. Cover the logo: would a stranger know what is being sold?
 - **A subhead** of one or two lines adding the next most important fact.

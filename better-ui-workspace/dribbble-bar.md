@@ -174,3 +174,37 @@ accent kept for one meaning.
 **Method C.5** (running) writes that down: step 4 becomes "carry it as a language, not a copy",
 two new failure modes ("the idea repeated without relief", "one colour meaning everything"), and
 product-ui gains screen rhythm, collapsed lists and a different ink per item.
+
+## Reset: Method D (professional, natural)
+
+The user looked at the Method C outputs and judged them overdone and strange: forced, unnatural,
+unprofessional, not like Dribbble. The AI judges had scored the same pages 7 to 8 because their
+rubric rewarded "one ownable idea".
+
+**A new test that agrees with the user: the line-up.** Each build is presented the way a Dribbble
+shot presents a design (phone screens in device frames on a soft backdrop, or a browser window),
+shuffled among the eight real reference shots for its category, and shown to a judge who is told
+only that some shots may be AI-made fakes that tend to look overdesigned. The judge ranks all
+nine and flags fakes. Pass: not flagged, ranked in the top half. (`tools/shot.cjs`,
+`tools/lineup.py`)
+
+Calibration on earlier builds:
+
+| Build | Rank of 9 | Verdict |
+|---|---|---|
+| Habit C.4 "Daymark" (old judge: 8) | 8th | likely fake: "the postal metaphor is costume, not function" |
+| Finance C.3 abacus (old judge: 7) | 8th | likely fake: "an invented abacus theme forced onto every element" |
+| Habit, no skill | 8th | likely fake: "looks like rendered HTML or a template" |
+
+The test catches both failures, overdesign and underdesign, the way the user does. Looking at the
+references again with that in mind, they are conventional: one sans-serif, a light grey canvas,
+white cards, one brand colour, standard anatomy (header, summary card, rows with icon chips, tab
+bar; sidebar, KPI row, chart, tables; nav, centred hero, product screenshot, logo strip), real
+content, and nothing themed.
+
+**Method D** rewrites the skill around that: set up a strict system (`references/system.md`), use
+the conventional layout for the kind of screen, add one or two designed visual moments (a brand
+summary card, a product screenshot), write plain product copy, and review against "would this
+pass as a real product". The finish-kit library and the dealer are removed; the illustrated
+objects and figure guidance are gone; the audit drops the checks that pushed toward decoration
+and adds checks for textures, serif display faces, extra font families and oversized type.

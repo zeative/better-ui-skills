@@ -769,7 +769,9 @@ async function cssFacts(page) {
     };
     let unreadable = 0;
     for (const sh of document.styleSheets) { try { visit(sh.cssRules); } catch (_) { unreadable++; } }
-    return { hover, focusVisible, focus, reducedMotion, transitionAll, animations, darkScheme, important, containerOrMedia, outlineNone, unreadable };
+    const html = document.documentElement.outerHTML;
+    const texture = (html.match(/feTurbulence|fractalNoise/g) || []).length;
+    return { texture, hover, focusVisible, focus, reducedMotion, transitionAll, animations, darkScheme, important, containerOrMedia, outlineNone, unreadable };
   });
 }
 
@@ -819,7 +821,11 @@ function report(results, facts, focus, runtime, args) {
   const allSizes = new Set(); results.forEach(({ m }) => Object.keys(m.fontSizes).forEach((k) => allSizes.add(+k)));
   if (sizeList.length > 12) problem('CRAFT', `${sizeList.length} distinct font sizes at ${results[results.length - 1].width}px (${sizeList.join(', ')}). Even with a detailed product mock a page rarely needs more than 9–11; near-duplicates (13 and 13.5, 15 and 16) read as accidents.`);
   const fams = Object.keys(widest.fontFamilies);
-  if (fams.length > 3) problem('CRAFT', `${fams.length} font families in use (${fams.join(', ')}). More than two or three is usually noise.`);
+  if (facts.texture && !showcase) problem('CRAFT', `Noise or texture filters are used (${facts.texture}× feTurbulence). Grain, paper and material textures make product UI look like a themed concept; real products use clean, flat surfaces.`);
+  const textFams = fams.filter((f) => !/mono|code|courier|consolas|menlo/i.test(f));
+  if (textFams.length > 1 && !showcase) problem('CRAFT', `${textFams.length} text font families in use (${textFams.join(', ')}). Professional product UI uses one sans-serif family and gets hierarchy from size, weight and colour.`);
+  const serifs = textFams.filter((f) => /serif|fraunces|playfair|instrument|garamond|lora|merriweather|georgia|times|bodoni|didot|caslon|libre baskerville|newsreader|dm serif|young serif|crimson|spectral/i.test(f) && !/sans/i.test(f));
+  if (serifs.length && !showcase) problem('CRAFT', `A serif or display face (${serifs.join(', ')}) is used on product UI. Real apps, dashboards and SaaS pages use a clean sans-serif; serif display type reads as a themed concept.`);
   if (narrow.smallText.length) problem('CRAFT', `Text under 12px: ${narrow.smallText.slice(0, 5).join('; ')}`);
   for (const { width, m } of results) {
     if (m.longLines.length) { problem('CRAFT', `Lines too long to read comfortably at ${width}px (aim for 45–75 characters): ${m.longLines.slice(0, 3).join('; ')}`); break; }
@@ -867,8 +873,6 @@ function report(results, facts, focus, runtime, args) {
   const clipW = results.filter(({ m }) => m.clippedCount).sort((p, q) => q.m.clippedCount - p.m.clippedCount)[0];
   if (clipW) problem('CRAFT', `${clipW.m.clippedCount} text(s) are cut off by their container at ${clipW.width}px: ${clipW.m.clippedText.slice(0, 6).join('; ')}. Widen the column, shorten the text, or allow a second line; showcase work has no truncated strings.`);
   if (narrow.gutters && Math.abs(narrow.gutters[0] - narrow.gutters[1]) > 5 && narrow.overflowPx <= 1) problem('CRAFT', `Uneven page margins at ${results[0].width}px: content starts ${narrow.gutters[0]}px from the left edge and ends ${narrow.gutters[1]}px from the right. Something is wider than its container.`);
-  if (widest.repeatedGraphics && widest.repeatedGraphics.length) problem('RICHNESS', `The same drawing is repeated (colour changes do not count): ${widest.repeatedGraphics.map((g) => `${g.n}× at ${g.size}px`).join(', ')}. Items in a list should each have a visual of their own: a different object, pack or portrait, not one glyph recoloured.`);
-  if (widest.initialAvatars >= 3) problem('RICHNESS', `${widest.initialAvatars} people are shown as initials on a disc. Draw illustrated portraits (references/showpiece.md); initials read as a placeholder next to work that shows faces.`);
   for (const { width, m } of results) {
     if (m.coveredCount) problem('BROKEN', `${m.coveredCount} piece(s) of text are covered by another element at ${width}px: ${m.coveredText.slice(0, 6).join('; ')}. Floating cards, stamps and tooltips may overlap empty margins and edges, never the content underneath.`);
   }
@@ -876,7 +880,6 @@ function report(results, facts, focus, runtime, args) {
     if (m.underBars && m.underBars.length) { problem('BROKEN', `Content is hidden under a fixed bar at ${width}px: ${m.underBars.slice(0, 4).join('; ')}. Give the page top and bottom padding equal to the bar's height plus a gap, so the first and last content can be seen in full.`); break; }
   }
   const tones = widest.sectionTones || [];
-  if (tones.length >= 5 && Math.max(...tones) - Math.min(...tones) < 0.05) problem('RICHNESS', `All ${tones.length} sections share one background tone. A long page needs changes of surface: at least one section in the opposite tone (light on a dark page, dark on a light one) and one tinted band.`);
   for (const { width, m } of results) {
     if (m.emptyBandCount) { problem('CRAFT', `${m.emptyBandCount} card(s) are partly empty at ${width}px: ${m.emptyBands.slice(0, 5).join('; ')}. Size the visual to fill its card, add a supporting element, or let the card be smaller; a half-empty tile looks unfinished.`); break; }
   }
@@ -885,15 +888,12 @@ function report(results, facts, focus, runtime, args) {
   }
   if (widest.nearTops && widest.nearTops.length) problem('CRAFT', `Cards in one row start at nearly, but not exactly, the same height: ${widest.nearTops.slice(0, 3).join('; ')}. Align their tops, or offset the featured one decisively (24px or more).`);
   const sl = widest.shadowLayers;
-  if (sl && sl.single >= 3 && sl.single > sl.layered) problem('RICHNESS', `${sl.single} of ${sl.single + sl.layered} shadowed cards use a single blur. Use layered shadows (a tight contact shadow plus a wide ambient one, with a light top edge) so surfaces sit in light (references/polish.md).`);
   const maxSize = Math.max(...Object.keys(widest.fontSizes).map(Number));
-  if (maxSize < 44) problem('RICHNESS', `The type has no voice: the largest text on the desktop page is ${maxSize}px. The one figure or line that matters most should dominate (64–120px for a hero figure or headline), with small quiet labels around it.`);
-  if (widest.cardAreas && widest.cardAreas.ratio < 2.2) problem('RICHNESS', `Everything has equal weight: across ${widest.cardAreas.n} cards the largest is only ${widest.cardAreas.ratio}× the typical one. Let one object dominate the screen and shrink or merge minor tiles, so the eye has a first, second and third stop.`);
+  const phoneMax = Math.max(...Object.keys(narrow.fontSizes).map(Number));
+  if (!showcase && phoneMax > 48) problem('CRAFT', `Oversized type on the phone: the largest text is ${phoneMax}px. In product UI the key figure is 28–36px and titles 20–24px; landing headlines 32–40px on a phone. Huge numerals read as a poster, not a product.`);
+  if (!showcase && maxSize > 72) problem('CRAFT', `Oversized type on desktop: the largest text is ${maxSize}px. Landing headlines sit at 40–56px, product figures at 28–36px.`);
   const rainbow = (widest.pastelHues && widest.pastelHues.length >= 3) ? widest.pastelHues : (widest.fillHues && widest.fillHues.length >= 4 ? widest.fillHues : null);
   if (rainbow) problem('RICHNESS', `Colour is spread over ${rainbow.length} hue families in large fills (${rainbow.map((h) => h + '°').join(', ')}): tiles or panels each in a different tint. That reads as a pastel rainbow, not a palette. Commit to a neutral base, one dominant colour in large fields and one hot accent; give kinds of item tints of one or two hues.`);
-  if (widest.foldContrast !== undefined && widest.foldContrast < 0.08) problem('RICHNESS', 'The first desktop screen has no large confident field of colour or contrasting surface: it is one tone (all light, or all dark). Use the dominant colour boldly on one big element (the hero card, a section, the showpiece), not only as small tints or a glow.');
-  if (R) { const [fw2] = R.foldLargest; if (fw2 >= 260 && fw2 < 540 && widest.docHeight > 2400) problem('RICHNESS', `The largest visual in the first desktop screen is ${fw2}px wide. Hero product visuals at the bar run 600–1000px wide; enlarge it and let it bleed past the fold or the container.`); }
-  if (widest.emojiCount > 6) problem('CRAFT', `Emoji appear in UI text ${widest.emojiCount}×. They render differently on every platform; use them as flavour, not as the icon system.`);
 
   // --- output
   L.push(`UI AUDIT  ${args.target}`);
@@ -931,7 +931,7 @@ function report(results, facts, focus, runtime, args) {
     items.forEach((p) => L.push('  • ' + p.msg));
     L.push('');
   }
-  L.push('This report cannot judge art direction, composition or how good the visuals are. Open the screenshots and score them with references/critique.md.');
+  L.push('This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.');
   return { text: L.join('\n'), problems: P };
 }
 

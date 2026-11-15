@@ -70,32 +70,30 @@ Labels above fields, the right input types, validation with helpful messages bes
 
 ## Small apps and mobile-first tools
 
-For a tracker, a to-do, a timer, a calculator, a wallet or any personal tool. These are judged differently from dashboards: the strongest ones show **few things with a lot of air and one focal object per screen**. Do not turn a personal app into an admin grid.
+For a tracker, to-do, wallet, workout log, timer or any personal tool. At the bar these look exactly like a well-made native iOS or Android app: familiar structure, clean surfaces, one brand colour, friendly item icons, real data. Design at 375px first.
 
-- **Open alive.** The first thing anyone sees must be the idea working, not waiting. Ship the app with believable sample data in a mid-use state (some things done, some pending, a week of history), so the hero device is full, coloured and finished on first load. Mark it once as sample data and give a clear way to start fresh. A hero made of empty outlines and zeros reads as a wireframe, however good the concept. The true empty state still gets designed; it is just not the opening view.
-- **One focal object.** The device that carries your idea is the hero, at about twice the size that feels sufficient, and it holds the key figure. Everything else on the screen is clearly secondary: fewer modules, smaller, quieter. If a module repeats information the hero already shows, cut it.
-- **On desktop, stay an app.** Widen into two or three well-spaced columns with the hero still dominant and composed for the width (a phone card dropped into a desktop grid looks lost); three to six modules in view, not ten. Lists collapse to their first four or five rows with a way to see more. One continuous backdrop from top to footer.
-- **No stock modules.** The transaction list, the category breakdown and the trend chart are where personal apps fall back to defaults. Draw each one in the idea's language: rows with a designed mark instead of a generic glyph, a breakdown that uses the motif instead of a plain donut, a chart with the same material as the hero. Do not show the same data twice in two forms.
+**Anatomy of the main screen, top to bottom:**
 
-- **A screen has a rhythm: one hero, then two or three modules of different shapes.** The hero holds one clean number and the motif; do not pack a second focal device, a chart and a stats panel into it. Below it, each module takes a different form (a compact list, a strip, a single chart, a small grid), never the same tall card template more than twice in a row.
-- **Collapse the list.** When items repeat (lifts, habits, accounts, tasks), show the active or next one expanded with its full visual, and the rest as slim rows: a mark, the name, one figure, the main control. Expand on tap. A phone screen of five identical tall cards is the most common reason these apps look long and monotonous.
-- **Each item its own ink.** Where items are drawn in the motif, give each one a different colour from the motif's world (or a different drawn mark), so the list reads at a glance; keep the screen's hot accent for state (today, active, next).
+1. **Safe area and header.** 12 to 16px top padding (plus `env(safe-area-inset-top)`). A header row: either a greeting ("Good morning, Sam" at 20 to 24px with the date in grey above or below) with a circular avatar or icon button on the right, or a page title with one or two round icon buttons (search, notifications, add). A small brand mark if there is no greeting.
+2. **Optional date or filter strip.** A horizontal week strip (seven day pills with the day letter and number, today filled with the brand colour), or segmented tabs (Today / Week / Month) in a pill control.
+3. **The summary card** (see `showpiece.md`): the brand-filled or dark card with the key figure (28 to 36px), a short line of context, and one clean visual (ring, mini chart, day dots, progress bar).
+4. **One or two sections**, each with a title row (16 to 18px, weight 600) and a "See all" link on the right:
+   - **A list of items** in white cards or one grouped white card with hairline separators. A row: a 40 to 44px icon chip (line icon or emoji in a soft tint), the name (15 to 16px, weight 500) with one line of secondary text (13 to 14px grey), and on the right the main control or figure: a round check button, a value, a chevron, a small progress ring. Row height 56 to 72px.
+   - **A small stats grid** of two or three tiles (an icon chip, a label, a figure, a tiny bar or sparkline), or **one chart card** (weekly bars with the current day in the brand colour, a clean line chart).
+5. **Bottom tab bar.** Four or five tabs with line icons and 11 to 12px labels, the active one in the brand colour, on a white bar with a top hairline or a floating rounded bar with a soft shadow. Often a central round add button in the brand colour. Leave enough bottom padding in the content so the bar never covers the last row.
 
-- **A person in the picture.** For consumer apps, put one figure or scene illustration at hero scale (see `showpiece.md`): the references in these categories almost all lead with an illustrated character or a photograph, and a screen of objects and numbers alone reads as cooler than the set.
-- **Colour that fills surfaces.** A clean neutral base with two, at most three, accents, each used on whole surfaces: a filled hero card, a tinted panel, a coloured primary button, accent-coloured data. One accent used only on small marks looks timid in this category; six tints on six tiles looks like a rainbow. Two or three, used boldly.
-- **Soft, layered surfaces.** Big-radius cards on a pale or dark ground, nested tinted panels, circular icon buttons, pill chips, a floating pill tab bar, layered shadows with a light top edge.
-- **A header with identity:** a wordmark or greeting, the date, an avatar or settings button.
-- **A hero card** on a contrast surface summarising today: a progress ring or big figure, a short encouraging line, perhaps a week strip.
-- **Items with character:** each item on its own card with a dimensional illustrated object of its own (see `showpiece.md`), a clear name, a secondary line, and the main control. An item may carry its own hue, in small doses (the object and its data marks), while the screen keeps one dominant accent.
-- **Dense, filled cards:** an item card uses its width. On desktop that can mean the name and control on the left and a full-width history strip with day labels on the right; never a wide card with a small widget in one corner.
-- **The main action is unmistakable:** the thing people do every day is the largest, most colourful control on each item, with a satisfying checked state (fill, icon, small bounce), and visibly different from history or decoration.
-- **The key quantity as a designed object:** a count or a run as a large numeral with a badge and a "best" chip; a balance as a big figure with a trend; progress as a ring.
-- **History as a visual:** a week strip of day pills, a month heatmap, a bar chart of the week.
-- **Adding is inviting:** a floating or prominent add button opening a sheet or inline form, with suggestion chips that have icons.
-- **Navigation:** a floating pill tab bar or bottom bar on phones.
-- **First run:** an illustration, a line of encouragement, starter suggestions as tappable chips, and the primary action.
-- **Rewards:** a small celebration on completing something (a burst, a badge, a changed card state).
-- Data persists across reloads.
+**Character comes from:** the brand colour on the summary card and active states, soft tints on item chips, friendly icons or emoji per item, a good sans at clean sizes, and real names and figures. Not from themes, metaphors, textures or decorative fonts.
+
+**Rules:**
+
+- **Open with data.** Ship believable sample data in a mid-use state (some done, some pending, a week of history) so the first view is full. Offer "Clear sample data" in settings or a menu, not as a banner across the main screen. Design the empty state too.
+- **Keep it calm.** One summary card, then white cards. Three to five things on the first screen, not ten. No module repeats information another already shows.
+- **Lists stay compact.** One row per item; details (a full history, settings) belong in a detail view or a bottom sheet opened by tapping the row.
+- **The main action is obvious.** The daily action (tick, log, add) is a clear round control on each row, with a satisfying checked state (fill with the brand or item colour, a check icon, a short scale animation). Completed items stay readable; do not grey them out heavily.
+- **Adding** uses a bottom sheet or a modal with a title, fields, suggestion chips with icons, and a full-width primary button.
+- **Streaks, progress and history** are shown the standard ways: a small flame or trophy icon with "12 days", a progress ring, a row of seven day dots, a monthly heatmap of small rounded squares, a weekly bar chart.
+- **On desktop, stay an app.** A centred column of 420 to 560px with a side panel for stats or a calendar, or a simple two-column layout inside a light shell with a left nav. Never a stretched phone layout and never a phone column alone in empty space.
+- **Data persists** across reloads.
 
 ## States
 

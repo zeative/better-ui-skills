@@ -2,13 +2,27 @@
 
 Everything here is made with HTML, CSS and inline SVG, so it needs no image files and stays sharp at any size. The recipes are starting points: adapt colours to your tokens and fill them with this product's content.
 
-Contents: the rule of detail · product mock · floating detail cards · atmosphere · charts · avatars and people · product thumbnails and objects · icons and icon chips · illustrated objects · illustration · logos and proof · frames · on a phone
+Contents: keep it real · the rule of detail · the app summary card · product mock · floating detail cards · atmosphere · charts · avatars and people · product thumbnails · icons and icon chips · empty-state illustration · logos and proof · frames · on a phone
+
+## Keep it real
+
+Every visual here should look like something a real product would show. No invented props, metaphor objects, textures or materials: the visual moments come from the product's own content (its figures, its items, its interface) drawn cleanly. Atmosphere belongs on landing pages, not inside product UI.
 
 ## The rule of detail
 
 A visual reads as real when it has the density of a real thing. Count the distinct designed pieces in your showpiece: a navigation with an active item, a title, a control row, four figures with deltas, a chart with grid, axis and a highlighted point, five table rows each with an avatar, a name, a figure and a status pill. That is thirty-plus pieces, and that is the level to work at. Five grey bars is a wireframe.
 
 Use the product's real nouns and plausible numbers. Vary the content: different names, different lengths, different statuses.
+
+## The app summary card
+
+The main visual moment of most mobile apps and many dashboards: one card near the top that summarises today or this period.
+
+- Filled with the brand colour (or near-black), radius 20 to 24, padding 20. White text: a small label ("Total balance", "Today"), the key figure at 28 to 36px weight 600, a secondary line or a delta pill.
+- One clean visual inside it: a progress ring, a small area chart, a row of seven day dots, a segmented progress bar, or a short bar chart. Drawn in white and translucent white on the brand fill.
+- Optionally two or three quick actions as round icon buttons along the bottom (Send, Add, Transfer), or a pair of mini stats separated by a hairline.
+- A subtle radial gradient or a few large, faint circles in the corner of the fill are common and fine; no textures or illustrations.
+- One such card per screen. The rest of the screen is white cards on the canvas.
 
 ## Product mock
 
@@ -75,9 +89,6 @@ The space behind the showpiece is designed, not a flat fill. Combine two or thre
   mask-image: radial-gradient(55% 55% at 50% 60%, #000 30%, transparent); }
 /* dot grid */
 .dots-bg { background-image: radial-gradient(var(--line) 1px, transparent 1.5px); background-size: 20px 20px; }
-/* grain: put on a fixed full-page pseudo-element */
-.grain::after { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .05; mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 /* glow under an object */
 .glow { box-shadow: 0 60px 120px -40px color-mix(in srgb, var(--accent) 55%, transparent); }
 ```
@@ -118,7 +129,7 @@ Compute coordinates from your real sample data (a few lines of JS, or by hand) s
 
 ## Avatars and people
 
-Initials on a coloured disc are the weakest avatar; a screen full of them looks unfinished next to work that uses portraits. Draw people.
+Real products show people as small circular avatars. Simple illustrated portraits look best in a showcase; initials on a soft tint are also normal in real products. Pick one style per page.
 
 - **Illustrated portrait** (works from 28px to 96px): a tinted circle, shoulders, a head, and a hair shape. Vary background hue, skin tone, hair colour and hair shape per person so no two match.
   ```html
@@ -131,10 +142,9 @@ Initials on a coloured disc are the weakest avatar; a screen full of them looks 
   ```
   Swap the last path for other hair shapes (a bob reaching the jaw, a top knot, a side sweep, a cap, a headscarf drawn as a path around the face) and reuse one `clipPath` for all avatars. Skin tones: `#F2D0B5 #E8B894 #C98E62 #A56E44 #7A4A2B`.
 - **Avatar stack:** give each avatar a 2px ring in the surface colour and overlap by a quarter of its width (`margin-left: -8px` at 32px). Nothing inside may be clipped by its neighbour. End with a "+12" chip.
-- Initials are acceptable only as a fallback at very small sizes, each in a different hue.
 - Do not hotlink photos of real people.
 
-## Product thumbnails and objects
+## Product thumbnails
 
 Lists of products, files, places or items need thumbnails. Draw small objects in SVG: three or four shapes, two tones of one hue plus a highlight, on a tinted rounded square.
 
@@ -159,61 +169,17 @@ If the project already has real product photos or the user supplies images, use 
   .chip-ic { width: 40px; aspect-ratio: 1; border-radius: 12px; display: grid; place-items: center;
              background: color-mix(in srgb, var(--c) 14%, var(--surface)); color: var(--c); }
   ```
-- Give categories different hues (`--c`) so a column of tiles or a list of habits is colourful with meaning.
+- Give categories different soft hues (`--c`) so a list of habits or categories is easy to scan. Keep the tints soft; strong colour stays on the brand elements.
+- In consumer apps, a native emoji in the same tinted chip is a common, friendly alternative for item icons (habits, categories, exercises). One approach per app.
 - Navigation items, KPI tiles, feature rows, list items and empty states all take an icon.
 
-## Illustrated objects
+## Empty-state illustration
 
-Thin line icons on tinted squares are the minimum. Where an item deserves presence (a category, a feature, an achievement, an empty state), draw a small **object** with some body to it instead.
-
-**Draw it in the language of your idea.** This matters more than the technique. If the design is flat with thick outlines, the objects are flat with thick outlines. If it is lacquer, brass and wood, they are lacquer, brass and wood. If it is paper and ink, they are stamped or engraved. Glossy emoji-style stickers dropped into a design that has its own material are the most common thing that makes a strong concept look assembled from stock parts. One style, one lighting direction, one level of detail across every icon, object, avatar and chart on the screen.
-
-Where the idea has no particular material, a soft dimensional style works: a filled shape with a gradient, a darker underside, a soft highlight and a contact shadow.
-
-```html
-<!-- an open book, 56×56, built from filled shapes -->
-<svg viewBox="0 0 56 56" class="obj">
-  <defs><linearGradient id="pg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#E9E4F7"/></linearGradient>
-        <linearGradient id="cv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#5B21B6"/></linearGradient></defs>
-  <ellipse cx="28" cy="47" rx="19" ry="3.5" fill="#000" opacity=".12"/>
-  <path d="M6 16c8-3 15-2 22 2 7-4 14-5 22-2v26c-8-3-15-2-22 2-7-4-14-5-22-2z" fill="url(#cv)"/>
-  <path d="M9 14c7-2.5 13-1.5 19 2v25c-6-3.5-12-4.5-19-2z" fill="url(#pg)"/><path d="M47 14c-7-2.5-13-1.5-19 2v25c6-3.5 12-4.5 19-2z" fill="url(#pg)"/>
-  <path d="M13 20c4-1 8-.5 11 1M13 25c4-1 8-.5 11 1M32 21c3-1.5 7-2 11-1" stroke="#B9AEDD" stroke-width="1.6" stroke-linecap="round" fill="none"/>
-  <path d="M11 15.5c5-1.5 10-1 15 1.5" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".8" fill="none"/></svg>
-```
-
-- Four to eight shapes per object: body, underside or side, a detail or label, a highlight, a contact shadow.
-- Every object in a set is a different thing (a book, a shoe, a droplet, a moon, a dumbbell, a leaf), not one glyph recoloured.
-- Keep one lighting direction (top-left highlight, bottom shadow) across the set.
-- Give the secondary surfaces the same finish as the hero device. A beautifully rendered centrepiece next to a flat gradient card with a default line chart looks half done: carry the material (its sheen, grain, edge, way of marking data) onto the other cards and charts.
-- Use these at 40 to 72px on item cards and tiles, and larger (120 to 200px) as the centre of a hero card or empty state.
-- Keep the simple stroke icons for navigation and small controls.
-
-## A figure or a scene
-
-Consumer apps (fitness, habits, food, learning, travel, wellness, kids) are judged against work that leads with a person: an illustrated athlete, a character, a photograph. Equipment and objects alone, however well drawn, read as cooler and less finished beside it. Give such an app one piece of figure or scene illustration at hero scale.
-
-- **A simple figure, built from bold shapes.** Head as a circle or rounded shape, torso as a rounded block, limbs as thick strokes with round caps (`stroke-linecap: round`, 10 to 18px at a 200px figure) or tapered capsules, hands and feet as small rounded shapes. No facial detail, or two dots and a line. Clothing in the palette's accents, skin in one of several tones.
-- **Pose carries it.** Draw the action the app is about (lifting, running, stretching, cooking, reading) with a clear line of action and some asymmetry. A stiff, symmetrical standing figure looks like a pictogram.
-- **Give it a setting in two or three shapes:** a ground shadow, a big soft colour shape behind, one prop.
-- **Add a few hand-drawn marks** around it in a single stroke weight: stars, sparkles, motion lines, a squiggle, a cloud. They make the scene feel drawn by a person.
-- **Draw it in the idea's language**, the same line weight, palette and level of detail as the icons and objects, and let it overlap the edge of its card.
-- Size: at least a third of the hero card's width; 160 to 280px tall on a phone.
-- Use it once at hero scale, then perhaps once more small (an empty state, a reward). If your environment can generate images or the user supplies photographs, a photograph or render of a person serves the same role.
-
-## Illustration
-
-When a section needs more than UI:
-
-- Compose with the product's own objects (see thumbnails) at a larger size, overlapping, with soft shadows, on a tinted panel with an atmosphere behind.
-- Build "3D-ish" forms from gradients: a base gradient, a darker edge, a soft white highlight, a drop shadow.
-- Abstract compositions must still mean something: a route with stops, a stack of documents, a network of nodes for integrations, rings for progress.
-- For empty states and onboarding, one centred illustration (120 to 200px) plus a heading and an action.
-- Emoji may add warmth as content in playful consumer directions, but they render differently on every platform; do not use them as the interface's icon system or as the only illustration.
+One simple, flat spot illustration (120 to 180px) for an empty state or onboarding: a few rounded shapes in the brand colour and its tints, plus one or two neutral shapes. No characters with faces, no scenes on the main screen.
 
 ## Logos and proof
 
-- A brand wordmark for the product: the name in the display face with a small glyph (a simple geometric mark in the accent) beside it. A plain-text name in the corner is a missing logo.
+- A brand wordmark for the product: the name in the UI font at weight 600 with a small glyph (a simple geometric mark in the accent) beside it. A plain-text name in the corner is a missing logo.
 - A "trusted by" strip, when the page calls for one: five or six fictional company wordmarks drawn as type plus a simple glyph, all in `--ink-3` at one height, evenly spaced. Never real brand logos.
 - Testimonials: a card with a quote, an illustrated portrait or gradient avatar, a fictional name and role, perhaps a small result figure. Mix sizes; make one of them large.
 - Ratings and counts: a badge with stars or an avatar stack and a number. Mark all of these as placeholder in your handoff.
@@ -228,7 +194,6 @@ When a section needs more than UI:
   .phone > .screen::before { content: ""; position: absolute; left: 50%; top: 8px; width: 34%; height: 22px; border-radius: 12px; background: #0b0b0f; transform: translateX(-50%); z-index: 2; }
   ```
 - **Browser frame**: see the product mock above.
-- **Paper or card objects**: a slight rotation, a paper-toned fill, a warm layered shadow, and a second sheet peeking out behind.
 
 ## On a phone
 

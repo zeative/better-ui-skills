@@ -1,6 +1,6 @@
 # Polish system
 
-Finish is a system, applied everywhere from the start. These recipes assume tokens like those in `art-directions.md`.
+Finish is a system, applied everywhere from the start. These recipes assume the tokens in `system.md`.
 
 Contents: surfaces, not bare pages · shadows · borders and edges · surfaces and glass · type finishing · colour finishing · buttons and controls · micro-details · spacing rhythm · variety within sets · motion · dark directions
 
@@ -22,7 +22,7 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 - Tint the shadow colour to the direction: cool navy for cool palettes, warm brown for warm ones, the card's own hue under coloured cards.
 - Use the scale with intent: `--sh-1` for resting cards, `--sh-2` on hover, `--sh-3` for floating cards, `--sh-4` for the showpiece.
 - Add a light top edge to raised surfaces: `box-shadow: inset 0 1px 0 rgba(255,255,255,.7), var(--sh-2)`. On dark surfaces use `rgba(255,255,255,.06)`.
-- **One shadow language.** Soft layered shadows, or hard offset shadows with outlines, or flat with rules: choose one for the design and vary its strength, never mix two. Within a hard-edged or flat style, depth still needs tiers: add inner highlights, a subtle grain or gradient on large colour fields, and a clearly different elevation for the feature card.
+- **One shadow language:** soft, low-opacity layered shadows, or hairline borders with almost no shadow. No hard offset shadows, no heavy outlines, no grain.
 - Depth must not be uniform. If every card has the same border and the same blur, the page is flat again. Resting cards are quiet; the focal card, primary buttons and anything floating are clearly lifted, with a brighter top edge and a deeper, wider shadow.
 - Ground and surface need visible separation: a surface that is nearly the same value as the ground disappears. Deepen the ground or brighten the surface until cards read at a glance.
 
@@ -48,13 +48,13 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 
 ## Type finishing
 
-- **Display:** large and tight. `font-size: clamp(40px, 6.5vw, 84px); line-height: 1.02; letter-spacing: -0.025em; text-wrap: balance;`. Headlines of four to eight words, broken so the lines are similar length. Tightness depends on the face: go as far as -0.04em only if letters still have clear air between them at the rendered size. Touching letters look like a mistake.
-- **One phrase of emphasis** in the headline: the accent colour, an italic, a highlighter block behind it, or a hand-drawn underline. Once per headline, and in keeping with the direction.
+- **Landing headlines:** `font-size: clamp(36px, 5vw, 56px); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance;` in the UI sans at weight 600. Six to ten words over two lines. Product UI titles are 20 to 24px.
+- **Emphasis**, if any: one word or phrase of a landing headline in the brand colour or in the muted grey. Nothing on product UI.
 - **Eyebrow pill** above a headline when it carries information: a small pill with a dot or icon and a short label.
-- **Scale with contrast:** a clear jump between levels (for example 96 / 40 / 22 / 16 / 13 / 11). The one figure or line that matters most is far larger than everything else: 64 to 120px for a hero balance, total or headline on desktop, 44 to 72px on a phone. Supporting figures are 28 to 40px; labels are 11 to 13px in muted ink. A screen where the largest text is 28px has no voice.
-- **Treat key numerals as graphics:** tight tracking, a distinctive weight (very heavy or very light), lighter or smaller decimals and currency signs, tabular figures.
-- **Few voices, far apart.** Two type roles are usually enough: a display voice for the hero line, the key figures and at most one or two more moments, and a text voice for everything else. A third (mono caps labels) only in one or two places. Avoid a page of mid-sized text: sizes should be either clearly big or clearly small. If every section headline shouts at the same volume, none of them does; let the hero and one other be loud.
-- **Small labels:** 11 to 12px, medium weight, `letter-spacing: .04em`, uppercase only when short.
+- **Scale:** use the compact scale in `system.md`. Hierarchy comes from weight (400/500/600) and colour (text vs. muted grey) as much as size. The key figure in an app or dashboard is 28 to 36px; KPI figures 22 to 28px; labels 12 to 13px in muted grey.
+- **Key numerals:** weight 600, slight negative tracking, decimals and currency signs smaller or muted, tabular figures.
+- **One family.** Everything in the UI sans. No display serif, no mono labels, no condensed headings on product UI.
+- **Small labels:** 12 to 13px, weight 500, sentence case, muted grey. Uppercase tracked labels are rare.
 - `font-variant-numeric: tabular-nums` on all figures; `font-feature-settings: "ss01", "cv11"` where the face has nicer alternates.
 - Body text stays calm: 15 to 17px, line-height 1.55, max 65ch, muted ink for secondary copy, and always above 4.5:1 contrast.
 
@@ -63,11 +63,11 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 - Roughly 60% ground and surfaces, 30% ink and neutrals, 10% accent. The accent is concentrated in a few strong places (primary button, key chart, active state, one feature card), not sprinkled.
 - Derive tints with `color-mix` instead of inventing new colours: 8 to 14% accent on surface for soft fills, 20 to 30% for borders of tinted elements.
 - A **category palette** for things that come in kinds (item types, statuses, team members): four to six hues at matched lightness and saturation, each with a soft tint. Use it in small doses: the item's object or icon tile and its own data marks. Do not also tint the whole card, its border and its button, or the screen turns into a rainbow and loses its identity.
-- **One dominant colour and one hot accent** define the screen. Viewed as a thumbnail, the page should read as two colours on a neutral base, with category hues as small sparks. Consumer apps may carry a third accent, as long as each of the three fills real surfaces and has a job.
-- **Use colour in large confident fields.** A full hero card, a whole section, a big tile in the dominant colour says more than that colour spread thinly as tints over ten tiles. A screen of many pastel tiles in different hues is the generic "friendly dashboard" look.
-- **Dark designs need colour most of all.** Charcoal cards on a black page with the accent only as a glow and a few small marks is a monochrome wall. Give the dominant colour real area (a filled hero block, solid coloured data marks, a coloured primary control) and include at least one fully light or fully coloured surface for contrast.
+- **One brand colour** defines the screen. Viewed as a thumbnail, the page reads as a neutral base with one colour, plus category tints as small sparks.
+- **One filled card per screen at most** (the summary card) in the brand colour or near-black. The rest are white cards. Do not tint every tile a different pastel.
+- **Dark apps** use near-black ground, slightly lighter surfaces, white text, and the brand colour on the primary control, active states and chart series.
 - Status colours are separate and always paired with a label or icon.
-- Gradients stay within about 40 degrees of hue (violet to pink, orange to yellow, teal to green) unless the direction is built on a wider one. Use them on a few hero elements, not everywhere.
+- Gradients are subtle and rare: a gentle one on the summary card or the landing hero background. Within about 30 degrees of hue.
 - Never grey text on a coloured fill: use white, ink, or a darker tone of that colour.
 
 ## Buttons and controls
@@ -137,7 +137,6 @@ Sets of similar things must not be clones, and no region of the page should be a
 ## Dark directions
 
 - The ground is not pure black; surfaces step up in lightness.
-- Shadows are less visible, so use light top edges, hairline borders and glows.
+- Shadows are less visible, so use hairline borders and slightly lighter surfaces.
 - Lower the saturation of large fills, keep accents vivid in small areas.
 - Check contrast of muted text: it is the usual failure.
-- A noise overlay at 3 to 5% removes banding in dark gradients.

@@ -1,133 +1,95 @@
 ---
 name: better-ui
-description: Design and build user interfaces at the level of the best work on Dribbble - art-directed, visually rich, deeply detailed and polished - instead of flat, generic "AI-looking" output. Use this whenever you create, restyle or review anything a person will look at in a browser or app - landing pages, marketing sites, dashboards, admin panels, web apps, mobile screens, components, forms, HTML prototypes, React/Vue/Svelte/Tailwind UI - including when the user only says "build me a page/app/site/dashboard for X" and never mentions design, and when they ask to make an existing UI look better, more premium, more modern, more polished or less generic. Skip it only for work with no visible result (backend, scripts, pure logic).
+description: Design and build user interfaces that look like real, professional products - the clean, polished, well-made work that is popular on Dribbble - instead of flat, generic "AI-looking" output or overdesigned, gimmicky output. Use this whenever you create, restyle or review anything a person will look at in a browser or app - landing pages, marketing sites, dashboards, admin panels, web apps, mobile screens, components, forms, HTML prototypes, React/Vue/Svelte/Tailwind UI - including when the user only says "build me a page/app/site/dashboard for X" and never mentions design, and when they ask to make an existing UI look better, more premium, more modern, more polished or less generic. Skip it only for work with no visible result (backend, scripts, pure logic).
 ---
 
 # Better UI
 
-The bar for this skill is the work that gets attention in design communities: a confident art direction, visuals that are rich and specific, real depth, and a finish where nothing looks accidental. Aim there on every build.
+The bar is the interface work that is popular on Dribbble, and the products good teams actually ship. Look at that work closely and it is not exotic. It is **familiar patterns executed with precision**: a clean sans-serif, a light neutral canvas, white cards, one brand colour, real-looking content, small consistent icons, generous but even spacing, and not one element out of place.
 
-Generic AI output and a great shot often use the same ingredients: cards, gradients, rounded corners, a product screenshot. What separates them is depth of execution.
+AI-built interfaces miss this bar in two opposite ways, and both are instantly recognisable:
 
-- **Generic is shallow.** A flat fill, three icon cards, a grey box labelled "dashboard", one shadow copied everywhere, text sitting on a blank page. Each element is the first version of itself.
-- **Great is deep.** A hero built around a product visual drawn in real detail, with pieces of it lifted out and floating beside it. A palette with a point of view. Type with character and tight control. Surfaces that sit in light. A dozen small designed details on every screen. Every element has been taken two steps past its first version.
+- **Too plain.** A page of text and default components. No brand, no hierarchy, no visual moment, nothing a designer drew. It reads as "rendered HTML".
+- **Too much.** An invented theme or metaphor pushed onto the interface (stamps, tickets, beads, paper, chalkboards), skeuomorphic textures, decorative display fonts, clever copy, every surface styled. It reads as a costume, and no real product team would ship it.
 
-So the job is neither restraint nor decoration. It is **commitment and detail**: commit to one strong direction, then execute every part of it more thoroughly than seems necessary. Expect to write a lot of markup. A hero visual alone is often 150 to 300 lines, and a dashboard has a dozen distinct modules; that is normal, and it is where the quality comes from. A short file is almost always a plain page.
+The professional middle is narrow and specific: **the conventional layout for this kind of screen, done carefully, with one or two well-made visual moments and real content.** That is what this skill builds.
 
-Two things stay non-negotiable while you do this: the interface must work (real states, real responsiveness, readable contrast), and the content must be specific and honest. Rich and wrong is still wrong.
+Two things are non-negotiable throughout: the interface must work (real states, responsive, readable contrast), and the content must be specific and honest.
 
 ## 1. Find out whose design this is
 
-- **An existing product** (styles, components, tokens, a Tailwind theme, a brand guide, a screenshot from the user): the direction is already decided. Read the tokens and a few screens, reuse the components, and bring the richness and finish of this skill *within* that system. Do not add a second styling system, font or accent. In step 3, skip the finish kit and palette; still look for the one idea within the existing brand. Use everything else.
-- **A direction from the user** (a reference, a brand, "make it look like X"): that wins over the library below.
+- **An existing product** (styles, components, tokens, a Tailwind theme, a brand guide, screenshots): read the tokens and a few screens and work inside that system. Do not add a second font, accent or component style. Apply the craft in this skill within it.
+- **A direction from the user** (a reference, a brand, "make it look like X"): that wins over the defaults below.
 - **A blank slate**: continue.
 
 ## 2. Understand the job and write the content
 
-A few lines, for yourself: what the product is, who is looking and in what situation, the one job of this screen, and its register. The register decides what "rich" means, so get it right:
+Note for yourself: what the product is, who uses it and where (phone on the go, desktop at work), the one job of this screen, and its kind:
 
-- *Persuade*: a landing or pricing page for a product. Rich means a detailed product visual, designed sections, layered surfaces.
-- *Operate*: an app, dashboard or tool. Rich means a full shell, data drawn beautifully, imagery in every list. A personal or mobile-first app is the quiet end of this: one focal object and a lot of air.
-- *Showcase*: a portfolio, studio, restaurant, fashion, event or personal site. Rich means large imagery and dramatic type with almost no interface. Cards, pills, glows and product-page sections are wrong here.
-- *Read*: docs and articles. Typography and calm.
+- *Mobile-first app* (tracker, wallet, workout, to-do, booking): looks like a native app.
+- *Dashboard or admin*: an app shell with data.
+- *Landing or marketing page*: sells a product.
+- *Showcase site* (portfolio, studio, restaurant, event): imagery and type; read `references/editorial.md`.
+- *Docs or reading*: typography and calm.
 
-Then draft the real content before any layout: the actual headline, labels, numbers, names. Make sample data plausible, internally consistent and right for the locale (currency, language, date formats). Specific content is what makes rich visuals convincing: a product mock filled with believable rows and figures looks real, and one filled with "Item 1" looks like a wireframe.
+Then write the real content before any layout: a product name, the headline, labels, numbers, names, dates. Plain product language, the way a good team's app talks: "3 of 5 done today", "$595 left this month", "Best streak 12 days". No metaphors in the copy, no jokes, no notes that describe the interface to the viewer. Sample data is plausible, internally consistent and right for the locale.
 
-When the brief is thin, do not send a questionnaire. Assume specifically, build, and state your assumptions at the end.
+When the brief is thin, assume specifically, build, and list your assumptions at the end. Never use real company logos, real people's names or faces, or invented claims about real results; fictional names and example figures are fine.
 
-Honesty rule: never use real company logos, real people's names or faces, or invented claims about real results. Sample people, fictional company names and example figures are fine and expected, inside product visuals and in proof sections alike. Where a marketing page needs proof you were not given (testimonials, customer logos, usage numbers), design the section fully with clearly fictional names, and tell the user in the handoff exactly which parts they must replace before publishing.
+## 3. Set up the system
 
-## 3. Find the one idea, then commit to it
+Read `references/system.md` and write its tokens at the top of the stylesheet before any component. In short:
 
-Polished work that follows a good template still looks like a template. What lifts a design into the top tier is **one ownable idea**: a visual concept taken from this product's own world, made the hero of the screen, and echoed through the details. A reviewer should be able to name it in a phrase ("departures as a split-flap board", "a playlist as a stack of record sleeves", "doses as a dotted scale on a pharmacy label").
+- **Type:** one sans-serif family (Inter, Plus Jakarta Sans, Manrope, DM Sans, Geist or the system UI font), weights 400/500/600, tabular figures for numbers. A compact scale: 12, 13, 14, 16, 18, 20, 24, 32, with 40 to 56 only for a landing hero. Serif or display faces only for showcase sites or when the brand already has one.
+- **Colour:** a light neutral canvas (or a near-black one for a dark app), white or slightly raised surfaces, two text greys, one brand colour chosen to fit the category, and semantic green, amber and red for status. Category colours, if needed, are soft tints used on small icon chips and chart series.
+- **Shape and depth:** one radius scale (for example 8, 12, 16, 24, full), hairline borders or a soft two-layer shadow, never both heavy. Flat and clean; no textures, grain, paper, bevels or glows behind text.
+- **Icons:** one line-icon set at one stroke width, usually inside soft tinted chips. Native emoji or 3D-style emoji are acceptable as item icons in consumer apps, used consistently.
 
-Work it out in writing before any layout:
+## 4. Use the conventional layout for this kind of screen
 
-1. **Name and world.** If the product has no name, give it one with an image in it. List eight or more things from its world that can be drawn: objects, marks, materials, tools, rituals, the way its trade writes numbers.
-2. **Choose the motif.** Pick the one that is most specific to this product, can be drawn simply, and can carry real data or content. A motif that could decorate any product (blobs, sparkles, generic rings, a stock gradient) is not one.
-3. **Make it the hero device, large.** The showpiece in step 4 is built *from* the motif, at a scale that dominates the first screen, and it shows real content: the actual figures, the actual items. A motif tucked into a logo or a small strip has been wasted.
-4. **Carry it through every module, as a language, not a copy.** The idea must not stop at the hero, and it must not be stamped onto every module either. The hero is the one place the motif appears whole. The other modules (the list, the chart, the breakdown, the form, the pricing) take its *language*: its material and colours, its edges and linework, its way of marking a value, its numerals. Each one stays a different shape from its neighbours. A striking top card above a stock list and a default donut reads as a template with a costume on; six copies of the hero object down the page read as a gimmick. Ask of every module two questions: would this look the same in any other product (then redraw it in the language), and is it the same object as the module above it (then change its form).
-5. **Commit the palette to it.** A neutral base, one dominant colour used in large confident fields, and one hot accent for the thing that matters most. Take the colours from the motif's world. If items come in kinds, give them tints of one or two hues, not a rainbow.
-6. **Give the type a voice.** The single most important figure or line is by far the largest thing on the screen (often 64 to 120px on desktop), in a face with character, with small quiet labels around it. Dramatic contrast of scale, not six sizes close together.
-7. **Rank the screen.** Decide the first, second and third thing the eye should hit, and give them clearly different size and weight. A screen of equal cards has no idea.
+Popular shots are not novel layouts; they are the standard layout of their kind, filled with real content and finished. Read the reference for your kind and follow its anatomy:
 
-Then choose the finish. Read `references/art-directions.md`: it is a library of finish kits (type pairing, shape and depth language, atmosphere, token structure). Shortlist the three that suit the idea and audience, and let the script deal one so the choice does not default to habit:
-
-```bash
-node <this-skill-dir>/scripts/deal.cjs "<product name>" <id> <id> <id>
-```
-
-Use the kit for its craft and **replace its colours and devices with your idea's**. The colours printed in the library are placeholders; shipping them unchanged is what makes a page look like a template. Write the result as CSS custom properties at the top of the stylesheet, with a comment stating the idea in one phrase, the motif, and the kit. Then use only those tokens.
-
-Commit fully. An idea applied timidly (a motif in the logo, a nice palette on the same three boxes) produces exactly the bland middle this skill exists to avoid.
-
-## 4. Design the showpiece first
-
-Every strong shot has one thing that makes people stop: a showpiece. It is where your idea from step 3 becomes visible. Decide what it is before laying out anything else, and give it a third or more of your effort.
-
-- **Landing page:** the hero visual. Almost always the product itself, drawn in convincing detail in HTML/CSS/SVG (a real app window with navigation, rows, figures and a chart), with two to four detail cards lifted out and floating over its edges, set in an atmosphere (glow, grid, rings).
-- **Dashboard or admin:** a full app shell with one hero module (the main chart or the key figure on a feature card) and supporting tiles that each carry a small visual of their own.
-- **Mobile-first tool or app:** one focal object that carries the idea and the key figure, at about twice the size that feels sufficient, with a custom control that has a satisfying state change. Few other modules.
-- **Showcase site:** one dominant image interlocked with one enormous line of type.
-
-`references/showpiece.md` explains how to build these in code: product mocks, floating cards, charts, avatars, thumbnails, icons, illustration, device frames and atmospheres. Read it before you start; do not improvise a grey rectangle.
-
-Then compose the rest of the screen around the showpiece, using the patterns for your register. Read the one that applies:
-
+- `references/product-ui.md` for mobile-first apps, dashboards and admin.
 - `references/marketing.md` for landing and pricing pages.
-- `references/product-ui.md` for dashboards, admin, apps and mobile tools.
-- `references/editorial.md` for showcase sites. Read it before `showpiece.md` and `polish.md`; where they disagree, it wins.
+- `references/editorial.md` for showcase sites.
 
-## 5. Build with depth and finish
+Every screen still needs a clear first, second and third thing to look at, and **one or two visual moments** that a designer clearly made: a summary card on the brand colour with a well-drawn chart, a product screenshot in a clean frame, a ring, a photo, a set of friendly item icons. `references/showpiece.md` explains how to draw these well in HTML, CSS and SVG. One or two, not ten: the rest of the screen stays calm so those moments carry.
 
-Read `references/polish.md` and apply its system from the first line, not at the end: content on surfaces rather than on the bare page, layered shadows with a light top edge, hairline borders, tinted neutrals, tight display type, a spacing rhythm, and the small details (pills, status dots, icon chips, key hints, sparklines, avatars) that make a screen feel designed. Give repeated elements variety: no row of tiles should be the same tile three times with different words.
+## 5. Build it properly
 
-Build the whole thing:
+- **Every width.** A mobile-first app is designed at 375px first and looks like a native app there: safe-area top padding, a header, content, a bottom tab bar. On desktop it becomes a sensible layout (a centred app column with side panels, or a proper shell), not a stretched phone.
+- **Every state** a person will meet: hover, focus, pressed, selected, empty, loading, error, long content. Controls on screen work. Data persists if the app stores anything.
+- **Restraint in motion:** quick hover and press feedback, a subtle state change on completion. Respect `prefers-reduced-motion`.
+- **The floor** in `references/craft.md`: contrast, focus, labels, 44px tap targets, one grid, no overflow.
+- **Finish:** `references/polish.md` covers alignment, spacing, shadows, type details and the small things that separate shipped work from a draft.
 
-- **Every width.** The phone layout is designed, not shrunk: the showpiece is recomposed for a narrow screen and stays impressive there. The desktop layout uses its width with a real multi-column composition, never a phone column floating in empty space. No horizontal scroll.
-- **Every state** a real person will meet: hover, focus, pressed, selected, empty, loading, error, long content. Controls that are on screen work.
-- **Motion with purpose:** one composed entrance for the showpiece if it suits the direction, hover and press feedback everywhere, nothing that delays content. Respect `prefers-reduced-motion`.
-- **The floor** in `references/craft.md`: contrast, focus visibility, labels, tap targets, a disciplined type scale, one grid. Richness never excuses unreadable text.
-
-## 6. Render, measure, critique against the bar, fix
+## 6. Render, audit, review against real products, fix
 
 You cannot judge a design from its source. Render it:
 
 ```bash
 node <this-skill-dir>/scripts/audit.cjs path/to/index.html --out .ui-audit
 node <this-skill-dir>/scripts/audit.cjs http://localhost:5173/ --setup seed.js   # app with state
-node <this-skill-dir>/scripts/audit.cjs index.html --register showcase           # portfolio, studio, restaurant
 ```
 
-The script screenshots the page at 375, 768 and 1440px and prints an inventory plus measured problems: overflow, contrast, focus, tap targets, clipped text, uneven phone gutters, near-miss alignment, awkward wraps, repeated graphics, and a warning when a screen is visually thin. Tall pages are saved as several parts so that details stay legible: open every part, not just the first screen. Fix everything under BROKEN and ACCESSIBILITY, and resolve what is under CRAFT and RICHNESS: each line there is something a demanding reviewer would mark the work down for (text hidden under a floating card, a half-empty tile, clipped strings, uneven margins, cards that almost align). Keep going until the report is clean or each remaining line is a decision you can defend. For apps, pass `--setup` with a few lines of JS that seed realistic data, because an empty app shows nothing. (No browser available? Say so in the handoff and review the source against `references/critique.md`.)
+The script screenshots the page at 375, 768 and 1440px and prints measured problems: overflow, contrast, focus, tap targets, clipped text, uneven gutters, near-miss alignment, awkward wraps. Fix everything under BROKEN and ACCESSIBILITY and resolve the rest. Open every screenshot part.
 
-Then **open the screenshots and critique them as an art director would**, using `references/critique.md`. It has the rubric (art direction, showpiece, richness, depth and finish, colour, typography, composition, phone) with what a 5, a 7 and a 9 look like, and the usual fixes for each gap.
-
-- **Get an independent review.** If you have any tool that starts a subagent (Task, Agent or similar), use it for this: it is the single most effective step in the skill, and skipping it is the usual reason work stops one notch short. Give the reviewer the brief at the end of `references/critique.md` with the screenshot paths filled in, and nothing about your intentions. A reviewer who did not build the page sees what is there, not what was meant. Only if you truly cannot spawn one, score it yourself, as harshly as a stranger would, and say so in the handoff.
-- Any dimension under 8 is unfinished. Fix the reviewer's gaps in order. They are usually: the showpiece is not detailed enough, overlapping elements hide content, sections after the first go flat, imagery is generic or repeated, tiles are half empty, and depth is timid.
-- A score of 6 or lower on a dimension will not be fixed by a tweak. Rework that aspect: recompose the layout, rebuild the palette, redraw the icon set, replace the chart. Small patches after a low score are why work stalls at 7.
-- Render again, run the audit again, and ask a **fresh** reviewer.
-- **Aim for a fresh reviewer scoring the work 8 or higher overall with no dimension under 7.** Do two rounds at least. If the second reviewer still says 7, do one more, and make it count: pick the reviewer's top two structural complaints (no figure or imagery, the idea stops at the hero, equal-weight layout, timid colour) and rebuild those parts; do not spend the round on small fixes. Stop after three rounds and report the last scores honestly in the handoff. Further rounds of patching do not move the score.
+Then review the screenshots with `references/critique.md`. The test is the one a designer applies when scrolling Dribbble: **would this pass as a real, professionally made product, among the popular shots of its category?** If you can start a subagent (Task, Agent or similar), have a fresh one review it with the brief at the end of `critique.md` and nothing about your intentions. Fix what it flags in order, render again, and review once more with a fresh reviewer. Two rounds is usually enough; stop after three.
 
 Delete the audit folder when you are done unless the user wants it.
 
 ## 7. Hand off plainly
 
-Tell the user, briefly: the direction you chose and how you tuned it, the assumptions you made, and what is placeholder or not wired up (sample data, fictional proof to replace, links that go nowhere). No adjectives about the result; they can see it.
+Tell the user briefly: what you built, the assumptions you made, and what is placeholder (sample data, fictional names, links that go nowhere). No adjectives about the result.
 
 ## Ways this goes wrong
 
-- **No idea.** Well-made cards in a pleasant palette that could belong to any product in the category. Polished and forgettable. Go back to step 3.
-- **Timid execution.** A nice palette on a page that is still heading, paragraph, three boxes. The idea has to reach the composition, the visuals and the details.
-- **An empty hero.** Headline, two buttons and a gradient is not a hero. Build the showpiece.
-- **The idea stops at the hero.** One memorable card, then plain white lists, a stock donut and default bars. Every module has to be drawn in the idea's language.
-- **The idea repeated without relief.** The motif drawn again on every rod, row and chart, or one tall card template stacked five times. Keep the whole motif for the hero, echo it as material elsewhere, and collapse repeated items to slim rows with only the active one expanded.
-- **One colour meaning everything.** The accent marks done, today, the hero figure, the button and the chart. Reserve it for one meaning (the active or next thing) and give the rest a quieter tone of the same family.
-- **Shallow visuals.** A product mock made of five grey bars, a chart with no grid, axis or highlighted point. Fill visuals with believable, specific content at real density.
-- **Text on a bare page.** Rows and tables sitting directly on the background with hairlines read as a document. Put content on surfaces, in a shell, with imagery.
-- **No imagery.** Lists without thumbnails, people without avatars, features without illustrations, items without icons. Every repeated item should carry a small visual.
-- **One good screen, then filler.** Each section after the first needs its own visual idea.
-- **Sameness within the page.** Identical tiles of equal weight, one shadow, one radius, one text size below the headline.
-- **A rainbow.** A different pastel on every tile and a different hue on every item. Commit to a base, one dominant colour and one hot accent.
-- **Decoration that fights the content.** Glow behind body text, low-contrast text on a gradient, animation on everything. Richness goes into visuals and surfaces; text stays effortless to read.
+- **A theme instead of a product.** The habit tracker becomes a stamp card, the budget an abacus, the workout a barbell. Real products use the standard pattern (a list, a ring, a progress bar) and get their character from colour, type, icons and finish. Drop the metaphor.
+- **Costume finishes.** Paper texture, grain, wood, brass, ticket notches, postmarks, chalk, neon glows, heavy offset shadows. Flat, clean surfaces.
+- **Display fonts on product UI.** A serif or condensed display face for app headings and numbers. Use the one sans family; let size and weight do the work.
+- **Clever copy.** Puns, metaphors and narrative labels ("Two to go", "postmark", "links closed"), or text that explains the design to the viewer. Write what a shipped app says.
+- **Too plain.** No brand mark, no header, no tab bar, rows of identical default cards, one colour used for everything, nothing a designer drew. Add the app chrome, a summary card, item icons and one clear visual moment.
+- **Everything styled.** Every card a different colour or treatment, gradients on everything, five accent colours. One brand colour, quiet surfaces, colour where it means something.
+- **Oversized type.** A 96px number on a phone. Hero figures in apps are 28 to 40px; landing headlines 40 to 56px.
+- **Wireframe content.** "Item 1", lorem ipsum, a grey box labelled "chart". Real names, figures and a real chart.
 - **Stopping after the first render.** The first render is a draft.
