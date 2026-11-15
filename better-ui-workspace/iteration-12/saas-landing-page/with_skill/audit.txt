@@ -1,0 +1,27 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-12/saas-landing-page/with_skill/outputs/index.html
+Rendered at 375px (page height 11776px), 768px (page height 9546px), 1440px (page height 6936px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   10px  11px  12px  13px  14px  15px  16px  17px  18px  20px  24px  28px  32px  40px  44px  64px
+  Families     Plus Jakarta Sans
+  Weights      400, 500, 600, 700
+  Text colours #5b6a64 #0e1a16 #ffffff #64726d #a9bdb5 #0d1f19 #0f7a5c #66746f (+8 more)
+  Fills        #ffffff #0f7a5c #f6f8f7 #e6f3ee #e8eefd #f7fbf9 #fef3e2 #0d1f19 (+12 more)
+  Radii        999px×30  50%×19  12px×17  10px×13  24px×12  16px×10  4px×7  8px×5  7px×3  6px×3  9px×2  14px×2
+  Shadows      20 distinct
+  Visuals      16 large graphics, 80 icons, 40 surfaces; largest graphic in the first screen 1080×703px
+  Interaction  32 interactive elements; 14 :hover rules, 1 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+TOUCH — fix unless there is a reason
+  • 15 touch targets under 40px at 375px wide, e.g. a.logo "Ledgerly" 115×30; a.logo "Ledgerly" 115×30; a "Invoicing" 60×28; a "Payments" 66×28; a "Reminders" 71×28
+
+CRAFT — measured inconsistencies; fix or be able to say why not
+  • 16 distinct font sizes at 1440px (10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 24, 28, 32, 40, 44, 64). Even with a detailed product mock a page rarely needs more than 9–11; near-duplicates (13 and 13.5, 15 and 16) read as accidents.
+  • Text under 12px: span.meta "4 open invoices" (11px); span.meta "Reminder sent today" (11px); span.delta "▲ 18%" (11px); span "Jun" (11px); span "Jul" (11px)
+  • 12 different corner radii (999px×30, 50%×19, 12px×17, 10px×13, 24px×12, 16px×10, 4px×7, 8px×5, 7px×3, 6px×3, 9px×2, 14px×2). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).
+  • 20 different box-shadows. Use a scale of four or five levels, not one per component.
+  • Columns in different sections start at nearly, but not exactly, the same x at 1440px: 330px (div.hero-copy "New Automatic reminders on every pla") vs 377px (div.m-main "Invoices November 2026 Search invoic"); 377px (div.m-main "Invoices November 2026 Search invoic") vs 400px (div.sec-head.center "Features Everything between “project"); 400px (div.sec-head.center "Features Everything between “project") vs 435px (div "Product Invoicing Payments Reminders"); 530px (article.tile.t-third "Recurring invoices for retainers Set") vs 585px (div.switch "Monthly Yearly"). Put every section on one shared grid so column edges repeat down the page.
+  • 4 short text(s) wrap leaving a stub on the last line at 375px: p "Pick a percentage and see how much o"; p "Income, expenses and outstanding inv"; summary "Does Ledgerly handle sales tax and V"; p#form-msg.form-msg "Free for up to 3 clients. Upgrade or". Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).
+
+This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.

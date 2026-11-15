@@ -1,0 +1,22 @@
+{
+  "skills_invoked": [
+    "better-ui",
+    "dataviz"
+  ],
+  "skill_files_read": [
+    "better-ui/references/critique.md",
+    "better-ui/references/critique.md"
+  ],
+  "tool_calls": {
+    "Skill": 2,
+    "Bash": 25,
+    "Read": 54,
+    "Write": 1,
+    "Agent": 2
+  },
+  "permission_denials": [
+    {
+      "skill": "dataviz"
+    }
+  ]
+}

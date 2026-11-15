@@ -103,7 +103,7 @@ Build and look at each: first run or empty (designed, with illustration and an a
 
 ## Sample data
 
-Use names, products, places and prices that fit the domain and country. Make numbers reconcile across tiles, charts and tables. Include variety and edge cases. Keep dates relative to today. Say once, discreetly, that the data is sample data.
+Use names, products, places and prices that fit the domain and country. Series behind charts vary naturally from point to point (no long flat runs, no sudden cliff at the end unless the story is about it), as real data does. Make numbers reconcile across tiles, charts and tables. Include variety and edge cases. Keep dates relative to today. Say once, discreetly, that the data is sample data.
 
 ## Phone and desktop
 

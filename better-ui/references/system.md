@@ -68,6 +68,7 @@ Pick one that fits, then vary its exact hue so it is not a stock value:
 
 Popular shots always have something to look at besides text: 3D icons, avatars, product pictures, a chart. Draw on these, and keep one style per screen.
 
+- **3D icons, in moderation.** Use them where the emoji is the natural picture of the thing (water 💧, a book 📚, coffee ☕, a house 🏠, a trophy 🏆), and only for one kind of item per screen. Where no emoji fits naturally (exercises, accounts, merchants, settings), use line icons in tinted chips instead; a leg emoji standing for squats looks like a stock kit. A screen where every icon is a 3D emoji reads as a template.
 - **3D icons for items** in consumer apps (habits, categories, exercises, rewards, empty states): Microsoft's Fluent 3D emoji, MIT licensed, served from a pinned CDN. Put each in a soft tinted chip, 40 to 48px, the image at about 60% of the chip. Fall back to the native emoji if the image fails:
   ```js
   const emoji3d = (e) => 'https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/' +
@@ -75,7 +76,7 @@ Popular shots always have something to look at besides text: 3D icons, avatars, 
   // <img src="${emoji3d('💧')}" alt="" width="28" height="28" onerror="this.replaceWith('💧')">
   ```
   Use the emoji's exact code points: `🏋️` is `1f3cb-fe0f`, `☕` is `2615`. A larger one (96 to 140px) makes a good empty-state or onboarding image.
-- **Avatars:** illustrated avatars from DiceBear's `notionists` or `lorelei` styles (`https://api.dicebear.com/9.x/notionists/svg?seed=<name>&backgroundColor=<hex>`), each on a different soft background, or simple SVG portraits. Initials on a tint are acceptable in dense admin tables.
+- **Avatars:** never initials for the signed-in user or in consumer apps. Use illustrated avatars from DiceBear's `notionists` or `lorelei` styles (`https://api.dicebear.com/9.x/notionists/svg?seed=<name>&backgroundColor=<hex>`), each on a different soft background, or simple SVG portraits. Initials on a tint are acceptable in dense admin tables.
 - **Products and places:** a 3D emoji (`🎧`, `👟`, `☕`, `🏠`) on a tinted rounded square works as a product thumbnail in dashboards and lists. Never a grey box.
 - **Charts:** clean and minimal (see `showpiece.md`).
 - If the network may be unavailable where the page is used, keep the fallbacks: the layout must hold with native emoji and initials.

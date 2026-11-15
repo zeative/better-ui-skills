@@ -244,3 +244,19 @@ The fairer presentation alone did not lift them; the reasons were now design one
 Habit and workout now rank in the top half with only soft suspicion, much of it about the
 presentation. Finance failed on two concrete faults, both now covered by rules (no native-looking
 controls, which this build predates; a solid bar or a fade behind a floating tab bar).
+
+**Method D.2 builds (iteration 12), now including a landing page and a dashboard:**
+
+| Case | Ranks of 9 | Flags | What the judges said |
+|---|---|---|---|
+| Store dashboard | **1st** | likely | "the most coherent and usable layout in the set"; flagged only for showing today's date and data that reconciles too neatly |
+| SaaS landing page | **3rd** | possible | "clean and coherent, but too tidy" |
+| Habit tracker | 4th, 4th | possible, possible | stock indigo with 3D emoji everywhere |
+| Workout app | 3rd, 5th | likely, likely | dark-and-lime template look, a leg emoji as exercise icon, tab labels under the home indicator |
+| Finance app | 7th, 7th | likely, likely | emoji category tiles, an initials avatar, a balance line flat then spiking, home indicator over the tab bar |
+
+The native date picker is gone. The home indicator overlapping the tab bar is the presenter's
+fault (a browser has no safe-area inset), so the presenter now adds the iPhone's bottom safe area.
+Design changes for **Method D.3**: 3D emoji only where the emoji is the natural picture of the
+thing and for one kind of item per screen, line icons elsewhere; never initials for the user in
+consumer apps; chart series that vary naturally.
