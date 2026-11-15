@@ -79,12 +79,12 @@ const path = require('path');
   const img = (s, style) => `<img src="data:image/png;base64,${s}" style="${style}">`;
   const html = phone
     ? `<body style="margin:0;height:900px;background:${backdrop};display:flex;align-items:center;justify-content:center;gap:44px;font-family:-apple-system,'SF Pro Text','Inter',sans-serif">${shots.map((s) => `
-      <div style="position:relative;width:300px;height:650px;border-radius:50px;background:linear-gradient(145deg,#4a4a50,#1a1a1d 30%,#0e0e10 70%,#3c3c42);padding:11px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),inset 0 0 0 3px #0b0b0d,0 50px 80px -30px rgba(0,0,0,.5),0 12px 24px -10px rgba(0,0,0,.3)">
-        <i style="position:absolute;left:-3px;top:120px;width:3px;height:56px;border-radius:2px;background:#2a2a2d"></i><i style="position:absolute;right:-3px;top:150px;width:3px;height:80px;border-radius:2px;background:#2a2a2d"></i>
-        <div style="position:relative;width:300px;height:650px;border-radius:39px;overflow:hidden;background:#fff">
+      <div style="position:relative;width:300px;height:650px;border-radius:40px;box-shadow:0 40px 80px -30px rgba(16,24,40,.35),0 10px 24px -12px rgba(16,24,40,.18)">
+        
+        <div style="position:relative;width:300px;height:650px;border-radius:40px;overflow:hidden;background:#fff">
           <div id="sb" style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 30px;font-size:13px;font-weight:600;color:${ink};background:${sbg}">
             <span>9:41</span><svg width="62" height="12" viewBox="0 0 62 12"><g fill="${ink}"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="1" width="3" height="11" rx="1"/><path d="M29 3.5a9 9 0 0 1 11 0l-1.3 1.4a7 7 0 0 0-8.4 0zM31.3 6a5.5 5.5 0 0 1 6.4 0l-1.4 1.5a3.4 3.4 0 0 0-3.6 0zM34.5 11l-1.6-1.7a2.3 2.3 0 0 1 3.2 0z"/><rect x="44.5" y=".5" width="15" height="10" rx="3" fill="none" stroke="${ink}" opacity=".4"/><rect x="46" y="2" width="11" height="7" rx="1.6"/><rect x="60.5" y="4" width="1.5" height="3" rx=".7" opacity=".4"/></g></svg></div>
-          <div style="position:absolute;left:50%;top:9px;width:92px;height:26px;border-radius:14px;background:#000;transform:translateX(-50%)"></div>
+          
           ${img(s, 'width:300px;height:585px;display:block;object-fit:cover;object-position:top')}<div style="height:27px;background:${bbg}"></div>
           <div style="position:absolute;left:50%;bottom:7px;width:110px;height:4px;border-radius:3px;background:${ink};opacity:.85;transform:translateX(-50%)"></div>
         </div></div>`).join('')}</body>`

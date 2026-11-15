@@ -260,3 +260,17 @@ fault (a browser has no safe-area inset), so the presenter now adds the iPhone's
 Design changes for **Method D.3**: 3D emoji only where the emoji is the natural picture of the
 thing and for one kind of item per screen, line icons elsewhere; never initials for the user in
 consumer apps; chart series that vary naturally.
+
+**Method D.3 builds (iteration 13), two line-ups each:**
+
+| App | Ranks of 9 | Flags | Remaining tells |
+|---|---|---|---|
+| Habit tracker | **3rd, 2nd** | possible, possible | the indigo-to-violet gradient card; emoji everywhere |
+| Finance app | **2nd**, 5th | possible, likely | emoji as category icons; identical device frames |
+| Workout app | **2nd, 2nd** | likely, possible | "could just be a careful designer"; frames look drawn in code |
+
+All three apps now land in the top two or three of nine shots in five of six line-ups. What is
+left is mostly the presentation (device frames judged as CSS-drawn) and two stock-kit signals.
+**Method D.4**: no emoji in finance, admin, SaaS or productivity (line icons in chips there);
+avoid the default indigo-to-violet gradient. The presenter now shows frameless rounded screens,
+as many real shots do, instead of drawn device frames.

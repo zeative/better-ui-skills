@@ -38,7 +38,7 @@ Write the choice as one line in a comment at the top of the stylesheet ("Look: s
 
 ## Brand colour by category
 
-Pick one that fits, then vary its exact hue so it is not a stock value:
+Pick one that fits, then vary its exact hue so it is not a stock value. Avoid the default indigo-to-violet (`#6366F1` → `#8B5CF6`) gradient card: it is the single most recognisable AI-generated look. If the brand is purple, use a solid fill or a gradient within one hue.
 
 - Finance, banking: deep green `#0F7B5F`, blue `#2563EB`, indigo `#4F46E5`, near-black with lime `#C6F432`.
 - Health, fitness, workout: orange `#FF5A1F`, coral `#F25C54`, lime on dark, electric blue.
@@ -68,7 +68,8 @@ Pick one that fits, then vary its exact hue so it is not a stock value:
 
 Popular shots always have something to look at besides text: 3D icons, avatars, product pictures, a chart. Draw on these, and keep one style per screen.
 
-- **3D icons, in moderation.** Use them where the emoji is the natural picture of the thing (water 💧, a book 📚, coffee ☕, a house 🏠, a trophy 🏆), and only for one kind of item per screen. Where no emoji fits naturally (exercises, accounts, merchants, settings), use line icons in tinted chips instead; a leg emoji standing for squats looks like a stock kit. A screen where every icon is a 3D emoji reads as a template.
+- **No emoji in finance, banking, admin, SaaS or productivity tools.** Their categories, merchants and accounts use a drawn line-icon set in tinted chips (or merchant logos drawn as simple letter marks); emoji tiles there read as a template.
+- **3D icons, in moderation, for personal consumer apps** (habits, wellness, food, hobbies). Use them where the emoji is the natural picture of the thing (water 💧, a book 📚, coffee ☕, a house 🏠, a trophy 🏆), and only for one kind of item per screen. Where no emoji fits naturally (exercises, accounts, merchants, settings), use line icons in tinted chips instead; a leg emoji standing for squats looks like a stock kit. A screen where every icon is a 3D emoji reads as a template.
 - **3D icons for items** in consumer apps (habits, categories, exercises, rewards, empty states): Microsoft's Fluent 3D emoji, MIT licensed, served from a pinned CDN. Put each in a soft tinted chip, 40 to 48px, the image at about 60% of the chip. Fall back to the native emoji if the image fails:
   ```js
   const emoji3d = (e) => 'https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/' +
