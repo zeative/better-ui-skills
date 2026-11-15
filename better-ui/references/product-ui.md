@@ -2,7 +2,7 @@
 
 At the bar, product UI is both a pleasure to look at and genuinely useful. The look comes from a full shell, content on surfaces, imagery in every list and data drawn beautifully. The usefulness comes from leading with what the person needs to do.
 
-Contents: the shell · lead with what matters · modules · tiles and figures · charts · lists and tables · forms and controls · small apps and mobile-first tools · states · sample data · phone and desktop
+Contents: the shell · lead with what matters · dense professional tools · modules · tiles and figures · charts · lists and tables · forms and controls · small apps and mobile-first tools · states · sample data · phone and desktop
 
 ## The shell
 
@@ -18,9 +18,24 @@ Navigation items for areas that are not built are part of the picture, but shoul
 
 Design for the question the person opens this screen to answer. A dashboard is the answer to "how is it going, and do I need to do anything right now?" Put a module near the top that says what needs attention (work waiting, something low, a deadline) with direct actions, alongside the headline figure. This is what separates a useful dashboard from a pretty one, and it is rare in showcase work, so it stands out.
 
+## Dense professional tools
+
+Trading terminals, market data sites, screeners, analytics workbenches, ops consoles, logs, developer tools. Their users are experts who scan, compare and act, often for hours. The best of them (Bloomberg-style terminals, TradingView, Linear, Datadog, Vercel's dashboard) look good because they are **precise, quiet and dense**, not because they are decorated. Everything above about hero modules, ten modules, colourful tiles and imagery is for overview dashboards of business tools; here it produces a template.
+
+- **Density first.** Keep at least as many rows, columns and figures per screen as the product had. Rows 28 to 36px, table text 12 to 13px, panels separated by hairlines or 1px gaps rather than floating rounded cards with big gaps. Whitespace is spent on alignment, not padding.
+- **Tables and lists are the main surface.** Right-aligned tabular or mono figures, sticky headers, sortable columns, compact filter chips. No thumbnails: a ticker or symbol is plain text in strong ink, optionally with the real logo if the product already has one. Never invent letter-badge "logos" for companies, coins or tickers.
+- **Colour means direction or state only.** Green and red for up and down (in the market's convention), one brand accent for selection and focus, everything else neutral. No tinted icon chips, no per-tile hues, no gradient cards, no glows.
+- **One look across the product, dark or light as the product already is.** Flat surfaces in two or three close greys, 4 to 8px radius, no shadows on a dark canvas.
+- **Charts are the domain's own** (candlesticks with volume, depth, yield curves, treemaps, correlation matrices), drawn crisply with proper axes, crosshair and readouts. A sparkline belongs in a table row or watchlist, not decorating every tile.
+- **Summary lines, not insight cards.** If the screen states what stands out, it is a compact text line or a small table, not a stack of cards with coloured icon chips.
+- **Headers stay small.** A page title of 16 to 20px with a one-line context, then data. No hero figure at 40px unless the product's identity is that figure (a price on a detail page).
+- **Phones:** keep the data; collapse columns into two-line rows (symbol and name left, price and change right) and use horizontal scroll for wide tables inside their own container.
+
+Test: put a screenshot beside the real tool it competes with. If yours shows less, or looks more like a template than a terminal, it is wrong.
+
 ## Modules
 
-A rich dashboard has ten or more distinct modules. Draw from these and vary them:
+A rich overview dashboard for a business tool (not a professional data tool, see above) has ten or more distinct modules. Draw from these and vary them:
 
 - A **hero module:** the key figure on a contrast surface (dark or accent card) with a delta badge, a sparkline or mini area chart, and a comparison line.
 - A row of **KPI tiles** (below).
@@ -56,7 +71,7 @@ See `showpiece.md` for how to draw them. In product UI:
 
 ## Lists and tables
 
-- A thumbnail or portrait in the first column of every row, each one visibly different from the others. Name in strong ink, a secondary line in muted ink beneath.
+- In consumer and business lists (not professional data tables), a thumbnail or portrait in the first column of every row, each one visibly different from the others. Name in strong ink, a secondary line in muted ink beneath.
 - No truncated strings. Size columns and shorten metadata so every name, place and code is shown whole.
 - Status as a pill with a dot, from a small consistent set.
 - Right-aligned tabular figures; row height 52 to 64px with thumbnails; hairline separators or soft zebra; row hover; a row action (button or menu).

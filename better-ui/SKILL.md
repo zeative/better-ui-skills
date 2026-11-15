@@ -20,6 +20,7 @@ Two things are non-negotiable throughout: the interface must work (real states, 
 ## 1. Find out whose design this is
 
 - **An existing product** (styles, components, tokens, a Tailwind theme, a brand guide, screenshots): read the tokens and a few screens and work inside that system. Do not add a second font, accent or component style. Apply the craft in this skill within it.
+- **A redesign of a live product**, even "redesign everything" or "rombak total": its users should still recognise it. Keep the logo, the brand colour, the character of the type (a mono or tabular face stays) and, above all, the **density** and the information on each screen. Change what is actually wrong: hierarchy, alignment, inconsistent components, missing states, cramped or broken mobile layouts, empty screens. Before building, write down what the current design does well and keep it. A redesign that swaps a product's identity for this skill's defaults is a downgrade, however polished.
 - **A direction from the user** (a reference, a brand, "make it look like X"): that wins over the defaults below.
 - **A blank slate**: continue.
 
@@ -29,6 +30,7 @@ Note for yourself: what the product is, who uses it and where (phone on the go, 
 
 - *Mobile-first app* (tracker, wallet, workout, to-do, booking): looks like a native app.
 - *Dashboard or admin*: an app shell with data.
+- *Professional or data-dense tool* (trading terminal, market data, analytics workbench, ops console, developer tool): people use it for hours and read it like a table; density is the feature. Read "Dense professional tools" in `references/product-ui.md` first: most of the dashboard advice does not apply.
 - *Landing or marketing page*: sells a product.
 - *Showcase site* (portfolio, studio, restaurant, event): imagery and type; read `references/editorial.md`.
 - *Docs or reading*: typography and calm.
@@ -107,6 +109,7 @@ Tell the user briefly: what you built, the assumptions you made, and what is pla
 - **Too plain.** No brand mark, no header, no tab bar, rows of identical default cards, one colour used for everything, nothing a designer drew. Add the app chrome, a summary card, item icons and one clear visual moment.
 - **A component-library default.** Inter, grey-100 cards, an indigo-to-violet gradient card, emoji tiles for every category: correct but with no point of view. Choose a look, a font with a little character, and 3D icons or avatars, so the screen is recognisably designed.
 - **Everything styled.** Every card a different colour or treatment, gradients on everything, five accent colours. One brand colour, quiet surfaces, colour where it means something.
+- **Dribbble-izing a professional tool.** A trading terminal or data tool turned into a consumer dashboard: a gradient hero card with a glow, a sparkline in every tile, letter-badge "logos" on every ticker, an "insights" card with coloured icon chips, half the rows it used to show. It looks like every generated fintech template and is worse to use. Pro tools stay dense, flat and tabular.
 - **Oversized type.** A 96px number on a phone. Hero figures in apps are 28 to 40px; landing headlines 40 to 56px.
 - **Browser defaults showing.** A native date picker, select arrow or checkbox inside an app screen. Style every control.
 - **Wireframe content.** "Item 1", lorem ipsum, a grey box labelled "chart". Real names, figures and a real chart.
