@@ -369,3 +369,13 @@ marketing.md names the stock AI hero recipe (blur blobs, "New" pill, two-tone he
 checkmarks, star-rated avatar stack, browser mock with toast) and allows at most two of its parts;
 finance gets one rendered 3D object with presence on the home screen, and transaction rows go back
 to category line icons.
+
+**Method D.9 builds (iteration 19).** Finance: 7th, 7th (possible, possible: "no brand voice",
+generic category glyphs for merchants; the builder skipped the 3D object). SaaS landing: 7th, 7th
+when shown as its first screen only, with the judges' main reason "a single hero viewport, unlike
+the dense multi-section mockups around it".
+
+Landing-page reference shots show the whole page, so the presenter gained a `page` mode: the full
+page in two tall columns. The same D.9 landing build, re-judged that way, ranked **1st and 3rd**
+(possible, possible: "very tidy… strong craft"). Its earlier low rank was the presentation, not the
+design. The finance rules now require the brand mark on the home screen and one 3D object.
