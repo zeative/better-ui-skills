@@ -228,3 +228,19 @@ third screen.
 (bright and clean, soft tint, colour blocks, dark with one neon, monochrome, fresh gradient), a
 sans with a little character, 3D icons (Fluent 3D emoji, MIT, pinned CDN, native fallback) and
 illustrated avatars; sample data that reads like real life; and no sample-data note on main screens.
+
+**Control: Method D builds under the fairer presentation.** Habit 4th (likely), workout 6th
+(possible), finance 8th (likely, for native browser date and select controls in its add sheet).
+The fairer presentation alone did not lift them; the reasons were now design ones.
+
+**Method D.1 builds (iteration 11), two line-ups each:**
+
+| App | Ranks of 9 | Flags | What the judges said |
+|---|---|---|---|
+| Habit tracker | 2nd, 4th | possible, possible | "clean and internally consistent… nothing is wrong, and that is the tell" |
+| Workout app | 1st, 7th | possible, possible | "the cleanest product thinking in the set"; suspected only for perfect arithmetic and flat frames |
+| Finance app | 8th, 8th | likely, likely | native browser date input; list rows showing beside the floating tab bar |
+
+Habit and workout now rank in the top half with only soft suspicion, much of it about the
+presentation. Finance failed on two concrete faults, both now covered by rules (no native-looking
+controls, which this build predates; a solid bar or a fade behind a floating tab bar).

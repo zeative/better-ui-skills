@@ -1,0 +1,832 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F4F4F2">
+<title>Setlog · Today's workout</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Look: bright and clean, warm grey canvas, white cards, near-black summary card, orange accent for progress and checks. */
+:root {
+  --font: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --canvas: #F4F4F2; --surface: #FFFFFF; --surface-2: #F5F5F3; --line: #EAEAE6;
+  --text: #16161A; --text-2: #62626B; --text-3: #8E8E96;
+  --dark: #17171C; --dark-2: #24242B;
+  --brand: #FF5A1F; --brand-ink: #C2410C; --brand-tint: #FFF0E9;
+  --ok: #15803D; --ok-tint: #E8F7EE;
+  --r-xs: 8px; --r-sm: 12px; --r-md: 18px; --r-lg: 24px; --r-full: 999px;
+  --sh-1: 0 1px 2px rgba(28,24,20,.05), 0 1px 1px rgba(28,24,20,.03);
+  --sh-2: 0 1px 2px rgba(28,24,20,.05), 0 8px 22px -10px rgba(28,24,20,.14);
+  --sh-float: 0 12px 32px -8px rgba(28,24,20,.22), 0 2px 6px rgba(28,24,20,.06);
+  --tabbar-h: 68px;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { margin: 0; font-family: var(--font); font-size: 16px; line-height: 1.5; color: var(--text); background: var(--canvas);
+  -webkit-font-smoothing: antialiased; min-height: 100dvh; }
+h1, h2, h3 { margin: 0; text-wrap: balance; font-weight: 600; }
+p { margin: 0; text-wrap: pretty; }
+img, svg { display: block; max-width: 100%; }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.ic { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* ---------- Shell ---------- */
+.app { max-width: 600px; margin: 0 auto; padding: calc(12px + env(safe-area-inset-top)) 16px calc(var(--tabbar-h) + 40px + env(safe-area-inset-bottom)); }
+.top { display: flex; align-items: center; gap: 12px; padding: 4px 0 16px; }
+.brand { display: none; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+.brand-mark { width: 32px; height: 32px; border-radius: var(--r-xs); background: var(--dark); display: grid; place-items: center; }
+.greet { flex: 1; min-width: 0; }
+.greet .date { font-size: 13px; color: var(--text-2); font-weight: 500; }
+.greet h1 { font-size: 24px; letter-spacing: -0.02em; line-height: 1.25; }
+.round-btn { width: 44px; height: 44px; border-radius: var(--r-full); border: 1px solid var(--line); background: var(--surface);
+  display: grid; place-items: center; box-shadow: var(--sh-1); transition: transform .15s, background-color .15s; color: var(--text); }
+.round-btn:hover { background: var(--surface-2); }
+.round-btn:active { transform: scale(.95); }
+.avatar { width: 44px; height: 44px; border-radius: var(--r-full); background: #FFE2D3; color: #9A3412; display: grid; place-items: center;
+  font-weight: 600; font-size: 16px; flex: none; overflow: hidden; }
+.avatar img { width: 100%; height: 100%; }
+
+.view { display: none; }
+.view.active { display: block; }
+.stack { display: grid; gap: 16px; }
+
+/* ---------- Week strip ---------- */
+.week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+.day { display: grid; justify-items: center; gap: 4px; padding: 10px 0 9px; border-radius: var(--r-md); background: var(--surface);
+  box-shadow: var(--sh-1); }
+.day .dl { font-size: 12px; color: var(--text-2); font-weight: 500; }
+.day .dn { font-size: 16px; font-weight: 600; }
+.day .dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; }
+.day.done .dot { background: var(--brand); }
+.day.future { background: transparent; box-shadow: inset 0 0 0 1px var(--line); }
+.day.future .dn { color: var(--text-2); }
+.day.today { background: var(--dark); box-shadow: 0 6px 16px -6px rgba(20,20,26,.5); }
+.day.today .dl { color: #C3C3CB; } .day.today .dn { color: #fff; }
+.day.today.done .dot { background: var(--brand); }
+
+/* ---------- Summary card ---------- */
+.summary { position: relative; overflow: hidden; background: var(--dark); color: #fff; border-radius: var(--r-lg); padding: 20px;
+  box-shadow: 0 2px 4px rgba(20,20,26,.08), 0 22px 44px -18px rgba(20,20,26,.45); isolation: isolate; }
+.summary::before { content: ""; position: absolute; z-index: -1; width: 260px; height: 260px; right: -90px; top: -110px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255,90,31,.16), transparent); }
+.sum-head { display: flex; gap: 16px; align-items: center; }
+.sum-text { flex: 1; min-width: 0; }
+.pill { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: var(--r-full); font-size: 12px; font-weight: 600; }
+.pill-dark { background: rgba(255,255,255,.1); color: #fff; }
+.pill-dark i { width: 6px; height: 6px; border-radius: 50%; background: var(--brand); }
+.sum-title { font-size: 24px; letter-spacing: -0.02em; margin-top: 10px; line-height: 1.2; }
+.sum-sub { font-size: 14px; color: #C3C3CB; margin-top: 4px; }
+.ring { position: relative; width: 96px; height: 96px; flex: none; }
+.ring svg { width: 96px; height: 96px; transform: rotate(-90deg); }
+.ring .track { stroke: rgba(255,255,255,.12); }
+.ring .bar { stroke: var(--brand); transition: stroke-dasharray .5s cubic-bezier(.2,.8,.2,1); }
+.ring-label { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.ring-label b { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; }
+.ring-label span { font-size: 12px; color: #C3C3CB; }
+.sum-stats { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.1); }
+.sum-stats > div + div { padding-left: 14px; border-left: 1px solid rgba(255,255,255,.1); }
+.sum-stats .k { font-size: 12px; color: #B4B4BD; }
+.sum-stats .v { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; }
+.sum-stats .v small { font-size: 13px; font-weight: 500; color: #B4B4BD; margin-left: 2px; }
+
+/* ---------- Section heading ---------- */
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 8px 0 -4px; }
+.sec-head h2 { font-size: 18px; letter-spacing: -0.01em; }
+.sec-head span { font-size: 14px; color: var(--text-2); }
+
+/* ---------- Exercise cards ---------- */
+.ex-list { display: grid; gap: 10px; }
+.ex { background: var(--surface); border-radius: var(--r-md); box-shadow: var(--sh-1); border: 1px solid transparent; transition: box-shadow .2s, border-color .2s; }
+.ex.open { box-shadow: var(--sh-2); border-color: var(--line); }
+.ex-head { width: 100%; display: flex; align-items: center; gap: 12px; padding: 12px 14px 12px 12px; background: none; border: 0; text-align: left; border-radius: var(--r-md); min-height: 72px; }
+.ex-head:hover .ex-name { color: #000; }
+.chip { width: 48px; height: 48px; border-radius: var(--r-sm); display: grid; place-items: center; flex: none; background: var(--t, #F1F1EE); position: relative; }
+.chip img { width: 30px; height: 30px; }
+.chip .gl { width: 26px; height: 26px; color: var(--c); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.chip .emoji { font-size: 26px; line-height: 1; }
+.chip .tick { position: absolute; right: -4px; bottom: -4px; width: 20px; height: 20px; border-radius: 50%; background: var(--brand); color: #fff;
+  display: none; place-items: center; box-shadow: 0 0 0 2px var(--surface); }
+.ex.complete .chip .tick { display: grid; }
+.ex-main { flex: 1; min-width: 0; }
+.ex-name { font-size: 16px; font-weight: 600; line-height: 1.3; }
+.ex-meta { font-size: 14px; color: var(--text-2); margin-top: 2px; }
+.ex-prog { display: flex; align-items: center; gap: 10px; flex: none; }
+.mini { display: flex; gap: 3px; }
+.mini i { width: 6px; height: 18px; border-radius: 3px; background: #E7E7E3; transition: background-color .2s; }
+.mini i.on { background: var(--brand); }
+.chev { color: var(--text-3); transition: transform .2s; }
+.ex.open .chev { transform: rotate(180deg); }
+.ex-body { display: none; padding: 0 14px 14px; }
+.ex.open .ex-body { display: block; }
+.sets-head, .set { display: grid; grid-template-columns: 32px minmax(56px, 1fr) minmax(0, 112px) minmax(0, 112px) 44px; gap: 8px; align-items: center; }
+.prev { font-size: 14px; color: var(--text-2); white-space: nowrap; }
+.sets-head span:last-child, .set .check { justify-self: end; }
+.sets-head { font-size: 12px; color: var(--text-2); font-weight: 500; padding: 2px 0 6px; border-top: 1px solid var(--line); padding-top: 12px; }
+.set { padding: 4px 0; }
+.set-n { width: 32px; height: 32px; border-radius: var(--r-xs); background: var(--surface-2); display: grid; place-items: center; font-size: 14px; font-weight: 600; color: var(--text-2); }
+.set.done .set-n { background: var(--brand-tint); color: var(--brand-ink); }
+.field { position: relative; }
+.field input { width: 100%; height: 44px; border-radius: var(--r-sm); border: 1px solid transparent; background: var(--surface-2); padding: 0 12px;
+  font-size: 16px; font-weight: 500; color: var(--text-2); font-variant-numeric: tabular-nums; transition: border-color .15s, background-color .15s; -moz-appearance: textfield; }
+.field input::-webkit-outer-spin-button, .field input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.field input:hover { border-color: var(--line); }
+.field input:focus { outline: none; border-color: var(--brand); background: var(--surface); box-shadow: 0 0 0 3px rgba(255,90,31,.15); }
+.set.done .field input { background: var(--brand-tint); color: var(--text); font-weight: 600; }
+.field input:focus { color: var(--text); }
+.check { width: 44px; height: 44px; border-radius: 50%; border: 2px solid #D9D9D4; background: var(--surface); display: grid; place-items: center;
+  color: transparent; transition: background-color .2s, border-color .2s, transform .15s; }
+.check:hover { border-color: var(--brand); color: #F4B79E; }
+.check:active { transform: scale(.92); }
+.set.done .check { background: var(--brand); border-color: var(--brand); color: #fff; animation: pop .3s cubic-bezier(.2,.9,.3,1.4); }
+@keyframes pop { 0% { transform: scale(.8); } 100% { transform: scale(1); } }
+.ex-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--text-2); }
+.text-btn { background: none; border: 0; font-size: 14px; font-weight: 600; color: var(--brand-ink); padding: 0 4px; min-height: 44px; border-radius: var(--r-xs); }
+.text-btn:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.done-banner { display: none; align-items: center; gap: 12px; padding: 14px 16px; border-radius: var(--r-md); background: var(--ok-tint); color: #14532D; font-size: 14px; }
+.done-banner.show { display: flex; }
+.done-banner b { display: block; font-size: 16px; }
+.done-banner .chip { width: 44px; height: 44px; background: #CFEEDB; }
+
+/* ---------- Progress ---------- */
+.card { background: var(--surface); border-radius: var(--r-md); box-shadow: var(--sh-1); padding: 18px; }
+.card-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.card-title h2 { font-size: 16px; }
+.card-title span { font-size: 13px; color: var(--text-2); }
+.goal { display: flex; align-items: center; gap: 16px; }
+.goal .ring { width: 84px; height: 84px; }
+.goal .ring svg { width: 84px; height: 84px; }
+.goal .ring .track { stroke: #F0F0EC; }
+.goal .ring-label b { font-size: 20px; }
+.goal .ring-label span { color: var(--text-2); }
+.goal-text b { font-size: 18px; display: block; letter-spacing: -0.01em; }
+.goal-text p { font-size: 14px; color: var(--text-2); margin-top: 2px; }
+.dots7 { display: flex; gap: 6px; margin-top: 10px; }
+.dots7 span { width: 24px; height: 24px; border-radius: var(--r-xs); background: var(--surface-2); font-size: 12px; font-weight: 600; color: var(--text-2); display: grid; place-items: center; }
+.dots7 span.on { background: var(--brand); color: var(--text); }
+.dots7 span.part { background: var(--brand-tint); color: var(--brand-ink); box-shadow: inset 0 0 0 1.5px var(--brand); }
+
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.tile { background: var(--surface); border-radius: var(--r-md); box-shadow: var(--sh-1); padding: 14px 12px; min-width: 0; }
+.tile .chip { width: 36px; height: 36px; border-radius: var(--r-sm); color: var(--c); background: color-mix(in srgb, var(--c) 13%, var(--surface)); }
+.tile .chip .ic { width: 18px; height: 18px; }
+.tile .k { font-size: 12px; color: var(--text-2); margin-top: 10px; font-weight: 500; }
+.tile .v { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; white-space: nowrap; }
+.tile .v small { font-size: 12px; font-weight: 500; color: var(--text-2); margin-left: 2px; letter-spacing: 0; }
+.delta { display: inline-flex; margin-top: 6px; font-size: 12px; font-weight: 600; padding: 2px 7px; border-radius: var(--r-full); white-space: nowrap; }
+.delta.up { background: var(--ok-tint); color: var(--ok); }
+.delta.down { background: #F3F3F0; color: var(--text-2); }
+
+.chart { position: relative; margin-top: 14px; }
+.bars { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; height: 150px; align-items: end; position: relative; }
+.grid-lines { position: absolute; inset: 0 0 0 0; display: grid; grid-template-rows: repeat(3, 1fr); pointer-events: none; }
+.grid-lines i { border-top: 1px dashed #E6E6E1; }
+.bar-col { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+.bar-col .b { width: 100%; max-width: 30px; border-radius: 8px 8px 4px 4px; background: #2A2A31; min-height: 4px; transition: height .5s cubic-bezier(.2,.8,.2,1); }
+.bar-col.off .b { background: transparent; min-height: 0; height: 0; }
+.bar-col.off::after { content: 'Rest'; font-size: 12px; color: var(--text-3); }
+.bar-col.future .b { background: transparent; border: 1.5px dashed #DCDCD6; height: 24px; }
+.bar-col.today .b { background: var(--brand); }
+.bar-col .val { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; white-space: nowrap; }
+.bar-col.today .val { color: var(--brand-ink); }
+.x-labels { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 8px; text-align: center; font-size: 12px; color: var(--text-2); font-weight: 500; }
+.x-labels .t { color: var(--text); font-weight: 600; }
+.legend { display: flex; gap: 14px; margin-top: 12px; font-size: 12px; color: var(--text-2); }
+.legend i { display: inline-block; width: 8px; height: 8px; border-radius: 3px; margin-right: 6px; vertical-align: 0; }
+
+.list { background: var(--surface); border-radius: var(--r-md); box-shadow: var(--sh-1); }
+.row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; min-height: 68px; }
+.row + .row { border-top: 1px solid var(--line); }
+.row .chip { width: 44px; height: 44px; border-radius: var(--r-sm); }
+.date-tile { display: grid; place-content: center; text-align: center; line-height: 1.1; }
+.date-tile small { font-size: 12px; font-weight: 500; color: var(--text-2); }
+.date-tile b { font-size: 16px; font-weight: 600; color: var(--text); }
+.grp { font-size: 16px !important; }
+.row-main { flex: 1; min-width: 0; }
+.row-main b { display: block; font-size: 16px; font-weight: 600; line-height: 1.3; }
+.row-main span { font-size: 13px; color: var(--text-2); }
+.row-val { text-align: right; flex: none; }
+.row-val b { display: block; font-size: 16px; font-weight: 600; white-space: nowrap; }
+.row-val b small { font-size: 13px; font-weight: 500; color: var(--text-2); }
+.row-val span { font-size: 12px; color: var(--text-2); }
+.row .pill-live { background: var(--brand-tint); color: var(--brand-ink); }
+
+.empty { text-align: center; padding: 32px 20px; }
+.empty img, .empty .emoji { width: 96px; height: 96px; margin: 0 auto 12px; font-size: 72px; line-height: 96px; }
+.empty b { font-size: 16px; display: block; }
+.empty p { font-size: 14px; color: var(--text-2); margin-top: 4px; }
+
+/* ---------- Tab bar ---------- */
+body::after { content: ''; position: fixed; left: 0; right: 0; bottom: 0; height: calc(var(--tabbar-h) + 40px); background: linear-gradient(rgba(244,244,242,0), var(--canvas) 70%); pointer-events: none; z-index: 19; }
+.tabbar { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(12px + env(safe-area-inset-bottom)); width: calc(100% - 32px); max-width: 568px;
+  height: var(--tabbar-h); background: var(--surface); border-radius: var(--r-md); box-shadow: var(--sh-float); border: 1px solid var(--line);
+  display: grid; grid-template-columns: repeat(3, 1fr); padding: 6px; z-index: 20; }
+.tab { border: 0; background: none; border-radius: var(--r-sm); display: grid; justify-items: center; align-content: center; gap: 3px;
+  font-size: 12px; font-weight: 500; color: var(--text-2); transition: background-color .15s, color .15s; }
+.tab:hover { color: var(--text); }
+.tab[aria-current="page"] { color: var(--text); font-weight: 600; background: var(--brand-tint); }
+.tab[aria-current="page"] .ic { color: var(--brand); }
+
+/* ---------- Rest timer ---------- */
+.rest { position: fixed; left: 50%; bottom: calc(var(--tabbar-h) + 24px + env(safe-area-inset-bottom)); transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+  width: calc(100% - 32px); max-width: 420px; background: var(--dark); color: #fff; border-radius: 18px; padding: 10px 10px 10px 16px;
+  display: flex; align-items: center; gap: 12px; box-shadow: var(--sh-float); z-index: 21; transition: opacity .2s, transform .25s; overflow: hidden; }
+.rest.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.rest .lbl { font-size: 12px; color: #B4B4BD; }
+.rest .time { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+.rest .grow { flex: 1; }
+.rest button { height: 40px; min-width: 44px; padding: 0 14px; border-radius: var(--r-sm); border: 0; background: rgba(255,255,255,.1); color: #fff; font-size: 14px; font-weight: 600; }
+.rest button:hover { background: rgba(255,255,255,.18); }
+.rest button.primary { background: var(--brand); color: var(--text); }
+.rest .track { position: absolute; left: 0; bottom: 0; height: 3px; background: var(--brand); transition: width 1s linear; }
+
+/* ---------- Sheet ---------- */
+.scrim { position: fixed; inset: 0; background: rgba(15,15,20,.4); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 30; }
+.scrim.show { opacity: 1; pointer-events: auto; }
+.sheet { position: fixed; left: 50%; bottom: 0; transform: translate(-50%, 100%); width: 100%; max-width: 480px; background: var(--surface);
+  border-radius: 24px 24px 0 0; padding: 10px 20px calc(20px + env(safe-area-inset-bottom)); z-index: 31; transition: transform .28s cubic-bezier(.2,.8,.2,1); visibility: hidden; }
+.sheet.show { transform: translate(-50%, 0); visibility: visible; }
+.grab { width: 40px; height: 5px; border-radius: 3px; background: #DCDCD6; margin: 0 auto 14px; }
+.sheet h2 { font-size: 20px; letter-spacing: -0.01em; margin-bottom: 16px; }
+.set-group { padding: 14px 0; border-top: 1px solid var(--line); }
+.set-group .lab { font-size: 14px; font-weight: 600; margin-bottom: 10px; display: block; }
+.seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; background: var(--surface-2); border-radius: var(--r-sm); padding: 4px; gap: 4px; }
+.seg button { height: 40px; border: 0; background: none; border-radius: var(--r-xs); font-size: 14px; font-weight: 500; color: var(--text-2); }
+.seg button:hover { color: var(--text); }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--text); font-weight: 600; box-shadow: var(--sh-1); }
+.btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; height: 50px; border-radius: var(--r-sm); border: 0; font-size: 16px; font-weight: 600;
+  background: var(--dark); color: #fff; transition: transform .15s, background-color .15s; }
+.btn:hover { background: #000; }
+.btn:active { transform: scale(.98); }
+.btn-line { background: var(--surface); color: var(--text); border: 1px solid var(--line); }
+.btn-line:hover { background: var(--surface-2); }
+.btn-danger { color: #B91C1C; }
+.btn-row { display: grid; gap: 8px; }
+.hint { font-size: 13px; color: var(--text-2); margin-top: 8px; }
+
+.toast { position: fixed; left: 50%; top: calc(16px + env(safe-area-inset-top)); transform: translate(-50%, -20px); opacity: 0; background: var(--dark); color: #fff;
+  padding: 10px 16px; border-radius: var(--r-full); font-size: 14px; font-weight: 500; z-index: 40; transition: opacity .2s, transform .2s; pointer-events: none; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- Desktop ---------- */
+@media (min-width: 960px) {
+  .app { max-width: 1120px; padding: 28px 32px 48px; display: grid; grid-template-columns: minmax(0, 1fr) 400px; gap: 0 28px; align-items: start; }
+  .top { grid-column: 1 / -1; padding-bottom: 24px; margin-bottom: 4px; }
+  .brand { display: flex; margin-right: 28px; padding-right: 28px; border-right: 1px solid var(--line); height: 44px; }
+  .view { display: block; }
+  #view-today { grid-column: 1; grid-row: 2 / span 2; }
+  #view-progress { grid-column: 2; grid-row: 2; }
+  #view-history { grid-column: 2; grid-row: 3; margin-top: 24px; }
+  .tabbar { display: none; }
+  body::after { display: none; }
+  .rest { bottom: 24px; }
+  .sheet { top: 50%; bottom: auto; border-radius: 24px; transform: translate(-50%, -46%); opacity: 0; transition: opacity .2s, transform .2s; padding-bottom: 24px; }
+  .sheet.show { transform: translate(-50%, -50%); opacity: 1; }
+  .grab { display: none; }
+  .greet h1 { font-size: 24px; }
+  .mob-only { display: none; }
+}
+@media (max-width: 959px) { .desk-only { display: none; } }
+@media (max-width: 359px) { .tiles { grid-template-columns: 1fr 1fr; } .tile:last-child { grid-column: 1 / -1; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-today" viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M3.5 9.5h17M8 2.5v4M16 2.5v4"/><path d="m9 14.5 2 2 4-4"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20h16"/><rect x="5.5" y="11" width="3" height="6" rx="1"/><rect x="10.5" y="6" width="3" height="11" rx="1"/><rect x="15.5" y="9" width="3" height="8" rx="1"/></symbol>
+  <symbol id="i-history" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/><path d="M3.5 4v4h4"/><path d="M12 8v4l3 2"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="k-barbell" viewBox="0 0 24 24"><path d="M2.5 12h19"/><rect x="5" y="7" width="3" height="10" rx="1"/><rect x="16" y="7" width="3" height="10" rx="1"/><path d="M3 9.5v5M21 9.5v5"/></symbol>
+  <symbol id="k-dumbbell" viewBox="0 0 24 24"><g transform="rotate(-35 12 12)"><path d="M8 12h8"/><rect x="5" y="8.5" width="3.2" height="7" rx="1.2"/><rect x="15.8" y="8.5" width="3.2" height="7" rx="1.2"/><path d="M3.2 10.5v3M20.8 10.5v3"/></g></symbol>
+  <symbol id="k-cable" viewBox="0 0 24 24"><path d="M4 3.5v17M4 4h9"/><circle cx="15" cy="5.5" r="2"/><path d="M17 5.5V13"/><path d="M14.5 13h5l-1 3.5h-3z"/><path d="M4 20.5h6"/></symbol>
+  <symbol id="k-body" viewBox="0 0 24 24"><circle cx="12" cy="4.8" r="2"/><path d="M12 8.5v6M7 10.5l5-2 5 2M9 20.5l3-6 3 6"/></symbol>
+  <symbol id="k-machine" viewBox="0 0 24 24"><path d="M4 20.5h16M6 20.5v-15M6 9h5l7-4.5"/><path d="M15 20.5v-5l-3-3"/><circle cx="18.5" cy="4.5" r="1.5"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v6a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 14v3M8.5 20.5h7M10 17h4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-weight" viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3.5 8.5 4.5-8.5 4.5L3.5 8z"/><path d="m3.5 12 8.5 4.5 8.5-4.5M3.5 16l8.5 4.5 8.5-4.5"/></symbol>
+</svg>
+
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#FF5A1F" stroke-width="2.4" stroke-linecap="round"><path d="M5 8v8M19 8v8M8.5 12h7"/></svg></span>
+      Setlog
+    </div>
+    <div class="greet">
+      <div class="date" id="today-date"></div>
+      <h1 id="greeting">Good morning, Alex</h1>
+    </div>
+    <button class="round-btn" id="open-settings" aria-label="Settings"><svg class="ic"><use href="#i-settings"/></svg></button>
+    <div class="avatar" aria-hidden="true"><img alt="" width="44" height="44" src="https://api.dicebear.com/9.x/notionists/svg?seed=Alex&backgroundColor=ffe2d3" onerror="this.replaceWith('A')"></div>
+  </header>
+
+  <main id="view-today" class="view active" aria-label="Today's workout">
+    <div class="stack">
+      <div class="week" id="week-strip" aria-label="This week"></div>
+      <section class="summary" id="summary" aria-live="polite"></section>
+      <div class="done-banner" id="done-banner" role="status"></div>
+      <div class="sec-head"><h2>Exercises</h2><span id="ex-count"></span></div>
+      <div class="ex-list" id="ex-list"></div>
+    </div>
+  </main>
+
+  <section id="view-progress" class="view" aria-labelledby="progress-h">
+    <div class="stack">
+      <div class="sec-head desk-only" style="margin-top:0"><h2 id="progress-h">This week</h2><span id="week-range"></span></div>
+      <div class="card" id="goal-card"></div>
+      <div class="tiles" id="tiles"></div>
+      <div class="card" id="chart-card"></div>
+    </div>
+  </section>
+
+  <section id="view-history" class="view" aria-labelledby="history-h">
+    <div class="stack" id="history"></div>
+  </section>
+</div>
+
+<nav class="tabbar" aria-label="Main">
+  <button class="tab" data-tab="today" aria-current="page"><svg class="ic"><use href="#i-today"/></svg>Today</button>
+  <button class="tab" data-tab="progress"><svg class="ic"><use href="#i-chart"/></svg>Progress</button>
+  <button class="tab" data-tab="history"><svg class="ic"><use href="#i-history"/></svg>History</button>
+</nav>
+
+<div class="rest" id="rest" role="timer" aria-live="off">
+  <div class="grow">
+    <div class="lbl" id="rest-label">Rest</div>
+    <div class="time num" id="rest-time">1:30</div>
+  </div>
+  <button id="rest-add" aria-label="Add 15 seconds">+15s</button>
+  <button class="primary" id="rest-skip">Skip</button>
+  <div class="track" id="rest-track"></div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-h">
+  <div class="grab"></div>
+  <h2 id="sheet-h">Settings</h2>
+  <div class="set-group">
+    <span class="lab" id="goal-lab">Weekly goal</span>
+    <div class="seg" id="goal-seg" role="group" aria-labelledby="goal-lab"></div>
+  </div>
+  <div class="set-group">
+    <span class="lab" id="rest-lab">Rest between sets</span>
+    <div class="seg" id="rest-seg" role="group" aria-labelledby="rest-lab"></div>
+  </div>
+  <div class="set-group btn-row">
+    <button class="btn btn-line" id="reset-today">Reset today's sets</button>
+    <button class="btn btn-line btn-danger" id="clear-data">Clear sample data</button>
+    <p class="hint">Clearing removes the sample history and starts your log fresh.</p>
+  </div>
+  <button class="btn" id="close-settings" style="margin-top:6px">Done</button>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+  const KEY = 'setlog.v1';
+  const DAY = 864e5;
+  const $ = (s) => document.querySelector(s);
+  const emoji3d = (e) => 'https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/' +
+    [...e].map((c) => c.codePointAt(0).toString(16)).join('-') + '.webp';
+  const icon = (e, size = 30) => `<img src="${emoji3d(e)}" alt="" width="${size}" height="${size}" loading="lazy" onerror="this.outerHTML='<span class=&quot;emoji&quot;>${e}</span>'">`;
+  const fmt = (n) => Math.round(n).toLocaleString('en-GB');
+  const keyOf = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const fromKey = (k) => { const [y, m, d] = k.split('-').map(Number); return new Date(y, m - 1, d); };
+  const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const mondayOf = (d) => { const off = (d.getDay() + 6) % 7; return new Date(d.getFullYear(), d.getMonth(), d.getDate() - off); };
+
+  const TINTS = { orange: '#FFEBDD', blue: '#E3EEFF', green: '#E3F5E8', violet: '#EEE8FF', yellow: '#FFF2C7', pink: '#FFE6EE', teal: '#DDF4F1' };
+  const TONES = { orange: '#E8590C', blue: '#2F6FEB', green: '#1E9E57', violet: '#7C5CFA', yellow: '#B7791F', pink: '#D6336C', teal: '#0E9F9A' };
+
+  const PLANS = {
+    push: { name: 'Push day', focus: 'Chest, shoulders and triceps', tint: 'orange', exercises: [
+      { name: 'Barbell bench press', kit: 'barbell', tint: 'orange', muscle: 'Chest', sets: 4, reps: 8, w: 60 },
+      { name: 'Incline dumbbell press', kit: 'dumbbell', tint: 'blue', muscle: 'Upper chest', sets: 3, reps: 10, w: 22 },
+      { name: 'Overhead press', kit: 'barbell', tint: 'yellow', muscle: 'Shoulders', sets: 3, reps: 8, w: 40 },
+      { name: 'Cable lateral raise', kit: 'cable', tint: 'violet', muscle: 'Side delts', sets: 3, reps: 12, w: 7.5 },
+      { name: 'Triceps rope pushdown', kit: 'cable', tint: 'pink', muscle: 'Triceps', sets: 3, reps: 12, w: 25 },
+      { name: 'Push-ups', kit: 'body', tint: 'green', muscle: 'Chest', sets: 2, reps: 15, w: 0 },
+    ]},
+    pull: { name: 'Pull day', focus: 'Back and biceps', tint: 'teal', exercises: [
+      { name: 'Deadlift', kit: 'barbell', tint: 'orange', muscle: 'Posterior chain', sets: 3, reps: 5, w: 100 },
+      { name: 'Pull-ups', kit: 'body', tint: 'blue', muscle: 'Lats', sets: 3, reps: 8, w: 0 },
+      { name: 'Barbell row', kit: 'barbell', tint: 'teal', muscle: 'Upper back', sets: 4, reps: 8, w: 55 },
+      { name: 'Face pull', kit: 'cable', tint: 'pink', muscle: 'Rear delts', sets: 3, reps: 15, w: 20 },
+      { name: 'Hammer curl', kit: 'dumbbell', tint: 'yellow', muscle: 'Biceps', sets: 3, reps: 10, w: 14 },
+    ]},
+    legs: { name: 'Leg day', focus: 'Quads, hamstrings and calves', tint: 'blue', exercises: [
+      { name: 'Back squat', kit: 'barbell', tint: 'orange', muscle: 'Quads', sets: 4, reps: 6, w: 80 },
+      { name: 'Romanian deadlift', kit: 'barbell', tint: 'teal', muscle: 'Hamstrings', sets: 3, reps: 10, w: 60 },
+      { name: 'Walking lunge', kit: 'dumbbell', tint: 'blue', muscle: 'Glutes', sets: 3, reps: 12, w: 16 },
+      { name: 'Leg press', kit: 'machine', tint: 'violet', muscle: 'Quads', sets: 3, reps: 12, w: 140 },
+      { name: 'Standing calf raise', kit: 'machine', tint: 'green', muscle: 'Calves', sets: 4, reps: 15, w: 40 },
+    ]},
+  };
+  const KIT = {};
+  Object.values(PLANS).forEach((p) => p.exercises.forEach((e) => (KIT[e.name] = e.kit)));
+  const glyph = (name, tint) => `<svg class="gl" style="--c:${TONES[tint]}" aria-hidden="true"><use href="#k-${KIT[name] || 'barbell'}"/></svg>`;
+  const ORDER = ['legs', 'pull', 'push'];
+  const nameToPlan = (n) => Object.keys(PLANS).find((k) => PLANS[k].name === n);
+
+  const buildWorkout = (planKey, prevWeights = {}) => {
+    const p = PLANS[planKey];
+    return { plan: planKey, exercises: p.exercises.map((e, i) => {
+      const w = prevWeights[e.name] ?? e.w;
+      return { id: planKey + i, name: e.name, tint: e.tint, muscle: e.muscle, target: e.reps,
+        sets: Array.from({ length: e.sets }, () => ({ w, r: e.reps, done: false })) };
+    })};
+  };
+
+  const seed = () => {
+    const now = new Date(); const today = startOfDay(now); const mon = mondayOf(now);
+    const raw = [
+      [-7, 'push', 52, 18, 5960], [-5, 'legs', 55, 17, 7050], [-3, 'pull', 47, 16, 4880],
+      [0, 'legs', 54, 17, 7420], [2, 'pull', 49, 16, 5140], [4, 'legs', 51, 17, 7180],
+    ];
+    const history = raw.map(([off, plan, mins, sets, volume]) => {
+      const d = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + off);
+      return { date: keyOf(d), plan, name: PLANS[plan].name, mins, sets, volume };
+    }).filter((h) => fromKey(h.date) < today);
+    const w = buildWorkout('push');
+    // mid-session: bench done, 1 incline set done
+    w.exercises[0].sets.forEach((s) => (s.done = true));
+    w.exercises[1].sets[0].done = true;
+    return { date: keyOf(today), workout: w, startedAt: Date.now() - 19 * 60e3, lastAt: Date.now() - 2 * 60e3,
+      history, goal: 4, rest: 90, open: w.exercises[1].id };
+  };
+
+  let S;
+  try { S = JSON.parse(localStorage.getItem(KEY)); } catch { S = null; }
+  if (!S || !S.workout) S = seed();
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch {} };
+
+  // Roll over to a new day: log yesterday's session if anything was done, then load the next plan in the cycle.
+  const rollover = () => {
+    const todayKey = keyOf(new Date());
+    if (S.date === todayKey) return;
+    const st = stats();
+    if (st.doneSets > 0) S.history.push({ date: S.date, plan: S.workout.plan, name: PLANS[S.workout.plan].name, mins: st.mins, sets: st.doneSets, volume: st.volume });
+    const weights = {};
+    S.workout.exercises.forEach((e) => { const last = [...e.sets].reverse().find((s) => s.done) || e.sets[0]; weights[e.name] = last.w; });
+    const last = S.history.length ? S.history[S.history.length - 1].plan : 'pull';
+    const next = ORDER[(ORDER.indexOf(last) + 1) % ORDER.length];
+    S.workout = buildWorkout(next, weights);
+    S.date = todayKey; S.startedAt = null; S.lastAt = null; S.open = S.workout.exercises[0].id;
+    save();
+  };
+
+  function stats() {
+    let total = 0, doneSets = 0, volume = 0, exDone = 0;
+    S.workout.exercises.forEach((e) => {
+      const d = e.sets.filter((s) => s.done);
+      total += e.sets.length; doneSets += d.length;
+      volume += d.reduce((a, s) => a + s.w * s.r, 0);
+      if (d.length === e.sets.length) exDone++;
+    });
+    const mins = S.startedAt ? Math.max(1, Math.round(((S.lastAt && doneSets === total ? S.lastAt : Date.now()) - S.startedAt) / 60e3)) : 0;
+    return { total, doneSets, volume, exDone, mins, complete: total > 0 && doneSets === total };
+  }
+
+  /* ---------- Render: today ---------- */
+  let tab = 'today';
+  const desk = matchMedia('(min-width: 960px)');
+  const renderHeader = () => {
+    const now = new Date();
+    const h = now.getHours();
+    if (tab === 'today' || desk.matches) {
+      $('#today-date').textContent = now.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' });
+      $('#greeting').textContent = `${h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening'}, Alex`;
+    } else if (tab === 'progress') {
+      $('#today-date').textContent = $('#week-range').textContent || 'This week';
+      $('#greeting').textContent = 'Progress';
+    } else {
+      $('#today-date').textContent = `${S.history.length + (stats().doneSets ? 1 : 0)} workouts logged`;
+      $('#greeting').textContent = 'History';
+    }
+  };
+  desk.addEventListener('change', () => renderHeader());
+
+  const weekDays = () => {
+    const mon = mondayOf(new Date()); const today = startOfDay(new Date());
+    return Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() + i);
+      const k = keyOf(d);
+      const isToday = +d === +today;
+      const logged = S.history.filter((h) => h.date === k);
+      return { d, k, isToday, future: d > today, logged };
+    });
+  };
+
+  const renderWeek = () => {
+    const st = stats();
+    $('#week-strip').innerHTML = weekDays().map(({ d, isToday, future, logged }) => {
+      const done = logged.length > 0 || (isToday && st.doneSets > 0);
+      const label = d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric' }) + (done ? ', workout logged' : '');
+      return `<div class="day${isToday ? ' today' : ''}${future ? ' future' : ''}${done ? ' done' : ''}" aria-label="${label}">
+        <span class="dl" aria-hidden="true">${d.toLocaleDateString('en-GB', { weekday: 'narrow' })}</span>
+        <span class="dn num" aria-hidden="true">${d.getDate()}</span><i class="dot" aria-hidden="true"></i></div>`;
+    }).join('');
+  };
+
+  const C = 2 * Math.PI * 42;
+  const ring = (pct, big, small, cls = '') => `<div class="ring ${cls}" aria-hidden="true">
+    <svg viewBox="0 0 100 100"><circle class="track" cx="50" cy="50" r="42" fill="none" stroke-width="9"/>
+    <circle class="bar" cx="50" cy="50" r="42" fill="none" stroke-width="9" stroke-linecap="round" stroke-dasharray="${Math.max(pct > 0 ? 0.01 : 0, pct) * C} ${C}"/></svg>
+    <div class="ring-label"><b class="num">${big}</b><span>${small}</span></div></div>`;
+
+  const renderSummary = () => {
+    const st = stats(); const p = PLANS[S.workout.plan];
+    const pct = st.total ? st.doneSets / st.total : 0;
+    const status = st.complete ? 'Completed' : st.doneSets ? 'In progress' : 'Planned';
+    const est = S.workout.exercises.reduce((a, e) => a + e.sets.length, 0) * 3;
+    $('#summary').innerHTML = `
+      <div class="sum-head">
+        <div class="sum-text">
+          <span class="pill pill-dark"><i></i>${status}</span>
+          <h2 class="sum-title">${p.name}</h2>
+          <p class="sum-sub">${p.focus}</p>
+        </div>
+        ${ring(pct, `${st.doneSets}/${st.total}`, 'sets')}
+      </div>
+      <div class="sum-stats">
+        <div><div class="k">Exercises</div><div class="v num">${st.exDone}<small>/ ${S.workout.exercises.length}</small></div></div>
+        <div><div class="k">Volume</div><div class="v num">${fmt(st.volume)}<small>kg</small></div></div>
+        <div><div class="k">${st.mins ? 'Time' : 'Est. time'}</div><div class="v num">${st.mins || est}<small>min</small></div></div>
+      </div>`;
+    $('#summary').setAttribute('aria-label', `${p.name}: ${st.doneSets} of ${st.total} sets done`);
+    const b = $('#done-banner');
+    b.classList.toggle('show', st.complete);
+    if (st.complete) b.innerHTML = `<span class="chip" style="color:var(--ok)"><svg class="ic"><use href="#i-trophy"/></svg></span><div><b>Workout complete</b>${st.total} sets · ${fmt(st.volume)} kg lifted in ${st.mins} min</div>`;
+    $('#ex-count').textContent = `${st.total} sets · rest ${S.rest < 120 ? S.rest + ' s' : S.rest / 60 + ' min'}`;
+  };
+
+  const exMeta = (e) => {
+    const done = e.sets.filter((s) => s.done).length;
+    const w = e.sets[0].w;
+    const load = w ? `${w} kg` : 'Bodyweight';
+    if (done === e.sets.length) return `Done · ${e.sets.length} sets · ${load}`;
+    return `${e.sets.length} × ${e.target} · ${load}`;
+  };
+
+  // last session's numbers for each set (sample: a small step below today's target)
+  const prevOf = (e, i) => {
+    const base = PLANS[S.workout.plan].exercises.find((x) => x.name === e.name);
+    if (!base) return '–';
+    const w = base.w >= 40 ? base.w - 2.5 : base.w > 0 ? base.w - 1 : 0;
+    const r = base.w === 0 ? base.reps - (i % 2) : base.reps;
+    return w ? `${w} × ${r}` : `${r} reps`;
+  };
+  const renderList = () => {
+    $('#ex-list').innerHTML = S.workout.exercises.map((e) => {
+      const done = e.sets.filter((s) => s.done).length;
+      const complete = done === e.sets.length;
+      const open = S.open === e.id;
+      const bw = e.sets[0].w === 0 && PLANS[S.workout.plan].exercises.find((x) => x.name === e.name)?.w === 0;
+      return `<article class="ex${open ? ' open' : ''}${complete ? ' complete' : ''}" data-id="${e.id}">
+        <button class="ex-head" aria-expanded="${open}" aria-controls="b-${e.id}" data-act="toggle">
+          <span class="chip" style="--t:${TINTS[e.tint]}">${glyph(e.name, e.tint)}<span class="tick"><svg class="ic" style="width:12px;height:12px;stroke-width:3"><use href="#i-check"/></svg></span></span>
+          <span class="ex-main"><span class="ex-name" style="display:block">${e.name}</span><span class="ex-meta" style="display:block">${exMeta(e)}</span></span>
+          <span class="ex-prog"><span class="mini" aria-label="${done} of ${e.sets.length} sets done">${e.sets.map((s) => `<i class="${s.done ? 'on' : ''}"></i>`).join('')}</span>
+          <svg class="ic chev" aria-hidden="true"><use href="#i-chev"/></svg></span>
+        </button>
+        <div class="ex-body" id="b-${e.id}">
+          <div class="sets-head" aria-hidden="true"><span>Set</span><span>Previous</span><span>${bw ? 'Added, kg' : 'Weight, kg'}</span><span>Reps</span><span>Done</span></div>
+          ${e.sets.map((s, i) => `<div class="set${s.done ? ' done' : ''}">
+            <span class="set-n num">${i + 1}</span><span class="prev num" aria-label="Previous: ${prevOf(e, i)}">${prevOf(e, i)}</span>
+            <label class="field"><span class="sr">Set ${i + 1} weight in kg</span><input type="number" inputmode="decimal" step="2.5" min="0" value="${s.w}" data-act="w" data-i="${i}"></label>
+            <label class="field"><span class="sr">Set ${i + 1} reps</span><input type="number" inputmode="numeric" min="0" value="${s.r}" data-act="r" data-i="${i}"></label>
+            <button class="check" data-act="tick" data-i="${i}" aria-pressed="${s.done}" aria-label="Mark set ${i + 1} ${s.done ? 'not done' : 'done'}"><svg class="ic" style="stroke-width:2.6"><use href="#i-check"/></svg></button>
+          </div>`).join('')}
+          <div class="ex-foot"><span>${e.muscle} · target ${e.sets.length} × ${e.target}</span>
+            <button class="text-btn" data-act="all">${complete ? 'Clear sets' : 'Complete all'}</button></div>
+        </div>
+      </article>`;
+    }).join('');
+  };
+
+  /* ---------- Render: progress ---------- */
+  const renderProgress = () => {
+    const days = weekDays(); const st = stats();
+    const mon = days[0].d, sun = days[6].d;
+    $('#week-range').textContent = `${mon.getDate()} ${mon.getMonth() !== sun.getMonth() ? mon.toLocaleDateString('en-GB', { month: 'short' }) + ' ' : ''}– ${sun.getDate()} ${sun.toLocaleDateString('en-GB', { month: 'short' })}`;
+
+    const weekKeys = new Set(days.map((d) => d.k));
+    const thisWeek = S.history.filter((h) => weekKeys.has(h.date));
+    const todayLive = st.doneSets > 0;
+    const finished = thisWeek.length + (st.complete ? 1 : 0);
+    const left = Math.max(0, S.goal - finished);
+    const goalText = finished >= S.goal ? 'Weekly goal reached' : `${left} more to hit your goal`;
+    const sub = st.complete || !todayLive ? `${finished} of ${S.goal} workouts this week` : `${PLANS[S.workout.plan].name} in progress today`;
+    $('#goal-card').innerHTML = `<div class="goal">
+        ${ring(Math.min(1, finished / S.goal), `${finished}/${S.goal}`, 'goal')}
+        <div class="goal-text"><b>${goalText}</b><p>${sub}</p>
+          <div class="dots7 mob-only" aria-hidden="true">${days.map(({ d, isToday, logged }) => {
+            const cls = logged.length || (isToday && st.complete) ? 'on' : isToday && todayLive ? 'part' : '';
+            return `<span class="${cls}">${d.toLocaleDateString('en-GB', { weekday: 'narrow' })}</span>`; }).join('')}</div>
+        </div></div>`;
+    $('#goal-card').setAttribute('aria-label', `Weekly goal: ${finished} of ${S.goal} workouts. ${goalText}.`);
+
+    const vol = thisWeek.reduce((a, h) => a + h.volume, 0) + st.volume;
+    const mins = thisWeek.reduce((a, h) => a + h.mins, 0) + st.mins;
+    const sets = thisWeek.reduce((a, h) => a + h.sets, 0) + st.doneSets;
+    // same days of last week, for a fair comparison
+    const todayIdx = days.findIndex((d) => d.isToday);
+    const lastKeys = new Set(days.slice(0, todayIdx + 1).map((d) => keyOf(new Date(d.d.getFullYear(), d.d.getMonth(), d.d.getDate() - 7))));
+    const lastVol = S.history.filter((h) => lastKeys.has(h.date)).reduce((a, h) => a + h.volume, 0);
+    const lastMins = S.history.filter((h) => lastKeys.has(h.date)).reduce((a, h) => a + h.mins, 0);
+    const delta = (a, b) => { if (!b) return ''; const p = Math.round((a - b) / b * 100); return `<span class="delta ${p >= 0 ? 'up' : 'down'}">${p >= 0 ? '+' : '−'}${Math.abs(p)}%</span>`; };
+    const volStr = fmt(vol) + '<small>kg</small>';
+    const lastSets = S.history.filter((h) => lastKeys.has(h.date)).reduce((a, h) => a + h.sets, 0);
+    $('#tiles').innerHTML = `
+      <div class="tile"><span class="chip" style="--c:#E8590C"><svg class="ic"><use href="#i-weight"/></svg></span><div class="k">Volume</div><div class="v num">${volStr}</div>${delta(vol, lastVol) || '<span class="delta down">This week</span>'}</div>
+      <div class="tile"><span class="chip" style="--c:#2F6FEB"><svg class="ic"><use href="#i-clock"/></svg></span><div class="k">Time</div><div class="v num">${mins}<small>min</small></div>${delta(mins, lastMins) || '<span class="delta down">This week</span>'}</div>
+      <div class="tile"><span class="chip" style="--c:#7C5CFA"><svg class="ic"><use href="#i-layers"/></svg></span><div class="k">Sets</div><div class="v num">${sets}</div>${delta(sets, lastSets) || '<span class="delta down">This week</span>'}</div>`;
+
+    const vals = days.map(({ k, isToday, future }) => ({ v: S.history.filter((h) => h.date === k).reduce((a, h) => a + h.volume, 0) + (isToday ? st.volume : 0), isToday, future }));
+    const max = Math.max(4000, ...vals.map((x) => x.v)) * 1.15;
+    $('#chart-card').innerHTML = `<div class="card-title"><h2>Volume by day</h2><span>kg lifted</span></div>
+      <div class="chart" role="img" aria-label="Volume by day this week: ${vals.map((x, i) => days[i].d.toLocaleDateString('en-GB', { weekday: 'short' }) + ' ' + fmt(x.v) + ' kg').join(', ')}">
+        <div class="bars">
+        ${vals.map((x) => {
+          const cls = x.isToday ? 'today' : x.future ? 'future' : x.v ? '' : 'off';
+          const label = x.v ? (x.v >= 1000 ? (x.v / 1000).toFixed(1) + 'k' : fmt(x.v)) : '';
+          return `<div class="bar-col ${cls}">${label ? `<span class="val num">${label}</span>` : ''}<i class="b" style="${x.v ? `height:${(x.v / max) * 100}%` : ''}"></i></div>`;
+        }).join('')}</div>
+        <div class="x-labels" aria-hidden="true">${days.map(({ d, isToday }) => `<span class="${isToday ? 't' : ''}">${isToday ? 'Today' : d.toLocaleDateString('en-GB', { weekday: 'short' }).slice(0, 3)}</span>`).join('')}</div>
+      </div>
+      <div class="legend" aria-hidden="true"><span><i style="background:#2A2A31"></i>Logged</span><span><i style="background:var(--brand)"></i>Today</span></div>`;
+  };
+
+  /* ---------- Render: history ---------- */
+  const renderHistory = () => {
+    const st = stats();
+    const mon = mondayOf(new Date());
+    const items = [...S.history].sort((a, b) => b.date.localeCompare(a.date));
+    const dateTile = (d, tint) => `<span class="chip date-tile" style="--t:${TINTS[tint]};--c:${TONES[tint]}"><small>${d.toLocaleDateString('en-GB', { weekday: 'short' })}</small><b class="num">${d.getDate()}</b></span>`;
+    const row = (h) => {
+      const d = fromKey(h.date);
+      return `<div class="row">${dateTile(d, PLANS[h.plan].tint)}
+        <div class="row-main"><b>${h.name}</b><span>${h.mins} min · ${h.sets} sets</span></div>
+        <div class="row-val"><b class="num">${fmt(h.volume)}<small> kg</small></b></div></div>`;
+    };
+    const live = st.doneSets ? `<div class="row">${dateTile(new Date(), PLANS[S.workout.plan].tint)}
+        <div class="row-main"><b>${PLANS[S.workout.plan].name}</b><span>Today · ${st.doneSets} of ${st.total} sets</span></div>
+        <div class="row-val">${st.complete ? `<b class="num">${fmt(st.volume)}<small> kg</small></b>` : '<span class="pill pill-live">In progress</span>'}</div></div>` : '';
+    const thisW = items.filter((h) => fromKey(h.date) >= mon);
+    const earlier = items.filter((h) => fromKey(h.date) < mon && fromKey(h.date) >= new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() - 7));
+    const older = items.filter((h) => fromKey(h.date) < new Date(mon.getFullYear(), mon.getMonth(), mon.getDate() - 7));
+    const group = (title, rows, extra, first) => {
+      const n = rows.length + (extra ? 1 : 0);
+      const kg = rows.reduce((a, h) => a + h.volume, 0) + (extra ? st.volume : 0);
+      return `<div class="sec-head"${first ? ' style="margin-top:0"' : ''}><h2 class="grp">${title}</h2><span>${n} ${n === 1 ? 'workout' : 'workouts'} · ${fmt(kg)} kg</span></div>
+        <div class="list">${extra}${rows.map(row).join('')}</div>`;
+    };
+    let html = `<h2 id="history-h" class="sr">Workout history</h2>`;
+    if (!items.length && !live) {
+      html += `<div class="list empty"><img src="${emoji3d('🗓️')}" alt="" width="96" height="96" onerror="this.outerHTML='<div class=&quot;emoji&quot;>🗓️</div>'"><b>No workouts logged yet</b><p>Tick off your first set today and it will show up here.</p></div>`;
+    } else {
+      let first = true;
+      if (live || thisW.length) { html += group(desk.matches ? 'Workouts this week' : 'This week', thisW, live, first); first = false; }
+      if (earlier.length) { html += group('Last week', earlier, '', first); first = false; }
+      if (older.length) html += group('Earlier', older, '', first);
+    }
+    $('#history').innerHTML = html;
+  };
+
+  const renderAll = () => { renderWeek(); renderSummary(); renderList(); renderProgress(); renderHistory(); renderHeader(); };
+  const renderLive = () => { renderWeek(); renderSummary(); renderProgress(); renderHistory(); };
+
+  /* ---------- Rest timer ---------- */
+  let restLeft = 0, restTotal = 0, restInt = null;
+  const fmtT = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+  const restTick = () => {
+    $('#rest-time').textContent = fmtT(Math.max(0, restLeft));
+    $('#rest-track').style.width = `${(restLeft / restTotal) * 100}%`;
+    if (restLeft <= 0) { stopRest(); toast('Rest over · next set'); navigator.vibrate?.(200); }
+    restLeft--;
+  };
+  const startRest = (label) => {
+    clearInterval(restInt); restTotal = restLeft = S.rest;
+    $('#rest-label').textContent = label; $('#rest').classList.add('show');
+    restTick(); restInt = setInterval(restTick, 1000);
+  };
+  const stopRest = () => { clearInterval(restInt); $('#rest').classList.remove('show'); };
+  $('#rest-skip').onclick = stopRest;
+  $('#rest-add').onclick = () => { restLeft += 15; restTotal += 15; restTick(); restLeft++; };
+
+  let toastT;
+  const toast = (msg) => { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2200); };
+
+  /* ---------- Interactions ---------- */
+  const exById = (id) => S.workout.exercises.find((e) => e.id === id);
+  const markActivity = () => { if (!S.startedAt) S.startedAt = Date.now(); S.lastAt = Date.now(); };
+
+  $('#ex-list').addEventListener('click', (ev) => {
+    const btn = ev.target.closest('[data-act]'); if (!btn || btn.tagName === 'INPUT') return;
+    const card = btn.closest('.ex'); const e = exById(card.dataset.id);
+    const act = btn.dataset.act;
+    if (act === 'toggle') {
+      S.open = S.open === e.id ? null : e.id; save(); renderList();
+      if (S.open) document.querySelector(`.ex[data-id="${e.id}"] .ex-head`).focus();
+      return;
+    }
+    if (act === 'tick') {
+      const i = +btn.dataset.i; const s = e.sets[i]; s.done = !s.done;
+      if (s.done) markActivity();
+      const allDone = e.sets.every((x) => x.done);
+      const st = stats();
+      if (s.done && st.complete) { stopRest(); }
+      else if (s.done && allDone) {
+        const next = S.workout.exercises.find((x) => x.sets.some((y) => !y.done));
+        if (next) { S.open = next.id; startRest(`Rest · up next: ${next.name}`); }
+      } else if (s.done) startRest(`Rest · set ${i + 2} of ${e.sets.length}`);
+      save(); renderList(); renderLive();
+      const again = document.querySelector(`.ex[data-id="${S.open}"] [data-act="tick"][data-i="${allDone && S.open !== e.id ? 0 : i}"]`)
+        || document.querySelector(`.ex[data-id="${e.id}"] .ex-head`);
+      again?.focus({ preventScroll: true });
+      if (S.open !== e.id) document.querySelector(`.ex[data-id="${S.open}"]`)?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
+      return;
+    }
+    if (act === 'all') {
+      const complete = e.sets.every((x) => x.done);
+      e.sets.forEach((x) => (x.done = !complete));
+      if (!complete) markActivity();
+      save(); renderList(); renderLive();
+    }
+  });
+
+  $('#ex-list').addEventListener('change', (ev) => {
+    const inp = ev.target; if (inp.tagName !== 'INPUT') return;
+    const e = exById(inp.closest('.ex').dataset.id); const i = +inp.dataset.i; const field = inp.dataset.act;
+    let v = parseFloat(inp.value); if (!isFinite(v) || v < 0) v = 0;
+    const old = e.sets[i][field];
+    e.sets[i][field] = v;
+    // carry a new weight forward to later sets that still had the old value
+    e.sets.forEach((s, j) => { if (j > i && !s.done && s[field] === old) s[field] = v; });
+    save(); renderList(); renderLive();
+    document.querySelector(`.ex[data-id="${e.id}"] input[data-act="${field}"][data-i="${i}"]`)?.focus();
+  });
+
+  /* Tabs (phone) */
+  const setTab = (t) => {
+    document.querySelectorAll('.tab').forEach((b) => b.dataset.tab === t ? b.setAttribute('aria-current', 'page') : b.removeAttribute('aria-current'));
+    document.querySelectorAll('.view').forEach((v) => v.classList.toggle('active', v.id === 'view-' + t));
+    tab = t; renderHeader();
+    window.scrollTo(0, 0);
+  };
+  document.querySelectorAll('.tab').forEach((b) => (b.onclick = () => setTab(b.dataset.tab)));
+
+  /* Settings sheet */
+  let lastFocus;
+  const openSheet = () => { lastFocus = document.activeElement; renderSettings(); $('#sheet').classList.add('show'); $('#scrim').classList.add('show'); setTimeout(() => $('#goal-seg button[aria-pressed="true"]').focus(), 50); };
+  const closeSheet = () => { $('#sheet').classList.remove('show'); $('#scrim').classList.remove('show'); lastFocus?.focus(); };
+  const renderSettings = () => {
+    $('#goal-seg').innerHTML = [3, 4, 5, 6].map((n) => `<button aria-pressed="${S.goal === n}" data-v="${n}">${n} a week</button>`).join('');
+    $('#rest-seg').innerHTML = [[60, '60 s'], [90, '90 s'], [120, '2 min'], [180, '3 min']].map(([v, l]) => `<button aria-pressed="${S.rest === v}" data-v="${v}">${l}</button>`).join('');
+  };
+  $('#goal-seg').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; S.goal = +b.dataset.v; save(); renderSettings(); renderProgress(); $(`#goal-seg [data-v="${S.goal}"]`).focus(); };
+  $('#rest-seg').onclick = (e) => { const b = e.target.closest('button'); if (!b) return; S.rest = +b.dataset.v; save(); renderSettings(); renderList(); renderSummary(); $(`#rest-seg [data-v="${S.rest}"]`).focus(); };
+  $('#open-settings').onclick = openSheet;
+  $('#close-settings').onclick = closeSheet;
+  $('#scrim').onclick = closeSheet;
+  $('#reset-today').onclick = () => {
+    S.workout.exercises.forEach((e) => e.sets.forEach((s) => (s.done = false)));
+    S.startedAt = null; S.lastAt = null; S.open = S.workout.exercises[0].id; stopRest(); save(); renderAll(); closeSheet(); toast("Today's sets cleared");
+  };
+  $('#clear-data').onclick = () => {
+    if (!confirm('Clear the sample history and today\'s sets?')) return;
+    S.history = []; S.workout = buildWorkout('push'); S.startedAt = null; S.lastAt = null; S.open = S.workout.exercises[0].id;
+    stopRest(); save(); renderAll(); closeSheet(); toast('Sample data cleared');
+  };
+  document.addEventListener('keydown', (e) => {
+    if (!$('#sheet').classList.contains('show')) return;
+    if (e.key === 'Escape') closeSheet();
+    if (e.key === 'Tab') {
+      const f = [...$('#sheet').querySelectorAll('button')]; const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+
+  rollover();
+  renderAll();
+  setInterval(() => { rollover(); if (S.startedAt && !stats().complete) renderSummary(); }, 30e3);
+})();
+</script>
+</body>
+</html>

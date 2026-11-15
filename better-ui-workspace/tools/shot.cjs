@@ -78,7 +78,7 @@ const path = require('path');
   const img = (s, style) => `<img src="data:image/png;base64,${s}" style="${style}">`;
   const html = phone
     ? `<body style="margin:0;height:900px;background:${backdrop};display:flex;align-items:center;justify-content:center;gap:44px;font-family:-apple-system,'SF Pro Text','Inter',sans-serif">${shots.map((s) => `
-      <div style="position:relative;width:300px;height:650px;border-radius:48px;background:#1d1d1f;padding:10px;box-shadow:inset 0 0 0 1.5px #3a3a3e,inset 0 0 0 4px #0c0c0e,0 40px 70px -28px rgba(0,0,0,.45),0 8px 20px -8px rgba(0,0,0,.25)">
+      <div style="position:relative;width:300px;height:650px;border-radius:50px;background:linear-gradient(145deg,#4a4a50,#1a1a1d 30%,#0e0e10 70%,#3c3c42);padding:11px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),inset 0 0 0 3px #0b0b0d,0 50px 80px -30px rgba(0,0,0,.5),0 12px 24px -10px rgba(0,0,0,.3)">
         <i style="position:absolute;left:-3px;top:120px;width:3px;height:56px;border-radius:2px;background:#2a2a2d"></i><i style="position:absolute;right:-3px;top:150px;width:3px;height:80px;border-radius:2px;background:#2a2a2d"></i>
         <div style="position:relative;width:300px;height:650px;border-radius:39px;overflow:hidden;background:#fff">
           <div id="sb" style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 30px;font-size:13px;font-weight:600;color:${ink};background:${sbg}">
