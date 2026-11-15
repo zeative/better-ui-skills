@@ -1,0 +1,22 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-22/finance-app/with_skill/outputs/index.html
+Rendered at 375px (page height 2929px), 768px (page height 2895px), 1440px (page height 1631px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  13px  14px  15px  16px  18px  20px  24px  32px  40px
+  Families     Urbanist
+  Weights      500, 600, 700
+  Text colours #5c5c64 #0d0d0d #bbbbbb #ffffff #5a5541 #dbdbdb #c0261d #cfcfcf (+14 more)
+  Fills        #ffffff #f5f5f6 #0d0d0d #ffd6e0 #ffedb0 #d3e8ff #ffe6d9 #dff4e6 (+15 more)
+  Radii        12px×24  999px×17  24px×9  8px×5  50%×3  16px×1
+  Shadows      6 distinct
+  Visuals      6 large graphics, 31 icons, 13 surfaces; largest graphic in the first screen 720×673px
+  Interaction  26 interactive elements; 20 :hover rules, 2 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+TOUCH — fix unless there is a reason
+  • 3 touch targets under 40px at 375px wide, e.g. a.brand.m-only "Tally" 84×32; a.link "Budgets" 77×37; a.link "See all" 68×37
+
+RICHNESS — below the bar as measured; a page can pass these and still be plain, so look at the screenshots
+  • Colour is spread over 3 hue families in large fills (0°, 36°, 216°): tiles or panels each in a different tint. That reads as a pastel rainbow, not a palette. Commit to a neutral base, one dominant colour in large fields and one hot accent; give kinds of item tints of one or two hues.
+
+This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.

@@ -15,8 +15,6 @@ const LOOKS = {
     { look: 'fresh gradient', canvas: '#F3F6FB', brand: '#1F4BFF', accent: '#7DD3FC', font: 'Plus Jakarta Sans', note: 'deep blue payment card with a soft sky gradient, white glassy cards' },
     { look: 'dark with one neon', canvas: '#0E0F12', brand: '#B6F09C', accent: '#FFFFFF', font: 'Onest', note: 'near-black, dark grey cards, mint for balances and the primary action' },
     { look: 'soft tint', canvas: '#F5F1EA', brand: '#1C3A2E', accent: '#F2B880', font: 'DM Sans', note: 'warm sand canvas, deep forest cards and buttons, apricot highlights' },
-    { look: 'bright and clean', canvas: '#F6F7F9', brand: '#5B3DF5', accent: '#FFB800', font: 'Figtree', note: 'solid violet (no gradient) on the card, amber for alerts and highlights' },
-    { look: 'colour blocks', canvas: '#F4F4F4', brand: '#0D0D0D', accent: '#FFD6E0', font: 'Urbanist', note: 'black, pink, butter and sky blocks for accounts and categories' },
   ],
   fitness: [
     { look: 'dark with one neon', canvas: '#0B0B0D', brand: '#D4FF3A', accent: '#FFFFFF', font: 'Sora', note: 'near-black, lime for the progress ring, current bar and start button' },

@@ -379,3 +379,12 @@ Landing-page reference shots show the whole page, so the presenter gained a `pag
 page in two tall columns. The same D.9 landing build, re-judged that way, ranked **1st and 3rd**
 (possible, possible: "very tidy… strong craft"). Its earlier low rank was the presentation, not the
 design. The finance rules now require the brand mark on the home screen and one 3D object.
+
+**Finance, rounds D.9b to D.10 (iterations 20 to 21).** With the brand mark and a required 3D
+object: 8th, 8th. Two further builds with a signature-chart rule and local merchants: 5th, 7th
+and 8th, 9th. The judges' reasons turned against the last changes: the 3D coin "pasted over the
+corner like a sticker", candy-pastel account tiles "assembled rather than designed", and local
+Chicago merchants "too knowingly specific, the way a generator localises sample data". Finance
+does best restrained: the D.6 emerald build ranked 1st in one line-up and the D.8 black-card build
+4th. The required 3D object is withdrawn, the colour-blocks and violet looks are removed from the
+finance deal, and the merchant rule asks for a plain mix instead of local trivia.

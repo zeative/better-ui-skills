@@ -1,0 +1,19 @@
+UI AUDIT  /home/user/better-ui-skills/better-ui-workspace/iteration-21/finance-app/with_skill/outputs/index.html
+Rendered at 375px (page height 2195px), 768px (page height 1264px), 1440px (page height 1166px)
+
+INVENTORY (what is actually on the page)
+  Font sizes   12px  13px  14px  15px  16px  18px  20px  28px  32px  40px
+  Families     Urbanist
+  Weights      500, 600, 700
+  Text colours #5c5e64 #0d0d0d #ffffff #bbbbbb #5f5942 #9e9e9e #adadad #a15c00 (+10 more)
+  Fills        #ffffff #e3e3df #f5f5f3 #0d0d0d #ffd6e0 #dff3cf #ffe0e8 #ffeda8 (+11 more)
+  Radii        999px×28  12px×17  20px×4  24px×4  50%×1  8px×1
+  Shadows      8 distinct
+  Visuals      4 large graphics, 28 icons, 9 surfaces; largest graphic in the first screen 591×475px
+  Interaction  21 interactive elements; 12 :hover rules, 1 :focus-visible rules; reduced-motion handled; dark scheme not defined
+  (1 cross-origin stylesheet(s) could not be inspected)
+
+RICHNESS — below the bar as measured; a page can pass these and still be plain, so look at the screenshots
+  • Colour is spread over 3 hue families in large fills (0°, 36°, 216°): tiles or panels each in a different tint. That reads as a pastel rainbow, not a palette. Commit to a neutral base, one dominant colour in large fields and one hot accent; give kinds of item tints of one or two hues.
+
+This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.
