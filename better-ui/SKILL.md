@@ -1,6 +1,7 @@
 ---
 name: better-ui
 description: Design and build user interfaces that look like real, professional products - the clean, polished, well-made work that is popular on Dribbble - instead of flat, generic "AI-looking" output or overdesigned, gimmicky output. Use this whenever you create, restyle or review anything a person will look at in a browser or app - landing pages, marketing sites, dashboards, admin panels, web apps, mobile screens, components, forms, HTML prototypes, React/Vue/Svelte/Tailwind UI - including when the user only says "build me a page/app/site/dashboard for X" and never mentions design, and when they ask to make an existing UI look better, more premium, more modern, more polished or less generic. Skip it only for work with no visible result (backend, scripts, pure logic).
+license: MIT
 ---
 
 # Better UI

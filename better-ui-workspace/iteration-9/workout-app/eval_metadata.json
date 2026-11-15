@@ -1,5 +1,0 @@
-{
-  "eval_name": "workout-app",
-  "prompt": "make a workout tracker app. today's workout with exercises, sets and reps i can tick off, and my progress for the week. single index.html, mobile first",
-  "assertions": []
-}

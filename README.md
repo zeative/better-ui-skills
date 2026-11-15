@@ -8,6 +8,7 @@
 [![Claude Code](https://img.shields.io/badge/Claude_Code-ready-FF6B4A?style=for-the-badge)](#quick-start)
 [![Tested against Dribbble](https://img.shields.io/badge/tested_against-Dribbble-ea4c89?style=for-the-badge)](#results)
 [![No dependencies](https://img.shields.io/badge/runtime_deps-0-1F9D55?style=for-the-badge)](#whats-inside)
+[![MIT license](https://img.shields.io/badge/license-MIT-5E6166?style=for-the-badge)](LICENSE)
 
 **Ask an agent for a page. Get something a product team would ship.**
 
@@ -99,7 +100,7 @@ Current models are already decent at some of these. These are the cases where be
 
 </details>
 
-Every page is in [`better-ui-workspace/before-after/`](better-ui-workspace/before-after). Open them in a browser and click around.
+Every page is in [`examples/`](examples). Open them in a browser and click around.
 
 ## Results
 
@@ -206,8 +207,8 @@ Same product name, same look, every time. Categories: finance, fitness, habits, 
 <br>
 
 1. **Build in isolation.** A headless agent session in an empty folder gets a one-line prompt that never mentions the skill.
-2. **Present it like a shot.** The page is rendered the way Dribbble shows designs: phones in device frames, dashboards in a browser window, landing pages as a long scroll, with the clock frozen to a neutral date. ([`shot.cjs`](better-ui-workspace/tools/shot.cjs))
-3. **Hide it.** The shot is shuffled among eight popular shots of the same category. ([`lineup.py`](better-ui-workspace/tools/lineup.py))
+2. **Present it like a shot.** The page is rendered the way Dribbble shows designs: phones in device frames, dashboards in a browser window, landing pages as a long scroll, with the clock frozen to a neutral date.
+3. **Hide it.** The shot is shuffled among eight popular shots of the same category.
 4. **Judge blind.** The judge is told only that some shots may be AI-made fakes. It ranks all nine and flags fakes. A page passes when it ranks in the top half and is not flagged as likely fake.
 
 Before it was trusted, the test was calibrated against a human reviewer's verdicts on earlier pages, and agreed every time: plain pages ranked 8th ("rendered HTML"), themed pages the human had rejected ranked 8th ("costume, not function").
@@ -219,7 +220,7 @@ Before it was trusted, the test was calibrated against a human reviewer's verdic
 
 <br>
 
-About twenty rounds of build → judge → change, all logged with scores and reasons in [`dribbble-bar.md`](better-ui-workspace/dribbble-bar.md).
+About twenty rounds of build → judge → change, each scored with the judges' reasons.
 
 - **Restraint alone** produced honest pages that judges called wireframes.
 - **Art-direction libraries and detailed showpieces** lifted scores but still read as templates.
@@ -279,6 +280,10 @@ Skills and writing this one learned from:
 The Dribbble reference shots used for judging are not stored in this repository. 3D icons in some outputs are Microsoft's [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) (MIT).
 
 </details>
+
+## License
+
+[MIT](LICENSE). Use it, fork it, ship it.
 
 <div align="center">
 
