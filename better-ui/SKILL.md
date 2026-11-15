@@ -36,6 +36,7 @@ Then write the real content before any layout: a product name, the headline, lab
 
 Copy that gives a mock-up away, and that real products never ship:
 - **Captions that explain the interface** ("Dashed line shows your daily average", "Tap the circle to complete a habit", "Days over $400 are capped"). Labels, legends and axis values do that job; delete the sentence.
+- **Numbers that disagree.** A streak of 0 next to a workout done today, a ring at 60% beside "2 of 5". Derive every count, streak, percentage and total from the same sample data in code.
 - **Contradictions** between parts of a screen ("Rest day" above a button saying "Train leg day today"). Read each screen top to bottom once as a user would.
 - **Developer phrasing** ("Saved on this device", "Remove the example habits", "Sample data").
 
@@ -47,7 +48,11 @@ When the brief is thin, assume specifically, build, and list your assumptions at
 
 Read `references/system.md` and write its tokens at the top of the stylesheet before any component. In short:
 
-- **A look:** pick one contemporary look (bright and clean, soft tint, colour blocks, dark with one neon, monochrome, fresh gradient) to suit the product and audience. It is a palette and surface treatment, not a theme, and it is what keeps a clean system from reading as a component-library default.
+- **A look:** one contemporary look (bright and clean, soft tint, colour blocks, dark with one neon, monochrome, fresh gradient): a palette and surface treatment, not a theme. On a blank slate, deal it rather than choosing by habit, because habit lands on the same indigo or emerald every generated app uses:
+  ```bash
+  node <this-skill-dir>/scripts/look.cjs "<product name>" <finance|fitness|habits|wellness|health|productivity|commerce|saas|food|travel|other>
+  ```
+  It prints a look, canvas, brand colour, accent and font. Use them as your starting tokens. Re-deal with `--not <n>` only if the result clearly does not suit the brief.
 - **Type:** one sans-serif family (Inter, Plus Jakarta Sans, Manrope, DM Sans, Geist or the system UI font), weights 400/500/600, tabular figures for numbers. A compact scale: 12, 13, 14, 16, 18, 20, 24, 32, with 40 to 56 only for a landing hero. Serif or display faces only for showcase sites or when the brand already has one.
 - **Colour:** a light neutral canvas (or a near-black one for a dark app), white or slightly raised surfaces, two text greys, one brand colour chosen to fit the category, and semantic green, amber and red for status. Category colours, if needed, are soft tints used on small icon chips and chart series.
 - **Shape and depth:** one radius scale (for example 8, 12, 16, 24, full), hairline borders or a soft two-layer shadow, never both heavy. Flat and clean; no textures, grain, paper, bevels or glows behind text.

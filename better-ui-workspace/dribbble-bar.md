@@ -306,3 +306,17 @@ visual, a weekly chart and an activity card; habits: a week strip and colour-cod
 that different items never share an icon, and the audit's repeated-drawing check returns as a
 CRAFT note about that. The presenter now paints each status bar with the real top pixel of its
 own screenshot.
+
+**Method D.6 builds (iteration 16):**
+
+| App | Ranks of 9 | Flags | Line-ups passed |
+|---|---|---|---|
+| Workout app | **4th, 3rd** | possible, possible | **2 of 2** |
+| Habit tracker | **2nd**, 4th | possible, likely | 1 of 2 (the second flagged the indigo gradient card) |
+| Finance app | 7th, **1st** | possible, possible | 1 of 2 ("the most usable and coherent set" / "stock emerald, no point of view") |
+
+Four of six line-ups pass and only one flag is "likely". Across rounds the builder, left to choose,
+lands on the same looks (indigo for habits, emerald for finance), which judges read as generic.
+**Method D.7** deals the look from a curated list per category (`scripts/look.cjs`, seeded by the
+product name) instead of leaving it to habit, and requires counts, streaks and percentages to be
+derived from the same sample data.
