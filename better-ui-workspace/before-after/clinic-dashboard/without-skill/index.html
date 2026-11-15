@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Klinik Gigi Senyum Sehat</title>
+<style>
+  :root {
+    --bg: #f4f6f8;
+    --card: #ffffff;
+    --text: #1c2430;
+    --muted: #6b7684;
+    --line: #e5e9ee;
+    --primary: #0f766e;
+    --primary-soft: #e6f4f2;
+    --blue: #2563eb;   --blue-soft: #e8efff;
+    --amber: #b45309;  --amber-soft: #fdf1e1;
+    --green: #15803d;  --green-soft: #e7f6ec;
+    --red: #b91c1c;    --red-soft: #fdeaea;
+    --gray-soft: #eef1f4;
+    --radius: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f1419; --card: #182028; --text: #e6ebf0; --muted: #94a0ad; --line: #26313c;
+      --primary: #2dd4bf; --primary-soft: #11332f;
+      --blue: #7aa2ff; --blue-soft: #1a2540;
+      --amber: #f5b454; --amber-soft: #352914;
+      --green: #4ade80; --green-soft: #12301d;
+      --red: #f87171; --red-soft: #3a1a1a;
+      --gray-soft: #222c36;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-variant-numeric: tabular-nums;
+  }
+  header {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between;
+    padding: 18px 28px; background: var(--card); border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo {
+    width: 40px; height: 40px; border-radius: 10px; background: var(--primary-soft);
+    display: grid; place-items: center; color: var(--primary);
+  }
+  h1 { font-size: 18px; margin: 0; }
+  .sub { color: var(--muted); font-size: 13px; }
+  .clock { text-align: right; }
+  .clock .time { font-size: 22px; font-weight: 650; }
+  .demo-tag {
+    display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 99px;
+    background: var(--amber-soft); color: var(--amber); font-weight: 600; margin-left: 6px;
+  }
+
+  main { padding: 24px 28px 40px; max-width: 1400px; margin: 0 auto; }
+
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 20px; }
+  .kpi { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+  .kpi .label { color: var(--muted); font-size: 13px; }
+  .kpi .value { font-size: 28px; font-weight: 700; margin-top: 4px; letter-spacing: -0.02em; }
+  .kpi .note { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  .up { color: var(--green); font-weight: 600; }
+  .down { color: var(--red); font-weight: 600; }
+
+  .grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
+  .col { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .card-head {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 14px 18px; border-bottom: 1px solid var(--line);
+  }
+  .card-head h2 { font-size: 15px; margin: 0; }
+  .card-head .meta { color: var(--muted); font-size: 12.5px; }
+  .card-body { padding: 16px 18px; }
+
+  /* Filter chips */
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    border: 1px solid var(--line); background: transparent; color: var(--muted);
+    padding: 4px 10px; border-radius: 99px; font: inherit; font-size: 12.5px; cursor: pointer;
+  }
+  .chip[aria-pressed="true"] { background: var(--text); color: var(--card); border-color: var(--text); }
+
+  /* Appointment table */
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 10px 18px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  th { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; background: var(--gray-soft); }
+  tr:last-child td { border-bottom: 0; }
+  td.time { font-weight: 650; white-space: nowrap; width: 70px; }
+  .pname { font-weight: 600; }
+  .psub { color: var(--muted); font-size: 12.5px; }
+  tr.is-now { background: var(--primary-soft); }
+  tr.is-done td:not(:last-child) { opacity: .6; }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 99px;
+    font-size: 12px; font-weight: 600; white-space: nowrap;
+  }
+  .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .b-done    { background: var(--green-soft); color: var(--green); }
+  .b-active  { background: var(--blue-soft);  color: var(--blue); }
+  .b-waiting { background: var(--amber-soft); color: var(--amber); }
+  .b-sched   { background: var(--gray-soft);  color: var(--muted); }
+  .b-cancel  { background: var(--red-soft);   color: var(--red); }
+
+  /* Queue */
+  .queue { list-style: none; margin: 0; padding: 0; }
+  .queue li {
+    display: grid; grid-template-columns: 40px 1fr auto; gap: 12px; align-items: center;
+    padding: 12px 18px; border-bottom: 1px solid var(--line);
+  }
+  .queue li:last-child { border-bottom: 0; }
+  .qno {
+    width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center;
+    background: var(--gray-soft); font-weight: 700; font-size: 13px;
+  }
+  .queue li:first-child .qno { background: var(--primary); color: var(--card); }
+  .wait { text-align: right; }
+  .wait .min { font-weight: 700; font-size: 16px; }
+  .wait .min.long { color: var(--red); }
+  .wait .lbl { color: var(--muted); font-size: 12px; }
+  .empty { padding: 24px 18px; text-align: center; color: var(--muted); }
+
+  /* Doctors */
+  .docs { display: grid; gap: 0; }
+  .doc { display: flex; align-items: center; gap: 12px; padding: 12px 18px; border-bottom: 1px solid var(--line); }
+  .doc:last-child { border-bottom: 0; }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%; flex: none; display: grid; place-items: center;
+    font-weight: 700; font-size: 13px; background: var(--primary-soft); color: var(--primary);
+  }
+  .doc .info { flex: 1; min-width: 0; }
+  .doc .name { font-weight: 600; }
+  .doc .right { text-align: right; }
+  .doc .shift { color: var(--muted); font-size: 12px; margin-top: 3px; }
+
+  /* Revenue */
+  .rev-top { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+  .rev-total { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+  .legend { display: flex; gap: 14px; font-size: 12.5px; color: var(--muted); }
+  .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; background: var(--sw); }
+  .chart { position: relative; }
+  .chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .chart .axis-text { fill: var(--muted); font-size: 11px; }
+  .chart .gridline { stroke: var(--line); }
+  .chart .bar { fill: var(--primary); }
+  .chart .bar.today { fill: var(--primary); }
+  .chart .bar.future { fill: var(--gray-soft); }
+  .chart .prev { fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 3 3; }
+  .chart .hit { fill: transparent; cursor: pointer; }
+  .chart .hit:hover + .bar, .chart .bar:hover { opacity: .85; }
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--text); color: var(--card);
+    padding: 7px 10px; border-radius: 8px; font-size: 12px; white-space: nowrap;
+    transform: translate(-50%, -100%); opacity: 0; transition: opacity .1s;
+  }
+  .breakdown { margin-top: 18px; display: grid; gap: 10px; }
+  .brow { display: grid; grid-template-columns: 130px 1fr 110px; align-items: center; gap: 10px; font-size: 13px; }
+  .brow .track { height: 8px; background: var(--gray-soft); border-radius: 99px; overflow: hidden; }
+  .brow .fill { height: 100%; background: var(--primary); border-radius: 99px; }
+  .brow .amt { text-align: right; font-weight: 600; }
+
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: 1fr; }
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    header, main { padding-left: 16px; padding-right: 16px; }
+    .kpis { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .kpi .value { font-size: 22px; }
+    th:nth-child(4), td:nth-child(4) { display: none; }
+    th, td { padding: 10px 12px; }
+    .brow { grid-template-columns: 100px 1fr 90px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="logo" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 5.5c-1.5-1.3-3.2-2-5-1.5C4.5 4.7 3.5 7.5 4.3 10.5c.6 2.2 1.2 4.3 1.6 6.5.3 1.7.7 3.5 2 3.5 1.6 0 1.6-2.6 2.2-4.4.4-1.2 1-1.6 1.9-1.6s1.5.4 1.9 1.6c.6 1.8.6 4.4 2.2 4.4 1.3 0 1.7-1.8 2-3.5.4-2.2 1-4.3 1.6-6.5.8-3-.2-5.8-2.7-6.5-1.8-.5-3.5.2-5 1.5z"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Klinik Gigi Senyum Sehat</h1>
+      <div class="sub">Dashboard Operasional <span class="demo-tag">Data simulasi</span></div>
+    </div>
+  </div>
+  <div class="clock">
+    <div class="time" id="clock">--:--</div>
+    <div class="sub" id="date">—</div>
+  </div>
+</header>
+
+<main>
+  <section class="kpis" aria-label="Ringkasan">
+    <div class="kpi">
+      <div class="label">Janji temu hari ini</div>
+      <div class="value" id="kpi-appt">–</div>
+      <div class="note" id="kpi-appt-note">–</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Pasien menunggu</div>
+      <div class="value" id="kpi-wait">–</div>
+      <div class="note" id="kpi-wait-note">–</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Dokter bertugas</div>
+      <div class="value" id="kpi-doc">–</div>
+      <div class="note" id="kpi-doc-note">–</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Pendapatan minggu ini</div>
+      <div class="value" id="kpi-rev">–</div>
+      <div class="note" id="kpi-rev-note">–</div>
+    </div>
+  </section>
+
+  <div class="grid">
+    <div class="col">
+      <section class="card" aria-labelledby="h-appt">
+        <div class="card-head">
+          <div>
+            <h2 id="h-appt">Jadwal Janji Temu Hari Ini</h2>
+            <div class="meta" id="appt-meta"></div>
+          </div>
+          <div class="chips" role="group" aria-label="Filter dokter" id="doc-filter"></div>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead>
+              <tr><th>Jam</th><th>Pasien</th><th>Tindakan</th><th>Dokter</th><th>Status</th></tr>
+            </thead>
+            <tbody id="appt-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="h-rev">
+        <div class="card-head">
+          <div>
+            <h2 id="h-rev">Pendapatan Minggu Ini</h2>
+            <div class="meta" id="rev-range"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="rev-top">
+            <div>
+              <div class="rev-total" id="rev-total">–</div>
+              <div class="sub" id="rev-compare">–</div>
+            </div>
+            <div class="legend">
+              <span style="--sw: var(--primary)">Minggu ini</span>
+              <span style="--sw: var(--muted)">Minggu lalu</span>
+            </div>
+          </div>
+          <div class="chart" id="chart">
+            <div class="tooltip" id="tooltip"></div>
+          </div>
+          <div class="breakdown" id="breakdown"></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="card" aria-labelledby="h-queue">
+        <div class="card-head">
+          <div>
+            <h2 id="h-queue">Ruang Tunggu</h2>
+            <div class="meta">Urut berdasarkan waktu kedatangan</div>
+          </div>
+        </div>
+        <ul class="queue" id="queue"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="h-doc">
+        <div class="card-head">
+          <div>
+            <h2 id="h-doc">Dokter Bertugas</h2>
+            <div class="meta" id="doc-meta"></div>
+          </div>
+        </div>
+        <div class="docs" id="docs"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<script>
+/* ===================== DATA DUMMY ===================== */
+// Waktu simulasi: jam praktik dimulai 08:00; "sekarang" = 10:42 dan berjalan sesuai waktu nyata sejak halaman dibuka.
+const SIM_START = { h: 10, m: 42 };
+const pageLoaded = Date.now();
+function simNow() {
+  const d = new Date();
+  d.setHours(SIM_START.h, SIM_START.m, 0, 0);
+  return new Date(d.getTime() + (Date.now() - pageLoaded));
+}
+function at(hhmm) {
+  const [h, m] = hhmm.split(":").map(Number);
+  const d = new Date(); d.setHours(h, m, 0, 0); return d;
+}
+
+const doctors = [
+  { id: "rina",  name: "drg. Rina Kartika",        spec: "Dokter Gigi Umum",       room: "Ruang 1", shift: "08:00–14:00", status: "busy",  patient: "Budi Santoso" },
+  { id: "hendra",name: "drg. Hendra Wijaya, Sp.Ort", spec: "Ortodonti",           room: "Ruang 2", shift: "09:00–15:00", status: "free" },
+  { id: "maya",  name: "drg. Maya Lestari, Sp.KG", spec: "Konservasi Gigi",        room: "Ruang 3", shift: "10:00–17:00", status: "busy",  patient: "Siti Aminah" },
+  { id: "fajar", name: "drg. Fajar Nugroho",       spec: "Dokter Gigi Umum",       room: "Ruang 1", shift: "14:00–20:00", status: "later" },
+];
+
+// status: done | active | waiting | sched | cancel
+const appointments = [
+  { time: "08:00", patient: "Ahmad Fauzi",     age: 34, proc: "Scaling",              doc: "rina",   status: "done" },
+  { time: "08:30", patient: "Dewi Puspita",    age: 27, proc: "Tambal komposit",      doc: "rina",   status: "done" },
+  { time: "09:00", patient: "Rizky Pratama",   age: 16, proc: "Kontrol behel",        doc: "hendra", status: "done" },
+  { time: "09:15", patient: "Lina Marlina",    age: 45, proc: "Konsultasi",           doc: "rina",   status: "cancel" },
+  { time: "09:45", patient: "Yusuf Hidayat",   age: 52, proc: "Cabut gigi",           doc: "rina",   status: "done" },
+  { time: "10:00", patient: "Nadia Putri",     age: 19, proc: "Pasang behel",         doc: "hendra", status: "done" },
+  { time: "10:15", patient: "Siti Aminah",     age: 38, proc: "Perawatan saluran akar", doc: "maya", status: "active" },
+  { time: "10:30", patient: "Budi Santoso",    age: 41, proc: "Tambal komposit",      doc: "rina",   status: "active" },
+  { time: "10:45", patient: "Kevin Halim",     age: 22, proc: "Kontrol behel",        doc: "hendra", status: "waiting" },
+  { time: "11:00", patient: "Ratna Sari",      age: 30, proc: "Scaling",              doc: "rina",   status: "waiting" },
+  { time: "11:15", patient: "Agus Salim",      age: 60, proc: "Crown porselen",       doc: "maya",   status: "waiting" },
+  { time: "11:30", patient: "Fitri Handayani", age: 8,  proc: "Fluoride anak",        doc: "rina",   status: "sched" },
+  { time: "13:00", patient: "Hana Wulandari",  age: 29, proc: "Bleaching",            doc: "maya",   status: "sched" },
+  { time: "13:30", patient: "Dimas Saputra",   age: 25, proc: "Konsultasi behel",     doc: "hendra", status: "sched" },
+  { time: "14:30", patient: "Indra Gunawan",   age: 47, proc: "Cabut gigi bungsu",    doc: "fajar",  status: "sched" },
+  { time: "15:30", patient: "Maria Ulfa",      age: 33, proc: "Tambal komposit",      doc: "maya",   status: "sched" },
+  { time: "16:00", patient: "Teguh Prasetyo",  age: 55, proc: "Gigi tiruan (cetak)",  doc: "fajar",  status: "sched" },
+  { time: "18:30", patient: "Putri Anjani",    age: 24, proc: "Scaling",              doc: "fajar",  status: "sched" },
+];
+
+// Pasien di ruang tunggu (arrived = jam datang)
+const queue = [
+  { patient: "Kevin Halim",  arrived: "10:21", appt: "10:45", proc: "Kontrol behel",  doc: "hendra" },
+  { patient: "Ratna Sari",   arrived: "10:29", appt: "11:00", proc: "Scaling",        doc: "rina" },
+  { patient: "Agus Salim",   arrived: "10:36", appt: "11:15", proc: "Crown porselen", doc: "maya" },
+  { patient: "Wahyu Ramadhan", arrived: "10:12", appt: null,  proc: "Sakit gigi (walk-in)", doc: "rina" },
+];
+
+// Pendapatan harian (Rupiah) Senin–Minggu
+const revenueThisWeek = [6_850_000, 8_420_000, 5_960_000, 9_310_000, 7_740_000, 11_250_000, 4_180_000];
+const revenueLastWeek = [7_200_000, 6_900_000, 6_400_000, 8_100_000, 8_650_000, 10_300_000, 5_100_000];
+const revenueByTreatment = [
+  { name: "Ortodonti",         amt: 15_600_000 },
+  { name: "Saluran akar",      amt: 9_850_000 },
+  { name: "Tambal & cabut",    amt: 8_720_000 },
+  { name: "Crown & gigi tiruan", amt: 7_400_000 },
+  { name: "Scaling & lainnya", amt: 12_140_000 },
+];
+
+/* ===================== HELPERS ===================== */
+const rupiah = n => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", maximumFractionDigits: 0 }).format(n);
+const rupiahShort = n => n >= 1e6 ? "Rp " + (n / 1e6).toLocaleString("id-ID", { maximumFractionDigits: 1 }) + " jt" : rupiah(n);
+const docById = id => doctors.find(d => d.id === id);
+const shortDoc = id => docById(id).name.replace(/^drg\. /, "").split(",")[0].split(" ")[0];
+const initials = name => name.replace(/^drg\. /, "").split(",")[0].split(" ").map(w => w[0]).slice(0, 2).join("");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const STATUS = {
+  done:    ["b-done", "Selesai"],
+  active:  ["b-active", "Sedang ditangani"],
+  waiting: ["b-waiting", "Sudah datang"],
+  sched:   ["b-sched", "Terjadwal"],
+  cancel:  ["b-cancel", "Batal"],
+};
+const DOC_STATUS = {
+  busy:  ["b-active", "Menangani pasien"],
+  free:  ["b-done", "Tersedia"],
+  later: ["b-sched", "Shift sore"],
+};
+
+/* ===================== RENDER ===================== */
+let docFilter = "all";
+
+function renderClock() {
+  const now = simNow();
+  document.getElementById("clock").textContent =
+    now.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+  document.getElementById("date").textContent =
+    now.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+}
+
+function renderKpis() {
+  const valid = appointments.filter(a => a.status !== "cancel");
+  const done = appointments.filter(a => a.status === "done").length;
+  const cancel = appointments.length - valid.length;
+  document.getElementById("kpi-appt").textContent = valid.length;
+  document.getElementById("kpi-appt-note").textContent = `${done} selesai · ${valid.length - done} tersisa · ${cancel} batal`;
+
+  const waits = queue.map(q => Math.max(0, Math.round((simNow() - at(q.arrived)) / 60000)));
+  const avg = waits.length ? Math.round(waits.reduce((a, b) => a + b, 0) / waits.length) : 0;
+  document.getElementById("kpi-wait").textContent = queue.length;
+  document.getElementById("kpi-wait-note").textContent = `Rata-rata tunggu ${avg} menit`;
+
+  const onDuty = doctors.filter(d => d.status !== "later");
+  const free = doctors.filter(d => d.status === "free").length;
+  document.getElementById("kpi-doc").textContent = `${onDuty.length}/${doctors.length}`;
+  document.getElementById("kpi-doc-note").textContent = `${free} tersedia · ${doctors.length - onDuty.length} masuk shift sore`;
+
+  const total = revenueThisWeek.reduce((a, b) => a + b, 0);
+  const prev = revenueLastWeek.reduce((a, b) => a + b, 0);
+  const pct = ((total - prev) / prev) * 100;
+  document.getElementById("kpi-rev").textContent = rupiahShort(total);
+  document.getElementById("kpi-rev-note").innerHTML =
+    `<span class="${pct >= 0 ? "up" : "down"}">${pct >= 0 ? "▲" : "▼"} ${Math.abs(pct).toFixed(1).replace(".", ",")}%</span> dari minggu lalu`;
+}
+
+function renderFilter() {
+  const wrap = document.getElementById("doc-filter");
+  const opts = [{ id: "all", label: "Semua" }, ...doctors.map(d => ({ id: d.id, label: shortDoc(d.id) }))];
+  wrap.innerHTML = opts.map(o =>
+    `<button class="chip" data-id="${o.id}" aria-pressed="${docFilter === o.id}">${esc(o.label)}</button>`).join("");
+  wrap.onclick = e => {
+    const b = e.target.closest(".chip"); if (!b) return;
+    docFilter = b.dataset.id; renderFilter(); renderAppointments();
+  };
+}
+
+function renderAppointments() {
+  const rows = appointments.filter(a => docFilter === "all" || a.doc === docFilter);
+  document.getElementById("appt-meta").textContent =
+    `${rows.length} janji temu · jam praktik 08:00–20:00`;
+  document.getElementById("appt-body").innerHTML = rows.map(a => {
+    const [cls, label] = STATUS[a.status];
+    const rowCls = a.status === "active" ? "is-now" : (a.status === "done" || a.status === "cancel") ? "is-done" : "";
+    return `<tr class="${rowCls}">
+      <td class="time">${a.time}</td>
+      <td><div class="pname">${esc(a.patient)}</div><div class="psub">${a.age} th</div></td>
+      <td>${esc(a.proc)}</td>
+      <td>${esc(shortDoc(a.doc))}<div class="psub">${docById(a.doc).room}</div></td>
+      <td><span class="badge ${cls}">${label}</span></td>
+    </tr>`;
+  }).join("") || `<tr><td colspan="5" class="empty">Tidak ada janji temu.</td></tr>`;
+}
+
+function renderQueue() {
+  const el = document.getElementById("queue");
+  const sorted = [...queue].sort((a, b) => a.arrived.localeCompare(b.arrived));
+  if (!sorted.length) { el.innerHTML = `<li class="empty">Ruang tunggu kosong.</li>`; return; }
+  el.innerHTML = sorted.map((q, i) => {
+    const mins = Math.max(0, Math.round((simNow() - at(q.arrived)) / 60000));
+    const apptTxt = q.appt ? `Janji ${q.appt}` : `<span class="badge b-waiting" style="padding:1px 7px">Walk-in</span>`;
+    return `<li>
+      <div class="qno">A${String(i + 1).padStart(2, "0")}</div>
+      <div>
+        <div class="pname">${esc(q.patient)}</div>
+        <div class="psub">${esc(q.proc)} · ${esc(shortDoc(q.doc))}</div>
+        <div class="psub">Datang ${q.arrived} · ${apptTxt}</div>
+      </div>
+      <div class="wait">
+        <div class="min ${mins >= 30 ? "long" : ""}">${mins} mnt</div>
+        <div class="lbl">menunggu</div>
+      </div>
+    </li>`;
+  }).join("");
+}
+
+function renderDoctors() {
+  const onDuty = doctors.filter(d => d.status !== "later").length;
+  document.getElementById("doc-meta").textContent = `${onDuty} sedang praktik saat ini`;
+  document.getElementById("docs").innerHTML = doctors.map(d => {
+    const [cls, label] = DOC_STATUS[d.status];
+    const count = appointments.filter(a => a.doc === d.id && a.status !== "cancel").length;
+    return `<div class="doc" style="${d.status === "later" ? "opacity:.7" : ""}">
+      <div class="avatar">${initials(d.name)}</div>
+      <div class="info">
+        <div class="name">${esc(d.name)}</div>
+        <div class="psub">${esc(d.spec)} · ${d.room}</div>
+        ${d.patient ? `<div class="psub">Pasien: <strong>${esc(d.patient)}</strong></div>` : ""}
+      </div>
+      <div class="right">
+        <span class="badge ${cls}">${label}</span>
+        <div class="shift">${d.shift} · ${count} pasien</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function renderRevenue() {
+  const days = ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"];
+  const now = simNow();
+  const todayIdx = (now.getDay() + 6) % 7; // Senin = 0
+  const monday = new Date(now); monday.setDate(now.getDate() - todayIdx);
+  const sunday = new Date(monday); sunday.setDate(monday.getDate() + 6);
+  const fmt = d => d.toLocaleDateString("id-ID", { day: "numeric", month: "short" });
+  document.getElementById("rev-range").textContent = `${fmt(monday)} – ${fmt(sunday)} · hingga hari ini`;
+
+  // Hari setelah hari ini belum ada pendapatan
+  const thisWeek = revenueThisWeek.map((v, i) => (i <= todayIdx ? v : 0));
+  const total = thisWeek.reduce((a, b) => a + b, 0);
+  const prevSame = revenueLastWeek.slice(0, todayIdx + 1).reduce((a, b) => a + b, 0);
+  const pct = ((total - prevSame) / prevSame) * 100;
+  document.getElementById("rev-total").textContent = rupiah(total);
+  document.getElementById("rev-compare").innerHTML =
+    `<span class="${pct >= 0 ? "up" : "down"}">${pct >= 0 ? "▲" : "▼"} ${Math.abs(pct).toFixed(1).replace(".", ",")}%</span> vs periode sama minggu lalu (${rupiahShort(prevSame)})`;
+
+  // Chart SVG
+  const W = 640, H = 220, padL = 44, padB = 26, padT = 10;
+  const max = Math.ceil(Math.max(...revenueThisWeek, ...revenueLastWeek) / 2e6) * 2e6;
+  const plotH = H - padB - padT, plotW = W - padL;
+  const slot = plotW / 7, bw = Math.min(44, slot * 0.55);
+  const y = v => padT + plotH - (v / max) * plotH;
+
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Grafik pendapatan harian minggu ini dibanding minggu lalu">`;
+  for (let t = 0; t <= max; t += 2e6) {
+    svg += `<line class="gridline" x1="${padL}" x2="${W}" y1="${y(t)}" y2="${y(t)}"/>`;
+    svg += `<text class="axis-text" x="${padL - 8}" y="${y(t) + 4}" text-anchor="end">${t / 1e6} jt</text>`;
+  }
+  days.forEach((d, i) => {
+    const cx = padL + slot * i + slot / 2;
+    const v = thisWeek[i];
+    const future = i > todayIdx;
+    const h = future ? 3 : Math.max(2, plotH - (y(v) - padT));
+    const by = future ? padT + plotH - 3 : y(v);
+    svg += `<rect class="bar ${future ? "future" : ""}" x="${cx - bw / 2}" y="${by}" width="${bw}" height="${h}" rx="4"/>`;
+    // penanda minggu lalu
+    svg += `<line class="prev" x1="${cx - bw / 2 - 4}" x2="${cx + bw / 2 + 4}" y1="${y(revenueLastWeek[i])}" y2="${y(revenueLastWeek[i])}"/>`;
+    svg += `<text class="axis-text" x="${cx}" y="${H - 8}" text-anchor="middle" style="${i === todayIdx ? "font-weight:700;fill:var(--text)" : ""}">${i === todayIdx ? "Hari ini" : d}</text>`;
+    svg += `<rect class="hit" data-i="${i}" x="${padL + slot * i}" y="${padT}" width="${slot}" height="${plotH}"/>`;
+  });
+  svg += `</svg>`;
+
+  const chart = document.getElementById("chart");
+  const tip = document.getElementById("tooltip");
+  chart.querySelector("svg")?.remove();
+  chart.insertAdjacentHTML("afterbegin", svg);
+
+  const full = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
+  chart.querySelectorAll(".hit").forEach(r => {
+    r.addEventListener("mousemove", e => {
+      const i = +r.dataset.i;
+      const box = chart.getBoundingClientRect();
+      tip.innerHTML = `<strong>${full[i]}</strong><br>Minggu ini: ${i > todayIdx ? "—" : rupiah(thisWeek[i])}<br>Minggu lalu: ${rupiah(revenueLastWeek[i])}`;
+      tip.style.left = (e.clientX - box.left) + "px";
+      tip.style.top = (e.clientY - box.top - 10) + "px";
+      tip.style.opacity = 1;
+    });
+    r.addEventListener("mouseleave", () => (tip.style.opacity = 0));
+  });
+
+  // Breakdown per tindakan
+  // Skala agar total breakdown selalu sama dengan total minggu ini (hingga hari ini)
+  const fullWeek = revenueThisWeek.reduce((a, b) => a + b, 0);
+  const scaled = revenueByTreatment.map(b => ({ ...b, amt: Math.round(b.amt * total / fullWeek / 1e4) * 1e4 }));
+  const bmax = Math.max(...scaled.map(b => b.amt));
+  const btotal = scaled.reduce((a, b) => a + b.amt, 0);
+  document.getElementById("breakdown").innerHTML =
+    `<div class="sub" style="font-weight:600;color:var(--text)">Per jenis tindakan</div>` +
+    scaled.sort((a, b) => b.amt - a.amt).map(b => `
+      <div class="brow">
+        <div>${esc(b.name)}</div>
+        <div class="track"><div class="fill" style="width:${(b.amt / bmax) * 100}%"></div></div>
+        <div class="amt">${rupiahShort(b.amt)} <span class="psub">${Math.round(b.amt / btotal * 100)}%</span></div>
+      </div>`).join("");
+}
+
+function renderAll() {
+  renderClock(); renderKpis(); renderFilter(); renderAppointments();
+  renderQueue(); renderDoctors(); renderRevenue();
+}
+renderAll();
+// Perbarui jam & waktu tunggu tiap 15 detik
+setInterval(() => { renderClock(); renderKpis(); renderQueue(); }, 15000);
+</script>
+</body>
+</html>

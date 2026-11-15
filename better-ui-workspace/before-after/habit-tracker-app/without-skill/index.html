@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f4f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141417" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Habits">
+<title>Habits</title>
+<style>
+  :root {
+    --bg: #f5f4f0;
+    --card: #ffffff;
+    --text: #1c1c1f;
+    --muted: #6e6e76;
+    --line: #e6e4de;
+    --empty: #eeede8;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 2px 8px rgba(0,0,0,.04);
+    --radius: 18px;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141417;
+      --card: #1e1e22;
+      --text: #f0f0f2;
+      --muted: #9a9aa3;
+      --line: #2c2c32;
+      --empty: #2a2a30;
+      --shadow: none;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 100dvh;
+  }
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  .wrap {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: calc(20px + env(safe-area-inset-top)) 16px calc(110px + env(safe-area-inset-bottom));
+  }
+
+  /* Header */
+  header { padding: 8px 4px 20px; }
+  .eyebrow { color: var(--muted); font-size: 14px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; }
+  h1 { margin: 2px 0 14px; font-size: 32px; letter-spacing: -.02em; }
+  .progress { display: flex; align-items: center; gap: 12px; }
+  .bar { flex: 1; height: 8px; border-radius: 99px; background: var(--empty); overflow: hidden; }
+  .bar > span { display: block; height: 100%; width: 0; border-radius: inherit; background: #22a861; transition: width .35s ease; }
+  .progress-label { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* Habit cards */
+  .list { display: grid; gap: 12px; }
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px;
+    border: 1px solid var(--line);
+  }
+  @media (prefers-color-scheme: light) { .card { border-color: transparent; } }
+  .top { display: flex; align-items: center; gap: 12px; }
+  .info { flex: 1; min-width: 0; }
+  .name-btn {
+    display: block; width: 100%; text-align: left; background: none; border: 0; padding: 0;
+    font-size: 17px; font-weight: 600; overflow-wrap: anywhere;
+  }
+  .meta { margin-top: 3px; font-size: 14px; color: var(--muted); display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .streak { font-weight: 600; color: var(--text); }
+  .streak.zero { color: var(--muted); font-weight: 500; }
+  .dot-sep { opacity: .5; }
+
+  .check {
+    flex: none;
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 2.5px solid var(--c);
+    background: transparent;
+    display: grid; place-items: center;
+    transition: background .15s ease, transform .12s ease;
+  }
+  .check svg { width: 26px; height: 26px; stroke: var(--c); stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; opacity: .35; }
+  .check:active { transform: scale(.92); }
+  .check.done { background: var(--c); }
+  .check.done svg { stroke: #fff; opacity: 1; }
+  .check.pop { animation: pop .3s ease; }
+  @keyframes pop { 50% { transform: scale(1.12); } }
+
+  .week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-top: 14px; }
+  .day {
+    border: 0; background: none; padding: 0;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .day .lbl { font-size: 11px; color: var(--muted); font-weight: 600; }
+  .day .cell {
+    width: 100%; max-width: 40px; aspect-ratio: 1; border-radius: 10px;
+    background: var(--empty);
+    display: grid; place-items: center;
+    font-size: 12px; font-weight: 600; color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    transition: background .15s ease;
+  }
+  .day.on .cell { background: var(--c); color: #fff; }
+  .day.today .lbl { color: var(--text); }
+  .day.today .cell { box-shadow: inset 0 0 0 2px var(--c); }
+  .day.on.today .cell { box-shadow: none; }
+
+  /* Empty state */
+  .empty { text-align: center; padding: 56px 20px; color: var(--muted); }
+  .empty .big { font-size: 44px; margin-bottom: 8px; }
+  .empty h2 { color: var(--text); font-size: 20px; margin: 0 0 6px; }
+  .empty p { margin: 0; }
+
+  .celebrate { text-align: center; margin: 18px 0 0; color: var(--muted); font-size: 15px; }
+
+  /* Add button */
+  .fab-wrap {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    padding: 12px 16px calc(16px + env(safe-area-inset-bottom));
+    background: linear-gradient(to top, var(--bg) 60%, transparent);
+    pointer-events: none;
+  }
+  .fab {
+    pointer-events: auto;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; max-width: 528px; margin: 0 auto;
+    height: 54px; border-radius: 16px; border: 0;
+    background: var(--text); color: var(--bg);
+    font-weight: 600; font-size: 17px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.15);
+  }
+  .fab:active { transform: scale(.98); }
+
+  /* Dialog / sheet */
+  dialog {
+    border: 0; padding: 0; margin: auto auto 0;
+    width: 100%; max-width: 560px;
+    background: var(--card); color: var(--text);
+    border-radius: 22px 22px 0 0;
+  }
+  @media (min-width: 600px) { dialog { margin: auto; border-radius: 22px; } }
+  dialog::backdrop { background: rgba(0,0,0,.4); }
+  dialog[open] { animation: up .22s ease; }
+  @keyframes up { from { transform: translateY(30px); opacity: 0; } }
+  .sheet { padding: 22px 20px calc(20px + env(safe-area-inset-bottom)); }
+  .sheet h3 { margin: 0 0 16px; font-size: 20px; }
+  .field-label { display: block; font-size: 13px; font-weight: 600; color: var(--muted); margin: 0 0 6px; }
+  .text-input {
+    width: 100%; height: 50px; padding: 0 14px;
+    border-radius: 12px; border: 1.5px solid var(--line);
+    background: var(--bg); color: var(--text);
+    font-size: 17px; /* >=16px prevents iOS zoom */
+    outline: none;
+  }
+  .text-input:focus { border-color: var(--text); }
+  .colors { display: flex; gap: 6px; justify-content: space-between; margin: 10px 2px 24px; }
+  .swatch { position: relative; }
+  .swatch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .swatch span {
+    display: block; width: 34px; height: 34px; border-radius: 50%;
+    background: var(--c);
+    box-shadow: 0 0 0 3px var(--card), 0 0 0 3px transparent;
+    transition: box-shadow .15s ease;
+  }
+  .swatch input:checked + span { box-shadow: 0 0 0 3px var(--card), 0 0 0 5px var(--c); }
+  .swatch input:focus-visible + span { outline: 2px solid var(--text); outline-offset: 6px; }
+  .actions { display: flex; gap: 10px; }
+  .btn {
+    flex: 1; height: 50px; border-radius: 12px; border: 0;
+    font-weight: 600; font-size: 16px;
+    background: var(--empty);
+  }
+  .btn.primary { background: var(--text); color: var(--bg); }
+  .btn.danger { background: transparent; color: #e5484d; flex: 0 0 auto; padding: 0 12px; }
+  .stats { display: flex; gap: 10px; margin: 0 0 18px; }
+  .stat { flex: 1; background: var(--bg); border-radius: 12px; padding: 10px 12px; }
+  .stat b { display: block; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .stat small { color: var(--muted); font-size: 12px; }
+  .hint { font-size: 13px; color: var(--muted); text-align: center; margin-top: 18px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow" id="weekday"></div>
+    <h1 id="date"></h1>
+    <div class="progress" id="progress">
+      <div class="bar"><span id="bar"></span></div>
+      <div class="progress-label" id="progressLabel"></div>
+    </div>
+  </header>
+
+  <main class="list" id="list"></main>
+  <p class="celebrate" id="celebrate" hidden></p>
+  <p class="hint" id="hint" hidden>Tap a day to fix a missed tick · tap a name to edit</p>
+</div>
+
+<div class="fab-wrap">
+  <button class="fab" id="addBtn" type="button">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    New habit
+  </button>
+</div>
+
+<dialog id="dlg">
+  <form method="dialog" class="sheet" id="form">
+    <h3 id="dlgTitle">New habit</h3>
+    <div class="stats" id="dlgStats" hidden>
+      <div class="stat"><b id="sCur">0</b><small>Current streak</small></div>
+      <div class="stat"><b id="sBest">0</b><small>Best streak</small></div>
+      <div class="stat"><b id="sTotal">0</b><small>Total days</small></div>
+    </div>
+    <label class="field-label" for="nameInput">Name</label>
+    <input class="text-input" id="nameInput" maxlength="60" autocomplete="off" placeholder="e.g. Drink 2L of water" required>
+    <div class="field-label" style="margin-top:18px">Colour</div>
+    <div class="colors" id="colors"></div>
+    <div class="actions">
+      <button class="btn danger" id="delBtn" type="button" hidden>Delete</button>
+      <button class="btn" value="cancel" formnovalidate>Cancel</button>
+      <button class="btn primary" value="save" id="saveBtn">Add</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(() => {
+  const KEY = 'habit-tracker-v1';
+  const COLORS = ['#22a861', '#3b82f6', '#f59e0b', '#ef4444', '#a855f7', '#ec4899', '#14b8a6', '#64748b'];
+  const DAY_LETTERS = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+  // ---------- storage ----------
+  function load() {
+    try {
+      const s = JSON.parse(localStorage.getItem(KEY));
+      if (s && Array.isArray(s.habits)) return s;
+    } catch (e) {}
+    return { habits: [] };
+  }
+  let state = load();
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { alert('Could not save — storage may be full or disabled.'); }
+  }
+
+  // ---------- dates (local time) ----------
+  const pad = n => String(n).padStart(2, '0');
+  const keyOf = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const today = () => { const n = new Date(); return new Date(n.getFullYear(), n.getMonth(), n.getDate()); };
+  const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const parseKey = k => { const [y, m, d] = k.split('-').map(Number); return new Date(y, m - 1, d); };
+
+  // ---------- streaks ----------
+  function currentStreak(h) {
+    let d = today();
+    if (!h.done[keyOf(d)]) d = addDays(d, -1); // today not done yet: streak is still alive from yesterday
+    let c = 0;
+    while (h.done[keyOf(d)]) { c++; d = addDays(d, -1); }
+    return c;
+  }
+  function bestStreak(h) {
+    const keys = Object.keys(h.done).sort();
+    let best = 0, run = 0, prev = null;
+    for (const k of keys) {
+      run = (prev && keyOf(addDays(prev, 1)) === k) ? run + 1 : 1;
+      if (run > best) best = run;
+      prev = parseKey(k);
+    }
+    return best;
+  }
+  const plural = (n, w) => `${n} ${w}${n === 1 ? '' : 's'}`;
+
+  // ---------- actions ----------
+  function toggle(id, key) {
+    const h = state.habits.find(x => x.id === id);
+    if (!h) return false;
+    if (h.done[key]) delete h.done[key]; else h.done[key] = 1;
+    save();
+    return !!h.done[key];
+  }
+
+  // ---------- render ----------
+  const $ = id => document.getElementById(id);
+  const list = $('list');
+  let renderedDay = keyOf(today());
+
+  function svgCheck() {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    const p = document.createElementNS(ns, 'path');
+    p.setAttribute('d', 'M5 12.5l4.5 4.5L19 7.5');
+    svg.appendChild(p);
+    return svg;
+  }
+
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+
+  function render() {
+    const t = today();
+    const tKey = keyOf(t);
+    renderedDay = tKey;
+
+    $('weekday').textContent = t.toLocaleDateString(undefined, { weekday: 'long' });
+    $('date').textContent = t.toLocaleDateString(undefined, { day: 'numeric', month: 'long' });
+
+    const total = state.habits.length;
+    const doneToday = state.habits.filter(h => h.done[tKey]).length;
+    $('progress').hidden = total === 0;
+    $('bar').style.width = total ? (doneToday / total * 100) + '%' : '0';
+    $('progressLabel').textContent = `${doneToday} / ${total} today`;
+
+    const cel = $('celebrate');
+    cel.hidden = !(total && doneToday === total);
+    cel.textContent = '🎉 All done for today. Nice work!';
+    $('hint').hidden = total === 0;
+
+    list.replaceChildren();
+
+    if (!total) {
+      const e = el('div', 'empty');
+      e.append(el('div', 'big', '🌱'), el('h2', null, 'No habits yet'), el('p', null, 'Add your first habit and start a streak.'));
+      list.append(e);
+      return;
+    }
+
+    for (const h of state.habits) {
+      const card = el('section', 'card');
+      card.style.setProperty('--c', h.color);
+
+      const top = el('div', 'top');
+      const info = el('div', 'info');
+      const name = el('button', 'name-btn', h.name);
+      name.type = 'button';
+      name.dataset.action = 'edit';
+      name.dataset.id = h.id;
+
+      const cur = currentStreak(h);
+      const best = bestStreak(h);
+      const meta = el('div', 'meta');
+      const streak = el('span', 'streak' + (cur ? '' : ' zero'), cur ? `🔥 ${plural(cur, 'day')}` : 'No streak yet');
+      meta.append(streak);
+      if (best > 0) {
+        meta.append(el('span', 'dot-sep', '·'), el('span', null, `best ${best}`));
+      }
+      info.append(name, meta);
+
+      const check = el('button', 'check' + (h.done[tKey] ? ' done' : ''));
+      check.type = 'button';
+      check.dataset.action = 'toggle';
+      check.dataset.id = h.id;
+      check.dataset.key = tKey;
+      check.setAttribute('aria-pressed', h.done[tKey] ? 'true' : 'false');
+      check.setAttribute('aria-label', `Mark ${h.name} done today`);
+      check.append(svgCheck());
+
+      top.append(info, check);
+
+      const week = el('div', 'week');
+      for (let i = 6; i >= 0; i--) {
+        const d = addDays(t, -i);
+        const k = keyOf(d);
+        const on = !!h.done[k];
+        const day = el('button', 'day' + (on ? ' on' : '') + (i === 0 ? ' today' : ''));
+        day.type = 'button';
+        day.dataset.action = 'toggle';
+        day.dataset.id = h.id;
+        day.dataset.key = k;
+        day.setAttribute('aria-pressed', on ? 'true' : 'false');
+        day.setAttribute('aria-label', `${h.name}, ${d.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}`);
+        day.append(el('span', 'lbl', DAY_LETTERS[d.getDay()]), el('span', 'cell', d.getDate()));
+        week.append(day);
+      }
+
+      card.append(top, week);
+      list.append(card);
+    }
+  }
+
+  list.addEventListener('click', e => {
+    const b = e.target.closest('button[data-action]');
+    if (!b) return;
+    const id = b.dataset.id;
+    if (b.dataset.action === 'toggle') {
+      const nowOn = toggle(id, b.dataset.key);
+      if (nowOn && navigator.vibrate) navigator.vibrate(12);
+      render();
+      if (nowOn && b.classList.contains('check')) {
+        const again = list.querySelector(`.check[data-id="${CSS.escape(id)}"]`);
+        if (again) again.classList.add('pop');
+      }
+    } else if (b.dataset.action === 'edit') {
+      openDialog(id);
+    }
+  });
+
+  // ---------- dialog ----------
+  const dlg = $('dlg');
+  const form = $('form');
+  const nameInput = $('nameInput');
+  const colorsEl = $('colors');
+  let editingId = null;
+
+  COLORS.forEach((c, i) => {
+    const lab = el('label', 'swatch');
+    lab.style.setProperty('--c', c);
+    const r = document.createElement('input');
+    r.type = 'radio'; r.name = 'color'; r.value = c;
+    r.setAttribute('aria-label', `Colour ${i + 1}`);
+    lab.append(r, el('span'));
+    colorsEl.append(lab);
+  });
+
+  function setColor(c) {
+    for (const r of form.elements.color) r.checked = r.value === c;
+  }
+
+  function openDialog(id) {
+    editingId = id || null;
+    const h = id ? state.habits.find(x => x.id === id) : null;
+    $('dlgTitle').textContent = h ? 'Edit habit' : 'New habit';
+    $('saveBtn').textContent = h ? 'Save' : 'Add';
+    $('delBtn').hidden = !h;
+    $('dlgStats').hidden = !h;
+    if (h) {
+      $('sCur').textContent = currentStreak(h);
+      $('sBest').textContent = bestStreak(h);
+      $('sTotal').textContent = Object.keys(h.done).length;
+    }
+    nameInput.value = h ? h.name : '';
+    setColor(h ? h.color : COLORS[state.habits.length % COLORS.length]);
+    dlg.showModal();
+    if (!h) setTimeout(() => nameInput.focus(), 50);
+  }
+
+  $('addBtn').addEventListener('click', () => openDialog(null));
+
+  // tap backdrop to close
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close('cancel'); });
+
+  form.addEventListener('submit', e => {
+    const action = e.submitter ? e.submitter.value : 'save';
+    if (action !== 'save') return;
+    const name = nameInput.value.trim();
+    if (!name) { e.preventDefault(); nameInput.focus(); return; }
+    const color = form.elements.color.value || COLORS[0];
+    if (editingId) {
+      const h = state.habits.find(x => x.id === editingId);
+      if (h) { h.name = name; h.color = color; }
+    } else {
+      state.habits.push({
+        id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+        name, color, created: keyOf(today()), done: {}
+      });
+    }
+    save();
+    render();
+  });
+
+  $('delBtn').addEventListener('click', () => {
+    const h = state.habits.find(x => x.id === editingId);
+    if (!h) return;
+    if (!confirm(`Delete "${h.name}" and its history?`)) return;
+    state.habits = state.habits.filter(x => x.id !== editingId);
+    save();
+    dlg.close('deleted');
+    render();
+  });
+
+  // ---------- keep in sync ----------
+  function checkRollover() { if (keyOf(today()) !== renderedDay) render(); }
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) checkRollover(); });
+  setInterval(checkRollover, 60 * 1000);
+  window.addEventListener('storage', e => { if (e.key === KEY) { state = load(); render(); } });
+
+  render();
+})();
+</script>
+</body>
+</html>

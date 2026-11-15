@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ringkasan · Sangrai Kopi Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Look: fresh gradient — periwinkle canvas, white cards, blue brand on the hero card, amber accent for the "today" moments */
+:root {
+  --font: "Figtree", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --canvas: #F1F4FD; --surface: #FFFFFF; --surface-2: #F6F8FD; --line: #E6EAF4; --line-2: #EEF1F8;
+  --text: #0E1530; --text-2: #5B6584; --text-3: #687290;
+  --brand: #3B5BFD; --brand-600: #2C47E0; --brand-300: #B4C2FF; --brand-tint: #EBEFFF; --on-brand: #FFFFFF;
+  --accent: #FFB020; --accent-tint: #FFF4DE; --accent-ink: #A16207;
+  --ok: #137333; --ok-tint: #E7F6EC; --warn: #B45309; --warn-tint: #FEF3E2; --bad: #C2410C; --bad-tint: #FDEDE6;
+  --violet: #7C5CFA; --teal: #0E9F9A; --rose: #E5487A;
+  --r-xs: 6px; --r-sm: 10px; --r-md: 16px; --r-lg: 20px; --r-full: 999px;
+  --sh-1: 0 1px 2px rgba(20,32,80,.05), 0 1px 1px rgba(20,32,80,.03);
+  --sh-2: 0 1px 2px rgba(20,32,80,.04), 0 8px 24px -12px rgba(20,32,80,.12);
+  --sh-float: 0 12px 32px -8px rgba(20,32,80,.22);
+  --sidebar: 252px;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font-family: var(--font); background: var(--canvas); color: var(--text); font-size: 14px; line-height: 1.5;
+  -webkit-font-smoothing: antialiased; font-variant-numeric: tabular-nums; }
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+svg.i { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 8px; }
+
+/* ---------- shell ---------- */
+.app { display: grid; grid-template-columns: var(--sidebar) 1fr; min-height: 100vh; background: linear-gradient(90deg, #fff 0 calc(var(--sidebar) - 1px), var(--line) 0 var(--sidebar), transparent 0); }
+.sidebar { position: sticky; top: 0; height: 100vh; background: var(--surface); border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; padding: 20px 16px; gap: 20px; overflow-y: auto; }
+.brand { display: flex; align-items: center; gap: 10px; padding: 4px 8px; }
+.brand-mark { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(140deg, #5A78FF, var(--brand-600));
+  display: grid; place-items: center; color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 6px 14px -6px rgba(59,91,253,.6); }
+.brand-name { font-weight: 600; font-size: 16px; letter-spacing: -.01em; line-height: 1.2; }
+.brand-sub { font-size: 12px; color: var(--text-3); }
+.nav-group { display: flex; flex-direction: column; gap: 2px; }
+.nav-label { font-size: 12px; color: var(--text-3); padding: 0 12px 6px; font-weight: 500; }
+.nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: var(--r-sm); color: var(--text-2);
+  font-weight: 500; transition: background .15s, color .15s; border: 0; background: none; width: 100%; text-align: left; }
+.nav-item:hover { background: var(--surface-2); color: var(--text); }
+.nav-item.active { background: var(--brand-tint); color: var(--brand-600); }
+.nav-item .count { margin-left: auto; font-size: 12px; font-weight: 600; background: var(--brand); color: #fff; border-radius: var(--r-full); padding: 1px 8px; }
+.nav-item .count.muted { background: var(--surface-2); color: var(--text-2); border: 1px solid var(--line); }
+.side-foot { margin-top: auto; display: flex; flex-direction: column; gap: 12px; }
+.store-card { border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px; background: var(--surface-2); }
+.store-card .row { display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+.store-card .meter { height: 6px; border-radius: 99px; background: var(--line); margin: 10px 0 6px; overflow: hidden; }
+.store-card .meter i { display: block; height: 100%; border-radius: inherit; background: var(--brand); }
+.store-card small { color: var(--text-2); font-size: 12px; }
+.user { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: var(--r-sm); }
+.user:hover { background: var(--surface-2); }
+.avatar { width: 36px; height: 36px; border-radius: 50%; flex: none; overflow: hidden; display: grid; place-items: center; font-size: 13px; font-weight: 600; }
+.avatar img { width: 100%; height: 100%; display: block; }
+.user b { font-weight: 600; font-size: 14px; display: block; line-height: 1.2; }
+.user span { font-size: 12px; color: var(--text-3); }
+
+.main { min-width: 0; display: flex; flex-direction: column; }
+.topbar { position: relative; z-index: 20; display: flex; align-items: center; gap: 12px; padding: 14px 32px;
+  background: rgba(241,244,253,.86); backdrop-filter: blur(12px); border-bottom: 1px solid transparent; }
+.topbar.scrolled { border-bottom-color: var(--line); }
+.icon-btn.menu-btn { display: none; }
+.search { flex: 1; max-width: 380px; display: flex; align-items: center; gap: 10px; height: 42px; padding: 0 12px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-sm); color: var(--text-3); }
+.search input { border: 0; outline: 0; background: none; font: inherit; color: var(--text); flex: 1; min-width: 0; }
+.search input::placeholder { color: var(--text-3); }
+.search:focus-within { border-color: var(--brand-300); box-shadow: 0 0 0 3px var(--brand-tint); }
+.kbd { font-size: 12px; border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; color: var(--text-2); background: var(--surface-2); }
+.top-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.icon-btn { width: 42px; height: 42px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--surface);
+  display: grid; place-items: center; color: var(--text-2); position: relative; transition: background .15s, color .15s; }
+.icon-btn:hover { color: var(--text); background: var(--surface-2); }
+.icon-btn .badge { position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--bad); box-shadow: 0 0 0 2px var(--surface); }
+.btn { height: 42px; padding: 0 16px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--surface);
+  display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; white-space: nowrap; transition: background .15s, transform .1s, box-shadow .15s; }
+.btn:hover { background: var(--surface-2); }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--brand); color: #fff; border-color: transparent; box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 6px 14px -8px rgba(59,91,253,.8); }
+.btn-primary:hover { background: var(--brand-600); }
+.btn-sm { height: 34px; padding: 0 12px; font-size: 13px; border-radius: 10px; }
+
+.content { padding: 8px 32px 40px; display: flex; flex-direction: column; gap: 20px; }
+.page-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.page-head h1 { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -.02em; line-height: 1.25; }
+.page-head p { margin: 4px 0 0; color: var(--text-2); }
+.seg { display: inline-flex; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 3px; gap: 2px; }
+.seg button { border: 0; background: none; height: 32px; padding: 0 12px; border-radius: 6px; font-weight: 500; font-size: 13px; color: var(--text-2); }
+.seg button:hover { color: var(--text); }
+.seg button[aria-pressed="true"] { background: var(--brand-tint); color: var(--brand-600); font-weight: 600; }
+
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px; }
+.card { background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--r-lg); box-shadow: var(--sh-2); padding: 22px; min-width: 0; }
+.card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.card-head h2 { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
+.card-head .sub { color: var(--text-2); font-size: 13px; margin-top: 2px; }
+.link { color: var(--brand-600); font-weight: 600; font-size: 13px; display: inline-flex; align-items: center; gap: 4px; border: 0; background: none; padding: 6px 4px; border-radius: 6px; }
+.link:hover { text-decoration: underline; }
+
+/* ---------- hero ---------- */
+.hero { grid-column: span 5; border-radius: var(--r-lg); color: #fff; padding: 22px 22px 18px; position: relative; overflow: hidden;
+  background: radial-gradient(120% 90% at 100% 0%, #6E8BFF 0%, transparent 55%), linear-gradient(150deg, #4A68FF 0%, #2B44D6 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 2px 4px rgba(43,68,214,.15), 0 24px 48px -20px rgba(43,68,214,.55); display: flex; flex-direction: column; }
+.hero::after { content: ""; position: absolute; width: 260px; height: 260px; border-radius: 50%; right: -90px; bottom: -150px; border: 40px solid rgba(255,255,255,.05); pointer-events: none; }
+.hero-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.hero-label { font-size: 14px; color: rgba(255,255,255,.82); display: flex; align-items: center; gap: 8px; }
+.live { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; background: rgba(255,255,255,.14); padding: 3px 10px; border-radius: var(--r-full); }
+.live .dot { background: #7CF0B0; box-shadow: 0 0 0 3px rgba(124,240,176,.25); }
+.hero-fig { font-size: 36px; font-weight: 600; letter-spacing: -.02em; margin: 6px 0 2px; line-height: 1.15; }
+.hero-fig small { font-size: 20px; color: rgba(255,255,255,.7); font-weight: 500; margin-right: 4px; }
+.hero-meta { display: flex; align-items: center; gap: 10px; font-size: 13px; color: rgba(255,255,255,.82); flex-wrap: wrap; }
+.pill-w { background: rgba(255,255,255,.18); color: #fff; font-weight: 600; font-size: 12px; padding: 3px 9px; border-radius: var(--r-full); display: inline-flex; align-items: center; gap: 4px; }
+.hero-chart { position: relative; margin-top: auto; padding-top: 16px; }
+.hero-chart svg { width: 100%; height: 104px; display: block; overflow: visible; }
+.hero-axis { display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,.7); margin-top: 6px; }
+.hero-legend { display: flex; gap: 14px; font-size: 12px; color: rgba(255,255,255,.8); margin-top: 10px; }
+.hero-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.hero-legend i { width: 14px; height: 0; border-top: 2px solid #fff; display: inline-block; }
+.hero-legend i.dash { border-top: 2px dashed rgba(255,255,255,.6); }
+.now-dot { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px rgba(255,176,32,.3), 0 0 0 1.5px #fff inset; transform: translate(-50%, -50%); }
+.now-tag { position: absolute; transform: translate(-50%, -100%); margin-top: -12px; background: #fff; color: var(--text); font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; white-space: nowrap; box-shadow: var(--sh-float); }
+
+/* ---------- KPI tiles ---------- */
+.kpis { grid-column: span 7; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.kpi { padding: 18px 20px; display: flex; flex-direction: column; gap: 12px; }
+.kpi-top { display: flex; align-items: center; gap: 10px; color: var(--text-2); font-size: 13px; font-weight: 500; }
+.chip-ic { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; flex: none;
+  background: color-mix(in srgb, var(--c) 13%, var(--surface)); color: var(--c); }
+.kpi-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.kpi-fig { font-size: 26px; font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
+.kpi-fig small { font-size: 15px; color: var(--text-3); font-weight: 500; }
+.kpi-foot span:last-child { white-space: nowrap; }
+.kpi-foot { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-3); margin-top: 6px; }
+.delta { display: inline-flex; align-items: center; gap: 2px; font-size: 12px; font-weight: 600; padding: 2px 7px; border-radius: var(--r-full); }
+.delta.up { background: var(--ok-tint); color: var(--ok); }
+.delta.down { background: var(--bad-tint); color: var(--bad); }
+.delta.flat { background: var(--surface-2); color: var(--text-2); }
+.spark { width: 96px; height: 40px; flex: none; overflow: visible; }
+
+/* ---------- weekly chart ---------- */
+.weekly { grid-column: span 8; display: flex; flex-direction: column; }
+.week-sum { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 18px; }
+.week-sum .lbl { font-size: 13px; color: var(--text-2); }
+.week-sum .val { font-size: 22px; font-weight: 600; letter-spacing: -.01em; display: flex; align-items: center; gap: 8px; }
+.bars-wrap { position: relative; height: 240px; margin-left: 52px; flex: none; }
+.gridline { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--line); }
+.gridline span { position: absolute; right: calc(100% + 10px); transform: translateY(-50%); font-size: 12px; color: var(--text-3); white-space: nowrap; }
+.bars { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(7, 1fr); align-items: end; gap: 14px; padding: 0 6px; }
+.bar-col { position: relative; height: 100%; display: flex; align-items: flex-end; justify-content: center; cursor: default; }
+.bar { width: min(56px, 72%); border-radius: 10px 10px 4px 4px; background: var(--brand-300); transition: background .15s, height .35s cubic-bezier(.2,.8,.2,1); position: relative; }
+.bar-col:hover .bar, .bar-col:focus-visible .bar { background: var(--brand); }
+.bar.peak { background: var(--brand); }
+.bar.today { background: repeating-linear-gradient(-45deg, var(--accent) 0 6px, #FFC85A 6px 12px); }
+.bar-col:hover .bar.today { background: repeating-linear-gradient(-45deg, #F59E0B 0 6px, var(--accent) 6px 12px); }
+.bar-val { position: absolute; left: 50%; transform: translate(-50%, -6px); font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; }
+.tip { position: absolute; bottom: calc(100% + 34px); left: 50%; transform: translate(-50%, 4px); background: var(--text); color: #fff; border-radius: 10px; padding: 8px 10px;
+  font-size: 12px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; z-index: 5; box-shadow: var(--sh-float); }
+.tip b { display: block; font-size: 13px; }
+.tip span { color: rgba(255,255,255,.7); }
+.bar-col:hover .tip, .bar-col:focus-visible .tip { opacity: 1; transform: translate(-50%, 0); }
+.x-labels { display: grid; grid-template-columns: repeat(7, 1fr); gap: 14px; margin: 10px 0 0 52px; padding: 0 6px; text-align: center; font-size: 12px; color: var(--text-2); }
+.x-labels b { display: block; color: var(--text); font-weight: 600; font-size: 13px; }
+.xl-short { display: none; }
+.x-labels .is-today b { color: var(--accent-ink); }
+.legend { display: flex; gap: 16px; font-size: 12px; color: var(--text-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+
+/* ---------- attention ---------- */
+.attention { grid-column: span 4; display: flex; flex-direction: column; }
+.att-list { display: flex; flex-direction: column; gap: 10px; }
+.att { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line-2); border-radius: 12px; background: var(--surface-2); }
+.att .txt { flex: 1; min-width: 0; }
+.att b { font-weight: 600; font-size: 14px; display: block; line-height: 1.3; text-wrap: balance; }
+.att span { font-size: 12px; color: var(--text-2); }
+.pickup { margin-top: auto; padding-top: 16px; }
+.pickup-box { border-radius: 12px; padding: 14px; background: var(--accent-tint); display: flex; gap: 12px; align-items: center; }
+.pickup-box b { font-weight: 600; font-size: 14px; display: block; }
+.pickup-box span { font-size: 12px; color: #7A4B05; text-wrap: balance; display: block; }
+.pickup-box .chip-ic { background: #fff; color: var(--accent-ink); }
+
+/* ---------- orders ---------- */
+.orders { grid-column: span 8; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+.tab { height: 34px; padding: 0 12px; border-radius: var(--r-full); border: 1px solid var(--line); background: var(--surface); font-size: 13px; font-weight: 500; color: var(--text-2); display: inline-flex; align-items: center; gap: 6px; }
+.tab:hover { color: var(--text); background: var(--surface-2); }
+.tab .n { font-size: 12px; color: var(--text-3); font-weight: 600; }
+.tab[aria-selected="true"] { background: var(--text); border-color: var(--text); color: #fff; }
+.tab[aria-selected="true"] .n { color: rgba(255,255,255,.7); }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+.tag-new { display: inline-block; margin-left: 6px; font-size: 12px; font-weight: 600; color: #4F35C2; background: #ECE6FF; border-radius: 6px; padding: 1px 6px; vertical-align: 1px; }
+th { text-align: left; font-size: 12px; font-weight: 500; color: var(--text-3); padding: 12px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 12px 10px; border-bottom: 1px solid var(--line-2); vertical-align: middle; }
+tbody tr { transition: background .12s; }
+tbody tr:hover { background: var(--surface-2); }
+tbody tr:last-child td { border-bottom: 0; }
+th.num, td.num { text-align: right; }
+.cust { display: flex; align-items: center; gap: 10px; }
+.cust .avatar { width: 34px; height: 34px; font-size: 12px; }
+.strong { font-weight: 600; color: var(--text); display: block; line-height: 1.3; white-space: nowrap; }
+.muted { color: var(--text-3); font-size: 12px; white-space: nowrap; }
+.prod-sum { font-size: 13px; color: var(--text); white-space: nowrap; }
+.status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: var(--r-full); white-space: nowrap; }
+.status .dot { width: 6px; height: 6px; background: currentColor; }
+.s-pack { background: var(--brand-tint); color: var(--brand-600); }
+.s-unpaid { background: var(--warn-tint); color: var(--warn); }
+.s-sent { background: var(--ok-tint); color: var(--ok); }
+.s-cancel { background: var(--surface-2); color: var(--text-2); }
+.row-btn { width: 34px; height: 34px; border-radius: 10px; border: 1px solid transparent; background: none; color: var(--text-3); display: grid; place-items: center; }
+.row-btn:hover { border-color: var(--line); background: var(--surface); color: var(--text); }
+.cancelled .strong, .cancelled .prod-sum { color: var(--text-3); }
+.cancelled td.num .strong { text-decoration: line-through; }
+.empty { text-align: center; color: var(--text-2); padding: 32px 0; }
+
+/* ---------- best sellers ---------- */
+.best { grid-column: span 4; }
+.best-list { display: flex; flex-direction: column; gap: 4px; }
+.best-row { display: grid; grid-template-columns: 22px 48px 1fr auto; gap: 12px; align-items: center; padding: 8px 0; }
+.rank { font-size: 13px; font-weight: 600; color: var(--text-3); text-align: center; }
+.thumb { width: 48px; height: 48px; display: block; }
+.best-row .name { font-weight: 600; line-height: 1.3; white-space: nowrap; }
+.best-row .meta { font-size: 12px; color: var(--text-3); white-space: nowrap; }
+.share { height: 6px; border-radius: 99px; background: var(--surface-2); margin-top: 7px; overflow: hidden; }
+.share i { display: block; height: 100%; border-radius: inherit; background: var(--brand); }
+.best-row .units { text-align: right; }
+.best-row .units b { font-weight: 600; display: block; line-height: 1.3; }
+.best-row .units span { font-size: 12px; color: var(--text-3); white-space: nowrap; }
+.mix { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line-2); }
+.mix-head { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-2); }
+.mix-head b { color: var(--text); font-weight: 600; }
+.mix-bar { display: flex; gap: 3px; height: 10px; margin: 10px 0 12px; }
+.mix-bar i { border-radius: 4px; min-width: 6px; }
+.mix-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--text-2); }
+.mix-legend span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.mix-legend i { width: 8px; height: 8px; border-radius: 3px; }
+.mix-legend b { color: var(--text); font-weight: 600; }
+.stock-low { color: var(--bad) !important; font-weight: 600; }
+
+/* ---------- drawer & toast ---------- */
+.scrim { display: none; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--text); color: #fff; padding: 12px 16px; border-radius: 12px;
+  font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 10px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 60; box-shadow: var(--sh-float); max-width: calc(100vw - 32px); }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast svg { color: #7CF0B0; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1360px) {
+  .hero { grid-column: span 12; }
+  .kpis { grid-column: span 12; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .kpi .spark { width: 80px; }
+  .weekly { grid-column: span 12; }
+  .attention { grid-column: span 5; }
+  .best { grid-column: span 7; }
+  .orders { grid-column: span 12; }
+  .hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); column-gap: 32px; }
+  .hero .hero-chart { grid-column: 2; grid-row: 1 / span 3; margin-top: 0; padding-top: 4px; }
+}
+@media (max-width: 1100px) {
+  .app { grid-template-columns: 1fr; background: none; }
+  .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 280px; z-index: 50; transform: translateX(-100%); visibility: hidden; transition: transform .25s ease, visibility .25s; box-shadow: var(--sh-float); }
+  .app.nav-open .sidebar { transform: none; visibility: visible; }
+  .app.nav-open .scrim { display: block; position: fixed; inset: 0; background: rgba(14,21,48,.35); z-index: 40; }
+  .icon-btn.menu-btn { display: grid; }
+  .hero { display: flex; }
+  .hero .hero-chart { grid-column: auto; grid-row: auto; margin-top: auto; padding-top: 16px; }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .attention, .best { grid-column: span 12; }
+}
+@media (max-width: 760px) {
+  .topbar { padding: 12px 16px; padding-top: calc(12px + env(safe-area-inset-top)); }
+  .content { padding: 4px 16px 32px; gap: 16px; }
+  .grid { gap: 16px; }
+  .kpis { gap: 12px; }
+  .search { display: none; }
+  .top-actions .btn-primary span { display: none; }
+  .top-actions .btn-primary { width: 42px; padding: 0; justify-content: center; }
+  .page-head h1 { font-size: 22px; }
+  .hero { display: flex; padding: 20px; }
+  .hero-fig { font-size: 32px; }
+  .hero .hero-chart { padding-top: 16px; }
+  .card { padding: 18px; border-radius: 18px; }
+  .kpi { padding: 16px; gap: 10px; }
+  .kpi-top { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .kpi-fig { font-size: 22px; }
+  .kpi .spark { display: none; }
+  .bars-wrap { margin-left: 40px; height: 200px; }
+  .x-labels { margin-left: 40px; }
+  .bars, .x-labels { gap: 6px; padding: 0; }
+  .bar-val { display: none; }
+  .xl-full { display: none; }
+  .xl-short { display: inline; }
+  .legend { flex-wrap: wrap; gap: 8px 14px; }
+  .legend > span { white-space: nowrap; }
+  .kpi-foot { flex-wrap: wrap; }
+  .kpi-foot span:last-child { white-space: normal; }
+  .bar-col:nth-child(1) .tip { left: 0; transform: translate(0, 4px); }
+  .bar-col:nth-child(7) .tip, .bar-col:nth-child(6) .tip { left: auto; right: 0; transform: translate(0, 4px); }
+  .week-sum { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
+  .week-sum > div:last-child { grid-column: 1 / -1; }
+  .week-sum .val { font-size: 18px; }
+  .weekly .card-head { flex-wrap: wrap; }
+  /* table -> cards */
+  .orders table, .orders tbody { display: block; }
+  .orders thead { display: none; }
+  .orders tbody tr { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; padding: 14px 0; border-bottom: 1px solid var(--line-2); }
+  .orders tbody tr:last-child { border-bottom: 0; }
+  .orders td { padding: 0; border: 0; }
+  .orders td.c-cust { grid-column: 1; grid-row: 1; }
+  .orders td.c-total { grid-column: 2; grid-row: 1; }
+  .orders td.c-prod { grid-column: 1 / -1; grid-row: 2; padding-left: 44px; }
+  .orders td.c-id { grid-column: 1; grid-row: 3; padding-left: 44px; }
+  .orders td.c-status { grid-column: 2; grid-row: 3; text-align: right; }
+  .orders td.c-act { display: none; }
+  .orders td.c-total .muted { display: none; }
+  .orders td.c-id .strong, .orders td.c-id .muted { display: inline; font-size: 12px; color: var(--text-3); font-weight: 500; }
+  .orders td.c-id .muted::before { content: " · "; }
+  .tabs { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+  .tab { flex: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="sidebar" id="sidebar" aria-label="Navigasi utama">
+    <div class="brand">
+      <div class="brand-mark"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round"><ellipse cx="12" cy="12" rx="6.5" ry="9" transform="rotate(35 12 12)"/><path d="M8.2 18.2c2.6-2.4 1.2-5.4 3.8-6.6s2.4-4.3 3.8-5.8"/></svg></div>
+      <div><div class="brand-name">Sangrai Kopi</div><div class="brand-sub">Panel admin toko</div></div>
+    </div>
+    <nav class="nav-group">
+      <div class="nav-label">Toko</div>
+      <a href="#" class="nav-item active" aria-current="page"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>Ringkasan</a>
+      <a href="#" class="nav-item"><svg class="i" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>Pesanan<span class="count" id="navOrders">0</span></a>
+      <a href="#" class="nav-item"><svg class="i" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg>Produk<span class="count muted" id="navProducts">7</span></a>
+      <a href="#" class="nav-item"><svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Pelanggan</a>
+      <a href="#" class="nav-item"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>Laporan</a>
+    </nav>
+    <nav class="nav-group">
+      <div class="nav-label">Pemasaran</div>
+      <a href="#" class="nav-item"><svg class="i" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>Promo &amp; voucher</a>
+      <a href="#" class="nav-item"><svg class="i" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Ulasan<span class="count muted">3</span></a>
+      <a href="#" class="nav-item"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Pengaturan</a>
+    </nav>
+    <div class="side-foot">
+      <div class="store-card">
+        <div class="row"><span style="font-weight:600">Target November</span><span id="targetPct" style="font-weight:600;color:var(--brand-600)">0%</span></div>
+        <div class="meter"><i id="targetBar" style="width:0"></i></div>
+        <small id="targetTxt"></small>
+      </div>
+      <div class="user">
+        <div class="avatar" style="background:#FFE7C2;color:#7A4B05"><img src="https://api.dicebear.com/9.x/notionists/svg?seed=Wulan&backgroundColor=ffe7c2" alt="" onerror="this.replaceWith('WS')"></div>
+        <div><b>Wulan Sari</b><span>Pemilik toko</span></div>
+      </div>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+
+  <div class="main">
+    <header class="topbar" id="topbar">
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Buka menu"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+      <label class="search"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Cari pesanan, produk, pelanggan" aria-label="Cari"><span class="kbd">⌘K</span></label>
+      <div class="top-actions">
+        <button class="icon-btn" aria-label="Notifikasi, ada yang baru" data-toast="3 notifikasi baru: 2 pesanan masuk, 1 ulasan"><svg class="i" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span class="badge"></span></button>
+        <button class="btn btn-primary" data-toast="Formulir produk baru dibuka"><svg class="i" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg><span>Tambah produk</span></button>
+      </div>
+    </header>
+
+    <main class="content">
+      <div class="page-head">
+        <div><h1>Selamat siang, Wulan</h1><p id="todayLine"></p></div>
+        <button class="btn" data-toast="Laporan harian sedang diunduh (PDF)"><svg class="i" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Unduh laporan</button>
+      </div>
+
+      <section class="grid">
+        <!-- hero -->
+        <article class="hero" aria-label="Penjualan hari ini">
+          <div>
+            <div class="hero-top">
+              <div class="hero-label">Penjualan hari ini</div>
+              <span class="live"><span class="dot"></span><span id="liveTime"></span></span>
+            </div>
+            <div class="hero-fig" id="heroFig"></div>
+            <div class="hero-meta" id="heroMeta"></div>
+          </div>
+          <div class="hero-chart">
+            <svg id="heroSvg" viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+            <div id="heroDots"></div>
+            <div class="hero-axis"><span>07.00</span><span>11.00</span><span>15.00</span><span>19.00</span><span>22.00</span></div>
+            <div class="hero-legend"><span><i></i>Hari ini</span><span><i class="dash"></i>Kemarin</span></div>
+          </div>
+        </article>
+
+        <div class="kpis" id="kpis"></div>
+
+        <!-- weekly chart -->
+        <article class="card weekly">
+          <div class="card-head">
+            <div><h2>Penjualan 7 hari terakhir</h2><div class="sub" id="weekRange"></div></div>
+            <div class="seg" role="group" aria-label="Ukuran grafik">
+              <button aria-pressed="true" data-metric="rev">Pendapatan</button>
+              <button aria-pressed="false" data-metric="cnt">Pesanan</button>
+            </div>
+          </div>
+          <div class="week-sum" id="weekSum"></div>
+          <div class="bars-wrap" id="barsWrap"></div>
+          <div class="x-labels" id="xLabels"></div>
+          <div class="legend" style="margin-top:16px">
+            <span><i style="background:var(--brand-300)"></i>Penjualan harian</span>
+            <span><i style="background:var(--brand)"></i>Hari tertinggi</span>
+            <span><i style="background:repeating-linear-gradient(-45deg,var(--accent) 0 3px,#FFC85A 3px 6px)"></i><span id="legendToday">Hari ini (berjalan)</span></span>
+          </div>
+        </article>
+
+        <!-- attention -->
+        <article class="card attention">
+          <div class="card-head"><div><h2>Perlu ditindaklanjuti</h2><div class="sub">Hal yang menunggu kamu hari ini</div></div></div>
+          <div class="att-list" id="attList"></div>
+          <div class="pickup"><div class="pickup-box">
+            <div class="chip-ic"><svg class="i" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62L18.3 8.38A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg></div>
+            <div><b>Jemput kurir JNE pukul 16.00</b><span id="pickupTxt"></span></div>
+          </div></div>
+        </article>
+
+        <!-- orders -->
+        <article class="card orders">
+          <div class="card-head">
+            <div><h2>Pesanan terbaru</h2><div class="sub">Masuk hari ini</div></div>
+            <a href="#" class="link">Semua pesanan <svg class="i" viewBox="0 0 24 24" style="width:16px;height:16px"><path d="m9 18 6-6-6-6"/></svg></a>
+          </div>
+          <div class="tabs" role="tablist" id="tabs"></div>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Pelanggan</th><th>Pesanan</th><th>Produk</th><th class="num">Total</th><th>Status</th><th><span style="position:absolute;left:-9999px">Aksi</span></th></tr></thead>
+            <tbody id="orderRows"></tbody>
+          </table></div>
+        </article>
+
+        <!-- best sellers -->
+        <article class="card best">
+          <div class="card-head">
+            <div><h2>Produk terlaris</h2><div class="sub">7 hari terakhir, per bungkus</div></div>
+            <a href="#" class="link">Lihat stok</a>
+          </div>
+          <div class="best-list" id="bestList"></div>
+          <div class="mix" id="bestMix"></div>
+        </article>
+      </section>
+    </main>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"><svg class="i" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg><span></span></div>
+
+<script>
+/* ===================== sample data ===================== */
+const NOW = new Date(2026, 10, 15, 14, 32);           // Minggu, 15 Nov 2026, 14.32
+const NOW_H = NOW.getHours() + NOW.getMinutes() / 60;
+
+const PRODUCTS = [
+  { name: 'Aceh Gayo',          meta: 'Medium · 250 g',   price: 118000, stock: 42, w: 22, bag: { c1: '#3B5BFD', c2: '#2238B8', bg: '#E4E9FF', label: 'band' } },
+  { name: 'Toraja Sapan',       meta: 'Medium-dark · 250 g', price: 112000, stock: 27, w: 15, bag: { c1: '#B45309', c2: '#7C3A05', bg: '#FDEBD3', label: 'circle' } },
+  { name: 'Kintamani Natural',  meta: 'Light · 250 g',    price: 105000, stock: 18, w: 14, bag: { c1: '#0E9F9A', c2: '#0A6E6B', bg: '#D9F3F1', label: 'tag' } },
+  { name: 'Flores Bajawa',      meta: 'Medium · 250 g',   price: 98000,  stock: 33, w: 10, bag: { c1: '#E5487A', c2: '#A3254F', bg: '#FCE3EC', label: 'stripe' } },
+  { name: 'Java Preanger',      meta: 'Medium · 250 g',   price: 92000,  stock: 51, w: 18, bag: { c1: '#3F8F3A', c2: '#2A6427', bg: '#E2F2DF', label: 'diamond' } },
+  { name: 'Papua Wamena',       meta: 'Light · 250 g',    price: 135000, stock: 4,  w: 6,  bag: { c1: '#7C5CFA', c2: '#4F35C2', bg: '#ECE6FF', label: 'circle2' } },
+  { name: 'House Blend Espresso', meta: 'Dark · 1 kg',    price: 285000, stock: 12, w: 8,  bag: { c1: '#26283A', c2: '#0E1022', bg: '#E6E7EE', label: 'big' } },
+];
+const SHORT = ['Aceh Gayo', 'Toraja Sapan', 'Kintamani', 'Flores Bajawa', 'Java Preanger', 'Papua Wamena', 'Espresso 1 kg'];
+
+// Today's orders, written by hand so the recent list reads like a real morning.
+const PAY = { bca: 'Transfer BCA', mdr: 'Transfer Mandiri', qris: 'QRIS', gopay: 'GoPay', vabni: 'VA BNI', vabri: 'VA BRI' };
+const TODAY_RAW = [
+  ['07:14', 'Hendra Gunawan',   'Bandung',          [[0, 2]],         'bca',   'sent'],
+  ['08:03', 'Larasati Dewi',    'Yogyakarta',       [[2, 1], [4, 1]], 'qris',  'sent'],
+  ['08:47', 'Kevin Wijaya',     'Jakarta Barat',    [[6, 1]],         'bca',   'sent', ],
+  ['09:20', 'Siti Rahmawati',   'Depok',            [[1, 2]],         'gopay', 'sent', 1],
+  ['10:05', 'Bagus Hidayat',    'Surabaya',         [[0, 1], [5, 1]], 'mdr',   'pack'],
+  ['10:38', 'Maya Anggraini',   'Malang',           [[4, 3]],         'qris',  'cancel'],
+  ['11:12', 'Fajar Nugroho',    'Bekasi',           [[3, 1]],         'qris',  'pack', 1],
+  ['11:56', 'Nadia Putri',      'Jakarta Selatan',  [[0, 1], [2, 1]], 'gopay', 'pack'],
+  ['12:30', 'Andi Saputra',     'Semarang',         [[6, 1], [1, 1]], 'bca',   'pack'],
+  ['13:04', 'Intan Permata',    'Tangerang Selatan',[[5, 2]],         'vabni', 'pack', 1],
+  ['13:41', 'Rizky Ramadhan',   'Bogor',            [[4, 2]],         'qris',  'pack'],
+  ['14:09', 'Ayu Lestari',      'Denpasar',         [[2, 2]],         'vabri', 'unpaid', 1],
+  ['14:26', 'Dimas Prasetyo',   'Jakarta Timur',    [[0, 1], [4, 1]], 'bca',   'unpaid'],
+];
+
+// Earlier days are generated from a seeded random source so every chart, total and ranking derives from one order log.
+function mulberry32(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const rnd = mulberry32(20261115);
+const pickW = (weights) => { const s = weights.reduce((a, b) => a + b, 0); let r = rnd() * s; for (let i = 0; i < weights.length; i++) { if ((r -= weights[i]) < 0) return i; } return weights.length - 1; };
+const HOURS = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+const HOUR_W = [3, 6, 9, 9, 7, 6, 6, 5, 5, 5, 6, 7, 9, 9, 6];
+
+const dayKey = (d) => d.getFullYear() + '-' + d.getMonth() + '-' + d.getDate();
+const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+const total = (items) => items.reduce((s, [p, q]) => s + PRODUCTS[p].price * q, 0);
+
+const ORDERS = [];
+let seq = 2183;
+for (let back = 29; back >= 1; back--) {
+  const day = new Date(startOfDay(NOW)); day.setDate(day.getDate() - back);
+  const dow = day.getDay();
+  const n = 17 + (dow === 0 || dow === 6 ? 4 : 0) + (dow === 5 ? 2 : 0) + Math.floor(rnd() * 6) + (back <= 14 ? 1 : 0);
+  const list = [];
+  for (let k = 0; k < n; k++) {
+    const h = HOURS[pickW(HOUR_W)] + rnd();
+    const lines = rnd() < .72 ? 1 : 2; const items = [];
+    for (let l = 0; l < lines; l++) {
+      let p = pickW(PRODUCTS.map((x) => x.w)); while (items.some((it) => it[0] === p)) p = (p + 1) % PRODUCTS.length;
+      const r = rnd(); items.push([p, r < .68 ? 1 : r < .93 ? 2 : 3]);
+    }
+    list.push({ day, h, items, status: 'done', isNew: rnd() < .22 });
+  }
+  list.sort((a, b) => a.h - b.h).forEach((o) => { o.id = 'SK-' + (seq++); o.total = total(o.items); ORDERS.push(o); });
+}
+TODAY_RAW.forEach(([t, name, city, items, pay, status, isNew]) => {
+  const [hh, mm] = t.split(':').map(Number);
+  ORDERS.push({ id: 'SK-' + (seq++), day: startOfDay(NOW), h: hh + mm / 60, time: t.replace(':', '.'), name, city, items, pay: PAY[pay], status, isNew: !!isNew, total: total(items) });
+});
+
+/* ===================== derived figures ===================== */
+const valid = (o) => o.status !== 'cancel';
+const fmt = new Intl.NumberFormat('id-ID');
+const rp = (n) => 'Rp' + fmt.format(Math.round(n));
+const rpShort = (n) => n >= 1e6 ? 'Rp' + (n / 1e6).toLocaleString('id-ID', { maximumFractionDigits: 1 }) + ' jt' : 'Rp' + Math.round(n / 1000) + ' rb';
+const pct = (a, b) => b ? (a - b) / b * 100 : 0;
+const DAYN = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+const DAYL = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+const MONL = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+const hhmm = (h) => String(Math.floor(h)).padStart(2, '0') + '.' + String(Math.round((h % 1) * 60)).padStart(2, '0');
+
+function daysBack(n) { const d = new Date(startOfDay(NOW)); d.setDate(d.getDate() - n); return d; }
+function statsFor(day, untilH = 24) {
+  const os = ORDERS.filter((o) => dayKey(o.day) === dayKey(day) && o.h <= untilH && valid(o));
+  const rev = os.reduce((s, o) => s + o.total, 0);
+  const units = os.reduce((s, o) => s + o.items.reduce((a, [, q]) => a + q, 0), 0);
+  return { os, rev, cnt: os.length, units, aov: os.length ? rev / os.length : 0, newC: os.filter((o) => o.isNew).length };
+}
+const today = statsFor(NOW);
+const ydaySame = statsFor(daysBack(1), NOW_H);
+const yday = statsFor(daysBack(1));
+const week = Array.from({ length: 7 }, (_, i) => { const d = daysBack(6 - i); return { d, ...statsFor(d) }; });
+const prevWeek = Array.from({ length: 7 }, (_, i) => statsFor(daysBack(13 - i)));
+const weekRev = week.reduce((s, x) => s + x.rev, 0), prevRev = prevWeek.reduce((s, x) => s + x.rev, 0);
+const weekCnt = week.reduce((s, x) => s + x.cnt, 0), prevCnt = prevWeek.reduce((s, x) => s + x.cnt, 0);
+
+/* ===================== render helpers ===================== */
+const $ = (s) => document.querySelector(s);
+const arrow = (up) => up ? '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg>' : '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 7l10 10M17 8v9H8"/></svg>';
+function delta(p) { const r = Math.round(p); const cls = r > 0 ? 'up' : r < 0 ? 'down' : 'flat'; return `<span class="delta ${cls}">${r !== 0 ? arrow(r > 0) : ''}${r > 0 ? '+' : ''}${r}%</span>`; }
+
+$('#todayLine').textContent = `${DAYL[NOW.getDay()]}, ${NOW.getDate()} ${MONL[NOW.getMonth()]} ${NOW.getFullYear()} · toko buka sampai 22.00`;
+$('#liveTime').textContent = 'Per ' + hhmm(NOW_H);
+
+/* hero */
+const heroParts = fmt.format(today.rev);
+$('#heroFig').innerHTML = `<small>Rp</small>${heroParts}`;
+const dRev = pct(today.rev, ydaySame.rev);
+$('#heroMeta').innerHTML = `<span class="pill-w">${arrow(dRev >= 0)}${dRev >= 0 ? '+' : ''}${Math.round(dRev)}%</span><span>vs kemarin di jam yang sama (${rp(ydaySame.rev)})</span>`;
+
+(function heroChart() {
+  const x0 = 7, x1 = 22, W = 300, H = 100;
+  const cum = (stats, until) => { const pts = []; for (let h = x0; h <= until + 1e-6; h += .25) { pts.push([h, stats.os.filter((o) => o.h <= h).reduce((s, o) => s + o.total, 0)]); } if (pts[pts.length - 1][0] < until) pts.push([until, stats.rev]); return pts; };
+  const tPts = cum(today, NOW_H), yPts = cum(yday, x1);
+  const max = Math.max(yday.rev, today.rev) * 1.08;
+  const X = (h) => (h - x0) / (x1 - x0) * W, Y = (v) => H - v / max * H;
+  const path = (pts) => pts.map(([h, v], i) => (i ? 'L' : 'M') + X(h).toFixed(1) + ' ' + Y(v).toFixed(1)).join(' ');
+  const tp = path(tPts);
+  $('#heroSvg').innerHTML = `
+    <defs><linearGradient id="hf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".32"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+    <g stroke="rgba(255,255,255,.14)" vector-effect="non-scaling-stroke"><path d="M0 33H300M0 66H300M0 100H300" vector-effect="non-scaling-stroke"/></g>
+    <path d="${path(yPts)}" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="1.5" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>
+    <path d="${tp} L${X(NOW_H).toFixed(1)} ${H} L0 ${H}Z" fill="url(#hf)"/>
+    <path d="${tp}" fill="none" stroke="#fff" stroke-width="2.5" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+    <line x1="${X(NOW_H)}" x2="${X(NOW_H)}" y1="${Y(today.rev)}" y2="${H}" stroke="rgba(255,255,255,.5)" stroke-dasharray="2 3" vector-effect="non-scaling-stroke"/>`;
+  const lx = X(NOW_H) / W * 100, ly = Y(today.rev) / H * 104 + 16;
+  $('#heroDots').innerHTML = `<span class="now-dot" style="left:${lx}%;top:${ly}px"></span><span class="now-tag" style="left:${lx}%;top:${ly}px">${today.cnt} pesanan · ${hhmm(NOW_H)}</span>`;
+})();
+
+/* KPI tiles */
+function sparkline(vals, color) {
+  const W = 96, H = 40, max = Math.max(...vals), min = Math.min(...vals);
+  const pts = vals.map((v, i) => [i / (vals.length - 1) * W, H - 4 - (v - min) / (max - min || 1) * (H - 8)]);
+  const d = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
+  const id = 'g' + color.replace('#', '');
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${color}" stop-opacity=".22"/><stop offset="1" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
+    <path d="${d} L${W} ${H} L0 ${H}Z" fill="url(#${id})"/><path d="${d}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${pts.at(-1)[0]}" cy="${pts.at(-1)[1]}" r="3" fill="#fff" stroke="${color}" stroke-width="2"/></svg>`;
+}
+function minibars(vals, color) {
+  const W = 96, H = 40, max = Math.max(...vals), bw = 9, gap = (W - bw * vals.length) / (vals.length - 1);
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" aria-hidden="true">${vals.map((v, i) => { const h = Math.max(4, v / max * (H - 2)); return `<rect x="${(i * (bw + gap)).toFixed(1)}" y="${(H - h).toFixed(1)}" width="${bw}" height="${h.toFixed(1)}" rx="3" fill="${color}" fill-opacity="${i === vals.length - 1 ? 1 : .28}"/>`; }).join('')}</svg>`;
+}
+function ring(p, color) {
+  const C = 2 * Math.PI * 15;
+  return `<svg class="spark" viewBox="0 0 96 40" aria-hidden="true"><g transform="translate(76 20) rotate(-90)"><circle r="15" fill="none" stroke="${color}" stroke-opacity=".16" stroke-width="5"/><circle r="15" fill="none" stroke="${color}" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(p * C).toFixed(1)} ${C.toFixed(1)}"/></g><text x="76" y="24" text-anchor="middle" font-size="11" font-weight="600" fill="${color}" font-family="Figtree, sans-serif">${Math.round(p * 100)}%</text></svg>`;
+}
+const ICON = {
+  bag: '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/>',
+  receipt: '<path d="M4 2v20l3-2 3 2 2-2 2 2 3-2 3 2V2l-3 2-3-2-2 2-2-2-3 2z"/><path d="M8 9h8M8 13h5"/>',
+  box: '<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/>',
+  userplus: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/>',
+  pack: '<path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  alert: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/>',
+  chev: '<path d="m9 18 6-6-6-6"/>',
+  msg: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/>',
+};
+const ic = (k) => `<svg class="i" viewBox="0 0 24 24">${ICON[k]}</svg>`;
+const weekVals = (k) => week.map((w) => w[k]);
+const KPIS = [
+  { label: 'Pesanan masuk', icon: 'bag', c: '#3B5BFD', fig: today.cnt, unit: '', d: pct(today.cnt, ydaySame.cnt), foot: `kemarin ${ydaySame.cnt}`, vis: sparkline(weekVals('cnt'), '#3B5BFD') },
+  { label: 'Rata-rata nilai pesanan', icon: 'receipt', c: '#0E9F9A', fig: fmt.format(Math.round(today.aov / 1000)), pre: 'Rp', unit: ' rb', d: pct(today.aov, ydaySame.aov), foot: `kemarin ${rpShort(ydaySame.aov)}`, vis: minibars(weekVals('aov'), '#0E9F9A') },
+  { label: 'Bungkus terjual', icon: 'box', c: '#D97706', fig: today.units, unit: ' bks', d: pct(today.units, ydaySame.units), foot: `kemarin ${ydaySame.units}`, vis: sparkline(weekVals('units'), '#D97706') },
+  { label: 'Pelanggan baru', icon: 'userplus', c: '#7C5CFA', fig: today.newC, unit: ` dari ${today.cnt}`, abs: today.newC - ydaySame.newC, foot: `kemarin ${ydaySame.newC}`, vis: ring(today.newC / today.cnt, '#7C5CFA') },
+];
+$('#kpis').innerHTML = KPIS.map((k) => `
+  <article class="card kpi">
+    <div class="kpi-top"><span class="chip-ic" style="--c:${k.c}">${ic(k.icon)}</span>${k.label}</div>
+    <div class="kpi-row">
+      <div><div class="kpi-fig">${k.pre ? `<small>${k.pre}</small>` : ''}${k.fig}<small>${k.unit}</small></div>
+      <div class="kpi-foot">${k.abs !== undefined ? `<span class="delta ${k.abs > 0 ? 'up' : k.abs < 0 ? 'down' : 'flat'}">${k.abs > 0 ? '+' : ''}${k.abs}</span>` : delta(k.d)}<span>${k.foot}</span></div></div>
+      ${k.vis}
+    </div>
+  </article>`).join('');
+
+/* weekly bars */
+let metric = 'rev';
+function niceStep(max) { const raw = max / 4, p = 10 ** Math.floor(Math.log10(raw)); const n = raw / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 2.5 ? 2.5 : n <= 5 ? 5 : 10) * p; }
+function renderWeek() {
+  const vals = week.map((w) => w[metric]);
+  const step = niceStep(Math.max(...vals)), top = Math.ceil(Math.max(...vals) * 1.12 / step) * step;
+  const label = (v) => metric === 'rev' ? (v === 0 ? '0' : (v / 1e6).toLocaleString('id-ID', { maximumFractionDigits: 1 }) + ' jt') : String(v);
+  const past = vals.slice(0, 6), peakI = past.indexOf(Math.max(...past));
+  let html = '';
+  for (let v = 0; v <= top + 1e-6; v += step) html += `<div class="gridline" style="bottom:${v / top * 100}%"><span>${label(v)}</span></div>`;
+  html += '<div class="bars">' + week.map((w, i) => {
+    const isToday = i === 6, v = vals[i];
+    const fullTxt = metric === 'rev' ? rp(v) : `${v} pesanan`;
+    const sub = isToday ? `sampai ${hhmm(NOW_H)}` : metric === 'rev' ? `${w.cnt} pesanan · ${w.units} bks` : `${rp(w.rev)}`;
+    return `<div class="bar-col" tabindex="0" aria-label="${DAYL[w.d.getDay()]} ${w.d.getDate()}: ${fullTxt}">
+      ${i === peakI || isToday ? `<span class="bar-val" style="bottom:${(v / top * 100).toFixed(1)}%">${metric === 'rev' ? rpShort(v) : v}</span>` : ''}
+      <div class="bar ${isToday ? 'today' : i === peakI ? 'peak' : ''}" style="height:${(v / top * 100).toFixed(1)}%">
+        <div class="tip"><b>${fullTxt}</b><span>${DAYL[w.d.getDay()]}, ${w.d.getDate()} ${MON[w.d.getMonth()]} · ${sub}</span></div>
+      </div></div>`;
+  }).join('') + '</div>';
+  $('#barsWrap').innerHTML = html;
+  $('#xLabels').innerHTML = week.map((w, i) => `<div class="${i === 6 ? 'is-today' : ''}"><b>${i === 6 ? '<span class="xl-full">Hari ini</span><span class="xl-short">' + DAYN[w.d.getDay()] + '</span>' : DAYN[w.d.getDay()]}</b>${w.d.getDate()}<span class="xl-full"> ${MON[w.d.getMonth()]}</span></div>`).join('');
+  const best = week.slice(0, 6).reduce((a, b) => (b.rev > a.rev ? b : a));
+  $('#weekSum').innerHTML = `
+    <div><div class="lbl">Total pendapatan</div><div class="val">${rp(weekRev)} ${delta(pct(weekRev, prevRev))}</div></div>
+    <div><div class="lbl">Total pesanan</div><div class="val">${weekCnt} ${delta(pct(weekCnt, prevCnt))}</div></div>
+    <div><div class="lbl">Hari tertinggi</div><div class="val">${DAYL[best.d.getDay()]}, ${rpShort(best.rev)}</div></div>`;
+}
+$('#weekRange').textContent = `${week[0].d.getDate()}–${week[6].d.getDate()} ${MONL[NOW.getMonth()]} · dibanding 7 hari sebelumnya`;
+$('#legendToday').textContent = `Hari ini, sampai ${hhmm(NOW_H)}`;
+document.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => {
+  metric = b.dataset.metric; document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-pressed', x === b)); renderWeek();
+}));
+renderWeek();
+
+/* attention */
+const todayOrders = ORDERS.filter((o) => dayKey(o.day) === dayKey(NOW));
+const toPack = todayOrders.filter((o) => o.status === 'pack'), unpaid = todayOrders.filter((o) => o.status === 'unpaid');
+const lowStock = PRODUCTS.filter((p) => p.stock <= 10);
+$('#attList').innerHTML = [
+  { icon: 'pack', c: '#3B5BFD', t: `${toPack.length} pesanan perlu dikemas`, s: `Terlama masuk ${toPack[0].time}`, b: 'Proses', toast: `${toPack.length} pesanan ditandai sedang dikemas` },
+  { icon: 'clock', c: '#D97706', t: `${unpaid.length} belum dibayar`, s: `${rp(unpaid.reduce((s, o) => s + o.total, 0))} · batas 24 jam`, b: 'Ingatkan', toast: `Pengingat pembayaran dikirim ke ${unpaid.length} pelanggan` },
+  ...lowStock.map((p) => ({ icon: 'alert', c: '#C2410C', t: `${p.name} sisa ${p.stock} bks`, s: `Laku ±${Math.max(1, Math.round(week.reduce((s, w) => s + w.os.reduce((a, o) => a + o.items.filter(([i]) => PRODUCTS[i] === p).reduce((x, [, q]) => x + q, 0), 0), 0) / 7))} bks/hari`, b: 'Restok', toast: `Draf pesanan restok ${p.name} dibuat` })),
+  { icon: 'msg', c: '#0E9F9A', t: '3 ulasan belum dibalas', s: 'Terbaru: ★5 untuk Aceh Gayo', b: 'Balas', toast: 'Halaman ulasan dibuka' },
+].map((a) => `<div class="att"><span class="chip-ic" style="--c:${a.c}">${ic(a.icon)}</span><div class="txt"><b>${a.t}</b><span>${a.s}</span></div><button class="btn btn-sm" data-toast="${a.toast}">${a.b}</button></div>`).join('');
+$('#pickupTxt').textContent = `${toPack.length} paket siap · 1 jam 28 menit lagi`;
+document.getElementById('navOrders').textContent = toPack.length + unpaid.length;
+
+/* orders table */
+const STATUS = { pack: ['Perlu dikemas', 's-pack'], unpaid: ['Belum dibayar', 's-unpaid'], sent: ['Dikirim', 's-sent'], cancel: ['Dibatalkan', 's-cancel'] };
+const AV = [['#E4E9FF', '#2238B8'], ['#FDEBD3', '#7C3A05'], ['#D9F3F1', '#0A6E6B'], ['#FCE3EC', '#A3254F'], ['#E2F2DF', '#2A6427'], ['#ECE6FF', '#4F35C2']];
+const initials = (n) => n.split(' ').map((x) => x[0]).slice(0, 2).join('');
+const TABS = [['all', 'Semua'], ['pack', 'Perlu dikemas'], ['unpaid', 'Belum dibayar'], ['sent', 'Dikirim'], ['cancel', 'Dibatalkan']];
+let tab = 'all';
+function renderOrders() {
+  $('#tabs').innerHTML = TABS.map(([k, l]) => { const n = k === 'all' ? todayOrders.length : todayOrders.filter((o) => o.status === k).length; return `<button class="tab" role="tab" aria-selected="${tab === k}" data-tab="${k}">${l}<span class="n">${n}</span></button>`; }).join('');
+  const rows = todayOrders.filter((o) => tab === 'all' || o.status === tab).slice().reverse().slice(0, 6);
+  $('#orderRows').innerHTML = rows.length ? rows.map((o, i) => {
+    const [bg, fg] = AV[(o.name.length + o.id.charCodeAt(6)) % AV.length];
+    const first = SHORT[o.items[0][0]] + ' ×' + o.items[0][1];
+    const more = o.items.length > 1 ? ` <span class="muted">+${o.items.length - 1} lainnya</span>` : '';
+    const [sl, sc] = STATUS[o.status];
+    return `<tr class="${o.status === 'cancel' ? 'cancelled' : ''}">
+      <td class="c-cust"><div class="cust"><span class="avatar" style="background:${bg};color:${fg}">${initials(o.name)}</span><div><span class="strong">${o.name}${o.isNew ? '<span class="tag-new">Baru</span>' : ''}</span><span class="muted">${o.city}</span></div></div></td>
+      <td class="c-id"><span class="strong">#${o.id}</span><span class="muted">${o.time}</span></td>
+      <td class="c-prod"><span class="prod-sum">${first}</span>${more}</td>
+      <td class="c-total num"><span class="strong">${rp(o.total)}</span><span class="muted">${o.pay}</span></td>
+      <td class="c-status"><span class="status ${sc}"><span class="dot"></span>${sl}</span></td>
+      <td class="c-act"><button class="row-btn" aria-label="Detail pesanan #${o.id}" data-toast="Detail pesanan #${o.id} dibuka">${ic('chev')}</button></td></tr>`;
+  }).join('') : `<tr><td colspan="6" class="empty">Tidak ada pesanan dengan status ini hari ini.</td></tr>`;
+}
+$('#tabs').addEventListener('click', (e) => { const b = e.target.closest('.tab'); if (!b) return; tab = b.dataset.tab; renderOrders(); });
+renderOrders();
+
+/* best sellers */
+function bag({ c1, c2, bg, label }) {
+  const bean = (x, y, s = 1) => `<g transform="translate(${x} ${y}) scale(${s}) rotate(30)"><ellipse rx="3" ry="4.2" fill="${c2}"/><path d="M0-3.6c-1.3 1.4 1.3 3.2 0 7.2" stroke="#fff" stroke-opacity=".7" stroke-width=".9" fill="none"/></g>`;
+  if (label === 'big') return `<svg class="thumb" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="${bg}"/>
+    <path d="M11 13h26l2 26a2 2 0 0 1-2 2H11a2 2 0 0 1-2-2z" fill="${c1}"/><rect x="11" y="9" width="26" height="5" rx="1.5" fill="${c2}"/><rect x="13" y="20" width="22" height="12" rx="2" fill="#FFB020"/>
+    <path d="M17 26h14M17 29h9" stroke="${c1}" stroke-width="1.6" stroke-linecap="round"/><circle cx="24" cy="23" r="1.6" fill="${c1}"/></svg>`;
+  const body = `<path d="M14 12h20l1.5 27a2 2 0 0 1-2 2.1H14.5a2 2 0 0 1-2-2.1z" fill="${c1}"/><rect x="13.5" y="8" width="21" height="5" rx="1.5" fill="${c2}"/><path d="M15 10.5h18" stroke="#fff" stroke-opacity=".35" stroke-dasharray="1.5 1.5"/>`;
+  const labels = {
+    band: `<rect x="13" y="22" width="22" height="10" fill="#fff"/>${bean(24, 27, .8)}`,
+    circle: `<circle cx="24" cy="27" r="7" fill="#fff"/>${bean(24, 27, .85)}`,
+    tag: `<rect x="16.5" y="18" width="15" height="17" rx="2.5" fill="#fff"/>${bean(24, 24, .7)}<path d="M19.5 31h9" stroke="${c2}" stroke-width="1.4" stroke-linecap="round"/>`,
+    stripe: `<path d="M13 25h22v4H13zM13 31h22v2H13z" fill="#fff"/><circle cx="24" cy="19" r="2.2" fill="#fff" fill-opacity=".85"/>`,
+    diamond: `<path d="M24 19.5 31 27l-7 7.5L17 27z" fill="#fff"/>${bean(24, 27, .7)}`,
+    circle2: `<rect x="13" y="20" width="22" height="15" fill="${c2}" fill-opacity=".35"/><circle cx="24" cy="27.5" r="5.5" fill="#fff"/>${bean(24, 27.5, .7)}`,
+  };
+  return `<svg class="thumb" viewBox="0 0 48 48"><rect width="48" height="48" rx="12" fill="${bg}"/>${body}${labels[label]}<circle cx="29.5" cy="16.5" r="1.3" fill="#fff" fill-opacity=".8"/><path d="M15.5 14v24" stroke="#fff" stroke-opacity=".18" stroke-width="2" stroke-linecap="round"/></svg>`;
+}
+(function best() {
+  const units = PRODUCTS.map(() => 0), rev = PRODUCTS.map(() => 0);
+  week.forEach((w) => w.os.forEach((o) => o.items.forEach(([p, q]) => { units[p] += q; rev[p] += q * PRODUCTS[p].price; })));
+  const order = PRODUCTS.map((_, i) => i).sort((a, b) => units[b] - units[a]).slice(0, 5);
+  const max = units[order[0]];
+  $('#bestList').innerHTML = order.map((p, r) => {
+    const P = PRODUCTS[p];
+    return `<div class="best-row"><span class="rank">${r + 1}</span>${bag(P.bag)}
+      <div style="min-width:0"><div class="name">${P.name}</div><div class="meta">${P.meta} · ${rpShort(rev[p])}</div><div class="share"><i style="width:${(units[p] / max * 100).toFixed(0)}%"></i></div></div>
+      <div class="units"><b>${units[p]} bks</b><span class="${P.stock <= 10 ? 'stock-low' : ''}">stok ${P.stock}</span></div></div>`;
+  }).join('');
+  const totRev = rev.reduce((a, b) => a + b, 0);
+  const segs = order.slice(0, 3).map((p) => ({ n: SHORT[p], v: rev[p], c: PRODUCTS[p].bag.c1 }));
+  segs.push({ n: 'Lainnya', v: totRev - segs.reduce((a, x) => a + x.v, 0), c: '#C9CFDF' });
+  $('#bestMix').innerHTML = `<div class="mix-head"><span>Porsi pendapatan</span><b>${rp(totRev)}</b></div>
+    <div class="mix-bar">${segs.map((x) => `<i style="flex:${x.v};background:${x.c}" title="${x.n}"></i>`).join('')}</div>
+    <div class="mix-legend">${segs.map((x) => `<span><i style="background:${x.c}"></i>${x.n} <b>${Math.round(x.v / totRev * 100)}%</b></span>`).join('')}</div>`;
+})();
+
+/* monthly target (sidebar) */
+(function target() {
+  const goal = 120e6, mtd = ORDERS.filter((o) => o.day.getMonth() === NOW.getMonth() && valid(o)).reduce((s, o) => s + o.total, 0);
+  const p = Math.min(1, mtd / goal);
+  $('#targetPct').textContent = Math.round(p * 100) + '%'; $('#targetBar').style.width = (p * 100).toFixed(1) + '%';
+  $('#targetTxt').textContent = `${rpShort(mtd)} dari ${rpShort(goal)}`;
+})();
+
+/* interactions */
+const toast = $('#toast'); let tt;
+document.addEventListener('click', (e) => {
+  const t = e.target.closest('[data-toast]'); if (t) { toast.querySelector('span').textContent = t.dataset.toast; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 2400); }
+  if (e.target.closest('a[href="#"]')) e.preventDefault();
+});
+const app = $('#app');
+$('#menuBtn').addEventListener('click', () => app.classList.add('nav-open'));
+$('#scrim').addEventListener('click', () => app.classList.remove('nav-open'));
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') app.classList.remove('nav-open'); if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); document.querySelector('.search input').focus(); } });
+addEventListener('scroll', () => $('#topbar').classList.toggle('scrolled', scrollY > 4), { passive: true });
+</script>
+</body>
+</html>

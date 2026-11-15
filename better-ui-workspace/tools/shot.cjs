@@ -79,6 +79,10 @@ const path = require('path');
     if (after > before && shots.length >= 3) { shots[2] = (await p.screenshot()).toString('base64'); tops[2] = await topColour(); }
     else if (after > before) { shots.push((await p.screenshot()).toString('base64')); tops.push(await topColour()); }
   } else if (page) {
+    // Scroll through the page first so scroll-triggered reveals play, as they would for a visitor.
+    const total = await p.evaluate(() => document.documentElement.scrollHeight);
+    for (let y = 0; y < total; y += 500) { await p.evaluate((y) => window.scrollTo(0, y), y); await p.waitForTimeout(140); }
+    await p.evaluate(() => window.scrollTo(0, 0)); await p.waitForTimeout(500);
     shots.push((await p.screenshot({ fullPage: true })).toString('base64'));
   } else {
     shots.push((await p.screenshot()).toString('base64'));

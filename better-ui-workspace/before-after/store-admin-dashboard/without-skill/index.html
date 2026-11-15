@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Admin · Kopi Lereng</title>
+<style>
+  :root {
+    --bg: #f6f3ef;
+    --surface: #ffffff;
+    --ink: #2a211c;
+    --ink-2: #6b5d54;
+    --ink-3: #9a8d84;
+    --line: #ebe4dd;
+    --brand: #6f4428;
+    --brand-soft: #c9a88f;
+    --brand-tint: #f3ebe4;
+    --up: #2f7a4b;
+    --up-bg: #e6f3eb;
+    --down: #b3402f;
+    --down-bg: #fbeae7;
+    --radius: 12px;
+    --shadow: 0 1px 2px rgba(42,33,28,.05), 0 1px 3px rgba(42,33,28,.04);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* Layout */
+  .app { display: grid; grid-template-columns: 232px 1fr; min-height: 100vh; }
+  aside {
+    background: var(--ink);
+    color: #e9e1da;
+    padding: 24px 16px;
+    position: sticky; top: 0; height: 100vh;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; padding: 0 8px 28px; font-weight: 700; font-size: 16px; color: #fff; }
+  .logo-mark {
+    width: 32px; height: 32px; border-radius: 8px; background: var(--brand);
+    display: grid; place-items: center;
+  }
+  nav a {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px; border-radius: 8px; color: #c8bcb2; text-decoration: none; margin-bottom: 2px;
+  }
+  nav a:hover { background: rgba(255,255,255,.06); color: #fff; }
+  nav a.active { background: rgba(255,255,255,.1); color: #fff; font-weight: 600; }
+  nav svg { width: 18px; height: 18px; flex: none; }
+  .nav-label { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #8a7d73; padding: 18px 10px 6px; }
+
+  main { padding: 28px 32px 48px; max-width: 1280px; width: 100%; }
+  header.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  h1 { font-size: 22px; margin: 0 0 2px; letter-spacing: -.01em; }
+  .sub { color: var(--ink-2); margin: 0; }
+  .top-actions { display: flex; gap: 10px; align-items: center; }
+  .btn {
+    border: 1px solid var(--line); background: var(--surface); color: var(--ink);
+    padding: 8px 14px; border-radius: 8px; font: inherit; font-weight: 500; cursor: pointer;
+  }
+  .btn:hover { border-color: var(--brand-soft); }
+  .btn.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .btn.primary:hover { background: #5c3820; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--brand-soft); color: var(--ink); display: grid; place-items: center; font-weight: 600; font-size: 13px; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 20px;
+  }
+  .card-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; gap: 12px; }
+  .card-head h2 { font-size: 15px; margin: 0; }
+  .card-head .meta { color: var(--ink-3); font-size: 12.5px; }
+  .card-head a { color: var(--brand); text-decoration: none; font-weight: 500; font-size: 13px; }
+  .card-head a:hover { text-decoration: underline; }
+
+  /* KPI */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px; }
+  .kpi .label { color: var(--ink-2); font-size: 13px; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .kpi .value { font-size: 26px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px; }
+  .kpi .value small { font-size: 15px; font-weight: 600; color: var(--ink-2); margin-left: 2px; }
+  .delta { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; font-weight: 600; padding: 2px 7px; border-radius: 999px; }
+  .delta.up { color: var(--up); background: var(--up-bg); }
+  .delta.down { color: var(--down); background: var(--down-bg); }
+  .kpi .cmp { color: var(--ink-3); font-size: 12px; margin-left: 6px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1.65fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+  /* Chart */
+  .chart-wrap { position: relative; }
+  .chart-total { display: flex; gap: 28px; margin-bottom: 12px; }
+  .chart-total div span { display: block; color: var(--ink-3); font-size: 12px; }
+  .chart-total div strong { font-size: 18px; }
+  #chart { width: 100%; height: 320px; display: block; }
+  #chart .grid { stroke: var(--line); stroke-width: 1; }
+  #chart .axis-text { fill: var(--ink-3); font-size: 11px; }
+  #chart .day-text { fill: var(--ink-2); font-size: 12px; }
+  #chart .day-text.today { fill: var(--ink); font-weight: 700; }
+  #chart .bar { fill: var(--brand-soft); transition: fill .15s; }
+  #chart .bar.today { fill: var(--brand); }
+  #chart .hit { fill: transparent; cursor: pointer; }
+  #chart g.col:hover .bar { fill: #a77f62; }
+  #chart g.col:hover .bar.today { fill: #5c3820; }
+  #chart .bar-label { fill: var(--ink); font-size: 11px; font-weight: 600; }
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--ink); color: #fff;
+    padding: 8px 10px; border-radius: 8px; font-size: 12px; white-space: nowrap;
+    transform: translate(-50%, -100%); opacity: 0; transition: opacity .12s;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+  }
+  .tooltip.show { opacity: 1; }
+  .tooltip b { display: block; font-size: 13px; margin-bottom: 2px; }
+  .tooltip span { color: #cfc3b9; }
+
+  /* Top products */
+  .prod { list-style: none; margin: 0; padding: 0; }
+  .prod li { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .prod li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .prod li:first-child { padding-top: 0; }
+  .rank { width: 26px; height: 26px; border-radius: 7px; background: var(--brand-tint); color: var(--brand); display: grid; place-items: center; font-weight: 700; font-size: 12px; }
+  .prod .name { font-weight: 600; }
+  .prod .origin { color: var(--ink-3); font-size: 12px; }
+  .prod .meter { height: 5px; background: var(--brand-tint); border-radius: 3px; margin-top: 6px; overflow: hidden; }
+  .prod .meter i { display: block; height: 100%; background: var(--brand); border-radius: 3px; }
+  .prod .right { text-align: right; }
+  .prod .right strong { display: block; }
+  .prod .right span { color: var(--ink-3); font-size: 12px; }
+
+  /* Orders */
+  .table-scroll { overflow-x: auto; margin: 0 -20px -20px; }
+  table { width: 100%; border-collapse: collapse; min-width: 720px; }
+  th, td { text-align: left; padding: 12px 20px; border-top: 1px solid var(--line); }
+  th { font-size: 12px; font-weight: 600; color: var(--ink-3); text-transform: uppercase; letter-spacing: .05em; background: #fbf9f7; }
+  td.r, th.r { text-align: right; }
+  tbody tr:hover { background: #fcfaf8; }
+  .oid { font-weight: 600; color: var(--brand); }
+  .cust { font-weight: 500; }
+  .muted { color: var(--ink-3); font-size: 12.5px; }
+  .badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; }
+  .badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+  .s-baru     { color: #2b5fa8; background: #e8f0fb; }
+  .s-diproses { color: #9a6200; background: #fdf3df; }
+  .s-dikirim  { color: #6a3fa0; background: #f1eafa; }
+  .s-selesai  { color: var(--up); background: var(--up-bg); }
+  .s-batal    { color: var(--down); background: var(--down-bg); }
+
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { border: 1px solid var(--line); background: var(--surface); padding: 4px 11px; border-radius: 999px; font: inherit; font-size: 12.5px; cursor: pointer; color: var(--ink-2); }
+  .chip.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+  .stock-warn { margin-top: 16px; padding: 10px 12px; border-radius: 8px; background: #fdf3df; color: #7a4e00; font-size: 12.5px; display: flex; gap: 8px; align-items: flex-start; }
+
+  @media (max-width: 1100px) {
+    .kpis { grid-template-columns: repeat(2, 1fr); }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 760px) {
+    .app { grid-template-columns: 1fr; }
+    aside { display: none; }
+    main { padding: 20px 16px 40px; }
+    .kpis { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .kpi .value { font-size: 21px; }
+    .kpi .cmp { display: block; margin: 4px 0 0; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="logo">
+      <div class="logo-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><ellipse cx="12" cy="12" rx="6.5" ry="9" transform="rotate(30 12 12)"/><path d="M9 5.5c3 3 3 10 6 13"/></svg>
+      </div>
+      Kopi Lereng
+    </div>
+    <nav>
+      <a href="#" class="active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Dashboard</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>Pesanan</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></svg>Produk</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2M16 3.13a4 4 0 0 1 0 7.75M21 21v-2a4 4 0 0 0-3-3.85"/></svg>Pelanggan</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg>Laporan</a>
+      <div class="nav-label">Toko</div>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg>Promo</a>
+      <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Pengaturan</a>
+    </nav>
+  </aside>
+
+  <main>
+    <header class="top">
+      <div>
+        <h1>Selamat siang, Rina</h1>
+        <p class="sub" id="today-label">Ringkasan toko hari ini</p>
+      </div>
+      <div class="top-actions">
+        <button class="btn">Unduh laporan</button>
+        <button class="btn primary">+ Tambah produk</button>
+        <div class="avatar" title="Rina (Admin)">RA</div>
+      </div>
+    </header>
+
+    <!-- KPI -->
+    <section class="kpis" id="kpis"></section>
+
+    <!-- Chart + Top products -->
+    <section class="grid-2">
+      <div class="card">
+        <div class="card-head">
+          <h2>Penjualan 7 hari terakhir</h2>
+          <span class="meta">Pendapatan kotor per hari</span>
+        </div>
+        <div class="chart-total" id="chart-total"></div>
+        <div class="chart-wrap">
+          <svg id="chart" role="img" aria-label="Grafik batang pendapatan 7 hari terakhir"></svg>
+          <div class="tooltip" id="tip"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Produk terlaris</h2>
+          <span class="meta">7 hari terakhir</span>
+        </div>
+        <ul class="prod" id="products"></ul>
+        <div class="stock-warn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:none;margin-top:1px"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <span><b>Stok menipis:</b> Toraja Sapan 250g tersisa 8 pack. Sisa stok cukup untuk ±3 hari.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent orders -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Pesanan terbaru</h2>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>No. Pesanan</th>
+              <th>Pelanggan</th>
+              <th>Produk</th>
+              <th>Waktu</th>
+              <th>Status</th>
+              <th class="r">Total</th>
+            </tr>
+          </thead>
+          <tbody id="orders"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+/* ===================== DATA DUMMY ===================== */
+const TODAY = new Date(2026, 10, 15); // 15 November 2026
+
+const kpi = {
+  revenue:   { now: 4235000, prev: 3810000 },
+  orders:    { now: 31,      prev: 28 },
+  kg:        { now: 18.4,    prev: 17.9 },
+  customers: { now: 7,       prev: 9 },
+};
+
+// 7 hari terakhir: 9–15 Nov 2026 (hari terakhir = hari ini)
+const sales7 = [
+  { revenue: 3240000, orders: 24 },
+  { revenue: 2980000, orders: 22 },
+  { revenue: 3615000, orders: 27 },
+  { revenue: 3120000, orders: 23 },
+  { revenue: 4050000, orders: 30 },
+  { revenue: 4780000, orders: 35 },
+  { revenue: 4235000, orders: 31 },
+];
+
+const products = [
+  { name: "Arabika Gayo Wine", origin: "Aceh · 250g", units: 64, price: 95000 },
+  { name: "House Blend Espresso", origin: "Racikan · 1kg", units: 21, price: 240000 },
+  { name: "Toraja Sapan", origin: "Sulawesi Selatan · 250g", units: 41, price: 110000 },
+  { name: "Kintamani Natural", origin: "Bali · 250g", units: 38, price: 98000 },
+  { name: "Robusta Temanggung", origin: "Jawa Tengah · 500g", units: 33, price: 85000 },
+];
+
+const orders = [
+  { id: "KL-10482", cust: "Dimas Pratama",   city: "Bandung",    items: "Arabika Gayo Wine 250g ×2",          time: "14:22", status: "baru",     total: 205000 },
+  { id: "KL-10481", cust: "Sari Wulandari",  city: "Jakarta Selatan", items: "House Blend Espresso 1kg ×1",   time: "13:58", status: "baru",     total: 255000 },
+  { id: "KL-10480", cust: "Kafe Senja Kopi", city: "Yogyakarta", items: "Robusta Temanggung 500g ×6",          time: "13:10", status: "diproses", total: 510000 },
+  { id: "KL-10479", cust: "Andre Wijaya",    city: "Surabaya",   items: "Toraja Sapan 250g ×1, Kintamani ×1",  time: "12:41", status: "diproses", total: 223000 },
+  { id: "KL-10478", cust: "Nadia Putri",     city: "Depok",      items: "Kintamani Natural 250g ×2",           time: "11:05", status: "dikirim",  total: 211000 },
+  { id: "KL-10477", cust: "Fajar Nugroho",   city: "Semarang",   items: "Flores Bajawa 250g ×1",               time: "10:32", status: "batal",    total: 107000 },
+  { id: "KL-10476", cust: "Lestari Ayu",     city: "Malang",     items: "Arabika Gayo Wine 250g ×3",           time: "09:47", status: "dikirim",  total: 300000 },
+  { id: "KL-10475", cust: "Bagas Saputra",   city: "Bekasi",     items: "House Blend Espresso 1kg ×2",         time: "Kemarin", status: "selesai", total: 495000 },
+];
+
+const STATUS = {
+  baru:     { label: "Baru",       cls: "s-baru" },
+  diproses: { label: "Diproses",   cls: "s-diproses" },
+  dikirim:  { label: "Dikirim",    cls: "s-dikirim" },
+  selesai:  { label: "Selesai",    cls: "s-selesai" },
+  batal:    { label: "Dibatalkan", cls: "s-batal" },
+};
+
+/* ===================== HELPERS ===================== */
+const rupiah = n => "Rp " + n.toLocaleString("id-ID");
+const juta = n => (n / 1e6).toLocaleString("id-ID", { maximumFractionDigits: 1 }) + " jt";
+const pct = (now, prev) => ((now - prev) / prev) * 100;
+const deltaHTML = (now, prev) => {
+  const p = pct(now, prev), up = p >= 0;
+  const arrow = up ? "▲" : "▼";
+  return `<span class="delta ${up ? "up" : "down"}">${arrow} ${Math.abs(p).toLocaleString("id-ID", { maximumFractionDigits: 1 })}%</span>`;
+};
+const dayShort = d => d.toLocaleDateString("id-ID", { weekday: "short" });
+const dateShort = d => d.toLocaleDateString("id-ID", { day: "numeric", month: "short" });
+
+document.getElementById("today-label").textContent =
+  "Ringkasan toko · " + TODAY.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
+
+/* ===================== KPI ===================== */
+const aov = { now: Math.round(kpi.revenue.now / kpi.orders.now), prev: Math.round(kpi.revenue.prev / kpi.orders.prev) };
+const kpiCards = [
+  { label: "Pendapatan hari ini", value: rupiah(kpi.revenue.now), d: kpi.revenue },
+  { label: "Jumlah pesanan", value: kpi.orders.now, d: kpi.orders },
+  { label: "Rata-rata per pesanan", value: rupiah(aov.now), d: aov },
+  { label: "Biji kopi terjual", value: kpi.kg.now.toLocaleString("id-ID") + "<small>kg</small>", d: kpi.kg },
+];
+document.getElementById("kpis").innerHTML = kpiCards.map(c => `
+  <div class="card kpi">
+    <div class="label">${c.label}</div>
+    <div class="value num">${c.value}</div>
+    <div>${deltaHTML(c.d.now, c.d.prev)}<span class="cmp">vs Minggu lalu</span></div>
+  </div>`).join("");
+
+/* ===================== CHART ===================== */
+const days = sales7.map((s, i) => {
+  const d = new Date(TODAY); d.setDate(TODAY.getDate() - (6 - i));
+  return { ...s, date: d, today: i === 6 };
+});
+const total7 = days.reduce((a, d) => a + d.revenue, 0);
+const orders7 = days.reduce((a, d) => a + d.orders, 0);
+document.getElementById("chart-total").innerHTML = `
+  <div><span>Total 7 hari</span><strong class="num">${rupiah(total7)}</strong></div>
+  <div><span>Pesanan</span><strong class="num">${orders7}</strong></div>
+  <div><span>Rata-rata / hari</span><strong class="num">${rupiah(Math.round(total7 / 7))}</strong></div>`;
+
+function drawChart() {
+  const svg = document.getElementById("chart");
+  const W = svg.clientWidth || 600, H = 320;
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+  const m = { t: 22, r: 8, b: 30, l: 46 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const max = 5000000, ticks = [0, 1e6, 2e6, 3e6, 4e6, 5e6];
+  const y = v => m.t + ih - (v / max) * ih;
+  const band = iw / days.length, bw = Math.min(44, band * 0.56);
+
+  let out = "";
+  ticks.forEach(t => {
+    out += `<line class="grid" x1="${m.l}" x2="${W - m.r}" y1="${y(t)}" y2="${y(t)}"/>`;
+    out += `<text class="axis-text" x="${m.l - 8}" y="${y(t) + 4}" text-anchor="end">${t === 0 ? "0" : t / 1e6 + " jt"}</text>`;
+  });
+  days.forEach((d, i) => {
+    const cx = m.l + band * i + band / 2;
+    const top = y(d.revenue), h = m.t + ih - top;
+    const r = 5;
+    // batang dengan sudut atas membulat
+    const path = `M${cx - bw/2},${m.t + ih} V${top + r} Q${cx - bw/2},${top} ${cx - bw/2 + r},${top} H${cx + bw/2 - r} Q${cx + bw/2},${top} ${cx + bw/2},${top + r} V${m.t + ih} Z`;
+    out += `<g class="col" data-i="${i}">
+      <rect class="hit" x="${m.l + band * i}" y="${m.t}" width="${band}" height="${ih}"/>
+      <path class="bar ${d.today ? "today" : ""}" d="${path}"/>
+      ${d.today ? `<text class="bar-label" x="${cx}" y="${top - 7}" text-anchor="middle">${juta(d.revenue)}</text>` : ""}
+      <text class="day-text ${d.today ? "today" : ""}" x="${cx}" y="${H - 10}" text-anchor="middle">${d.today ? "Hari ini" : dayShort(d.date)}</text>
+    </g>`;
+  });
+  svg.innerHTML = out;
+
+  const tip = document.getElementById("tip");
+  svg.querySelectorAll("g.col").forEach(g => {
+    const d = days[+g.dataset.i];
+    const i = +g.dataset.i;
+    g.addEventListener("mouseenter", () => {
+      const cx = m.l + band * i + band / 2;
+      const scale = svg.getBoundingClientRect().width / W;
+      tip.innerHTML = `<b class="num">${rupiah(d.revenue)}</b><span>${dayShort(d.date)}, ${dateShort(d.date)} · ${d.orders} pesanan</span>`;
+      tip.style.left = cx * scale + "px";
+      tip.style.top = (y(d.revenue) - 10) * scale + "px";
+      tip.classList.add("show");
+    });
+    g.addEventListener("mouseleave", () => tip.classList.remove("show"));
+  });
+}
+drawChart();
+window.addEventListener("resize", drawChart);
+
+/* ===================== PRODUK TERLARIS ===================== */
+const ranked = products.map(p => ({ ...p, rev: p.units * p.price })).sort((a, b) => b.rev - a.rev);
+const topRev = ranked[0].rev;
+document.getElementById("products").innerHTML = ranked.map((p, i) => `
+  <li>
+    <div class="rank">${i + 1}</div>
+    <div>
+      <div class="name">${p.name}</div>
+      <div class="origin">${p.origin}</div>
+      <div class="meter"><i style="width:${(p.rev / topRev) * 100}%"></i></div>
+    </div>
+    <div class="right">
+      <strong class="num">${rupiah(p.rev)}</strong>
+      <span class="num">${p.units} terjual</span>
+    </div>
+  </li>`).join("");
+
+/* ===================== PESANAN TERBARU ===================== */
+let filter = "semua";
+const filterKeys = ["semua", "baru", "diproses", "dikirim"];
+function renderFilters() {
+  document.getElementById("filters").innerHTML = filterKeys.map(k => {
+    const count = k === "semua" ? orders.length : orders.filter(o => o.status === k).length;
+    const label = k === "semua" ? "Semua" : STATUS[k].label;
+    return `<button class="chip ${filter === k ? "on" : ""}" data-k="${k}">${label} ${count}</button>`;
+  }).join("");
+  document.querySelectorAll(".chip").forEach(b => b.onclick = () => { filter = b.dataset.k; renderFilters(); renderOrders(); });
+}
+function renderOrders() {
+  const list = filter === "semua" ? orders : orders.filter(o => o.status === filter);
+  document.getElementById("orders").innerHTML = list.map(o => `
+    <tr>
+      <td class="oid">#${o.id}</td>
+      <td><div class="cust">${o.cust}</div><div class="muted">${o.city}</div></td>
+      <td>${o.items}</td>
+      <td class="muted num">${o.time}</td>
+      <td><span class="badge ${STATUS[o.status].cls}">${STATUS[o.status].label}</span></td>
+      <td class="r num"><strong>${rupiah(o.total)}</strong></td>
+    </tr>`).join("") || `<tr><td colspan="6" class="muted" style="text-align:center;padding:28px">Tidak ada pesanan dengan status ini.</td></tr>`;
+}
+renderFilters();
+renderOrders();
+</script>
+</body>
+</html>

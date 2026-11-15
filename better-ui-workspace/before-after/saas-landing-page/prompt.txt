@@ -1,0 +1,1 @@
+Build a landing page for Ledgerly, an invoicing tool for freelancers. It needs a hero, a features section, pricing, and a signup call to action. Put everything in a single index.html.

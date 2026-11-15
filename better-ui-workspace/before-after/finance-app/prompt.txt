@@ -1,0 +1,1 @@
+build a personal finance app: balance, recent transactions, spending by category and a monthly budget. single index.html, mobile first but should look good on desktop too
