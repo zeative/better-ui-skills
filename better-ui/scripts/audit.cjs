@@ -873,6 +873,7 @@ function report(results, facts, focus, runtime, args) {
   const clipW = results.filter(({ m }) => m.clippedCount).sort((p, q) => q.m.clippedCount - p.m.clippedCount)[0];
   if (clipW) problem('CRAFT', `${clipW.m.clippedCount} text(s) are cut off by their container at ${clipW.width}px: ${clipW.m.clippedText.slice(0, 6).join('; ')}. Widen the column, shorten the text, or allow a second line; showcase work has no truncated strings.`);
   if (narrow.gutters && Math.abs(narrow.gutters[0] - narrow.gutters[1]) > 5 && narrow.overflowPx <= 1) problem('CRAFT', `Uneven page margins at ${results[0].width}px: content starts ${narrow.gutters[0]}px from the left edge and ends ${narrow.gutters[1]}px from the right. Something is wider than its container.`);
+  if (widest.repeatedGraphics && widest.repeatedGraphics.length) problem('CRAFT', `The same icon or drawing is repeated (colour changes do not count): ${widest.repeatedGraphics.map((g) => `${g.n}× at ${g.size}px`).join(', ')}. If these mark different items (exercises, categories, accounts), give each its own icon; the same glyph on different things looks like a placeholder.`);
   for (const { width, m } of results) {
     if (m.coveredCount) problem('BROKEN', `${m.coveredCount} piece(s) of text are covered by another element at ${width}px: ${m.coveredText.slice(0, 6).join('; ')}. Floating cards, stamps and tooltips may overlap empty margins and edges, never the content underneath.`);
   }

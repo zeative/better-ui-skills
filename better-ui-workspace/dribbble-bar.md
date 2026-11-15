@@ -290,3 +290,19 @@ two causes: the frameless presentation (judged as a code render, worse than the 
 the presenter goes back to D.3's frames) and copy that gives a mock-up away. **Method D.5** adds
 copy rules: no captions explaining the interface, no contradictions within a screen, no developer
 phrasing, and a real Settings screen.
+
+**Method D.5 builds (iteration 15), back on device frames:**
+
+| App | Ranks of 9 | Flags | Result |
+|---|---|---|---|
+| Habit tracker | **1st, 2nd** | possible, possible | **pass in both line-ups** |
+| Workout app | **2nd**, 5th | possible, likely | pass in one; the other flagged a reused icon on two lifts and "no visual signature" |
+| Finance app | 7th, 8th | likely, likely | "a generic Tailwind template with no distinctive voice"; a grey status-bar band on scrolled frames (presenter) |
+
+The habit tracker is the first app to pass both line-ups. **Method D.6** adds a signature moment
+per category, the thing popular shots in that category almost always show (finance: a designed
+payment card and a category breakdown that is not a default donut; fitness: a large progress
+visual, a weekly chart and an activity card; habits: a week strip and colour-coded rows), a rule
+that different items never share an icon, and the audit's repeated-drawing check returns as a
+CRAFT note about that. The presenter now paints each status bar with the real top pixel of its
+own screenshot.

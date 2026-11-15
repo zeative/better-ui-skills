@@ -82,12 +82,19 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
    - **A small stats grid** of two or three tiles (an icon chip, a label, a figure, a tiny bar or sparkline), or **one chart card** (weekly bars with the current day in the brand colour, a clean line chart).
 5. **Bottom tab bar.** Four or five tabs with line icons and 11 to 12px labels, the active one in the brand colour, on a white bar with a top hairline or a floating rounded bar with a soft shadow. Often a central round add button in the brand colour. Leave enough bottom padding in the content so the bar never covers the last row. Content scrolls under the bar, so the bar needs something behind it: a solid white bar with a top hairline, or, for a floating bar, a fade from the canvas colour to transparent (about 24px tall) behind it. Rows peeking through a gap around a floating bar look like a collision in every screenshot.
 
+**Each category has a signature moment** that popular shots almost always include. Build the one for your product as the summary card or right beneath it, drawn with care:
+- *Finance and banking:* a designed payment card (brand gradient or deep solid colour, a subtle pattern or large soft shapes, chip, network mark drawn as simple circles, masked number, name), often slightly stacked over a second card; quick actions as round buttons below it; a category breakdown drawn as something other than a default donut (proportional bubbles, a segmented bar with labels, stacked pills).
+- *Fitness and workout:* a large progress visual for today (ring or arc with the key figure), a weekly bar chart with the current bar highlighted, and an activity card with a small route map or a session timeline.
+- *Habits and wellness:* a week strip with per-day completion rings, colour-coded habit rows, and a streak or consistency chart.
+- *Dashboards:* the KPI row and one large chart with a highlighted point and tooltip.
+
 **Character comes from:** the brand colour on the summary card and active states, soft tints on item chips, friendly icons or emoji per item, a good sans at clean sizes, and real names and figures. Not from themes, metaphors, textures or decorative fonts.
 
 **Rules:**
 
 - **Open with data.** Ship believable sample data in a mid-use state (some done, some pending, a week of history) so the first view is full. Offer "Clear sample data" in a settings screen or menu; never put a sample-data note on the main screens. Design the empty state too.
 - **Keep it calm.** One summary card, then white cards. Three to five things on the first screen, not ten. No module repeats information another already shows.
+- **Every item has its own icon.** Two different exercises, categories or accounts never share the same glyph; draw or pick a distinct one for each.
 - **Lists stay compact.** One row per item; details (a full history, settings) belong in a detail view or a bottom sheet opened by tapping the row.
 - **The main action is obvious.** The daily action (tick, log, add) is a clear round control on each row, with a satisfying checked state (fill with the brand or item colour, a check icon, a short scale animation). Completed items stay readable; do not grey them out heavily.
 - **Adding** uses a bottom sheet or a modal with a title, fields, suggestion chips with icons, and a full-width primary button.

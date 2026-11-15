@@ -22,7 +22,7 @@ const path = require('path');
   if (setup) { await p.evaluate(`(async () => { ${fs.readFileSync(setup, 'utf8')}\n })()`); await p.waitForTimeout(400); }
   await p.evaluate(() => document.fonts.ready);
   await p.waitForTimeout(600);
-  const shots = [];
+  const shots = []; const tops = [];
   // The backdrop takes a light tint of the page's brand colour, as most shots do.
   const brand = await p.evaluate(() => {
     const score = {};
@@ -36,6 +36,7 @@ const path = require('path');
   });
   const tint = (k) => brand ? `rgb(${brand.map((v) => Math.round(v * k + 255 * (1 - k))).join(',')})` : (k > 0.1 ? '#dfe2e7' : '#eef0f3');
   const backdrop = `linear-gradient(160deg,${tint(0.08)},${tint(0.22)})`;
+  const topColour = () => p.evaluate(() => { let e = document.elementFromPoint(187, 1); while (e) { const c = getComputedStyle(e).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; e = e.parentElement; } return getComputedStyle(document.body).backgroundColor || 'rgb(255,255,255)'; });
   const sbg = await p.evaluate(() => { let e = document.elementFromPoint(187, 2); while (e) { const c = getComputedStyle(e).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; e = e.parentElement; } return 'rgb(255,255,255)'; });
   const bbg = await p.evaluate(() => { let e = document.elementFromPoint(187, window.innerHeight - 2); while (e) { const c = getComputedStyle(e).backgroundColor; if (c && !/rgba\(0, 0, 0, 0\)|transparent/.test(c)) return c; e = e.parentElement; } return 'rgb(255,255,255)'; });
   const [r, g, bl] = (sbg.match(/\d+/g) || [255, 255, 255]).map(Number);
@@ -46,7 +47,7 @@ const path = require('path');
     for (const y of [...new Set(ys)]) {
       await p.evaluate((y) => window.scrollTo(0, y), y);
       await p.waitForTimeout(350);
-      shots.push((await p.screenshot()).toString('base64'));
+      shots.push((await p.screenshot()).toString('base64')); tops.push(await topColour());
     }
     // Real shots show different screens: use the second tab of the tab bar for the middle frame, if there is one.
     await p.evaluate(() => window.scrollTo(0, 0)); await p.waitForTimeout(200);
@@ -58,7 +59,7 @@ const path = require('path');
         await tabs.nth(nTabs >= 4 ? 1 : nTabs - 1).click({ timeout: 1500 }); await p.waitForTimeout(600);
         await p.evaluate(() => window.scrollTo(0, 0)); await p.waitForTimeout(250);
         const t1 = await p.evaluate(() => document.body.innerText);
-        if (t1 !== t0) shots[1] = (await p.screenshot()).toString('base64');
+        if (t1 !== t0) { shots[1] = (await p.screenshot()).toString('base64'); tops[1] = await topColour(); }
         await tabs.nth(0).click({ timeout: 1500 }); await p.waitForTimeout(500);
       } catch (_) { /* keep the scrolled frame */ }
     }
@@ -70,19 +71,19 @@ const path = require('path');
       if (await el.count()) { try { await el.click({ timeout: 1500 }); } catch (_) { continue; } await p.waitForTimeout(700); break; }
     }
     const after = await p.evaluate(() => document.body.innerText.length);
-    if (after !== before && shots.length >= 3) shots[2] = (await p.screenshot()).toString('base64');
-    else if (after !== before) shots.push((await p.screenshot()).toString('base64'));
+    if (after !== before && shots.length >= 3) { shots[2] = (await p.screenshot()).toString('base64'); tops[2] = await topColour(); }
+    else if (after !== before) { shots.push((await p.screenshot()).toString('base64')); tops.push(await topColour()); }
   } else {
     shots.push((await p.screenshot()).toString('base64'));
   }
   const sp = await b.newPage({ viewport: { width: 1200, height: 900 }, deviceScaleFactor: 1 });
   const img = (s, style) => `<img src="data:image/png;base64,${s}" style="${style}">`;
   const html = phone
-    ? `<body style="margin:0;height:900px;background:${backdrop};display:flex;align-items:center;justify-content:center;gap:44px;font-family:-apple-system,'SF Pro Text','Inter',sans-serif">${shots.map((s) => `
+    ? `<body style="margin:0;height:900px;background:${backdrop};display:flex;align-items:center;justify-content:center;gap:44px;font-family:-apple-system,'SF Pro Text','Inter',sans-serif">${shots.map((s, i) => `
       <div style="position:relative;width:300px;height:650px;border-radius:50px;background:linear-gradient(145deg,#4a4a50,#1a1a1d 30%,#0e0e10 70%,#3c3c42);padding:11px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),inset 0 0 0 3px #0b0b0d,0 50px 80px -30px rgba(0,0,0,.5),0 12px 24px -10px rgba(0,0,0,.3)">
         <i style="position:absolute;left:-3px;top:120px;width:3px;height:56px;border-radius:2px;background:#2a2a2d"></i><i style="position:absolute;right:-3px;top:150px;width:3px;height:80px;border-radius:2px;background:#2a2a2d"></i>
         <div style="position:relative;width:300px;height:650px;border-radius:39px;overflow:hidden;background:#fff">
-          <div id="sb" style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 30px;font-size:13px;font-weight:600;color:${ink};background:${sbg}">
+          <div id="sb" style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 26px 0 30px;font-size:13px;font-weight:600;color:${ink};background:${tops[i] || sbg}">
             <span>9:41</span><svg width="62" height="12" viewBox="0 0 62 12"><g fill="${ink}"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="1" width="3" height="11" rx="1"/><path d="M29 3.5a9 9 0 0 1 11 0l-1.3 1.4a7 7 0 0 0-8.4 0zM31.3 6a5.5 5.5 0 0 1 6.4 0l-1.4 1.5a3.4 3.4 0 0 0-3.6 0zM34.5 11l-1.6-1.7a2.3 2.3 0 0 1 3.2 0z"/><rect x="44.5" y=".5" width="15" height="10" rx="3" fill="none" stroke="${ink}" opacity=".4"/><rect x="46" y="2" width="11" height="7" rx="1.6"/><rect x="60.5" y="4" width="1.5" height="3" rx=".7" opacity=".4"/></g></svg></div>
           <div style="position:absolute;left:50%;top:9px;width:92px;height:26px;border-radius:14px;background:#000;transform:translateX(-50%)"></div>
           ${img(s, 'width:300px;height:585px;display:block;object-fit:cover;object-position:top')}<div style="height:27px;background:${bbg}"></div>
@@ -91,6 +92,18 @@ const path = require('path');
     : `<body style="margin:0;height:900px;background:${backdrop};display:flex;align-items:center;justify-content:center"><div style="width:1100px;border-radius:22px;overflow:hidden;box-shadow:0 30px 70px -25px rgba(0,0,0,.35);background:#fff">${img(shots[0], 'width:1100px;display:block')}</div></body>`;
   await sp.setContent(html);
   await sp.waitForFunction(() => [...document.images].every((i) => i.complete));
+  // Paint each status bar with the real top-row pixel colour of its own screenshot.
+  await sp.evaluate(() => {
+    for (const img of document.querySelectorAll('img')) {
+      const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = 4;
+      const x = c.getContext('2d'); x.drawImage(img, 0, 0);
+      const [r, g, b] = x.getImageData(Math.floor(img.naturalWidth / 2), 1, 1, 1).data;
+      const bar = img.parentElement.querySelector('#sb'); if (!bar) continue;
+      bar.style.background = `rgb(${r},${g},${b})`;
+      const ink = (0.299 * r + 0.587 * g + 0.114 * b) > 140 ? '#000' : '#fff';
+      bar.style.color = ink; bar.querySelectorAll('g').forEach((el) => el.setAttribute('fill', ink));
+    }
+  });
   await sp.screenshot({ path: out });
   await b.close();
 })();
