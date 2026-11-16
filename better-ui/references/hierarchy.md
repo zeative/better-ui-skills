@@ -60,7 +60,12 @@ Contents: decide the levels · the type ramp · grouping and spacing · numbers 
 
 - **Fitts's law:** the primary action is large and close to where attention already is; destructive actions are away from it. Targets are at least 44px on touch screens; dense desktop tools can go to 28 to 32px rows when the whole row is clickable.
 - **Hick's law:** fewer choices at once. Group options, choose good defaults, put rare actions in a menu.
-- One primary button per view; secondary actions quieter; text links for the least important.
+- **A button's weight follows its scope,** not the importance its author feels:
+  - *Page action* (the one thing this screen is for: "New invoice", "Add habit"): the filled brand button, 36 to 40px tall in apps, 44 to 48px in a landing hero. One per screen.
+  - *Panel or section action* (in a card or table header: "Add position", "Export"): a quiet button, outline or a neutral fill, 28 to 32px tall, 10 to 12px side padding, 12 to 13px text, an icon only if it helps. It must not outweigh the panel's own title.
+  - *Row or item action* ("Edit", "Remind"): an icon button or a text link, shown on hover in dense tables.
+  - In professional tools the brand fill is rarer still: often only the global primary action, or none, with selection and focus carrying the accent.
+- Buttons in one row share one height with the icon buttons beside them. A filled button in a header that is taller or brighter than everything else in that header is the most common way a tidy screen starts to shout.
 
 ## Checks
 

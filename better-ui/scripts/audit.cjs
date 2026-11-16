@@ -399,6 +399,19 @@ function measure(targetWidth) {
     if (Math.max(...lens) / Math.min(...lens) > 1.8) unevenTxt.push(`${describe(kids[0]).split(' "')[0]} (${Math.min(...lens)} to ${Math.max(...lens)} characters)`);
   }
   out.unevenCopy = unevenTxt.slice(0, 4);
+  // (b9) filled, saturated buttons: how many compete on the first screen, and any that outweigh a small panel title
+  const chroma = (c) => { const m = (c || '').match(/[\d.]+/g); if (!m || (m.length > 3 && +m[3] < 0.6)) return 0; const v = m.slice(0, 3).map(Number); return Math.max(...v) - Math.min(...v); };
+  const loud = [], loudInPanel = [];
+  for (const el of document.querySelectorAll('button, a[class*="btn"], a[class*="button"]')) {
+    if (!isVisible(el)) continue; const r = el.getBoundingClientRect(); if (r.top > innerHeight || r.width < 40) continue;
+    if (chroma(getComputedStyle(el).backgroundColor) < 70) continue;
+    loud.push(describe(el));
+    // a small panel title in the same header row
+    const row = el.closest('header, [class*="head"], [class*="toolbar"], [class*="bar"]') || el.parentElement;
+    const title = row && [...row.querySelectorAll('h2, h3, h4, [class*="title"]')].find((t) => !el.contains(t) && isVisible(t));
+    if (title && row.getBoundingClientRect().height < 72 && parseFloat(getComputedStyle(title).fontSize) <= 16 && !row.closest('nav, [class*="topbar"], body > header')) loudInPanel.push(`${describe(el)} beside "${(title.innerText || '').trim().slice(0, 24)}"`);
+  }
+  out.loudButtons = loud; out.loudInPanel = loudInPanel.slice(0, 4);
   // (b3) the largest chart on the first screen drawn as plain bars
   let bigSvg = null, bigArea = 0;
   for (const g of document.querySelectorAll('svg')) {
@@ -1013,6 +1026,8 @@ function report(results, facts, focus, runtime, args) {
   if (widest.regionTones > 4) problem('CRAFT', `The large regions of the page use ${widest.regionTones} different background tones. Keep to the canvas, one tinted band and at most one dark band (or canvas, surface and one raised level in an app).`);
   for (const { width, m } of results) { if (m.wrappingButtons && m.wrappingButtons.length) { problem('CRAFT', `Buttons or tabs whose label wraps at ${width}px: ${m.wrappingButtons.slice(0, 4).join('; ')}. Shorten the label (1 to 3 words) rather than letting it break (references/copy.md).`); break; } }
   if (widest.unevenCopy && widest.unevenCopy.length) problem('CRAFT', `Side-by-side cards whose body copy runs very different lengths: ${widest.unevenCopy.slice(0, 3).join('; ')}. Write siblings to within about 20% of each other so the row ends level (references/copy.md).`);
+  if (widest.loudButtons && widest.loudButtons.length > 2) problem('CRAFT', `${widest.loudButtons.length} filled, coloured buttons compete on the first desktop screen: ${widest.loudButtons.slice(0, 4).join('; ')}. Keep the brand fill for the one page action; panel and row actions are quiet (references/hierarchy.md, Controls).`);
+  if (widest.loudInPanel && widest.loudInPanel.length) problem('CRAFT', `A filled, coloured button outweighs a small panel title: ${widest.loudInPanel.slice(0, 3).join('; ')}. Panel actions are compact outline or neutral buttons, 28 to 32px (references/hierarchy.md, Controls).`);
   if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }
