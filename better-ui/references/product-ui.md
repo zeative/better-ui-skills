@@ -38,6 +38,8 @@ Audit these pages with `--register dense`: the RICHNESS notes (add cards, imager
 
 Test: put a screenshot beside the real tool it competes with. If yours shows less, or looks more like a template than a terminal, it is wrong.
 
+**Fill the first screen.** On desktop an app screen is composed to the viewport: if the cards end before the bottom of the window, let the main chart or list take the remaining height (`flex: 1` on the main column, a `min-height` on the chart) instead of leaving an empty band under the last card. Check the 1440×900 screenshot for a dead strip at the bottom.
+
 ## Modules
 
 An overview dashboard for a business tool (not a professional data tool, see above) has six to ten modules, each answering a different question. A module that only fills space (a promo card, a tip, a second chart saying the same thing) makes it look generated; leave it out. Draw from these:

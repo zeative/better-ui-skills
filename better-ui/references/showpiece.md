@@ -59,7 +59,8 @@ When a figure counts a physical thing, an object drawn in CSS inside that figure
 .num { position: absolute; right: 18px; bottom: 16px; font: 500 11px/1 var(--mono); letter-spacing: .1em; color: rgba(255,255,255,.7); }
 ```
 
-- The card's own edge crops the object, so it reads as sitting in the card, and the text keeps the left 55 to 60% clear. Check that the object covers nothing written.
+- The card's own edge crops the object, so it reads as sitting in the card, and the text keeps the left 55 to 60% clear. Check that the object covers nothing written. Keep it to about 40% of the card's width; most of it visible, one corner cut by the edge.
+- Make it out of a real material, not the brand colour: graphite or black metal, brushed silver, frosted white plastic, kraft paper. A flat purple or blue rectangle reads as a sticker however it is rotated. The brand can appear as a small mark on it. Real material is several layers: a base gradient with a light and a dark side, a diagonal sheen, a 1px light edge on top and a dark edge below, and a soft shadow that falls away from the light.
 - Light, shadow and a slight rotation are what make it real; a flat rectangle is a sticker. Draw details as shapes (a chip, a masked number, a network mark of two circles), never real brand logos.
 - A receipt: off-white paper with a zigzag or perforated edge (`clip-path` polygon), mono lines for items and total, a small "Paid" mark, a soft shadow, rotated 3 to 6 degrees.
 
