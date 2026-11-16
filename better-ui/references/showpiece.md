@@ -177,6 +177,48 @@ Position the tooltip as an HTML element over the highlighted point: a small dark
 
 Compute coordinates from your real sample data (a few lines of JS, or by hand) so the chart, the totals and the table agree. One main chart leads the screen; anything else that shows data is smaller and different in kind.
 
+### Choosing the main chart
+
+Decide by the data, not by habit:
+
+- **A time series with more than seven points** (days of a month, weeks of a quarter): a smooth line or area, never bars. Compare it with the previous period as a dashed line, or mirror the previous period below the axis.
+- **Seven or fewer discrete periods in a small chart** (days of a week in a tile): bars, with the previous period as ghost bars and the one that matters highlighted.
+- **A split by category over time** (revenue by plan, traffic by channel): one smooth line per category in its own colour, with the same colour as a dot beside each category in the list or navigation.
+- **A share right now:** a segmented bar or a ranked list with thin bars, not a donut.
+
+Whatever the form, the main chart carries a comparison (previous period, target or average), one highlighted point with a tooltip, and mono axis labels.
+
+A small helper draws smooth curves and the mirrored comparison from your data:
+
+```js
+// smooth path through [x, y] points (Catmull-Rom turned into cubic Bezier segments)
+const smooth = (pts) => pts.reduce((d, p, i) => {
+  if (i === 0) return `M${p}`;
+  const p0 = pts[i - 2] || pts[i - 1], p1 = pts[i - 1], p3 = pts[i + 1] || p;
+  const c1 = [p1[0] + (p[0] - p0[0]) / 6, p1[1] + (p[1] - p0[1]) / 6];
+  const c2 = [p[0] - (p3[0] - p1[0]) / 6, p[1] - (p3[1] - p1[1]) / 6];
+  return `${d} C${c1} ${c2} ${p}`;
+}, '');
+
+// this period above a centre axis, the previous one mirrored below it
+function mirrored(svg, cur, prev, { w = 720, h = 320, pad = 16 } = {}) {
+  const mid = h / 2, max = Math.max(...cur, ...prev);
+  const x = (i, n) => (i * w) / (n - 1), y = (v) => (v / max) * (mid - pad);
+  const up = cur.map((v, i) => [x(i, cur.length), mid - y(v)]);
+  const down = prev.map((v, i) => [x(i, prev.length), mid + y(v)]);
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+  svg.innerHTML = `
+    <defs><linearGradient id="upFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--accent)" stop-opacity=".22"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+    <line x1="0" x2="${w}" y1="${mid}" y2="${mid}" stroke="var(--line)"/>
+    <path d="${smooth(up)} L${w},${mid} L0,${mid} Z" fill="url(#upFill)"/>
+    <path d="${smooth(up)}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+    <path d="${smooth(down)}" fill="none" stroke="var(--text-3)" stroke-width="1.5" stroke-linecap="round" opacity=".8"/>`;
+}
+```
+
+Label the two halves in the mono ("Nov 1–16" above, "Oct 1–16" below) and put y-axis values on both sides of the axis. For categories, call `smooth` once per series and stroke each in its colour.
+
 ### Chart ideas that read as designed
 
 Pick the form from the question the chart answers, then draw it with care. These are the forms good product shots use instead of the library default:

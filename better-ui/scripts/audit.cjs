@@ -301,6 +301,45 @@ function measure(targetWidth) {
     if (off >= Math.max(1, later.length / 2)) ragged.push(describe(el));
   }
   out.raggedStrips = ragged.slice(0, 5);
+  // (b3) the largest chart on the first screen drawn as plain bars
+  let bigSvg = null, bigArea = 0;
+  for (const g of document.querySelectorAll('svg')) {
+    if (!isVisible(g)) continue; const r = g.getBoundingClientRect(); if (r.top > innerHeight) continue;
+    if (r.width * r.height > bigArea) { bigArea = r.width * r.height; bigSvg = g; }
+  }
+  out.plainBarChart = 0;
+  if (bigSvg && bigArea > 400 * 180) {
+    const bars = [...bigSvg.querySelectorAll('rect')].filter((x) => { const b = x.getBoundingClientRect(); return b.height > 6 && b.width > 2 && b.width < 80; });
+    const curves = [...bigSvg.querySelectorAll('path')].some((p) => { const d = p.getAttribute('d') || ''; return /[CQS]/.test(d) && d.length > 60; });
+    const bb = {}, bt = {};
+    for (const x of bars) { const r = x.getBoundingClientRect(); const kb = Math.round(r.bottom / 3), kt = Math.round(r.top / 3); bb[kb] = (bb[kb] || 0) + 1; bt[kt] = (bt[kt] || 0) + 1; }
+    const svgMirror = Object.keys(bb).some((k) => bb[k] >= 8 && [-1, 0, 1, 2].some((o) => (bt[+k + o] || 0) >= 8));
+    if (bars.length >= 8 && !curves && !svgMirror) out.plainBarChart = bars.length;
+  }
+  // bars drawn as HTML elements: narrow filled boxes without text that share a baseline
+  if (!out.plainBarChart) {
+    const hasCurve = bigSvg && [...bigSvg.querySelectorAll('path')].some((p) => { const d = p.getAttribute('d') || ''; return /[CQS]/.test(d) && d.length > 60; }) && bigArea > 400 * 180;
+    const groups = {}, tops = {};
+    for (const el of document.querySelectorAll('body *')) {
+      if (el.children.length || (el.textContent || '').trim()) continue;
+      const r = el.getBoundingClientRect();
+      if (r.top > innerHeight || r.width < 3 || r.width > 80 || r.height < 10 || r.height > 700) continue;
+      const cs = getComputedStyle(el);
+      const filled = (cs.backgroundColor && !/rgba?\(0, 0, 0, 0\)|transparent/.test(cs.backgroundColor)) || cs.backgroundImage !== 'none';
+      if (!filled) continue;
+      const key = Math.round(r.bottom / 3);
+      (groups[key] = groups[key] || []).push(r);
+      const tk = Math.round(r.top / 3); (tops[tk] = tops[tk] || []).push(r);
+    }
+    for (const [k, g] of Object.entries(groups)) {
+      if (g.length < 8) continue;
+      // a mirrored bar chart (one period above an axis, another hanging below it) is a designed form
+      const mirror = [-1, 0, 1, 2].some((o) => (tops[+k + o] || []).length >= 8);
+      if (mirror) continue;
+      const hs = g.map((r) => r.height), span = Math.max(...g.map((r) => r.right)) - Math.min(...g.map((r) => r.left));
+      if (span > 360 && Math.max(...hs) / Math.min(...hs) > 1.3 && !hasCurve) { out.plainBarChart = g.length; break; }
+    }
+  }
   // (c) side-by-side siblings whose main values sit at different heights
   const uneven = [];
   for (const el of document.querySelectorAll('body *')) {
@@ -869,6 +908,7 @@ function report(results, facts, focus, runtime, args) {
   }
   const stubW = results.filter(({ m }) => m.wrapStubCount).sort((p, q) => q.m.wrapStubCount - p.m.wrapStubCount)[0];
   if (stubW) problem('CRAFT', `${stubW.m.wrapStubCount} short text(s) wrap leaving a stub on the last line at ${stubW.width}px: ${stubW.m.wrapStubs.slice(0, 5).join('; ')}. Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).`);
+  if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }
     if (m.lonelyItems && m.lonelyItems.length) { problem('CRAFT', `A wrapping row leaves one item alone on its last line at ${width}px: ${m.lonelyItems.slice(0, 3).join('; ')}.`); break; }
