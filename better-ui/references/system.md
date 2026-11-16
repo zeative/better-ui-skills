@@ -19,7 +19,9 @@ Write the choice as one line in a comment at the top of the stylesheet ("Look: s
 
 ## Type
 
-- **One sans-serif family** with a little character: Plus Jakarta Sans, Manrope, Outfit, Urbanist, Sora, DM Sans, Figtree, Onest, Geist or Inter, or the system stack (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`). Load from Google Fonts with `display=swap`, with the system stack as fallback. A second family only for code (a mono) or when the brand already has a display face.
+- **One sans-serif family** with a little character: Plus Jakarta Sans, Manrope, Outfit, Urbanist, Sora, DM Sans, Figtree, Onest, Geist or Inter, or the system stack (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`). Load from Google Fonts with `display=swap`, with the system stack as fallback. A second family only for a mono partner or when the brand already has a display face.
+- **A mono partner for meta** (Geist Mono, JetBrains Mono, IBM Plex Mono, DM Mono) is one of the cheapest ways to make a dashboard or tool look made: use it for the change and its comparison ("+12% vs last month"), axis labels, counts in navigation, section labels, invoice and card numbers, keycaps and timestamps. Never for headings, body or buttons.
+- **Two-tone titles.** A page title can carry its context in a quieter tone: "October" in primary and "2026" in tertiary, or "Revenue" with the period muted beside it.
 - **Weights 400, 500 and 600.** 700 sparingly for the largest figure. No 800/900 on UI.
 - **A compact scale.** 12 (captions, tab labels), 13, 14 (secondary text, table cells), 16 (body, row titles), 18, 20 (card titles), 24 (section and page titles), 32 (hero figures in apps and dashboards). Landing hero headlines 40 to 56px; never above 64px.
 - **Letter-spacing:** -0.01em to -0.02em on 20px and above; 0 on body; small uppercase labels are rare and lightly tracked (0.04em), not a recurring style.
@@ -28,7 +30,7 @@ Write the choice as one line in a comment at the top of the stylesheet ("Look: s
 
 ## Colour
 
-- **Canvas:** a light neutral, slightly cool or warm: `#F5F6F8`, `#F4F5F7`, `#F7F7F5`, `#F2F4F7`. White canvas with light grey cards also works. For a dark app: `#0B0B0F` to `#141418` canvas, `#1C1C22` surfaces.
+- **Canvas:** a light neutral, slightly cool or warm: `#F5F6F8`, `#F4F5F7`, `#F7F7F5`, `#F2F4F7`. White canvas with light grey cards also works. For a dark app use graphite, not blue-black or purple-black: `#0E0E0F` to `#141415` canvas, `#18181A` to `#1C1C1E` surfaces, `#232326` raised, borders `rgba(255,255,255,.07)`.
 - **Surfaces:** white (`#FFFFFF`) cards on the canvas; an inner panel one step darker than the card (`#F6F7F9`).
 - **Text:** primary `#0F172A`-ish (near-black, not pure), secondary `#64748B`-ish, tertiary for placeholders `#94A3B8`. Hairlines `#E9ECF1`.
 - **One brand colour** (see below), used for: the primary button, the active tab and nav item, links, the main chart series, selected states, and at most one large filled card (a summary card) per screen. A soft tint of it (8 to 12% opacity on the canvas) for chips and selected backgrounds.
@@ -51,7 +53,8 @@ Pick one that fits, then vary its exact hue so it is not a stock value. Avoid th
 
 - **Cards:** white, radius 16 to 24 on mobile and 12 to 16 on desktop, padding 16 to 20 (mobile) or 20 to 24 (desktop).
 - **Depth:** either a hairline border (`1px solid #EEF0F3`) or a soft shadow, usually not both strongly. A good soft shadow: `0 1px 2px rgba(16,24,40,.04), 0 8px 24px -12px rgba(16,24,40,.10)`. Floating elements (tab bar, sheets, popovers): `0 12px 32px -8px rgba(16,24,40,.18)`.
-- **No** textures, noise, paper, bevels, inner glows, coloured offset shadows, or gradient borders on product UI. A gentle gradient on one summary card or a landing hero background is fine.
+- **Material, quietly.** What makes a well-made surface feel physical is small: a tone shift inside one neutral (the top of a card 2 to 4% lighter than the bottom), a 1px highlight along the top edge (`inset 0 1px 0 rgba(255,255,255,.05)` on dark, `rgba(255,255,255,.8)` on light), a hairline border, and on light themes a small soft shadow. The active navigation item is a raised step of the same material, not a coloured pill. Recipes are in `showpiece.md` (Surfaces with material).
+- **No** textures, noise, paper, heavy bevels, coloured glows on chrome, coloured offset shadows, gradient borders, or gradients from one hue to another on product UI.
 
 ## Radius and spacing
 

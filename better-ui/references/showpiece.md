@@ -2,17 +2,66 @@
 
 Everything here is made with HTML, CSS and inline SVG, so it needs no image files and stays sharp at any size. The recipes are starting points: adapt colours to your tokens and fill them with this product's content.
 
-Contents: keep it real · the rule of detail · the app summary card · product mock · floating detail cards · atmosphere · charts · avatars and people · product thumbnails · icons and icon chips · empty-state illustration · logos and proof · frames · on a phone
+Contents: keep it real · the rule of detail · surfaces with material · a rendered object · the app summary card · product mock · floating detail cards · atmosphere · charts · avatars and people · product thumbnails · icons and icon chips · empty-state illustration · logos and proof · frames · on a phone
 
 ## Keep it real
 
-Every visual here should look like something a real product would show. No invented props, metaphor objects, textures or materials: the visual moments come from the product's own content (its figures, its items, its interface) drawn cleanly. Atmosphere belongs on landing pages, not inside product UI.
+Every visual here should look like something a real product would show. No invented props, metaphor objects or textures: the visual moments come from the product's own content (its figures, its items, its interface) drawn cleanly. The one exception is a rendered object that *is* the thing a figure counts (see below). Atmosphere belongs on landing pages, not inside product UI.
 
 ## The rule of detail
 
 A visual reads as real when it has the density of a real thing. Count the distinct designed pieces in your showpiece: a navigation with an active item, a title, a control row, four figures with deltas, a chart with grid, axis and a highlighted point, five table rows each with an avatar, a name, a figure and a status pill. That is thirty-plus pieces, and that is the level to work at. Five grey bars is a wireframe.
 
 Use the product's real nouns and plausible numbers. Vary the content: different names, different lengths, different statuses.
+
+## Surfaces with material
+
+The difference between a flat template and a screen that looks made is often a few quiet layers on each surface. Use them on cards, the sidebar, inputs and the active navigation item, all from one neutral:
+
+```css
+/* dark, graphite */
+.card { background: linear-gradient(180deg, #1b1b1d, #161618); border: 1px solid rgba(255,255,255,.07);
+  border-radius: 16px; box-shadow: inset 0 1px 0 rgba(255,255,255,.05); }
+.nav a[aria-current] { background: linear-gradient(180deg, #2a2a2d, #222225); border: 1px solid rgba(255,255,255,.08);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 1px 2px rgba(0,0,0,.4); border-radius: 10px; }
+.kbd { font: 500 11px/1 var(--mono); padding: 4px 6px; border-radius: 6px; background: #232326;
+  border: 1px solid rgba(255,255,255,.08); box-shadow: inset 0 -1px 0 rgba(0,0,0,.5); }
+/* light */
+.card { background: linear-gradient(180deg, #fff, #fcfcfb); border: 1px solid #ebebe8;
+  box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(20,20,20,.04), 0 6px 16px -8px rgba(20,20,20,.08); }
+```
+
+- Give the screen room: card padding 24 to 32 on desktop, navigation rows 36 to 40px with 16 to 18px icons, a page title of 28 to 40px. Generous, even padding is most of what reads as quality in a close-up.
+- Section labels in the navigation ("Navigation", "Plans") in the mono, muted, sentence case. Counts right-aligned in the mono.
+- One material for everything. Do not mix a glossy card with a flat one.
+
+## A rendered object
+
+When a figure counts a physical thing, an object drawn in CSS inside that figure's card is the strongest single moment a dashboard can have: payment cards beside spend or paid revenue, a receipt beside paid invoices, a ticket beside bookings, a parcel label beside shipments. Only for the thing the number counts, at most one per screen, and never as a sticker on an unrelated card.
+
+```html
+<article class="kpi">                 <!-- position: relative; overflow: hidden -->
+  <p class="label">Paid this month</p><p class="fig">$48,210</p><p class="meta">+12% vs last month</p>
+  <div class="obj" aria-hidden="true"><div class="pcard back"></div><div class="pcard"><i class="chip"></i><span class="num">•••• 4821</span></div></div>
+</article>
+```
+
+```css
+.obj { position: absolute; right: -28px; top: 50%; width: 190px; height: 120px; transform: translateY(-50%) rotate(-9deg); }
+.pcard { position: absolute; inset: 0; border-radius: 14px;
+  background: linear-gradient(135deg, #3b3b3f 0%, #1c1c1f 48%, #2b2b2f 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), inset 0 -1px 0 rgba(0,0,0,.5), 0 20px 30px -14px rgba(0,0,0,.7); }
+.pcard::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.09) 46%, transparent 62%); }   /* sheen */
+.pcard.back { transform: translate(26px, -24px) rotate(8deg); filter: brightness(.75); }
+.chip { position: absolute; left: 18px; top: 40px; width: 30px; height: 22px; border-radius: 5px;
+  background: linear-gradient(135deg, #e4e4e4, #9b9b9b); }
+.num { position: absolute; right: 18px; bottom: 16px; font: 500 11px/1 var(--mono); letter-spacing: .1em; color: rgba(255,255,255,.7); }
+```
+
+- The card's own edge crops the object, so it reads as sitting in the card, and the text keeps the left 55 to 60% clear. Check that the object covers nothing written.
+- Light, shadow and a slight rotation are what make it real; a flat rectangle is a sticker. Draw details as shapes (a chip, a masked number, a network mark of two circles), never real brand logos.
+- A receipt: off-white paper with a zigzag or perforated edge (`clip-path` polygon), mono lines for items and total, a small "Paid" mark, a soft shadow, rotated 3 to 6 degrees.
 
 ## The app summary card
 
@@ -125,7 +174,22 @@ Position the tooltip as an HTML element over the highlighted point: a small dark
 
 **Heatmap or calendar grid.** A CSS grid of small rounded squares in four or five tints of one hue.
 
-Compute coordinates from your real sample data (a few lines of JS, or by hand) so the chart, the totals and the table agree. A dashboard should show at least three different chart forms; a landing page's product mock should contain at least one.
+Compute coordinates from your real sample data (a few lines of JS, or by hand) so the chart, the totals and the table agree. One main chart leads the screen; anything else that shows data is smaller and different in kind.
+
+### Chart ideas that read as designed
+
+Pick the form from the question the chart answers, then draw it with care. These are the forms good product shots use instead of the library default:
+
+- **Mirrored comparison** (this period against the last): the current period above a centre axis in colour, the previous one mirrored below it in neutral greys, both with smooth curves and mono axis labels on each side. One glance shows growth and shape.
+- **Series that match a legend elsewhere.** When the chart splits by category (plans, channels, regions), give each a colour and show the same colour as a dot beside that category in the navigation or the list next to it, so the screen explains the chart without a separate legend.
+- **Ghost bars:** each current bar with the previous period as a neutral bar or outline behind it, the bar that matters in the accent with a value chip.
+- **Bullet or target:** a bar against a target tick ("$48k of $60k goal"), for one figure with a goal.
+- **Slope chart** for how a ranking or share moved between two dates; **small multiples** (the same tiny chart per category on one scale) instead of one chart with eight tangled lines.
+- **Segmented bar** for share right now; **calendar heatmap** for daily activity; **waterfall** for how a total was built.
+
+Drawing it well: smooth curves with cubic segments (Catmull-Rom or monotone), 2px strokes with round caps, a faint grid, mono labels in the tertiary tone, the leading series a little brighter or thicker. On dark themes a very soft bloom on the lines of the main chart only (`filter: drop-shadow(0 0 6px color-mix(in srgb, currentColor 40%, transparent))`) is fine; never on chrome.
+
+A landing page's product mock should contain at least one chart.
 
 ## Avatars and people
 
