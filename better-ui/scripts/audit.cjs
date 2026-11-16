@@ -387,6 +387,8 @@ function measure(targetWidth) {
       const cs = getComputedStyle(el);
       // photographs and artwork are imagery, not a block of colour
       if (/url\(/.test(cs.backgroundImage) || [...el.querySelectorAll('img, video, picture')].some((im) => { const q = im.getBoundingClientRect(); return q.width * q.height > r.width * r.height * 0.4; })) return false;
+      // a scrim or caption overlay laid over a photograph belongs to the image
+      if ((document.elementsFromPoint(r.left + r.width / 2, r.top + r.height / 2) || []).some((x) => /^(IMG|VIDEO|PICTURE|CANVAS)$/.test(x.tagName) || /url\(/.test(getComputedStyle(x).backgroundImage))) return false;
       let m = (cs.backgroundColor || '').match(/[\d.]+/g);
       if ((!m || (m.length > 3 && +m[3] < 0.6)) && /gradient/.test(cs.backgroundImage)) m = (cs.backgroundImage.match(/rgba?\([^)]*\)/) || [''])[0].match(/[\d.]+/g);
       if (!m || (m.length > 3 && +m[3] < 0.6)) return false;
