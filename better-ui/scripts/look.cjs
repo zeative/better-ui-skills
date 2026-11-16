@@ -3,7 +3,7 @@
 // that every generated app uses. Deterministic: the same product name always gets the same pick.
 //
 // usage: node look.cjs "<product name>" <category> [--not <n>]
-//   category: finance | fitness | habits | wellness | productivity | commerce | saas | health | food | travel | other
+//   category: finance | crypto | fitness | habits | wellness | sleep | health | productivity | commerce | saas | food | travel | media | other
 //   --not <n> skips the nth option (to re-deal if the first does not suit the brief)
 //
 // Prints the look, canvas, brand colour, accent, font and its mono partner. Treat it as the starting point for
@@ -58,6 +58,24 @@ const LOOKS = {
   travel: [
     { look: 'fresh gradient', canvas: '#EFF6FF', brand: '#0B63F6', accent: '#FFB703', font: 'Plus Jakarta Sans', note: 'sky gradient, sunshine accents, photo-led cards' },
     { look: 'monochrome', canvas: '#F5F5F4', brand: '#111111', accent: '#F97316', font: 'Manrope', note: 'black and white with sunset orange' },
+  ],
+  // categories whose products are usually dark: the content (artwork, charts, calm) glows on a dark ground
+  media: [
+    { look: 'dark with one neon', canvas: '#0B0B0E', brand: '#1ED760', accent: '#FFFFFF', font: 'Geist', note: 'near-black, album art carries the colour, green for play and the active tab' },
+    { look: 'dark with one neon', canvas: '#101014', brand: '#FF5A5F', accent: '#FFFFFF', font: 'Inter', note: 'dark graphite, coral for play and progress, artwork large' },
+    { look: 'dark with one neon', canvas: '#0E0D12', brand: '#B4A1FF', accent: '#FFD166', font: 'Manrope', note: 'deep ink, lavender for the active state, warm yellow for highlights' },
+    { look: 'monochrome', canvas: '#F4F4F2', brand: '#111111', accent: '#FF4D2E', font: 'Instrument Sans', note: 'white and black, artwork as the only colour, one hot accent' },
+  ],
+  crypto: [
+    { look: 'dark with one neon', canvas: '#0B0D10', brand: '#3DDC97', accent: '#FFFFFF', font: 'Geist', note: 'near-black, mint for gains and the primary action, large area chart' },
+    { look: 'dark with one neon', canvas: '#0D0E12', brand: '#C6F432', accent: '#FFFFFF', font: 'Inter', note: 'graphite, lime for the chart line and actions' },
+    { look: 'dark with one neon', canvas: '#0F1016', brand: '#7C8CFF', accent: '#3DDC97', font: 'Manrope', note: 'deep navy-black, periwinkle actions, mint for gains' },
+    { look: 'monochrome', canvas: '#F5F5F3', brand: '#111111', accent: '#16A34A', font: 'Geist', note: 'white page, black cards and buttons, green only for gains' },
+  ],
+  sleep: [
+    { look: 'dark with one neon', canvas: '#0E1020', brand: '#9C8CFF', accent: '#FFD9A0', font: 'Figtree', note: 'night-blue canvas, soft violet for the session, warm moonlight accent' },
+    { look: 'dark with one neon', canvas: '#121018', brand: '#FF9F7A', accent: '#FFFFFF', font: 'DM Sans', note: 'deep plum-black, apricot for play and the streak' },
+    { look: 'soft tint', canvas: '#F3F1FA', brand: '#2E2A5C', accent: '#8FD3C4', font: 'DM Sans', note: 'calm lavender canvas, deep indigo cards, sea-green accents' },
   ],
   other: [
     { look: 'bright and clean', canvas: '#F6F7F9', brand: '#2563EB', accent: '#F59E0B', font: 'Plus Jakarta Sans', note: 'blue for actions' },

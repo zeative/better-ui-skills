@@ -123,6 +123,7 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
 **Rules:**
 
 - **Open with data.** Ship believable sample data in a mid-use state (some done, some pending, a week of history) so the first view is full. Offer "Clear sample data" in a settings screen or menu; never put a sample-data note on the main screens. Design the empty state too.
+- **One dominant thing on the first screen.** The element the screen is about (the balance with its chart, today's session, the now-playing artwork, the active order) takes 35 to 50% of the first screen, drawn large and well; everything else is clearly smaller. A first screen of five medium cards of similar size has no focus, however neat. The main chart sits above the fold, not cut by the tab bar.
 - **Keep it calm.** One summary card, then white cards. Three to five things on the first screen, not ten. No module repeats information another already shows.
 - **Transaction rows lead with a clear mark:** a line icon for the category in a soft chip, or a person's avatar for transfers. Keep one style for every row.
 - **Every item has its own icon.** Two different exercises, categories or accounts never share the same glyph; draw or pick a distinct one for each.
