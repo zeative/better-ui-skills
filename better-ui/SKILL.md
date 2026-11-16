@@ -59,7 +59,7 @@ When the brief is thin, assume specifically, build, and list your assumptions at
 
 ## 3. Set up the system
 
-Read `references/system.md` and write its tokens at the top of the stylesheet before any component. In short:
+Read `references/spec.md` first: it fixes every size, space, radius, type style and colour role as one value for phone apps, desktop apps and dashboards, professional data tools and landing pages, chosen from Apple's and Google's guidelines, Refactoring UI, Practical UI and Nielsen Norman Group research. Copy `assets/tokens.css` verbatim to the top of the stylesheet and build only from it; never interpolate or invent a value. Where any other file gives a range, `spec.md` decides. Then read `references/system.md` for the look. In short:
 
 - **A look:** one contemporary look (bright and clean, dark with one neon, monochrome, fresh gradient) on a neutral canvas; no pastel canvases or candy-coloured cards: a palette and surface treatment, not a theme. On a blank slate, deal it rather than choosing by habit, because habit lands on the same indigo or emerald every generated app uses:
   ```bash

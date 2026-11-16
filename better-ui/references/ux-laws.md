@@ -57,7 +57,7 @@ Contents: perception and grouping · attention and hierarchy · choice and memor
 Review every render with this method, in order, instead of asking whether you like it:
 
 1. **Predicted gaze order.** Run the audit and read its gaze order: the first item must be the screen's primary thing, and the first two must not be near-equal. If they are wrong, change weight (size, weight, contrast), not colour.
-2. **Squint test.** Blur the screenshot (or view it small). You should see the primary, then the groups you intended, and nothing else.
+2. **Squint and grayscale test.** Open the audit's `*-squint.png` (the first screen in grayscale, blurred). You should see the primary, then the groups you intended, and nothing else. If the hierarchy only worked through colour, it disappears here.
 3. **Five-second test.** Look for five seconds, then say what the screen is for and what its main number or action is. If you cannot, the hierarchy is not doing its job.
 4. **Grouping and alignment.** Check proximity, common region and similarity against the tables above.
 5. **Heuristic pass** (Nielsen): visibility of system status; match with the real world (the user's words); user control (undo, back, cancel); consistency; error prevention; recognition rather than recall; flexibility (shortcuts for experts); minimal design (nothing irrelevant); helpful errors; help where needed.

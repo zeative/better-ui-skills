@@ -458,6 +458,25 @@ function measure(targetWidth) {
     }
   }
   out.squeezed = [...new Set(squeezed)].slice(0, 5);
+  // spec compliance: spacing values off the scale, too many font sizes on the first screen, accent side borders on cards
+  const SCALE = new Set([0, 1, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128]);
+  const offScale = {}; const firstSizes = new Set(); const sideBorder = [];
+  for (const el of document.querySelectorAll('body *')) {
+    if (!isVisible(el)) continue; const cs = getComputedStyle(el); const r = el.getBoundingClientRect();
+    for (const prop of ['paddingTop', 'paddingLeft', 'marginTop', 'marginBottom', 'rowGap', 'columnGap']) {
+      const v = parseFloat(cs[prop]); if (!v || isNaN(v)) continue; const rv = Math.round(v);
+      if (Math.abs(v - rv) > 0.01 || !SCALE.has(rv)) offScale[rv] = (offScale[rv] || 0) + 1;
+    }
+    if (r.top < innerHeight && r.bottom > 0 && [...el.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim())) { const fs = Math.round(parseFloat(cs.fontSize)); if (fs > 11) firstSizes.add(fs); }
+    const bl = parseFloat(cs.borderLeftWidth), bt = parseFloat(cs.borderTopWidth), br = parseFloat(cs.borderRightWidth);
+    if (r.width > 120 && r.height > 48 && ((bl >= 3 && bl > br) || (bt >= 3 && parseFloat(cs.borderBottomWidth) < bt))) {
+      const c = (bl >= 3 ? cs.borderLeftColor : cs.borderTopColor).match(/[\d.]+/g);
+      if (c && toHsl(+c[0], +c[1], +c[2]).s > 0.3) sideBorder.push(describe(el));
+    }
+  }
+  out.offScale = Object.entries(offScale).sort((a, b) => b[1] - a[1]).slice(0, 6);
+  out.firstSizes = [...firstSizes].sort((a, b) => b - a);
+  out.sideBorder = sideBorder.slice(0, 4);
   // predicted gaze order: rank what is on the first screen by visual weight (size, weight, contrast, saturation)
   const lumOf = (m) => { const v = m.slice(0, 3).map((x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4; }); return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
   const bgOf = (el) => { for (let n = el; n; n = n.parentElement) { const m = (getComputedStyle(n).backgroundColor || '').match(/[\d.]+/g); if (m && !(m.length > 3 && +m[3] < 0.5)) return m.map(Number); } return [255, 255, 255]; };
@@ -1183,6 +1202,9 @@ function report(results, facts, focus, runtime, args) {
   for (const { width, m } of results) { if (m.squeezed && m.squeezed.length && width < 500) { problem('CRAFT', `Text squeezed into narrow columns at ${width}px: ${m.squeezed.slice(0, 4).join('; ')}. Give the text at least 60% of its card, keep card titles and meta on one line, and clamp card body text to two lines (references/copy.md, Give text room).`); break; } }
   for (const { width, m } of results) { const g = m.gaze || []; const sig = (x) => x.d.split(' "')[0]; if (g.length >= 2 && g[1].w > g[0].w * 0.88 && sig(g[0]) !== sig(g[1])) { problem('CRAFT', `No clear first thing at ${width}px: the two heaviest elements on the first screen weigh almost the same (${g[0].d.slice(0, 40)} ${g[0].w}, ${g[1].d.slice(0, 40)} ${g[1].w}). Make the primary clearly heavier by size, weight or contrast, or quieten the other (references/ux-laws.md, Visual weight).`); break; } }
   for (const { width, m } of results) { if (m.boxedChart) { problem('CRAFT', `The main chart is boxed in a card on the phone: ${m.boxedChart}. Put the summary directly on the canvas and let its chart run the full width of the screen (references/product-ui.md, The summary, unboxed).`); break; } }
+  { const off = widest.offScale || []; const n = off.reduce((a, [, c]) => a + c, 0); if (n >= 6) problem('CRAFT', `${n} spacing values are off the scale (${off.map(([v, c]) => `${v}px ×${c}`).join(', ')}). Use only 0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96 and 128 (references/spec.md, Spacing).`); }
+  for (const { width, m } of results) { if (m.firstSizes && m.firstSizes.length > 5) { problem('CRAFT', `${m.firstSizes.length} font sizes on the first screen at ${width}px (${m.firstSizes.join(', ')}px). Use at most five from the ramp in references/spec.md.`); break; } }
+  if (widest.sideBorder && widest.sideBorder.length) problem('CRAFT', `Cards with a coloured side or top border: ${widest.sideBorder.join('; ')}. A coloured edge on cards is one of the most recognisable tells of generated UI; group with spacing or a surface step instead.`);
   if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }
@@ -1339,6 +1361,11 @@ function report(results, facts, focus, runtime, args) {
         const fold = rel(path.join(args.out, `${width}-fold.png`));
         await page.screenshot({ path: fold });
         shots.push(fold);
+        // squint test: the first screen in grayscale and blurred, so only hierarchy and grouping remain
+        const squint = rel(path.join(args.out, `${width}-squint.png`));
+        await page.addStyleTag({ content: 'html{filter:grayscale(1) blur(6px)!important}' }).catch(() => {});
+        await page.screenshot({ path: squint }).then(() => shots.push(squint), () => {});
+        await page.evaluate(() => { const s = [...document.querySelectorAll('style')].pop(); if (s && /grayscale\(1\) blur/.test(s.textContent)) s.remove(); }).catch(() => {});
         // Tall pages are cut into parts that stay legible when viewed; one huge image would be
         // scaled down until its text and details cannot be judged.
         if (m.docHeight > height * 1.15) {
