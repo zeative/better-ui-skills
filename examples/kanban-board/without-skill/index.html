@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team Board</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --surface: #ffffff;
+    --column: #ebedf0;
+    --text: #1f2328;
+    --muted: #656d76;
+    --border: #d8dce1;
+    --accent: #3b5bdb;
+    --accent-hover: #2f4ac0;
+    --danger: #c92a2a;
+    --danger-bg: #fff0f0;
+    --warn: #a35b00;
+    --warn-bg: #fff4e0;
+    --ok-bg: #edf2ff;
+    --shadow: 0 1px 2px rgba(15, 23, 42, .08), 0 1px 1px rgba(15, 23, 42, .04);
+    --shadow-lift: 0 8px 24px rgba(15, 23, 42, .16);
+    --radius: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15171a;
+      --surface: #22252a;
+      --column: #1c1f23;
+      --text: #e6e8eb;
+      --muted: #9aa1aa;
+      --border: #343840;
+      --accent: #748ffc;
+      --accent-hover: #91a7ff;
+      --danger: #ff8787;
+      --danger-bg: #3a1f22;
+      --warn: #ffc078;
+      --warn-bg: #3a2c17;
+      --ok-bg: #232a40;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .4);
+      --shadow-lift: 0 8px 24px rgba(0, 0, 0, .5);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+  }
+  button, input, select, textarea { font: inherit; color: inherit; }
+
+  /* ---------- Header ---------- */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 14px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  header h1 { font-size: 17px; margin: 0; font-weight: 650; letter-spacing: -.01em; }
+  .toolbar { display: flex; align-items: center; gap: 12px; margin-left: auto; flex-wrap: wrap; }
+  .search {
+    width: 220px;
+    padding: 7px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+  }
+  .search:focus { outline: 2px solid var(--accent); outline-offset: -1px; background: var(--surface); }
+
+  .people { display: flex; align-items: center; }
+  .people button {
+    border: 2px solid var(--surface);
+    margin-left: -6px;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    background: none;
+    transition: transform .12s, opacity .12s;
+  }
+  .people button:first-child { margin-left: 0; }
+  .people button:hover { transform: translateY(-2px); z-index: 1; }
+  .people.filtering button:not([aria-pressed="true"]) { opacity: .35; }
+  .people button[aria-pressed="true"] { border-color: var(--accent); z-index: 2; }
+  .people button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .btn {
+    border: 1px solid var(--border);
+    background: var(--surface);
+    padding: 7px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 550;
+  }
+  .btn:hover { background: var(--bg); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+  @media (prefers-color-scheme: dark) { .btn-primary { color: #10131a; } }
+  .btn-danger { color: var(--danger); border-color: transparent; background: none; padding-left: 0; }
+  .btn-danger:hover { background: none; text-decoration: underline; }
+  .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---------- Board ---------- */
+  main {
+    flex: 1;
+    display: flex;
+    gap: 14px;
+    padding: 18px 24px 24px;
+    overflow-x: auto;
+    align-items: flex-start;
+  }
+  .column {
+    flex: 0 0 280px;
+    background: var(--column);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+  }
+  .column-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px 8px;
+  }
+  .column-head h2 { font-size: 13px; margin: 0; font-weight: 650; }
+  .column-head .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .count {
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--surface);
+    border-radius: 999px;
+    padding: 0 8px;
+    min-width: 22px;
+    text-align: center;
+  }
+  .cards {
+    list-style: none;
+    margin: 0;
+    padding: 4px 8px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 48px;
+    overflow-y: auto;
+    border-radius: 8px;
+    transition: background .12s;
+  }
+  .cards.drag-over { background: rgba(59, 91, 219, .07); }
+  .empty {
+    color: var(--muted);
+    font-size: 12.5px;
+    text-align: center;
+    padding: 14px 8px;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+  }
+  .add-in-column {
+    margin: 0 8px 10px;
+    padding: 7px 8px;
+    text-align: left;
+    border: none;
+    background: none;
+    color: var(--muted);
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .add-in-column:hover { background: var(--surface); color: var(--text); }
+  .add-in-column:focus-visible { outline: 2px solid var(--accent); }
+
+  /* ---------- Card ---------- */
+  .card {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 10px 12px;
+    box-shadow: var(--shadow);
+    cursor: grab;
+    border: 1px solid transparent;
+    transition: box-shadow .12s, border-color .12s;
+  }
+  .card:hover { border-color: var(--border); }
+  .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .card.dragging { opacity: .4; }
+  .card.done .card-title { color: var(--muted); }
+  .card-top { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .priority {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .priority::before { content: ""; width: 7px; height: 7px; border-radius: 2px; background: currentColor; }
+  .priority.high { color: var(--danger); }
+  .priority.medium { color: var(--warn); }
+  .card-title { font-weight: 560; margin: 0; overflow-wrap: anywhere; }
+  .card-desc {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 12.5px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+  .card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; min-height: 24px; }
+  .due {
+    font-size: 12px;
+    color: var(--muted);
+    padding: 1px 7px;
+    border-radius: 999px;
+    background: var(--bg);
+    white-space: nowrap;
+  }
+  .due.overdue { color: var(--danger); background: var(--danger-bg); font-weight: 600; }
+  .due.soon { color: var(--warn); background: var(--warn-bg); font-weight: 600; }
+
+  .drop-marker { height: 3px; border-radius: 2px; background: var(--accent); margin: -2px 0; }
+
+  /* ---------- Avatar ---------- */
+  .avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 650;
+    color: #fff;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  .avatar.unassigned { background: transparent; border: 1.5px dashed var(--border); color: var(--muted); }
+  .avatar.lg { width: 30px; height: 30px; font-size: 12px; }
+
+  /* ---------- Dialog ---------- */
+  dialog {
+    border: none;
+    border-radius: 14px;
+    padding: 0;
+    width: min(480px, calc(100vw - 32px));
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: var(--shadow-lift);
+  }
+  dialog::backdrop { background: rgba(15, 23, 42, .45); }
+  dialog form { padding: 22px; display: grid; gap: 14px; }
+  dialog h2 { margin: 0; font-size: 17px; }
+  .field { display: grid; gap: 5px; }
+  .field label { font-size: 12.5px; font-weight: 600; color: var(--muted); }
+  .field input, .field select, .field textarea {
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    width: 100%;
+  }
+  .field textarea { resize: vertical; min-height: 72px; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .actions { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+  .actions .spacer { flex: 1; }
+  .error { color: var(--danger); font-size: 12.5px; margin: 0; }
+
+  .hint { color: var(--muted); font-size: 12px; padding: 0 24px 14px; }
+  kbd { font: 11px ui-monospace, monospace; background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 0 4px; }
+
+  @media (max-width: 640px) {
+    header { padding: 12px 16px; }
+    .toolbar { margin-left: 0; width: 100%; }
+    .search { flex: 1; width: auto; }
+    main { padding: 14px 16px; }
+    .column { flex-basis: 85vw; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Product Team Board</h1>
+  <div class="toolbar">
+    <input id="search" class="search" type="search" placeholder="Search tasks…" aria-label="Search tasks">
+    <div id="people" class="people" role="group" aria-label="Filter by assignee"></div>
+    <button id="newTask" class="btn btn-primary" type="button">+ New task</button>
+  </div>
+</header>
+
+<main id="board" aria-label="Kanban board"></main>
+<p class="hint">Drag cards between columns, or focus a card and press <kbd>Alt</kbd>+<kbd>←</kbd>/<kbd>→</kbd> to move it. Changes are saved in this browser.</p>
+
+<dialog id="taskDialog" aria-labelledby="dialogTitle">
+  <form id="taskForm" method="dialog" novalidate>
+    <h2 id="dialogTitle">New task</h2>
+    <div class="field">
+      <label for="fTitle">Title</label>
+      <input id="fTitle" name="title" maxlength="140" autocomplete="off" placeholder="e.g. Ship onboarding checklist">
+      <p id="titleError" class="error" hidden>Give the task a title.</p>
+    </div>
+    <div class="field">
+      <label for="fDesc">Description</label>
+      <textarea id="fDesc" name="desc" placeholder="Optional details, links, acceptance criteria…"></textarea>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="fAssignee">Assignee</label>
+        <select id="fAssignee" name="assignee"></select>
+      </div>
+      <div class="field">
+        <label for="fDue">Due date</label>
+        <input id="fDue" name="due" type="date">
+      </div>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="fPriority">Priority</label>
+        <select id="fPriority" name="priority">
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fColumn">Status</label>
+        <select id="fColumn" name="column"></select>
+      </div>
+    </div>
+    <div class="actions">
+      <button id="deleteBtn" type="button" class="btn btn-danger" hidden>Delete task</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="cancelBtn">Cancel</button>
+      <button type="submit" class="btn btn-primary" id="saveBtn">Add task</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(() => {
+  const STORAGE_KEY = 'team-kanban-v1';
+
+  const COLUMNS = [
+    { id: 'backlog',    name: 'Backlog',     color: '#868e96' },
+    { id: 'todo',       name: 'To do',       color: '#4dabf7' },
+    { id: 'inprogress', name: 'In progress', color: '#fab005' },
+    { id: 'review',     name: 'In review',   color: '#9775fa' },
+    { id: 'done',       name: 'Done',        color: '#40c057' },
+  ];
+
+  const MEMBERS = [
+    { id: 'maya',  name: 'Maya Chen',      role: 'Product',     color: '#d6336c' },
+    { id: 'leo',   name: 'Leo Okafor',     role: 'Engineering', color: '#1c7ed6' },
+    { id: 'sara',  name: 'Sara Lindqvist', role: 'Design',      color: '#7048e8' },
+    { id: 'diego', name: 'Diego Ramos',    role: 'Engineering', color: '#0c8599' },
+    { id: 'priya', name: 'Priya Nair',     role: 'QA',          color: '#e8590c' },
+  ];
+  const memberById = Object.fromEntries(MEMBERS.map(m => [m.id, m]));
+  const PRIORITY_RANK = { high: 0, medium: 1, low: 2 };
+
+  // ---------- Dates (stored as local YYYY-MM-DD) ----------
+  const pad = n => String(n).padStart(2, '0');
+  const toISO = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const parseISO = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+  const today = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
+  const offset = days => { const d = today(); d.setDate(d.getDate() + days); return toISO(d); };
+  const daysUntil = iso => Math.round((parseISO(iso) - today()) / 86400000);
+  const shortDate = iso => parseISO(iso).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+
+  function describeDue(iso, isDone) {
+    const n = daysUntil(iso);
+    const date = shortDate(iso);
+    if (isDone) return { text: date, cls: '' };
+    if (n < 0)  return { text: `Overdue · ${date}`, cls: 'overdue' };
+    if (n === 0) return { text: 'Due today', cls: 'soon' };
+    if (n === 1) return { text: 'Due tomorrow', cls: 'soon' };
+    if (n <= 6) return { text: `${parseISO(iso).toLocaleDateString(undefined, { weekday: 'short' })} · ${date}`, cls: '' };
+    return { text: date, cls: '' };
+  }
+
+  // ---------- State ----------
+  const uid = () => Math.random().toString(36).slice(2, 10);
+
+  function seed() {
+    const t = (column, title, desc, assignee, due, priority) =>
+      ({ id: uid(), column, title, desc, assignee, due, priority });
+    return [
+      t('backlog', 'Research competitor pricing pages', 'Collect screenshots + tiers from top 5 competitors.', 'maya', offset(14), 'low'),
+      t('backlog', 'Dark mode for settings screen', '', 'sara', null, 'low'),
+      t('todo', 'Write PRD for team invites', 'Cover roles, pending invites, and email copy.', 'maya', offset(3), 'high'),
+      t('todo', 'Set up error tracking alerts', 'Route P1 alerts to #eng-oncall.', 'diego', offset(5), 'medium'),
+      t('todo', 'Test plan for billing migration', '', 'priya', offset(6), 'medium'),
+      t('inprogress', 'Onboarding checklist UI', 'Implement the 4-step checklist from the Figma file.', 'leo', offset(1), 'high'),
+      t('inprogress', 'Empty state illustrations', 'Projects, Reports and Inbox.', 'sara', offset(-1), 'medium'),
+      t('review', 'CSV export for reports', 'PR #482 — needs review from someone on platform.', 'diego', offset(0), 'high'),
+      t('done', 'Fix login redirect loop', 'Safari-only issue with SameSite cookies.', 'leo', offset(-3), 'high'),
+      t('done', 'Q4 roadmap review', '', 'maya', offset(-5), 'medium'),
+    ];
+  }
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const data = JSON.parse(raw);
+        if (Array.isArray(data)) return data.filter(t => COLUMNS.some(c => c.id === t.column));
+      }
+    } catch (_) { /* fall through to seed */ }
+    return seed();
+  }
+
+  let tasks = load();
+  const save = () => { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks)); } catch (_) {} };
+
+  const filters = { q: '', people: new Set() };
+
+  // ---------- DOM helpers ----------
+  function el(tag, props = {}, ...children) {
+    const node = document.createElement(tag);
+    for (const [k, v] of Object.entries(props)) {
+      if (v == null || v === false) continue;
+      if (k === 'class') node.className = v;
+      else if (k === 'text') node.textContent = v;
+      else if (k.startsWith('on')) node.addEventListener(k.slice(2), v);
+      else node.setAttribute(k, v === true ? '' : v);
+    }
+    for (const c of children.flat()) if (c != null) node.append(c);
+    return node;
+  }
+
+  const initials = name => name.split(/\s+/).map(p => p[0]).slice(0, 2).join('').toUpperCase();
+
+  function avatar(memberId, size = '') {
+    const m = memberById[memberId];
+    if (!m) return el('span', { class: `avatar unassigned ${size}`, title: 'Unassigned', 'aria-label': 'Unassigned', text: '?' });
+    const a = el('span', { class: `avatar ${size}`, title: m.name, 'aria-label': `Assigned to ${m.name}`, text: initials(m.name) });
+    a.style.background = m.color;
+    return a;
+  }
+
+  // ---------- Rendering ----------
+  const board = document.getElementById('board');
+  const peopleEl = document.getElementById('people');
+
+  function matches(t) {
+    if (filters.people.size && !filters.people.has(t.assignee || '')) return false;
+    if (filters.q) {
+      const hay = `${t.title} ${t.desc || ''} ${memberById[t.assignee]?.name || ''}`.toLowerCase();
+      if (!hay.includes(filters.q)) return false;
+    }
+    return true;
+  }
+
+  function renderPeople() {
+    peopleEl.replaceChildren(...MEMBERS.map(m => {
+      const pressed = filters.people.has(m.id);
+      return el('button', {
+        type: 'button',
+        'aria-pressed': String(pressed),
+        title: `${m.name} · ${m.role}`,
+        'aria-label': `Show tasks for ${m.name}`,
+        onclick: () => {
+          pressed ? filters.people.delete(m.id) : filters.people.add(m.id);
+          render();
+        },
+      }, avatar(m.id, 'lg'));
+    }));
+    peopleEl.classList.toggle('filtering', filters.people.size > 0);
+  }
+
+  function renderCard(t) {
+    const isDone = t.column === 'done';
+    const due = t.due ? describeDue(t.due, isDone) : null;
+    const card = el('li', {
+      class: `card${isDone ? ' done' : ''}`,
+      draggable: 'true',
+      tabindex: '0',
+      'data-id': t.id,
+      'aria-label': `${t.title}. ${t.priority} priority.${due ? ' ' + due.text + '.' : ''} ${memberById[t.assignee]?.name || 'Unassigned'}.`,
+    },
+      el('div', { class: 'card-top' }, el('span', { class: `priority ${t.priority}`, text: t.priority })),
+      el('p', { class: 'card-title', text: t.title }),
+      t.desc ? el('p', { class: 'card-desc', text: t.desc }) : null,
+      el('div', { class: 'card-foot' },
+        due ? el('span', { class: `due ${due.cls}`, text: due.text }) : el('span'),
+        avatar(t.assignee),
+      ),
+    );
+    card.addEventListener('click', () => openDialog({ task: t }));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDialog({ task: t }); }
+      if (e.altKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+        e.preventDefault();
+        const i = COLUMNS.findIndex(c => c.id === t.column) + (e.key === 'ArrowRight' ? 1 : -1);
+        if (i >= 0 && i < COLUMNS.length) {
+          moveTask(t.id, COLUMNS[i].id, Infinity);
+          board.querySelector(`[data-id="${t.id}"]`)?.focus();
+        }
+      }
+    });
+    card.addEventListener('dragstart', e => {
+      dragId = t.id;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', t.id);
+      requestAnimationFrame(() => card.classList.add('dragging'));
+    });
+    card.addEventListener('dragend', () => { dragId = null; card.classList.remove('dragging'); clearMarkers(); });
+    return card;
+  }
+
+  function render() {
+    renderPeople();
+    const filtering = filters.q || filters.people.size;
+    board.replaceChildren(...COLUMNS.map(col => {
+      const all = tasks.filter(t => t.column === col.id);
+      const visible = all.filter(matches);
+      const list = el('ul', { class: 'cards', 'data-column': col.id, 'aria-label': `${col.name} tasks` },
+        visible.length
+          ? visible.map(renderCard)
+          : el('li', { class: 'empty', text: filtering && all.length ? 'No matching tasks' : 'Drop tasks here' }),
+      );
+      wireDropZone(list);
+      const dot = el('span', { class: 'dot' }); dot.style.background = col.color;
+      return el('section', { class: 'column', 'aria-labelledby': `col-${col.id}` },
+        el('div', { class: 'column-head' },
+          dot,
+          el('h2', { id: `col-${col.id}`, text: col.name }),
+          el('span', { class: 'count', 'aria-label': `${all.length} tasks`, text: filtering ? `${visible.length}/${all.length}` : String(all.length) }),
+        ),
+        list,
+        el('button', { class: 'add-in-column', type: 'button', onclick: () => openDialog({ column: col.id }), text: '+ Add task' }),
+      );
+    }));
+  }
+
+  // ---------- Moving / drag and drop ----------
+  let dragId = null;
+
+  // Move task into `column`, placed before the task with id `beforeId` (or at end if not found).
+  function moveTask(id, column, beforeId) {
+    const idx = tasks.findIndex(t => t.id === id);
+    if (idx < 0) return;
+    const [task] = tasks.splice(idx, 1);
+    task.column = column;
+    let insertAt = tasks.findIndex(t => t.id === beforeId);
+    if (insertAt < 0) {
+      // after the last task currently in that column, else at end
+      const lastInCol = tasks.map(t => t.column).lastIndexOf(column);
+      insertAt = lastInCol >= 0 ? lastInCol + 1 : tasks.length;
+    }
+    tasks.splice(insertAt, 0, task);
+    save();
+    render();
+  }
+
+  function clearMarkers() {
+    document.querySelectorAll('.drop-marker').forEach(m => m.remove());
+    document.querySelectorAll('.drag-over').forEach(m => m.classList.remove('drag-over'));
+  }
+
+  function cardAfterPointer(list, y) {
+    const cards = [...list.querySelectorAll('.card:not(.dragging)')];
+    return cards.find(c => { const r = c.getBoundingClientRect(); return y < r.top + r.height / 2; }) || null;
+  }
+
+  function wireDropZone(list) {
+    list.addEventListener('dragover', e => {
+      if (!dragId) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      clearMarkers();
+      list.classList.add('drag-over');
+      const before = cardAfterPointer(list, e.clientY);
+      const marker = el('li', { class: 'drop-marker', 'aria-hidden': 'true' });
+      before ? list.insertBefore(marker, before) : list.append(marker);
+    });
+    list.addEventListener('dragleave', e => {
+      if (!list.contains(e.relatedTarget)) clearMarkers();
+    });
+    list.addEventListener('drop', e => {
+      if (!dragId) return;
+      e.preventDefault();
+      const before = cardAfterPointer(list, e.clientY);
+      const id = dragId;
+      clearMarkers();
+      moveTask(id, list.dataset.column, before ? before.dataset.id : null);
+    });
+  }
+
+  // ---------- Dialog ----------
+  const dialog = document.getElementById('taskDialog');
+  const form = document.getElementById('taskForm');
+  const f = {
+    title: document.getElementById('fTitle'),
+    desc: document.getElementById('fDesc'),
+    assignee: document.getElementById('fAssignee'),
+    due: document.getElementById('fDue'),
+    priority: document.getElementById('fPriority'),
+    column: document.getElementById('fColumn'),
+  };
+  const titleError = document.getElementById('titleError');
+  const deleteBtn = document.getElementById('deleteBtn');
+  let editingId = null;
+
+  f.assignee.append(el('option', { value: '', text: 'Unassigned' }), ...MEMBERS.map(m => el('option', { value: m.id, text: m.name })));
+  f.column.append(...COLUMNS.map(c => el('option', { value: c.id, text: c.name })));
+
+  function openDialog({ task = null, column = 'todo' } = {}) {
+    editingId = task?.id || null;
+    document.getElementById('dialogTitle').textContent = task ? 'Edit task' : 'New task';
+    document.getElementById('saveBtn').textContent = task ? 'Save changes' : 'Add task';
+    deleteBtn.hidden = !task;
+    titleError.hidden = true;
+    f.title.removeAttribute('aria-invalid');
+    f.title.value = task?.title || '';
+    f.desc.value = task?.desc || '';
+    f.assignee.value = task?.assignee || (filters.people.size === 1 ? [...filters.people][0] : '');
+    f.due.value = task?.due || '';
+    f.priority.value = task?.priority || 'medium';
+    f.column.value = task?.column || column;
+    dialog.showModal();
+    f.title.focus();
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const title = f.title.value.trim();
+    if (!title) {
+      titleError.hidden = false;
+      f.title.setAttribute('aria-invalid', 'true');
+      f.title.focus();
+      return;
+    }
+    const data = {
+      title,
+      desc: f.desc.value.trim(),
+      assignee: f.assignee.value || null,
+      due: f.due.value || null,
+      priority: f.priority.value,
+    };
+    const column = f.column.value;
+    if (editingId) {
+      const t = tasks.find(t => t.id === editingId);
+      Object.assign(t, data);
+      if (t.column !== column) { dialog.close(); moveTask(t.id, column, null); return; }
+    } else {
+      tasks.push({ id: uid(), column, ...data });
+      // keep new tasks at the end of their column
+      const added = tasks.pop();
+      const lastInCol = tasks.map(t => t.column).lastIndexOf(column);
+      tasks.splice(lastInCol >= 0 ? lastInCol + 1 : tasks.length, 0, added);
+    }
+    save();
+    dialog.close();
+    render();
+  });
+
+  f.title.addEventListener('input', () => {
+    if (f.title.value.trim()) { titleError.hidden = true; f.title.removeAttribute('aria-invalid'); }
+  });
+  document.getElementById('cancelBtn').addEventListener('click', () => dialog.close());
+  deleteBtn.addEventListener('click', () => {
+    const t = tasks.find(t => t.id === editingId);
+    if (t && confirm(`Delete "${t.title}"?`)) {
+      tasks = tasks.filter(x => x.id !== editingId);
+      save();
+      dialog.close();
+      render();
+    }
+  });
+  dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+
+  // ---------- Toolbar ----------
+  document.getElementById('newTask').addEventListener('click', () => openDialog());
+  document.getElementById('search').addEventListener('input', e => {
+    filters.q = e.target.value.trim().toLowerCase();
+    render();
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'n' && !dialog.open && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) && !e.metaKey && !e.ctrlKey && !e.altKey) {
+      e.preventDefault();
+      openDialog();
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+make a music player app: now playing with controls, a queue, and a library of playlists. single index.html, mobile first

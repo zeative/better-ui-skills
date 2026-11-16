@@ -100,6 +100,78 @@ Current models are already decent at some of these. These are the cases where be
 
 </details>
 
+### Ten more prompts, no judges
+
+After the skill was finished, ten new prompts were run the same way, both sides, and are shown as they came out. Nothing was ranked or picked by a judge, and all ten are here: six below and four in the fold.
+
+<table>
+<tr>
+<th width="50%">Without better-ui</th>
+<th width="50%">With better-ui</th>
+</tr>
+<tr><td colspan="2"><b>Coffee ordering app</b> · <i>"Bikin aplikasi pesan kopi buat kedai kopi kecil: menu, keranjang, dan status pesanan. Satu file index.html, mobile first."</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/coffee-order-before.jpg"><img src="docs/images/compare/coffee-order-before.jpg" alt="Coffee ordering app without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/coffee-order-after.jpg"><img src="docs/images/compare/coffee-order-after.jpg" alt="Coffee ordering app with better-ui" width="72%"></a></td>
+</tr>
+<tr><td colspan="2"><b>Kanban board</b> · <i>"make a kanban board web app for a small product team: columns, task cards with assignees and due dates, and a way to add tasks. single index.html"</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/kanban-board-before.jpg"><img src="docs/images/compare/kanban-board-before.jpg" alt="Kanban board without better-ui"></a></td>
+<td><a href="docs/images/compare/kanban-board-after.jpg"><img src="docs/images/compare/kanban-board-after.jpg" alt="Kanban board with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>SaaS analytics dashboard</b> · <i>"build a web analytics dashboard for a SaaS product: visitors, signups, conversion, traffic sources and top pages. dummy data, single index.html"</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/analytics-dashboard-before.jpg"><img src="docs/images/compare/analytics-dashboard-before.jpg" alt="SaaS analytics dashboard without better-ui"></a></td>
+<td><a href="docs/images/compare/analytics-dashboard-after.jpg"><img src="docs/images/compare/analytics-dashboard-after.jpg" alt="SaaS analytics dashboard with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Meditation and sleep app</b> · <i>"make a meditation and sleep app: today&#x27;s session, a library of guided sessions, and a weekly mindfulness streak. single index.html, mobile first"</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/meditation-app-before.jpg"><img src="docs/images/compare/meditation-app-before.jpg" alt="Meditation and sleep app without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/meditation-app-after.jpg"><img src="docs/images/compare/meditation-app-after.jpg" alt="Meditation and sleep app with better-ui" width="72%"></a></td>
+</tr>
+<tr><td colspan="2"><b>Student dashboard</b> · <i>"Bikin dashboard siswa untuk aplikasi belajar online: jadwal kelas hari ini, tugas yang belum dikumpulkan, nilai, dan progres kursus. Data dummy, satu file index.html."</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/student-dashboard-before.jpg"><img src="docs/images/compare/student-dashboard-before.jpg" alt="Student dashboard without better-ui"></a></td>
+<td><a href="docs/images/compare/student-dashboard-after.jpg"><img src="docs/images/compare/student-dashboard-after.jpg" alt="Student dashboard with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Music player</b> · <i>"make a music player app: now playing with controls, a queue, and a library of playlists. single index.html, mobile first"</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/music-player-before.jpg"><img src="docs/images/compare/music-player-before.jpg" alt="Music player without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/music-player-after.jpg"><img src="docs/images/compare/music-player-after.jpg" alt="Music player with better-ui" width="72%"></a></td>
+</tr>
+</table>
+
+<details>
+<summary><b>The other four</b></summary>
+
+<br>
+
+<table>
+<tr><th width="50%">Without better-ui</th><th width="50%">With better-ui</th></tr>
+<tr><td colspan="2"><b>Crypto portfolio tracker</b> · <i>"build a crypto portfolio tracker app: total balance, holdings with price changes, a chart and recent transactions. single index.html, mobile first"</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/crypto-portfolio-before.jpg"><img src="docs/images/compare/crypto-portfolio-before.jpg" alt="Crypto portfolio tracker without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/crypto-portfolio-after.jpg"><img src="docs/images/compare/crypto-portfolio-after.jpg" alt="Crypto portfolio tracker with better-ui" width="72%"></a></td>
+</tr>
+<tr><td colspan="2"><b>Recipe app</b> · <i>"make a recipe app: browse recipes by category, a recipe detail with ingredients and steps, and saved favourites. single index.html, mobile first"</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/recipe-app-before.jpg"><img src="docs/images/compare/recipe-app-before.jpg" alt="Recipe app without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/recipe-app-after.jpg"><img src="docs/images/compare/recipe-app-after.jpg" alt="Recipe app with better-ui" width="72%"></a></td>
+</tr>
+<tr><td colspan="2"><b>Bali villa landing page</b> · <i>"Bikin landing page buat villa sewaan di Bali: foto, fasilitas, harga per malam, ulasan tamu, dan tombol booking. Satu file index.html."</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/villa-landing-before.jpg"><img src="docs/images/compare/villa-landing-before.jpg" alt="Bali villa landing page without better-ui"></a></td>
+<td><a href="docs/images/compare/villa-landing-after.jpg"><img src="docs/images/compare/villa-landing-after.jpg" alt="Bali villa landing page with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Sneaker product page</b> · <i>"build a product page for an online sneaker store: gallery, sizes, colours, price, reviews and add to cart. single index.html"</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/sneaker-product-before.jpg"><img src="docs/images/compare/sneaker-product-before.jpg" alt="Sneaker product page without better-ui"></a></td>
+<td><a href="docs/images/compare/sneaker-product-after.jpg"><img src="docs/images/compare/sneaker-product-after.jpg" alt="Sneaker product page with better-ui"></a></td>
+</tr>
+</table>
+
+</details>
+
 Every page is in [`examples/`](examples). Open them in a browser and click around.
 
 ## Results

@@ -1,0 +1,1 @@
+make a meditation and sleep app: today's session, a library of guided sessions, and a weekly mindfulness streak. single index.html, mobile first

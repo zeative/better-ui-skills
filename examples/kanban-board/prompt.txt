@@ -1,0 +1,1 @@
+make a kanban board web app for a small product team: columns, task cards with assignees and due dates, and a way to add tasks. single index.html

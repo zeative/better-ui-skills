@@ -1,0 +1,1 @@
+build a product page for an online sneaker store: gallery, sizes, colours, price, reviews and add to cart. single index.html

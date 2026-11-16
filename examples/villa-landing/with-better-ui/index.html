@@ -1,0 +1,1029 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Villa Sawah Tegallalang · Villa 3 kamar dengan kolam pribadi di Ubud, Bali</title>
+<meta name="description" content="Villa 3 kamar tidur dengan kolam renang pribadi menghadap sawah Tegallalang, 15 menit dari pusat Ubud. Sarapan harian, staf villa, mulai Rp3.200.000 per malam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Look: monochrome — warm stone canvas, black controls, sunset orange accent used sparingly. Font: Manrope. */
+:root{
+  --font:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --canvas:#F5F5F4; --surface:#FFFFFF; --surface-2:#F3F2F0; --line:rgba(17,17,17,.09); --line-2:rgba(17,17,17,.16);
+  --ink:#111111; --text:#1C1917; --text-2:#57534E; --text-3:#6B6560;
+  --brand:#111111; --on-brand:#FFFFFF;
+  --accent:#F97316; --accent-ink:#C2410C; --accent-tint:#FFF1E6;
+  --ok:#15803D; --ok-tint:#E8F7EE; --bad:#B91C1C; --bad-tint:#FDECEC;
+  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:24px; --r-full:999px;
+  --sh-1:0 1px 2px rgba(28,25,23,.06),0 1px 1px rgba(28,25,23,.04);
+  --sh-2:0 1px 2px rgba(28,25,23,.05),0 8px 20px -8px rgba(28,25,23,.12);
+  --sh-3:0 2px 4px rgba(28,25,23,.05),0 16px 32px -10px rgba(28,25,23,.16),0 32px 64px -24px rgba(28,25,23,.14);
+  --wrap:1200px; --gutter:clamp(20px,4vw,40px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);font-size:16px;line-height:1.55;color:var(--text);background:var(--canvas);-webkit-font-smoothing:antialiased;overflow-x:clip}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit}
+h1,h2,h3,h4{margin:0;color:var(--ink);font-weight:600;line-height:1.2;text-wrap:balance}
+p{margin:0;text-wrap:pretty}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ico{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 22px;border-radius:var(--r-full);border:0;font-weight:600;font-size:15px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:transform .15s ease-out,box-shadow .15s ease-out,background-color .15s ease-out}
+.btn-dark{background:var(--ink);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 2px rgba(0,0,0,.2),0 8px 18px -8px rgba(0,0,0,.45)}
+.btn-light{background:#fff;color:var(--ink);box-shadow:var(--sh-2)}
+.btn-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-2)}
+.btn-accent{background:var(--accent);color:#1a0b02;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 1px 2px rgba(0,0,0,.15),0 10px 22px -10px rgba(249,115,22,.8)}
+@media (hover:hover){.btn:hover{transform:translateY(-1px)}.btn-dark:hover{background:#262626}.btn-ghost:hover{background:rgba(17,17,17,.04)}}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.btn-block{width:100%}
+
+/* Nav */
+.nav{position:sticky;top:0;z-index:40;background:rgba(245,245,244,.82);backdrop-filter:saturate(1.4) blur(16px);-webkit-backdrop-filter:saturate(1.4) blur(16px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav-in{display:flex;align-items:center;gap:32px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:17px;letter-spacing:-.01em;color:var(--ink)}
+.logo-mark{width:32px;height:32px;border-radius:10px;background:var(--ink);display:grid;place-items:center}
+.logo small{display:block;font-size:12px;font-weight:500;color:var(--text-3);letter-spacing:0;margin-top:-2px}
+.nav-links{display:flex;gap:4px;margin-left:auto}
+.nav-links a{font-size:14px;font-weight:500;color:var(--text-2);text-decoration:none;padding:8px 12px;border-radius:var(--r-full);transition:background .15s,color .15s}
+.nav-links a:hover{color:var(--ink);background:rgba(17,17,17,.05)}
+.nav .btn{height:40px;padding:0 18px;font-size:14px}
+.menu-btn{display:none;margin-left:auto;width:44px;height:44px;border-radius:var(--r-full);border:0;background:transparent;cursor:pointer;place-items:center}
+.mobile-menu{display:none}
+
+/* Hero */
+.hero{padding:20px 0 0}
+.hero-frame{position:relative;border-radius:28px;overflow:hidden;min-height:clamp(520px,78vh,720px);display:flex;align-items:flex-end;isolation:isolate;background:#2b2a26}
+.hero-frame>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero-frame::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.1) 60%,rgba(0,0,0,0) 100%),linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.5) 75%,rgba(0,0,0,.7) 100%)}
+.hero-body{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;width:100%;padding:clamp(24px,4vw,48px)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px 0 10px;border-radius:var(--r-full);background:rgba(255,255,255,.16);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;font-size:13px;font-weight:500;border:1px solid rgba(255,255,255,.22);margin-bottom:20px}
+.hero-eyebrow .ico{width:16px;height:16px}
+.hero h1{color:#fff;font-size:clamp(36px,5.2vw,60px);line-height:1.05;letter-spacing:-.03em;max-width:15ch}
+.hero-sub{color:rgba(255,255,255,.88);font-size:17px;max-width:46ch;margin-top:16px}
+.hero-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.hero-actions .btn-ghost{color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
+.hero-actions .btn-ghost:hover{background:rgba(255,255,255,.12)}
+.hero-card{width:300px;background:rgba(255,255,255,.96);border-radius:20px;padding:20px;box-shadow:var(--sh-3)}
+.hero-card .row{display:flex;justify-content:space-between;align-items:center}
+.price-big{font-size:28px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.price-big span{white-space:nowrap;font-size:14px;font-weight:500;color:var(--text-3);letter-spacing:0}
+.rating{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14px;color:var(--ink)}
+.rating .star{width:16px;height:16px;fill:var(--accent);stroke:none}
+.hero-card hr{border:0;border-top:1px solid var(--line);margin:16px 0}
+.hero-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.hero-facts b{display:block;font-size:18px;font-weight:600;color:var(--ink)}
+.hero-facts span{font-size:12px;color:var(--text-3)}
+
+/* Section base */
+section{position:relative}
+.sec{padding:clamp(72px,9vw,120px) 0}
+.eyebrow{font-size:13px;font-weight:600;color:var(--accent-ink);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.h2{font-size:clamp(28px,3.4vw,40px);letter-spacing:-.025em;line-height:1.12}
+.lead{font-size:17px;color:var(--text-2);margin-top:14px;max-width:56ch}
+
+/* Quick facts strip */
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:20px;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--sh-1);border:1px solid var(--line)}
+.strip>div{display:flex;gap:14px;align-items:center;padding:20px 24px}
+.strip>div+div{border-left:1px solid var(--line)}
+.chip-ico{width:44px;height:44px;border-radius:var(--r-sm);background:var(--surface-2);display:grid;place-items:center;color:var(--ink);flex:none}
+.strip b{display:block;font-weight:600;color:var(--ink);font-size:15px;line-height:1.3}
+.strip span{font-size:13px;color:var(--text-3)}
+
+/* Gallery */
+.gal-side{display:flex;align-items:center;gap:24px}
+.gal-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:32px}
+.gallery{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:240px 240px;gap:12px}
+.g-item{position:relative;border:0;padding:0;border-radius:var(--r-md);overflow:hidden;cursor:zoom-in;background:#d6d3d1}
+.g-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.g-item:hover img{transform:scale(1.03)}
+.g-item:first-child{grid-row:span 2}
+.g-cap{position:absolute;left:12px;bottom:12px;font-size:12px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.92);padding:5px 10px;border-radius:var(--r-full)}
+
+/* Main two-col */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:56px;align-items:start}
+.block+.block{margin-top:64px;padding-top:64px;border-top:1px solid var(--line)}
+.host{display:flex;gap:14px;align-items:center;margin-top:24px}
+.host img{width:48px;height:48px;border-radius:50%;background:#FDE7D3}
+.host b{display:block;font-weight:600;color:var(--ink);font-size:15px}
+.host span{font-size:14px;color:var(--text-3)}
+.about p{color:var(--text-2);max-width:62ch}
+.about p+p{margin-top:14px}
+
+.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
+.room{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:20px;box-shadow:var(--sh-1)}
+.room .chip-ico{margin-bottom:16px;background:var(--accent-tint);color:var(--accent-ink)}
+.room h3{font-size:16px}
+.room p{font-size:14px;color:var(--text-2);margin-top:4px}
+
+.amen{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 32px;margin-top:28px}
+.amen li{display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.amen b{font-weight:600;color:var(--ink);font-size:15px;display:block;line-height:1.35}
+.amen span{font-size:13px;color:var(--text-3)}
+.amen .chip-ico{width:40px;height:40px;border-radius:10px}
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:var(--r-full);font-size:12px;font-weight:600;background:var(--surface-2);color:var(--text-2);margin-left:6px;vertical-align:1px}
+ul.clean{list-style:none;margin:0;padding:0}
+ul.clean.amen{margin-top:28px}
+ul.clean.dist{margin-top:28px}
+
+/* Rates table */
+.rates{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-1)}
+.rate{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:20px 24px}
+.rate+.rate{border-top:1px solid var(--line)}
+.rate h3{font-size:16px;display:flex;align-items:center;gap:10px}
+.rate p{font-size:14px;color:var(--text-3);margin-top:2px}
+.rate .p{text-align:right;font-size:20px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+.rate .p small{display:block;font-size:12px;font-weight:500;color:var(--text-3);letter-spacing:0}
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.rate-notes{display:flex;flex-wrap:wrap;gap:8px 24px;padding:16px 24px;background:var(--surface-2);font-size:13px;color:var(--text-2)}
+.rate-notes span{display:inline-flex;align-items:center;gap:6px}
+.rate-notes .ico{width:16px;height:16px;color:var(--text-3)}
+
+/* Booking card */
+.book-col{position:sticky;top:92px}
+.book{background:var(--surface);border-radius:var(--r-lg);padding:24px;box-shadow:inset 0 1px 0 #fff,var(--sh-3);border:1px solid var(--line)}
+.book-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.book-top .price-big{font-size:28px}
+.book-sub{font-size:13px;color:var(--text-3);margin-top:2px}
+.fields{margin-top:20px;border:1px solid var(--line-2);border-radius:var(--r-sm);position:relative}
+.dates{display:grid;grid-template-columns:1fr 1fr}
+.field{display:block;width:100%;text-align:left;background:none;border:0;padding:10px 14px;cursor:pointer;min-height:58px;border-radius:0}
+.field+.field{border-left:1px solid var(--line-2)}
+.field small{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.field span{display:block;font-size:15px;color:var(--text-2);margin-top:2px}
+.field span.set{color:var(--ink);font-weight:500}
+.field.active{box-shadow:inset 0 0 0 2px var(--ink);border-radius:var(--r-sm)}
+.guests{border-top:1px solid var(--line-2);display:flex;align-items:center;justify-content:space-between;padding:8px 8px 8px 14px;min-height:58px}
+.guests small{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
+.guests span{font-size:15px;color:var(--ink);font-weight:500}
+.stepper{display:flex;align-items:center;gap:6px}
+.step{width:40px;height:40px;border-radius:50%;border:1px solid var(--line-2);background:#fff;cursor:pointer;display:grid;place-items:center;transition:border-color .15s,background .15s}
+.step:hover:not([disabled]){border-color:var(--ink)}
+.step[disabled]{opacity:.35;cursor:not-allowed}
+.step .ico{width:16px;height:16px}
+.book .btn{margin-top:16px;height:52px;font-size:16px}
+.book-note{text-align:center;font-size:13px;color:var(--text-3);margin-top:10px}
+.msg{font-size:13px;margin-top:12px;padding:10px 12px;border-radius:var(--r-xs);display:none;align-items:flex-start;gap:8px}
+.msg.show{display:flex}
+.msg.err{background:var(--bad-tint);color:var(--bad)}
+.msg .ico{width:16px;height:16px;margin-top:2px}
+.breakdown{margin-top:18px;display:none}
+.breakdown.show{display:block}
+.bd-row{display:flex;justify-content:space-between;gap:12px;font-size:15px;color:var(--text-2);padding:5px 0}
+.bd-row span:last-child{color:var(--text);font-variant-numeric:tabular-nums}
+.bd-total{display:flex;justify-content:space-between;font-weight:700;color:var(--ink);font-size:16px;border-top:1px solid var(--line);margin-top:10px;padding-top:14px}
+.wa{display:flex;gap:12px;align-items:center;margin-top:16px;padding:14px 16px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line);text-decoration:none;transition:border-color .15s}
+.wa:hover{border-color:var(--line-2)}
+.wa b{display:block;font-size:14px;font-weight:600;color:var(--ink)}
+.wa span{font-size:13px;color:var(--text-3)}
+.wa .chip-ico{width:40px;height:40px;background:#E7F7EC;color:#15803D}
+.wa .chev{margin-left:auto;color:var(--text-3)}
+
+/* Calendar popover */
+.cal{position:absolute;top:calc(100% + 8px);right:-12px;width:344px;max-width:calc(100vw - 32px);background:#fff;border-radius:20px;box-shadow:var(--sh-3),0 0 0 1px var(--line);padding:18px;z-index:30;display:none}
+.cal.open{display:block;animation:pop .16s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cal-head b{font-size:15px;font-weight:600;color:var(--ink)}
+.cal-nav{width:36px;height:36px;border-radius:50%;border:0;background:var(--surface-2);cursor:pointer;display:grid;place-items:center}
+.cal-nav:hover:not([disabled]){background:#e7e5e4}
+.cal-nav[disabled]{opacity:.35;cursor:not-allowed}
+.cal-nav .ico{width:16px;height:16px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);row-gap:2px}
+.cal-dow{font-size:12px;font-weight:600;color:var(--text-3);text-align:center;padding:4px 0 8px}
+.day{position:relative;height:44px;border:0;background:none;cursor:pointer;font-size:14px;font-weight:500;color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;font-variant-numeric:tabular-nums}
+.day i{display:block;height:12px;font-style:normal;font-size:10px;font-weight:500;color:var(--text-3);margin-top:2px}
+.day::before{content:"";position:absolute;inset:2px;border-radius:12px;z-index:-1;transition:background .12s}
+.day:hover:not([disabled])::before{box-shadow:inset 0 0 0 1.5px var(--ink)}
+.day[disabled]{color:#c4c0bc;cursor:not-allowed}
+.day.booked{text-decoration:line-through}
+.day.in-range::before{background:var(--surface-2);border-radius:0;inset:2px 0}
+.day.start::before,.day.end::before{background:var(--ink);border-radius:12px;inset:2px}
+.day.start,.day.end{color:#fff}
+.day.start i,.day.end i{color:rgba(255,255,255,.75)}
+.day.peak i{color:var(--accent-ink)}
+.day.start.peak i,.day.end.peak i{color:#FDBA74}
+.cal{isolation:isolate}
+.cal-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--text-3)}
+.cal-foot button{background:none;border:0;font-weight:600;text-decoration:underline;cursor:pointer;color:var(--ink);padding:8px;font-size:13px}
+.cal-legend{display:flex;gap:12px;align-items:center}
+.cal-legend span{display:inline-flex;gap:6px;align-items:center}
+
+/* Reviews (dark) */
+.reviews{background:#141312;color:#E7E5E4;border-radius:32px;margin:0 clamp(8px,1.5vw,20px)}
+.reviews .h2{color:#fff}
+.reviews .eyebrow{color:#FDBA74}
+.rv-top{display:grid;grid-template-columns:340px 1fr;gap:56px;align-items:start}
+.score{font-size:72px;font-weight:700;letter-spacing:-.04em;color:#fff;line-height:1;margin-top:24px;display:flex;align-items:flex-end;gap:12px}
+.score small{font-size:15px;font-weight:500;color:#A8A29E;letter-spacing:0;padding-bottom:10px}
+.stars{display:flex;gap:3px;margin-top:12px}
+.stars svg{width:18px;height:18px;fill:var(--accent)}
+.bars{margin-top:28px;display:grid;gap:14px}
+.bar-row{display:grid;grid-template-columns:110px 1fr 34px;gap:12px;align-items:center;font-size:14px;color:#D6D3D1}
+.bar{height:8px;border-radius:var(--r-full);background:rgba(255,255,255,.1);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#FB923C,var(--accent))}
+.bar-row b{text-align:right;color:#fff;font-weight:600;font-variant-numeric:tabular-nums}
+.rv-grid{columns:2;column-gap:16px}
+.rv{break-inside:avoid;background:#1F1E1C;border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:24px;margin-bottom:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.rv.feat{background:#fff;color:var(--text)}
+.rv.feat q{color:var(--ink);font-size:18px;font-weight:500;line-height:1.5;letter-spacing:-.01em}
+.rv q{display:block;quotes:none;font-size:15px;line-height:1.6;color:#E7E5E4}
+.rv-who{display:flex;gap:12px;align-items:center;margin-top:20px}
+.rv-who img{width:40px;height:40px;border-radius:50%}
+.rv-who b{display:block;font-size:14px;font-weight:600;color:#fff}
+.rv.feat .rv-who b{color:var(--ink)}
+.rv-who span{font-size:13px;color:#A8A29E}
+.rv.feat .rv-who span{color:var(--text-3)}
+.rv .stars{margin:0 0 14px}
+.rv .stars svg{width:14px;height:14px}
+.rv-more{margin-top:8px;text-align:center}
+.reviews .btn-ghost{color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.reviews .btn-ghost:hover{background:rgba(255,255,255,.08)}
+.rv.hidden{display:none}
+
+/* Location */
+.loc{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
+.map{position:relative;aspect-ratio:5/4;border-radius:var(--r-lg);overflow:hidden;background:#EAE7E1;box-shadow:var(--sh-2)}
+.map svg{width:100%;height:100%;display:block}
+.pin{position:absolute;left:52%;top:46%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center}
+.pin-card{background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:8px 12px;border-radius:12px;white-space:nowrap;box-shadow:var(--sh-3);display:flex;align-items:center;gap:8px}
+.pin-card .logo-mark{width:22px;height:22px;border-radius:6px;background:var(--accent)}
+.pin::after{content:"";width:12px;height:12px;background:var(--ink);transform:rotate(45deg);margin-top:-7px;border-radius:2px}
+.map-lbl{position:absolute;font-size:12px;font-weight:600;color:var(--text-2);background:rgba(255,255,255,.85);padding:4px 8px;border-radius:var(--r-full)}
+.dist{margin-top:28px}
+.dist li{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.dist li:first-child{border-top:1px solid var(--line)}
+.dist b{font-weight:600;color:var(--ink);font-size:15px}
+.dist .t{margin-left:auto;font-size:14px;color:var(--text-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.dist .chip-ico{width:36px;height:36px;border-radius:10px}
+.dist .chip-ico .ico{width:18px;height:18px}
+
+/* FAQ */
+.faq{display:grid;grid-template-columns:1fr 1.6fr;gap:56px}
+.qa{border-top:1px solid var(--line)}
+.qa details{border-bottom:1px solid var(--line)}
+.qa summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:20px 0;font-weight:600;color:var(--ink);font-size:16px}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary .pm{width:32px;height:32px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;flex:none;transition:transform .2s}
+.qa summary .pm .ico{width:16px;height:16px}
+.qa details[open] .pm{transform:rotate(45deg)}
+.qa details p{color:var(--text-2);padding:0 48px 20px 0;font-size:15px}
+.contact-card{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;box-shadow:var(--sh-1)}
+.contact-card .host{margin-top:0}
+.contact-card p{font-size:14px;color:var(--text-2);margin-top:14px}
+.contact-card .btn{margin-top:16px;height:44px}
+
+/* Closing */
+.close{background:#1f2a1c;position:relative;border-radius:32px;overflow:hidden;margin:0 clamp(8px,1.5vw,20px);min-height:440px;display:flex;align-items:center;isolation:isolate}
+.close>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.close::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(17,17,17,.82) 0%,rgba(17,17,17,.55) 55%,rgba(17,17,17,.1) 100%)}
+.close h2{color:#fff;font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;max-width:16ch;line-height:1.08}
+.close p{color:rgba(255,255,255,.85);margin-top:14px;max-width:44ch;font-size:17px}
+.close .hero-actions .btn-ghost{color:#fff}
+
+footer{padding:72px 0 40px}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+.foot .fh{font-size:14px;margin-bottom:14px}
+.foot ul li{font-size:14px;line-height:1.5;margin:-2px 0}
+.foot ul a{display:inline-block;padding:10px 0;font-size:14px;color:var(--text-2);text-decoration:none}
+.foot ul a:hover{color:var(--ink);text-decoration:underline}
+.foot p{font-size:14px;color:var(--text-2);margin-top:14px;max-width:34ch}
+.legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:56px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--text-3)}
+
+/* Mobile bar */
+.mbar{display:none}
+
+/* Dialogs */
+dialog{border:0;padding:0;background:transparent;max-width:100vw;max-height:100vh}
+dialog::backdrop{background:rgba(12,10,9,.6);backdrop-filter:blur(4px)}
+.lb{width:100vw;height:100vh;height:100dvh}
+.lb-in{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 72px 32px}
+.lb-in img{max-width:100%;max-height:calc(100% - 48px);border-radius:var(--r-md);object-fit:contain}
+.lb-cap{color:#fff;margin-top:16px;font-size:14px;font-weight:500}
+.lb-cap span{color:#A8A29E;margin-left:8px}
+.lb-btn{position:absolute;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;cursor:pointer;display:grid;place-items:center;transition:background .15s}
+.lb-btn:hover{background:rgba(255,255,255,.26)}
+.lb-close{top:16px;right:16px}
+.lb-prev{left:16px;top:50%;transform:translateY(-50%)}
+.lb-next{right:16px;top:50%;transform:translateY(-50%)}
+
+.modal{width:min(520px,calc(100vw - 24px))}
+.modal-in{background:#fff;border-radius:var(--r-lg);padding:28px;box-shadow:var(--sh-3);max-height:calc(100dvh - 24px);overflow:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:start;gap:16px}
+.modal-head h3{font-size:22px;letter-spacing:-.02em}
+.x{width:40px;height:40px;border-radius:50%;border:0;background:var(--surface-2);cursor:pointer;display:grid;place-items:center;flex:none}
+.x:hover{background:#e7e5e4}
+.summary{display:flex;gap:14px;margin-top:20px;padding:12px;background:var(--surface-2);border-radius:var(--r-md);align-items:center}
+.summary img{width:72px;height:72px;border-radius:var(--r-sm);object-fit:cover}
+.summary b{display:block;font-size:15px;font-weight:600;color:var(--ink)}
+.summary span{display:block;font-size:13px;color:var(--text-2)}
+.form{display:grid;gap:14px;margin-top:20px}
+.form label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.form input,.form textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--line-2);border-radius:var(--r-sm);padding:12px 14px;transition:border-color .15s,box-shadow .15s}
+.form input:focus,.form textarea:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 3px rgba(17,17,17,.08)}
+.form input[aria-invalid=true]{border-color:var(--bad);box-shadow:0 0 0 3px rgba(185,28,28,.1)}
+.form .err-t{font-size:12px;color:var(--bad);margin-top:6px;display:none}
+.form [aria-invalid=true]+.err-t{display:block}
+.form textarea{resize:vertical;min-height:84px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.done{text-align:center;padding:12px 4px 4px}
+.done .ok-badge{width:64px;height:64px;border-radius:50%;background:var(--ok-tint);color:var(--ok);display:grid;place-items:center;margin:0 auto 18px}
+.done .ok-badge .ico{width:30px;height:30px;stroke-width:2}
+.done h3{font-size:22px}
+.done p{color:var(--text-2);margin-top:8px}
+.code{display:inline-block;margin-top:16px;font-weight:700;letter-spacing:.06em;background:var(--surface-2);padding:8px 14px;border-radius:var(--r-xs);color:var(--ink)}
+
+/* Responsive */
+@media (max-width:1080px){
+  .main{grid-template-columns:minmax(0,1fr) 360px;gap:40px}
+  .rv-top{grid-template-columns:1fr;gap:40px}
+  .nav-links a:nth-child(5){display:none}
+}
+@media (max-width:900px){
+  .nav-links,.nav .btn{display:none}
+  .menu-btn{display:grid}
+  .mobile-menu.open{display:block;position:absolute;left:0;right:0;top:68px;background:var(--canvas);border-bottom:1px solid var(--line);padding:8px var(--gutter) 20px}
+  .mobile-menu a{display:block;padding:14px 0;font-weight:600;text-decoration:none;border-bottom:1px solid var(--line)}
+  .hero-body{grid-template-columns:1fr}
+  .hero-card{display:none}
+  .strip{grid-template-columns:1fr 1fr}
+  .strip>div:nth-child(3){border-left:0}
+  .strip>div:nth-child(n+3){border-top:1px solid var(--line)}
+  .main{grid-template-columns:1fr}
+  .book-col{position:static;max-width:520px}
+  .rooms{grid-template-columns:1fr 1fr 1fr}
+  .loc,.faq{grid-template-columns:1fr;gap:40px}
+  .foot{grid-template-columns:1fr 1fr}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:35;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom));align-items:center;justify-content:space-between;gap:12px;transform:translateY(110%);transition:transform .25s ease-out}
+  .mbar.show{transform:none}
+  .mbar b{font-size:17px;font-weight:700;color:var(--ink)}
+  .mbar span{display:block;font-size:13px;color:var(--text-3)}
+  .mbar .btn{height:44px}
+  footer{padding-bottom:110px}
+}
+@media (max-width:640px){
+  .hero{padding-top:8px}
+  .hero-frame{border-radius:22px;min-height:560px}
+  .hero-sub{font-size:16px}
+  .hero-actions .btn{flex:1}
+  .gal-head{flex-direction:column;align-items:start}
+  .gallery{grid-template-columns:1fr 1fr;grid-template-rows:240px 140px 140px}
+  .g-item:first-child{grid-column:1/3;grid-row:auto}
+  .gal-side{flex-direction:column;align-items:start;gap:16px}
+  .strip{grid-template-columns:1fr}
+  .strip>div+div{border-left:0;border-top:1px solid var(--line)}
+  .strip>div{padding:16px 20px}
+  .rooms{grid-template-columns:1fr}
+  .amen{grid-template-columns:1fr}
+  .rv-grid{columns:1}
+  .score{font-size:48px}
+  .book{padding:20px}
+  .book-top .price-big{font-size:24px}
+  .bar-row{grid-template-columns:96px 1fr 30px}
+  .rate{padding:18px 20px}
+  .rate-notes{padding:16px 20px}
+  .foot{grid-template-columns:1fr 1fr;gap:32px}
+  .foot>div:first-child{grid-column:1/3}
+  .reviews,.close{border-radius:24px;margin:0 8px}
+  .close{min-height:520px;align-items:flex-end;padding-bottom:8px}
+  .close::after{background:linear-gradient(180deg,rgba(17,17,17,.15) 0%,rgba(17,17,17,.85) 70%)}
+  .lb-in{padding:64px 12px 88px}
+  .lb-prev,.lb-next{top:auto;bottom:20px;transform:none}
+  .lb-prev{left:calc(50% - 60px)}.lb-next{right:calc(50% - 60px)}
+  .two{grid-template-columns:1fr}
+  .modal-in{padding:22px}
+  .cal{right:-8px;left:-8px;width:auto}
+  .qa details p{padding-right:0}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></symbol>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a href="#top" class="logo" aria-label="Villa Sawah, ke atas">
+      <span class="logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18c3-2 6-2 9 0s6 2 9 0"/><path d="M3 13c3-2 6-2 9 0s6 2 9 0"/><path d="M12 3v7M9 6l3-3 3 3"/></svg></span>
+      <span>Villa Sawah<small>Tegallalang, Ubud</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Utama">
+      <a href="#galeri">Galeri</a>
+      <a href="#fasilitas">Fasilitas</a>
+      <a href="#harga">Harga</a>
+      <a href="#ulasan">Ulasan</a>
+      <a href="#lokasi">Lokasi</a>
+    </nav>
+    <a href="#booking" class="btn btn-dark" data-open-cal>Cek tanggal</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="mMenu">
+      <svg class="ico" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mMenu">
+    <a href="#galeri">Galeri</a><a href="#fasilitas">Fasilitas</a><a href="#harga">Harga</a><a href="#ulasan">Ulasan</a><a href="#lokasi">Lokasi</a>
+    <a href="#booking" class="btn btn-dark btn-block" style="margin-top:16px;color:#fff;border:0">Cek tanggal</a>
+  </div>
+</header>
+
+<main id="top">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-frame">
+        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1800&q=75&auto=format&fit=crop"
+             srcset="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=900&q=70&auto=format&fit=crop 900w, https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1800&q=75&auto=format&fit=crop 1800w"
+             sizes="100vw" alt="Kolam renang villa di antara pohon kelapa dan atap alang-alang, dengan perbukitan di belakang" fetchpriority="high">
+        <div class="hero-body">
+          <div>
+            <div class="hero-eyebrow">
+              <svg class="ico" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+              Tegallalang · 15 menit dari pusat Ubud
+            </div>
+            <h1>Villa tiga kamar dengan kolam pribadi di tepi sawah</h1>
+            <p class="hero-sub">Untuk keluarga atau rombongan hingga 6 orang. Sarapan tiap pagi, staf villa dari 07.00 sampai 22.00, dan Wi‑Fi 100 Mbps untuk yang tetap kerja.</p>
+            <div class="hero-actions">
+              <a href="#booking" class="btn btn-accent" data-open-cal>Cek ketersediaan</a>
+              <a href="#galeri" class="btn btn-ghost">Lihat foto</a>
+            </div>
+          </div>
+          <aside class="hero-card" aria-label="Ringkasan harga">
+            <div class="row">
+              <div class="price-big num">Rp3,2 jt <span>/ malam</span></div>
+            </div>
+            <div class="row" style="margin-top:6px">
+              <span style="font-size:13px;color:var(--text-3)">Harga mulai, musim sepi</span>
+              <span class="rating"><svg class="star"><use href="#i-star"/></svg>4,92</span>
+            </div>
+            <hr>
+            <div class="hero-facts">
+              <div><b>3</b><span>Kamar</span></div>
+              <div><b>6</b><span>Tamu</span></div>
+              <div><b>12 m</b><span>Kolam</span></div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <div class="strip">
+        <div><span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M3 18c2 1.3 4 1.3 6 0s4-1.3 6 0 4 1.3 6 0"/><path d="M8 15V5a2 2 0 0 1 4 0M16 15V5a2 2 0 0 0-4 0M8 9h8"/></svg></span><div><b>Kolam pribadi 12 m</b><span>Menghadap sawah</span></div></div>
+        <div><span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M3 9h18M5 9v10M19 9v10M3 19h18"/><path d="M8 5h8l2 4H6z"/></svg></span><div><b>Sarapan harian</b><span>Dimasak staf villa</span></div></div>
+        <div><span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a14.5 14.5 0 0 1 20 0"/><circle cx="12" cy="19.5" r=".8" fill="currentColor"/></svg></span><div><b>Wi‑Fi 100 Mbps</b><span>Fiber + cadangan 4G</span></div></div>
+        <div><span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg></span><div><b>Batal gratis</b><span>Hingga 14 hari sebelum</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="sec" id="galeri" style="padding-bottom:0">
+    <div class="wrap">
+      <div class="gal-head">
+        <div>
+          <div class="eyebrow">Galeri</div>
+          <h2 class="h2">Bangun dengan pemandangan sawah</h2>
+        </div>
+        <div class="gal-side"><p class="lead" style="max-width:40ch;margin:0">Tiga kamar menghadap ke kolam, ruang keluarga terbuka, dan gazebo untuk pijat atau yoga pagi.</p><button class="btn btn-ghost" type="button" id="galAll"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Semua foto</button></div>
+      </div>
+      <div class="gallery" id="gallery"></div>
+    </div>
+  </section>
+
+  <!-- Main -->
+  <section class="sec">
+    <div class="wrap main">
+      <div>
+        <div class="block about">
+          <div class="eyebrow">Tentang villa</div>
+          <h2 class="h2">Tenang, dekat dengan semuanya</h2>
+          <p class="lead">Villa Sawah berdiri di lahan 800 m² di ujung jalan desa Tegallalang. Cukup jauh dari jalan utama untuk mendengar suara air irigasi, cukup dekat untuk makan malam di Ubud.</p>
+          <p style="margin-top:14px">Setiap pagi Pak Wayan dan timnya menyiapkan sarapan di gazebo: nasi goreng, pancake pisang, atau buah dan yogurt. Mau makan malam di villa? Pesan sehari sebelumnya, belanja dihitung sesuai struk.</p>
+          <div class="host">
+            <img src="https://api.dicebear.com/9.x/notionists/svg?seed=Wayan&backgroundColor=fde7d3" alt="" width="48" height="48">
+            <div><b>Dikelola oleh Made &amp; Wayan</b><span>Tuan rumah sejak 2019</span></div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="eyebrow">Kamar</div>
+          <h2 class="h2">3 kamar tidur, 3 kamar mandi</h2>
+          <div class="rooms">
+            <div class="room">
+              <span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 15h18M3 18v2M21 18v2"/><path d="M6 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3M12 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg></span>
+              <h3>Kamar utama</h3>
+              <p>King bed, kamar mandi semi-outdoor dengan bathtub, akses langsung ke kolam.</p>
+            </div>
+            <div class="room">
+              <span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 15h18M3 18v2M21 18v2"/><path d="M6 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3M12 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg></span>
+              <h3>Kamar sawah</h3>
+              <p>Queen bed, jendela kaca penuh ke arah sawah, kamar mandi dalam.</p>
+            </div>
+            <div class="room">
+              <span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M2 18v-5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v5M12 18v-5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v5M2 15h20M2 18v2M22 18v2"/></svg></span>
+              <h3>Kamar taman</h3>
+              <p>Dua single bed (bisa digabung), cocok untuk anak atau teman.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" id="fasilitas">
+          <div class="eyebrow">Fasilitas</div>
+          <h2 class="h2">Yang sudah termasuk</h2>
+          <ul class="clean amen" id="amen"></ul>
+        </div>
+
+        <div class="block" id="harga">
+          <div class="eyebrow">Harga per malam</div>
+          <h2 class="h2">Harga sesuai musim</h2>
+          <p class="lead">Harga untuk seluruh villa (maks. 6 tamu), sudah termasuk sarapan. Minimal menginap 2 malam.</p>
+          <div class="rates" id="rates"></div>
+        </div>
+      </div>
+
+      <!-- Booking -->
+      <div class="book-col" id="booking">
+        <div class="book">
+          <div class="book-top">
+            <div>
+              <div class="price-big num" id="bkRate">Rp3.200.000 <span>/ malam</span></div>
+              <div class="book-sub" id="bkRateNote">Musim sepi · untuk seluruh villa</div>
+            </div>
+            <a href="#ulasan" class="rating" style="text-decoration:none;padding:11px 0"><svg class="star"><use href="#i-star"/></svg>4,92</a>
+          </div>
+
+          <div class="fields">
+            <div class="dates">
+              <button class="field" id="fIn" type="button" aria-haspopup="dialog" aria-expanded="false"><small>Check-in</small><span id="vIn">Pilih tanggal</span></button>
+              <button class="field" id="fOut" type="button" aria-haspopup="dialog" aria-expanded="false"><small>Check-out</small><span id="vOut">Pilih tanggal</span></button>
+            </div>
+            <div class="guests">
+              <div><small>Tamu</small><span id="vGuests" class="num">2 tamu</span></div>
+              <div class="stepper">
+                <button class="step" id="gMinus" type="button" aria-label="Kurangi tamu"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+                <button class="step" id="gPlus" type="button" aria-label="Tambah tamu"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+              </div>
+            </div>
+            <div class="cal" id="cal" role="dialog" aria-label="Pilih tanggal menginap">
+              <div class="cal-head">
+                <button class="cal-nav" id="cPrev" type="button" aria-label="Bulan sebelumnya"><svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+                <b id="cTitle"></b>
+                <button class="cal-nav" id="cNext" type="button" aria-label="Bulan berikutnya"><svg class="ico" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+              </div>
+              <div class="cal-grid" id="cGrid"></div>
+              <div class="cal-foot">
+                <span id="cHint">Pilih tanggal check-in</span>
+                <button type="button" id="cClear">Hapus</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="msg err" id="bkErr" role="alert"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span></span></div>
+
+          <div class="breakdown" id="bd" aria-live="polite"></div>
+
+          <button class="btn btn-dark btn-block" id="bookBtn" type="button">Pilih tanggal</button>
+          <p class="book-note">Belum ada pembayaran. Kami konfirmasi lewat WhatsApp.</p>
+        </div>
+        <a class="wa" href="https://wa.me/6281200000000?text=Halo%2C%20saya%20mau%20tanya%20Villa%20Sawah" target="_blank" rel="noopener">
+          <span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2z"/></svg></span>
+          <div><b>Tanya dulu lewat WhatsApp</b><span>Dibalas 08.00–21.00 WITA</span></div>
+          <svg class="ico chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="reviews sec" id="ulasan">
+    <div class="wrap rv-top">
+      <div>
+        <div class="eyebrow">Ulasan tamu</div>
+        <h2 class="h2">Kata tamu yang sudah menginap</h2>
+        <div class="score num">4,92 <small>dari 128 ulasan</small></div>
+        <div class="stars" aria-label="Rating 4,92 dari 5"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div>
+        <div class="bars" id="bars"></div>
+      </div>
+      <div>
+        <div class="rv-grid" id="rvGrid"></div>
+        <div class="rv-more"><button class="btn btn-ghost" id="rvMore" type="button">Tampilkan ulasan lain</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location -->
+  <section class="sec" id="lokasi">
+    <div class="wrap loc">
+      <div class="map" role="img" aria-label="Peta sederhana lokasi villa di Tegallalang, utara Ubud">
+        <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="500" height="400" fill="#EAE7E1"/>
+          <g fill="#DCE5CF">
+            <path d="M0 0h190c-10 60 20 110 0 170-20 50-90 60-190 50z"/>
+            <path d="M310 0h190v150c-60 20-130 10-170-30-30-30-30-80-20-120z"/>
+            <path d="M320 260c50-20 120-10 180 20v120H300c-20-50-20-110 20-140z"/>
+            <path d="M0 290c50-10 110 0 140 40 20 30 20 50 10 70H0z"/>
+          </g>
+          <g stroke="#C9D6B8" stroke-width="1" fill="none">
+            <path d="M20 40c50 10 100 10 150 0M15 80c55 12 110 12 160 0M10 120c55 12 110 12 165 0M330 40c50 10 100 10 150 0M325 80c55 12 110 12 160 0"/>
+          </g>
+          <path d="M240 -10c10 80-20 140 0 210s-10 150 10 210" stroke="#BFD3E0" stroke-width="8" fill="none" stroke-linecap="round"/>
+          <path d="M260 410c-10-70 0-130 20-180s20-140 0-240" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <path d="M-10 250c90-10 170 0 290-40s170-20 230-10" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <path d="M280 200c-10-30-20-40-20-60" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="map-lbl" style="left:8%;top:12%">Sawah Tegallalang</span>
+        <span class="map-lbl" style="left:58%;top:84%">ke Ubud ↓</span>
+        <span class="map-lbl" style="left:6%;top:66%">Jl. Raya Tegallalang</span>
+        <div class="pin"><div class="pin-card"><span class="logo-mark"></span>Villa Sawah</div></div>
+      </div>
+      <div>
+        <div class="eyebrow">Lokasi</div>
+        <h2 class="h2">Di desa, bukan di jalan raya</h2>
+        <p class="lead">Jalan masuk 200 m terakhir cukup untuk satu mobil. Parkir untuk dua mobil di depan gerbang. Alamat lengkap dikirim setelah booking dikonfirmasi. Waktu tempuh dengan mobil:</p>
+        <ul class="clean dist" id="dist"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap faq">
+      <div>
+        <div class="eyebrow">Pertanyaan</div>
+        <h2 class="h2">Sebelum Anda memesan</h2>
+        <div class="contact-card">
+          <div class="host">
+            <img src="https://api.dicebear.com/9.x/notionists/svg?seed=MadeAyu&backgroundColor=e0ecd9" alt="" width="48" height="48">
+            <div><b>Made Ayu</b><span>Reservasi</span></div>
+          </div>
+          <p>Ada pertanyaan soal tanggal, acara keluarga, atau kebutuhan khusus? Tanya langsung, kami balas di hari yang sama.</p>
+          <a class="btn btn-ghost" href="mailto:reservasi@villasawah.example">reservasi@villasawah.example</a>
+        </div>
+      </div>
+      <div class="qa" id="qa"></div>
+    </div>
+  </section>
+
+  <!-- Closing -->
+  <section class="close">
+    <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1800&q=70&auto=format&fit=crop" alt="Terasering sawah hijau dengan pohon kelapa di Tegallalang" loading="lazy">
+    <div class="wrap" style="width:100%;padding-top:56px;padding-bottom:56px">
+      <h2>Tanggal di bulan Desember cepat penuh</h2>
+      <p>Libur Natal dan tahun baru biasanya penuh sejak awal bulan. Cek tanggal Anda sekarang, kami konfirmasi dalam 1 jam.</p>
+      <div class="hero-actions">
+        <a href="#booking" class="btn btn-accent" data-open-cal>Cek ketersediaan</a>
+        <a class="btn btn-ghost" href="https://wa.me/6281200000000" target="_blank" rel="noopener">Chat WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a href="#top" class="logo"><span class="logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18c3-2 6-2 9 0s6 2 9 0"/><path d="M3 13c3-2 6-2 9 0s6 2 9 0"/><path d="M12 3v7M9 6l3-3 3 3"/></svg></span><span>Villa Sawah<small>Tegallalang, Ubud</small></span></a>
+        <p>Banjar Kebon, Tegallalang, Gianyar, Bali 80561. Villa pribadi, dikelola keluarga sejak 2019.</p>
+      </div>
+      <div><h2 class="fh">Villa</h2><ul class="clean"><li><a href="#galeri">Galeri</a></li><li><a href="#fasilitas">Fasilitas</a></li><li><a href="#harga">Harga</a></li><li><a href="#ulasan">Ulasan</a></li></ul></div>
+      <div><h2 class="fh">Info</h2><ul class="clean"><li><a href="#lokasi">Lokasi</a></li><li><a href="#qa">Tanya jawab</a></li><li><a href="#qa">Kebijakan pembatalan</a></li><li><a href="#qa">Aturan villa</a></li></ul></div>
+      <div><h2 class="fh">Kontak</h2><ul class="clean"><li><a href="https://wa.me/6281200000000">WhatsApp</a></li><li><a href="mailto:reservasi@villasawah.example">Email</a></li><li><a href="#">Instagram</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Villa Sawah Tegallalang</span><span>Harga dalam Rupiah · WITA (GMT+8)</span></div>
+  </div>
+</footer>
+
+<div class="mbar" id="mbar">
+  <div><b class="num" id="mbPrice">Rp3.200.000</b><span id="mbNote">/ malam · ★ 4,92</span></div>
+  <a href="#booking" class="btn btn-dark" data-open-cal>Cek tanggal</a>
+</div>
+
+<!-- Lightbox -->
+<dialog class="lb" id="lb" aria-label="Galeri foto">
+  <div class="lb-in">
+    <img id="lbImg" alt="">
+    <div class="lb-cap" id="lbCap"></div>
+    <button class="lb-btn lb-close" id="lbClose" aria-label="Tutup"><svg class="ico" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Foto sebelumnya"><svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="lb-btn lb-next" id="lbNext" aria-label="Foto berikutnya"><svg class="ico" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+</dialog>
+
+<!-- Booking modal -->
+<dialog class="modal" id="modal" aria-labelledby="mTitle">
+  <div class="modal-in" id="modalIn"></div>
+</dialog>
+
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const IMG = (id, w) => `https://images.unsplash.com/photo-${id}?w=${w}&q=72&auto=format&fit=crop`;
+  const rp = n => 'Rp' + Math.round(n).toLocaleString('id-ID');
+  const ico = p => `<svg class="ico" viewBox="0 0 24 24">${p}</svg>`;
+  const star = '<svg><use href="#i-star"/></svg>';
+
+  /* ---------- Gallery ---------- */
+  const photos = [
+    { id: '1520250497591-112f2f40a3f4', cap: 'Kolam & taman' },
+    { id: '1578683010236-d716f9a3f461', cap: 'Kamar utama' },
+    { id: '1555400038-63f5ba517a47', cap: 'Sawah belakang villa' },
+    { id: '1610641818989-c2051b5e2cfd', cap: 'Kolam sore hari' },
+    { id: '1544161515-4ab6ce6db874', cap: 'Pijat di gazebo' },
+  ];
+  const gal = $('#gallery');
+  gal.innerHTML = photos.map((p, i) => `
+    <button class="g-item" type="button" data-i="${i}" aria-label="Buka foto: ${p.cap}">
+      <img src="${IMG(p.id, i === 0 ? 1000 : 640)}" alt="${p.cap}" loading="lazy">
+      <span class="g-cap">${p.cap}</span>
+    </button>`).join('');
+  const lb = $('#lb'); let cur = 0;
+  const showLb = i => { cur = (i + photos.length) % photos.length; $('#lbImg').src = IMG(photos[cur].id, 1800); $('#lbImg').alt = photos[cur].cap; $('#lbCap').innerHTML = `${photos[cur].cap}<span>${cur + 1} / ${photos.length}</span>`; };
+  gal.addEventListener('click', e => { const b = e.target.closest('.g-item'); if (!b) return; showLb(+b.dataset.i); lb.showModal(); });
+  $('#galAll').onclick = () => { showLb(0); lb.showModal(); };
+  $('#lbClose').onclick = () => lb.close();
+  $('#lbPrev').onclick = () => showLb(cur - 1);
+  $('#lbNext').onclick = () => showLb(cur + 1);
+  lb.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') showLb(cur - 1); if (e.key === 'ArrowRight') showLb(cur + 1); });
+  lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('lb-in')) lb.close(); });
+
+  /* ---------- Amenities ---------- */
+  const amen = [
+    ['Kolam renang pribadi', 'Air garam, 12 × 4 m', '<path d="M3 18c2 1.3 4 1.3 6 0s4-1.3 6 0 4 1.3 6 0"/><path d="M8 15V5a2 2 0 0 1 4 0M16 15V5a2 2 0 0 0-4 0M8 9h8"/>'],
+    ['Sarapan setiap pagi', 'Untuk semua tamu', '<path d="M17 8h1a3 3 0 0 1 0 6h-1"/><path d="M3 8h14v6a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z"/><path d="M7 2v3M11 2v3"/>'],
+    ['Wi‑Fi 100 Mbps', 'Fiber, cadangan 4G', '<path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a14.5 14.5 0 0 1 20 0"/><path d="M12 19.5h.01"/>'],
+    ['AC di setiap kamar', 'Plus kipas langit-langit', '<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/><path d="M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5"/>'],
+    ['Dapur lengkap', 'Kompor, kulkas, oven', '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M8 6h.01M12 6h.01"/><rect x="8" y="12" width="8" height="5" rx="1"/>'],
+    ['Staf villa', '07.00–22.00, housekeeping harian', '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'],
+    ['Parkir 2 mobil', 'Di dalam gerbang', '<path d="M5 17h14M6 17v2M18 17v2"/><path d="M5 17l1.5-6A2 2 0 0 1 8.4 9.5h7.2a2 2 0 0 1 1.9 1.5L19 17"/><path d="M7.5 14h.01M16.5 14h.01"/>'],
+    ['Genset cadangan', 'Listrik tetap menyala', '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>'],
+    ['Antar-jemput bandara', 'Rp450.000 sekali jalan', '<path d="M2 16l20-7-2-3-7 2.5L7 4 5 5l4 5-5 2-2-1-1 1z"/><path d="M3 21h18"/>', 'Tambahan'],
+    ['Pijat di villa', 'Rp250.000 / 60 menit', '<path d="M12 21c-4-3-8-6.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 4.5-4 8-8 11z"/>', 'Tambahan'],
+  ];
+  $('#amen').innerHTML = amen.map(([t, s, p, tag]) => `
+    <li><span class="chip-ico">${ico(p)}</span><div><b>${t}${tag ? `<span class="tag">${tag}</span>` : ''}</b><span>${s}</span></div></li>`).join('');
+
+  /* ---------- Seasons & rates ---------- */
+  const SEASONS = {
+    low:  { name: 'Musim sepi',  price: 3200000, color: '#A8A29E', when: 'Februari–Maret, November' },
+    reg:  { name: 'Reguler',     price: 3850000, color: '#111111', when: 'Januari (6–31), April–Juni, September–Oktober, 1–19 Desember' },
+    peak: { name: 'Musim ramai', price: 4900000, color: '#F97316', when: 'Juli–Agustus, 20 Desember–5 Januari' },
+  };
+  const seasonOf = d => {
+    const m = d.getMonth(), day = d.getDate();
+    if (m === 6 || m === 7 || (m === 11 && day >= 20) || (m === 0 && day <= 5)) return 'peak';
+    if (m === 1 || m === 2 || m === 10) return 'low';
+    return 'reg';
+  };
+  const CLEAN = 350000, TAX = 0.10;
+  $('#rates').innerHTML = ['low', 'reg', 'peak'].map(k => {
+    const s = SEASONS[k];
+    return `<div class="rate"><div><h3><span class="dot" style="background:${s.color}"></span>${s.name}</h3><p>${s.when}</p></div>
+      <div class="p num">${rp(s.price)}<small>per malam</small></div></div>`;
+  }).join('') + `<div class="rate-notes">
+      <span>${ico('<path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/>')}Biaya kebersihan ${rp(CLEAN)} sekali</span>
+      <span>${ico('<path d="M9 14l6-6M9.5 8.5h.01M14.5 13.5h.01"/><rect x="4" y="3" width="16" height="18" rx="2"/>')}Pajak & layanan 10%</span>
+      <span>${ico('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>')}Min. 2 malam</span>
+    </div>`;
+
+  /* ---------- Booking state ---------- */
+  const TODAY = new Date(); TODAY.setHours(0, 0, 0, 0);
+  const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+  const key = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  // Nights already taken (relative to today so the demo always has some)
+  const BOOKED = new Set();
+  [[4, 3], [12, 4], [21, 2], [33, 5], [38, 6], [52, 3], [70, 4]].forEach(([s, n]) => { for (let i = 0; i < n; i++) BOOKED.add(key(addDays(TODAY, s + i))); });
+
+  const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const MON = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  const DOW = ['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
+  const fmt = d => `${['Min','Sen','Sel','Rab','Kam','Jum','Sab'][d.getDay()]}, ${d.getDate()} ${MON[d.getMonth()]} ${d.getFullYear()}`;
+  const fmtShort = d => `${d.getDate()} ${MON[d.getMonth()]}`;
+
+  const st = { in: null, out: null, guests: 2, view: new Date(TODAY.getFullYear(), TODAY.getMonth(), 1), picking: 'in' };
+  const MAXG = 6, MAX_VIEW = new Date(TODAY.getFullYear() + 1, TODAY.getMonth(), 1);
+
+  const cal = $('#cal'), fIn = $('#fIn'), fOut = $('#fOut');
+  const openCal = which => { st.picking = which || (st.in && !st.out ? 'out' : 'in'); cal.classList.add('open'); fIn.setAttribute('aria-expanded', 'true'); fOut.setAttribute('aria-expanded', 'true'); renderCal(); };
+  const closeCal = () => { cal.classList.remove('open'); fIn.setAttribute('aria-expanded', 'false'); fOut.setAttribute('aria-expanded', 'false'); renderFields(); };
+
+  const rangeHasBooked = (a, b) => { for (let d = new Date(a); d < b; d = addDays(d, 1)) if (BOOKED.has(key(d))) return true; return false; };
+
+  function renderCal() {
+    const v = st.view, y = v.getFullYear(), m = v.getMonth();
+    $('#cTitle').textContent = `${MONTHS[m]} ${y}`;
+    $('#cPrev').disabled = v <= new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+    $('#cNext').disabled = v >= MAX_VIEW;
+    const first = (new Date(y, m, 1).getDay() + 6) % 7;
+    const days = new Date(y, m + 1, 0).getDate();
+    let html = DOW.map(d => `<div class="cal-dow">${d}</div>`).join('');
+    for (let i = 0; i < first; i++) html += '<span></span>';
+    for (let d = 1; d <= days; d++) {
+      const dt = new Date(y, m, d), k = key(dt), s = seasonOf(dt);
+      const past = dt < TODAY, booked = BOOKED.has(k);
+      // check-in needs the next night free too (minimum stay is 2 nights)
+      let dis = past || booked || BOOKED.has(key(addDays(dt, 1)));
+      // when choosing check-out, the night before must be free; check-out may land on a booked night's start
+      if (st.picking === 'out' && st.in) {
+        dis = past || dt <= st.in || rangeHasBooked(st.in, dt);
+      }
+      const cls = ['day', s === 'peak' ? 'peak' : '', booked ? 'booked' : '',
+        st.in && +dt === +st.in ? 'start' : '', st.out && +dt === +st.out ? 'end' : '',
+        st.in && st.out && dt > st.in && dt < st.out ? 'in-range' : ''].join(' ');
+      const p = (SEASONS[s].price / 1e6).toLocaleString('id-ID', { maximumFractionDigits: 2 });
+      html += `<button type="button" class="${cls}" data-k="${k}" ${dis ? 'disabled' : ''} aria-label="${fmt(dt)}${booked ? ', sudah dipesan' : `, ${rp(SEASONS[s].price)} per malam`}">${d}<i>${booked || past ? '' : p + 'jt'}</i></button>`;
+    }
+    $('#cGrid').innerHTML = html;
+    $('#cHint').textContent = st.picking === 'in' ? 'Pilih tanggal check-in' : `Check-in ${fmtShort(st.in)} · pilih check-out`;
+    fIn.classList.toggle('active', st.picking === 'in');
+    fOut.classList.toggle('active', st.picking === 'out');
+  }
+
+  $('#cGrid').addEventListener('click', e => {
+    const b = e.target.closest('.day'); if (!b || b.disabled) return;
+    const [y, m, d] = b.dataset.k.split('-').map(Number), dt = new Date(y, m - 1, d);
+    hideErr();
+    if (st.picking === 'in') { st.in = dt; st.out = null; st.picking = 'out'; renderCal(); update(); }
+    else {
+      const n = Math.round((dt - st.in) / 864e5);
+      if (n < 2) { showErr('Minimal menginap 2 malam. Pilih check-out paling cepat ' + fmtShort(addDays(st.in, 2)) + '.'); return; }
+      st.out = dt; closeCal(); update();
+    }
+  });
+  $('#cPrev').onclick = () => { st.view = new Date(st.view.getFullYear(), st.view.getMonth() - 1, 1); renderCal(); };
+  $('#cNext').onclick = () => { st.view = new Date(st.view.getFullYear(), st.view.getMonth() + 1, 1); renderCal(); };
+  $('#cClear').onclick = () => { st.in = st.out = null; st.picking = 'in'; hideErr(); renderCal(); update(); };
+  fIn.onclick = () => cal.classList.contains('open') && st.picking === 'in' ? closeCal() : openCal('in');
+  fOut.onclick = () => openCal(st.in ? 'out' : 'in');
+  document.addEventListener('click', e => {
+    if (!cal.classList.contains('open')) return;
+    // composedPath survives the grid re-render that detaches the clicked day
+    const inside = e.composedPath().some(n => n.classList && (n.classList.contains('fields') || n.hasAttribute('data-open-cal')));
+    if (!inside) closeCal();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && cal.classList.contains('open')) { closeCal(); fIn.focus(); } });
+
+  document.querySelectorAll('[data-open-cal]').forEach(a => a.addEventListener('click', () => {
+    $('#mMenu').classList.remove('open');
+    setTimeout(() => { if (!st.out) openCal('in'); }, 450);
+  }));
+
+  const showErr = t => { const m = $('#bkErr'); m.querySelector('span').textContent = t; m.classList.add('show'); };
+  const hideErr = () => $('#bkErr').classList.remove('show');
+
+  function renderFields() {
+    $('#vIn').textContent = st.in ? fmt(st.in) : 'Pilih tanggal'; $('#vIn').classList.toggle('set', !!st.in);
+    $('#vOut').textContent = st.out ? fmt(st.out) : 'Pilih tanggal'; $('#vOut').classList.toggle('set', !!st.out);
+    if (!cal.classList.contains('open')) { fIn.classList.remove('active'); fOut.classList.remove('active'); }
+  }
+
+  function quote() {
+    if (!st.in || !st.out) return null;
+    const groups = {}; let n = 0;
+    for (let d = new Date(st.in); d < st.out; d = addDays(d, 1)) { const s = seasonOf(d); groups[s] = (groups[s] || 0) + 1; n++; }
+    const lines = Object.entries(groups).map(([s, c]) => ({ label: `${rp(SEASONS[s].price)} × ${c} malam`, amt: SEASONS[s].price * c, s }));
+    const sub = lines.reduce((a, l) => a + l.amt, 0);
+    const tax = Math.round((sub + CLEAN) * TAX);
+    return { n, lines, sub, clean: CLEAN, tax, total: sub + CLEAN + tax };
+  }
+
+  function update() {
+    renderFields();
+    const g = st.guests;
+    $('#vGuests').textContent = `${g} tamu`;
+    $('#gMinus').disabled = g <= 1; $('#gPlus').disabled = g >= MAXG;
+    const q = quote(), bd = $('#bd'), btn = $('#bookBtn');
+    const s = SEASONS[seasonOf(st.in || TODAY)];
+    $('#bkRate').innerHTML = `${rp(q ? Math.round(q.sub / q.n) : s.price)} <span>/ malam${q && q.lines.length > 1 ? ' rata-rata' : ''}</span>`;
+    $('#bkRateNote').textContent = (q && q.lines.length > 1 ? 'Gabungan dua musim' : s.name) + ' · untuk seluruh villa';
+    $('#mbPrice').textContent = q ? rp(q.total) : rp(s.price);
+    $('#mbNote').textContent = q ? `total · ${q.n} malam` : '/ malam · ★ 4,92';
+    if (q) {
+      bd.innerHTML = q.lines.map(l => `<div class="bd-row"><span>${l.label}</span><span>${rp(l.amt)}</span></div>`).join('') +
+        `<div class="bd-row"><span>Biaya kebersihan</span><span>${rp(q.clean)}</span></div>
+         <div class="bd-row"><span>Pajak & layanan 10%</span><span>${rp(q.tax)}</span></div>
+         <div class="bd-total"><span>Total ${q.n} malam</span><span class="num">${rp(q.total)}</span></div>`;
+      bd.classList.add('show');
+      btn.textContent = 'Pesan sekarang';
+    } else { bd.classList.remove('show'); btn.textContent = st.in ? 'Pilih tanggal check-out' : 'Pilih tanggal'; }
+  }
+  $('#gMinus').onclick = () => { st.guests = Math.max(1, st.guests - 1); update(); };
+  $('#gPlus').onclick = () => { st.guests = Math.min(MAXG, st.guests + 1); update(); };
+
+  /* ---------- Booking modal ---------- */
+  const modal = $('#modal'), mIn = $('#modalIn');
+  $('#bookBtn').onclick = e => {
+    e.stopPropagation();
+    const q = quote();
+    if (!q) { openCal(st.in ? 'out' : 'in'); return; }
+    mIn.innerHTML = `
+      <div class="modal-head"><h3 id="mTitle">Lengkapi data pemesanan</h3><button class="x" type="button" data-close aria-label="Tutup">${ico('<path d="M6 6l12 12M18 6L6 18"/>')}</button></div>
+      <div class="summary"><img src="${IMG(photos[0].id, 200)}" alt=""><div><b>Villa Sawah · ${q.n} malam, ${st.guests} tamu</b><span>${fmt(st.in)} – ${fmt(st.out)}</span><span style="color:var(--ink);font-weight:600;margin-top:2px" class="num">Total ${rp(q.total)}</span></div></div>
+      <form class="form" id="bkForm" novalidate>
+        <div><label for="fName">Nama lengkap</label><input id="fName" name="name" autocomplete="name" required><div class="err-t">Isi nama sesuai identitas.</div></div>
+        <div class="two">
+          <div><label for="fWa">Nomor WhatsApp</label><input id="fWa" name="wa" type="tel" inputmode="tel" autocomplete="tel" placeholder="0812…" required><div class="err-t">Masukkan nomor yang aktif di WhatsApp.</div></div>
+          <div><label for="fMail">Email</label><input id="fMail" name="email" type="email" autocomplete="email" required><div class="err-t">Email belum valid.</div></div>
+        </div>
+        <div><label for="fNote">Catatan (opsional)</label><textarea id="fNote" name="note" placeholder="Jam tiba, antar-jemput bandara, perayaan…"></textarea></div>
+        <button class="btn btn-dark btn-block" type="submit" style="height:52px">Kirim permintaan booking</button>
+        <p class="book-note" style="margin:0">Pembayaran DP 30% dilakukan setelah kami konfirmasi ketersediaan.</p>
+      </form>`;
+    modal.showModal();
+    $('#fName').focus();
+    $('#bkForm').onsubmit = ev => {
+      ev.preventDefault();
+      const f = ev.target; let ok = true;
+      const chk = (el, valid) => { el.setAttribute('aria-invalid', valid ? 'false' : 'true'); if (!valid && ok) { el.focus(); ok = false; } };
+      chk(f.name, f.name.value.trim().length >= 3);
+      chk(f.wa, f.wa.value.replace(/\D/g, '').length >= 9);
+      chk(f.email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim()));
+      if (!ok) return;
+      const btn = f.querySelector('[type=submit]'); btn.disabled = true; btn.textContent = 'Mengirim…';
+      setTimeout(() => {
+        const code = 'VS-' + key(st.in).slice(2).replace(/-/g, '') + '-' + String(Math.floor(Math.random() * 900 + 100));
+        mIn.innerHTML = `<div class="done">
+          <div class="ok-badge">${ico('<path d="M5 12.5l4.5 4.5L19 7.5"/>')}</div>
+          <h3 id="mTitle">Permintaan terkirim</h3>
+          <p>Terima kasih, ${f.name.value.trim().split(' ')[0]}. Kami cek ketersediaan ${fmtShort(st.in)}–${fmtShort(st.out)} dan membalas lewat WhatsApp dalam 1 jam (08.00–21.00 WITA).</p>
+          <div class="code">${code}</div>
+          <button class="btn btn-dark btn-block" type="button" data-close style="margin-top:24px">Selesai</button>
+        </div>`;
+      }, 900);
+    };
+  };
+  modal.addEventListener('click', e => { if (e.target === modal || e.target.closest('[data-close]')) modal.close(); });
+
+  /* ---------- Reviews ---------- */
+  const cats = [['Kebersihan', 4.95], ['Akurasi foto', 4.93], ['Staf', 4.98], ['Lokasi', 4.71], ['Nilai harga', 4.86]];
+  $('#bars').innerHTML = cats.map(([n, v]) => `<div class="bar-row"><span>${n}</span><div class="bar"><i style="width:${(v / 5) * 100}%"></i></div><b>${v.toLocaleString('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b></div>`).join('');
+  const reviews = [
+    { n: 'Rina Kusuma', w: 'Jakarta · Oktober 2026', bg: 'fde7d3', feat: true, t: 'Kami datang bertiga keluarga, 6 orang termasuk dua anak. Kolamnya jadi tempat anak-anak seharian. Pak Wayan bikin nasi goreng terenak yang pernah kami makan, dan sore hari sawahnya kelihatan keemasan dari kamar.' },
+    { n: 'Tom Hargreaves', w: 'Melbourne · Oktober 2026', bg: 'dbeafe', t: 'Wi‑Fi was genuinely fast. I took two video calls a day from the gazebo with no drops. Quiet at night, just frogs and the water in the rice fields.' },
+    { n: 'Dimas Pratama', w: 'Surabaya · September 2026', bg: 'e0ecd9', t: 'Jalan masuknya agak sempit, tapi staf sudah kirim video petunjuk arah lewat WhatsApp. Kamar bersih, handuk diganti setiap hari.' },
+    { n: 'Sarah Whitfield', w: 'London · September 2026', bg: 'fce7f3', t: 'The massage in the gazebo on our last afternoon was the highlight. Airport pick-up was on time at 1am, driver waited with a sign.' },
+    { n: 'Ayu Lestari', w: 'Bandung · Agustus 2026', bg: 'fef3c7', t: 'Cocok buat yang mau tenang. Kalau mau ke café di Ubud cukup 15 menit naik Grab. Satu-satunya catatan: kamar taman agak kecil untuk dua orang dewasa.' },
+    { n: 'Kenji Watanabe', w: 'Osaka · Agustus 2026', bg: 'ede9fe', t: 'Very clean, very quiet. The pool is longer than it looks in the photos. We booked dinner at the villa twice, both times excellent.' },
+    { n: 'Putri Maharani', w: 'Denpasar · Juli 2026', bg: 'e0f2fe', t: 'Staycation ulang tahun mama. Staf bantu dekor meja makan dengan bunga kamboja tanpa diminta. Pasti balik lagi.' },
+    { n: 'Lukas Becker', w: 'München · Juli 2026', bg: 'f5f5f4', t: 'Good value for a group of five. Kitchen had everything we needed. Bring mosquito repellent for the evenings by the pool.' },
+  ];
+  const rvHtml = (r, i) => `<article class="rv${r.feat ? ' feat' : ''}${i >= 5 ? ' hidden' : ''}">
+      <div class="stars" aria-label="5 dari 5">${star.repeat(5)}</div>
+      <q>${r.t}</q>
+      <div class="rv-who"><img src="https://api.dicebear.com/9.x/notionists/svg?seed=${encodeURIComponent(r.n)}&backgroundColor=${r.bg}" alt="" width="40" height="40" loading="lazy"><div><b>${r.n}</b><span>${r.w}</span></div></div>
+    </article>`;
+  $('#rvGrid').innerHTML = reviews.map(rvHtml).join('');
+  $('#rvMore').onclick = function () {
+    const hidden = document.querySelectorAll('.rv.hidden');
+    if (hidden.length) { hidden.forEach(el => el.classList.remove('hidden')); this.textContent = 'Tampilkan lebih sedikit'; }
+    else { document.querySelectorAll('.rv').forEach((el, i) => i >= 5 && el.classList.add('hidden')); this.textContent = 'Tampilkan ulasan lain'; $('#ulasan').scrollIntoView(); }
+  };
+
+  /* ---------- Distances ---------- */
+  const dist = [
+    ['Tegallalang Rice Terrace', '5 menit', '<path d="M3 18c3-2 6-2 9 0s6 2 9 0M3 13c3-2 6-2 9 0s6 2 9 0"/>'],
+    ['Pusat Ubud & Pasar Seni', '15 menit', '<path d="M3 21h18M5 21V10l7-6 7 6v11"/><path d="M10 21v-5h4v5"/>'],
+    ['Minimarket & ATM', '4 menit', '<path d="M3 7h18l-2 10H5z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/>'],
+    ['Klinik 24 jam', '12 menit', '<path d="M12 7v10M7 12h10"/><rect x="3" y="3" width="18" height="18" rx="4"/>'],
+    ['Bandara Ngurah Rai', '75–90 menit', '<path d="M2 16l20-7-2-3-7 2.5L7 4 5 5l4 5-5 2-2-1-1 1z"/><path d="M3 21h18"/>'],
+  ];
+  $('#dist').innerHTML = dist.map(([t, d, p]) => `<li><span class="chip-ico">${ico(p)}</span><b>${t}</b><span class="t">${d}</span></li>`).join('');
+
+  /* ---------- FAQ ---------- */
+  const faq = [
+    ['Jam check-in dan check-out?', 'Check-in mulai 14.00, check-out sampai 12.00. Early check-in atau late check-out bisa diatur jika tanggal sebelumnya/sesudahnya kosong, gratis sampai 2 jam.'],
+    ['Bagaimana cara pembayarannya?', 'Setelah kami konfirmasi lewat WhatsApp, bayar DP 30% via transfer bank atau kartu kredit dalam 24 jam. Sisanya dibayar paling lambat 7 hari sebelum check-in.'],
+    ['Apa kebijakan pembatalannya?', 'Batal hingga 14 hari sebelum check-in: DP dikembalikan penuh. 7–13 hari sebelum: dikembalikan 50%. Kurang dari 7 hari: tidak dapat dikembalikan, tapi bisa pindah tanggal sekali.'],
+    ['Boleh membawa anak kecil?', 'Boleh. Tersedia baby cot dan kursi makan anak tanpa biaya. Kolam tidak berpagar, jadi anak perlu didampingi. Bayi di bawah 2 tahun tidak dihitung dalam 6 tamu.'],
+    ['Apakah bisa untuk acara atau pemotretan?', 'Makan malam keluarga hingga 12 orang boleh dengan pemberitahuan. Pemotretan komersial dan pesta dengan musik keras tidak diizinkan karena villa berada di lingkungan desa.'],
+  ];
+  $('#qa').innerHTML = faq.map(([q, a], i) => `<details${i === 0 ? ' open' : ''}><summary>${q}<span class="pm">${ico('<path d="M12 5v14M5 12h14"/>')}</span></summary><p>${a}</p></details>`).join('');
+
+  /* ---------- Chrome ---------- */
+  const nav = $('#nav'), mbar = $('#mbar'), bookEl = $('#booking');
+  const onScroll = () => {
+    nav.classList.toggle('scrolled', scrollY > 8);
+    const r = bookEl.getBoundingClientRect();
+    mbar.classList.toggle('show', scrollY > 500 && (r.bottom < 0 || r.top > innerHeight));
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  $('#menuBtn').onclick = function () { const o = $('#mMenu').classList.toggle('open'); this.setAttribute('aria-expanded', o); };
+  $('#mMenu').addEventListener('click', e => { if (e.target.tagName === 'A') $('#mMenu').classList.remove('open'); });
+
+  update();
+})();
+</script>
+</body>
+</html>

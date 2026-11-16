@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strata Runner 2 — Kinetic Supply Co.</title>
+<meta name="description" content="Strata Runner 2: a lightweight everyday running sneaker with a responsive foam midsole. Free delivery over £150 and free 30-day returns.">
+<style>
+  :root {
+    --ink: #161513;
+    --ink-2: #4a4743;
+    --ink-3: #7c7872;
+    --line: #e4e0d9;
+    --paper: #fbfaf8;
+    --card: #ffffff;
+    --brand: #161513;
+    --sale: #c8341b;
+    --ok: #2f7a4f;
+    --warn: #b35a00;
+    --star: #f2a516;
+    --radius: 14px;
+    --shadow: 0 10px 30px rgba(22, 21, 19, .10);
+    --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: var(--font); color: var(--ink); background: var(--paper); line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  img, svg { display: block; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
+  .sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- Header ---------- */
+  .promo { background: var(--ink); color: #fff; text-align: center; font-size: 13px; padding: 8px 12px; letter-spacing: .02em; }
+  header.site { position: sticky; top: 0; z-index: 30; background: rgba(251, 250, 248, .92); backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--line); }
+  .nav { display: flex; align-items: center; gap: 28px; height: 64px; }
+  .logo { font-weight: 800; letter-spacing: -.02em; font-size: 20px; text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .logo-mark { width: 26px; height: 26px; border-radius: 7px; background: var(--ink); display: grid; place-items: center; }
+  .nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; font-size: 15px; }
+  .nav ul a { text-decoration: none; color: var(--ink-2); }
+  .nav ul a:hover { color: var(--ink); }
+  .nav-actions { margin-left: auto; display: flex; gap: 6px; }
+  .icon-btn { position: relative; width: 42px; height: 42px; border-radius: 50%; border: 0; background: transparent; display: grid; place-items: center; }
+  .icon-btn:hover { background: #efece6; }
+  .badge { position: absolute; top: 3px; right: 1px; min-width: 19px; height: 19px; padding: 0 5px; border-radius: 10px; background: var(--sale); color: #fff; font-size: 11px; font-weight: 700; display: grid; place-items: center; transform: scale(0); transition: transform .2s; }
+  .badge.show { transform: scale(1); }
+  .badge.bump { animation: bump .4s; }
+  @keyframes bump { 50% { transform: scale(1.35); } }
+  @media (max-width: 760px) { .nav ul { display: none; } }
+
+  .crumbs { font-size: 13px; color: var(--ink-3); padding: 18px 0 8px; }
+  .crumbs ol { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; }
+  .crumbs li + li::before { content: "/"; margin-right: 6px; color: #c3beb6; }
+  .crumbs a { text-decoration: none; }
+  .crumbs a:hover { text-decoration: underline; }
+
+  /* ---------- Product layout ---------- */
+  .product { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 48px; padding: 8px 0 56px; }
+  @media (max-width: 920px) { .product { grid-template-columns: 1fr; gap: 28px; } }
+
+  /* Gallery */
+  .gallery { position: sticky; top: 84px; align-self: start; display: grid; grid-template-columns: 84px 1fr; gap: 14px; }
+  @media (max-width: 920px) { .gallery { position: static; grid-template-columns: 1fr; } }
+  .thumbs { display: flex; flex-direction: column; gap: 10px; }
+  @media (max-width: 920px) { .thumbs { flex-direction: row; order: 2; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; } }
+  .thumb { flex: 0 0 auto; width: 84px; aspect-ratio: 1; border-radius: 10px; border: 2px solid transparent; background: var(--bg, #f1ede6); padding: 4px; transition: border-color .2s, background .4s; }
+  .thumb[aria-selected="true"] { border-color: var(--ink); }
+  .thumb:hover { border-color: #b9b3aa; }
+  .thumb[aria-selected="true"]:hover { border-color: var(--ink); }
+  .thumb svg { width: 100%; height: 100%; }
+  .stage { position: relative; aspect-ratio: 1 / 1; border-radius: var(--radius); background: var(--bg, #f1ede6); overflow: hidden; transition: background .5s; cursor: zoom-in; touch-action: pan-y; }
+  .stage .slide { position: absolute; inset: 0; display: grid; place-items: center; padding: 6%; opacity: 0; transition: opacity .35s ease; pointer-events: none; }
+  .stage .slide.active { opacity: 1; }
+  .stage .slide svg { width: 100%; height: auto; transition: transform .25s ease; transform-origin: var(--zx, 50%) var(--zy, 50%); }
+  .stage.zoomed { cursor: zoom-out; }
+  .stage.zoomed .slide.active svg { transform: scale(2); }
+  .stage-tag { position: absolute; top: 16px; left: 16px; display: flex; gap: 8px; z-index: 2; }
+  .pill { font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+  .pill.sale { background: var(--sale); color: #fff; }
+  .pill.dark { background: var(--ink); color: #fff; }
+  .stage-nav { position: absolute; inset: auto 16px 16px auto; display: flex; gap: 8px; z-index: 2; }
+  .stage-nav button { width: 42px; height: 42px; border-radius: 50%; border: 0; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.1); display: grid; place-items: center; }
+  .stage-nav button:hover { background: var(--ink); color: #fff; }
+  .stage-count { position: absolute; left: 16px; bottom: 22px; font-size: 13px; color: var(--ink-2); z-index: 2; font-variant-numeric: tabular-nums; }
+  .stage-hint { position: absolute; right: 16px; top: 16px; font-size: 12px; color: var(--ink-3); background: rgba(255,255,255,.75); border-radius: 999px; padding: 4px 10px; z-index: 2; }
+  @media (hover: none) { .stage-hint { display: none; } }
+
+  /* Buy box */
+  .buy h1 { font-size: clamp(28px, 3.4vw, 40px); line-height: 1.08; letter-spacing: -.025em; margin: 4px 0 6px; }
+  .eyebrow { font-size: 13px; font-weight: 600; color: var(--ink-3); letter-spacing: .06em; text-transform: uppercase; }
+  .rating-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-2); text-decoration: none; margin-bottom: 18px; }
+  .rating-link:hover span:last-child { text-decoration: underline; }
+  .stars { --r: 0; font-size: 16px; letter-spacing: 2px; line-height: 1; background: linear-gradient(90deg, var(--star) calc(var(--r) / 5 * 100%), #d9d4cc 0); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; }
+  .price-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
+  .price { font-size: 28px; font-weight: 750; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+  .price.on-sale { color: var(--sale); }
+  .was { color: var(--ink-3); text-decoration: line-through; font-size: 18px; }
+  .save { font-size: 13px; font-weight: 700; color: var(--sale); background: #fdebe6; border-radius: 6px; padding: 2px 8px; }
+  .instalments { font-size: 13px; color: var(--ink-3); margin: 0 0 22px; }
+
+  .group { border: 0; padding: 0; margin: 0 0 24px; min-width: 0; }
+  .group-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; gap: 12px; }
+  .group-head legend, .group-head .label { font-weight: 700; font-size: 15px; padding: 0; float: left; }
+  .group-head .value { font-weight: 400; color: var(--ink-2); }
+  .link-btn { background: none; border: 0; padding: 0; text-decoration: underline; text-underline-offset: 3px; font-size: 14px; color: var(--ink-2); }
+  .link-btn:hover { color: var(--ink); }
+
+  .swatches { display: flex; gap: 12px; flex-wrap: wrap; clear: both; }
+  .swatch input { position: absolute; opacity: 0; pointer-events: none; }
+  .swatch label { display: block; width: 72px; aspect-ratio: 1; border-radius: 12px; border: 2px solid var(--line); background: var(--sbg); padding: 3px; cursor: pointer; transition: border-color .15s, transform .15s; position: relative; }
+  .swatch label:hover { border-color: #b9b3aa; }
+  .swatch input:checked + label { border-color: var(--ink); }
+  .swatch input:focus-visible + label { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .swatch label svg { width: 100%; height: 100%; }
+  .swatch .dot { position: absolute; top: -6px; right: -6px; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 999px; background: var(--sale); color: #fff; }
+
+  .unit-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 2px; background: #fff; }
+  .unit-toggle button { border: 0; background: transparent; padding: 3px 11px; border-radius: 999px; font-size: 12px; font-weight: 700; color: var(--ink-3); }
+  .unit-toggle button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+  .size-tools { display: flex; align-items: center; gap: 14px; }
+
+  .sizes { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 14px 8px; clear: both; }
+  .size input { position: absolute; opacity: 0; pointer-events: none; }
+  .size label { position: relative; display: grid; place-items: center; height: 50px; border-radius: 10px; border: 1px solid var(--line); background: #fff; font-weight: 600; font-size: 15px; cursor: pointer; transition: border-color .15s, background .15s; font-variant-numeric: tabular-nums; }
+  .size label:hover { border-color: var(--ink); }
+  .size input:checked + label { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .size input:focus-visible + label { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .size input:disabled + label { color: #b6b1a9; background: #f4f2ee; cursor: not-allowed; border-color: #eeebe6;
+    background-image: linear-gradient(to top right, transparent calc(50% - .6px), #d4cfc7 50%, transparent calc(50% + .6px)); }
+  .size .low { position: absolute; bottom: -1px; left: 50%; transform: translate(-50%, 50%); font-size: 10px; font-weight: 700; background: #fff3e2; color: var(--warn); padding: 0 6px; border-radius: 999px; white-space: nowrap; line-height: 16px; }
+  .size input:checked + label .low { background: #fff; }
+  .sizes.shake { animation: shake .4s; }
+  @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+  .field-msg { font-size: 13px; margin-top: 10px; min-height: 20px; color: var(--ink-2); }
+  .field-msg.error { color: var(--sale); font-weight: 600; }
+  .fit-note { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--ink-2); margin-top: 4px; }
+
+  .cta { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; margin-bottom: 14px; }
+  .qty { display: flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; background: #fff; height: 56px; }
+  .qty button { width: 42px; height: 100%; border: 0; background: none; font-size: 20px; border-radius: 999px; }
+  .qty button:disabled { color: #c9c4bc; cursor: not-allowed; }
+  .qty output { width: 26px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .btn { height: 56px; border-radius: 999px; border: 0; padding: 0 26px; font-weight: 700; font-size: 16px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: background .2s, transform .1s; }
+  .btn:active { transform: scale(.98); }
+  .btn-primary { background: var(--ink); color: #fff; }
+  .btn-primary:hover { background: #33302c; }
+  .btn-primary.added { background: var(--ok); }
+  .btn-primary[aria-disabled="true"] { background: #8d8880; }
+  .btn-ghost { background: #fff; border: 1px solid var(--line); width: 56px; padding: 0; }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .btn-ghost[aria-pressed="true"] svg { fill: var(--sale); stroke: var(--sale); }
+  .btn-outline { background: transparent; border: 1.5px solid var(--ink); height: 46px; font-size: 15px; }
+  .btn-outline:hover { background: var(--ink); color: #fff; }
+
+  .perks { list-style: none; padding: 16px 0; margin: 10px 0 0; display: grid; gap: 10px; font-size: 14px; color: var(--ink-2); border-top: 1px solid var(--line); }
+  .perks li { display: flex; gap: 10px; align-items: center; }
+  .perks svg { flex: none; }
+
+  details.acc { border-top: 1px solid var(--line); }
+  details.acc:last-of-type { border-bottom: 1px solid var(--line); }
+  details.acc summary { list-style: none; cursor: pointer; padding: 18px 0; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+  details.acc summary::-webkit-details-marker { display: none; }
+  details.acc summary::after { content: "+"; font-size: 22px; font-weight: 400; transition: transform .2s; }
+  details.acc[open] summary::after { transform: rotate(45deg); }
+  details.acc .acc-body { padding: 0 0 18px; color: var(--ink-2); font-size: 15px; }
+  details.acc ul { padding-left: 18px; margin: 0; }
+
+  /* ---------- Reviews ---------- */
+  .section-title { font-size: clamp(24px, 2.6vw, 32px); letter-spacing: -.02em; margin: 0 0 24px; }
+  .reviews { border-top: 1px solid var(--line); padding: 56px 0 72px; }
+  .rev-layout { display: grid; grid-template-columns: 320px 1fr; gap: 56px; }
+  @media (max-width: 920px) { .rev-layout { grid-template-columns: 1fr; gap: 32px; } }
+  .summary { position: sticky; top: 90px; align-self: start; }
+  @media (max-width: 920px) { .summary { position: static; } }
+  .avg { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+  .avg-num { font-size: 54px; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+  .avg .stars { font-size: 22px; }
+  .avg-count { color: var(--ink-3); font-size: 14px; margin-bottom: 20px; }
+  .bars { display: grid; gap: 6px; margin-bottom: 24px; }
+  .bar { display: grid; grid-template-columns: 34px 1fr 34px; align-items: center; gap: 10px; font-size: 13px; border: 0; background: none; padding: 4px 6px; margin: 0 -6px; border-radius: 8px; text-align: left; color: var(--ink-2); }
+  .bar:hover { background: #f1eee9; }
+  .bar[aria-pressed="true"] { background: #ebe6de; color: var(--ink); font-weight: 700; }
+  .bar .track { height: 8px; background: #e9e5de; border-radius: 99px; overflow: hidden; }
+  .bar .fill { height: 100%; background: var(--star); border-radius: 99px; width: 0; transition: width .6s cubic-bezier(.2,.8,.2,1); }
+  .bar .n { text-align: right; font-variant-numeric: tabular-nums; }
+  .fit-meter { margin-bottom: 26px; }
+  .fit-meter .label { font-weight: 700; font-size: 14px; margin-bottom: 10px; }
+  .fit-track { position: relative; height: 6px; background: #e9e5de; border-radius: 99px; margin: 0 6px; }
+  .fit-track::before, .fit-track::after { content: ""; position: absolute; top: -3px; width: 2px; height: 12px; background: #d0cac1; left: 50%; }
+  .fit-track::after { display: none; }
+  .fit-pin { position: absolute; top: 50%; width: 16px; height: 16px; border-radius: 50%; background: var(--ink); border: 3px solid #fff; box-shadow: 0 1px 4px rgba(0,0,0,.3); transform: translate(-50%, -50%); left: 50%; transition: left .6s; }
+  .fit-labels { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-3); margin-top: 8px; }
+
+  .rev-toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+  .rev-toolbar .showing { font-size: 14px; color: var(--ink-2); }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; background: var(--ink); color: #fff; border: 0; border-radius: 999px; padding: 3px 10px; margin-left: 8px; }
+  .select { appearance: none; border: 1px solid var(--line); background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23161513' stroke-width='1.6' fill='none'/%3E%3C/svg%3E") no-repeat right 12px center; padding: 8px 36px 8px 14px; border-radius: 999px; font-size: 14px; }
+  .rev-list { list-style: none; margin: 0; padding: 0; }
+  .review { padding: 26px 0; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 1fr 180px; gap: 24px; }
+  @media (max-width: 620px) { .review { grid-template-columns: 1fr; gap: 10px; } }
+  .review.fresh { animation: fresh 1.6s ease; }
+  @keyframes fresh { from { background: #fff6dc; } to { background: transparent; } }
+  .review h3 { font-size: 17px; margin: 8px 0 6px; }
+  .review p { margin: 0 0 12px; color: var(--ink-2); }
+  .review .meta { font-size: 13px; color: var(--ink-3); display: grid; gap: 4px; align-content: start; }
+  .review .who { font-weight: 700; color: var(--ink); font-size: 14px; }
+  .verified { color: var(--ok); font-weight: 600; display: inline-flex; gap: 4px; align-items: center; }
+  .review .date { font-size: 13px; color: var(--ink-3); margin-left: 8px; }
+  .helpful { font-size: 13px; color: var(--ink-3); display: flex; gap: 10px; align-items: center; }
+  .helpful button { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 3px 12px; font-size: 13px; }
+  .helpful button:hover:not(:disabled) { border-color: var(--ink); }
+  .helpful button:disabled { background: #eef6f1; border-color: #bfdccb; color: var(--ok); cursor: default; }
+  .rev-empty { padding: 40px 0; color: var(--ink-3); text-align: center; }
+  .rev-more { display: flex; justify-content: center; padding-top: 28px; }
+
+  /* ---------- Dialogs ---------- */
+  dialog { border: 0; border-radius: 18px; padding: 0; width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 48px); box-shadow: 0 30px 80px rgba(0,0,0,.25); color: var(--ink); }
+  dialog::backdrop { background: rgba(22, 21, 19, .45); backdrop-filter: blur(2px); }
+  dialog[open] { animation: pop .22s ease; }
+  @keyframes pop { from { opacity: 0; transform: translateY(12px) scale(.98); } }
+  .dlg-head { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: #fff; }
+  .dlg-head h2 { margin: 0; font-size: 20px; }
+  .dlg-body { padding: 20px 24px 24px; }
+  table.sizes-table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .sizes-table th, .sizes-table td { padding: 9px 10px; text-align: center; border-bottom: 1px solid var(--line); }
+  .sizes-table thead th { background: #f4f1ec; font-weight: 700; }
+  .sizes-table tr.is-selected td { background: #fff6dc; font-weight: 700; }
+  .form-row { display: grid; gap: 6px; margin-bottom: 16px; }
+  .form-row label, .form-row legend { font-weight: 600; font-size: 14px; padding: 0; }
+  .input { width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; background: #fff; }
+  .input:focus { outline: 2px solid var(--ink); outline-offset: 0; border-color: transparent; }
+  textarea.input { min-height: 110px; resize: vertical; }
+  .star-input { display: inline-flex; flex-direction: row-reverse; justify-content: flex-end; gap: 2px; border: 0; padding: 0; margin: 0; }
+  .star-input input { position: absolute; opacity: 0; }
+  .star-input label { font-size: 32px; line-height: 1; color: #d9d4cc; cursor: pointer; transition: color .1s, transform .1s; }
+  .star-input label:hover, .star-input label:hover ~ label, .star-input input:checked ~ label { color: var(--star); }
+  .star-input input:focus-visible + label { outline: 2px solid var(--ink); border-radius: 4px; }
+  .seg { display: flex; gap: 8px; flex-wrap: wrap; }
+  .seg input { position: absolute; opacity: 0; }
+  .seg label { border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 14px; cursor: pointer; font-weight: 500; }
+  .seg input:checked + label { background: var(--ink); color: #fff; border-color: var(--ink); }
+  .seg input:focus-visible + label { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .form-error { color: var(--sale); font-size: 13px; font-weight: 600; min-height: 18px; }
+
+  /* ---------- Cart drawer ---------- */
+  .overlay { position: fixed; inset: 0; background: rgba(22, 21, 19, .45); opacity: 0; pointer-events: none; transition: opacity .25s; z-index: 50; }
+  .overlay.open { opacity: 1; pointer-events: auto; }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100vw); background: #fff; z-index: 51; transform: translateX(100%); transition: transform .32s cubic-bezier(.2,.8,.2,1); display: flex; flex-direction: column; box-shadow: -10px 0 40px rgba(0,0,0,.12); visibility: hidden; }
+  .drawer.open { transform: none; visibility: visible; }
+  .drawer-head { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; border-bottom: 1px solid var(--line); }
+  .drawer-head h2 { margin: 0; font-size: 20px; }
+  .ship { padding: 14px 22px; font-size: 13px; color: var(--ink-2); background: #f7f5f1; }
+  .ship .track { height: 6px; background: #e4dfd7; border-radius: 99px; overflow: hidden; margin-top: 8px; }
+  .ship .fill { height: 100%; background: var(--ok); width: 0; transition: width .5s; }
+  .cart-items { flex: 1; overflow-y: auto; list-style: none; margin: 0; padding: 0 22px; }
+  .cart-item { display: grid; grid-template-columns: 88px 1fr auto; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .cart-item .pic { border-radius: 10px; aspect-ratio: 1; padding: 6px; }
+  .cart-item .pic svg { width: 100%; height: 100%; }
+  .cart-item h3 { font-size: 15px; margin: 0 0 2px; }
+  .cart-item .sub { font-size: 13px; color: var(--ink-3); margin: 0 0 10px; }
+  .cart-item .qty { height: 34px; width: max-content; }
+  .cart-item .qty button { width: 32px; font-size: 16px; }
+  .cart-item .right { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end; }
+  .cart-item .line-price { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .remove { background: none; border: 0; font-size: 13px; text-decoration: underline; color: var(--ink-3); padding: 0; }
+  .remove:hover { color: var(--sale); }
+  .cart-empty { text-align: center; padding: 60px 20px; color: var(--ink-3); }
+  .cart-empty svg { margin: 0 auto 14px; opacity: .5; }
+  .drawer-foot { border-top: 1px solid var(--line); padding: 18px 22px 22px; display: grid; gap: 10px; }
+  .totals { display: flex; justify-content: space-between; font-size: 14px; color: var(--ink-2); }
+  .totals.grand { font-size: 18px; font-weight: 800; color: var(--ink); }
+  .drawer-foot .btn { width: 100%; }
+  .drawer-foot small { text-align: center; color: var(--ink-3); font-size: 12px; }
+
+  /* ---------- Sticky mobile/desktop bar ---------- */
+  .sticky-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; background: rgba(255,255,255,.96); backdrop-filter: blur(8px); border-top: 1px solid var(--line); transform: translateY(110%); transition: transform .3s; }
+  .sticky-bar.show { transform: none; }
+  .sticky-inner { display: flex; align-items: center; gap: 14px; height: 76px; }
+  .sticky-inner .mini { width: 56px; height: 56px; border-radius: 10px; padding: 4px; flex: none; }
+  .sticky-inner .mini svg { width: 100%; height: 100%; }
+  .sticky-inner .info { min-width: 0; flex: 1; }
+  .sticky-inner .info strong { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sticky-inner .info span { font-size: 13px; color: var(--ink-2); }
+  .sticky-inner .btn { height: 48px; }
+
+  /* ---------- Toast ---------- */
+  .toast { position: fixed; left: 50%; top: 84px; transform: translate(-50%, -20px); background: var(--ink); color: #fff; padding: 12px 18px; border-radius: 12px; font-size: 14px; display: flex; gap: 10px; align-items: center; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; z-index: 60; box-shadow: var(--shadow); }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  .toast button { background: none; border: 0; color: #fff; text-decoration: underline; font-weight: 700; padding: 0; }
+
+  footer.site { border-top: 1px solid var(--line); padding: 30px 0 110px; color: var(--ink-3); font-size: 13px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Shared SVG artwork: one sneaker drawing recoloured through CSS custom properties -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <pattern id="tread" width="16" height="12" patternUnits="userSpaceOnUse">
+      <path d="M2 10 L8 3 L14 10" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+    </pattern>
+    <symbol id="shoe" viewBox="0 0 400 240">
+      <ellipse cx="212" cy="207" rx="176" ry="8" fill="#000" opacity=".13"/>
+      <!-- tongue -->
+      <path d="M148 98 C146 74 158 55 177 50 C190 47 197 56 195 69 L184 110 Z" fill="var(--upper)" stroke="rgba(0,0,0,.18)" stroke-width="1.5"/>
+      <path d="M160 70 C166 60 176 56 186 56" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <!-- upper -->
+      <path d="M40 158 C31 128 35 97 56 76 C67 65 89 61 105 69 C121 77 137 90 159 94 C187 98 215 104 245 120 C285 140 334 138 364 148 C385 155 391 166 385 172 L40 172 Z" fill="var(--upper)" stroke="rgba(0,0,0,.2)" stroke-width="1.5"/>
+      <!-- toe cap -->
+      <path d="M316 140 C344 141 371 148 381 158 C387 164 387 170 385 172 L312 172 C305 160 307 147 316 140 Z" fill="#000" opacity=".07"/>
+      <!-- heel counter -->
+      <path d="M40 158 C32 129 36 98 56 77 C71 100 84 132 99 168 L40 168 Z" fill="var(--heel)"/>
+      <!-- collar lining -->
+      <path d="M58 79 C70 68 91 66 104 72 C120 80 136 93 157 97" stroke="var(--lining)" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <!-- pull tab -->
+      <path d="M49 80 L42 56 C41 51 48 49 52 53 L63 75 Z" fill="var(--accent)"/>
+      <!-- eyestay + laces -->
+      <path d="M163 93 L267 126" stroke="#000" stroke-opacity=".09" stroke-width="18" stroke-linecap="round"/>
+      <g stroke="var(--lace)" stroke-width="5" stroke-linecap="round">
+        <path d="M163 86 L178 104"/><path d="M186 94 L201 111"/><path d="M209 101 L224 119"/><path d="M232 109 L247 126"/><path d="M255 117 L268 131"/>
+      </g>
+      <g fill="#000" opacity=".25">
+        <circle cx="170" cy="100" r="2"/><circle cx="193" cy="107" r="2"/><circle cx="216" cy="115" r="2"/><circle cx="239" cy="122" r="2"/><circle cx="261" cy="129" r="2"/>
+      </g>
+      <!-- accent wave -->
+      <path d="M96 160 C146 152 196 129 258 124 C289 121 309 127 319 134 C280 132 236 142 199 157 C175 167 128 170 96 160 Z" fill="var(--accent)"/>
+      <!-- stitch line -->
+      <path d="M62 152 C130 160 220 158 312 154" stroke="#000" stroke-opacity=".18" stroke-width="1.2" stroke-dasharray="4 4" fill="none"/>
+      <!-- midsole -->
+      <path d="M34 150 C26 163 27 185 44 191 L354 191 C377 191 391 179 385 161 C352 167 302 168 252 165 L122 161 C90 157 60 152 34 150 Z" fill="var(--sole)" stroke="rgba(0,0,0,.14)" stroke-width="1.5"/>
+      <path d="M48 177 C140 181 262 181 372 175" stroke="#000" stroke-opacity=".08" stroke-width="2" fill="none"/>
+      <path d="M56 160 C70 162 86 164 100 166 L96 182 L52 180 Z" fill="var(--accent)" opacity=".85"/>
+      <!-- outsole -->
+      <path d="M38 186 C34 196 40 204 55 204 L350 204 C372 204 388 197 386 182 C378 188 366 191 354 191 L44 191 C41 190 39 188 38 186 Z" fill="var(--outsole)"/>
+      <!-- brand mark -->
+      <path d="M118 118 l14 -8 l6 10 l14 -8" stroke="var(--accent)" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+    </symbol>
+    <symbol id="sole" viewBox="0 0 400 240">
+      <path d="M48 120 C48 84 88 72 140 78 C200 86 250 70 320 72 C366 74 388 100 386 122 C384 150 360 170 318 168 C262 166 220 152 160 160 C96 168 48 156 48 120 Z" fill="var(--outsole)" stroke="var(--sole)" stroke-width="8"/>
+      <path transform="translate(217 120) scale(.86) translate(-217 -120)" d="M48 120 C48 84 88 72 140 78 C200 86 250 70 320 72 C366 74 388 100 386 122 C384 150 360 170 318 168 C262 166 220 152 160 160 C96 168 48 156 48 120 Z" fill="url(#tread)"/>
+      <ellipse cx="110" cy="120" rx="34" ry="22" fill="var(--accent)" opacity=".85"/>
+      <path d="M96 120 l9 -6 l5 8 l10 -6" stroke="var(--outsole)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="promo">Free delivery over £150 · Free 30-day returns · Members get 10% off first order</div>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="#" class="logo" aria-label="Kinetic Supply Co. home">
+      <span class="logo-mark"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 11 l4 -5 l3 4 l5 -6" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      Kinetic
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#">New in</a></li>
+        <li><a href="#">Running</a></li>
+        <li><a href="#">Lifestyle</a></li>
+        <li><a href="#">Trail</a></li>
+        <li><a href="#">Sale</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" aria-label="Search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+      <button class="icon-btn" aria-label="Account"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></button>
+      <button class="icon-btn" id="cartBtn" aria-label="Open bag, 0 items" aria-controls="drawer" aria-expanded="false">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <span class="badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <nav class="crumbs" aria-label="Breadcrumb">
+    <ol>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Men</a></li>
+      <li><a href="#">Running</a></li>
+      <li aria-current="page">Strata Runner 2</li>
+    </ol>
+  </nav>
+
+  <section class="product" id="product">
+    <!-- Gallery -->
+    <div class="gallery" aria-roledescription="carousel" aria-label="Product images">
+      <div class="thumbs" role="tablist" aria-label="Choose image" id="thumbs"></div>
+      <div class="stage" id="stage">
+        <div class="stage-tag" id="stageTags"></div>
+        <span class="stage-hint">Click to zoom</span>
+        <div id="slides"></div>
+        <span class="stage-count" id="stageCount" aria-live="polite"></span>
+        <div class="stage-nav">
+          <button id="prevImg" aria-label="Previous image"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button id="nextImg" aria-label="Next image"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buy box -->
+    <div class="buy">
+      <div class="eyebrow">Men's road running shoe</div>
+      <h1>Strata Runner 2</h1>
+      <a href="#reviews" class="rating-link" id="ratingLink">
+        <span class="stars" id="headStars" aria-hidden="true">★★★★★</span>
+        <span id="headRating"></span>
+      </a>
+
+      <div class="price-row" aria-live="polite">
+        <span class="price" id="price"></span>
+        <span class="was" id="was" hidden></span>
+        <span class="save" id="save" hidden></span>
+      </div>
+      <p class="instalments" id="instalments"></p>
+
+      <form id="buyForm" novalidate>
+        <fieldset class="group">
+          <div class="group-head">
+            <legend>Colour: <span class="value" id="colourName"></span></legend>
+          </div>
+          <div class="swatches" id="swatches"></div>
+        </fieldset>
+
+        <fieldset class="group">
+          <div class="group-head">
+            <legend>Size <span class="value" id="sizeLabel"></span></legend>
+            <div class="size-tools">
+              <div class="unit-toggle" role="group" aria-label="Size system" id="unitToggle">
+                <button type="button" data-unit="UK" aria-pressed="true">UK</button>
+                <button type="button" data-unit="EU" aria-pressed="false">EU</button>
+                <button type="button" data-unit="US" aria-pressed="false">US</button>
+              </div>
+              <button type="button" class="link-btn" id="sizeGuideBtn">Size guide</button>
+            </div>
+          </div>
+          <div class="sizes" id="sizes"></div>
+          <div class="field-msg" id="sizeMsg" aria-live="polite"></div>
+          <div class="fit-note">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.5"/></svg>
+            <span id="fitNote">Most customers say this fits true to size.</span>
+          </div>
+        </fieldset>
+
+        <div class="cta" id="mainCta">
+          <div class="qty" role="group" aria-label="Quantity">
+            <button type="button" id="qtyDown" aria-label="Decrease quantity">−</button>
+            <output id="qty" aria-live="polite">1</output>
+            <button type="button" id="qtyUp" aria-label="Increase quantity">+</button>
+          </div>
+          <button type="submit" class="btn btn-primary" id="addBtn">
+            <span id="addLabel">Add to bag</span>
+          </button>
+          <button type="button" class="btn btn-ghost" id="wishBtn" aria-pressed="false" aria-label="Save to wishlist">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-9.2-9C1.4 8 3.2 4.5 6.6 4.5c2.1 0 3.6 1.2 5.4 3.1 1.8-1.9 3.3-3.1 5.4-3.1 3.4 0 5.2 3.5 3.8 6.5C19 15.6 12 20 12 20z"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <ul class="perks">
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span id="deliveryEta"></span></li>
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4h4"/></svg>Free 30-day returns — even if you've run in them</li>
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>2-year manufacturer warranty</li>
+      </ul>
+
+      <details class="acc" open>
+        <summary>Description</summary>
+        <div class="acc-body">
+          <p style="margin-top:0">Built for the daily miles. The Strata Runner 2 pairs a supercritical foam midsole with a breathable engineered-knit upper, so easy runs feel easier and tempo days still feel snappy.</p>
+          <ul>
+            <li>Drop: 8 mm · Stack height: 36 / 28 mm</li>
+            <li>Weight: 265 g (UK 9)</li>
+            <li>Neutral support · Best for road and track</li>
+          </ul>
+        </div>
+      </details>
+      <details class="acc">
+        <summary>Materials &amp; care</summary>
+        <div class="acc-body">
+          <ul>
+            <li>Upper: 62% recycled polyester engineered knit</li>
+            <li>Midsole: nitrogen-infused TPEE foam</li>
+            <li>Outsole: high-abrasion rubber, 30% bio-based</li>
+            <li>Hand wash cold, air dry. Remove insoles to dry.</li>
+          </ul>
+        </div>
+      </details>
+      <details class="acc">
+        <summary>Delivery &amp; returns</summary>
+        <div class="acc-body">
+          <p style="margin-top:0">Standard delivery (2–4 working days) is £4.95, free on orders over £150. Next-day delivery is £7.95 if ordered before 9pm. Return any unworn or lightly worn pair within 30 days for a full refund.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="reviews" id="reviews" aria-labelledby="revTitle">
+    <h2 class="section-title" id="revTitle">Reviews</h2>
+    <div class="rev-layout">
+      <aside class="summary">
+        <div class="avg">
+          <span class="avg-num" id="avgNum">0.0</span>
+          <span class="stars" id="avgStars" aria-hidden="true">★★★★★</span>
+        </div>
+        <div class="avg-count" id="avgCount"></div>
+        <div class="bars" id="bars" role="group" aria-label="Filter by rating"></div>
+        <div class="fit-meter">
+          <div class="label">How it fits</div>
+          <div class="fit-track"><span class="fit-pin" id="fitPin"></span></div>
+          <div class="fit-labels"><span>Runs small</span><span>True to size</span><span>Runs large</span></div>
+        </div>
+        <button class="btn btn-outline" id="writeBtn" type="button" style="width:100%">Write a review</button>
+      </aside>
+
+      <div>
+        <div class="rev-toolbar">
+          <div class="showing" id="showing" aria-live="polite"></div>
+          <label>
+            <span class="sr-only">Sort reviews</span>
+            <select class="select" id="sortSel">
+              <option value="recent">Most recent</option>
+              <option value="helpful">Most helpful</option>
+              <option value="high">Highest rated</option>
+              <option value="low">Lowest rated</option>
+            </select>
+          </label>
+        </div>
+        <ul class="rev-list" id="revList"></ul>
+        <div class="rev-more"><button class="btn btn-outline" id="moreBtn" type="button">Show more reviews</button></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">© 2026 Kinetic Supply Co. · Demo product page · Prices include VAT</div>
+</footer>
+
+<!-- Sticky add-to-bag bar -->
+<div class="sticky-bar" id="stickyBar" aria-hidden="true">
+  <div class="wrap sticky-inner">
+    <div class="mini" id="stickyPic"></div>
+    <div class="info">
+      <strong>Strata Runner 2</strong>
+      <span id="stickyInfo"></span>
+    </div>
+    <button class="btn btn-primary" id="stickyAdd" type="button" tabindex="-1">Add to bag</button>
+  </div>
+</div>
+
+<!-- Cart drawer -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+  <div class="drawer-head">
+    <h2 id="drawerTitle">Your bag</h2>
+    <button class="icon-btn" id="closeDrawer" aria-label="Close bag"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="ship" id="ship"></div>
+  <ul class="cart-items" id="cartItems"></ul>
+  <div class="drawer-foot" id="drawerFoot">
+    <div class="totals"><span>Subtotal</span><span id="subtotal"></span></div>
+    <div class="totals"><span>Delivery</span><span id="shipping"></span></div>
+    <div class="totals grand"><span>Total</span><span id="total"></span></div>
+    <button class="btn btn-primary" type="button" id="checkoutBtn">Checkout</button>
+    <small>Taxes included. Secure checkout.</small>
+  </div>
+</aside>
+
+<!-- Size guide -->
+<dialog id="sizeGuide" aria-labelledby="sgTitle">
+  <div class="dlg-head">
+    <h2 id="sgTitle">Size guide</h2>
+    <button class="icon-btn" data-close aria-label="Close size guide"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="dlg-body">
+    <p style="margin-top:0;color:var(--ink-2);font-size:14px">Measure your foot from heel to longest toe while standing. If you're between sizes, we recommend going half a size up for longer runs.</p>
+    <table class="sizes-table">
+      <thead><tr><th scope="col">UK</th><th scope="col">EU</th><th scope="col">US</th><th scope="col">Foot length</th></tr></thead>
+      <tbody id="sgBody"></tbody>
+    </table>
+  </div>
+</dialog>
+
+<!-- Write a review -->
+<dialog id="reviewDlg" aria-labelledby="rvTitle">
+  <form method="dialog" id="reviewForm" novalidate>
+    <div class="dlg-head">
+      <h2 id="rvTitle">Write a review</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Close"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="dlg-body">
+      <fieldset class="form-row" style="border:0;padding:0;margin:0 0 16px">
+        <legend>Overall rating</legend>
+        <div class="star-input">
+          <input type="radio" name="rating" id="r5" value="5"><label for="r5" title="5 stars">★<span class="sr-only">5 stars</span></label>
+          <input type="radio" name="rating" id="r4" value="4"><label for="r4" title="4 stars">★<span class="sr-only">4 stars</span></label>
+          <input type="radio" name="rating" id="r3" value="3"><label for="r3" title="3 stars">★<span class="sr-only">3 stars</span></label>
+          <input type="radio" name="rating" id="r2" value="2"><label for="r2" title="2 stars">★<span class="sr-only">2 stars</span></label>
+          <input type="radio" name="rating" id="r1" value="1"><label for="r1" title="1 star">★<span class="sr-only">1 star</span></label>
+        </div>
+      </fieldset>
+      <fieldset class="form-row" style="border:0;padding:0;margin:0 0 16px">
+        <legend>How did they fit?</legend>
+        <div class="seg">
+          <input type="radio" name="fit" id="f-1" value="-1"><label for="f-1">Runs small</label>
+          <input type="radio" name="fit" id="f0" value="0" checked><label for="f0">True to size</label>
+          <input type="radio" name="fit" id="f1" value="1"><label for="f1">Runs large</label>
+        </div>
+      </fieldset>
+      <div class="form-row"><label for="rvHead">Headline</label><input class="input" id="rvHead" maxlength="80" placeholder="Sum it up in a few words"></div>
+      <div class="form-row"><label for="rvBody">Your review</label><textarea class="input" id="rvBody" maxlength="1000" placeholder="What did you like or dislike? How did you use them?"></textarea></div>
+      <div class="form-row"><label for="rvName">Display name</label><input class="input" id="rvName" maxlength="40" autocomplete="nickname"></div>
+      <div class="form-error" id="rvError" aria-live="assertive"></div>
+      <button class="btn btn-primary" type="submit" style="width:100%">Submit review</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  /* ---------------- Data ---------------- */
+  const money = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' });
+  const fmt = n => money.format(n).replace('.00', '');
+  const FREE_SHIP = 150, SHIP_COST = 4.95;
+
+  const SIZES = [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 12];
+  const EU = { 6: 40, 6.5: 40.5, 7: 41, 7.5: 42, 8: 42.5, 8.5: 43, 9: 44, 9.5: 44.5, 10: 45, 10.5: 45.5, 11: 46, 12: 47.5 };
+  const CM = { 6: 24.5, 6.5: 25, 7: 25.5, 7.5: 26, 8: 26.5, 8.5: 27, 9: 27.5, 9.5: 28, 10: 28.5, 10.5: 29, 11: 29.5, 12: 30.5 };
+  const sizeIn = (uk, unit) => unit === 'EU' ? EU[uk] : unit === 'US' ? uk + 1 : uk;
+  const sizeText = (uk, unit) => `${unit} ${sizeIn(uk, unit)}`;
+
+  const COLOURS = [
+    { id: 'chalk', name: 'Chalk / Ember', price: 120,
+      vars: { upper: '#f2efe9', heel: '#e2dcd0', accent: '#e4572e', sole: '#ffffff', outsole: '#2d2a26', lace: '#ffffff', lining: '#e4572e', bg: '#f3eee6' },
+      stock: [3, 8, 12, 9, 0, 14, 11, 6, 2, 7, 4, 0] },
+    { id: 'midnight', name: 'Midnight / Mint', price: 120,
+      vars: { upper: '#24324f', heel: '#1a253e', accent: '#7fd1ae', sole: '#f4f1ea', outsole: '#1b1b1b', lace: '#f4f1ea', lining: '#7fd1ae', bg: '#e5eaf2' },
+      stock: [0, 2, 6, 10, 12, 9, 0, 5, 8, 3, 1, 2] },
+    { id: 'moss', name: 'Moss / Sun', price: 96, was: 120,
+      vars: { upper: '#6f7e51', heel: '#5a6740', accent: '#efc84a', sole: '#efe7d6', outsole: '#4b3a2a', lace: '#efe7d6', lining: '#efc84a', bg: '#edefe2' },
+      stock: [0, 0, 2, 1, 4, 0, 3, 0, 2, 0, 1, 0] },
+    { id: 'onyx', name: 'Onyx / Volt Pink', price: 130, badge: 'Limited',
+      vars: { upper: '#2a2a2a', heel: '#1c1c1c', accent: '#ff4f8b', sole: '#323232', outsole: '#141414', lace: '#444444', lining: '#ff4f8b', bg: '#ebebeb' },
+      stock: [5, 4, 7, 8, 9, 6, 10, 7, 5, 4, 3, 2] },
+  ];
+
+  const VIEWS = [
+    { label: 'Side view', svg: `<svg viewBox="0 0 400 240"><use href="#shoe" width="400" height="240"/></svg>` },
+    { label: 'Inside view', svg: `<svg viewBox="0 0 400 240"><g transform="translate(400 0) scale(-1 1)"><use href="#shoe" width="400" height="240"/></g></svg>` },
+    { label: 'Heel detail', svg: `<svg viewBox="22 40 200 150"><use href="#shoe" width="400" height="240"/></svg>` },
+    { label: 'Outsole', svg: `<svg viewBox="0 0 400 240"><use href="#sole" width="400" height="240"/></svg>` },
+    { label: 'Pair', svg: `<svg viewBox="0 -10 400 260"><use href="#shoe" width="400" height="240" transform="translate(70 -6) scale(.82)" opacity=".92"/><use href="#shoe" width="400" height="240" transform="translate(-6 40) scale(.86)"/></svg>` },
+  ];
+
+  const REVIEWS = [
+    { id: 1, name: 'Priya S.', rating: 5, date: '2026-11-02', title: 'Best daily trainer I\'ve owned', body: 'Logged about 180 km in these so far. The foam still feels bouncy and the knit upper is genuinely breathable — no hot spots on my long run. Picked up a second pair in Midnight.', size: 7, colour: 'Midnight / Mint', fit: 0, helpful: 42, verified: true },
+    { id: 2, name: 'Tom W.', rating: 4, date: '2026-10-27', title: 'Comfy, slightly narrow toe box', body: 'Great cushioning and they look sharp. Toe box is a touch narrow for my wide feet, so I went half a size up and they\'re perfect now.', size: 10, colour: 'Chalk / Ember', fit: -1, helpful: 31, verified: true },
+    { id: 3, name: 'Marcus L.', rating: 5, date: '2026-10-19', title: 'Light and fast', body: 'Swapped from a heavier max-cushion shoe and immediately knocked time off my 10k. They feel light on foot without being harsh.', size: 9, colour: 'Onyx / Volt Pink', fit: 0, helpful: 18, verified: true },
+    { id: 4, name: 'Hannah J.', rating: 3, date: '2026-10-11', title: 'Good shoe, sole wearing quickly', body: 'Really comfortable but I\'m seeing wear on the outer heel after around 250 km. Fine for the price but not the most durable I\'ve had.', size: 6.5, colour: 'Chalk / Ember', fit: 0, helpful: 27, verified: true },
+    { id: 5, name: 'Dev P.', rating: 5, date: '2026-09-30', title: 'The Moss colourway is stunning', body: 'Wear these as much for walking around town as running. Compliments every time. Fit was spot on in my usual size.', size: 8.5, colour: 'Moss / Sun', fit: 0, helpful: 12, verified: false },
+    { id: 6, name: 'Elena R.', rating: 4, date: '2026-09-21', title: 'Lovely ride, laces too long', body: 'Ride is smooth and stable for a neutral shoe. Only gripe is the laces are absurdly long — swapped them out. Otherwise a winner.', size: 7.5, colour: 'Midnight / Mint', fit: 0, helpful: 9, verified: true },
+    { id: 7, name: 'Callum B.', rating: 2, date: '2026-09-08', title: 'Ran large for me', body: 'Heel slip from day one even with a runner\'s knot. Returned for a half size down, which fixed it — returns process was painless at least.', size: 11, colour: 'Onyx / Volt Pink', fit: 1, helpful: 15, verified: true },
+    { id: 8, name: 'Aisha K.', rating: 5, date: '2026-08-29', title: 'Half-marathon PB', body: 'Did my first half in these and set a PB. Feet felt fresh in the last 5k, which has never happened before.', size: 6, colour: 'Chalk / Ember', fit: 0, helpful: 22, verified: true },
+    { id: 9, name: 'Joe M.', rating: 4, date: '2026-08-14', title: 'Solid all-rounder', body: 'Not the flashiest racer but does everything well — easy runs, intervals, gym. Good grip in the wet.', size: 9.5, colour: 'Midnight / Mint', fit: 0, helpful: 6, verified: true },
+    { id: 10, name: 'Sophie T.', rating: 5, date: '2026-07-30', title: 'Instantly comfortable', body: 'No break-in needed at all. Took them straight out for 12 km and had zero issues.', size: 6.5, colour: 'Moss / Sun', fit: 0, helpful: 4, verified: true },
+    { id: 11, name: 'Rob A.', rating: 4, date: '2026-07-18', title: 'Great, but wish there were wide fits', body: 'Love the cushioning. If they made a wide version I\'d give five stars.', size: 10.5, colour: 'Chalk / Ember', fit: -1, helpful: 11, verified: false },
+  ];
+
+  /* ---------------- State ---------------- */
+  const state = {
+    colour: COLOURS[0], size: null, qty: 1, unit: 'UK', view: 0,
+    reviews: [...REVIEWS], filter: 0, sort: 'recent', shown: 4,
+    cart: load('ks-cart', []), wish: load('ks-wish', []), voted: load('ks-voted', []),
+  };
+  function load(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }
+  function save(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  const varStyle = c => Object.entries(c.vars).map(([k, v]) => `--${k}:${v}`).join(';');
+  const applyVars = (el, c) => Object.entries(c.vars).forEach(([k, v]) => el.style.setProperty('--' + k, v));
+  const shoeSvg = (c, vb = '0 0 400 240') => `<svg viewBox="${vb}" style="${varStyle(c)}" aria-hidden="true"><use href="#shoe" width="400" height="240"/></svg>`;
+
+  // Colour vars live on <body> so <use> clones and the tread pattern inherit them.
+  const setPageColour = c => { applyVars(document.body, c); };
+
+  /* ---------------- Gallery ---------------- */
+  const slidesEl = $('#slides'), thumbsEl = $('#thumbs'), stage = $('#stage');
+  slidesEl.innerHTML = VIEWS.map((v, i) =>
+    `<div class="slide${i === 0 ? ' active' : ''}" role="tabpanel" id="slide-${i}" aria-label="${v.label}" aria-hidden="${i !== 0}">${v.svg.replace('<svg', `<svg role="img" aria-label="Strata Runner 2, ${v.label.toLowerCase()}"`)}</div>`).join('');
+  thumbsEl.innerHTML = VIEWS.map((v, i) =>
+    `<button type="button" class="thumb" role="tab" aria-selected="${i === 0}" aria-controls="slide-${i}" tabindex="${i === 0 ? 0 : -1}" aria-label="${v.label}">${v.svg}</button>`).join('');
+
+  function showView(i, focusThumb = false) {
+    state.view = (i + VIEWS.length) % VIEWS.length;
+    stage.classList.remove('zoomed');
+    slidesEl.querySelectorAll('.slide').forEach((s, n) => { s.classList.toggle('active', n === state.view); s.setAttribute('aria-hidden', n !== state.view); });
+    thumbsEl.querySelectorAll('.thumb').forEach((t, n) => { t.setAttribute('aria-selected', n === state.view); t.tabIndex = n === state.view ? 0 : -1; });
+    if (focusThumb) thumbsEl.children[state.view].focus();
+    $('#stageCount').textContent = `${state.view + 1} / ${VIEWS.length} · ${VIEWS[state.view].label}`;
+  }
+  thumbsEl.addEventListener('click', e => { const t = e.target.closest('.thumb'); if (t) showView([...thumbsEl.children].indexOf(t)); });
+  thumbsEl.addEventListener('keydown', e => {
+    const k = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+    if (k) { e.preventDefault(); showView(state.view + k, true); }
+  });
+  $('#prevImg').addEventListener('click', e => { e.stopPropagation(); showView(state.view - 1); });
+  $('#nextImg').addEventListener('click', e => { e.stopPropagation(); showView(state.view + 1); });
+
+  // Click-to-zoom that follows the pointer
+  stage.addEventListener('click', e => {
+    if (e.target.closest('.stage-nav')) return;
+    stage.classList.toggle('zoomed');
+    moveZoom(e);
+  });
+  stage.addEventListener('mousemove', moveZoom);
+  stage.addEventListener('mouseleave', () => stage.classList.remove('zoomed'));
+  function moveZoom(e) {
+    if (!stage.classList.contains('zoomed')) return;
+    const r = stage.getBoundingClientRect();
+    const svg = stage.querySelector('.slide.active svg');
+    svg.style.setProperty('--zx', ((e.clientX - r.left) / r.width * 100) + '%');
+    svg.style.setProperty('--zy', ((e.clientY - r.top) / r.height * 100) + '%');
+  }
+  // Swipe on touch
+  let tx = null;
+  stage.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', e => {
+    if (tx === null) return;
+    const dx = e.changedTouches[0].clientX - tx; tx = null;
+    if (Math.abs(dx) > 40) showView(state.view + (dx < 0 ? 1 : -1));
+  });
+
+  /* ---------------- Colours ---------------- */
+  $('#swatches').innerHTML = COLOURS.map((c, i) => `
+    <div class="swatch">
+      <input type="radio" name="colour" id="c-${c.id}" value="${c.id}" ${i === 0 ? 'checked' : ''}>
+      <label for="c-${c.id}" style="--sbg:${c.vars.bg}" title="${c.name}">
+        <span class="sr-only">${c.name}${c.was ? ', on sale' : ''}</span>
+        ${shoeSvg(c, '20 30 380 190')}
+        ${c.was ? '<span class="dot">Sale</span>' : c.badge ? `<span class="dot" style="background:var(--ink)">${c.badge}</span>` : ''}
+      </label>
+    </div>`).join('');
+  $('#swatches').addEventListener('change', e => {
+    state.colour = COLOURS.find(c => c.id === e.target.value);
+    // keep the chosen size if still in stock in the new colour
+    if (state.size !== null && stockOf(state.size) === 0) {
+      announceSize(`${sizeText(state.size, state.unit)} is sold out in ${state.colour.name}. Please choose another size.`, true);
+      state.size = null;
+    }
+    renderColour();
+  });
+
+  function stockOf(uk) { return state.colour.stock[SIZES.indexOf(uk)]; }
+
+  function renderColour() {
+    const c = state.colour;
+    setPageColour(c);
+    $('#colourName').textContent = c.name;
+    $('#price').textContent = fmt(c.price);
+    $('#price').classList.toggle('on-sale', !!c.was);
+    $('#was').hidden = $('#save').hidden = !c.was;
+    if (c.was) { $('#was').textContent = fmt(c.was); $('#save').textContent = `Save ${Math.round((1 - c.price / c.was) * 100)}%`; }
+    $('#instalments').textContent = `or 4 interest-free payments of ${money.format(c.price / 4)}`;
+    $('#stageTags').innerHTML = (c.was ? '<span class="pill sale">Sale</span>' : '') + (c.badge ? `<span class="pill dark">${c.badge}</span>` : '') + '<span class="pill">New season</span>';
+    $('#stickyPic').style.background = c.vars.bg;
+    $('#stickyPic').innerHTML = shoeSvg(c, '20 30 380 190');
+    renderSizes();
+    updateWish();
+  }
+
+  /* ---------------- Sizes ---------------- */
+  function renderSizes() {
+    $('#sizes').innerHTML = SIZES.map((uk, i) => {
+      const s = state.colour.stock[i];
+      const id = `s-${String(uk).replace('.', '_')}`;
+      return `<div class="size">
+        <input type="radio" name="size" id="${id}" value="${uk}" ${s === 0 ? 'disabled' : ''} ${state.size === uk ? 'checked' : ''}>
+        <label for="${id}">${sizeIn(uk, state.unit)}${s === 0 ? '<span class="sr-only"> – sold out</span>' : ''}${s > 0 && s <= 3 ? `<span class="low">${s} left</span>` : ''}</label>
+      </div>`;
+    }).join('');
+    $('#sizeLabel').textContent = state.size !== null ? `: ${sizeText(state.size, state.unit)}` : '';
+    clampQty();
+    updateSticky();
+  }
+  $('#sizes').addEventListener('change', e => {
+    state.size = Number(e.target.value);
+    $('#sizes').classList.remove('error');
+    const s = stockOf(state.size);
+    announceSize(s <= 3 ? `Hurry — only ${s} left in ${sizeText(state.size, state.unit)}.` : `In stock · ${sizeText(state.size, state.unit)} (${CM[state.size]} cm foot length)`);
+    $('#sizeLabel').textContent = `: ${sizeText(state.size, state.unit)}`;
+    clampQty();
+    updateSticky();
+  });
+  function announceSize(msg, isError = false) {
+    const m = $('#sizeMsg'); m.textContent = msg; m.classList.toggle('error', isError);
+  }
+  $('#unitToggle').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    state.unit = b.dataset.unit;
+    $('#unitToggle').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    renderSizes();
+    if (state.size !== null) announceSize(`Selected ${sizeText(state.size, state.unit)}`);
+  });
+
+  // Size guide
+  const sg = $('#sizeGuide');
+  $('#sizeGuideBtn').addEventListener('click', () => {
+    $('#sgBody').innerHTML = SIZES.map(uk => `<tr class="${uk === state.size ? 'is-selected' : ''}"><td>${uk}</td><td>${EU[uk]}</td><td>${uk + 1}</td><td>${CM[uk]} cm</td></tr>`).join('');
+    sg.showModal();
+  });
+
+  /* ---------------- Quantity ---------------- */
+  function maxQty() { return state.size === null ? 5 : Math.min(5, stockOf(state.size) - inCart(state.colour.id, state.size)); }
+  function inCart(cid, size) { const it = state.cart.find(i => i.colour === cid && i.size === size); return it ? it.qty : 0; }
+  function clampQty() {
+    const m = Math.max(1, maxQty());
+    state.qty = Math.min(Math.max(1, state.qty), m);
+    $('#qty').textContent = state.qty;
+    $('#qtyDown').disabled = state.qty <= 1;
+    $('#qtyUp').disabled = state.qty >= m;
+  }
+  $('#qtyDown').addEventListener('click', () => { state.qty--; clampQty(); });
+  $('#qtyUp').addEventListener('click', () => { state.qty++; clampQty(); });
+
+  /* ---------------- Add to bag ---------------- */
+  let addedTimer;
+  $('#buyForm').addEventListener('submit', e => { e.preventDefault(); addToBag(); });
+  $('#stickyAdd').addEventListener('click', () => {
+    if (state.size === null) { $('#product').scrollIntoView({ block: 'start' }); setTimeout(addToBag, 350); }
+    else addToBag();
+  });
+
+  function addToBag() {
+    if (state.size === null) {
+      const s = $('#sizes');
+      s.classList.remove('shake'); void s.offsetWidth; s.classList.add('shake', 'error');
+      announceSize('Please select a size.', true);
+      s.querySelector('input:not(:disabled)')?.focus({ preventScroll: true });
+      return;
+    }
+    const c = state.colour, avail = maxQty();
+    if (avail <= 0) { announceSize(`You already have all available ${sizeText(state.size, state.unit)} pairs in your bag.`, true); return; }
+    const qty = Math.min(state.qty, avail);
+    const existing = state.cart.find(i => i.colour === c.id && i.size === state.size);
+    if (existing) existing.qty += qty;
+    else state.cart.push({ colour: c.id, size: state.size, qty, price: c.price });
+    save('ks-cart', state.cart);
+    renderCart(true);
+
+    const btn = $('#addBtn');
+    btn.classList.add('added'); $('#addLabel').textContent = '✓ Added to bag';
+    clearTimeout(addedTimer);
+    addedTimer = setTimeout(() => { btn.classList.remove('added'); $('#addLabel').textContent = 'Add to bag'; }, 2200);
+    toast(`${qty} × ${c.name}, ${sizeText(state.size, state.unit)} added`, 'View bag', openDrawer);
+    state.qty = 1; clampQty();
+  }
+
+  /* ---------------- Wishlist ---------------- */
+  function updateWish() {
+    const on = state.wish.includes(state.colour.id);
+    $('#wishBtn').setAttribute('aria-pressed', on);
+    $('#wishBtn').setAttribute('aria-label', on ? 'Remove from wishlist' : 'Save to wishlist');
+  }
+  $('#wishBtn').addEventListener('click', () => {
+    const id = state.colour.id, on = state.wish.includes(id);
+    state.wish = on ? state.wish.filter(x => x !== id) : [...state.wish, id];
+    save('ks-wish', state.wish); updateWish();
+    toast(on ? 'Removed from wishlist' : `${state.colour.name} saved to wishlist`);
+  });
+
+  /* ---------------- Cart drawer ---------------- */
+  const drawer = $('#drawer'), overlay = $('#overlay');
+  let lastFocus = null;
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    drawer.classList.add('open'); overlay.classList.add('open');
+    $('#cartBtn').setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => $('#closeDrawer').focus(), 50);
+  }
+  function closeDrawer() {
+    drawer.classList.remove('open'); overlay.classList.remove('open');
+    $('#cartBtn').setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    lastFocus?.focus();
+  }
+  $('#cartBtn').addEventListener('click', openDrawer);
+  $('#closeDrawer').addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', e => {
+    if (!drawer.classList.contains('open')) return;
+    if (e.key === 'Escape') closeDrawer();
+    if (e.key === 'Tab') { // focus trap
+      const f = [...drawer.querySelectorAll('button:not(:disabled)')];
+      if (!f.length) return;
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f.at(-1).focus(); }
+      else if (!e.shiftKey && document.activeElement === f.at(-1)) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+
+  function renderCart(bump = false) {
+    const count = state.cart.reduce((a, i) => a + i.qty, 0);
+    const sub = state.cart.reduce((a, i) => a + i.qty * i.price, 0);
+    const badge = $('#cartBadge');
+    badge.textContent = count; badge.classList.toggle('show', count > 0);
+    if (bump) { badge.classList.remove('bump'); void badge.offsetWidth; badge.classList.add('bump'); }
+    $('#cartBtn').setAttribute('aria-label', `Open bag, ${count} item${count === 1 ? '' : 's'}`);
+    $('#drawerTitle').textContent = count ? `Your bag (${count})` : 'Your bag';
+
+    const remaining = FREE_SHIP - sub;
+    $('#ship').hidden = count === 0;
+    $('#ship').innerHTML = (remaining > 0
+      ? `You're <strong>${fmt(remaining)}</strong> away from free delivery`
+      : `<strong>You've unlocked free delivery</strong> 🎉`) +
+      `<div class="track"><div class="fill" style="width:${Math.min(100, sub / FREE_SHIP * 100)}%"></div></div>`;
+
+    $('#drawerFoot').hidden = count === 0;
+    const shipping = sub >= FREE_SHIP || sub === 0 ? 0 : SHIP_COST;
+    $('#subtotal').textContent = money.format(sub);
+    $('#shipping').textContent = shipping ? money.format(shipping) : 'Free';
+    $('#total').textContent = money.format(sub + shipping);
+
+    if (!count) {
+      $('#cartItems').innerHTML = `<li class="cart-empty">
+        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+        <p>Your bag is empty.</p><button class="btn btn-outline" type="button" data-close-drawer>Continue shopping</button></li>`;
+    } else {
+      $('#cartItems').innerHTML = state.cart.map((it, idx) => {
+        const c = COLOURS.find(x => x.id === it.colour);
+        const max = Math.min(5, c.stock[SIZES.indexOf(it.size)]);
+        return `<li class="cart-item">
+          <div class="pic" style="background:${c.vars.bg}">${shoeSvg(c, '20 30 380 190')}</div>
+          <div>
+            <h3>Strata Runner 2</h3>
+            <p class="sub">${c.name} · UK ${it.size}<br>${fmt(it.price)} each</p>
+            <div class="qty" role="group" aria-label="Quantity for ${c.name} UK ${it.size}">
+              <button type="button" data-dec="${idx}" aria-label="Decrease">−</button>
+              <output>${it.qty}</output>
+              <button type="button" data-inc="${idx}" aria-label="Increase" ${it.qty >= max ? 'disabled' : ''}>+</button>
+            </div>
+          </div>
+          <div class="right">
+            <span class="line-price">${money.format(it.qty * it.price)}</span>
+            <button type="button" class="remove" data-rm="${idx}">Remove</button>
+          </div>
+        </li>`;
+      }).join('');
+    }
+    clampQty();
+  }
+  $('#cartItems').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.hasAttribute('data-close-drawer')) return closeDrawer();
+    const d = b.dataset;
+    if (d.inc) state.cart[d.inc].qty++;
+    if (d.dec) { const it = state.cart[d.dec]; it.qty--; if (!it.qty) state.cart.splice(d.dec, 1); }
+    if (d.rm) {
+      const [removed] = state.cart.splice(d.rm, 1);
+      const pos = Number(d.rm);
+      toast('Item removed', 'Undo', () => { state.cart.splice(pos, 0, removed); save('ks-cart', state.cart); renderCart(); });
+    }
+    save('ks-cart', state.cart);
+    renderCart();
+    // keep focus inside the drawer after re-render
+    if (!drawer.contains(document.activeElement)) $('#closeDrawer').focus();
+  });
+  $('#checkoutBtn').addEventListener('click', () => toast('This is a demo — checkout is not connected.'));
+
+  /* ---------------- Sticky bar ---------------- */
+  function updateSticky() {
+    const c = state.colour;
+    $('#stickyInfo').textContent = `${c.name} · ${fmt(c.price)}${state.size !== null ? ' · ' + sizeText(state.size, state.unit) : ''}`;
+    $('#stickyAdd').textContent = state.size === null ? 'Select size' : 'Add to bag';
+  }
+  const bar = $('#stickyBar');
+  new IntersectionObserver(([en]) => {
+    const show = !en.isIntersecting && en.boundingClientRect.top < 0;
+    bar.classList.toggle('show', show);
+    bar.setAttribute('aria-hidden', !show);
+    $('#stickyAdd').tabIndex = show ? 0 : -1;
+  }).observe($('#mainCta'));
+
+  /* ---------------- Toast ---------------- */
+  let toastTimer;
+  function toast(msg, actionLabel, action) {
+    const t = $('#toast');
+    t.innerHTML = `<span>${esc(msg)}</span>`;
+    if (actionLabel) {
+      const b = document.createElement('button'); b.type = 'button'; b.textContent = actionLabel;
+      b.onclick = () => { t.classList.remove('show'); action(); };
+      t.appendChild(b);
+    }
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3800);
+  }
+
+  /* ---------------- Reviews ---------------- */
+  const starStr = r => `<span class="stars" style="--r:${r}" aria-hidden="true">★★★★★</span>`;
+  const fmtDate = d => new Date(d + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  function renderSummary() {
+    const rs = state.reviews, n = rs.length;
+    const avg = rs.reduce((a, r) => a + r.rating, 0) / n;
+    $('#avgNum').textContent = avg.toFixed(1);
+    $('#avgStars').style.setProperty('--r', avg);
+    $('#headStars').style.setProperty('--r', avg);
+    $('#headRating').textContent = `${avg.toFixed(1)} · ${n} reviews`;
+    $('#ratingLink').setAttribute('aria-label', `Rated ${avg.toFixed(1)} out of 5 from ${n} reviews. Jump to reviews`);
+    const rec = Math.round(rs.filter(r => r.rating >= 4).length / n * 100);
+    $('#avgCount').textContent = `Based on ${n} reviews · ${rec}% would recommend`;
+    $('#bars').innerHTML = [5, 4, 3, 2, 1].map(s => {
+      const k = rs.filter(r => r.rating === s).length;
+      return `<button type="button" class="bar" data-star="${s}" aria-pressed="${state.filter === s}" aria-label="${s} star reviews: ${k}. ${state.filter === s ? 'Clear filter' : 'Filter'}">
+        <span>${s} ★</span><span class="track"><span class="fill" data-w="${n ? k / n * 100 : 0}"></span></span><span class="n">${k}</span></button>`;
+    }).join('');
+    requestAnimationFrame(() => requestAnimationFrame(() =>
+      $('#bars').querySelectorAll('.fill').forEach(f => f.style.width = f.dataset.w + '%')));
+    const fit = rs.reduce((a, r) => a + r.fit, 0) / n; // -1 .. 1
+    $('#fitPin').style.left = `${50 + fit * 50}%`;
+    $('#fitNote').textContent = Math.abs(fit) < .15 ? 'Most customers say this fits true to size.'
+      : fit < 0 ? 'Some customers suggest going half a size up.' : 'Some customers suggest going half a size down.';
+  }
+  $('#bars').addEventListener('click', e => {
+    const b = e.target.closest('.bar'); if (!b) return;
+    const s = Number(b.dataset.star);
+    state.filter = state.filter === s ? 0 : s; state.shown = 4;
+    renderSummary(); renderReviews();
+    $('#bars').querySelector(`[data-star="${s}"]`).focus();
+  });
+  $('#sortSel').addEventListener('change', e => { state.sort = e.target.value; state.shown = 4; renderReviews(); });
+  $('#moreBtn').addEventListener('click', () => { state.shown += 4; renderReviews(); });
+
+  function renderReviews(freshId) {
+    let list = state.reviews.filter(r => !state.filter || r.rating === state.filter);
+    const sorters = {
+      recent: (a, b) => b.date.localeCompare(a.date),
+      helpful: (a, b) => b.helpful - a.helpful,
+      high: (a, b) => b.rating - a.rating || b.date.localeCompare(a.date),
+      low: (a, b) => a.rating - b.rating || b.date.localeCompare(a.date),
+    };
+    list.sort(sorters[state.sort]);
+    const total = list.length;
+    list = list.slice(0, state.shown);
+    $('#showing').innerHTML = `Showing ${list.length} of ${total} review${total === 1 ? '' : 's'}` +
+      (state.filter ? `<button class="chip" type="button" id="clearFilter" aria-label="Clear ${state.filter} star filter">${state.filter} ★ ✕</button>` : '');
+    $('#clearFilter')?.addEventListener('click', () => { state.filter = 0; renderSummary(); renderReviews(); });
+    $('#moreBtn').parentElement.hidden = state.shown >= total;
+
+    $('#revList').innerHTML = list.length ? list.map(r => {
+      const voted = state.voted.includes(r.id);
+      return `<li class="review${r.id === freshId ? ' fresh' : ''}">
+        <div>
+          <div>${starStr(r.rating)}<span class="sr-only">${r.rating} out of 5 stars</span><span class="date">${fmtDate(r.date)}</span></div>
+          <h3>${esc(r.title)}</h3>
+          <p>${esc(r.body)}</p>
+          <div class="helpful">Was this helpful?
+            <button type="button" data-help="${r.id}" ${voted ? 'disabled' : ''}>${voted ? '✓ Thanks' : 'Yes'} · ${r.helpful}</button>
+          </div>
+        </div>
+        <div class="meta">
+          <span class="who">${esc(r.name)}</span>
+          ${r.verified ? '<span class="verified"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12l5 5 9-10"/></svg>Verified buyer</span>' : ''}
+          ${r.size ? `<span>Size bought: UK ${r.size}</span>` : ''}
+          ${r.colour ? `<span>Colour: ${esc(r.colour)}</span>` : ''}
+          <span>Fit: ${['Runs small', 'True to size', 'Runs large'][r.fit + 1]}</span>
+        </div>
+      </li>`;
+    }).join('') : `<li class="rev-empty">No ${state.filter}-star reviews yet.</li>`;
+  }
+  $('#revList').addEventListener('click', e => {
+    const b = e.target.closest('[data-help]'); if (!b) return;
+    const id = Number(b.dataset.help), r = state.reviews.find(x => x.id === id);
+    r.helpful++; state.voted.push(id); save('ks-voted', state.voted);
+    b.disabled = true; b.textContent = `✓ Thanks · ${r.helpful}`;
+  });
+
+  // Persist user-submitted reviews
+  state.reviews.push(...load('ks-reviews', []));
+  state.reviews.forEach(r => { if (state.voted.includes(r.id)) r.helpful++; });
+
+  const rd = $('#reviewDlg');
+  $('#writeBtn').addEventListener('click', () => { $('#rvError').textContent = ''; rd.showModal(); });
+  document.querySelectorAll('dialog [data-close]').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
+  document.querySelectorAll('dialog').forEach(d => d.addEventListener('click', e => { if (e.target === d) d.close(); }));
+  $('#reviewForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target;
+    const rating = Number(f.rating.value), title = $('#rvHead').value.trim(), body = $('#rvBody').value.trim(), name = $('#rvName').value.trim();
+    const err = !rating ? 'Please choose a star rating.' : !title ? 'Please add a headline.' : body.length < 10 ? 'Please write at least a sentence (10+ characters).' : !name ? 'Please add a display name.' : '';
+    if (err) { $('#rvError').textContent = err; return; }
+    const r = { id: Date.now(), name, rating, title, body, fit: Number(f.fit.value), helpful: 0, verified: false,
+      date: new Date().toISOString().slice(0, 10), colour: state.colour.name, size: state.size };
+    state.reviews.push(r);
+    save('ks-reviews', state.reviews.filter(x => x.id > 1e6));
+    f.reset(); rd.close();
+    state.filter = 0; state.sort = 'recent'; $('#sortSel').value = 'recent';
+    renderSummary(); renderReviews(r.id);
+    toast('Thanks! Your review has been posted.');
+    $('#reviews').scrollIntoView();
+  });
+
+  /* ---------------- Delivery ETA ---------------- */
+  (() => {
+    const d = new Date(); let add = 2;
+    while (add > 0) { d.setDate(d.getDate() + 1); if (d.getDay() % 6) add--; }
+    $('#deliveryEta').innerHTML = `Order now for delivery by <strong>${d.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' })}</strong>`;
+  })();
+
+  /* ---------------- Init ---------------- */
+  renderColour();
+  showView(0);
+  renderCart();
+  renderSummary();
+  renderReviews();
+})();
+</script>
+</body>
+</html>

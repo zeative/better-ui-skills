@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fbf7f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1714" media="(prefers-color-scheme: dark)">
+<title>Pantry — Recipes</title>
+<style>
+  :root {
+    --bg: #fbf7f2;
+    --surface: #ffffff;
+    --surface-2: #f3ece3;
+    --text: #2a221b;
+    --muted: #7a6c5f;
+    --line: #e8ddd0;
+    --accent: #c4512b;
+    --accent-ink: #ffffff;
+    --accent-soft: #fbe4da;
+    --heart: #d93a4a;
+    --radius: 18px;
+    --shadow: 0 1px 2px rgba(60,40,20,.06), 0 4px 16px rgba(60,40,20,.06);
+    --nav-h: 64px;
+    --safe-b: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1714;
+      --surface: #241f1b;
+      --surface-2: #2e2823;
+      --text: #f3ebe2;
+      --muted: #a89a8c;
+      --line: #3a332c;
+      --accent: #ec7a52;
+      --accent-ink: #1a1714;
+      --accent-soft: #3d2a21;
+      --heart: #ff6b7a;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.25);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: calc(var(--nav-h) + var(--safe-b));
+  }
+  button { font: inherit; color: inherit; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+  .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+  /* ---------- Header ---------- */
+  .top {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(12px);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .top .wrap { padding-top: 14px; padding-bottom: 10px; }
+  .title { font-size: 28px; font-weight: 750; letter-spacing: -.02em; margin: 0 0 10px; }
+  .sub { color: var(--muted); margin: -6px 0 12px; font-size: 15px; }
+
+  .search {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 0 12px; height: 46px;
+  }
+  .search:focus-within { border-color: var(--accent); }
+  .search svg { flex: none; color: var(--muted); }
+  .search input {
+    flex: 1; border: 0; background: transparent; color: var(--text);
+    font: inherit; font-size: 16px; height: 100%; outline: none; min-width: 0;
+  }
+  .search input::placeholder { color: var(--muted); }
+  .clear-btn { border: 0; background: none; padding: 6px; cursor: pointer; color: var(--muted); display: none; }
+  .search.has-value .clear-btn { display: block; }
+
+  .chips {
+    display: flex; gap: 8px; overflow-x: auto; padding: 12px 16px 4px;
+    margin: 0 -16px; scrollbar-width: none; scroll-snap-type: x proximity; scroll-padding-inline: 16px;
+  }
+  .chips::-webkit-scrollbar { display: none; }
+  .chip {
+    flex: none; scroll-snap-align: start;
+    display: inline-flex; align-items: center; gap: 6px;
+    border: 1px solid var(--line); background: var(--surface);
+    padding: 8px 14px; border-radius: 999px; font-size: 14px; font-weight: 550;
+    cursor: pointer; white-space: nowrap; min-height: 38px;
+  }
+  .chip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .chip .n { opacity: .6; font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  /* ---------- Grid & cards ---------- */
+  .section-h { display: flex; align-items: baseline; justify-content: space-between; margin: 18px 0 10px; }
+  .section-h h2 { font-size: 18px; margin: 0; letter-spacing: -.01em; }
+  .section-h span { color: var(--muted); font-size: 14px; }
+
+  .grid { display: grid; grid-template-columns: 1fr; gap: 14px; padding-bottom: 24px; }
+  @media (min-width: 540px) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 860px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .card {
+    position: relative; background: var(--surface); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--line);
+    transition: transform .15s ease;
+  }
+  .card:active { transform: scale(.985); }
+  .card > a { display: flex; gap: 0; text-decoration: none; flex-direction: column; height: 100%; }
+  .thumb {
+    aspect-ratio: 16 / 9; display: grid; place-items: center;
+    font-size: 64px; line-height: 1;
+    background: var(--g, var(--surface-2));
+  }
+  .card-body { padding: 12px 14px 14px; }
+  .card-cat { font-size: 12px; font-weight: 650; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); }
+  .card h3 { margin: 2px 0 6px; font-size: 17px; line-height: 1.25; letter-spacing: -.01em; padding-right: 8px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 4px 12px; color: var(--muted); font-size: 13px; }
+  .meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+  /* compact list cards on narrow phones */
+  @media (max-width: 539px) {
+    .card > a { flex-direction: row; }
+    .thumb { aspect-ratio: auto; width: 104px; min-height: 104px; flex: none; font-size: 46px; }
+    .card-body { padding: 12px 52px 12px 14px; display: flex; flex-direction: column; justify-content: center; }
+  }
+
+  .fav-btn {
+    position: absolute; top: 8px; right: 8px;
+    width: 40px; height: 40px; border-radius: 50%;
+    border: 0; cursor: pointer; display: grid; place-items: center;
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    box-shadow: 0 1px 4px rgba(0,0,0,.12);
+    color: var(--muted);
+  }
+  @media (max-width: 539px) { .card .fav-btn { top: 50%; transform: translateY(-50%); box-shadow: none; background: transparent; } }
+  .fav-btn[aria-pressed="true"] { color: var(--heart); }
+  .fav-btn svg { width: 22px; height: 22px; }
+  .fav-btn[aria-pressed="true"] svg path { fill: currentColor; }
+  .fav-btn.pop svg { animation: pop .35s ease; }
+  @keyframes pop { 40% { transform: scale(1.35); } }
+
+  .empty {
+    text-align: center; padding: 48px 24px; color: var(--muted);
+  }
+  .empty .big { font-size: 56px; margin-bottom: 8px; }
+  .empty h2 { color: var(--text); margin: 0 0 6px; font-size: 20px; }
+  .empty p { margin: 0 auto 18px; max-width: 30ch; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    border: 0; border-radius: 12px; padding: 12px 18px; min-height: 46px;
+    background: var(--accent); color: var(--accent-ink); font-weight: 650; text-decoration: none; cursor: pointer;
+  }
+
+  /* ---------- Detail ---------- */
+  .detail-hero {
+    position: relative; display: grid; place-items: center;
+    height: 240px; font-size: 110px; background: var(--g);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  @media (min-width: 720px) { .detail-hero { height: 300px; border-radius: 0 0 28px 28px; } }
+  .hero-bar {
+    position: absolute; top: calc(env(safe-area-inset-top, 0px) + 12px); left: 12px; right: 12px;
+    display: flex; justify-content: space-between;
+  }
+  .icon-btn {
+    width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer;
+    display: grid; place-items: center; text-decoration: none;
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    box-shadow: 0 2px 8px rgba(0,0,0,.12); color: var(--text);
+  }
+  .icon-btn svg { width: 22px; height: 22px; }
+  .hero-bar .fav-btn { position: static; width: 44px; height: 44px; box-shadow: 0 2px 8px rgba(0,0,0,.12); transform: none; background: color-mix(in srgb, var(--surface) 92%, transparent); }
+
+  .detail { max-width: 720px; }
+  .detail-head {
+    background: var(--surface); border-radius: 24px 24px 0 0; margin: -24px -16px 0;
+    padding: 20px 20px 4px; position: relative;
+  }
+  @media (min-width: 720px) { .detail-head { margin: -40px 0 0; border-radius: 24px; box-shadow: var(--shadow); padding: 24px; } }
+  .detail-head h1 { font-size: 26px; line-height: 1.2; margin: 4px 0 8px; letter-spacing: -.02em; }
+  .detail-head p { margin: 0 0 14px; color: var(--muted); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0 0 12px; }
+  .stat { background: var(--surface-2); border-radius: 14px; padding: 10px 8px; text-align: center; }
+  .stat b { display: block; font-size: 16px; font-variant-numeric: tabular-nums; }
+  .stat small { color: var(--muted); font-size: 12px; }
+
+  .tabs {
+    position: sticky; top: 0; z-index: 5; background: var(--bg);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+    padding: 10px 0; padding-top: calc(env(safe-area-inset-top, 0px) + 10px);
+  }
+  .tab {
+    border: 0; background: var(--surface-2); border-radius: 12px; padding: 10px; min-height: 44px;
+    font-weight: 650; cursor: pointer; color: var(--muted);
+  }
+  .tab[aria-selected="true"] { background: var(--text); color: var(--bg); }
+  .tab .n { font-weight: 500; opacity: .7; }
+
+  .panel { padding: 6px 0 32px; }
+  .panel[hidden] { display: none; }
+
+  .servings {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px;
+    padding: 8px 8px 8px 14px; margin-bottom: 12px;
+  }
+  .servings .lbl { font-weight: 600; }
+  .stepper { display: flex; align-items: center; gap: 4px; }
+  .stepper button {
+    width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--surface-2); font-size: 20px; cursor: pointer; line-height: 1;
+  }
+  .stepper button:disabled { opacity: .4; cursor: default; }
+  .stepper output { min-width: 32px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  .ing-list, .step-list { list-style: none; margin: 0; padding: 0; }
+  .ing-list li + li { border-top: 1px solid var(--line); }
+  .ing {
+    display: flex; align-items: center; gap: 12px; padding: 12px 4px; cursor: pointer; min-height: 52px;
+  }
+  .ing input { appearance: none; -webkit-appearance: none; margin: 0; flex: none;
+    width: 24px; height: 24px; border-radius: 7px; border: 2px solid var(--line); background: var(--surface);
+    display: grid; place-items: center; cursor: pointer; }
+  .ing input:checked { background: var(--accent); border-color: var(--accent); }
+  .ing input:checked::after { content: ""; width: 6px; height: 11px; border: solid var(--accent-ink); border-width: 0 2.5px 2.5px 0; transform: translateY(-1px) rotate(45deg); }
+  .ing .qty { font-weight: 700; min-width: 72px; font-variant-numeric: tabular-nums; }
+  .ing input:checked ~ span { text-decoration: line-through; color: var(--muted); }
+  .hint { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+  .link-btn { border: 0; background: none; color: var(--accent); font-weight: 600; cursor: pointer; padding: 4px 0; }
+
+  .step-list { counter-reset: s; }
+  .step {
+    display: flex; gap: 14px; width: 100%; text-align: left; border: 0; cursor: pointer;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px; margin-bottom: 10px; font-size: 16px; line-height: 1.55;
+  }
+  .step .num {
+    flex: none; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--accent-soft); color: var(--accent); font-weight: 750; font-size: 14px;
+    display: grid; place-items: center;
+  }
+  .step[aria-pressed="true"] { background: transparent; }
+  .step[aria-pressed="true"] .txt { color: var(--muted); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--muted) 50%, transparent); }
+  .step[aria-pressed="true"] .num { background: var(--accent); color: var(--accent-ink); }
+  .progress { height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; margin: 4px 0 14px; }
+  .progress i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .25s ease; }
+
+  /* ---------- Bottom nav ---------- */
+  .nav {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+    height: calc(var(--nav-h) + var(--safe-b)); padding-bottom: var(--safe-b);
+    background: color-mix(in srgb, var(--surface) 92%, transparent);
+    backdrop-filter: saturate(1.4) blur(12px);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+    border-top: 1px solid var(--line);
+    display: flex; justify-content: center;
+  }
+  .nav-inner { display: grid; grid-template-columns: 1fr 1fr; width: 100%; max-width: 420px; }
+  .nav a {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    text-decoration: none; color: var(--muted); font-size: 12px; font-weight: 600; position: relative;
+  }
+  .nav a svg { width: 24px; height: 24px; }
+  .nav a[aria-current="page"] { color: var(--accent); }
+  .badge {
+    position: absolute; top: 8px; left: calc(50% + 6px);
+    background: var(--heart); color: #fff; font-size: 11px; font-weight: 700;
+    min-width: 18px; height: 18px; border-radius: 9px; padding: 0 5px;
+    display: grid; place-items: center; font-variant-numeric: tabular-nums;
+  }
+  .badge[hidden] { display: none; }
+
+  .toast {
+    position: fixed; left: 50%; bottom: calc(var(--nav-h) + var(--safe-b) + 12px);
+    transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+    background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: 12px;
+    font-size: 14px; font-weight: 600; transition: .2s ease; z-index: 30; white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<main id="app" tabindex="-1"></main>
+
+<nav class="nav" aria-label="Main">
+  <div class="nav-inner">
+    <a href="#/" data-nav="browse">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
+      Browse
+    </a>
+    <a href="#/saved" data-nav="saved">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>
+      Saved
+      <span class="badge" id="fav-count" hidden></span>
+    </a>
+  </div>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ================= Data ================= */
+const CATEGORIES = [
+  { id: "breakfast", name: "Breakfast", emoji: "🍳", g: "linear-gradient(135deg,#ffe3a3,#ffc58a)" },
+  { id: "mains",     name: "Mains",     emoji: "🍲", g: "linear-gradient(135deg,#ffc9a8,#f4977a)" },
+  { id: "vegetarian",name: "Vegetarian",emoji: "🥦", g: "linear-gradient(135deg,#cdeeb0,#9fd88f)" },
+  { id: "soups",     name: "Soups & Salads", emoji: "🥗", g: "linear-gradient(135deg,#c9ecdf,#8fd1c0)" },
+  { id: "desserts",  name: "Desserts",  emoji: "🍰", g: "linear-gradient(135deg,#ffd3e2,#f3a6c4)" },
+];
+
+// q = quantity per base servings (null = to taste)
+const RECIPES = [
+  {
+    id: "fluffy-pancakes", title: "Fluffy Buttermilk Pancakes", cat: "breakfast", emoji: "🥞",
+    time: 25, servings: 4, level: "Easy",
+    desc: "Tall, tender pancakes with crisp golden edges. The weekend classic.",
+    ingredients: [
+      [2, "cups", "plain flour"], [2, "tbsp", "sugar"], [2, "tsp", "baking powder"],
+      [0.5, "tsp", "bicarbonate of soda"], [0.5, "tsp", "salt"], [2, "cups", "buttermilk"],
+      [2, "", "eggs"], [3, "tbsp", "melted butter, plus extra for the pan"],
+    ],
+    steps: [
+      "Whisk the flour, sugar, baking powder, bicarb and salt together in a large bowl.",
+      "In a jug, whisk the buttermilk, eggs and melted butter until smooth.",
+      "Pour the wet ingredients into the dry and fold gently — a few lumps are fine. Rest for 5 minutes.",
+      "Heat a non-stick pan over medium heat and brush with butter.",
+      "Ladle in ¼ cup of batter per pancake. Cook until bubbles form and the edges look set, about 2 minutes.",
+      "Flip and cook for another 1–2 minutes until golden. Serve with maple syrup and berries.",
+    ],
+  },
+  {
+    id: "shakshuka", title: "Smoky Shakshuka", cat: "breakfast", emoji: "🍳",
+    time: 30, servings: 2, level: "Easy",
+    desc: "Eggs gently poached in a spiced pepper and tomato sauce. Bring bread for dipping.",
+    ingredients: [
+      [1, "tbsp", "olive oil"], [1, "", "onion, sliced"], [1, "", "red pepper, sliced"],
+      [2, "cloves", "garlic, sliced"], [1, "tsp", "smoked paprika"], [1, "tsp", "ground cumin"],
+      [400, "g", "tin chopped tomatoes"], [4, "", "eggs"], [null, "", "salt, pepper & fresh coriander"],
+    ],
+    steps: [
+      "Heat the oil in a deep frying pan. Cook the onion and pepper for 8 minutes until soft.",
+      "Add the garlic, paprika and cumin and stir for 1 minute until fragrant.",
+      "Pour in the tomatoes, season, and simmer for 10 minutes until thickened.",
+      "Make 4 wells in the sauce and crack an egg into each.",
+      "Cover and cook on low for 5–7 minutes, until the whites are set but the yolks still runny.",
+      "Scatter with coriander and serve straight from the pan.",
+    ],
+  },
+  {
+    id: "overnight-oats", title: "Berry Overnight Oats", cat: "breakfast", emoji: "🫐",
+    time: 5, servings: 1, level: "Easy",
+    desc: "Five minutes the night before, a creamy breakfast waiting in the morning.",
+    ingredients: [
+      [0.5, "cup", "rolled oats"], [0.5, "cup", "milk of choice"], [0.25, "cup", "Greek yoghurt"],
+      [1, "tbsp", "chia seeds"], [2, "tsp", "honey"], [0.5, "cup", "mixed berries"],
+    ],
+    steps: [
+      "Stir the oats, milk, yoghurt, chia seeds and honey together in a jar.",
+      "Top with half the berries, seal and refrigerate overnight.",
+      "In the morning, stir, loosen with a splash of milk if needed, and top with the remaining berries.",
+    ],
+  },
+  {
+    id: "lemon-chicken", title: "Lemon Garlic Roast Chicken", cat: "mains", emoji: "🍗",
+    time: 75, servings: 4, level: "Medium",
+    desc: "Juicy chicken thighs roasted over potatoes that soak up all the lemony juices.",
+    ingredients: [
+      [8, "", "bone-in chicken thighs"], [800, "g", "baby potatoes, halved"], [2, "", "lemons"],
+      [6, "cloves", "garlic, smashed"], [3, "tbsp", "olive oil"], [4, "sprigs", "thyme"],
+      [null, "", "salt & black pepper"],
+    ],
+    steps: [
+      "Heat the oven to 200°C (180°C fan).",
+      "Toss the potatoes with half the oil, salt and pepper in a large roasting tin.",
+      "Zest one lemon over the chicken, add the remaining oil, garlic and thyme, and season well.",
+      "Nestle the chicken skin-side up on the potatoes. Cut the lemons into wedges and tuck them in.",
+      "Roast for 50–60 minutes, until the skin is crisp and the juices run clear.",
+      "Rest for 5 minutes, then squeeze the roasted lemon over everything before serving.",
+    ],
+  },
+  {
+    id: "beef-ragu", title: "Slow-Cooked Beef Ragù", cat: "mains", emoji: "🍝",
+    time: 210, servings: 6, level: "Medium",
+    desc: "Rich, meltingly tender beef braised in red wine and tomato. Worth every minute.",
+    ingredients: [
+      [1, "kg", "beef chuck, in large chunks"], [2, "tbsp", "olive oil"], [1, "", "onion, diced"],
+      [2, "", "carrots, diced"], [2, "sticks", "celery, diced"], [3, "cloves", "garlic"],
+      [250, "ml", "red wine"], [800, "g", "chopped tomatoes"], [2, "", "bay leaves"],
+      [500, "g", "pappardelle"],
+    ],
+    steps: [
+      "Season the beef and brown it in batches in the oil in a heavy casserole. Set aside.",
+      "Lower the heat and cook the onion, carrot and celery for 10 minutes. Add the garlic for 1 minute more.",
+      "Pour in the wine and scrape up the browned bits. Bubble for 2 minutes.",
+      "Return the beef with the tomatoes and bay leaves. Cover and simmer gently for 3 hours.",
+      "Shred the beef with two forks directly in the pot and season to taste.",
+      "Cook the pasta, then toss with the ragù and a splash of pasta water.",
+    ],
+  },
+  {
+    id: "salmon-teriyaki", title: "Sticky Teriyaki Salmon", cat: "mains", emoji: "🍣",
+    time: 20, servings: 2, level: "Easy",
+    desc: "Glossy, sweet-savoury glazed salmon on rice. Faster than takeaway.",
+    ingredients: [
+      [2, "", "salmon fillets"], [3, "tbsp", "soy sauce"], [2, "tbsp", "mirin"],
+      [1, "tbsp", "honey"], [1, "tsp", "grated ginger"], [1, "tsp", "sesame oil"],
+      [1, "cup", "jasmine rice"], [2, "", "spring onions, sliced"],
+    ],
+    steps: [
+      "Cook the rice according to the packet.",
+      "Whisk the soy, mirin, honey and ginger together.",
+      "Sear the salmon skin-side down in the sesame oil for 4 minutes, then flip.",
+      "Pour in the sauce and let it bubble for 2–3 minutes, spooning it over the fish until sticky.",
+      "Serve on rice, scattered with spring onions.",
+    ],
+  },
+  {
+    id: "chickpea-curry", title: "Coconut Chickpea Curry", cat: "vegetarian", emoji: "🍛",
+    time: 35, servings: 4, level: "Easy",
+    desc: "Creamy, gently spiced and on the table in half an hour.",
+    ingredients: [
+      [1, "tbsp", "coconut oil"], [1, "", "onion, diced"], [3, "cloves", "garlic"],
+      [1, "tbsp", "grated ginger"], [2, "tbsp", "curry paste"], [800, "g", "chickpeas, drained"],
+      [400, "ml", "coconut milk"], [400, "g", "chopped tomatoes"], [100, "g", "baby spinach"],
+      [0.5, "", "lime, juiced"],
+    ],
+    steps: [
+      "Soften the onion in the oil for 6 minutes. Add the garlic, ginger and curry paste; cook for 2 minutes.",
+      "Add the chickpeas, coconut milk and tomatoes. Simmer for 15 minutes.",
+      "Stir in the spinach until wilted, then finish with lime juice and salt.",
+      "Serve with rice or warm flatbreads.",
+    ],
+  },
+  {
+    id: "mushroom-risotto", title: "Mushroom & Thyme Risotto", cat: "vegetarian", emoji: "🍄",
+    time: 45, servings: 4, level: "Medium",
+    desc: "Silky, savoury risotto with golden pan-fried mushrooms.",
+    ingredients: [
+      [400, "g", "mixed mushrooms, sliced"], [2, "tbsp", "butter"], [1, "", "shallot, finely diced"],
+      [300, "g", "arborio rice"], [125, "ml", "dry white wine"], [1.2, "L", "hot vegetable stock"],
+      [50, "g", "parmesan, grated"], [4, "sprigs", "thyme"],
+    ],
+    steps: [
+      "Fry the mushrooms in half the butter over high heat until golden. Set aside.",
+      "In the same pan, soften the shallot in the remaining butter.",
+      "Add the rice and stir for 1 minute, then pour in the wine and let it absorb.",
+      "Add the stock a ladle at a time, stirring, waiting until each is absorbed — about 20 minutes.",
+      "When the rice is just tender, stir in the parmesan, thyme leaves and most of the mushrooms.",
+      "Rest for 2 minutes, then serve topped with the remaining mushrooms.",
+    ],
+  },
+  {
+    id: "veggie-tacos", title: "Crispy Cauliflower Tacos", cat: "vegetarian", emoji: "🌮",
+    time: 40, servings: 4, level: "Easy",
+    desc: "Smoky roasted cauliflower, crunchy slaw and a lime crema.",
+    ingredients: [
+      [1, "", "cauliflower, in florets"], [2, "tbsp", "olive oil"], [2, "tsp", "chipotle powder"],
+      [8, "", "small tortillas"], [2, "cups", "shredded red cabbage"], [0.5, "cup", "sour cream"],
+      [1, "", "lime"], [1, "", "avocado, sliced"],
+    ],
+    steps: [
+      "Heat the oven to 220°C. Toss the cauliflower with the oil, chipotle and salt.",
+      "Roast for 25 minutes, turning once, until charred at the edges.",
+      "Mix the sour cream with the lime zest and half the juice. Toss the cabbage with the rest of the juice.",
+      "Warm the tortillas, then fill with cauliflower, slaw, avocado and a drizzle of crema.",
+    ],
+  },
+  {
+    id: "tomato-soup", title: "Roasted Tomato Soup", cat: "soups", emoji: "🍅",
+    time: 50, servings: 4, level: "Easy",
+    desc: "Sweet roasted tomatoes blended into a velvety soup. Grilled cheese optional but encouraged.",
+    ingredients: [
+      [1, "kg", "ripe tomatoes, halved"], [1, "", "red onion, quartered"], [4, "cloves", "garlic"],
+      [3, "tbsp", "olive oil"], [500, "ml", "vegetable stock"], [1, "handful", "basil"],
+      [null, "", "salt & pepper"],
+    ],
+    steps: [
+      "Heat the oven to 200°C. Spread the tomatoes, onion and garlic in a tin, drizzle with oil and season.",
+      "Roast for 35 minutes until soft and caramelised.",
+      "Tip everything into a pan with the stock and basil and simmer for 5 minutes.",
+      "Blend until smooth, adjust the seasoning, and serve.",
+    ],
+  },
+  {
+    id: "greek-salad", title: "Proper Greek Salad", cat: "soups", emoji: "🥗",
+    time: 10, servings: 2, level: "Easy",
+    desc: "No lettuce, big chunks, a slab of feta. Summer on a plate.",
+    ingredients: [
+      [4, "", "ripe tomatoes, in wedges"], [1, "", "cucumber, chunked"], [0.5, "", "red onion, thinly sliced"],
+      [1, "", "green pepper, sliced"], [0.5, "cup", "kalamata olives"], [200, "g", "block of feta"],
+      [3, "tbsp", "extra virgin olive oil"], [1, "tsp", "dried oregano"],
+    ],
+    steps: [
+      "Arrange the tomato, cucumber, onion and pepper in a shallow bowl. Season with salt.",
+      "Scatter over the olives and lay the feta on top whole.",
+      "Drizzle generously with olive oil and sprinkle with oregano. Serve with crusty bread.",
+    ],
+  },
+  {
+    id: "chocolate-mug-cake", title: "Two-Minute Chocolate Mug Cake", cat: "desserts", emoji: "☕",
+    time: 5, servings: 1, level: "Easy",
+    desc: "For when you need cake right now.",
+    ingredients: [
+      [4, "tbsp", "plain flour"], [3, "tbsp", "sugar"], [2, "tbsp", "cocoa powder"],
+      [0.25, "tsp", "baking powder"], [3, "tbsp", "milk"], [2, "tbsp", "vegetable oil"],
+      [1, "tbsp", "chocolate chips"],
+    ],
+    steps: [
+      "Mix the flour, sugar, cocoa and baking powder in a large mug.",
+      "Stir in the milk and oil until smooth, then fold in the chocolate chips.",
+      "Microwave on high for 70–90 seconds, until risen but still slightly fudgy in the middle.",
+      "Let it cool for a minute — then dig in.",
+    ],
+  },
+  {
+    id: "lemon-tart", title: "Zesty Lemon Tart", cat: "desserts", emoji: "🍋",
+    time: 90, servings: 8, level: "Hard",
+    desc: "Crisp buttery pastry with a sharp, silky lemon filling.",
+    ingredients: [
+      [1, "", "23cm sweet pastry case, blind-baked"], [4, "", "lemons, zest and juice"],
+      [5, "", "eggs"], [150, "g", "caster sugar"], [150, "ml", "double cream"],
+      [null, "", "icing sugar, to dust"],
+    ],
+    steps: [
+      "Heat the oven to 150°C (130°C fan).",
+      "Whisk the eggs and sugar until combined, then whisk in the lemon zest, juice and cream.",
+      "Strain the mixture into a jug and skim off any foam.",
+      "Place the pastry case on the oven shelf and carefully pour in the filling.",
+      "Bake for 30–35 minutes until just set with a slight wobble in the centre.",
+      "Cool completely, then chill for at least 1 hour. Dust with icing sugar to serve.",
+    ],
+  },
+  {
+    id: "banana-bread", title: "Brown Butter Banana Bread", cat: "desserts", emoji: "🍌",
+    time: 70, servings: 10, level: "Easy",
+    desc: "Nutty brown butter takes the classic loaf somewhere special.",
+    ingredients: [
+      [115, "g", "butter"], [3, "", "very ripe bananas"], [150, "g", "light brown sugar"],
+      [2, "", "eggs"], [1, "tsp", "vanilla extract"], [220, "g", "plain flour"],
+      [1, "tsp", "bicarbonate of soda"], [0.5, "tsp", "cinnamon"],
+    ],
+    steps: [
+      "Heat the oven to 175°C and line a loaf tin.",
+      "Melt the butter and cook until it smells nutty and turns golden brown. Cool slightly.",
+      "Mash the bananas, then whisk in the brown butter, sugar, eggs and vanilla.",
+      "Fold in the flour, bicarb, cinnamon and a pinch of salt until just combined.",
+      "Pour into the tin and bake for 55–60 minutes, until a skewer comes out clean.",
+    ],
+  },
+];
+
+const CAT = Object.fromEntries(CATEGORIES.map(c => [c.id, c]));
+const BY_ID = Object.fromEntries(RECIPES.map(r => [r.id, r]));
+
+/* ================= State ================= */
+const FAV_KEY = "pantry.favourites.v1";
+let favs = new Set(load(FAV_KEY, []));
+let query = "";
+const uiState = {}; // per-recipe: { servings, checked:Set, done:Set, tab }
+
+function load(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } }
+function saveFavs() { try { localStorage.setItem(FAV_KEY, JSON.stringify([...favs])); } catch {} }
+
+/* ================= Helpers ================= */
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+const ICON = {
+  heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>',
+  back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>',
+  share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v13M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 002 2h10a2 2 0 002-2v-6"/></svg>',
+  clock: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  people: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14.8c1.8.7 3 2.5 3.5 5.2"/></svg>',
+  search: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+  x: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+};
+
+function fmtTime(m) {
+  if (m < 60) return `${m} min`;
+  const h = Math.floor(m / 60), r = m % 60;
+  return r ? `${h} hr ${r} min` : `${h} hr`;
+}
+
+const FRACS = [[0.125,"⅛"],[0.25,"¼"],[0.333,"⅓"],[0.5,"½"],[0.667,"⅔"],[0.75,"¾"]];
+function fmtQty(q, unit) {
+  if (q == null) return "";
+  // metric weights/volumes: decimal rounding
+  if (["g","ml","kg","L"].includes(unit)) {
+    let v = q;
+    if (unit === "g" || unit === "ml") v = q >= 100 ? Math.round(q / 5) * 5 : Math.round(q);
+    else v = Math.round(q * 100) / 100;
+    return `${v}${unit === "g" || unit === "ml" || unit === "kg" || unit === "L" ? " " + unit : ""}`;
+  }
+  let whole = Math.floor(q), frac = q - whole, fs = "";
+  if (frac > 0.06) {
+    let best = FRACS.reduce((a, b) => Math.abs(b[0] - frac) < Math.abs(a[0] - frac) ? b : a);
+    if (frac > 0.9) { whole += 1; } else fs = best[1];
+  }
+  const num = (whole ? whole : "") + fs || "0";
+  return unit ? `${num} ${unit}` : num;
+}
+
+function toast(msg) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => t.classList.remove("show"), 1800);
+}
+
+function favBtn(r, extra = "") {
+  const on = favs.has(r.id);
+  return `<button class="fav-btn ${extra}" data-fav="${r.id}" aria-pressed="${on}"
+    aria-label="${on ? "Remove" : "Save"} ${esc(r.title)} ${on ? "from" : "to"} favourites">${ICON.heart}</button>`;
+}
+
+function card(r) {
+  const c = CAT[r.cat];
+  return `<li class="card">
+    <a href="#/recipe/${r.id}">
+      <div class="thumb" style="--g:${c.g}" aria-hidden="true">${r.emoji}</div>
+      <div class="card-body">
+        <div class="card-cat">${esc(c.name)}</div>
+        <h3>${esc(r.title)}</h3>
+        <div class="meta">
+          <span>${ICON.clock}${fmtTime(r.time)}</span>
+          <span>${ICON.people}${r.servings}</span>
+          <span>${r.level}</span>
+        </div>
+      </div>
+    </a>
+    ${favBtn(r)}
+  </li>`;
+}
+
+function updateBadge() {
+  const b = $("#fav-count");
+  b.textContent = favs.size;
+  b.hidden = favs.size === 0;
+}
+
+function setNav(which) {
+  document.querySelectorAll(".nav a").forEach(a => {
+    if (a.dataset.nav === which) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  });
+}
+
+/* ================= Views ================= */
+function viewBrowse(catId) {
+  setNav("browse");
+  const cat = catId && CAT[catId] ? catId : "all";
+  document.title = cat === "all" ? "Pantry — Recipes" : `${CAT[cat].name} — Pantry`;
+  const count = id => id === "all" ? RECIPES.length : RECIPES.filter(r => r.cat === id).length;
+
+  app.innerHTML = `
+    <header class="top">
+      <div class="wrap">
+        <h1 class="title">What are we cooking?</h1>
+        <label class="search ${query ? "has-value" : ""}">
+          ${ICON.search}
+          <span class="visually-hidden">Search recipes</span>
+          <input id="q" type="search" placeholder="Search recipes or ingredients" value="${esc(query)}" autocomplete="off" enterkeyhint="search">
+          <button type="button" class="clear-btn" aria-label="Clear search">${ICON.x}</button>
+        </label>
+        <div class="chips" role="group" aria-label="Categories">
+          ${[{ id: "all", name: "All", emoji: "✨" }, ...CATEGORIES].map(c => `
+            <button class="chip" data-cat="${c.id}" aria-pressed="${c.id === cat}">
+              <span aria-hidden="true">${c.emoji}</span>${esc(c.name)} <span class="n">${count(c.id)}</span>
+            </button>`).join("")}
+        </div>
+      </div>
+    </header>
+    <div class="wrap">
+      <div class="section-h"><h2 id="list-h"></h2><span id="list-n" aria-live="polite"></span></div>
+      <ul class="grid" id="list" style="list-style:none;margin:0;padding:0 0 24px"></ul>
+    </div>`;
+
+  const renderList = () => {
+    const q = query.trim().toLowerCase();
+    const list = RECIPES.filter(r => (cat === "all" || r.cat === cat) && (!q ||
+      r.title.toLowerCase().includes(q) || r.desc.toLowerCase().includes(q) ||
+      r.ingredients.some(i => i[2].toLowerCase().includes(q))));
+    $("#list-h").textContent = q ? `Results for “${query.trim()}”` : (cat === "all" ? "All recipes" : CAT[cat].name);
+    $("#list-n").textContent = `${list.length} recipe${list.length === 1 ? "" : "s"}`;
+    $("#list").innerHTML = list.length ? list.map(card).join("") : `
+      <li class="empty" style="grid-column:1/-1">
+        <div class="big" aria-hidden="true">🔍</div>
+        <h2>No recipes found</h2>
+        <p>Try a different search${cat !== "all" ? " or look in all categories" : ""}.</p>
+        ${cat !== "all" ? `<a class="btn" href="#/">Search all recipes</a>` : ""}
+      </li>`;
+  };
+  renderList();
+
+  const input = $("#q"), box = $(".search");
+  input.addEventListener("input", () => {
+    query = input.value;
+    box.classList.toggle("has-value", !!query);
+    renderList();
+  });
+  $(".clear-btn").addEventListener("click", e => {
+    e.preventDefault();
+    query = ""; input.value = ""; box.classList.remove("has-value"); renderList(); input.focus();
+  });
+  app.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+    location.hash = b.dataset.cat === "all" ? "#/" : `#/c/${b.dataset.cat}`;
+  }));
+  // keep active chip in view
+  $(`.chip[aria-pressed="true"]`)?.scrollIntoView({ inline: "center", block: "nearest" });
+}
+
+function viewSaved() {
+  setNav("saved");
+  document.title = "Saved — Pantry";
+  const list = RECIPES.filter(r => favs.has(r.id));
+  app.innerHTML = `
+    <header class="top"><div class="wrap">
+      <h1 class="title">Saved recipes</h1>
+      <p class="sub">${list.length ? `${list.length} favourite${list.length === 1 ? "" : "s"}, saved on this device` : "Your favourites live here"}</p>
+    </div></header>
+    <div class="wrap">
+      ${list.length ? `<ul class="grid" style="list-style:none;margin:8px 0 0;padding:0 0 24px">${list.map(card).join("")}</ul>` : `
+      <div class="empty">
+        <div class="big" aria-hidden="true">🤍</div>
+        <h2>Nothing saved yet</h2>
+        <p>Tap the heart on any recipe to keep it here for later.</p>
+        <a class="btn" href="#/">Browse recipes</a>
+      </div>`}
+    </div>`;
+}
+
+function viewRecipe(id) {
+  const r = BY_ID[id];
+  if (!r) { location.replace("#/"); return; }
+  setNav(null);
+  document.title = `${r.title} — Pantry`;
+  const c = CAT[r.cat];
+  const s = uiState[id] ||= { servings: r.servings, checked: new Set(), done: new Set(), tab: "ing" };
+
+  app.innerHTML = `
+    <div class="detail-hero" style="--g:${c.g}">
+      <span aria-hidden="true">${r.emoji}</span>
+      <div class="hero-bar">
+        <button class="icon-btn" id="back" aria-label="Back">${ICON.back}</button>
+        <div style="display:flex;gap:8px">
+          <button class="icon-btn" id="share" aria-label="Share recipe">${ICON.share}</button>
+          ${favBtn(r)}
+        </div>
+      </div>
+    </div>
+    <div class="wrap detail">
+      <div class="detail-head">
+        <a class="card-cat" href="#/c/${c.id}" style="text-decoration:none">${esc(c.name)}</a>
+        <h1>${esc(r.title)}</h1>
+        <p>${esc(r.desc)}</p>
+        <div class="stats">
+          <div class="stat"><b>${fmtTime(r.time)}</b><small>Total time</small></div>
+          <div class="stat"><b>${r.ingredients.length}</b><small>Ingredients</small></div>
+          <div class="stat"><b>${r.level}</b><small>Difficulty</small></div>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Recipe sections">
+        <button class="tab" role="tab" id="t-ing" aria-controls="p-ing" data-tab="ing">Ingredients <span class="n">${r.ingredients.length}</span></button>
+        <button class="tab" role="tab" id="t-steps" aria-controls="p-steps" data-tab="steps">Method <span class="n">${r.steps.length}</span></button>
+      </div>
+
+      <section class="panel" role="tabpanel" id="p-ing" aria-labelledby="t-ing">
+        <div class="servings">
+          <span class="lbl" id="serv-lbl">Servings</span>
+          <div class="stepper" role="group" aria-labelledby="serv-lbl">
+            <button id="sv-dec" aria-label="Fewer servings">−</button>
+            <output id="sv" aria-live="polite">${s.servings}</output>
+            <button id="sv-inc" aria-label="More servings">+</button>
+          </div>
+        </div>
+        <ul class="ing-list" id="ings"></ul>
+        <p class="hint"><span id="ing-count"></span> <button class="link-btn" id="reset-ing" hidden>Clear ticks</button></p>
+      </section>
+
+      <section class="panel" role="tabpanel" id="p-steps" aria-labelledby="t-steps">
+        <div class="progress" aria-hidden="true"><i id="prog"></i></div>
+        <ol class="step-list">
+          ${r.steps.map((t, i) => `<li><button class="step" data-step="${i}" aria-pressed="${s.done.has(i)}">
+            <span class="num" aria-hidden="true">${i + 1}</span>
+            <span class="txt"><span class="visually-hidden">Step ${i + 1}: </span>${esc(t)}</span>
+          </button></li>`).join("")}
+        </ol>
+        <p class="hint" id="step-hint">Tap a step to mark it done.</p>
+      </section>
+    </div>`;
+
+  const renderIngs = () => {
+    const k = s.servings / r.servings;
+    $("#ings").innerHTML = r.ingredients.map(([q, u, name], i) => `
+      <li><label class="ing">
+        <input type="checkbox" data-ing="${i}" ${s.checked.has(i) ? "checked" : ""}>
+        <span class="qty">${q == null ? "" : esc(fmtQty(q * k, u))}</span>
+        <span>${esc(name)}</span>
+      </label></li>`).join("");
+    $("#sv").textContent = s.servings;
+    $("#sv-dec").disabled = s.servings <= 1;
+    $("#sv-inc").disabled = s.servings >= 24;
+    updateIngCount();
+  };
+  const updateIngCount = () => {
+    const n = s.checked.size;
+    $("#ing-count").textContent = n ? `${n} of ${r.ingredients.length} ready.` : "Tick items off as you gather them.";
+    $("#reset-ing").hidden = !n;
+  };
+  const updateProgress = () => {
+    const n = s.done.size;
+    $("#prog").style.width = `${(n / r.steps.length) * 100}%`;
+    $("#step-hint").textContent = n === r.steps.length ? "All done — enjoy! 🎉" : n ? `${n} of ${r.steps.length} steps done.` : "Tap a step to mark it done.";
+  };
+  const setTab = t => {
+    s.tab = t;
+    app.querySelectorAll(".tab").forEach(b => {
+      const on = b.dataset.tab === t;
+      b.setAttribute("aria-selected", on);
+      b.tabIndex = on ? 0 : -1;
+    });
+    $("#p-ing").hidden = t !== "ing";
+    $("#p-steps").hidden = t !== "steps";
+  };
+
+  renderIngs(); updateProgress(); setTab(s.tab);
+
+  $("#back").addEventListener("click", () => {
+    // go back if we navigated here inside the app; otherwise (deep link) go to the category
+    if (inAppNavs > 0) history.back();
+    else location.hash = `#/c/${r.cat}`;
+  });
+  $("#share").addEventListener("click", async () => {
+    const data = { title: r.title, text: r.desc, url: location.href };
+    try {
+      if (navigator.share) await navigator.share(data);
+      else { await navigator.clipboard.writeText(location.href); toast("Link copied"); }
+    } catch {}
+  });
+  $("#sv-dec").addEventListener("click", () => { s.servings = Math.max(1, s.servings - 1); renderIngs(); });
+  $("#sv-inc").addEventListener("click", () => { s.servings = Math.min(24, s.servings + 1); renderIngs(); });
+  $("#ings").addEventListener("change", e => {
+    const i = +e.target.dataset.ing;
+    e.target.checked ? s.checked.add(i) : s.checked.delete(i);
+    updateIngCount();
+  });
+  $("#reset-ing").addEventListener("click", () => { s.checked.clear(); renderIngs(); });
+  app.querySelectorAll(".step").forEach(b => b.addEventListener("click", () => {
+    const i = +b.dataset.step;
+    s.done.has(i) ? s.done.delete(i) : s.done.add(i);
+    b.setAttribute("aria-pressed", s.done.has(i));
+    updateProgress();
+  }));
+  const tabs = [...app.querySelectorAll(".tab")];
+  tabs.forEach(b => {
+    b.addEventListener("click", () => setTab(b.dataset.tab));
+    b.addEventListener("keydown", e => {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        const next = tabs[(tabs.indexOf(b) + 1) % 2];
+        setTab(next.dataset.tab); next.focus();
+      }
+    });
+  });
+}
+
+/* ================= Global events ================= */
+const app = $("#app");
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-fav]");
+  if (!b) return;
+  e.preventDefault(); e.stopPropagation();
+  const id = b.dataset.fav, r = BY_ID[id];
+  const on = !favs.has(id);
+  on ? favs.add(id) : favs.delete(id);
+  saveFavs(); updateBadge();
+  document.querySelectorAll(`[data-fav="${id}"]`).forEach(el => {
+    el.setAttribute("aria-pressed", on);
+    el.setAttribute("aria-label", `${on ? "Remove" : "Save"} ${r.title} ${on ? "from" : "to"} favourites`);
+    el.classList.remove("pop"); void el.offsetWidth; if (on) el.classList.add("pop");
+  });
+  toast(on ? "Saved to favourites" : "Removed from favourites");
+  // on Saved view, remove the card after un-favouriting
+  if (!on && location.hash === "#/saved") setTimeout(viewSaved, 250);
+});
+
+// sync favourites across tabs
+window.addEventListener("storage", e => {
+  if (e.key === FAV_KEY) { favs = new Set(load(FAV_KEY, [])); updateBadge(); route(); }
+});
+
+/* ================= Router ================= */
+const scrollPos = {};
+let current = null;
+
+function route() {
+  const h = location.hash || "#/";
+  if (current) scrollPos[current] = scrollY;
+  const [, a, b] = h.split("/");
+  if (a === "recipe") viewRecipe(b);
+  else if (a === "saved") viewSaved();
+  else viewBrowse(a === "c" ? b : null);
+  const restore = a !== "recipe" && scrollPos[h] != null;
+  window.scrollTo(0, restore ? scrollPos[h] : 0);
+  if (current !== null && a === "recipe") app.focus({ preventScroll: true });
+  current = h;
+}
+
+let inAppNavs = 0;
+window.addEventListener("hashchange", () => { inAppNavs++; route(); });
+updateBadge();
+route();
+</script>
+</body>
+</html>
