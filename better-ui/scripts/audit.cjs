@@ -747,6 +747,43 @@ function measure(targetWidth) {
   window.scrollTo(0, 0); probeEnds(flow.slice(0, 8), 'top');
   window.scrollTo(0, document.documentElement.scrollHeight); probeEnds(flow.slice(-10), 'bottom');
   out.underBars = [...new Set(underBars)].slice(0, 6);
+  // text cut by the edge of a floating bottom bar, or showing in the gap between stacked bottom bars
+  const peek = [];
+  for (const pos of [0, 0.5]) {
+  window.scrollTo(0, Math.max(0, (document.documentElement.scrollHeight - innerHeight) * pos));
+  const bottomBars = [...document.querySelectorAll('body *')].filter((n) => {
+    const q = getComputedStyle(n).position; if (q !== 'fixed' && q !== 'sticky') return false;
+    const r = n.getBoundingClientRect(); if (!(isVisible(n) && r.height > 30 && r.height < 200 && r.bottom > innerHeight - 140 && r.top < innerHeight - 10 && r.width > innerWidth * 0.5)) return false;
+    for (let m = n; m && m !== document.documentElement; m = m.parentElement) { const q = getComputedStyle(m); if (parseFloat(q.opacity) < 0.05 || q.visibility === 'hidden') return false; }
+    return true;
+  }).filter((n, i, all) => !all.some((o) => o !== n && o.contains(n)));
+  // the topmost element at a point that can actually be seen (skips transparent scrims and hidden layers)
+  const seenAt = (x, y) => (document.elementsFromPoint(x, y) || []).find((e) => { for (let n = e; n && n !== document.documentElement; n = n.parentElement) { const q = getComputedStyle(n); if (parseFloat(q.opacity) < 0.05 || q.visibility === 'hidden') return false; } return true; });
+  const flowTextAt = (x, y) => { const t = seenAt(x, y); if (!t || inFixed(t)) return null;
+    return [...t.childNodes].some((c) => c.nodeType === 3 && c.nodeValue.trim().length > 1) ? t : null; };
+  for (const bar of bottomBars) {
+    const r = bar.getBoundingClientRect(), bg = parseColor(getComputedStyle(bar).backgroundColor);
+    // only floating bars (inset from the screen edges, with a visible fill): content scrolling under a full-width solid bar is normal
+    if (r.width > innerWidth - 12 || !bg || bg.a < 0.3) continue;
+    for (const fx of [0.25, 0.5, 0.75]) {
+      const x = r.left + r.width * fx;
+      const above = flowTextAt(x, r.top - 3);
+      if (above) { const tr = above.getBoundingClientRect(); if (tr.top < r.top - 1 && tr.bottom > r.top + 2) { peek.push(`${describe(above)} is cut by the top edge of ${describe(bar).split(' "')[0]}`); break; } }
+    }
+  }
+  const sorted = bottomBars.map((n) => n.getBoundingClientRect()).sort((p, q) => p.top - q.top);
+  for (let i = 0; i < sorted.length - 1; i++) {
+    const gapTop = sorted[i].bottom, gapBottom = sorted[i + 1].top; if (gapBottom - gapTop < 3) continue;
+    for (const fx of [0.2, 0.4, 0.6, 0.8]) {
+      const t = seenAt(innerWidth * fx, (gapTop + gapBottom) / 2); if (!t || inFixed(t)) continue;
+      // anything but the bare page ground (a card, a row, text) showing between the bars reads as a collision
+      let n = t; while (n && n !== document.body && n !== document.documentElement) { const c = parseColor(getComputedStyle(n).backgroundColor); if ((c && c.a > 0.05) || [...n.childNodes].some((x) => x.nodeType === 3 && x.nodeValue.trim())) break; n = n.parentElement; }
+      if (n && n !== document.body && n !== document.documentElement) { peek.push(`${describe(n)} shows in the gap between two bottom bars`); break; }
+    }
+  }
+  }
+  out.barPeek = [...new Set(peek)].slice(0, 4);
+  window.scrollTo(0, 0);
   hitStyle.remove();
   window.scrollTo(0, 0);
   out.coveredText = covered.slice(0, 10); out.coveredCount = covered.length;
@@ -1039,6 +1076,7 @@ function report(results, facts, focus, runtime, args) {
   if (widest.loudButtons && widest.loudButtons.length > 2) problem('CRAFT', `${widest.loudButtons.length} filled, coloured buttons compete on the first desktop screen: ${widest.loudButtons.slice(0, 4).join('; ')}. Keep the brand fill for the one page action; panel and row actions are quiet (references/hierarchy.md, Controls).`);
   if (widest.loudInPanel && widest.loudInPanel.length) problem('CRAFT', `A filled, coloured button outweighs a small panel title: ${widest.loudInPanel.slice(0, 3).join('; ')}. Panel actions are compact outline or neutral buttons, 28 to 32px (references/hierarchy.md, Controls).`);
   if (widest.nativeControls && widest.nativeControls.length) problem('CRAFT', `Browser-default controls showing: ${widest.nativeControls.slice(0, 4).join('; ')}. A native date or time picker shows the browser's format (05/28/2025) and its own glyph; use date chips or a styled picker in the locale's format, and selects with appearance: none and your own chevron (references/product-ui.md).`);
+  for (const { width, m } of results) { if (m.barPeek && m.barPeek.length) { problem('CRAFT', `Content collides with a floating bottom bar at ${width}px: ${m.barPeek.slice(0, 3).join('; ')}. Put the bars in one fixed dock with a solid or fading backdrop (references/product-ui.md, bottom tab bar).`); break; } }
   if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }
