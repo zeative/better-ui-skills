@@ -14,31 +14,31 @@ const LOOKS = {
     { look: 'monochrome', canvas: '#F4F4F2', brand: '#111111', accent: '#C6F432', font: 'Manrope', note: 'black cards and buttons, lime only for positive figures and the active state' },
     { look: 'fresh gradient', canvas: '#F3F6FB', brand: '#1F4BFF', accent: '#7DD3FC', font: 'Plus Jakarta Sans', note: 'deep blue payment card with a soft sky gradient, white glassy cards' },
     { look: 'dark with one neon', canvas: '#0E0F12', brand: '#B6F09C', accent: '#FFFFFF', font: 'Onest', note: 'near-black, dark grey cards, mint for balances and the primary action' },
-    { look: 'soft tint', canvas: '#F5F1EA', brand: '#1C3A2E', accent: '#F2B880', font: 'DM Sans', note: 'warm sand canvas, deep forest cards and buttons, apricot highlights' },
+    { look: 'bright and clean', canvas: '#F6F6F4', brand: '#1C3A2E', accent: '#E0892E', font: 'DM Sans', note: 'neutral off-white, deep forest cards and buttons, amber highlights' },
   ],
   fitness: [
     { look: 'dark with one neon', canvas: '#0B0B0D', brand: '#D4FF3A', accent: '#FFFFFF', font: 'Geist', note: 'near-black, lime for the progress ring, current bar and start button' },
-    { look: 'soft tint', canvas: '#F1EEFB', brand: '#141414', accent: '#C9F158', font: 'Plus Jakarta Sans', note: 'lilac canvas, black controls and tab bar, lime highlights' },
+    { look: 'monochrome', canvas: '#F4F4F2', brand: '#141414', accent: '#C9F158', font: 'Plus Jakarta Sans', note: 'off-white canvas, black controls and tab bar, lime highlights' },
     { look: 'bright and clean', canvas: '#F6F6F4', brand: '#FF5A1F', accent: '#141414', font: 'Manrope', note: 'orange for progress and actions, one black stat card' },
-    { look: 'colour blocks', canvas: '#F5F5F0', brand: '#111111', accent: '#FF7A45', font: 'Instrument Sans', note: 'lime, lilac and peach stat cards, black hero card' },
+    { look: 'bright and clean', canvas: '#F5F5F3', brand: '#111111', accent: '#FF6A3D', font: 'Instrument Sans', note: 'black hero card, white cards, tomato for progress and actions' },
     { look: 'fresh gradient', canvas: '#EEF4FF', brand: '#2E5BFF', accent: '#FF8A3D', font: 'Onest', note: 'blue-to-sky gradient on the hero, white cards' },
   ],
   habits: [
-    { look: 'soft tint', canvas: '#EEF3EC', brand: '#1F2A24', accent: '#7BD389', font: 'Plus Jakarta Sans', note: 'sage canvas, deep green-black summary card, mint completion' },
-    { look: 'colour blocks', canvas: '#F7F5F0', brand: '#111111', accent: '#FFC94A', font: 'Instrument Sans', note: 'each habit a soft colour block, black summary card' },
-    { look: 'dark with one neon', canvas: '#0F0F12', brand: '#FF8A3D', accent: '#FFFFFF', font: 'Geist', note: 'dark rows, each habit its own tint, orange for today' },
+    { look: 'bright and clean', canvas: '#F5F6F4', brand: '#1F2A24', accent: '#22A060', font: 'Plus Jakarta Sans', note: 'neutral canvas, deep green-black summary card, green completion' },
+    { look: 'monochrome', canvas: '#F6F6F4', brand: '#111111', accent: '#FFB020', font: 'Instrument Sans', note: 'white rows, black summary card, amber for today' },
+    { look: 'dark with one neon', canvas: '#0F0F12', brand: '#FF8A3D', accent: '#FFFFFF', font: 'Geist', note: 'dark rows, orange for today, one colour per habit only on its small check' },
     { look: 'bright and clean', canvas: '#F6F7FB', brand: '#FF6B4A', accent: '#2B2D42', font: 'Figtree', note: 'coral for progress and actions, ink summary card' },
-    { look: 'soft tint', canvas: '#FBF1EC', brand: '#2D1E2F', accent: '#FF9F7A', font: 'Figtree', note: 'peach canvas, aubergine controls, apricot rings' },
+    { look: 'bright and clean', canvas: '#F7F6F4', brand: '#2D1E2F', accent: '#F26B3A', font: 'Figtree', note: 'warm off-white, aubergine controls, orange rings' },
   ],
   wellness: 'habits', health: [
     { look: 'bright and clean', canvas: '#F4F7F8', brand: '#0E9F9A', accent: '#2F6FEB', font: 'Plus Jakarta Sans', note: 'teal for care actions, blue for data' },
     { look: 'fresh gradient', canvas: '#EEF5FF', brand: '#2F6FEB', accent: '#6EE7B7', font: 'Onest', note: 'blue gradient header card, mint for good results' },
-    { look: 'soft tint', canvas: '#F3F1FA', brand: '#3B2F6B', accent: '#8FD3C4', font: 'DM Sans', note: 'calm lavender canvas, deep indigo-ink text, sea-green accents' },
+    { look: 'bright and clean', canvas: '#F5F6F8', brand: '#2E2A5C', accent: '#0FA89A', font: 'DM Sans', note: 'neutral canvas, deep indigo, teal accents' },
   ],
   productivity: [
     { look: 'monochrome', canvas: '#F7F7F7', brand: '#111111', accent: '#FF5C35', font: 'Geist', note: 'black and white with one tomato accent' },
     { look: 'bright and clean', canvas: '#F5F6F8', brand: '#2563EB', accent: '#F59E0B', font: 'Inter', note: 'blue for actions and selection' },
-    { look: 'soft tint', canvas: '#F2F0EB', brand: '#1E1B4B', accent: '#A3E635', font: 'Manrope', note: 'paper canvas, ink controls, lime highlights' },
+    { look: 'monochrome', canvas: '#F5F5F4', brand: '#1E1B4B', accent: '#84CC16', font: 'Manrope', note: 'off-white canvas, ink controls, lime highlights' },
   ],
   commerce: [
     { look: 'bright and clean', canvas: '#F5F6F8', brand: '#0F766E', accent: '#F97316', font: 'Plus Jakarta Sans', note: 'teal for actions, orange for alerts; dark sidebar' },
@@ -52,7 +52,7 @@ const LOOKS = {
     { look: 'dark with one neon', canvas: '#0B0D10', brand: '#A3E635', accent: '#FFFFFF', font: 'Onest', note: 'dark page, lime CTA and highlights' },
   ],
   food: [
-    { look: 'colour blocks', canvas: '#FBF7F0', brand: '#1F1F1F', accent: '#FF7043', font: 'Instrument Sans', note: 'warm cream, tomato accents, colour-blocked categories' },
+    { look: 'bright and clean', canvas: '#F8F7F5', brand: '#1F1F1F', accent: '#F0532B', font: 'Instrument Sans', note: 'warm white, tomato accents, photo-led cards' },
     { look: 'bright and clean', canvas: '#F7F7F5', brand: '#E4572E', accent: '#2E7D32', font: 'Plus Jakarta Sans', note: 'paprika actions, herb green for healthy tags' },
   ],
   travel: [
@@ -75,12 +75,12 @@ const LOOKS = {
   sleep: [
     { look: 'dark with one neon', canvas: '#0E1020', brand: '#9C8CFF', accent: '#FFD9A0', font: 'Figtree', note: 'night-blue canvas, soft violet for the session, warm moonlight accent' },
     { look: 'dark with one neon', canvas: '#121018', brand: '#FF9F7A', accent: '#FFFFFF', font: 'DM Sans', note: 'deep plum-black, apricot for play and the streak' },
-    { look: 'soft tint', canvas: '#F3F1FA', brand: '#2E2A5C', accent: '#8FD3C4', font: 'DM Sans', note: 'calm lavender canvas, deep indigo cards, sea-green accents' },
+    { look: 'dark with one neon', canvas: '#0C0D10', brand: '#7DD3C0', accent: '#FFFFFF', font: 'DM Sans', note: 'graphite night, sea-green for the session and streak' },
   ],
   other: [
     { look: 'bright and clean', canvas: '#F6F7F9', brand: '#2563EB', accent: '#F59E0B', font: 'Plus Jakarta Sans', note: 'blue for actions' },
     { look: 'monochrome', canvas: '#F5F5F5', brand: '#111111', accent: '#FF5C35', font: 'Geist', note: 'black and white, one hot accent' },
-    { look: 'soft tint', canvas: '#F1F0EC', brand: '#1F2A24', accent: '#C6F432', font: 'Manrope', note: 'stone canvas, dark controls, lime highlights' },
+    { look: 'monochrome', canvas: '#F4F4F2', brand: '#1F2A24', accent: '#A3D900', font: 'Manrope', note: 'off-white canvas, dark controls, lime highlights' },
   ],
 };
 

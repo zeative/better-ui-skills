@@ -366,6 +366,19 @@ function measure(targetWidth) {
     regionSet.add(m.slice(0, 3).map((v) => Math.round(v / 6) * 6).join(','));
   }
   out.regionTones = regionSet.size;
+  // pastel fills: large light surfaces that still carry a hue (lilac, peach, mint, cream), the palette of generated UI
+  const toHsl = (r, g, b0) => { r /= 255; g /= 255; b0 /= 255; const mx = Math.max(r, g, b0), mn = Math.min(r, g, b0), l = (mx + mn) / 2;
+    const d = mx - mn; const sat = d === 0 ? 0 : d / (1 - Math.abs(2 * l - 1)); let h = 0;
+    if (d) { h = mx === r ? ((g - b0) / d) % 6 : mx === g ? (b0 - r) / d + 2 : (r - g) / d + 4; h = Math.round(h * 60 + 360) % 360; } return { h, s: sat, l }; };
+  const pastel = [];
+  for (const el of document.querySelectorAll('body, body *')) {
+    if (!isVisible(el) && el !== document.body) continue;
+    const r = el.getBoundingClientRect(); if (r.width * r.height < 140 * 80 || r.top > innerHeight * 2) continue;
+    const m = (getComputedStyle(el).backgroundColor || '').match(/[\d.]+/g); if (!m || (m.length > 3 && +m[3] < 0.6)) continue;
+    const c = toHsl(+m[0], +m[1], +m[2]);
+    if (c.l > 0.8 && c.l < 0.975 && c.s > 0.33) pastel.push({ h: Math.round(c.h / 30) * 30, d: describe(el) });
+  }
+  out.pastel = { n: pastel.length, hues: [...new Set(pastel.map((x) => x.h))].length, eg: pastel.slice(0, 4).map((x) => x.d) };
   // (b8) copy that does not fit: buttons that wrap, siblings whose text runs very different lengths
   const wrapBtn = [];
   for (const el of document.querySelectorAll('button, a[class*="btn"], a[class*="button"], [role="tab"]')) {
@@ -1077,6 +1090,7 @@ function report(results, facts, focus, runtime, args) {
   if (widest.loudInPanel && widest.loudInPanel.length) problem('CRAFT', `A filled, coloured button outweighs a small panel title: ${widest.loudInPanel.slice(0, 3).join('; ')}. Panel actions are compact outline or neutral buttons, 28 to 32px (references/hierarchy.md, Controls).`);
   if (widest.nativeControls && widest.nativeControls.length) problem('CRAFT', `Browser-default controls showing: ${widest.nativeControls.slice(0, 4).join('; ')}. A native date or time picker shows the browser's format (05/28/2025) and its own glyph; use date chips or a styled picker in the locale's format, and selects with appearance: none and your own chevron (references/product-ui.md).`);
   for (const { width, m } of results) { if (m.barPeek && m.barPeek.length) { problem('CRAFT', `Content collides with a floating bottom bar at ${width}px: ${m.barPeek.slice(0, 3).join('; ')}. Put the bars in one fixed dock with a solid or fading backdrop (references/product-ui.md, bottom tab bar).`); break; } }
+  if (widest.pastel && (widest.pastel.n >= 3 || widest.pastel.eg.some((d) => /^body|^html|^main|^div#app|^\.app/.test(d)))) problem('CRAFT', `${widest.pastel.n} large pastel fills (light surfaces that still carry a hue) in ${widest.pastel.hues} hue(s): ${widest.pastel.eg.slice(0, 3).join('; ')}. Pastel canvases and candy-coloured cards are the palette of generated UI; keep canvases and cards neutral and let one saturated brand colour, photos and data carry the colour (references/system.md, No pastels).`);
   if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }

@@ -101,7 +101,7 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
 2. **Optional date or filter strip.** A horizontal week strip (seven day pills with the day letter and number, today filled with the brand colour), or segmented tabs (Today / Week / Month) in a pill control.
 3. **The summary card** (see `showpiece.md`): the brand-filled or dark card with the key figure (28 to 36px), a short line of context, and one clean visual (ring, mini chart, day dots, progress bar).
 4. **One or two sections**, each with a title row (16 to 18px, weight 600) and a "See all" link on the right:
-   - **A list of items** in white cards or one grouped white card with hairline separators. A row: a 40 to 44px icon chip (line icon or emoji in a soft tint), the name (15 to 16px, weight 500) with one line of secondary text (13 to 14px grey), and on the right the main control or figure: a round check button, a value, a chevron, a small progress ring. Row height 56 to 72px.
+   - **A list of items** in white cards or one grouped white card with hairline separators. A row: a 40 to 44px icon chip (line icon or 3D emoji on a neutral grey chip, or a photo), the name (15 to 16px, weight 500) with one line of secondary text (13 to 14px grey), and on the right the main control or figure: a round check button, a value, a chevron, a small progress ring. Row height 56 to 72px.
    - **A small stats grid** of two or three tiles (an icon chip, a label, a figure, a tiny bar or sparkline), or **one chart card** (weekly bars with the current day in the brand colour, a clean line chart).
 5. **Bottom tab bar.** Four or five tabs with line icons and 11 to 12px labels, the active one in the brand colour, on a white bar with a top hairline or a floating rounded bar with a soft shadow. Often a central round add button in the brand colour. Leave enough bottom padding in the content so the bar never covers the last row. Content scrolls under the bar, so the bar needs something behind it: a solid white bar with a top hairline, or, for a floating bar, a fade from the canvas colour to transparent (about 24px tall) behind it. Rows peeking through a gap around a floating bar look like a collision in every screenshot. The same goes for a floating cart or action bar stacked above the tab bar: put both in one fixed dock with one backdrop, so nothing shows between them:
    ```css
@@ -118,7 +118,7 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
 - *Habits and wellness:* a week strip with per-day completion rings, colour-coded habit rows, and a streak or consistency chart.
 - *Dashboards:* the KPI row and one large chart with a highlighted point and tooltip.
 
-**Character comes from:** the brand colour on the summary card and active states, soft tints on item chips, friendly icons or emoji per item, a good sans at clean sizes, and real names and figures. Not from themes, metaphors, textures or decorative fonts.
+**Character comes from:** the brand colour on the summary card and active states, photographs and artwork, friendly icons or emoji per item, a good sans at clean sizes, and real names and figures. Not from themes, metaphors, textures or decorative fonts.
 
 **Rules:**
 

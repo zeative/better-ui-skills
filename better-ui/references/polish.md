@@ -42,7 +42,6 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 ## Surfaces and glass
 
 - A barely visible vertical gradient makes a card feel lit: `background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 94%, var(--ink)))`.
-- Tinted cards: `color-mix(in srgb, var(--accent) 8%, var(--surface))` with ink text and an accent icon chip.
 - Glass needs something colourful behind it: `background: rgba(255,255,255,.62); backdrop-filter: blur(24px) saturate(1.4); border: 1px solid rgba(255,255,255,.7);` with a soft shadow. Body text on glass needs a strong enough panel to pass contrast.
 - Insets (search fields, code, wells) go one step darker than their card with an inner shadow: `box-shadow: inset 0 1px 2px rgba(16,24,40,.06)`.
 
@@ -61,9 +60,9 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 ## Colour finishing
 
 - Roughly 60% ground and surfaces, 30% ink and neutrals, 10% accent. The accent is concentrated in a few strong places (primary button, key chart, active state, one feature card), not sprinkled.
-- Derive tints with `color-mix` instead of inventing new colours: 8 to 14% accent on surface for soft fills, 20 to 30% for borders of tinted elements.
-- A **category palette** for things that come in kinds (item types, statuses, team members): four to six hues at matched lightness and saturation, each with a soft tint. Use it in small doses: the item's object or icon tile and its own data marks. Do not also tint the whole card, its border and its button, or the screen turns into a rainbow and loses its identity.
-- **One brand colour** defines the screen. Viewed as a thumbnail, the page reads as a neutral base with one colour, plus category tints as small sparks.
+- Derive tints with `color-mix` instead of inventing new colours, and keep them small: 6 to 10% brand on surface for a selected row or a focus ring, never for whole cards.
+- A **category palette** for things that come in kinds (item types, statuses, team members): four to six clear hues at matched lightness and saturation, used as marks (dots, icon strokes, chart series), not pastel fills. Use it in small doses: the item's object or icon tile and its own data marks. Do not also tint the whole card, its border and its button, or the screen turns into a rainbow and loses its identity.
+- **One brand colour** defines the screen. Viewed as a thumbnail, the page reads as a neutral base with one colour, plus category colours as small sparks.
 - **One filled card per screen at most** (the summary card) in the brand colour or near-black. The rest are white cards. Do not tint every tile a different pastel.
 - **Dark apps** use near-black ground, slightly lighter surfaces, white text, and the brand colour on the primary control, active states and chart series.
 - Status colours are separate and always paired with a label or icon.

@@ -9,13 +9,13 @@ Contents: choose a look · type · colour · brand colour by category · surface
 A clean system with no point of view reads as a component-library template. Popular shots each have one recognisable, contemporary *look*: a palette and surface treatment, not a theme. Pick the one that suits the product and audience, and apply it consistently. These are styles, not concepts: nothing about the product's world is drawn into the interface.
 
 - **Bright and clean:** white or very light grey canvas, white cards, one saturated brand colour on the summary card, buttons and active states. The safe default for finance, productivity and admin.
-- **Soft tint:** a pale tinted canvas (lilac, periwinkle, mint or peach at 4 to 8% saturation), large white cards with generous radius (24 to 28), a black or deep brand colour for primary buttons and the tab bar, and one fresh accent (lime, coral). Common in wellness, habits and lifestyle.
-- **Colour blocks:** a light canvas where three or four cards are filled with soft colours from one family (lime, lilac, sky, peach), black text on them, one card in black. Common in fitness, habits and personal dashboards.
 - **Dark with one neon:** near-black canvas, dark grey cards, white text, one vivid accent (lime `#C6F432`, orange `#FF6A2B`, electric blue) for the hero figure, chart and primary control. Common in fitness, crypto, music.
 - **Monochrome:** black, white and greys with one small accent; strong type; crisp hairlines. Common in fintech and SaaS.
 - **Fresh gradient:** a soft blue or sky gradient behind the hero or summary card, glass-like white cards with a light blur. Common in banking and SaaS landing pages.
 
-Write the choice as one line in a comment at the top of the stylesheet ("Look: soft tint, lilac canvas, black controls, lime accent").
+Write the choice as one line in a comment at the top of the stylesheet ("Look: monochrome, off-white canvas, black controls, lime accent").
+
+**No pastels.** Pale tinted canvases (lilac, peach, mint, sage, periwinkle), cards filled with soft candy colours, and a different pastel chip behind every item are the most recognisable palette of generated interfaces. Canvases are neutral (white, off-white, light grey, graphite, near-black); colour comes from one saturated or deep brand colour, its accent, photographs and artwork, and data. Tints of the brand are for small things (a selected row, a focus ring, a chart fill), at 6 to 10%, never for whole cards or regions.
 
 ## Type
 
@@ -34,9 +34,9 @@ Write the choice as one line in a comment at the top of the stylesheet ("Look: s
 - **Canvas:** a light neutral, slightly cool or warm: `#F5F6F8`, `#F4F5F7`, `#F7F7F5`, `#F2F4F7`. White canvas with light grey cards also works. For a dark app use graphite, not blue-black or purple-black: `#0E0E0F` to `#141415` canvas, `#18181A` to `#1C1C1E` surfaces, `#232326` raised, borders `rgba(255,255,255,.07)`.
 - **Surfaces:** white (`#FFFFFF`) cards on the canvas; an inner panel one step darker than the card (`#F6F7F9`).
 - **Text:** primary `#0F172A`-ish (near-black, not pure), secondary `#64748B`-ish, tertiary for placeholders `#94A3B8`. Hairlines `#E9ECF1`.
-- **One brand colour** (see below), used for: the primary button, the active tab and nav item, links, the main chart series, selected states, and at most one large filled card (a summary card) per screen. A soft tint of it (8 to 12% opacity on the canvas) for chips and selected backgrounds.
-- **Semantic colours:** success green, warning amber, danger red, in soft-tint pill form (`#E8F7EE` background, `#15803D` text) for statuses and deltas.
-- **Category colours** (habits, spending categories, muscle groups): a set of five or six soft tints, each with a stronger tone for its icon. Used only on small chips, icon backgrounds and chart series, never as card backgrounds across the page.
+- **One brand colour** (see below), used for: the primary button, the active tab and nav item, links, the main chart series, selected states, and at most one large filled card (a summary card) per screen. A light tint of it (6 to 10% opacity on the canvas) for chips and selected backgrounds.
+- **Semantic colours:** success green, warning amber, danger red, as coloured text with a dot or a very light pill (`#ECF7F0` background, `#15803D` text) for statuses and deltas. Never as large fills.
+- **Category colours** (habits, spending categories, muscle groups): five or six clear, mid-saturation hues used only as small marks: a dot, an icon's stroke, a chart series, a thin bar. Icon chips sit on a neutral grey (`#F2F2F0` on light, `#232326` on dark) with the icon in the category colour, not on a pastel square. Never as card backgrounds.
 - A dark surface (a near-black card or a dark sidebar) is a good single contrast element on a light screen.
 
 ## Brand colour by category
@@ -73,16 +73,16 @@ Pick one that fits, then vary its exact hue so it is not a stock value. Avoid th
 ## Icons
 
 - One line-icon set at one stroke width (1.5 to 2px), drawn as inline SVG in the Lucide/Feather style: home, chart, calendar, user, plus, bell, search, settings, chevrons.
-- Icon chips: a 36 to 44px rounded square or circle in a soft tint with the icon in the stronger tone.
-- In consumer apps, items (habits, categories, exercises) may use native emoji in a tinted chip instead. Pick one approach per app.
+- Icon chips: a 36 to 44px rounded square or circle in a neutral grey, the icon in the text colour or the item's category colour.
+- In consumer apps, items (habits, categories, exercises) may use native emoji on a neutral chip instead. Pick one approach per app.
 
 ## Imagery
 
 Popular shots always have something to look at besides text: 3D icons, avatars, product pictures, a chart. Draw on these, and keep one style per screen.
 
-- **No emoji in finance, banking, admin, SaaS or productivity tools.** Their categories, merchants and accounts use a drawn line-icon set in tinted chips (or merchant logos drawn as simple letter marks); emoji tiles there read as a template.
+- **No emoji in finance, banking, admin, SaaS or productivity tools.** Their categories, merchants and accounts use a drawn line-icon set on neutral chips (or merchant logos drawn as simple letter marks); emoji tiles there read as a template.
 - **3D icons, in moderation, for personal consumer apps** (habits, wellness, food, hobbies). Use them where the emoji is the natural picture of the thing (water 💧, a book 📚, coffee ☕, a house 🏠, a trophy 🏆), and only for one kind of item per screen. Where no emoji fits naturally (exercises, accounts, merchants, settings), use line icons in tinted chips instead; a leg emoji standing for squats looks like a stock kit. A screen where every icon is a 3D emoji reads as a template.
-- **3D icons for items** in consumer apps (habits, categories, exercises, rewards, empty states): Microsoft's Fluent 3D emoji, MIT licensed, served from a pinned CDN. Put each in a soft tinted chip, 40 to 48px, the image at about 60% of the chip. Fall back to the native emoji if the image fails:
+- **3D icons for items** in consumer apps (habits, categories, exercises, rewards, empty states): Microsoft's Fluent 3D emoji, MIT licensed, served from a pinned CDN. Put each on a neutral grey chip, 40 to 48px, the image at about 60% of the chip. Fall back to the native emoji if the image fails:
   ```js
   const emoji3d = (e) => 'https://cdn.jsdelivr.net/npm/@lobehub/fluent-emoji-3d@1.1.0/assets/' +
     [...e].map((c) => c.codePointAt(0).toString(16)).join('-') + '.webp';
@@ -90,7 +90,7 @@ Popular shots always have something to look at besides text: 3D icons, avatars, 
   ```
   Use the emoji's exact code points: `🏋️` is `1f3cb-fe0f`, `☕` is `2615`. A larger one (96 to 140px) makes a good empty-state or onboarding image.
 - **Avatars:** never initials for the signed-in user or in consumer apps. Use illustrated avatars from DiceBear's `notionists` or `lorelei` styles (`https://api.dicebear.com/9.x/notionists/svg?seed=<name>&backgroundColor=<hex>`), each on a different soft background, or simple SVG portraits. Initials on a tint are acceptable in dense admin tables.
-- **Products and places:** a 3D emoji (`🎧`, `👟`, `☕`, `🏠`) on a tinted rounded square works as a product thumbnail in dashboards and lists. Never a grey box.
+- **Products and places:** a real photograph where there is one (see `editorial.md`), otherwise a 3D emoji (`🎧`, `👟`, `☕`, `🏠`) on a neutral rounded square. Never an empty grey box.
 - **Charts:** clean and minimal (see `showpiece.md`).
 - If the network may be unavailable where the page is used, keep the fallbacks: the layout must hold with native emoji and initials.
 

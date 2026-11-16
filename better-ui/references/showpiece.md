@@ -236,7 +236,7 @@ A landing page's product mock should contain at least one chart.
 
 ## Avatars and people
 
-Real products show people as small circular avatars. Simple illustrated portraits look best in a showcase; initials on a soft tint are also normal in real products. Pick one style per page.
+Real products show people as small circular avatars. Simple illustrated portraits look best in a showcase; initials on a light grey are also normal in real products. Pick one style per page.
 
 - **Illustrated portrait** (works from 28px to 96px): a tinted circle, shoulders, a head, and a hair shape. Vary background hue, skin tone, hair colour and hair shape per person so no two match.
   ```html
@@ -271,13 +271,13 @@ If the project already has real product photos or the user supplies images, use 
 ## Icons and icon chips
 
 - Use one inline SVG set: 24×24 viewBox, `fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"`. Draw the dozen you need; keep them simple and consistent.
-- An **icon chip** is the workhorse of rich UI: a 36 to 44px rounded square in a tint, with the icon in the darker tone of the same hue.
+- An **icon chip** is the workhorse of rich UI: a 36 to 44px rounded square in a neutral grey, with the icon in the text colour or its category colour.
   ```css
   .chip-ic { width: 40px; aspect-ratio: 1; border-radius: 12px; display: grid; place-items: center;
              background: color-mix(in srgb, var(--c) 14%, var(--surface)); color: var(--c); }
   ```
-- Give categories different soft hues (`--c`) so a list of habits or categories is easy to scan. Keep the tints soft; strong colour stays on the brand elements.
-- In consumer apps, a native emoji in the same tinted chip is a common, friendly alternative for item icons (habits, categories, exercises). One approach per app.
+- Give categories different hues (`--c`) on the icon or a small dot so a list is easy to scan; the chip itself stays neutral. No pastel square behind every item.
+- In consumer apps, a native or 3D emoji on the same neutral chip is a common, friendly alternative for item icons (habits, categories, exercises). One approach per app.
 - Navigation items, KPI tiles, feature rows, list items and empty states all take an icon.
 
 ## Empty-state illustration
