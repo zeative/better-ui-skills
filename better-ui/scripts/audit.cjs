@@ -413,6 +413,14 @@ function measure(targetWidth) {
   }
   // repeated coloured buttons of one class are data cells (treemap tiles, calendar days), not actions
   const byClass = {}; for (const d of loud) { const k = d.split(' "')[0]; byClass[k] = (byClass[k] || 0) + 1; }
+  // browser-default controls left showing: native date and time pickers, unstyled selects
+  const nativeCtl = [];
+  for (const el of document.querySelectorAll('input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"], input[type="week"], select')) {
+    if (!isVisible(el)) continue; const cs = getComputedStyle(el);
+    if (el.tagName === 'SELECT' && cs.appearance === 'none') continue;
+    nativeCtl.push(describe(el) + (el.type && el.tagName === 'INPUT' ? ` [${el.type}]` : ''));
+  }
+  out.nativeControls = nativeCtl.slice(0, 5);
   out.loudButtons = loud.filter((d) => byClass[d.split(' "')[0]] < 5); out.loudInPanel = loudInPanel.slice(0, 4);
   // (b3) the largest chart on the first screen drawn as plain bars
   let bigSvg = null, bigArea = 0;
@@ -1030,6 +1038,7 @@ function report(results, facts, focus, runtime, args) {
   if (widest.unevenCopy && widest.unevenCopy.length) problem('CRAFT', `Side-by-side cards whose body copy runs very different lengths: ${widest.unevenCopy.slice(0, 3).join('; ')}. Write siblings to within about 20% of each other so the row ends level (references/copy.md).`);
   if (widest.loudButtons && widest.loudButtons.length > 2) problem('CRAFT', `${widest.loudButtons.length} filled, coloured buttons compete on the first desktop screen: ${widest.loudButtons.slice(0, 4).join('; ')}. Keep the brand fill for the one page action; panel and row actions are quiet (references/hierarchy.md, Controls).`);
   if (widest.loudInPanel && widest.loudInPanel.length) problem('CRAFT', `A filled, coloured button outweighs a small panel title: ${widest.loudInPanel.slice(0, 3).join('; ')}. Panel actions are compact outline or neutral buttons, 28 to 32px (references/hierarchy.md, Controls).`);
+  if (widest.nativeControls && widest.nativeControls.length) problem('CRAFT', `Browser-default controls showing: ${widest.nativeControls.slice(0, 4).join('; ')}. A native date or time picker shows the browser's format (05/28/2025) and its own glyph; use date chips or a styled picker in the locale's format, and selects with appearance: none and your own chevron (references/product-ui.md).`);
   if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }
