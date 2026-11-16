@@ -433,6 +433,29 @@ function measure(targetWidth) {
     if (Math.max(...lens) / Math.min(...lens) > 1.8) unevenTxt.push(`${describe(kids[0]).split(' "')[0]} (${Math.min(...lens)} to ${Math.max(...lens)} characters)`);
   }
   out.unevenCopy = unevenTxt.slice(0, 4);
+  // squeezed text: titles that wrap, or paragraphs four lines deep, in a column much narrower than their card
+  const squeezed = [];
+  const cardOf = (el) => { for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) { const q = getComputedStyle(n); const bg = parseColor(q.backgroundColor);
+    if ((bg && bg.a > 0.5) || parseFloat(q.borderTopWidth) > 0 || parseFloat(q.borderRadius) >= 8) { const r = n.getBoundingClientRect(); if (r.width > 160) return n; } } return null; };
+  for (const el of document.querySelectorAll('body *')) {
+    if (!isVisible(el) || el.children.length > 2 || /^(BUTTON|TD|TH|LABEL|OPTION|SVG)$/i.test(el.tagName) || el.closest('table, nav')) continue;
+    { const ctl = el.closest('button, a'); if (ctl && ctl.getBoundingClientRect().width < 200) continue; }
+    if (![...el.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim().length > 3)) continue;
+    const t = (el.innerText || '').trim(); if (t.length < 6) continue;
+    const r = el.getBoundingClientRect(); if (r.top > innerHeight * 2) continue;
+    const cs = getComputedStyle(el), fs = parseFloat(cs.fontSize), lh = cs.lineHeight === 'normal' ? fs * 1.25 : parseFloat(cs.lineHeight);
+    const lines = Math.round(r.height / lh); if (lines < 2) continue;
+    const card = cardOf(el); if (!card) continue; const cw = card.getBoundingClientRect().width;
+    const narrow = r.width < cw * 0.6;
+    if (fs >= 17 && lines >= 2 && narrow) squeezed.push(`${describe(el)} (title on ${lines} lines in a column ${Math.round(100 * r.width / cw)}% of its card)`);
+    else if (fs < 17 && (lines >= 4 || (lines >= 3 && r.width < cw * 0.55)) && narrow) squeezed.push(`${describe(el)} (${lines} lines in a column ${Math.round(100 * r.width / cw)}% of its card)`);
+    else if (fs < 17 && lines === 2 && /[\d]/.test(t) && t.length < 48) {
+      // a short meta line (time, price, count) that wraps
+      const range = document.createRange(); range.selectNodeContents(el); const rs = [...range.getClientRects()].filter((q) => q.width > 2);
+      if (rs.length >= 2 && rs[rs.length - 1].width < 60) squeezed.push(`${describe(el)} (a short meta line that wraps)`);
+    }
+  }
+  out.squeezed = [...new Set(squeezed)].slice(0, 5);
   // (b9) filled, saturated buttons: how many compete on the first screen, and any that outweigh a small panel title
   const chroma = (c) => { const m = (c || '').match(/[\d.]+/g); if (!m || (m.length > 3 && +m[3] < 0.6)) return 0; const v = m.slice(0, 3).map(Number); return Math.max(...v) - Math.min(...v); };
   const loud = [], loudInPanel = [];
@@ -1113,6 +1136,7 @@ function report(results, facts, focus, runtime, args) {
   for (const { width, m } of results) { if (m.barPeek && m.barPeek.length) { problem('CRAFT', `Content collides with a floating bottom bar at ${width}px: ${m.barPeek.slice(0, 3).join('; ')}. Put the bars in one fixed dock with a solid or fading backdrop (references/product-ui.md, bottom tab bar).`); break; } }
   if (widest.pastel && (widest.pastel.n >= 3 || widest.pastel.eg.some((d) => /^body|^html|^main|^div#app|^\.app/.test(d)))) problem('CRAFT', `${widest.pastel.n} large pastel fills (light surfaces that still carry a hue) in ${widest.pastel.hues} hue(s): ${widest.pastel.eg.slice(0, 3).join('; ')}. Pastel canvases and candy-coloured cards are the palette of generated UI; keep canvases and cards neutral and let one saturated brand colour, photos and data carry the colour (references/system.md, No pastels).`);
   for (const { width, m } of results) { if (m.loudFill && m.loudFill.share > 18) { problem('CRAFT', `Saturated or dark blocks cover ${m.loudFill.share}% of the first screen at ${width}px: ${m.loudFill.eg.join('; ')}. On a light screen keep large fills under about 15%; let the main card lead by size and put the brand colour in its chart and controls (references/system.md, Colour by area).`); break; } }
+  for (const { width, m } of results) { if (m.squeezed && m.squeezed.length && width < 500) { problem('CRAFT', `Text squeezed into narrow columns at ${width}px: ${m.squeezed.slice(0, 4).join('; ')}. Give the text at least 60% of its card, keep card titles and meta on one line, and clamp card body text to two lines (references/copy.md, Give text room).`); break; } }
   if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }

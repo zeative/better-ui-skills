@@ -46,6 +46,16 @@ Things shown side by side are read as a set, so write them as one:
 - **Plan for length.** Indonesian and German strings run about 20 to 35% longer than English; give buttons and labels room, or choose shorter words.
 - Dates, times, numbers and currency in the locale's format: "Sen, 16 Nov", "Rp48.210", "14.30".
 
+## Give text room
+
+Text broken into many short lines looks cramped however good the words are. On a phone this mostly happens when a card puts an image or a large figure beside the text:
+
+- **The text column is at least 60% of the card** (about 190px or more on a 375px screen). If an image takes more, put it above the text, make it smaller (56 to 72px), or move it to the side of the title row.
+- **Titles in cards stay on one line.** A product or item name that needs two lines in a narrow column is a sign the column is too narrow or the name too long: widen, shorten, or let the title run full width above the image.
+- **Body text in a card is at most two lines** on a phone; clip the rest with `-webkit-line-clamp: 2` or cut it. Four lines in a narrow column is a wall.
+- **Meta lines never wrap.** "Siap sekitar 09.41", "148 terjual", "3 item · Rp49.000": keep them to one line (`white-space: nowrap` with ellipsis) and keep units with their numbers (`09.41`, `Rp 22.000`, `12 min`) using a non-breaking space, so no line ends with a lone time or price.
+- **Phrases stay whole.** Do not let a two-word name ("Es Kopi", "Morning Coffee") break across lines; rewrite or reflow before shrinking the type.
+
 ## Fit checks
 
 After rendering, at 375 and 1440px:
