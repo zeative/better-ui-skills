@@ -60,11 +60,15 @@ Use what the site needs, but set it as editorial content, not as product-page co
 
 For a photographer, a restaurant, a fashion label or a property, the design depends on images you were not given. Do not let that turn the page into an illustrated product page.
 
+Use real photographs from Unsplash, whose licence allows free use and serving straight from its CDN: `https://images.unsplash.com/photo-<id>?w=1600&q=75&auto=format&fit=crop` (a smaller `w` for thumbnails). Choose pictures of the actual subject (the rice terrace, the pool at dusk, the plated dish), one consistent light and grade across the page, and no identifiable people presented as real guests or customers. After rendering, open the screenshots and check that every image loaded and shows what its caption says; replace any that fail or show the wrong thing. In the handoff, say the photos are stand-ins from Unsplash to be replaced with the client's own.
+
+Only when no network is available, fall back to placeholders:
+
 - Build every picture as a real image slot (`<img>` or a background with a fixed aspect ratio and `object-fit: cover`, with alt text) so the layout is true to the final thing.
 - Fill each slot with a quiet, art-directed placeholder in the palette: a tonal gradient with grain suggesting light and horizon, or a restrained drawn scene. Keep placeholders subordinate and consistent; they stand in for photographs, they are not the showpiece.
 - Put the design effort where it will survive the swap: the crops and sizes, the sequence, the typography interlocking with the image, the captions.
 - In the handoff, list each slot with its aspect ratio and suggested content, and say plainly that the page will not reach its intended quality until real photographs are in.
-- Use the user's own images whenever they are provided. Never hotlink other people's photographs.
+- Use the user's own images whenever they are provided. Never take photographs from other websites; Unsplash is the exception because its licence allows it.
 
 ## Phone
 
