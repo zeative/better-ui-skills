@@ -458,6 +458,36 @@ function measure(targetWidth) {
     }
   }
   out.squeezed = [...new Set(squeezed)].slice(0, 5);
+  // predicted gaze order: rank what is on the first screen by visual weight (size, weight, contrast, saturation)
+  const lumOf = (m) => { const v = m.slice(0, 3).map((x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4; }); return 0.2126 * v[0] + 0.7152 * v[1] + 0.0722 * v[2]; };
+  const bgOf = (el) => { for (let n = el; n; n = n.parentElement) { const m = (getComputedStyle(n).backgroundColor || '').match(/[\d.]+/g); if (m && !(m.length > 3 && +m[3] < 0.5)) return m.map(Number); } return [255, 255, 255]; };
+  const gaze = [];
+  for (const el of document.querySelectorAll('body *')) {
+    if (!isVisible(el) || el.closest('nav, [role="tablist"]')) continue;
+    const r = el.getBoundingClientRect(); if (r.top >= innerHeight || r.bottom <= 0 || r.width < 8 || r.height < 8) continue;
+    const vis = Math.max(0, Math.min(r.bottom, innerHeight) - Math.max(r.top, 0)) / r.height; if (vis < 0.5) continue;
+    const cs = getComputedStyle(el); let w = 0, kind = '';
+    const own = [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.nodeValue).join('').trim();
+    if (own.length >= 1 && !/^(SCRIPT|STYLE)$/.test(el.tagName)) {
+      const fg = (cs.color.match(/[\d.]+/g) || [0, 0, 0]).map(Number), bg = bgOf(el.parentElement || el);
+      const fs = parseFloat(cs.fontSize); const c = Math.abs(lumOf(fg) - lumOf(bg));
+      w = Math.pow(fs, 1.8) * (+cs.fontWeight / 400) * (0.3 + c) * Math.min(1, 0.4 + own.length / 12); kind = 'text';
+    } else if (/^(IMG|SVG|CANVAS|VIDEO|PICTURE)$/i.test(el.tagName) || /url\(/.test(cs.backgroundImage)) {
+      if (el.tagName.toLowerCase() === 'svg' && r.width * r.height < 48 * 48) continue;
+      w = Math.sqrt(r.width * r.height) * 1.6; kind = 'image';
+    } else {
+      if (/^(HEADER|FOOTER|ASIDE|NAV)$/.test(el.tagName) || el.closest('header, footer, aside')) continue; // app chrome, not content
+      const m = (cs.backgroundColor || '').match(/[\d.]+/g); if (!m || (m.length > 3 && +m[3] < 0.6)) continue;
+      const a = r.width * r.height; if (a < innerWidth * innerHeight * 0.02 || a > innerWidth * innerHeight * 0.6) continue;
+      const pb = bgOf(el.parentElement); const c = Math.abs(lumOf(m.map(Number)) - lumOf(pb)); const sat = toHsl(+m[0], +m[1], +m[2]).s;
+      if (c < 0.08 && sat < 0.35) continue;
+      w = Math.sqrt(a) * (c + sat * 0.5) * 3; kind = 'fill';
+    }
+    if (w > 0) gaze.push({ w: Math.round(w), d: describe(el), kind, el });
+  }
+  gaze.sort((p, q) => q.w - p.w);
+  for (let i = gaze.length - 1; i > 0; i--) { const el = gaze[i]; if (gaze.slice(0, i).some((g) => g.el && el.el && (g.el.contains(el.el) || el.el.contains(g.el)))) gaze.splice(i, 1); }
+  out.gaze = gaze.slice(0, 6).map(({ w, d, kind }) => ({ w, d, kind }));
   // (b9) filled, saturated buttons: how many compete on the first screen, and any that outweigh a small panel title
   const chroma = (c) => { const m = (c || '').match(/[\d.]+/g); if (!m || (m.length > 3 && +m[3] < 0.6)) return 0; const v = m.slice(0, 3).map(Number); return Math.max(...v) - Math.min(...v); };
   const loud = [], loudInPanel = [];
@@ -1139,6 +1169,7 @@ function report(results, facts, focus, runtime, args) {
   if (widest.pastel && (widest.pastel.n >= 3 || widest.pastel.eg.some((d) => /^body|^html|^main|^div#app|^\.app/.test(d)))) problem('CRAFT', `${widest.pastel.n} large pastel fills (light surfaces that still carry a hue) in ${widest.pastel.hues} hue(s): ${widest.pastel.eg.slice(0, 3).join('; ')}. Pastel canvases and candy-coloured cards are the palette of generated UI; keep canvases and cards neutral and let one saturated brand colour, photos and data carry the colour (references/system.md, No pastels).`);
   for (const { width, m } of results) { if (m.loudFill && m.loudFill.share > 18) { problem('CRAFT', `Saturated or dark blocks cover ${m.loudFill.share}% of the first screen at ${width}px: ${m.loudFill.eg.join('; ')}. On a light screen keep large fills under about 15%; let the main card lead by size and put the brand colour in its chart and controls (references/system.md, Colour by area).`); break; } }
   for (const { width, m } of results) { if (m.squeezed && m.squeezed.length && width < 500) { problem('CRAFT', `Text squeezed into narrow columns at ${width}px: ${m.squeezed.slice(0, 4).join('; ')}. Give the text at least 60% of its card, keep card titles and meta on one line, and clamp card body text to two lines (references/copy.md, Give text room).`); break; } }
+  for (const { width, m } of results) { const g = m.gaze || []; const sig = (x) => x.d.split(' "')[0]; if (g.length >= 2 && g[1].w > g[0].w * 0.88 && sig(g[0]) !== sig(g[1])) { problem('CRAFT', `No clear first thing at ${width}px: the two heaviest elements on the first screen weigh almost the same (${g[0].d.slice(0, 40)} ${g[0].w}, ${g[1].d.slice(0, 40)} ${g[1].w}). Make the primary clearly heavier by size, weight or contrast, or quieten the other (references/ux-laws.md, Visual weight).`); break; } }
   if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }
@@ -1207,6 +1238,7 @@ function report(results, facts, focus, runtime, args) {
   L.push(`  Radii        ${rad.map(([k, v]) => `${k}×${v}`).join('  ') || 'none'}`);
   L.push(`  Shadows      ${sh} distinct`);
   if (widest.richness) L.push(`  Visuals      ${widest.richness.bigGraphics} large graphics, ${widest.richness.icons} icons, ${widest.richness.surfaces} surfaces; largest graphic in the first screen ${widest.richness.foldLargest.join('×')}px`);
+  for (const { width, m } of [results[0], results[results.length - 1]]) if (m.gaze && m.gaze.length) L.push(`  Gaze ${width}px  ${m.gaze.slice(0, 5).map((g, i) => `${i + 1}. ${g.d.slice(0, 38)} [${g.kind} ${g.w}]`).join('  ')}`);
   L.push(`  Interaction  ${widest.interactiveCount} interactive elements; ${facts.hover} :hover rules, ${facts.focusVisible} :focus-visible rules; reduced-motion ${facts.reducedMotion ? 'handled' : 'not handled'}; dark scheme ${facts.darkScheme ? 'defined' : 'not defined'}`);
   if (facts.unreadable) L.push(`  (${facts.unreadable} cross-origin stylesheet(s) could not be inspected)`);
   L.push('');
