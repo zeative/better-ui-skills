@@ -488,6 +488,18 @@ function measure(targetWidth) {
   gaze.sort((p, q) => q.w - p.w);
   for (let i = gaze.length - 1; i > 0; i--) { const el = gaze[i]; if (gaze.slice(0, i).some((g) => g.el && el.el && (g.el.contains(el.el) || el.el.contains(g.el)))) gaze.splice(i, 1); }
   out.gaze = gaze.slice(0, 6).map(({ w, d, kind }) => ({ w, d, kind }));
+  // the main chart boxed inside a card on a phone, narrower than the screen it should fill
+  out.boxedChart = null;
+  if (innerWidth < 500) {
+    let big = null, ba = 0;
+    for (const g of document.querySelectorAll('svg, canvas')) { if (!isVisible(g)) continue; const q = g.getBoundingClientRect(); if (q.top > innerHeight || q.width < 220 || q.height < 90) continue; if (g.tagName.toLowerCase() === 'svg' && !g.querySelector('path, polyline, line, rect')) continue; if (q.width * q.height > ba) { ba = q.width * q.height; big = g; } }
+    if (big) {
+      const q = big.getBoundingClientRect();
+      let card = null; for (let n = big.parentElement; n && n !== document.body; n = n.parentElement) { const c = getComputedStyle(n); const bg = parseColor(c.backgroundColor);
+        if ((parseFloat(c.borderTopWidth) > 0 || (bg && bg.a > 0.5 && bgOf(n.parentElement).join() !== [bg.r, bg.g, bg.b].join())) && parseFloat(c.borderRadius) >= 10) { card = n; break; } }
+      if (card && card.getBoundingClientRect().width < innerWidth - 4) out.boxedChart = `${describe(big).split(' "')[0]} ${Math.round(q.width)}px wide inside ${describe(card).split(' "')[0]} (${Math.round(card.getBoundingClientRect().width)}px) on a ${innerWidth}px screen`;
+    }
+  }
   // (b9) filled, saturated buttons: how many compete on the first screen, and any that outweigh a small panel title
   const chroma = (c) => { const m = (c || '').match(/[\d.]+/g); if (!m || (m.length > 3 && +m[3] < 0.6)) return 0; const v = m.slice(0, 3).map(Number); return Math.max(...v) - Math.min(...v); };
   const loud = [], loudInPanel = [];
@@ -1170,6 +1182,7 @@ function report(results, facts, focus, runtime, args) {
   for (const { width, m } of results) { if (m.loudFill && m.loudFill.share > 18) { problem('CRAFT', `Saturated or dark blocks cover ${m.loudFill.share}% of the first screen at ${width}px: ${m.loudFill.eg.join('; ')}. On a light screen keep large fills under about 15%; let the main card lead by size and put the brand colour in its chart and controls (references/system.md, Colour by area).`); break; } }
   for (const { width, m } of results) { if (m.squeezed && m.squeezed.length && width < 500) { problem('CRAFT', `Text squeezed into narrow columns at ${width}px: ${m.squeezed.slice(0, 4).join('; ')}. Give the text at least 60% of its card, keep card titles and meta on one line, and clamp card body text to two lines (references/copy.md, Give text room).`); break; } }
   for (const { width, m } of results) { const g = m.gaze || []; const sig = (x) => x.d.split(' "')[0]; if (g.length >= 2 && g[1].w > g[0].w * 0.88 && sig(g[0]) !== sig(g[1])) { problem('CRAFT', `No clear first thing at ${width}px: the two heaviest elements on the first screen weigh almost the same (${g[0].d.slice(0, 40)} ${g[0].w}, ${g[1].d.slice(0, 40)} ${g[1].w}). Make the primary clearly heavier by size, weight or contrast, or quieten the other (references/ux-laws.md, Visual weight).`); break; } }
+  for (const { width, m } of results) { if (m.boxedChart) { problem('CRAFT', `The main chart is boxed in a card on the phone: ${m.boxedChart}. Put the summary directly on the canvas and let its chart run the full width of the screen (references/product-ui.md, The summary, unboxed).`); break; } }
   if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }

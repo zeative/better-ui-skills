@@ -68,6 +68,7 @@ When a figure counts a physical thing, an object drawn in CSS inside that figure
 
 The main visual moment of most mobile apps and many dashboards: one card near the top that summarises today or this period.
 
+- **On phones, no card at all.** The summary sits on the canvas and its chart runs the full width of the screen; boxing it makes the main thing narrower than the screen it is meant to fill. On desktop it can be the first card of the grid.
 - **A neutral surface, not a block of colour.** A white card on a light canvas (or the raised surface on a dark one), radius 20 to 24, padding 20 to 24. It leads by size and content: a small label ("Total balance", "Today"), the key figure at 32 to 40px weight 600, a secondary line or a delta pill.
 - One clean visual inside it, and that is where the colour goes: a progress ring, an area chart, a row of seven day dots or a segmented progress bar drawn in the brand colour. The colour sits in the data, not under the text.
 - A card filled with the brand colour or near-black is allowed only when it is compact (a pill-sized status card, a small tile, a payment card object), never for a block taking a third of the screen. Large saturated or dark blocks on a light screen are what makes a screen feel loud.

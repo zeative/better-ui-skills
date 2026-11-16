@@ -9,7 +9,7 @@ Contents: perception and grouping · attention and hierarchy · choice and memor
 | Principle | Rule | Check |
 |:---|:---|:---|
 | **Proximity**: things close together are seen as a group | Space inside a group is about half the space between groups (8 inside, 16 to 24 between items, 32 to 48 between sections) | Squint: do the groups you meant appear as blobs, and nothing else? |
-| **Common region**: things inside one boundary belong together | Use a card or panel only for a group that must read as one object; never a card around one line or a card inside a card | Count boundaries; each one should hold a real group |
+| **Common region**: things inside one boundary belong together | Use a card or panel only to separate several peer groups; never a card around one line, a card inside a card, or a card around the screen's one main thing (on a phone the main figure and chart sit on the canvas, full width) | Count boundaries; each one should hold a real group |
 | **Similarity**: things that look alike are read as alike | Same kind of thing, same treatment: one style for every primary button, every status, every link | List the treatments of each kind; more than one is a bug |
 | **Figure and ground**: the eye separates objects from their background | Two or three surface levels, separated by a quiet step in tone; content never on a busy ground | Can you say instantly what is foreground on every part of the screen? |
 | **Prägnanz** (simplicity): people perceive the simplest form | Prefer one clear shape per element: one radius scale, aligned edges, no decorative outlines | Follow each column edge down the screen; every break needs a reason |
