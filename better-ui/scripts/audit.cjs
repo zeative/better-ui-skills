@@ -411,7 +411,9 @@ function measure(targetWidth) {
     const title = row && [...row.querySelectorAll('h2, h3, h4, [class*="title"]')].find((t) => !el.contains(t) && isVisible(t));
     if (title && row.getBoundingClientRect().height < 72 && parseFloat(getComputedStyle(title).fontSize) <= 16 && !row.closest('nav, [class*="topbar"], body > header')) loudInPanel.push(`${describe(el)} beside "${(title.innerText || '').trim().slice(0, 24)}"`);
   }
-  out.loudButtons = loud; out.loudInPanel = loudInPanel.slice(0, 4);
+  // repeated coloured buttons of one class are data cells (treemap tiles, calendar days), not actions
+  const byClass = {}; for (const d of loud) { const k = d.split(' "')[0]; byClass[k] = (byClass[k] || 0) + 1; }
+  out.loudButtons = loud.filter((d) => byClass[d.split(' "')[0]] < 5); out.loudInPanel = loudInPanel.slice(0, 4);
   // (b3) the largest chart on the first screen drawn as plain bars
   let bigSvg = null, bigArea = 0;
   for (const g of document.querySelectorAll('svg')) {
