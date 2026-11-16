@@ -6,305 +6,293 @@
 <title>Beranda · Kelasku</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* Look: monochrome — light grey canvas, white cards, black controls, one electric-blue accent */
 :root {
   --font: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --canvas: #F5F5F4; --surface: #FFFFFF; --surface-2: #F6F6F5; --line: #EBEBE9; --line-2: #DEDEDB;
-  --text: #111111; --text-2: #63635F; --text-3: #757571;
+  --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --canvas: #F5F5F4; --surface: #FFFFFF; --surface-2: #F6F6F5; --line: #EAEAE8; --line-2: #DEDEDB;
+  --text: #121212; --text-2: #63635F; --text-3: #6F6F6A;
   --brand: #111111; --on-brand: #FFFFFF;
-  --accent: #3D5AFE; --accent-ink: #2A3FD1; --accent-tint: #ECEFFF;
-  --ok: #157F3D; --ok-tint: #E7F6EC; --warn: #A15C07; --warn-tint: #FEF3DC; --bad: #C2281D; --bad-tint: #FDECEA;
-  --r-xs: 6px; --r-sm: 10px; --r-md: 16px; --r-lg: 20px; --r-full: 999px;
+  --accent: #FF5C35; --accent-ink: #C93A17; --accent-tint: #FFEDE7;
+  --ok: #137236; --ok-tint: #E7F6EC; --warn: #A15C00; --warn-tint: #FDF1DC;
+  --c-std: #2F6BFF; --c-std-t: #E9F0FF;
+  --c-bsd: #0F9F78; --c-bsd-t: #E3F6EF;
+  --c-sta: #0E97B8; --c-sta-t: #E2F4F8;
+  --c-dai: #DB3F86; --c-dai-t: #FCE9F2;
+  --c-bia: #7655F0; --c-bia-t: #EFEAFE;
+  --r-xs: 6px; --r-sm: 10px; --r-md: 14px; --r-lg: 18px; --r-full: 999px;
   --shadow: 0 1px 2px rgba(17,17,17,.04), 0 8px 24px -14px rgba(17,17,17,.12);
-  --shadow-float: 0 16px 40px -10px rgba(17,17,17,.24);
+  --shadow-float: 0 12px 32px -8px rgba(17,17,17,.22);
 }
-* { box-sizing: border-box; }
-html, body { margin: 0; }
-body { font-family: var(--font); background: var(--canvas); color: var(--text); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
-button { font: inherit; color: inherit; cursor: pointer; }
-a { color: inherit; text-decoration: none; }
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: var(--font); font-size: 14px; line-height: 1.5; color: var(--text); background: var(--canvas); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; }
+img { display: block; }
+h1, h2, h3, p { margin: 0; }
 .num { font-variant-numeric: tabular-nums; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
-svg.i { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
-svg.i.sm { width: 16px; height: 16px; }
+.mono { font-family: var(--mono); font-size: 12px; letter-spacing: 0; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
-/* ---------- Shell ---------- */
+/* Shell */
 .app { display: grid; grid-template-columns: 248px 1fr; min-height: 100vh; }
-.side { background: var(--surface); border-right: 1px solid var(--line); }
-.side-in { position: sticky; top: 0; height: 100vh; padding: 20px 16px; display: flex; flex-direction: column; gap: 24px; }
-.logo { display: flex; align-items: center; gap: 10px; padding: 4px 8px; font-weight: 600; font-size: 18px; letter-spacing: -.02em; }
-.logo-mark { width: 32px; height: 32px; border-radius: 10px; background: var(--brand); display: grid; place-items: center; }
-.nav-group { display: grid; gap: 2px; }
-.nav-label { font-size: 12px; color: var(--text-3); padding: 0 12px 6px; }
-.nav a { display: flex; align-items: center; gap: 12px; height: 42px; padding: 0 12px; border-radius: var(--r-sm); color: var(--text-2); font-weight: 500; transition: background .15s, color .15s; }
-.nav a:hover { background: var(--surface-2); color: var(--text); }
-.nav a.active { background: var(--brand); color: #fff; }
-.nav a .count { margin-left: auto; font-size: 12px; min-width: 22px; height: 20px; padding: 0 6px; border-radius: var(--r-full); background: var(--accent); color: #fff; display: grid; place-items: center; font-weight: 600; }
-.side-card { margin-top: auto; background: var(--surface-2); border-radius: var(--r-md); padding: 16px; }
-.side-card h4 { margin: 10px 0 2px; font-size: 14px; font-weight: 600; }
-.side-card p { margin: 0 0 12px; font-size: 13px; color: var(--text-2); }
-.side-card .bar { height: 6px; border-radius: 6px; background: var(--line-2); overflow: hidden; }
-.side-card .bar i { display: block; height: 100%; background: var(--text); border-radius: 6px; }
-.side-card .meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-2); margin-top: 8px; }
-.flame { width: 36px; height: 36px; border-radius: 10px; background: var(--surface); color: var(--text); display: grid; place-items: center; }
+.side { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; padding: 20px 14px 16px; border-right: 1px solid var(--line); background: var(--canvas); }
+.brand { display: flex; align-items: center; gap: 10px; padding: 4px 10px 22px; font-weight: 600; font-size: 17px; letter-spacing: -0.01em; }
+.brand-mark { width: 30px; height: 30px; border-radius: 10px; background: var(--brand); display: grid; place-items: center; box-shadow: inset 0 1px 0 rgba(255,255,255,.18); }
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav-label { font-size: 12px; color: var(--text-3); padding: 18px 10px 6px; }
+.nav a { display: flex; align-items: center; gap: 11px; height: 38px; padding: 0 10px; border-radius: var(--r-sm); color: var(--text-2); text-decoration: none; font-weight: 500; transition: background .15s, color .15s; }
+.nav a svg { flex: none; }
+.nav a:hover { background: rgba(17,17,17,.04); color: var(--text); }
+.nav a[aria-current="page"] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgba(17,17,17,.06), inset 0 0 0 1px var(--line); }
+.nav .count { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--text-3); }
+.nav .count.hot { color: var(--accent-ink); }
+.side-foot { margin-top: auto; display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: var(--r-md); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.side-foot .who { min-width: 0; line-height: 1.3; }
+.side-foot .who b { display: block; font-weight: 600; font-size: 14px; }
+.side-foot .who span { font-size: 12px; color: var(--text-2); }
 
-.main { min-width: 0; padding: 0 32px 40px; }
-.top { display: flex; align-items: center; gap: 16px; padding: 22px 0 24px; }
-.top .hello small { display: block; font-size: 13px; color: var(--text-2); }
-.top .hello h1 { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -.02em; line-height: 1.25; }
-.search { margin-left: auto; position: relative; width: 300px; }
-.search input { width: 100%; height: 42px; border-radius: var(--r-full); border: 1px solid var(--line); background: var(--surface); padding: 0 52px 0 40px; font: inherit; font-size: 14px; color: var(--text); }
+.avatar { flex: none; border-radius: 50%; overflow: hidden; display: grid; place-items: center; font-size: 12px; font-weight: 600; color: var(--text); }
+.avatar img { width: 100%; height: 100%; }
+
+.main { min-width: 0; padding: 20px 32px 40px; }
+.top { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.title h1 { text-wrap: balance; font-size: 24px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.title h1 span { color: var(--text-3); font-weight: 500; }
+.title p { color: var(--text-2); margin-top: 4px; font-size: 14px; }
+.top-actions { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.search { display: flex; align-items: center; gap: 8px; height: 40px; width: 300px; padding: 0 8px 0 12px; border-radius: var(--r-sm); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); color: var(--text-3); }
+.search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; font: inherit; color: var(--text); }
 .search input::placeholder { color: var(--text-3); }
-.search input:focus { outline: none; border-color: var(--text); }
-.search .i { position: absolute; left: 14px; top: 11px; color: var(--text-3); }
-.search kbd { position: absolute; right: 10px; top: 10px; font: 500 12px var(--font); color: var(--text-2); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; background: var(--surface-2); }
-.icon-btn { width: 42px; height: 42px; border-radius: var(--r-full); border: 1px solid var(--line); background: var(--surface); display: grid; place-items: center; position: relative; transition: background .15s; }
+.search:focus-within { box-shadow: inset 0 0 0 1px var(--text); }
+.kbd { font-family: var(--mono); font-size: 11px; color: var(--text-2); padding: 2px 6px; border-radius: 6px; background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line), inset 0 -1px 0 var(--line-2); }
+.icon-btn { position: relative; width: 40px; height: 40px; border: 0; border-radius: var(--r-sm); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); display: grid; place-items: center; cursor: pointer; transition: background .15s; }
 .icon-btn:hover { background: var(--surface-2); }
-.icon-btn .dot { position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--surface); }
-.me { position: relative; }
-.me > button { display: flex; align-items: center; gap: 10px; border: 0; background: transparent; padding: 3px 4px 3px 3px; border-radius: var(--r-full); }
-.me > button:hover { background: rgba(0,0,0,.04); }
-.me .who { text-align: left; line-height: 1.25; }
-.me .who b { display: block; font-size: 14px; font-weight: 600; }
-.me .who span { font-size: 12px; color: var(--text-2); }
-.av { width: 40px; height: 40px; border-radius: 50%; flex: none; object-fit: cover; background: #FFE3D6; display: grid; place-items: center; font-size: 13px; font-weight: 600; overflow: hidden; }
-.av.sm { width: 28px; height: 28px; font-size: 11px; }
-.menu { position: absolute; right: 0; top: calc(100% + 8px); width: 240px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); box-shadow: var(--shadow-float); padding: 6px; display: none; z-index: 30; }
-.menu.open { display: block; }
-.menu button { display: flex; width: 100%; align-items: center; gap: 10px; height: 40px; padding: 0 10px; border: 0; background: transparent; border-radius: 10px; text-align: left; font-size: 14px; }
-.menu button:hover { background: var(--surface-2); }
-.menu hr { border: 0; border-top: 1px solid var(--line); margin: 6px 4px; }
+.icon-btn .dot { position: absolute; top: 9px; right: 10px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px var(--surface); }
+.top .me { display: none; }
 
-/* ---------- Grid & cards ---------- */
-.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px; }
-.card { background: var(--surface); border-radius: var(--r-md); box-shadow: var(--shadow); border: 1px solid #EFEFED; padding: 20px; min-width: 0; }
-.span-6 { grid-column: span 6; } .span-3 { grid-column: span 3; } .span-7 { grid-column: span 7; } .span-5 { grid-column: span 5; } .span-12 { grid-column: span 12; }
-.card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; min-height: 32px; }
-.card-head h2 { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -.01em; }
-.card-head .sub { font-size: 13px; color: var(--text-2); }
-.card-head > div:first-child { flex: 1; min-width: 0; }
-.card-head .right { margin-left: auto; display: flex; gap: 8px; align-items: center; }
-.link-chip { display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 12px; border-radius: var(--r-full); border: 1px solid var(--line); font-size: 13px; font-weight: 500; color: var(--text); background: var(--surface); transition: background .15s; white-space: nowrap; }
-.link-chip:hover { background: var(--surface-2); }
+/* Grid */
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+.tile { background: var(--surface); border-radius: var(--r-md); padding: 18px 20px; box-shadow: var(--shadow), inset 0 0 0 1px var(--line); }
+.tile .lbl { color: var(--text-2); font-size: 13px; white-space: nowrap; }
+.tile .fig { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; margin-top: 8px; font-variant-numeric: tabular-nums; }
+.tile .fig small { font-size: 16px; color: var(--text-3); font-weight: 500; letter-spacing: 0; margin-left: 2px; }
+.tile .meta { margin-top: 8px; display: flex; align-items: center; gap: 6px; color: var(--text-2); white-space: nowrap; overflow: hidden; }
+.chg { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; border-radius: var(--r-xs); font-family: var(--mono); font-size: 12px; font-weight: 500; }
+.chg.up { background: var(--ok-tint); color: var(--ok); }
+.chg.hot { background: var(--accent-tint); color: var(--accent-ink); }
 
-/* Hero */
-.hero { background: var(--brand); color: #fff; border: 0; position: relative; overflow: hidden; display: flex; gap: 28px; justify-content: space-between; }
-.hero-l { display: flex; flex-direction: column; min-width: 0; }
-.hero-l .hero-stats { margin-top: auto; padding-top: 24px; }
-.hero .label { font-size: 13px; color: rgba(255,255,255,.66); display: flex; align-items: center; gap: 8px; }
-.hero .fig { font-size: 36px; font-weight: 600; letter-spacing: -.02em; line-height: 1.15; margin-top: 6px; }
-.hero .fig small { font-size: 16px; font-weight: 500; color: rgba(255,255,255,.6); letter-spacing: 0; }
-.hero-body { display: flex; gap: 24px; align-items: flex-end; justify-content: space-between; margin-top: auto; padding-top: 20px; }
-.hero-stats { display: flex; gap: 20px; }
-.hero-stats div { font-size: 12px; color: rgba(255,255,255,.66); }
-.hero-stats b { display: block; font-size: 18px; color: #fff; font-weight: 600; }
-.week { display: flex; gap: 10px; align-items: flex-end; align-self: stretch; min-height: 150px; padding-top: 8px; }
-.week .col { display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
-.week .bar { width: 22px; border-radius: 6px; background: rgba(255,255,255,.18); position: relative; }
-.week .col.today .bar { background: var(--accent); }
-.week .col.today .v { color: #fff; }
-.week .col span { font-size: 12px; color: rgba(255,255,255,.6); }
-.week .col.today span { color: #fff; font-weight: 600; }
-.week .col .v { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font-size: 12px; color: #fff; font-weight: 600; white-space: nowrap; }
-.goal { height: 6px; border-radius: 6px; background: rgba(255,255,255,.16); margin-top: 14px; overflow: hidden; max-width: 260px; }
-.goal i { display: block; height: 100%; background: #fff; border-radius: 6px; }
+.grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 16px; align-items: start; }
+.col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.card { background: var(--surface); border-radius: var(--r-lg); box-shadow: var(--shadow), inset 0 0 0 1px var(--line); padding: 20px; min-width: 0; }
+.card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; min-height: 32px; }
+.card-head h2 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+.card-head .sub { color: var(--text-3); font-family: var(--mono); font-size: 12px; }
+.card-head .end { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: var(--r-sm); border: 0; font-weight: 500; font-size: 13px; cursor: pointer; white-space: nowrap; text-decoration: none; transition: background .15s, transform .1s, box-shadow .15s; }
+.btn:active { transform: scale(.97); }
+.btn-ghost { background: var(--surface); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-2); }
+.btn-ghost:hover { background: var(--surface-2); }
+.btn-dark { background: var(--brand); color: var(--on-brand); }
+.btn-dark:hover { background: #2A2A2A; }
+.btn-light { background: #fff; color: var(--text); }
+.btn-light:hover { background: #EDEDEB; }
+.btn-lg { height: 44px; padding: 0 18px; font-size: 14px; }
+.link { min-height: 32px; padding: 0 2px; color: var(--text-2); text-decoration: none; font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
+.link:hover { color: var(--text); }
 
-/* KPI */
-.kpi { display: flex; flex-direction: column; }
-.kpi .ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 13%, #fff); color: var(--c); }
-.kpi .row { display: flex; justify-content: space-between; align-items: flex-start; }
-.kpi .lbl { font-size: 13px; color: var(--text-2); margin-top: 16px; }
-.kpi .val { font-size: 32px; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; }
-.kpi .val small { font-size: 15px; color: var(--text-3); font-weight: 500; letter-spacing: 0; }
-.kpi .foot { margin-top: auto; padding-top: 14px; font-size: 13px; color: var(--text-2); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.pill { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 9px; border-radius: var(--r-full); font-size: 12px; font-weight: 500; white-space: nowrap; }
-.pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
-.pill.nodot::before { display: none; }
-.pill.ok { background: var(--ok-tint); color: var(--ok); }
-.pill.warn { background: var(--warn-tint); color: var(--warn); }
-.pill.bad { background: var(--bad-tint); color: var(--bad); }
-.pill.mute { background: var(--surface-2); color: var(--text-2); }
-.pill.live { background: var(--accent-tint); color: var(--accent-ink); }
-.pill.live::before { animation: pulse 1.6s infinite; }
-@keyframes pulse { 50% { opacity: .3; } }
-.spark { width: 100%; height: 48px; margin-top: 14px; display: block; overflow: visible; }
-.seg { display: flex; gap: 4px; margin-top: 18px; }
-.seg i { flex: 1; height: 28px; border-radius: 8px; }
-.seg i.bad { background: var(--bad); } .seg i.warn { background: #F0B44C; } .seg i.mute { background: #E6E6E3; }
-.legend { display: flex; gap: 6px 12px; flex-wrap: wrap; font-size: 12px; color: var(--text-2); }
-.legend span { display: inline-flex; align-items: center; gap: 6px; }
-.legend i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
-
-/* Chips */
-.chip-ic { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none; background: color-mix(in srgb, var(--c) 13%, #fff); color: var(--c); }
+.cdot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
 
 /* Schedule */
-.sched { display: grid; gap: 0; }
-.slot { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 14px; position: relative; }
-.slot .time { font-size: 13px; font-weight: 600; padding-top: 12px; text-align: right; }
-.slot .time span { display: block; font-weight: 400; color: var(--text-3); font-size: 12px; }
-.slot .body { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); margin-bottom: 10px; min-width: 0; }
-.slot.now .body { border-color: var(--text); box-shadow: 0 0 0 3px rgba(17,17,17,.05); }
-.slot.done .time { color: var(--text-3); }
-.slot .info { min-width: 0; flex: 1; }
-.slot .info b { display: block; font-weight: 600; font-size: 14px; line-height: 1.35; }
-.slot .info .meta { font-size: 13px; color: var(--text-2); display: flex; align-items: center; gap: 6px; margin-top: 2px; }
-.slot .act { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex: none; }
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; padding: 0 14px; border-radius: var(--r-full); border: 1px solid var(--line); background: var(--surface); font-size: 13px; font-weight: 500; white-space: nowrap; transition: background .15s, transform .1s; }
-.btn:hover { background: var(--surface-2); }
-.btn:active { transform: scale(.97); }
-.btn.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
-.btn.primary:hover { background: #2a2a2a; }
-.btn.lg { height: 44px; padding: 0 20px; font-size: 14px; }
+.sched { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.slot { display: grid; grid-template-columns: 56px 1fr; gap: 14px; position: relative; }
+.slot + .slot { margin-top: 4px; }
+.slot .time { padding-top: 14px; text-align: right; color: var(--text-2); line-height: 1.35; }
+.slot .time span { display: block; color: var(--text-3); }
+.slot-body { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: var(--r-md); min-width: 0; }
+.slot.done .slot-body { background: var(--surface-2); }
+.slot.later .slot-body { box-shadow: inset 0 0 0 1px var(--line); }
+.slot-info { min-width: 0; flex: 1; }
+.slot-info .c { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-2); }
+.slot-info h3 { font-size: 15px; font-weight: 600; margin-top: 3px; letter-spacing: -0.005em; }
+.slot-info .lect { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13px; color: var(--text-2); }
+.slot.done h3 { color: var(--text-2); font-weight: 500; }
+.pill { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 9px; border-radius: var(--r-full); font-size: 12px; font-weight: 500; white-space: nowrap; }
+.pill.done { background: var(--ok-tint); color: var(--ok); }
+.pill.later { background: var(--surface-2); color: var(--text-2); }
+
+.slot.live .slot-body { background: #141414; color: #fff; padding: 18px; flex-direction: column; align-items: stretch; gap: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,.08), var(--shadow-float); background-image: linear-gradient(180deg, #1E1E1E, #121212); }
+.slot.live .time { color: var(--text); font-weight: 500; }
+.live-top { display: flex; align-items: center; gap: 10px; }
+.live-badge { display: inline-flex; align-items: center; gap: 7px; height: 24px; padding: 0 10px; border-radius: var(--r-full); background: rgba(255,92,53,.16); color: #FF8A6B; font-size: 12px; font-weight: 500; }
+.live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); position: relative; }
+.live-dot::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 1.5px solid var(--accent); opacity: 0; animation: ping 1.8s ease-out infinite; }
+@keyframes ping { 0% { transform: scale(.5); opacity: .8; } 100% { transform: scale(1.5); opacity: 0; } }
+.live-top .left { margin-left: auto; color: rgba(255,255,255,.6); }
+.live h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.25; }
+.live .topic { color: rgba(255,255,255,.66); margin-top: 4px; }
+.live-bar { height: 4px; border-radius: 4px; background: rgba(255,255,255,.12); overflow: hidden; }
+.live-bar i { display: block; height: 100%; background: #fff; border-radius: 4px; }
+.live-bar-meta { display: flex; justify-content: space-between; margin-top: 6px; color: rgba(255,255,255,.55); }
+.live-foot { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.stack { display: flex; align-items: center; }
+.stack .avatar { box-shadow: 0 0 0 2px #171717; }
+.stack .avatar + .avatar { margin-left: -8px; }
+.stack .more { margin-left: 10px; color: rgba(255,255,255,.66); font-size: 13px; }
+.live-foot .btns { margin-left: auto; display: flex; gap: 8px; }
+.btn-glass { background: rgba(255,255,255,.08); color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+.btn-glass:hover { background: rgba(255,255,255,.14); }
+
+/* Tabs */
+.seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: var(--r-sm); background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line); }
+.seg button { border: 0; background: none; height: 28px; padding: 0 10px; border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--text-2); cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+.seg button .mono { color: var(--text-3); }
+.seg button[aria-selected="true"] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgba(17,17,17,.08), inset 0 0 0 1px var(--line); }
 
 /* Tasks */
-.tabs { display: inline-flex; padding: 3px; background: var(--surface-2); border-radius: var(--r-full); gap: 2px; }
-.tabs button { height: 30px; padding: 0 12px; border: 0; background: transparent; border-radius: var(--r-full); font-size: 13px; font-weight: 500; color: var(--text-2); display: inline-flex; align-items: center; gap: 6px; }
-.tabs button .n { font-size: 11px; color: var(--text-3); }
-.tabs button[aria-selected="true"] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
-.tabs button[aria-selected="true"] .n { color: var(--text-2); }
-.tasks { display: grid; }
-.task { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); min-height: 68px; }
-.task:first-child { border-top: 0; padding-top: 4px; }
-.task .info { flex: 1; min-width: 0; }
-.task .info b { display: block; font-weight: 500; font-size: 14px; line-height: 1.35; text-wrap: pretty; }
-.task .info .meta { font-size: 13px; color: var(--text-2); margin-top: 2px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.task .due { flex: none; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-.task .due small { font-size: 12px; color: var(--text-3); }
-.empty { text-align: center; padding: 28px 12px; color: var(--text-2); }
-.empty .em { width: 64px; height: 64px; border-radius: 20px; background: var(--ok-tint); color: var(--ok); display: grid; place-items: center; margin: 0 auto 12px; }
-.empty b { display: block; color: var(--text); font-size: 15px; }
+.tasks { list-style: none; margin: 0; padding: 0; }
+.task { display: flex; align-items: center; gap: 12px; padding: 13px 0; border-top: 1px solid var(--line); }
+.task:first-child { border-top: 0; padding-top: 2px; }
+.task-chip { width: 40px; height: 40px; border-radius: 10px; flex: none; display: grid; place-items: center; }
+.task-info { flex: 1; min-width: 0; }
+.task-info h3 { text-wrap: balance; font-size: 14px; font-weight: 500; line-height: 1.35; }
+.task-info .m { display: flex; align-items: center; gap: 6px; margin-top: 3px; font-size: 12px; color: var(--text-2); flex-wrap: wrap; }
+.task-info .m .sep { color: var(--line-2); }
+.task-end { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex: none; }
+.due { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: var(--r-xs); font-family: var(--mono); font-size: 12px; font-weight: 500; white-space: nowrap; }
+.due.hot { background: var(--accent-tint); color: var(--accent-ink); }
+.due.soon { background: var(--warn-tint); color: var(--warn); }
+.due.calm { background: var(--surface-2); color: var(--text-2); }
+.due.sent { background: var(--ok-tint); color: var(--ok); }
+.task .btn { height: 30px; }
+.empty { text-align: center; padding: 28px 12px 18px; color: var(--text-2); }
+.empty .ic { width: 56px; height: 56px; margin: 0 auto 12px; border-radius: 16px; display: grid; place-items: center; background: var(--ok-tint); color: var(--ok); }
+.empty b { display: block; color: var(--text); font-weight: 600; font-size: 15px; margin-bottom: 2px; }
 
 /* Grades */
-.chart { position: relative; height: 180px; margin: 8px 0 4px; }
-.chart .gl { position: absolute; left: 28px; right: 0; border-top: 1px dashed var(--line-2); }
-.chart .gl span { position: absolute; left: -28px; top: -9px; font-size: 12px; color: var(--text-3); width: 22px; text-align: right; }
-.bars { position: absolute; left: 28px; right: 0; top: 0; bottom: 22px; display: grid; grid-template-columns: repeat(6, 1fr); align-items: end; }
-.bars .b { display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; position: relative; }
-.bars .b i { width: 30px; max-width: 70%; border-radius: var(--r-full); background: #E6E6E3; display: block; }
-.bars .b.cur i { background: var(--accent); }
-.bars .b .x { position: absolute; bottom: -22px; font-size: 12px; color: var(--text-3); }
-.bars .b.cur .x { color: var(--text); font-weight: 600; }
-.bars .b .tip { position: absolute; transform: translateY(-34px); background: var(--text); color: #fff; font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
-.bars .b .tip::after { content: ""; position: absolute; left: 50%; bottom: -4px; width: 8px; height: 8px; background: var(--text); transform: translateX(-50%) rotate(45deg); border-radius: 1px; }
-.bars .b .hv { position: absolute; font-size: 11px; color: var(--text-2); transform: translateY(-20px); opacity: 0; transition: opacity .15s; }
-.bars .b:hover .hv { opacity: 1; }
-.grade-sum { display: flex; align-items: baseline; gap: 10px; }
-.grade-sum .val { font-size: 32px; font-weight: 600; letter-spacing: -.02em; }
-.gl-list { margin-top: 20px; border-top: 1px solid var(--line); }
-.g-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
-.g-row:last-child { border-bottom: 0; padding-bottom: 0; }
-.g-row .chip-ic { width: 36px; height: 36px; border-radius: 10px; }
-.g-row .info { flex: 1; min-width: 0; }
-.g-row .info b { display: block; font-size: 14px; font-weight: 500; text-wrap: pretty; }
-.g-row .info span { font-size: 12px; color: var(--text-2); }
-.score { font-size: 16px; font-weight: 600; min-width: 48px; text-align: right; }
-.score.hi { color: var(--ok); }
+.grade-sum { display: flex; align-items: flex-end; gap: 28px; margin-bottom: 18px; flex-wrap: wrap; }
+.grade-sum .big { font-size: 32px; font-weight: 600; letter-spacing: -0.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+.grade-sum .big small { font-size: 16px; color: var(--text-3); font-weight: 500; letter-spacing: 0; }
+.grade-sum .l { font-size: 13px; color: var(--text-2); margin-bottom: 8px; }
+.legend { margin-left: auto; display: flex; gap: 16px; color: var(--text-2); font-size: 13px; }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; }
+.chart { position: relative; height: 224px; }
+.chart svg { width: 100%; height: 100%; overflow: visible; }
+.chart .tip { position: absolute; pointer-events: none; transform: translate(-50%, -100%); background: #141414; color: #fff; border-radius: 10px; padding: 8px 10px; font-size: 12px; line-height: 1.45; white-space: nowrap; box-shadow: var(--shadow-float); opacity: 0; transition: opacity .12s; }
+.chart .tip b { font-weight: 600; font-size: 13px; }
+.chart .tip span { color: rgba(255,255,255,.65); }
+.bar-hit { cursor: default; }
+.recent { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 6px; }
+.recent-row { display: grid; grid-template-columns: 1fr auto 84px; align-items: center; gap: 14px; padding: 10px 0; }
+.recent-row + .recent-row { border-top: 1px solid var(--line); }
+.recent-row .n { font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.recent-row .d { color: var(--text-3); }
+.recent-row .s { display: flex; align-items: center; justify-content: flex-end; white-space: nowrap; text-align: right; font-weight: 600; font-size: 16px; font-variant-numeric: tabular-nums; }
+.recent-row .s small { color: var(--text-3); font-weight: 400; font-size: 12px; }
+.letter { display: inline-grid; place-items: center; min-width: 30px; height: 22px; padding: 0 6px; border-radius: var(--r-xs); background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line); font-family: var(--mono); font-size: 12px; font-weight: 500; }
 
 /* Courses */
-.courses { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.course { border: 1px solid var(--line); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 14px; transition: border-color .15s, box-shadow .15s; }
-.course:hover { border-color: var(--line-2); box-shadow: var(--shadow); }
-.course .top-r { display: flex; gap: 12px; align-items: flex-start; }
-.course .info { flex: 1; min-width: 0; }
-.course .info b { display: block; font-weight: 600; font-size: 14px; line-height: 1.35; text-wrap: balance; }
-.course .info span { font-size: 13px; color: var(--text-2); }
-.ring { position: relative; width: 52px; height: 52px; flex: none; }
-.ring svg { width: 52px; height: 52px; transform: rotate(-90deg); }
-.ring b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; font-weight: 600; }
-.segs { display: grid; gap: 3px; }
-.segs i { height: 6px; border-radius: 3px; background: #ECECEA; }
-.segs i.on { background: var(--text); }
-.course .next { display: flex; align-items: center; gap: 10px; background: var(--surface-2); border-radius: 10px; padding: 8px 8px 8px 12px; }
-.course .next div { flex: 1; min-width: 0; font-size: 13px; line-height: 1.35; }
-.course .next div span { display: block; font-size: 12px; color: var(--text-2); }
-.course .next .play { width: 40px; height: 40px; border-radius: 50%; background: var(--brand); color: #fff; border: 0; display: grid; place-items: center; flex: none; }
-.course .next .play:hover { background: #2a2a2a; }
+.courses { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.course { display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+.course:first-child { border-top: 0; padding-top: 2px; }
+.course-info { flex: 1; min-width: 0; }
+.course-row { display: flex; align-items: baseline; gap: 10px; }
+.course-row h3 { font-size: 14px; font-weight: 600; }
+.course-row .pct { margin-left: auto; font-weight: 600; font-variant-numeric: tabular-nums; }
+.course .next { font-size: 13px; color: var(--text-2); margin-top: 2px; }
+.prog { height: 6px; border-radius: 6px; background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line); margin-top: 10px; overflow: hidden; }
+.prog i { display: block; height: 100%; border-radius: 6px; }
+.course .mods { display: flex; justify-content: space-between; margin-top: 6px; color: var(--text-3); }
 
 /* Modal */
-.scrim { position: fixed; inset: 0; background: rgba(17,17,17,.4); display: none; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
-.scrim.open { display: flex; }
-.sheet { width: 100%; max-width: 480px; background: var(--surface); border-radius: var(--r-lg); padding: 24px; box-shadow: var(--shadow-float); animation: up .2s ease-out; }
-@keyframes up { from { transform: translateY(12px); opacity: 0; } }
-.sheet h3 { margin: 0; font-size: 20px; font-weight: 600; letter-spacing: -.01em; }
-.sheet .sub { color: var(--text-2); font-size: 14px; margin: 4px 0 20px; }
-.drop { border: 1.5px dashed var(--line-2); border-radius: 12px; padding: 20px; text-align: center; color: var(--text-2); font-size: 13px; cursor: pointer; transition: border-color .15s, background .15s; display: block; }
-.drop:hover, .drop.has { border-color: var(--text); background: var(--surface-2); }
-.drop b { color: var(--text); display: block; font-size: 14px; font-weight: 500; margin: 8px 0 2px; }
-.drop input { position: absolute; width: 1px; height: 1px; opacity: 0; }
-.field { margin-top: 16px; }
+.scrim { position: fixed; inset: 0; background: rgba(17,17,17,.38); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+.scrim.open { display: flex; animation: fade .15s ease-out; }
+@keyframes fade { from { opacity: 0; } }
+.sheet { width: 100%; max-width: 460px; background: var(--surface); border-radius: 20px; padding: 22px; box-shadow: var(--shadow-float); animation: rise .2s ease-out; }
+@keyframes rise { from { transform: translateY(12px); opacity: 0; } }
+.sheet-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 18px; }
+.sheet-head h2 { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
+.sheet-head p { color: var(--text-2); font-size: 13px; margin-top: 2px; }
+.sheet-head .icon-btn { margin-left: auto; flex: none; width: 36px; height: 36px; }
+.drop { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 24px 16px; border-radius: var(--r-md); border: 1.5px dashed var(--line-2); background: var(--surface-2); text-align: center; cursor: pointer; transition: border-color .15s, background .15s; }
+.drop:hover, .drop.drag { border-color: var(--text); background: #F0F0EE; }
+.drop b { font-weight: 600; }
+.drop span { color: var(--text-2); font-size: 13px; }
+.drop input { display: none; }
+.file { display: none; align-items: center; gap: 12px; padding: 12px; border-radius: var(--r-md); box-shadow: inset 0 0 0 1px var(--line); }
+.file.show { display: flex; }
+.file .fi { width: 36px; height: 36px; border-radius: 10px; background: var(--accent-tint); color: var(--accent-ink); display: grid; place-items: center; flex: none; }
+.file b { display: block; font-weight: 500; font-size: 14px; word-break: break-all; }
+.file span { color: var(--text-3); }
+.field { margin-top: 14px; }
 .field label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; }
-.field textarea { width: 100%; min-height: 84px; resize: vertical; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; font: inherit; font-size: 16px; color: var(--text); }
-.field textarea:focus { outline: none; border-color: var(--text); }
-.err { color: var(--bad); font-size: 13px; margin-top: 8px; display: none; }
+.field textarea { width: 100%; min-height: 84px; resize: vertical; border: 0; border-radius: var(--r-sm); padding: 10px 12px; font: inherit; font-size: 16px; color: var(--text); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line-2); outline: 0; }
+.field textarea:focus { box-shadow: inset 0 0 0 1.5px var(--text); }
+.err { color: var(--accent-ink); font-size: 13px; margin-top: 8px; display: none; }
 .err.show { display: block; }
-.sheet .acts { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
-.toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); background: var(--text); color: #fff; padding: 12px 16px; border-radius: 12px; font-size: 14px; display: flex; gap: 10px; align-items: center; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 60; box-shadow: var(--shadow-float); }
-.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.sheet-foot { display: flex; gap: 8px; margin-top: 18px; }
+.sheet-foot .btn { flex: 1; }
 
-/* Mobile tab bar */
+.toast { position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px); background: #141414; color: #fff; padding: 11px 16px; border-radius: 12px; font-size: 14px; box-shadow: var(--shadow-float); display: flex; align-items: center; gap: 10px; opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 60; white-space: nowrap; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+.toast svg { color: #4ADE80; }
+
 .tabbar { display: none; }
 
 @media (max-width: 1280px) {
-  .span-3 { grid-column: span 3; }
-  .search { width: 220px; }
+  .main { padding: 20px 24px 40px; }
+  .search { width: 240px; }
 }
 @media (max-width: 1100px) {
+  .grid { grid-template-columns: 1fr; }
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
   .app { grid-template-columns: 1fr; }
   .side { display: none; }
-  .main { padding: 0 20px 112px; }
-  .span-6 { grid-column: span 12; }
-  .span-3 { grid-column: span 6; }
-  .span-7, .span-5 { grid-column: span 12; }
-  .tabbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,.96); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); z-index: 20; justify-content: space-around; }
-  .tabbar a { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 12px; color: var(--text-2); min-width: 56px; padding: 6px 4px; position: relative; font-weight: 500; }
-  .tabbar a.active { color: var(--text); }
-  .tabbar a.active::before { content: ""; position: absolute; top: -7px; width: 24px; height: 3px; border-radius: 3px; background: var(--accent); }
-  .tabbar a .badge { position: absolute; top: 2px; right: 12px; min-width: 16px; height: 16px; border-radius: 8px; background: var(--accent); color: #fff; font-size: 10px; font-weight: 600; display: grid; place-items: center; padding: 0 4px; }
-  .m-logo { display: flex !important; }
-  .top { flex-wrap: wrap; row-gap: 12px; }
-  .search, .me .who { display: none; }
-}
-.m-logo { display: none; }
-@media (max-width: 720px) {
-  .main { padding: 0 16px 104px; }
-  .grid { gap: 12px; }
-  .top { padding: calc(14px + env(safe-area-inset-top)) 0 16px; flex-wrap: wrap; gap: 12px; }
-  .top .hello h1 { font-size: 20px; }
+  .main { padding: calc(14px + env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom)); }
   .search { display: none; }
-  .me .who { display: none; }
-  .card { padding: 16px; }
-  .hero .fig { font-size: 32px; }
-  .hero { flex-direction: column; }
-  .week { min-height: 110px; }
-  .week { justify-content: space-between; }
-  .week .bar { width: 26px; }
-  .kpi .val { font-size: 28px; }
-  .kpi .lbl { margin-top: 12px; }
-  .kpi .ic { width: 36px; height: 36px; }
-  .seg { margin-top: 12px; } .seg i { height: 20px; }
-  .spark { height: 36px; margin-top: 8px; }
-  .courses { grid-template-columns: 1fr; }
-  .card-head { flex-wrap: wrap; }
-  .card-head .right { margin-left: 0; width: 100%; }
-  .card-head.keep .right { margin-left: auto; width: auto; }
-  .slot { grid-template-columns: 44px minmax(0, 1fr); gap: 10px; }
-  .slot .body { flex-wrap: wrap; }
-  .slot .chip-ic { display: none; }
-  .slot .act { flex-direction: row; flex-wrap: wrap; gap: 8px; width: 100%; justify-content: space-between; align-items: center; }
-  .task { align-items: flex-start; flex-wrap: wrap; }
-  .task .info { flex: 1 1 calc(100% - 52px); }
-  .task .due { flex-direction: row; width: 100%; padding-left: 52px; justify-content: space-between; align-items: center; }
-  .btn { height: 40px; }
-  .link-chip { height: 40px; }
-  .tabs { width: 100%; }
-  .tabs button { height: 40px; flex: 1; justify-content: center; }
-  .tabbar a { color: var(--text-2); }
+  .top { margin-bottom: 18px; align-items: flex-start; }
+  .top .me { display: grid; }
+  .title h1 { font-size: 20px; }
+  .title p { font-size: 13px; white-space: nowrap; }
+  .tile .meta .mono { font-family: var(--font); font-size: 12px; }
+  .kpis { gap: 12px; margin-bottom: 12px; }
+  .grid, .col { gap: 12px; }
+  .tile { padding: 14px 16px; }
+  .tile .fig { font-size: 26px; }
+  .tile .meta { font-size: 12px; flex-wrap: wrap; white-space: normal; row-gap: 4px; }
+  .seg button { height: 40px; }
+  .btn, .task .btn { height: 40px; }
+  .legend { margin-left: 0; width: 100%; }
+  .link { min-height: 40px; }
+  .card { padding: 16px; border-radius: 16px; }
+  .tabbar { display: flex; position: fixed; inset: auto 0 0; z-index: 20; background: rgba(255,255,255,.96); backdrop-filter: blur(12px); border-top: 1px solid var(--line); padding: 6px 8px calc(6px + env(safe-area-inset-bottom)); }
+  .tabbar a { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 0; min-height: 48px; color: var(--text-3); text-decoration: none; font-size: 12px; font-weight: 500; position: relative; }
+  .tabbar a[aria-current="page"] { color: var(--text); }
+  .tabbar .badge { position: absolute; top: 2px; left: calc(50% + 6px); min-width: 16px; height: 16px; padding: 0 4px; border-radius: 8px; background: var(--accent); color: #fff; font-size: 10px; font-weight: 600; display: grid; place-items: center; }
 }
-@media (max-width: 400px) {
-  .span-3 { grid-column: span 12; }
+@media (max-width: 520px) {
+  .slot { grid-template-columns: 1fr; gap: 6px; }
+  .slot .time { padding-top: 0; text-align: left; display: flex; gap: 6px; }
+  .slot .time span::before { content: "– "; }
+  .slot + .slot { margin-top: 12px; }
+  .slot-body { flex-wrap: wrap; }
+  .live-bar-meta .mid { display: none; }
+  .live-foot .btns { margin-left: 0; width: 100%; }
+  .live-foot .btns .btn { flex: 1; }
+  .legend { margin-left: 0; width: 100%; }
+  .grade-sum { gap: 20px; }
+  .card-head { flex-wrap: wrap; }
+  .card-head .sub { display: none; }
+  .tasks-head .end { margin-left: 0; width: 100%; }
+  .tasks-head .seg { width: 100%; }
+  .tasks-head .seg button { flex: 1; justify-content: center; }
+  .recent-row { grid-template-columns: 1fr auto; }
+  .recent-row .d { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -312,470 +300,486 @@ svg.i.sm { width: 16px; height: 16px; }
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16.5" rx="2.5"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h14v15H6a2 2 0 0 0-2 2 2 2 0 0 0 2 2h14"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11h6M9 15h4"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="m8.5 14 -1.5 7 5-2.5 5 2.5-1.5-7"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-5A8 8 0 1 1 21 12z"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><rect x="2.5" y="6" width="13" height="12" rx="2.5"/><path d="m15.5 10.5 6-3.5v10l-6-3.5"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m10 8.5 5.5 3.5-5.5 3.5z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2.5H6.5a2 2 0 0 0-2 2v15a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V8z"/><path d="M14 2.5V8h5.5"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V3.5M7 8l5-5 5 5M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-tree" viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="2"/><circle cx="6" cy="19.5" r="2"/><circle cx="18" cy="19.5" r="2"/><circle cx="12" cy="19.5" r="2"/><path d="M12 6.5v11M12 12H6v5.5M12 12h6v5.5"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+    <symbol id="i-stat" viewBox="0 0 24 24"><path d="M3 20.5h18M6 17v-5M10.5 17V7M15 17v-7M19.5 17V4"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="m12 19 7-7 3 3-7 7z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18z"/><circle cx="11" cy="11" r="2"/><path d="m2 2 7.6 7.6"/></symbol>
+    <symbol id="i-lang" viewBox="0 0 24 24"><path d="M4 5h9M8.5 3v2M6 5c1 4 3.5 7 6 8.5M11 5c-.8 4-3.4 7.4-7 9"/><path d="m12 21 4.5-10 4.5 10M13.6 17.5h5.8"/></symbol>
+  </defs>
+</svg>
+
 <div class="app">
-  <aside class="side" aria-label="Navigasi utama"><div class="side-in">
-    <div class="logo"><span class="logo-mark" data-logo></span>Kelasku</div>
-    <nav class="nav nav-group" aria-label="Menu">
-      <div class="nav-label">Menu</div>
-      <a href="#" class="active" aria-current="page"><svg class="i" data-i="home"></svg>Beranda</a>
-      <a href="#"><svg class="i" data-i="calendar"></svg>Jadwal</a>
-      <a href="#"><svg class="i" data-i="clipboard"></svg>Tugas<span class="count num" data-pending-count></span></a>
-      <a href="#"><svg class="i" data-i="chart"></svg>Nilai</a>
-      <a href="#"><svg class="i" data-i="layers"></svg>Kursus saya</a>
-    </nav>
-    <nav class="nav nav-group" aria-label="Lainnya">
-      <div class="nav-label">Lainnya</div>
-      <a href="#"><svg class="i" data-i="message"></svg>Diskusi</a>
-      <a href="#"><svg class="i" data-i="settings"></svg>Pengaturan</a>
-    </nav>
-    <div class="side-card">
-      <div class="flame"><svg class="i" data-i="calendar"></svg></div>
-      <h4>Penilaian Akhir Semester</h4>
-      <p class="num" data-pas></p>
-      <div class="bar"><i data-pas-bar></i></div>
-      <div class="meta num"><span data-pas-ready></span><span>8 mapel</span></div>
+  <aside class="side" aria-label="Navigasi utama">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16M4 12l8-8M9 9l9 11"/><circle cx="19" cy="5" r="1.6" fill="#FF5C35" stroke="none"/></svg>
+      </span>
+      Kelasku
     </div>
-  </div></aside>
+    <nav class="nav">
+      <a href="#" aria-current="page"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-home"/></svg>Beranda</a>
+      <a href="#"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-cal"/></svg>Jadwal</a>
+      <a href="#"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-book"/></svg>Kursus saya<span class="count" data-count="courses">5</span></a>
+      <a href="#"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-clip"/></svg>Tugas<span class="count hot" data-count="pending"></span></a>
+      <a href="#"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-award"/></svg>Nilai</a>
+      <a href="#"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-chat"/></svg>Diskusi<span class="count">3</span></a>
+      <div class="nav-label">Akun</div>
+      <a href="#"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-user"/></svg>Profil</a>
+      <a href="#" id="resetLink"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-gear"/></svg>Pengaturan</a>
+    </nav>
+    <div class="side-foot">
+      <span class="avatar" style="width:36px;height:36px;background:#FFE4D9" data-avatar="Nadia Putri"></span>
+      <div class="who"><b>Nadia Putri</b><span>Informatika · Semester 3</span></div>
+    </div>
+  </aside>
 
   <main class="main">
     <header class="top">
-      <div class="m-logo logo" style="padding:0;width:100%;font-size:16px"><span class="logo-mark" data-logo style="width:28px;height:28px;border-radius:8px"></span>Kelasku</div>
-      <div class="hello">
-        <small data-today></small>
-        <h1 data-greet></h1>
+      <div class="title">
+        <h1>Senin, 16 November <span>2026</span></h1>
+        <p>Semester ganjil 2026/2027 · Minggu&nbsp;ke-11</p>
       </div>
-      <label class="search">
-        <svg class="i sm" data-i="search"></svg>
-        <input type="search" placeholder="Cari materi, tugas, kelas" aria-label="Cari">
-        <kbd>⌘K</kbd>
-      </label>
-      <button class="icon-btn" aria-label="Notifikasi, 3 baru" style="margin-left:auto"><svg class="i" data-i="bell"></svg><span class="dot"></span></button>
-      <div class="me">
-        <button aria-haspopup="menu" aria-expanded="false" data-me-btn>
-          <span class="av" data-avatar="Nadia Putri" data-bg="ffd5c2"></span>
-          <span class="who"><b>Nadia Putri</b><span>Kelas 11 IPA · SMA</span></span>
-          <svg class="i sm" data-i="chevron-down" style="color:var(--text-3)"></svg>
-        </button>
-        <div class="menu" role="menu" data-menu>
-          <button role="menuitem"><svg class="i sm" data-i="user"></svg>Profil saya</button>
-          <button role="menuitem"><svg class="i sm" data-i="settings"></svg>Pengaturan</button>
-          <hr>
-          <button role="menuitem" data-reset><svg class="i sm" data-i="refresh"></svg>Atur ulang data contoh</button>
-          <button role="menuitem"><svg class="i sm" data-i="logout"></svg>Keluar</button>
-        </div>
+      <div class="top-actions">
+        <label class="search">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><use href="#i-search"/></svg>
+          <span class="sr">Cari</span>
+          <input type="search" placeholder="Cari kursus atau tugas">
+          <span class="kbd">⌘K</span>
+        </label>
+        <button class="icon-btn" aria-label="Notifikasi, 2 baru"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-bell"/></svg><span class="dot"></span></button>
+        <span class="avatar me" style="width:40px;height:40px;background:#FFE4D9" data-avatar="Nadia Putri"></span>
       </div>
     </header>
 
+    <section class="kpis" aria-label="Ringkasan">
+      <div class="tile">
+        <div class="lbl">Belum dikumpulkan</div>
+        <div class="fig" id="kPending"></div>
+        <div class="meta" id="kPendingMeta"></div>
+      </div>
+      <div class="tile">
+        <div class="lbl">Rata-rata nilai</div>
+        <div class="fig" id="kAvg"></div>
+        <div class="meta" id="kAvgMeta"></div>
+      </div>
+      <div class="tile">
+        <div class="lbl">Kehadiran</div>
+        <div class="fig" id="kAtt"></div>
+        <div class="meta" id="kAttMeta"></div>
+      </div>
+      <div class="tile">
+        <div class="lbl">Progres kursus</div>
+        <div class="fig" id="kProg"></div>
+        <div class="meta" id="kProgMeta"></div>
+      </div>
+    </section>
+
     <div class="grid">
-      <!-- Hero: study this week -->
-      <section class="card hero span-6" aria-label="Waktu belajar 7 hari terakhir">
-        <div class="hero-l">
-          <div class="label"><svg class="i sm" data-i="clock"></svg>Waktu belajar · 7 hari terakhir</div>
-          <div class="fig num" data-hours></div>
-          <div class="goal" aria-hidden="true"><i data-goal></i></div>
-          <div class="hero-stats num">
-            <div><b data-lessons-week></b>materi selesai</div>
-            <div><b data-streak-short></b>streak</div>
-            <div><b data-avg-day></b>rata-rata/hari</div>
+      <div class="col">
+        <section class="card" aria-labelledby="hSched">
+          <div class="card-head">
+            <h2 id="hSched">Jadwal hari ini</h2>
+            <span class="sub" id="schedSub"></span>
+            <div class="end"><a class="link" href="#">Minggu ini <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a></div>
           </div>
-        </div>
-        <div class="week num" data-week aria-hidden="true"></div>
-      </section>
+          <ol class="sched" id="sched"></ol>
+        </section>
 
-      <section class="card kpi span-3" style="--c:#C2281D" aria-label="Tugas tertunda">
-        <div class="row"><div class="ic"><svg class="i" data-i="clipboard"></svg></div><span data-kpi-task-pill></span></div>
-        <div class="lbl">Tugas tertunda</div>
-        <div class="val num" data-kpi-tasks></div>
-        <div class="seg" data-kpi-seg aria-hidden="true"></div>
-        <div class="foot" data-kpi-task-foot></div>
-      </section>
+        <section class="card" aria-labelledby="hGrades">
+          <div class="card-head">
+            <h2 id="hGrades">Nilai per kursus</h2>
+            <span class="sub">Semester ganjil</span>
+            <div class="end"><a class="link" href="#">Transkrip <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a></div>
+          </div>
+          <div class="grade-sum">
+            <div><div class="l">Nilai tertinggi</div><div class="big" id="gBest"></div></div>
+            <div><div class="l">Di atas rata-rata kelas</div><div class="big" id="gAbove"></div></div>
+            <div class="legend"><span><i style="width:20px;background:linear-gradient(90deg,var(--c-std) 0 20%,var(--c-bsd) 20% 40%,var(--c-sta) 40% 60%,var(--c-dai) 60% 80%,var(--c-bia) 80%)"></i>Nilai kamu</span><span><i style="background:#E4E4E1"></i>Rata-rata kelas</span></div>
+          </div>
+          <div class="chart" id="chart"><div class="tip" id="tip"></div></div>
+          <div class="recent" id="recent"></div>
+        </section>
+      </div>
 
-      <section class="card kpi span-3" style="--c:#3D5AFE" aria-label="Rata-rata nilai">
-        <div class="row"><div class="ic"><svg class="i" data-i="award"></svg></div><span class="pill mute nodot num" data-kpi-count></span></div>
-        <div class="lbl">Rata-rata nilai semester</div>
-        <div class="val num" data-kpi-avg></div>
-        <svg class="spark" viewBox="0 0 200 48" preserveAspectRatio="none" data-spark aria-hidden="true"></svg>
-        <div class="foot" data-kpi-avg-foot></div>
-      </section>
+      <div class="col">
+        <section class="card" aria-labelledby="hTasks">
+          <div class="card-head tasks-head">
+            <h2 id="hTasks">Tugas</h2>
+            <div class="end">
+              <div class="seg" role="tablist" aria-label="Filter tugas">
+                <button role="tab" aria-selected="true" data-filter="pending">Belum dikumpulkan <span class="mono" data-count="pending"></span></button>
+                <button role="tab" aria-selected="false" data-filter="sent">Terkumpul <span class="mono" data-count="sent"></span></button>
+              </div>
+            </div>
+          </div>
+          <ul class="tasks" id="tasks"></ul>
+        </section>
 
-      <!-- Schedule -->
-      <section class="card span-6" aria-labelledby="h-sched">
-        <div class="card-head keep">
-          <div><h2 id="h-sched">Jadwal kelas hari ini</h2><div class="sub num" data-sched-sub></div></div>
-          <div class="right"><a href="#" class="link-chip">Kalender<svg class="i sm" data-i="arrow-right"></svg></a></div>
-        </div>
-        <div class="sched" data-sched></div>
-      </section>
-
-      <!-- Tasks -->
-      <section class="card span-6" aria-labelledby="h-task">
-        <div class="card-head">
-          <div><h2 id="h-task">Tugas belum dikumpulkan</h2><div class="sub" data-task-sub></div></div>
-          <div class="right"><div class="tabs" role="tablist" aria-label="Filter tugas" data-tabs></div></div>
-        </div>
-        <div class="tasks" data-tasks></div>
-      </section>
-
-      <!-- Courses -->
-      <section class="card span-7" aria-labelledby="h-course">
-        <div class="card-head keep">
-          <div><h2 id="h-course">Progres kursus</h2><div class="sub num" data-course-sub></div></div>
-          <div class="right"><a href="#" class="link-chip">Semua kursus<svg class="i sm" data-i="arrow-right"></svg></a></div>
-        </div>
-        <div class="courses" data-courses></div>
-      </section>
-
-      <!-- Grades -->
-      <section class="card span-5" aria-labelledby="h-grade">
-        <div class="card-head keep">
-          <div><h2 id="h-grade">Nilai</h2><div class="sub">Rata-rata per bulan</div></div>
-          <div class="right"><a href="#" class="link-chip">Rapor<svg class="i sm" data-i="arrow-right"></svg></a></div>
-        </div>
-        <div class="chart" data-chart></div>
-        <div class="gl-list" data-grades></div>
-      </section>
+        <section class="card" aria-labelledby="hCourses">
+          <div class="card-head">
+            <h2 id="hCourses">Progres kursus</h2>
+            <div class="end"><a class="link" href="#">Semua kursus <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-arrow"/></svg></a></div>
+          </div>
+          <ul class="courses" id="courses"></ul>
+        </section>
+      </div>
     </div>
   </main>
 </div>
 
 <nav class="tabbar" aria-label="Navigasi">
-  <a href="#" class="active" aria-current="page"><svg class="i" data-i="home"></svg>Beranda</a>
-  <a href="#"><svg class="i" data-i="calendar"></svg>Jadwal</a>
-  <a href="#"><svg class="i" data-i="clipboard"></svg>Tugas<span class="badge num" data-pending-count></span></a>
-  <a href="#"><svg class="i" data-i="chart"></svg>Nilai</a>
-  <a href="#"><svg class="i" data-i="layers"></svg>Kursus</a>
+  <a href="#" aria-current="page"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-home"/></svg>Beranda</a>
+  <a href="#"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-cal"/></svg>Jadwal</a>
+  <a href="#"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-clip"/></svg>Tugas<span class="badge" data-count="pending"></span></a>
+  <a href="#"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-award"/></svg>Nilai</a>
+  <a href="#"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-user"/></svg>Profil</a>
 </nav>
 
-<div class="scrim" data-scrim role="dialog" aria-modal="true" aria-labelledby="m-title">
-  <form class="sheet" data-form novalidate>
-    <h3 id="m-title">Kumpulkan tugas</h3>
-    <p class="sub" data-m-sub></p>
-    <label class="drop" data-drop>
-      <input type="file" data-file accept=".pdf,.doc,.docx,.jpg,.png">
-      <svg class="i" data-i="upload" style="width:28px;height:28px;color:var(--text)"></svg>
-      <b data-file-name>Pilih file jawaban</b>
-      PDF, DOCX, JPG atau PNG, maks. 10 MB
-    </label>
-    <div class="err" data-err>Lampirkan file jawaban terlebih dahulu.</div>
-    <div class="field">
-      <label for="note">Catatan untuk guru (opsional)</label>
-      <textarea id="note" placeholder="Misalnya: nomor 4 saya kerjakan dengan cara lain"></textarea>
+<div class="scrim" id="scrim" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <form class="sheet" id="form" novalidate>
+    <div class="sheet-head">
+      <span class="task-chip" id="mChip"></span>
+      <div><h2 id="mTitle"></h2><p id="mMeta"></p></div>
+      <button type="button" class="icon-btn" id="mClose" aria-label="Tutup"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><use href="#i-x"/></svg></button>
     </div>
-    <div class="acts">
-      <button type="button" class="btn lg" data-close>Batal</button>
-      <button type="submit" class="btn primary lg">Kumpulkan</button>
+    <label class="drop" id="drop">
+      <input type="file" id="fileInput" accept=".pdf,.docx,.zip,.png,.jpg">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-upload"/></svg>
+      <b>Pilih file atau seret ke sini</b>
+      <span>PDF, DOCX, ZIP atau gambar, maks. 20 MB</span>
+    </label>
+    <div class="file" id="fileBox">
+      <span class="fi"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#i-file"/></svg></span>
+      <div style="min-width:0;flex:1"><b id="fileName"></b><span class="mono" id="fileSize"></span></div>
+      <button type="button" class="btn btn-ghost" id="fileRemove">Ganti</button>
+    </div>
+    <div class="err" id="err">Lampirkan file tugas terlebih dahulu</div>
+    <div class="field">
+      <label for="note">Catatan untuk dosen <span style="color:var(--text-3);font-weight:400">(opsional)</span></label>
+      <textarea id="note" placeholder="Misalnya bagian yang ingin dikonsultasikan"></textarea>
+    </div>
+    <div class="sheet-foot">
+      <button type="button" class="btn btn-ghost btn-lg" id="mCancel">Batal</button>
+      <button type="submit" class="btn btn-dark btn-lg">Kumpulkan</button>
     </div>
   </form>
 </div>
-<div class="toast" data-toast role="status" aria-live="polite"><svg class="i sm" data-i="check"></svg><span></span></div>
+
+<div class="toast" id="toast" role="status"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><use href="#i-check"/></svg><span id="toastText"></span></div>
 
 <script>
-/* ---------- Icons ---------- */
-const ICONS = {
-  home: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-6h4v6"/>',
-  calendar: '<rect x="3" y="4.5" width="18" height="16" rx="3"/><path d="M3 9.5h18M8 2.5v4M16 2.5v4"/>',
-  clipboard: '<rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V3h6v1"/><path d="M9 11h6M9 15h4"/>',
-  chart: '<path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/>',
-  layers: '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/>',
-  message: '<path d="M4 5h16v11H9l-5 4V5Z"/>',
-  settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/>',
-  flame: '<path d="M12 21c-3.9 0-7-2.8-7-6.6 0-3.1 2-5.2 3.6-7 .4 1.9 1.4 3 2.6 3.4C11 7.5 12.3 5 14.6 3c.2 3.1 4.4 5.7 4.4 11.4 0 3.8-3.1 6.6-7 6.6Z"/><path d="M12 21c-1.7 0-3-1.2-3-2.9 0-1.9 1.6-2.9 2.3-4.1.8 1.3 3.7 2.2 3.7 4.1 0 1.7-1.3 2.9-3 2.9Z"/>',
-  search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
-  bell: '<path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15L6 16Z"/><path d="M10 21h4"/>',
-  'chevron-down': '<path d="m6 9 6 6 6-6"/>',
-  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',
-  refresh: '<path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/>',
-  logout: '<path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 17l-5-5 5-5M5 12h11"/>',
-  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
-  award: '<circle cx="12" cy="9" r="6"/><path d="m8.5 14-1.5 7 5-3 5 3-1.5-7"/>',
-  'arrow-right': '<path d="M5 12h14M13 6l6 6-6 6"/>',
-  video: '<rect x="3" y="6" width="13" height="12" rx="2.5"/><path d="m16 10 5-3v10l-5-3"/>',
-  play: '<path d="M8 5.5v13l10-6.5-10-6.5Z" fill="currentColor"/>',
-  upload: '<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>',
-  check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
-  'check-circle': '<circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/>',
-  paperclip: '<path d="m20 11-8.5 8.5a5 5 0 0 1-7-7L13 4a3.3 3.3 0 0 1 4.7 4.7l-8.6 8.5a1.7 1.7 0 0 1-2.3-2.3L14.5 7"/>',
-  // subjects
-  sigma: '<path d="M18 5H6l6.5 7L6 19h12"/>',
-  atom: '<circle cx="12" cy="12" r="1.5"/><ellipse cx="12" cy="12" rx="9.5" ry="4"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9.5" ry="4" transform="rotate(120 12 12)"/>',
-  flask: '<path d="M9 3h6M10 3v6l-5.5 9.5A1.7 1.7 0 0 0 6 21h12a1.7 1.7 0 0 0 1.5-2.5L14 9V3"/><path d="M7.5 15h9"/>',
-  leaf: '<path d="M5 19c0-8 5-14 15-14 0 9-5 14-12 14H5Z"/><path d="M5 19 13 11"/>',
-  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3Z"/>',
-  book: '<path d="M12 6c-2-1.5-5-2-8-1.5v14c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5v-14c-3-.5-6 0-8 1.5Z"/><path d="M12 6v14"/>',
-  landmark: '<path d="M3 21h18M4 10h16M12 3l8 5H4l8-5Z"/><path d="M6 10v8M10 10v8M14 10v8M18 10v8"/>',
-};
-const icon = (n, cls = 'i') => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n]}</svg>`;
-function hydrateIcons(root = document) {
-  root.querySelectorAll('svg[data-i]').forEach(s => { s.setAttribute('viewBox', '0 0 24 24'); s.setAttribute('aria-hidden', 'true'); s.innerHTML = ICONS[s.dataset.i]; });
-}
-document.querySelectorAll('[data-logo]').forEach(el => el.innerHTML =
-  '<svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 7.5 12 4l8 3.5-8 3.5-8-3.5Z" fill="#fff"/><path d="M7 10v4.5c1.4 1.3 3 2 5 2s3.6-.7 5-2V10" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="20" cy="13" r="1.6" fill="#7B8CFF"/></svg>');
+// ---------- Data contoh ----------
+const NOW = new Date(2026, 10, 16, 10, 25); // Senin, 16 Nov 2026, 10.25 WIB
 
-/* ---------- Avatars ---------- */
-function avatar(el) {
-  const name = el.dataset.avatar, bg = el.dataset.bg || 'e5e7eb';
-  const init = name.split(' ').map(w => w[0]).slice(0, 2).join('');
-  el.textContent = init;
-  const img = new Image();
-  img.alt = ''; img.width = 40; img.height = 40;
-  img.onload = () => { el.textContent = ''; el.appendChild(img); };
-  img.src = `https://api.dicebear.com/9.x/notionists/svg?seed=${encodeURIComponent(name)}&backgroundColor=${bg}`;
-  img.style.cssText = 'width:100%;height:100%';
-}
-
-/* ---------- Sample data (dates relative to today) ---------- */
-const NOW = (() => { const d = new Date(); d.setHours(10, 40, 0, 0); return d; })(); // demo clock: mid-morning
-const dayOffset = (n, h = 23, m = 59) => { const d = new Date(NOW); d.setDate(d.getDate() + n); d.setHours(h, m, 0, 0); return d; };
-
-const SUBJ = {
-  mat: { name: 'Matematika', c: '#0B7FB0', i: 'sigma' },
-  fis: { name: 'Fisika', c: '#7A55D6', i: 'atom' },
-  kim: { name: 'Kimia', c: '#0E8F7E', i: 'flask' },
-  bio: { name: 'Biologi', c: '#3D8B37', i: 'leaf' },
-  ing: { name: 'Bahasa Inggris', c: '#C4720E', i: 'globe' },
-  ind: { name: 'Bahasa Indonesia', c: '#C93D7E', i: 'book' },
-  sej: { name: 'Sejarah', c: '#8A6440', i: 'landmark' },
+const COURSES = {
+  std: { name: 'Struktur Data', icon: 'i-tree', c: 'var(--c-std)', t: 'var(--c-std-t)', done: 10, total: 14, next: 'Modul 11 · Pohon biner', you: 88, cls: 79 },
+  bsd: { name: 'Basis Data', icon: 'i-db', c: 'var(--c-bsd)', t: 'var(--c-bsd-t)', done: 9, total: 14, next: 'Modul 10 · Normalisasi 3NF', you: 84, cls: 81 },
+  sta: { name: 'Statistika', icon: 'i-stat', c: 'var(--c-sta)', t: 'var(--c-sta-t)', done: 8, total: 12, next: 'Modul 9 · Uji hipotesis', you: 76, cls: 72 },
+  dai: { name: 'Desain Antarmuka', icon: 'i-pen', c: 'var(--c-dai)', t: 'var(--c-dai-t)', done: 11, total: 12, next: 'Modul 12 · Uji usabilitas', you: 91, cls: 83 },
+  bia: { name: 'Bahasa Inggris Akademik', icon: 'i-lang', c: 'var(--c-bia)', t: 'var(--c-bia-t)', done: 6, total: 10, next: 'Modul 7 · Argumentative essay', you: 87, cls: 85 },
 };
-const TEACHERS = {
-  mat: { name: 'Pak Hendra Wijaya', bg: 'c9dcff' },
-  fis: { name: 'Bu Ratna Sari', bg: 'e3d8ff' },
-  kim: { name: 'Pak Dimas Prasetyo', bg: 'c8efe6' },
-  ing: { name: 'Ms. Anisa Rahma', bg: 'ffe2bf' },
-  ind: { name: 'Bu Lestari Ningsih', bg: 'ffd6e8' },
-  bio: { name: 'Bu Fitri Handayani', bg: 'd5f0cf' },
-};
+const LAST_SEM_AVG = 83.1;
+const ATTENDANCE = { present: 31, total: 33 };
 
 const SCHEDULE = [
-  { s: 'mat', title: 'Turunan fungsi trigonometri', start: [7, 30], end: [9, 0], room: 'Kelas live · 11 IPA 2' },
-  { s: 'fis', title: 'Dinamika rotasi dan momen inersia', start: [10, 0], end: [11, 30], room: 'Kelas live · 11 IPA 2' },
-  { s: 'kim', title: 'Praktikum virtual: titrasi asam-basa', start: [13, 0], end: [14, 30], room: 'Lab virtual' },
-  { s: 'ing', title: 'Analytical exposition text', start: [15, 30], end: [16, 30], room: 'Kelas live · 11 IPA 2' },
+  { course: 'sta', start: '07.30', end: '09.10', topic: 'Pertemuan 11 · Distribusi sampling', lect: 'Dr. Sari Wulandari', mode: 'Kuliah daring' },
+  { course: 'std', start: '10.00', end: '11.40', topic: 'Pertemuan 11 · Pohon biner dan traversal', lect: 'Budi Santoso, M.Kom.', mode: 'Kuliah daring', joined: 34 },
+  { course: 'bsd', start: '13.00', end: '14.40', topic: 'Praktikum 6 · Normalisasi 3NF', lect: 'Rina Kusuma, M.T.', mode: 'Praktikum' },
+  { course: 'bia', start: '15.30', end: '16.30', topic: 'Diskusi kelompok · Essay outline', lect: 'Andi Wijaya, M.A.', mode: 'Diskusi' },
 ];
 
-const SEED_TASKS = [
-  { id: 't1', s: 'fis', title: 'Latihan soal Hukum Newton II', kind: '15 soal pilihan ganda', due: dayOffset(-1, 20, 0) },
-  { id: 't2', s: 'kim', title: 'Laporan praktikum titrasi asam-basa', kind: 'Laporan · PDF', due: dayOffset(0, 23, 59) },
-  { id: 't3', s: 'mat', title: 'Kuis turunan fungsi trigonometri', kind: '10 soal · 30 menit', due: dayOffset(1, 20, 0) },
-  { id: 't4', s: 'ind', title: 'Esai argumentasi tentang transportasi umum', kind: 'Esai · 600–800 kata', due: dayOffset(3, 23, 59) },
-  { id: 't5', s: 'bio', title: 'Rangkuman bab sistem imun', kind: 'Rangkuman · DOCX', due: dayOffset(5, 23, 59) },
+const TASKS = [
+  { id: 't1', course: 'bsd', title: 'Laporan Praktikum 5: Normalisasi', kind: 'Laporan', due: new Date(2026, 10, 16, 23, 59) },
+  { id: 't2', course: 'std', title: 'Kuis 6: Pohon dan heap', kind: 'Kuis online', due: new Date(2026, 10, 17, 9, 0) },
+  { id: 't3', course: 'sta', title: 'Tugas 3: Uji hipotesis dua sampel', kind: 'Tugas', due: new Date(2026, 10, 19, 23, 59) },
+  { id: 't4', course: 'dai', title: 'Wireframe aplikasi perpustakaan', kind: 'Proyek', due: new Date(2026, 10, 23, 12, 0) },
+  { id: 't5', course: 'bia', title: 'Essay 2: Argumentative writing', kind: 'Essay', due: new Date(2026, 10, 25, 23, 59) },
 ];
 
-const GRADES = [ // this month's graded work
-  { s: 'fis', title: 'Ulangan harian: gerak parabola', score: 92, d: -2 },
-  { s: 'mat', title: 'Kuis limit fungsi', score: 88, d: -4 },
-  { s: 'sej', title: 'Esai: Sumpah Pemuda 1928', score: 90, d: -6 },
-  { s: 'kim', title: 'Tugas stoikiometri', score: 78, d: -9 },
-  { s: 'ing', title: 'Reading quiz: narrative text', score: 85, d: -11 },
-];
-const MONTHS = [ // earlier months' averages
-  { m: 'Jun', v: 80.4 }, { m: 'Jul', v: 82.1 }, { m: 'Agu', v: 81.3 }, { m: 'Sep', v: 84.0 }, { m: 'Okt', v: 83.2 },
-];
-const SEMESTER_PREV = [83.0, 84.0, 86.5, 81.0, 85.5, 79.0, 87.0, 84.5]; // graded work earlier this semester
-
-const COURSES = [
-  { s: 'mat', title: 'UTBK: Penalaran Matematika', done: 34, total: 50, next: 'Peluang kejadian bersyarat', dur: '18 menit' },
-  { s: 'fis', title: 'Fisika 11 · Semester 1', done: 22, total: 28, next: 'Elastisitas dan Hukum Hooke', dur: '24 menit' },
-  { s: 'ing', title: 'Reading untuk UTBK', done: 15, total: 20, next: 'Finding the main idea', dur: '12 menit' },
-  { s: 'kim', title: 'Stoikiometri & Larutan', done: 9, total: 24, next: 'Konsentrasi larutan (molaritas)', dur: '20 menit' },
+const RECENT = [
+  { course: 'std', title: 'Kuis 5: Linked list', date: 'Kam, 12 Nov', score: 92 },
+  { course: 'bsd', title: 'Laporan Praktikum 4: ERD', date: 'Sel, 10 Nov', score: 85 },
+  { course: 'sta', title: 'Tugas 2: Estimasi interval', date: 'Jum, 6 Nov', score: 74 },
 ];
 
-const STUDY = [1.5, 2.0, 1.0, 2.5, 1.5, 2.0, 1.0]; // hours, last 7 days ending today
-const LESSONS_WEEK = 18;
-const STREAK = 9, BEST = 21, TARGET = 14;
+// ---------- Helpers ----------
+const $ = (s) => document.querySelector(s);
+const fmt1 = (n) => n.toFixed(1).replace('.', ',');
+const icon = (id, size = 18, sw = 1.8) => `<svg width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#${id}"/></svg>`;
+const HARI = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+const BULAN = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+const hhmm = (d) => String(d.getHours()).padStart(2, '0') + '.' + String(d.getMinutes()).padStart(2, '0');
+const toMin = (s) => { const [h, m] = s.split('.').map(Number); return h * 60 + m; };
+const nowMin = NOW.getHours() * 60 + NOW.getMinutes();
+const letter = (s) => s >= 85 ? 'A' : s >= 80 ? 'AB' : s >= 75 ? 'B' : s >= 70 ? 'BC' : 'C';
+const AV_BG = ['#FFE4D9', '#E3F6EF', '#E9F0FF', '#FCE9F2', '#EFEAFE', '#FDF1DC', '#E2F4F8'];
+const initials = (n) => n.replace(/^(Dr\.|Prof\.)\s*/, '').split(/[\s,]+/).slice(0, 2).map((w) => w[0]).join('');
+function avatar(name, size, bg) {
+  const url = `https://api.dicebear.com/9.x/notionists/svg?seed=${encodeURIComponent(name)}&backgroundColor=transparent`;
+  return `<span class="avatar" style="width:${size}px;height:${size}px;background:${bg}"><img src="${url}" alt="" width="${size}" height="${size}" onerror="this.parentNode.textContent='${initials(name)}'"></span>`;
+}
+document.querySelectorAll('[data-avatar]').forEach((el) => {
+  const n = el.dataset.avatar, s = parseInt(el.style.width);
+  el.outerHTML = avatar(n, s, el.style.background);
+});
 
-/* ---------- State ---------- */
-const KEY = 'kelasku-submitted-v1';
-let submitted = JSON.parse(localStorage.getItem(KEY) || '[]');
-let filter = 'all';
-const save = () => localStorage.setItem(KEY, JSON.stringify(submitted));
-
-/* ---------- Helpers ---------- */
-const fmt = (n, d = 1) => n.toLocaleString('id-ID', { minimumFractionDigits: d, maximumFractionDigits: d });
-const hhmm = ([h, m]) => `${String(h).padStart(2, '0')}.${String(m).padStart(2, '0')}`;
-const dayName = d => d.toLocaleDateString('id-ID', { weekday: 'long' });
-const shortDate = d => d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
-const startOfDay = d => { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; };
-const daysBetween = (a, b) => Math.round((startOfDay(b) - startOfDay(a)) / 864e5);
-const chip = (s, size = '') => `<span class="chip-ic" style="--c:${SUBJ[s].c}${size}">${icon(SUBJ[s].i)}</span>`;
-const avg = a => a.reduce((x, y) => x + y, 0) / a.length;
+// ---------- State ----------
+const KEY = 'kelasku.submitted.v1';
+let submitted = {};
+try { submitted = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(submitted)); } catch (e) {} };
+let filter = 'pending';
 
 function dueInfo(due) {
-  const dd = daysBetween(NOW, due), t = `${String(due.getHours()).padStart(2, '0')}.${String(due.getMinutes()).padStart(2, '0')}`;
-  if (due < NOW) return { cls: 'bad', label: `Terlambat ${Math.max(1, -dd)} hari`, when: `${dayName(due)}, ${shortDate(due)} · ${t}`, group: 'late' };
-  if (dd === 0) return { cls: 'warn', label: `Hari ini, ${t}`, when: 'Sisa ' + Math.round((due - NOW) / 36e5) + ' jam', group: 'soon' };
-  if (dd === 1) return { cls: 'warn', label: `Besok, ${t}`, when: dayName(due) + ', ' + shortDate(due), group: 'soon' };
-  return { cls: 'mute', label: `${dd} hari lagi`, when: dayName(due) + ', ' + shortDate(due), group: 'later' };
+  const h = (due - NOW) / 36e5;
+  const label = h < 24 && due.getDate() === NOW.getDate() ? `Hari ini ${hhmm(due)}`
+    : h < 48 && due.getDate() === NOW.getDate() + 1 ? `Besok ${hhmm(due)}`
+    : `${HARI[due.getDay()]}, ${due.getDate()} ${BULAN[due.getMonth()]}`;
+  const left = h < 24 ? `${Math.floor(h)} jam lagi` : `${Math.ceil(h / 24)} hari lagi`;
+  const cls = h < 24 ? 'hot' : h < 96 ? 'soon' : 'calm';
+  return { label, left, cls, hours: h };
 }
 
-/* ---------- Render ---------- */
-function renderHeader() {
-  document.querySelector('[data-today]').textContent = NOW.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-  const h = NOW.getHours();
-  const g = h < 11 ? 'Selamat pagi' : h < 15 ? 'Selamat siang' : h < 18 ? 'Selamat sore' : 'Selamat malam';
-  document.querySelector('[data-greet]').textContent = `${g}, Nadia`;
-}
+// ---------- Render ----------
+function renderKpis() {
+  const pending = TASKS.filter((t) => !submitted[t.id]);
+  const urgent = pending.filter((t) => dueInfo(t.due).hours < 24).length;
+  $('#kPending').textContent = pending.length;
+  $('#kPendingMeta').innerHTML = urgent
+    ? `<span class="chg hot">${urgent} tugas</span><span>tenggat &lt; 24 jam</span>`
+    : `<span class="mono">Tidak ada tenggat dekat</span>`;
 
-function renderHero() {
-  const total = STUDY.reduce((a, b) => a + b, 0);
-  document.querySelector('[data-hours]').innerHTML = `${fmt(total)} <small>dari target ${TARGET} jam</small>`;
-  document.querySelector('[data-goal]').style.width = Math.min(100, total / TARGET * 100) + '%';
-  document.querySelector('[data-lessons-week]').textContent = LESSONS_WEEK;
-  document.querySelector('[data-streak-short]').textContent = `${STREAK} hari`;
-  document.querySelector('[data-avg-day]').textContent = `${fmt(total / 7)} jam`;
-  const max = 3;
-  document.querySelector('[data-week]').innerHTML = STUDY.map((v, i) => {
-    const d = dayOffset(i - 6);
-    const letter = d.toLocaleDateString('id-ID', { weekday: 'short' }).slice(0, 3);
-    const today = i === 6;
-    return `<div class="col${today ? ' today' : ''}"><div class="bar" style="height:${Math.round(v / max * 96)}px">${today ? `<span class="v">${fmt(v)} j</span>` : ''}</div><span>${today ? 'Hari ini' : letter}</span></div>`;
-  }).join('');
-  const pas = dayOffset(16, 7, 30);
-  document.querySelector('[data-pas]').textContent = `Mulai ${pas.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' })}, 16\u00a0hari lagi`;
-  document.querySelector('[data-pas-bar]').style.width = (5 / 8 * 100) + '%';
-  document.querySelector('[data-pas-ready]').textContent = 'Kisi-kisi 5 dari 8 dibaca';
-}
+  const list = Object.values(COURSES);
+  const avg = list.reduce((s, c) => s + c.you, 0) / list.length;
+  $('#kAvg').innerHTML = `${fmt1(avg)}<small>/100</small>`;
+  const d = avg - LAST_SEM_AVG;
+  $('#kAvgMeta').innerHTML = `<span class="chg up">+${fmt1(d)}</span><span>vs semester lalu</span>`;
 
-function pendingTasks() { return SEED_TASKS.filter(t => !submitted.includes(t.id)).sort((a, b) => a.due - b.due); }
+  $('#kAtt').innerHTML = `${Math.round(ATTENDANCE.present / ATTENDANCE.total * 100)}<small>%</small>`;
+  $('#kAttMeta').innerHTML = `<span class="mono">${ATTENDANCE.present} dari ${ATTENDANCE.total} pertemuan</span>`;
 
-function renderKPIs() {
-  const p = pendingTasks();
-  const late = p.filter(t => dueInfo(t.due).group === 'late').length;
-  const soon = p.filter(t => dueInfo(t.due).group === 'soon').length;
-  document.querySelector('[data-kpi-tasks]').innerHTML = `${p.length} <small>tugas</small>`;
-  document.querySelector('[data-kpi-task-pill]').innerHTML = late ? `<span class="pill bad">${late} terlambat</span>` : p.length ? '' : '<span class="pill ok">Semua beres</span>';
-  const later = p.length - late - soon;
-  const cls = { late: 'bad', soon: 'warn', later: 'mute' };
-  document.querySelector('[data-kpi-seg]').innerHTML = p.map(t => `<i class="${cls[dueInfo(t.due).group]}"></i>`).join('') || '<i class="mute"></i>';
-  document.querySelector('[data-kpi-task-foot]').innerHTML = `<div class="legend num"><span><i style="background:var(--bad)"></i>${late} terlambat</span><span><i style="background:#F0B44C"></i>${soon} segera</span><span><i style="background:#E6E6E3"></i>${later} nanti</span></div>`;
-  document.querySelectorAll('[data-pending-count]').forEach(el => { el.textContent = p.length; el.style.display = p.length ? '' : 'none'; });
+  const done = list.reduce((s, c) => s + c.done, 0), total = list.reduce((s, c) => s + c.total, 0);
+  $('#kProg').innerHTML = `${Math.round(done / total * 100)}<small>%</small>`;
+  $('#kProgMeta').innerHTML = `<span class="mono">${done} dari ${total} modul</span>`;
 
-  const all = [...SEMESTER_PREV, ...GRADES.map(g => g.score)];
-  const semAvg = avg(all), prevAvg = avg(SEMESTER_PREV);
-  const delta = semAvg - prevAvg;
-  document.querySelector('[data-kpi-avg]').innerHTML = `${fmt(semAvg)} <small>/ 100</small>`;
-  document.querySelector('[data-kpi-avg-foot]').innerHTML = `<span class="pill ${delta >= 0 ? 'ok' : 'bad'} nodot num">${delta >= 0 ? '▲' : '▼'} ${fmt(Math.abs(delta))}</span><span>sejak awal bulan</span>`;
-  // sparkline from running average
-  const pts = all.map((_, i) => avg(all.slice(0, i + 1)));
-  const lo = Math.min(...pts) - .5, hi = Math.max(...pts) + .5;
-  const xy = pts.map((v, i) => [i * (200 / (pts.length - 1)), 44 - (v - lo) / (hi - lo) * 40]);
-  const d = xy.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' ');
-  document.querySelector('[data-kpi-count]').textContent = `${all.length} penilaian`;
-  document.querySelector('[data-spark]').innerHTML = `<defs><linearGradient id="sg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3D5AFE" stop-opacity=".18"/><stop offset="1" stop-color="#3D5AFE" stop-opacity="0"/></linearGradient></defs><path d="${d} L200 48 L0 48Z" fill="url(#sg)"/><path d="${d}" fill="none" stroke="#3D5AFE" stroke-width="2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`;
+  document.querySelectorAll('[data-count="pending"]').forEach((el) => { el.textContent = pending.length; el.hidden = !pending.length; });
+  document.querySelectorAll('[data-count="sent"]').forEach((el) => el.textContent = TASKS.length - pending.length);
 }
 
 function renderSchedule() {
-  const at = ([h, m]) => { const d = new Date(NOW); d.setHours(h, m, 0, 0); return d; };
-  let done = 0;
-  const html = SCHEDULE.map(c => {
-    const st = at(c.start), en = at(c.end), sub = SUBJ[c.s], t = TEACHERS[c.s];
-    const state = NOW >= en ? 'done' : NOW >= st ? 'now' : 'next';
-    if (state === 'done') done++;
-    let act;
-    if (state === 'done') act = `<span class="pill ok">Selesai</span><button class="btn">${icon('play', 'i sm')}Rekaman</button>`;
-    else if (state === 'now') act = `<span class="pill live num">Live · sisa ${Math.round((en - NOW) / 6e4)} mnt</span><button class="btn primary">${icon('video', 'i sm')}Gabung kelas</button>`;
-    else { const mins = Math.round((st - NOW) / 6e4); act = `<span class="pill mute num">Mulai ${mins >= 60 ? Math.floor(mins / 60) + ' j ' + (mins % 60 ? (mins % 60) + ' mnt' : '') : mins + ' mnt'} lagi</span><button class="btn">Pengingat</button>`; }
-    return `<div class="slot ${state}">
-      <div class="time num">${hhmm(c.start)}<span>${hhmm(c.end)}</span></div>
-      <div class="body">
-        ${chip(c.s)}
-        <div class="info"><b>${sub.name}: ${c.title}</b>
-          <div class="meta"><span class="av sm" data-avatar="${t.name}" data-bg="${t.bg}"></span>${t.name}</div></div>
-        <div class="act">${act}</div>
-      </div></div>`;
+  const remaining = SCHEDULE.filter((s) => toMin(s.end) > nowMin).length;
+  $('#schedSub').textContent = `${SCHEDULE.length} kelas · ${remaining} tersisa`;
+  $('#sched').innerHTML = SCHEDULE.map((s, i) => {
+    const c = COURSES[s.course];
+    const st = toMin(s.start), en = toMin(s.end);
+    const state = nowMin >= en ? 'done' : nowMin >= st ? 'live' : 'later';
+    const time = `<div class="time mono">${s.start}<span>${s.end}</span></div>`;
+    if (state === 'live') {
+      const pct = Math.round((nowMin - st) / (en - st) * 100);
+      const people = ['Dimas Arya', 'Salsa Ramadhani', 'Kevin Halim', 'Putri Ayu'];
+      return `<li class="slot live">${time}<div class="slot-body live">
+        <div class="live-top"><span class="live-badge"><span class="live-dot"></span>Berlangsung</span><span class="mono left">${en - nowMin} menit lagi</span></div>
+        <div><div class="slot-info c" style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.66)"><span class="cdot" style="background:${c.c}"></span>${c.name} · ${s.mode}</div>
+          <h3 style="margin-top:6px">${s.topic.split(' · ')[1]}</h3>
+          <p class="topic">${s.topic.split(' · ')[0]} · ${s.lect}</p></div>
+        <div><div class="live-bar"><i style="width:${pct}%"></i></div>
+          <div class="live-bar-meta mono"><span>Mulai ${s.start}</span><span class="mid">${pct}% berjalan</span><span>Selesai ${s.end}</span></div></div>
+        <div class="live-foot">
+          <div class="stack">${people.map((p, k) => avatar(p, 28, AV_BG[k + 1])).join('')}<span class="more">+${s.joined - people.length} mahasiswa</span></div>
+          <div class="btns"><button class="btn btn-glass btn-lg">Materi</button><button class="btn btn-light btn-lg">${icon('i-video', 16)}Gabung kelas</button></div>
+        </div></div></li>`;
+    }
+    const right = state === 'done'
+      ? `<a class="btn btn-ghost" href="#">${icon('i-play', 15)}Rekaman</a>`
+      : `<span class="pill later">${Math.floor((st - nowMin) / 60)} jam ${(st - nowMin) % 60} mnt lagi</span>`;
+    return `<li class="slot ${state}">${time}<div class="slot-body">
+      <div class="slot-info">
+        <div class="c"><span class="cdot" style="background:${c.c}"></span>${c.name} · ${state === 'done' ? '<span style="color:var(--ok)">Hadir</span>' : s.mode}</div>
+        <h3>${s.topic.split(' · ')[1]}</h3>
+        <div class="lect">${avatar(s.lect, 22, AV_BG[i])}${s.lect}</div>
+      </div>${right}</div></li>`;
   }).join('');
-  document.querySelector('[data-sched]').innerHTML = html;
-  document.querySelector('[data-sched-sub]').textContent = `${SCHEDULE.length} kelas · ${done} selesai`;
-  document.querySelectorAll('[data-sched] [data-avatar]').forEach(avatar);
 }
 
 function renderTasks() {
-  const p = pendingTasks();
-  const groups = { all: p, late: p.filter(t => dueInfo(t.due).group === 'late'), soon: p.filter(t => dueInfo(t.due).group === 'soon') };
-  const tabs = [['all', 'Semua'], ['soon', 'Segera'], ['late', 'Terlambat']];
-  document.querySelector('[data-tabs]').innerHTML = tabs.map(([k, l]) =>
-    `<button role="tab" aria-selected="${filter === k}" data-f="${k}">${l}<span class="n num">${groups[k].length}</span></button>`).join('');
-  const nextDue = p.find(t => t.due > NOW);
-  document.querySelector('[data-task-sub]').textContent = p.length ? (nextDue ? `Tenggat terdekat: ${nextDue.title.split(' ').slice(0, 3).join(' ')}…` : '') : 'Semua tugas sudah dikumpulkan';
-  document.querySelector('[data-task-sub]').textContent = p.length ? `${p.length} tugas dari ${new Set(p.map(t => t.s)).size} mata pelajaran` : 'Semua tugas sudah dikumpulkan';
-  const list = groups[filter];
-  document.querySelector('[data-tasks]').innerHTML = list.length ? list.map(t => {
-    const d = dueInfo(t.due);
-    return `<div class="task">${chip(t.s)}
-      <div class="info"><b>${t.title}</b><div class="meta"><span>${SUBJ[t.s].name}</span><span aria-hidden="true">·</span><span>${t.kind}</span></div></div>
-      <div class="due"><span class="pill ${d.cls} num">${d.label}</span><button class="btn${d.group === 'late' ? ' primary' : ''}" data-submit="${t.id}" aria-label="Kumpulkan ${t.title}">${icon('upload', 'i sm')}Kumpulkan</button></div>
-    </div>`;
-  }).join('') : `<div class="empty"><div class="em">${icon('check-circle')}</div><b>${filter === 'all' ? 'Semua tugas sudah dikumpulkan' : 'Tidak ada tugas di sini'}</b>${filter === 'all' ? 'Tugas baru dari guru akan muncul di sini.' : 'Coba lihat tab Semua.'}</div>`;
+  document.querySelectorAll('.seg button').forEach((b) => b.setAttribute('aria-selected', b.dataset.filter === filter));
+  const rows = TASKS.filter((t) => filter === 'pending' ? !submitted[t.id] : submitted[t.id]);
+  if (!rows.length) {
+    $('#tasks').innerHTML = filter === 'pending'
+      ? `<li class="empty"><div class="ic">${icon('i-check', 26, 2.2)}</div><b>Semua tugas sudah terkumpul</b>Tugas baru akan muncul di sini</li>`
+      : `<li class="empty"><div class="ic" style="background:var(--surface-2);color:var(--text-3)">${icon('i-clip', 24)}</div><b>Belum ada tugas terkumpul</b>Minggu ini</li>`;
+    return;
+  }
+  $('#tasks').innerHTML = rows.map((t) => {
+    const c = COURSES[t.course], d = dueInfo(t.due);
+    const end = submitted[t.id]
+      ? `<span class="due sent">Terkumpul ${submitted[t.id]}</span><button class="btn btn-ghost" data-undo="${t.id}">Batalkan</button>`
+      : `<span class="due ${d.cls}">${d.left}</span><button class="btn ${d.cls === 'hot' ? 'btn-dark' : 'btn-ghost'}" data-submit="${t.id}">Kumpulkan</button>`;
+    return `<li class="task">
+      <span class="task-chip" style="background:${c.t};color:${c.c}">${icon(c.icon, 19)}</span>
+      <div class="task-info"><h3>${t.title}</h3>
+        <div class="m"><span>${c.name}</span><span class="sep">·</span><span class="mono">${d.label}</span></div></div>
+      <div class="task-end">${end}</div></li>`;
+  }).join('');
 }
 
-function renderGrades() {
-  const cur = avg(GRADES.map(g => g.score));
-  const series = [...MONTHS, { m: NOW.toLocaleDateString('id-ID', { month: 'short' }).replace('.', ''), v: cur, cur: true }];
-  const lo = 60, hi = 100, H = 158;
-  const lines = [100, 90, 80, 70, 60].map(v => `<div class="gl" style="top:${(hi - v) / (hi - lo) * H}px"><span class="num">${v}</span></div>`).join('');
-  const bars = series.map(s => {
-    const h = Math.round((s.v - lo) / (hi - lo) * H);
-    return `<div class="b${s.cur ? ' cur' : ''}" style="--h:${h}px">
-      ${s.cur ? `<span class="tip num" style="bottom:${h}px">${fmt(s.v)}</span>` : `<span class="hv num" style="bottom:${h}px">${fmt(s.v)}</span>`}
-      <i style="height:${h}px" title="${s.m}: ${fmt(s.v)}"></i><span class="x">${s.m}</span></div>`;
-  }).join('');
-  document.querySelector('[data-chart]').innerHTML = lines + `<div class="bars" role="img" aria-label="Rata-rata nilai per bulan: ${series.map(s => s.m + ' ' + fmt(s.v)).join(', ')}">${bars}</div>`;
-  document.querySelector('[data-grades]').innerHTML = GRADES.slice(0, 3).map(g => {
-    const d = dayOffset(g.d);
-    return `<div class="g-row">${chip(g.s)}<div class="info"><b>${g.title}</b><span>${SUBJ[g.s].name} · ${shortDate(d)}</span></div><span class="score num">${g.score}</span></div>`;
+function renderChart() {
+  const ids = Object.keys(COURSES);
+  const list = ids.map((k) => COURSES[k]);
+  const best = list.reduce((a, b) => (b.you > a.you ? b : a));
+  $('#gBest').innerHTML = `${best.you}<small> ${best.name.split(' ')[0]}</small>`;
+  $('#gAbove').innerHTML = `${list.filter((c) => c.you > c.cls).length}<small> dari ${list.length} kursus</small>`;
+
+  const el = $('#chart');
+  const W = el.clientWidth, H = el.clientHeight, padL = 30, padB = 28, padT = 26;
+  const iw = W - padL, ih = H - padB - padT;
+  const y = (v) => padT + ih - (v / 100) * ih;
+  const gw = iw / ids.length;
+  const bw = Math.max(12, Math.min(28, gw * 0.24));
+  const short = { std: 'Struktur Data', bsd: 'Basis Data', sta: 'Statistika', dai: 'Desain', bia: 'B. Inggris' };
+  let s = '';
+  [0, 25, 50, 75, 100].forEach((v) => {
+    s += `<line x1="${padL}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="${v ? '#EFEFED' : '#DEDEDB'}" ${v ? 'stroke-dasharray="2 4"' : ''}/>`;
+    s += `<text x="0" y="${y(v) + 4}" font-family="Geist Mono, monospace" font-size="11" fill="#6F6F6A">${v}</text>`;
+  });
+  ids.forEach((k, i) => {
+    const c = COURSES[k];
+    const cx = padL + gw * i + gw / 2;
+    const r = bw / 2;
+    const gx = cx - bw - 2, yx = cx + 2;
+    s += `<g class="bar" data-k="${k}">`;
+    s += `<rect x="${gx}" y="${y(c.cls)}" width="${bw}" height="${y(0) - y(c.cls)}" rx="${r}" fill="#E4E4E1"/>`;
+    s += `<rect x="${yx}" y="${y(c.you)}" width="${bw}" height="${y(0) - y(c.you)}" rx="${r}" fill="${c.c}"/>`;
+    s += `<text x="${yx + bw / 2}" y="${y(c.you) - 8}" text-anchor="middle" font-family="Geist, sans-serif" font-weight="600" font-size="12" fill="#121212">${c.you}</text>`;
+    s += `<text x="${cx}" y="${H - 6}" text-anchor="middle" font-family="Geist, sans-serif" font-size="12" fill="#63635F">${W < 480 ? k.toUpperCase() : short[k]}</text>`;
+    s += `<rect class="bar-hit" x="${padL + gw * i}" y="${padT}" width="${gw}" height="${ih}" fill="transparent"/>`;
+    s += `</g>`;
+  });
+  el.querySelector('svg')?.remove();
+  el.insertAdjacentHTML('afterbegin', `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Nilai kamu dibandingkan rata-rata kelas per kursus">${s}</svg>`);
+  const tip = $('#tip');
+  el.querySelectorAll('.bar').forEach((g) => {
+    g.addEventListener('mouseenter', () => {
+      const c = COURSES[g.dataset.k], i = ids.indexOf(g.dataset.k);
+      el.querySelectorAll('.bar').forEach((o) => o.style.opacity = o === g ? 1 : .45);
+      const diff = c.you - c.cls;
+      tip.innerHTML = `<b>${c.name}</b><br>Kamu ${c.you} · Kelas ${c.cls}<br><span>${diff >= 0 ? '+' : '−'}${Math.abs(diff)} poin dari rata-rata · ${letter(c.you)}</span>`;
+      let x = padL + gw * i + gw / 2;
+      x = Math.min(Math.max(x, 100), W - 100);
+      tip.style.left = x + 'px'; tip.style.top = (y(Math.max(c.you, c.cls)) - 26) + 'px'; tip.style.opacity = 1;
+    });
+    g.addEventListener('mouseleave', () => { el.querySelectorAll('.bar').forEach((o) => o.style.opacity = 1); tip.style.opacity = 0; });
+  });
+
+  $('#recent').innerHTML = RECENT.map((r) => {
+    const c = COURSES[r.course];
+    return `<div class="recent-row"><div class="n"><span class="cdot" style="background:${c.c}"></span><span>${r.title}</span></div>
+      <span class="d mono">${r.date}</span>
+      <div class="s"><span class="letter" style="margin-right:8px">${letter(r.score)}</span>${r.score}</div></div>`;
   }).join('');
 }
 
 function renderCourses() {
-  const done = COURSES.reduce((a, c) => a + c.done, 0), tot = COURSES.reduce((a, c) => a + c.total, 0);
-  document.querySelector('[data-course-sub]').textContent = `${done} dari ${tot} materi selesai`;
-  document.querySelector('[data-courses]').innerHTML = COURSES.map(c => {
-    const pct = Math.round(c.done / c.total * 100), C = 2 * Math.PI * 20;
-    return `<article class="course">
-      <div class="top-r">${chip(c.s)}<div class="info"><b>${c.title}</b><span class="num">${c.done} dari ${c.total} materi</span></div>
-        <div class="ring" role="img" aria-label="${pct}% selesai"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="#ECECEA" stroke-width="5"/><circle cx="24" cy="24" r="20" fill="none" stroke="var(--text)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(pct / 100 * C).toFixed(1)} ${C.toFixed(1)}"/></svg><b class="num">${pct}%</b></div></div>
-      <div class="next"><div>${c.next}<span>Materi ${c.done + 1} · ${c.dur}</span></div><button class="play" aria-label="Lanjutkan ${c.next}">${icon('play', 'i sm')}</button></div>
-    </article>`;
+  $('#courses').innerHTML = Object.values(COURSES).map((c) => {
+    const pct = Math.round(c.done / c.total * 100);
+    return `<li class="course">
+      <span class="task-chip" style="background:${c.t};color:${c.c}">${icon(c.icon, 19)}</span>
+      <div class="course-info">
+        <div class="course-row"><h3>${c.name}</h3><span class="pct">${pct}%</span></div>
+        <p class="next">Berikutnya: ${c.next}</p>
+        <div class="prog" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Progres ${c.name}"><i style="width:${pct}%;background:${c.c}"></i></div>
+        <div class="mods mono"><span>${c.done} dari ${c.total} modul</span><span>Nilai ${c.you}</span></div>
+      </div></li>`;
   }).join('');
 }
 
-function renderAll() { renderKPIs(); renderSchedule(); renderTasks(); }
+function renderAll() { renderKpis(); renderSchedule(); renderTasks(); renderChart(); renderCourses(); }
 
-/* ---------- Interactions ---------- */
-const scrim = document.querySelector('[data-scrim]'), form = document.querySelector('[data-form]');
-const fileIn = document.querySelector('[data-file]'), fileName = document.querySelector('[data-file-name]'), err = document.querySelector('[data-err]'), drop = document.querySelector('[data-drop]');
-let current = null, lastFocus = null;
+// ---------- Interactions ----------
+let current = null, file = null;
+const scrim = $('#scrim');
 function openModal(id) {
-  current = SEED_TASKS.find(t => t.id === id); lastFocus = document.activeElement;
-  document.querySelector('[data-m-sub]').textContent = `${SUBJ[current.s].name} · ${current.title}`;
-  fileIn.value = ''; fileName.textContent = 'Pilih file jawaban'; drop.classList.remove('has'); err.classList.remove('show'); form.querySelector('textarea').value = '';
-  scrim.classList.add('open'); setTimeout(() => drop.focus(), 30);
+  current = TASKS.find((t) => t.id === id);
+  const c = COURSES[current.course], d = dueInfo(current.due);
+  $('#mChip').style.cssText = `background:${c.t};color:${c.c}`;
+  $('#mChip').innerHTML = icon(c.icon, 19);
+  $('#mTitle').textContent = current.title;
+  $('#mMeta').textContent = `${c.name} · Tenggat ${d.label}`;
+  setFile(null); $('#note').value = ''; $('#err').classList.remove('show');
+  scrim.classList.add('open');
+  setTimeout(() => $('#drop').focus(), 50);
 }
-function closeModal() { scrim.classList.remove('open'); lastFocus && lastFocus.focus(); }
-drop.tabIndex = 0;
-drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileIn.click(); } });
-fileIn.addEventListener('change', () => { if (fileIn.files[0]) { fileName.textContent = fileIn.files[0].name; drop.classList.add('has'); err.classList.remove('show'); } });
-form.addEventListener('submit', e => {
+function closeModal() { scrim.classList.remove('open'); current = null; }
+function setFile(f) {
+  file = f;
+  $('#drop').style.display = f ? 'none' : '';
+  $('#fileBox').classList.toggle('show', !!f);
+  if (f) {
+    $('#fileName').textContent = f.name;
+    $('#fileSize').textContent = f.size > 1e6 ? fmt1(f.size / 1e6) + ' MB' : Math.max(1, Math.round(f.size / 1e3)) + ' KB';
+    $('#err').classList.remove('show');
+  }
+}
+$('#drop').tabIndex = 0;
+$('#drop').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('#fileInput').click(); } });
+$('#fileInput').addEventListener('change', (e) => setFile(e.target.files[0] || null));
+['dragover', 'dragenter'].forEach((ev) => $('#drop').addEventListener(ev, (e) => { e.preventDefault(); $('#drop').classList.add('drag'); }));
+['dragleave', 'drop'].forEach((ev) => $('#drop').addEventListener(ev, (e) => { e.preventDefault(); $('#drop').classList.remove('drag'); }));
+$('#drop').addEventListener('drop', (e) => setFile(e.dataTransfer.files[0] || null));
+$('#fileRemove').addEventListener('click', () => { $('#fileInput').value = ''; setFile(null); $('#fileInput').click(); });
+$('#mClose').addEventListener('click', closeModal);
+$('#mCancel').addEventListener('click', closeModal);
+scrim.addEventListener('click', (e) => { if (e.target === scrim) closeModal(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && scrim.classList.contains('open')) closeModal();
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); document.querySelector('.search input').focus(); }
+});
+$('#form').addEventListener('submit', (e) => {
   e.preventDefault();
-  if (!fileIn.files[0]) { err.classList.add('show'); return; }
-  submitted.push(current.id); save(); closeModal(); renderAll(); toast(`Tugas “${current.title}” terkirim`);
+  if (!file) { $('#err').classList.add('show'); return; }
+  submitted[current.id] = hhmm(NOW);
+  const title = current.title;
+  save(); closeModal(); renderAll();
+  toast(`${title.split(':')[0]} terkumpul`);
 });
-document.querySelector('[data-close]').onclick = closeModal;
-scrim.addEventListener('click', e => { if (e.target === scrim) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); menu.classList.remove('open'); meBtn.setAttribute('aria-expanded', 'false'); } });
-document.addEventListener('click', e => {
-  const s = e.target.closest('[data-submit]'); if (s) openModal(s.dataset.submit);
-  const f = e.target.closest('[data-f]'); if (f) { filter = f.dataset.f; renderTasks(); }
-  if (e.target.closest('a[href="#"]')) e.preventDefault();
+document.addEventListener('click', (e) => {
+  const sb = e.target.closest('[data-submit]'); if (sb) openModal(sb.dataset.submit);
+  const ub = e.target.closest('[data-undo]');
+  if (ub) { delete submitted[ub.dataset.undo]; save(); renderAll(); toast('Pengumpulan dibatalkan'); }
+  const tab = e.target.closest('[data-filter]'); if (tab) { filter = tab.dataset.filter; renderTasks(); }
 });
-const menu = document.querySelector('[data-menu]'), meBtn = document.querySelector('[data-me-btn]');
-meBtn.onclick = e => { e.stopPropagation(); const o = menu.classList.toggle('open'); meBtn.setAttribute('aria-expanded', o); };
-document.addEventListener('click', e => { if (!e.target.closest('.me')) { menu.classList.remove('open'); meBtn.setAttribute('aria-expanded', 'false'); } });
-document.querySelector('[data-reset]').onclick = () => { submitted = []; save(); filter = 'all'; renderAll(); menu.classList.remove('open'); toast('Data contoh dipulihkan'); };
-let tt; function toast(msg) { const t = document.querySelector('[data-toast]'); t.querySelector('span').textContent = msg; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2600); }
+$('#resetLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  if (confirm('Kembalikan data contoh ke kondisi awal?')) { submitted = {}; save(); filter = 'pending'; renderAll(); }
+});
+let tt;
+function toast(msg) {
+  $('#toastText').textContent = msg; $('#toast').classList.add('show');
+  clearTimeout(tt); tt = setTimeout(() => $('#toast').classList.remove('show'), 2400);
+}
+let rz; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(renderChart, 100); });
 
-hydrateIcons();
-document.querySelectorAll('.me [data-avatar]').forEach(avatar);
-renderHeader(); renderHero(); renderGrades(); renderCourses(); renderAll();
+renderAll();
+document.fonts && document.fonts.ready.then(renderChart);
 </script>
 </body>
 </html>

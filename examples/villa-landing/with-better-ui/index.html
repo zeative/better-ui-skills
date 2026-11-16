@@ -3,689 +3,696 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Villa Sawah Tegallalang · Villa 3 kamar dengan kolam pribadi di Ubud, Bali</title>
-<meta name="description" content="Villa 3 kamar tidur dengan kolam renang pribadi menghadap sawah Tegallalang, 15 menit dari pusat Ubud. Sarapan harian, staf villa, mulai Rp3.200.000 per malam.">
+<title>Villa Sawah · Villa privat tiga kamar di Sayan, Ubud</title>
+<meta name="description" content="Villa tiga kamar dengan kolam renang pribadi di tepi sawah Sayan, Ubud. Sarapan setiap pagi, untuk hingga 6 tamu.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://images.unsplash.com">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-/* Look: monochrome — warm stone canvas, black controls, sunset orange accent used sparingly. Font: Manrope. */
+/* Look: monochrome, warm stone canvas, black controls, sunset orange as a small accent.
+   Character: quiet, warm, exact. Signature: availability calendar with booked nights hatched. */
 :root{
-  --font:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  --canvas:#F5F5F4; --surface:#FFFFFF; --surface-2:#F3F2F0; --line:rgba(17,17,17,.09); --line-2:rgba(17,17,17,.16);
-  --ink:#111111; --text:#1C1917; --text-2:#57534E; --text-3:#6B6560;
+  --font:"Manrope",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --mono:"DM Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --canvas:#F5F5F4; --canvas-2:#ECEBE8; --surface:#FFFFFF; --surface-2:#F6F6F4;
+  --line:#E5E4E0; --line-2:#D6D4CF;
+  --text:#141414; --text-2:#5E5C57; --text-3:#8F8C86;
   --brand:#111111; --on-brand:#FFFFFF;
-  --accent:#F97316; --accent-ink:#C2410C; --accent-tint:#FFF1E6;
-  --ok:#15803D; --ok-tint:#E8F7EE; --bad:#B91C1C; --bad-tint:#FDECEC;
-  --r-xs:8px; --r-sm:12px; --r-md:16px; --r-lg:24px; --r-full:999px;
-  --sh-1:0 1px 2px rgba(28,25,23,.06),0 1px 1px rgba(28,25,23,.04);
-  --sh-2:0 1px 2px rgba(28,25,23,.05),0 8px 20px -8px rgba(28,25,23,.12);
-  --sh-3:0 2px 4px rgba(28,25,23,.05),0 16px 32px -10px rgba(28,25,23,.16),0 32px 64px -24px rgba(28,25,23,.14);
-  --wrap:1200px; --gutter:clamp(20px,4vw,40px);
+  --accent:#F97316; --accent-ink:#C2530A; --accent-tint:#FEF0E6;
+  --ok:#15803D; --ok-tint:#E8F5EC; --bad:#C62828; --bad-tint:#FCEBEA;
+  --r-xs:6px; --r-sm:10px; --r-md:14px; --r-lg:20px; --r-full:999px;
+  --shadow:0 1px 2px rgba(20,20,20,.04),0 8px 24px -12px rgba(20,20,20,.12);
+  --shadow-float:0 18px 40px -12px rgba(20,20,20,.25),0 2px 6px rgba(20,20,20,.06);
+  --wrap:1200px; --gut:clamp(20px,4vw,40px);
+  --sec:clamp(72px,9vw,120px);
 }
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%}
-body{margin:0;font-family:var(--font);font-size:16px;line-height:1.55;color:var(--text);background:var(--canvas);-webkit-font-smoothing:antialiased;overflow-x:clip}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;font-family:var(--font);font-size:16px;line-height:1.55;color:var(--text);background:var(--canvas);-webkit-font-smoothing:antialiased;font-feature-settings:"ss01"}
 img{display:block;max-width:100%}
+button{font:inherit;color:inherit;cursor:pointer}
 a{color:inherit}
-button{font:inherit;color:inherit}
-h1,h2,h3,h4{margin:0;color:var(--ink);font-weight:600;line-height:1.2;text-wrap:balance}
-p{margin:0;text-wrap:pretty}
+h1,h2,h3,p{margin:0}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gut)}
+.mono{font-family:var(--mono);font-size:13px;letter-spacing:.01em}
 .num{font-variant-numeric:tabular-nums}
-.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
-.ico{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+svg.i{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 
 /* Buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 22px;border-radius:var(--r-full);border:0;font-weight:600;font-size:15px;cursor:pointer;text-decoration:none;white-space:nowrap;transition:transform .15s ease-out,box-shadow .15s ease-out,background-color .15s ease-out}
-.btn-dark{background:var(--ink);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 1px 2px rgba(0,0,0,.2),0 8px 18px -8px rgba(0,0,0,.45)}
-.btn-light{background:#fff;color:var(--ink);box-shadow:var(--sh-2)}
-.btn-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-2)}
-.btn-accent{background:var(--accent);color:#1a0b02;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 1px 2px rgba(0,0,0,.15),0 10px 22px -10px rgba(249,115,22,.8)}
-@media (hover:hover){.btn:hover{transform:translateY(-1px)}.btn-dark:hover{background:#262626}.btn-ghost:hover{background:rgba(17,17,17,.04)}}
-.btn:active{transform:translateY(0) scale(.98)}
-.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:48px;padding:0 22px;border-radius:var(--r-full);border:1px solid transparent;font-weight:600;font-size:15px;white-space:nowrap;text-decoration:none;transition:transform .12s,background .15s,border-color .15s,box-shadow .15s}
+.btn:active{transform:scale(.98)}
+.btn-dark{background:var(--brand);color:var(--on-brand);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+.btn-dark:hover{background:#2A2A2A}
+.btn-light{background:var(--surface);color:var(--text);border-color:var(--line-2)}
+.btn-light:hover{border-color:var(--text)}
+.btn-white{background:#fff;color:var(--text)}
+.btn-white:hover{background:#F0EFEC}
+.btn-sm{height:40px;padding:0 16px;font-size:14px}
 .btn-block{width:100%}
+.link{font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;background:none;border:0;padding:0}
 
 /* Nav */
-.nav{position:sticky;top:0;z-index:40;background:rgba(245,245,244,.82);backdrop-filter:saturate(1.4) blur(16px);-webkit-backdrop-filter:saturate(1.4) blur(16px);border-bottom:1px solid transparent;transition:border-color .2s}
-.nav.scrolled{border-bottom-color:var(--line)}
-.nav-in{display:flex;align-items:center;gap:32px;height:68px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:17px;letter-spacing:-.01em;color:var(--ink)}
-.logo-mark{width:32px;height:32px;border-radius:10px;background:var(--ink);display:grid;place-items:center}
-.logo small{display:block;font-size:12px;font-weight:500;color:var(--text-3);letter-spacing:0;margin-top:-2px}
-.nav-links{display:flex;gap:4px;margin-left:auto}
-.nav-links a{font-size:14px;font-weight:500;color:var(--text-2);text-decoration:none;padding:8px 12px;border-radius:var(--r-full);transition:background .15s,color .15s}
-.nav-links a:hover{color:var(--ink);background:rgba(17,17,17,.05)}
-.nav .btn{height:40px;padding:0 18px;font-size:14px}
-.menu-btn{display:none;margin-left:auto;width:44px;height:44px;border-radius:var(--r-full);border:0;background:transparent;cursor:pointer;place-items:center}
-.mobile-menu{display:none}
+.nav{position:absolute;inset:0 0 auto 0;z-index:30;padding-top:env(safe-area-inset-top)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:76px}
+.mark{min-height:44px;display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;letter-spacing:-.01em;text-decoration:none;color:#fff}
+.mark svg{width:28px;height:28px}
+.nav-links{display:flex;gap:30px;list-style:none;margin:0;padding:0}
+.nav-links a{display:block;padding:12px 0;color:rgba(255,255,255,.9);text-decoration:none;text-shadow:0 1px 10px rgba(0,0,0,.25);font-size:14px;font-weight:500}
+.nav-links a:hover{color:#fff}
+.nav-r{display:flex;align-items:center;gap:10px}
+.menu-btn{display:none;width:44px;height:44px;border-radius:var(--r-full);border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.08);color:#fff;align-items:center;justify-content:center}
+.menu{display:none}
 
 /* Hero */
-.hero{padding:20px 0 0}
-.hero-frame{position:relative;border-radius:28px;overflow:hidden;min-height:clamp(520px,78vh,720px);display:flex;align-items:flex-end;isolation:isolate;background:#2b2a26}
-.hero-frame>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
-.hero-frame::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.1) 60%,rgba(0,0,0,0) 100%),linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,0) 30%,rgba(0,0,0,.5) 75%,rgba(0,0,0,.7) 100%)}
-.hero-body{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;width:100%;padding:clamp(24px,4vw,48px)}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px 0 10px;border-radius:var(--r-full);background:rgba(255,255,255,.16);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;font-size:13px;font-weight:500;border:1px solid rgba(255,255,255,.22);margin-bottom:20px}
-.hero-eyebrow .ico{width:16px;height:16px}
-.hero h1{color:#fff;font-size:clamp(36px,5.2vw,60px);line-height:1.05;letter-spacing:-.03em;max-width:15ch}
-.hero-sub{color:rgba(255,255,255,.88);font-size:17px;max-width:46ch;margin-top:16px}
-.hero-actions{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
-.hero-actions .btn-ghost{color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
-.hero-actions .btn-ghost:hover{background:rgba(255,255,255,.12)}
-.hero-card{width:300px;background:rgba(255,255,255,.96);border-radius:20px;padding:20px;box-shadow:var(--sh-3)}
-.hero-card .row{display:flex;justify-content:space-between;align-items:center}
-.price-big{font-size:28px;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
-.price-big span{white-space:nowrap;font-size:14px;font-weight:500;color:var(--text-3);letter-spacing:0}
-.rating{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14px;color:var(--ink)}
-.rating .star{width:16px;height:16px;fill:var(--accent);stroke:none}
-.hero-card hr{border:0;border-top:1px solid var(--line);margin:16px 0}
-.hero-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
-.hero-facts b{display:block;font-size:18px;font-weight:600;color:var(--ink)}
-.hero-facts span{font-size:12px;color:var(--text-3)}
+.hero{position:relative;min-height:min(860px,100svh);display:flex;flex-direction:column;justify-content:flex-end;color:#fff;overflow:hidden;background:#2b3a2a}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,14,10,.45) 0%,rgba(10,14,10,0) 22%,rgba(10,14,10,0) 38%,rgba(10,14,10,.7) 100%),linear-gradient(90deg,rgba(10,14,10,.5) 0%,rgba(10,14,10,.15) 55%,rgba(10,14,10,0) 80%)}
+.hero-c{position:relative;z-index:2;width:100%;padding-top:140px;padding-bottom:40px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:#fff;text-shadow:0 1px 12px rgba(0,0,0,.35)}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(44px,6.6vw,92px);line-height:1.0;letter-spacing:-.02em;max-width:13ch;margin:18px 0 20px;text-wrap:balance}
+.hero h1 em{font-style:italic}
+.hero-sub{font-size:18px;line-height:1.5;color:rgba(255,255,255,.88);max-width:44ch;text-wrap:pretty}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;font-size:14px;color:rgba(255,255,255,.9)}
+.hero-meta span{display:inline-flex;align-items:center;gap:6px}
+.star{width:15px;height:15px;fill:var(--accent);stroke:none}
 
-/* Section base */
-section{position:relative}
-.sec{padding:clamp(72px,9vw,120px) 0}
-.eyebrow{font-size:13px;font-weight:600;color:var(--accent-ink);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.eyebrow::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.h2{font-size:clamp(28px,3.4vw,40px);letter-spacing:-.025em;line-height:1.12}
-.lead{font-size:17px;color:var(--text-2);margin-top:14px;max-width:56ch}
+.bookbar{position:relative;z-index:3;margin-top:44px;display:grid;grid-template-columns:1fr 1fr 1fr auto;align-items:center;background:#fff;color:var(--text);border-radius:var(--r-full);padding:8px 8px 8px 12px;box-shadow:var(--shadow-float);max-width:860px}
+.bb-f{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:8px 20px;border:0;background:none;text-align:left;border-radius:var(--r-full);min-height:56px;justify-content:center}
+.bb-f+.bb-f{border-left:1px solid var(--line)}
+.bb-f:hover{background:var(--surface-2)}
+.bb-f small{font-size:12px;color:var(--text-3);font-weight:500}
+.bb-f b{font-weight:600;font-size:15px;white-space:nowrap}
+.bookbar .btn{height:56px;padding:0 26px}
 
-/* Quick facts strip */
-.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:20px;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--sh-1);border:1px solid var(--line)}
-.strip>div{display:flex;gap:14px;align-items:center;padding:20px 24px}
-.strip>div+div{border-left:1px solid var(--line)}
-.chip-ico{width:44px;height:44px;border-radius:var(--r-sm);background:var(--surface-2);display:grid;place-items:center;color:var(--ink);flex:none}
-.strip b{display:block;font-weight:600;color:var(--ink);font-size:15px;line-height:1.3}
-.strip span{font-size:13px;color:var(--text-3)}
+/* Sections */
+section{scroll-margin-top:20px}
+.sec{padding:var(--sec) 0}
+.sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:40px}
+.kicker{color:var(--text-3);display:block;margin-bottom:12px}
+.h2{font-family:var(--serif);font-weight:400;font-size:clamp(36px,4.2vw,52px);line-height:1.05;letter-spacing:-.015em;text-wrap:balance}
+.h2 em{font-style:italic;color:var(--text-2)}
+.lede{font-size:17px;color:var(--text-2);max-width:52ch;margin-top:14px;text-wrap:pretty}
 
 /* Gallery */
-.gal-side{display:flex;align-items:center;gap:24px}
-.gal-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:32px}
-.gallery{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:240px 240px;gap:12px}
-.g-item{position:relative;border:0;padding:0;border-radius:var(--r-md);overflow:hidden;cursor:zoom-in;background:#d6d3d1}
-.g-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-.g-item:hover img{transform:scale(1.03)}
-.g-item:first-child{grid-row:span 2}
-.g-cap{position:absolute;left:12px;bottom:12px;font-size:12px;font-weight:600;color:var(--ink);background:rgba(255,255,255,.92);padding:5px 10px;border-radius:var(--r-full)}
+.gallery{display:grid;grid-template-columns:calc(50% + 22px) 1fr 1fr;grid-template-rows:260px 260px;gap:10px;border-radius:var(--r-lg);overflow:hidden}
+.g{position:relative;border:0;padding:0;overflow:hidden;background:var(--canvas-2)}
+.g img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.g:hover img{transform:scale(1.03)}
+.g-1{grid-row:span 2}
+.g-1 img{object-position:60% 100%;transform:scale(1.6);transform-origin:60% 100%}
+.g-1:hover img{transform:scale(1.63)}
+.g-cap{position:absolute;left:14px;bottom:12px;color:#fff;font-family:var(--mono);font-size:12px;text-shadow:0 1px 8px rgba(0,0,0,.4)}
+.g-all{white-space:nowrap;position:absolute;right:14px;bottom:14px;height:38px;padding:0 14px;border-radius:var(--r-full);background:#fff;color:var(--text);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:8px;box-shadow:var(--shadow)}
 
-/* Main two-col */
-.main{display:grid;grid-template-columns:minmax(0,1fr) 392px;gap:56px;align-items:start}
-.block+.block{margin-top:64px;padding-top:64px;border-top:1px solid var(--line)}
-.host{display:flex;gap:14px;align-items:center;margin-top:24px}
-.host img{width:48px;height:48px;border-radius:50%;background:#FDE7D3}
-.host b{display:block;font-weight:600;color:var(--ink);font-size:15px}
-.host span{font-size:14px;color:var(--text-3)}
-.about p{color:var(--text-2);max-width:62ch}
-.about p+p{margin-top:14px}
+/* Overview + booking */
+.ov{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:72px;align-items:start}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:32px 0}
+.fact{padding:20px 0}
+.fact+.fact{padding-left:20px;border-left:1px solid var(--line)}
+.fact b{display:block;font-size:24px;font-weight:600;letter-spacing:-.02em}
+.fact span{font-size:14px;color:var(--text-2)}
+.desc{font-size:17px;color:var(--text-2);max-width:60ch}
+.desc p+p{margin-top:14px}
+.host{display:flex;align-items:center;gap:14px;margin-top:32px;padding:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);max-width:520px}
+.host-av{display:flex}
+.host-av img{width:44px;height:44px;border-radius:50%;border:2px solid #fff}
+.host-av img+img{margin-left:-12px}
+.host b{font-weight:600;display:block;font-size:15px}
+.host span{font-size:13px;color:var(--text-2)}
 
-.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
-.room{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:20px;box-shadow:var(--sh-1)}
-.room .chip-ico{margin-bottom:16px;background:var(--accent-tint);color:var(--accent-ink)}
-.room h3{font-size:16px}
-.room p{font-size:14px;color:var(--text-2);margin-top:4px}
+.h3{font-size:20px;font-weight:600;letter-spacing:-.01em;margin:56px 0 20px}
+.amen{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px;list-style:none;margin:0;padding:0}
+.amen li{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
+.amen li small{display:block;color:var(--text-3);font-size:13px}
+.amen .chip{width:40px;height:40px;border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;flex:none}
 
-.amen{display:grid;grid-template-columns:repeat(2,1fr);gap:4px 32px;margin-top:28px}
-.amen li{display:flex;gap:14px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
-.amen b{font-weight:600;color:var(--ink);font-size:15px;display:block;line-height:1.35}
-.amen span{font-size:13px;color:var(--text-3)}
-.amen .chip-ico{width:40px;height:40px;border-radius:10px}
-.tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:var(--r-full);font-size:12px;font-weight:600;background:var(--surface-2);color:var(--text-2);margin-left:6px;vertical-align:1px}
-ul.clean{list-style:none;margin:0;padding:0}
-ul.clean.amen{margin-top:28px}
-ul.clean.dist{margin-top:28px}
-
-/* Rates table */
-.rates{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-1)}
-.rate{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:20px 24px}
-.rate+.rate{border-top:1px solid var(--line)}
-.rate h3{font-size:16px;display:flex;align-items:center;gap:10px}
-.rate p{font-size:14px;color:var(--text-3);margin-top:2px}
-.rate .p{text-align:right;font-size:20px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
-.rate .p small{display:block;font-size:12px;font-weight:500;color:var(--text-3);letter-spacing:0}
-.dot{width:10px;height:10px;border-radius:50%;flex:none}
-.rate-notes{display:flex;flex-wrap:wrap;gap:8px 24px;padding:16px 24px;background:var(--surface-2);font-size:13px;color:var(--text-2)}
-.rate-notes span{display:inline-flex;align-items:center;gap:6px}
-.rate-notes .ico{width:16px;height:16px;color:var(--text-3)}
+.rooms{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.room{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);padding:18px}
+.room svg{color:var(--text-2)}
+.room b{display:block;margin-top:14px;font-weight:600;font-size:15px}
+.room span{font-size:13px;color:var(--text-2)}
 
 /* Booking card */
-.book-col{position:sticky;top:92px}
-.book{background:var(--surface);border-radius:var(--r-lg);padding:24px;box-shadow:inset 0 1px 0 #fff,var(--sh-3);border:1px solid var(--line)}
-.book-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-.book-top .price-big{font-size:28px}
-.book-sub{font-size:13px;color:var(--text-3);margin-top:2px}
-.fields{margin-top:20px;border:1px solid var(--line-2);border-radius:var(--r-sm);position:relative}
-.dates{display:grid;grid-template-columns:1fr 1fr}
-.field{display:block;width:100%;text-align:left;background:none;border:0;padding:10px 14px;cursor:pointer;min-height:58px;border-radius:0}
-.field+.field{border-left:1px solid var(--line-2)}
-.field small{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
-.field span{display:block;font-size:15px;color:var(--text-2);margin-top:2px}
-.field span.set{color:var(--ink);font-weight:500}
-.field.active{box-shadow:inset 0 0 0 2px var(--ink);border-radius:var(--r-sm)}
-.guests{border-top:1px solid var(--line-2);display:flex;align-items:center;justify-content:space-between;padding:8px 8px 8px 14px;min-height:58px}
-.guests small{display:block;font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink)}
-.guests span{font-size:15px;color:var(--ink);font-weight:500}
-.stepper{display:flex;align-items:center;gap:6px}
-.step{width:40px;height:40px;border-radius:50%;border:1px solid var(--line-2);background:#fff;cursor:pointer;display:grid;place-items:center;transition:border-color .15s,background .15s}
-.step:hover:not([disabled]){border-color:var(--ink)}
-.step[disabled]{opacity:.35;cursor:not-allowed}
-.step .ico{width:16px;height:16px}
-.book .btn{margin-top:16px;height:52px;font-size:16px}
-.book-note{text-align:center;font-size:13px;color:var(--text-3);margin-top:10px}
-.msg{font-size:13px;margin-top:12px;padding:10px 12px;border-radius:var(--r-xs);display:none;align-items:flex-start;gap:8px}
-.msg.show{display:flex}
-.msg.err{background:var(--bad-tint);color:var(--bad)}
-.msg .ico{width:16px;height:16px;margin-top:2px}
-.breakdown{margin-top:18px;display:none}
-.breakdown.show{display:block}
-.bd-row{display:flex;justify-content:space-between;gap:12px;font-size:15px;color:var(--text-2);padding:5px 0}
-.bd-row span:last-child{color:var(--text);font-variant-numeric:tabular-nums}
-.bd-total{display:flex;justify-content:space-between;font-weight:700;color:var(--ink);font-size:16px;border-top:1px solid var(--line);margin-top:10px;padding-top:14px}
-.wa{display:flex;gap:12px;align-items:center;margin-top:16px;padding:14px 16px;border-radius:var(--r-md);background:var(--surface);border:1px solid var(--line);text-decoration:none;transition:border-color .15s}
-.wa:hover{border-color:var(--line-2)}
-.wa b{display:block;font-size:14px;font-weight:600;color:var(--ink)}
-.wa span{font-size:13px;color:var(--text-3)}
-.wa .chip-ico{width:40px;height:40px;background:#E7F7EC;color:#15803D}
-.wa .chev{margin-left:auto;color:var(--text-3)}
+.bk{position:sticky;top:24px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow)}
+.bk-top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px}
+.bk-price{white-space:nowrap;font-size:28px;font-weight:600;letter-spacing:-.02em}
+.bk-price small{font-size:15px;font-weight:500;color:var(--text-2);letter-spacing:0}
+.bk-rate{min-height:40px;font-size:13px;color:var(--text-2);display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.bk-season{margin-top:4px;color:var(--text-3)}
+.fields{margin-top:20px;border:1px solid var(--line-2);border-radius:var(--r-md);position:relative}
+.fields-row{display:grid;grid-template-columns:1fr 1fr}
+.fld{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:12px 14px;border:0;background:none;text-align:left;min-height:62px}
+.fld+.fld{border-left:1px solid var(--line-2)}
+.fld small{font-size:12px;color:var(--text-3);font-weight:500}
+.fld b{font-weight:600;font-size:15px;white-space:nowrap}
+.fld[aria-expanded="true"]{box-shadow:inset 0 0 0 2px var(--text);border-radius:var(--r-md)}
+.guests{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line-2);padding:10px 10px 10px 14px}
+.guests small{display:block;font-size:12px;color:var(--text-3);font-weight:500}
+.guests b{font-weight:600;font-size:15px}
+.step{display:flex;align-items:center;gap:10px}
+.step button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line-2);background:#fff;display:grid;place-items:center}
+.step button:hover:not(:disabled){border-color:var(--text)}
+.step button:disabled{opacity:.35;cursor:not-allowed}
+.step output{min-width:18px;text-align:center;font-weight:600}
+.bk .btn{margin-top:16px;height:52px}
+.bk-note{text-align:center;font-size:13px;color:var(--text-3);margin-top:10px}
+.bk-err{display:none;margin-top:12px;padding:10px 12px;border-radius:var(--r-sm);background:var(--bad-tint);color:var(--bad);font-size:13px;font-weight:500}
+.bk-err.on{display:block}
+.sum{list-style:none;margin:18px 0 0;padding:0;font-size:14px}
+.sum li{display:flex;justify-content:space-between;gap:12px;padding:5px 0;color:var(--text-2)}
+.sum li span:last-child{color:var(--text)}
+.sum .free{color:var(--ok)!important;font-weight:600}
+.sum .disc span:last-child{color:var(--ok)}
+.sum .tot{margin-top:10px;padding-top:14px;border-top:1px solid var(--line);font-weight:600;font-size:16px}
+.sum .tot span{color:var(--text)}
+.sum-empty{margin-top:18px;font-size:14px;color:var(--text-2);background:var(--surface-2);border-radius:var(--r-sm);padding:12px 14px}
 
 /* Calendar popover */
-.cal{position:absolute;top:calc(100% + 8px);right:-12px;width:344px;max-width:calc(100vw - 32px);background:#fff;border-radius:20px;box-shadow:var(--sh-3),0 0 0 1px var(--line);padding:18px;z-index:30;display:none}
-.cal.open{display:block;animation:pop .16s ease-out}
-@keyframes pop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
-.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.cal-head b{font-size:15px;font-weight:600;color:var(--ink)}
-.cal-nav{width:36px;height:36px;border-radius:50%;border:0;background:var(--surface-2);cursor:pointer;display:grid;place-items:center}
-.cal-nav:hover:not([disabled]){background:#e7e5e4}
-.cal-nav[disabled]{opacity:.35;cursor:not-allowed}
-.cal-nav .ico{width:16px;height:16px}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);row-gap:2px}
-.cal-dow{font-size:12px;font-weight:600;color:var(--text-3);text-align:center;padding:4px 0 8px}
-.day{position:relative;height:44px;border:0;background:none;cursor:pointer;font-size:14px;font-weight:500;color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;font-variant-numeric:tabular-nums}
-.day i{display:block;height:12px;font-style:normal;font-size:10px;font-weight:500;color:var(--text-3);margin-top:2px}
-.day::before{content:"";position:absolute;inset:2px;border-radius:12px;z-index:-1;transition:background .12s}
-.day:hover:not([disabled])::before{box-shadow:inset 0 0 0 1.5px var(--ink)}
-.day[disabled]{color:#c4c0bc;cursor:not-allowed}
-.day.booked{text-decoration:line-through}
-.day.in-range::before{background:var(--surface-2);border-radius:0;inset:2px 0}
-.day.start::before,.day.end::before{background:var(--ink);border-radius:12px;inset:2px}
-.day.start,.day.end{color:#fff}
-.day.start i,.day.end i{color:rgba(255,255,255,.75)}
-.day.peak i{color:var(--accent-ink)}
-.day.start.peak i,.day.end.peak i{color:#FDBA74}
-.cal{isolation:isolate}
-.cal-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--text-3)}
-.cal-foot button{background:none;border:0;font-weight:600;text-decoration:underline;cursor:pointer;color:var(--ink);padding:8px;font-size:13px}
-.cal-legend{display:flex;gap:12px;align-items:center}
-.cal-legend span{display:inline-flex;gap:6px;align-items:center}
+.cal{position:absolute;z-index:40;top:calc(100% + 10px);right:0;width:max-content;background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-float);padding:20px;display:none}
+.cal.on{display:block}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.cal-head b{font-size:15px;font-weight:600}
+.cal-head span{font-size:13px;color:var(--text-2)}
+.cal-nav{display:flex;gap:6px}
+.cal-nav button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-2);background:#fff;display:grid;place-items:center}
+.cal-nav button:disabled{opacity:.3;cursor:not-allowed}
+.months{display:flex;gap:28px;margin-top:10px}
+.month-t{margin:0 0 10px;font-size:14px;font-weight:600;text-align:center}
+.dow,.days{display:grid;grid-template-columns:repeat(7,40px)}
+.dow span{font-size:11px;color:var(--text-3);text-align:center;padding-bottom:6px;font-family:var(--mono)}
+.day{height:40px;border:0;background:none;padding:0;font-size:14px;font-weight:500;position:relative;font-variant-numeric:tabular-nums}
+.day span{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;position:relative;z-index:1}
+.day:hover:not(:disabled) span{box-shadow:inset 0 0 0 1.5px var(--text)}
+.day:disabled{cursor:not-allowed;color:var(--text-3)}
+.day.past{color:#C9C7C1}
+.day.booked span{color:var(--text-3);text-decoration:line-through;text-decoration-color:var(--text-3)}
+.day.booked::before{content:"";position:absolute;inset:4px 2px;border-radius:8px;background:repeating-linear-gradient(135deg,#EFEDE9 0 3px,transparent 3px 7px)}
+.day.in{background:var(--canvas-2)}
+.day.start{background:linear-gradient(90deg,transparent 50%,var(--canvas-2) 50%)}
+.day.end{background:linear-gradient(90deg,var(--canvas-2) 50%,transparent 50%)}
+.day.start.end{background:none}
+.day.start span,.day.end span{background:var(--brand);color:#fff}
+.day.today span::after{content:"";position:absolute;bottom:6px;left:50%;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--accent)}
+.cal-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.legend{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-2)}
+.legend i{width:18px;height:14px;border-radius:4px;background:repeating-linear-gradient(135deg,#E2E0DB 0 3px,transparent 3px 7px);border:1px solid var(--line)}
+.cal-foot .btns{display:flex;gap:8px;align-items:center}
 
-/* Reviews (dark) */
-.reviews{background:#141312;color:#E7E5E4;border-radius:32px;margin:0 clamp(8px,1.5vw,20px)}
-.reviews .h2{color:#fff}
-.reviews .eyebrow{color:#FDBA74}
-.rv-top{display:grid;grid-template-columns:340px 1fr;gap:56px;align-items:start}
-.score{font-size:72px;font-weight:700;letter-spacing:-.04em;color:#fff;line-height:1;margin-top:24px;display:flex;align-items:flex-end;gap:12px}
-.score small{font-size:15px;font-weight:500;color:#A8A29E;letter-spacing:0;padding-bottom:10px}
-.stars{display:flex;gap:3px;margin-top:12px}
-.stars svg{width:18px;height:18px;fill:var(--accent)}
-.bars{margin-top:28px;display:grid;gap:14px}
-.bar-row{display:grid;grid-template-columns:110px 1fr 34px;gap:12px;align-items:center;font-size:14px;color:#D6D3D1}
-.bar{height:8px;border-radius:var(--r-full);background:rgba(255,255,255,.1);overflow:hidden}
-.bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#FB923C,var(--accent))}
-.bar-row b{text-align:right;color:#fff;font-weight:600;font-variant-numeric:tabular-nums}
-.rv-grid{columns:2;column-gap:16px}
-.rv{break-inside:avoid;background:#1F1E1C;border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:24px;margin-bottom:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
-.rv.feat{background:#fff;color:var(--text)}
-.rv.feat q{color:var(--ink);font-size:18px;font-weight:500;line-height:1.5;letter-spacing:-.01em}
-.rv q{display:block;quotes:none;font-size:15px;line-height:1.6;color:#E7E5E4}
-.rv-who{display:flex;gap:12px;align-items:center;margin-top:20px}
-.rv-who img{width:40px;height:40px;border-radius:50%}
-.rv-who b{display:block;font-size:14px;font-weight:600;color:#fff}
-.rv.feat .rv-who b{color:var(--ink)}
-.rv-who span{font-size:13px;color:#A8A29E}
-.rv.feat .rv-who span{color:var(--text-3)}
-.rv .stars{margin:0 0 14px}
-.rv .stars svg{width:14px;height:14px}
-.rv-more{margin-top:8px;text-align:center}
-.reviews .btn-ghost{color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
-.reviews .btn-ghost:hover{background:rgba(255,255,255,.08)}
-.rv.hidden{display:none}
+/* Rates */
+.rates-band{background:var(--canvas-2)}
+.rates{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}
+.rt{width:100%;border-collapse:collapse;background:var(--surface);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow)}
+.rt th,.rt td{text-align:left;padding:20px 24px;border-bottom:1px solid var(--line);vertical-align:middle}
+.rt thead th{font-family:var(--mono);font-weight:400;font-size:12px;color:var(--text-3);padding-top:16px;padding-bottom:16px}
+.rt tbody tr:last-child td{border-bottom:0}
+.rt td b{display:block;font-weight:600;font-size:16px}
+.rt td small{font-size:13px;color:var(--text-2)}
+.rt .p{text-align:right;white-space:nowrap}
+.rt .p b{font-size:20px;letter-spacing:-.015em}
+.rt .p small{display:block}
+.rt th.p{text-align:right}
+.cur td:first-child{position:relative}
+.tag{display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:var(--r-full);background:var(--accent-tint);color:var(--accent-ink);font-size:12px;font-weight:600;margin-left:8px;vertical-align:2px}
+.incl{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:12px}
+.incl li{text-wrap:balance;display:flex;gap:12px;align-items:flex-start;font-size:15px}
+.incl svg{color:var(--ok);margin-top:2px}
+.rate-notes{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px 24px;font-size:13px;color:var(--text-2)}
+
+/* Reviews */
+.rv-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:end;margin-bottom:48px}
+.score{display:flex;align-items:flex-end;gap:20px}
+.score b{font-family:var(--serif);font-weight:400;font-size:96px;line-height:1;letter-spacing:-.03em}
+.score .stars{display:flex;gap:3px}
+.score .stars svg{width:18px;height:18px}
+.score p{font-size:14px;color:var(--text-2);margin-top:8px}
+.cats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px 32px}
+.cat{font-size:14px}
+.cat div{display:flex;justify-content:space-between;margin-bottom:8px;color:var(--text-2)}
+.cat div span:last-child{color:var(--text);font-weight:600}
+.bar{height:3px;border-radius:3px;background:var(--line-2)}
+.bar i{display:block;height:100%;border-radius:4px;background:var(--text)}
+.rv-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr) minmax(0,1fr);gap:16px}
+.rv{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;display:flex;flex-direction:column}
+.rv q{quotes:"“" "”";font-size:15px;line-height:1.6;color:var(--text);flex:1}
+.rv-feat{grid-row:span 2;background:var(--brand);color:#fff;border-color:var(--brand);padding:32px}
+.rv-feat q{font-family:var(--serif);font-size:28px;line-height:1.2;letter-spacing:-.01em;color:#fff}
+.rv-feat .who span,.rv-feat .rv-stay{color:rgba(255,255,255,.66)}
+.rv-feat .rv-photo{margin:-32px -32px 28px;height:240px;overflow:hidden;border-radius:var(--r-lg) var(--r-lg) 0 0}
+.rv-feat .rv-photo img{width:100%;height:100%;object-fit:cover}
+.rv-stars{display:flex;gap:2px;margin-bottom:14px}
+.rv-stars svg{width:14px;height:14px}
+.who{display:flex;align-items:center;gap:12px;margin-top:22px}
+.who img{width:40px;height:40px;border-radius:50%}
+.who b{display:block;font-weight:600;font-size:14px}
+.who span{font-size:13px;color:var(--text-2)}
+.rv-h{display:flex;flex-wrap:wrap;row-gap:6px;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.rv-h .rv-stars{margin:0}
+.rv-stay{color:var(--text-3);font-size:12px}
 
 /* Location */
-.loc{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
-.map{position:relative;aspect-ratio:5/4;border-radius:var(--r-lg);overflow:hidden;background:#EAE7E1;box-shadow:var(--sh-2)}
-.map svg{width:100%;height:100%;display:block}
-.pin{position:absolute;left:52%;top:46%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center}
-.pin-card{background:var(--ink);color:#fff;font-size:13px;font-weight:600;padding:8px 12px;border-radius:12px;white-space:nowrap;box-shadow:var(--sh-3);display:flex;align-items:center;gap:8px}
-.pin-card .logo-mark{width:22px;height:22px;border-radius:6px;background:var(--accent)}
-.pin::after{content:"";width:12px;height:12px;background:var(--ink);transform:rotate(45deg);margin-top:-7px;border-radius:2px}
-.map-lbl{position:absolute;font-size:12px;font-weight:600;color:var(--text-2);background:rgba(255,255,255,.85);padding:4px 8px;border-radius:var(--r-full)}
-.dist{margin-top:28px}
-.dist li{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.loc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:center}
+.loc-img{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/3;background:var(--canvas-2)}
+.loc-img img{width:100%;height:100%;object-fit:cover}
+.pin{position:absolute;left:24px;bottom:24px;background:#fff;border-radius:var(--r-md);padding:14px 16px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-float)}
+.pin .pdot{width:36px;height:36px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center}
+.pin b{display:block;font-size:14px;font-weight:600}
+.pin span{font-size:12px;color:var(--text-2)}
+.dist{list-style:none;padding:0;margin:28px 0 0}
+.dist li{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);font-size:15px}
 .dist li:first-child{border-top:1px solid var(--line)}
-.dist b{font-weight:600;color:var(--ink);font-size:15px}
-.dist .t{margin-left:auto;font-size:14px;color:var(--text-2);font-variant-numeric:tabular-nums;white-space:nowrap}
-.dist .chip-ico{width:36px;height:36px;border-radius:10px}
-.dist .chip-ico .ico{width:18px;height:18px}
+.dist .mono{color:var(--text-2);white-space:nowrap}
 
 /* FAQ */
-.faq{display:grid;grid-template-columns:1fr 1.6fr;gap:56px}
-.qa{border-top:1px solid var(--line)}
-.qa details{border-bottom:1px solid var(--line)}
-.qa summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;align-items:center;padding:20px 0;font-weight:600;color:var(--ink);font-size:16px}
-.qa summary::-webkit-details-marker{display:none}
-.qa summary .pm{width:32px;height:32px;border-radius:50%;background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;flex:none;transition:transform .2s}
-.qa summary .pm .ico{width:16px;height:16px}
-.qa details[open] .pm{transform:rotate(45deg)}
-.qa details p{color:var(--text-2);padding:0 48px 20px 0;font-size:15px}
-.contact-card{margin-top:28px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;box-shadow:var(--sh-1)}
-.contact-card .host{margin-top:0}
-.contact-card p{font-size:14px;color:var(--text-2);margin-top:14px}
-.contact-card .btn{margin-top:16px;height:44px}
+.faq{display:grid;grid-template-columns:repeat(2,1fr);gap:0 64px;counter-reset:q}
+.qa{padding:24px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:40px 1fr}
+.qa::before{counter-increment:q;content:counter(q,decimal-leading-zero);font-family:var(--mono);font-size:13px;color:var(--text-3);padding-top:3px}
+.qa h3{font-size:17px;font-weight:600;letter-spacing:-.005em;margin-bottom:8px}
+.qa p{font-size:15px;color:var(--text-2);text-wrap:pretty}
 
 /* Closing */
-.close{background:#1f2a1c;position:relative;border-radius:32px;overflow:hidden;margin:0 clamp(8px,1.5vw,20px);min-height:440px;display:flex;align-items:center;isolation:isolate}
-.close>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
-.close::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(17,17,17,.82) 0%,rgba(17,17,17,.55) 55%,rgba(17,17,17,.1) 100%)}
-.close h2{color:#fff;font-size:clamp(30px,4vw,48px);letter-spacing:-.03em;max-width:16ch;line-height:1.08}
-.close p{color:rgba(255,255,255,.85);margin-top:14px;max-width:44ch;font-size:17px}
-.close .hero-actions .btn-ghost{color:#fff}
+.close{position:relative;color:#fff;background:#151815;overflow:hidden}
+.close img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.close::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,14,12,.85) 0%,rgba(12,14,12,.35) 70%)}
+.close .wrap{position:relative;z-index:2;padding-top:clamp(96px,11vw,150px);padding-bottom:clamp(96px,11vw,150px)}
+.close h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,5vw,68px);line-height:1.02;letter-spacing:-.02em;max-width:14ch;text-wrap:balance}
+.close p{margin-top:18px;font-size:17px;color:rgba(255,255,255,.8);max-width:46ch}
+.close .acts{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn-ghost{color:#fff;border-color:rgba(255,255,255,.4)}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,.06)}
 
-footer{padding:72px 0 40px}
-.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
-.foot .fh{font-size:14px;margin-bottom:14px}
-.foot ul li{font-size:14px;line-height:1.5;margin:-2px 0}
-.foot ul a{display:inline-block;padding:10px 0;font-size:14px;color:var(--text-2);text-decoration:none}
-.foot ul a:hover{color:var(--ink);text-decoration:underline}
-.foot p{font-size:14px;color:var(--text-2);margin-top:14px;max-width:34ch}
-.legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:56px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--text-3)}
+footer{background:#151815;color:rgba(255,255,255,.66);font-size:14px;border-top:1px solid rgba(255,255,255,.08)}
+footer .wrap{padding-top:56px;padding-bottom:40px}
+.ft{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:32px}
+.ft h3{margin:0 0 14px;font-size:13px;font-weight:600;color:#fff}
+.ft ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.ft a{text-decoration:none;display:inline-block;padding:3px 0}
+.ft a:hover{color:#fff}
+.ft .mark{display:inline-flex;padding:0}
+.ft-b{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:48px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);font-size:13px}
 
 /* Mobile bar */
 .mbar{display:none}
 
-/* Dialogs */
-dialog{border:0;padding:0;background:transparent;max-width:100vw;max-height:100vh}
-dialog::backdrop{background:rgba(12,10,9,.6);backdrop-filter:blur(4px)}
-.lb{width:100vw;height:100vh;height:100dvh}
-.lb-in{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 72px 32px}
-.lb-in img{max-width:100%;max-height:calc(100% - 48px);border-radius:var(--r-md);object-fit:contain}
-.lb-cap{color:#fff;margin-top:16px;font-size:14px;font-weight:500}
-.lb-cap span{color:#A8A29E;margin-left:8px}
-.lb-btn{position:absolute;width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;cursor:pointer;display:grid;place-items:center;transition:background .15s}
-.lb-btn:hover{background:rgba(255,255,255,.26)}
-.lb-close{top:16px;right:16px}
-.lb-prev{left:16px;top:50%;transform:translateY(-50%)}
-.lb-next{right:16px;top:50%;transform:translateY(-50%)}
-
-.modal{width:min(520px,calc(100vw - 24px))}
-.modal-in{background:#fff;border-radius:var(--r-lg);padding:28px;box-shadow:var(--sh-3);max-height:calc(100dvh - 24px);overflow:auto}
-.modal-head{display:flex;justify-content:space-between;align-items:start;gap:16px}
-.modal-head h3{font-size:22px;letter-spacing:-.02em}
-.x{width:40px;height:40px;border-radius:50%;border:0;background:var(--surface-2);cursor:pointer;display:grid;place-items:center;flex:none}
-.x:hover{background:#e7e5e4}
-.summary{display:flex;gap:14px;margin-top:20px;padding:12px;background:var(--surface-2);border-radius:var(--r-md);align-items:center}
-.summary img{width:72px;height:72px;border-radius:var(--r-sm);object-fit:cover}
-.summary b{display:block;font-size:15px;font-weight:600;color:var(--ink)}
-.summary span{display:block;font-size:13px;color:var(--text-2)}
-.form{display:grid;gap:14px;margin-top:20px}
-.form label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
-.form input,.form textarea{width:100%;font:inherit;font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--line-2);border-radius:var(--r-sm);padding:12px 14px;transition:border-color .15s,box-shadow .15s}
-.form input:focus,.form textarea:focus{outline:0;border-color:var(--ink);box-shadow:0 0 0 3px rgba(17,17,17,.08)}
-.form input[aria-invalid=true]{border-color:var(--bad);box-shadow:0 0 0 3px rgba(185,28,28,.1)}
-.form .err-t{font-size:12px;color:var(--bad);margin-top:6px;display:none}
-.form [aria-invalid=true]+.err-t{display:block}
-.form textarea{resize:vertical;min-height:84px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.done{text-align:center;padding:12px 4px 4px}
-.done .ok-badge{width:64px;height:64px;border-radius:50%;background:var(--ok-tint);color:var(--ok);display:grid;place-items:center;margin:0 auto 18px}
-.done .ok-badge .ico{width:30px;height:30px;stroke-width:2}
-.done h3{font-size:22px}
-.done p{color:var(--text-2);margin-top:8px}
-.code{display:inline-block;margin-top:16px;font-weight:700;letter-spacing:.06em;background:var(--surface-2);padding:8px 14px;border-radius:var(--r-xs);color:var(--ink)}
+/* Modal + lightbox */
+.ov-bg{position:fixed;inset:0;z-index:80;background:rgba(14,14,14,.55);display:none;align-items:center;justify-content:center;padding:20px}
+.ov-bg.on{display:flex}
+.modal{background:#fff;border-radius:var(--r-lg);width:min(520px,100%);max-height:calc(100svh - 40px);overflow:auto;padding:28px;box-shadow:var(--shadow-float)}
+.modal-h{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.modal-h h2{font-size:22px;font-weight:600;letter-spacing:-.015em}
+.x{width:40px;height:40px;border-radius:50%;border:1px solid var(--line-2);background:#fff;display:grid;place-items:center;flex:none}
+.trip{display:flex;gap:14px;align-items:center;margin:20px 0;padding:12px;border-radius:var(--r-md);background:var(--surface-2)}
+.trip img{width:72px;height:56px;border-radius:var(--r-sm);object-fit:cover}
+.trip b{display:block;font-weight:600;font-size:15px}
+.trip span{font-size:13px;color:var(--text-2)}
+.form{display:grid;gap:14px}
+.form label{display:grid;gap:6px;font-size:13px;font-weight:600}
+.form input,.form textarea{font:inherit;font-size:15px;font-weight:400;padding:12px 14px;border:1px solid var(--line-2);border-radius:var(--r-sm);background:#fff;color:var(--text);width:100%}
+.form textarea{min-height:84px;resize:vertical}
+.form input:focus,.form textarea:focus{outline:none;border-color:var(--text);box-shadow:0 0 0 3px rgba(20,20,20,.08)}
+.form .err input{border-color:var(--bad)}
+.form .msg{display:none;font-weight:500;color:var(--bad);font-size:12px}
+.form .err .msg{display:block}
+.form .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.done{text-align:center;padding:12px 0 4px}
+.done .ok{width:56px;height:56px;border-radius:50%;background:var(--ok-tint);color:var(--ok);display:grid;place-items:center;margin:0 auto 16px}
+.done h2{font-size:22px;font-weight:600;letter-spacing:-.015em}
+.done p{color:var(--text-2);margin:8px auto 22px;max-width:36ch;font-size:15px}
+.lb{position:fixed;inset:0;z-index:90;background:rgba(10,10,10,.94);display:none;flex-direction:column}
+.lb.on{display:flex}
+.lb-top{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;color:rgba(255,255,255,.8)}
+.lb-top .x{background:transparent;border-color:rgba(255,255,255,.3);color:#fff}
+.lb-stage{flex:1;display:flex;align-items:center;justify-content:center;gap:16px;padding:0 16px 24px;min-height:0}
+.lb-stage img{max-width:min(1200px,100%);max-height:100%;object-fit:contain;border-radius:8px}
+.lb-nav{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;display:grid;place-items:center;flex:none}
+.lb-nav:hover{background:rgba(255,255,255,.08)}
 
 /* Responsive */
 @media (max-width:1080px){
-  .main{grid-template-columns:minmax(0,1fr) 360px;gap:40px}
-  .rv-top{grid-template-columns:1fr;gap:40px}
-  .nav-links a:nth-child(5){display:none}
+  .ov{grid-template-columns:minmax(0,1fr) 360px;gap:48px}
+  .rv-grid{grid-template-columns:1fr 1fr}
+  .rv-feat{grid-row:auto;grid-column:span 2}
 }
 @media (max-width:900px){
-  .nav-links,.nav .btn{display:none}
-  .menu-btn{display:grid}
-  .mobile-menu.open{display:block;position:absolute;left:0;right:0;top:68px;background:var(--canvas);border-bottom:1px solid var(--line);padding:8px var(--gutter) 20px}
-  .mobile-menu a{display:block;padding:14px 0;font-weight:600;text-decoration:none;border-bottom:1px solid var(--line)}
-  .hero-body{grid-template-columns:1fr}
-  .hero-card{display:none}
-  .strip{grid-template-columns:1fr 1fr}
-  .strip>div:nth-child(3){border-left:0}
-  .strip>div:nth-child(n+3){border-top:1px solid var(--line)}
-  .main{grid-template-columns:1fr}
-  .book-col{position:static;max-width:520px}
-  .rooms{grid-template-columns:1fr 1fr 1fr}
-  .loc,.faq{grid-template-columns:1fr;gap:40px}
-  .foot{grid-template-columns:1fr 1fr}
-  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:35;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom));align-items:center;justify-content:space-between;gap:12px;transform:translateY(110%);transition:transform .25s ease-out}
-  .mbar.show{transform:none}
-  .mbar b{font-size:17px;font-weight:700;color:var(--ink)}
-  .mbar span{display:block;font-size:13px;color:var(--text-3)}
-  .mbar .btn{height:44px}
-  footer{padding-bottom:110px}
+  .nav-links{display:none}
+  .nav-r .btn{display:none}
+  .menu-btn{display:inline-flex}
+  .menu.on{display:block;position:absolute;top:72px;left:var(--gut);right:var(--gut);background:#fff;border-radius:var(--r-lg);padding:8px;box-shadow:var(--shadow-float)}
+  .menu a{display:block;padding:14px 16px;text-decoration:none;font-weight:500;border-radius:var(--r-sm)}
+  .menu a:hover{background:var(--surface-2)}
+  .ov{grid-template-columns:1fr}
+  .bk{position:relative;top:0}
+  .cal{left:0;right:auto}
+  .rates,.rv-top,.loc{grid-template-columns:1fr;gap:40px}
+  .faq{grid-template-columns:1fr}
+  .ft{grid-template-columns:1fr 1fr}
+  .ft>div:first-child{grid-column:span 2}
+  .ft ul{gap:0}
+  .ft a{padding:10px 0}
+  .mbar{display:flex;position:fixed;z-index:50;left:0;right:0;bottom:0;align-items:center;justify-content:space-between;gap:12px;background:#fff;border-top:1px solid var(--line);padding:12px var(--gut) calc(12px + env(safe-area-inset-bottom));transform:translateY(110%);transition:transform .25s}
+  .mbar.on{transform:none}
+  .mbar b{font-size:17px;font-weight:600;display:block;letter-spacing:-.01em}
+  .mbar span{font-size:13px;color:var(--text-2)}
+  body{padding-bottom:0}
 }
-@media (max-width:640px){
-  .hero{padding-top:8px}
-  .hero-frame{border-radius:22px;min-height:560px}
-  .hero-sub{font-size:16px}
-  .hero-actions .btn{flex:1}
-  .gal-head{flex-direction:column;align-items:start}
-  .gallery{grid-template-columns:1fr 1fr;grid-template-rows:240px 140px 140px}
-  .g-item:first-child{grid-column:1/3;grid-row:auto}
-  .gal-side{flex-direction:column;align-items:start;gap:16px}
-  .strip{grid-template-columns:1fr}
-  .strip>div+div{border-left:0;border-top:1px solid var(--line)}
-  .strip>div{padding:16px 20px}
-  .rooms{grid-template-columns:1fr}
+@media (max-width:720px){
+  .bookbar{grid-template-columns:1fr 1fr;border-radius:var(--r-lg);padding:8px;gap:0}
+  .bb-f{border-radius:var(--r-md)}
+  .bb-f:nth-child(3){grid-column:span 2;border-left:0;border-top:1px solid var(--line)}
+  .bookbar .btn{grid-column:span 2;margin-top:6px;width:100%}
+  .gallery{grid-template-columns:1fr 1fr;grid-template-rows:240px 150px}
+  .g-1{grid-column:span 2;grid-row:auto}
+  .g-4,.g-5{display:none}
+  .facts{grid-template-columns:1fr 1fr}
+  .fact:nth-child(3){padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .fact:nth-child(4){border-top:1px solid var(--line)}
   .amen{grid-template-columns:1fr}
-  .rv-grid{columns:1}
-  .score{font-size:48px}
-  .book{padding:20px}
-  .book-top .price-big{font-size:24px}
-  .bar-row{grid-template-columns:96px 1fr 30px}
-  .rate{padding:18px 20px}
-  .rate-notes{padding:16px 20px}
-  .foot{grid-template-columns:1fr 1fr;gap:32px}
-  .foot>div:first-child{grid-column:1/3}
-  .reviews,.close{border-radius:24px;margin:0 8px}
-  .close{min-height:520px;align-items:flex-end;padding-bottom:8px}
-  .close::after{background:linear-gradient(180deg,rgba(17,17,17,.15) 0%,rgba(17,17,17,.85) 70%)}
-  .lb-in{padding:64px 12px 88px}
-  .lb-prev,.lb-next{top:auto;bottom:20px;transform:none}
-  .lb-prev{left:calc(50% - 60px)}.lb-next{right:calc(50% - 60px)}
-  .two{grid-template-columns:1fr}
-  .modal-in{padding:22px}
-  .cal{right:-8px;left:-8px;width:auto}
-  .qa details p{padding-right:0}
+  .rooms{grid-template-columns:1fr}
+  .cats{grid-template-columns:1fr 1fr}
+  .rv-grid{grid-template-columns:minmax(0,1fr)}
+  .rv-feat{grid-column:auto}
+  .rv-feat q{font-size:26px}
+  .sec-h{flex-direction:column;align-items:flex-start}
+  .months .month+.month{display:none}
+  .rt th,.rt td{padding:16px}
+  .rt .p b{font-size:17px}
+  .score b{font-size:76px}
+  .bk{padding:20px}
+  .bk-price{font-size:24px}
 }
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media (max-width:440px){
+  .cal{left:-1px;right:-1px;width:auto;padding:14px}
+  .dow,.days{grid-template-columns:repeat(7,1fr)}
+  .day span{width:38px;height:38px;margin:0 auto}
+  .cal-foot{flex-direction:column;align-items:stretch}
+  .cal-foot .btns{justify-content:space-between}
+  .form .row2{grid-template-columns:1fr}
+  .hero-meta{gap:6px 14px}
+  .hero-meta span:nth-child(3){display:none}
+}
 </style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></symbol>
+  <symbol id="i-pool" viewBox="0 0 24 24"><path d="M2 18c1.5 0 2.5-1 4-1s2.5 1 4 1 2.5-1 4-1 2.5 1 4 1 2.5-1 4-1"/><path d="M2 14c1.5 0 2.5-1 4-1s2.5 1 4 1 2.5-1 4-1 2.5 1 4 1 2.5-1 4-1"/><path d="M8 12V5a2 2 0 0 1 4 0"/><path d="M16 12V5a2 2 0 0 0-4 0"/><path d="M8 8h8"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0"/><path d="M8.5 16a5 5 0 0 1 7 0"/><path d="M2 9a15 15 0 0 1 20 0"/><circle cx="12" cy="19.5" r=".6"/></symbol>
+  <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M4.9 6l14.2 12M19.1 6 4.9 18"/><path d="m9 4 3 2 3-2M9 20l3-2 3 2"/></symbol>
+  <symbol id="i-cook" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h2a2 2 0 0 0 2-2V2M6 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol>
+  <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><path d="M6 2v2M10 2v2M14 2v2"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9Z"/><path d="M19 17v4M17 19h4"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2Z"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L18 10l-2.7-3.6A2 2 0 0 0 13.7 6H8.3a2 2 0 0 0-1.6.8L4 10.5l-1.5.6C1.7 11.4 1 12.1 1 13v3c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M9 17h6"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="m17 2-5 5-5-5"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></symbol>
+  <symbol id="i-baby" viewBox="0 0 24 24"><path d="M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5"/><path d="M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1"/></symbol>
+  <symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/></symbol>
+  <symbol id="i-bath" viewBox="0 0 24 24"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.7 3 4 3.7 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><path d="M10 5 8 7M2 12h20M7 19v2M17 19v2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-msg" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9Z"/></symbol>
 </svg>
 
-<header class="nav" id="nav">
-  <div class="wrap nav-in">
-    <a href="#top" class="logo" aria-label="Villa Sawah, ke atas">
-      <span class="logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18c3-2 6-2 9 0s6 2 9 0"/><path d="M3 13c3-2 6-2 9 0s6 2 9 0"/><path d="M12 3v7M9 6l3-3 3 3"/></svg></span>
-      <span>Villa Sawah<small>Tegallalang, Ubud</small></span>
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="#top" aria-label="Villa Sawah, ke atas">
+      <svg viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="#fff"/><path d="M6 18.5c2.7 0 2.7-2 5.3-2s2.7 2 5.4 2 2.6-2 5.3-2" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M8 13.5 14 8l6 5.5" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Villa Sawah
     </a>
-    <nav class="nav-links" aria-label="Utama">
-      <a href="#galeri">Galeri</a>
-      <a href="#fasilitas">Fasilitas</a>
-      <a href="#harga">Harga</a>
-      <a href="#ulasan">Ulasan</a>
-      <a href="#lokasi">Lokasi</a>
-    </nav>
-    <a href="#booking" class="btn btn-dark" data-open-cal>Cek tanggal</a>
-    <button class="menu-btn" id="menuBtn" aria-label="Buka menu" aria-expanded="false" aria-controls="mMenu">
-      <svg class="ico" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-    </button>
+    <ul class="nav-links">
+      <li><a href="#galeri">Galeri</a></li>
+      <li><a href="#villa">Fasilitas</a></li>
+      <li><a href="#harga">Harga</a></li>
+      <li><a href="#ulasan">Ulasan</a></li>
+      <li><a href="#lokasi">Lokasi</a></li>
+    </ul>
+    <div class="nav-r">
+      <a class="btn btn-white btn-sm" href="#pesan" data-open-cal>Cek tanggal</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Buka menu" aria-expanded="false"><svg class="i"><use href="#i-menu"/></svg></button>
+    </div>
   </div>
-  <div class="mobile-menu" id="mMenu">
-    <a href="#galeri">Galeri</a><a href="#fasilitas">Fasilitas</a><a href="#harga">Harga</a><a href="#ulasan">Ulasan</a><a href="#lokasi">Lokasi</a>
-    <a href="#booking" class="btn btn-dark btn-block" style="margin-top:16px;color:#fff;border:0">Cek tanggal</a>
-  </div>
+  <nav class="menu" id="menu" aria-label="Menu">
+    <a href="#galeri">Galeri</a><a href="#villa">Fasilitas</a><a href="#harga">Harga</a><a href="#ulasan">Ulasan</a><a href="#lokasi">Lokasi</a><a href="#pesan">Pesan</a>
+  </nav>
 </header>
 
 <main id="top">
-  <!-- Hero -->
   <section class="hero">
-    <div class="wrap">
-      <div class="hero-frame">
-        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1800&q=75&auto=format&fit=crop"
-             srcset="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=900&q=70&auto=format&fit=crop 900w, https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1800&q=75&auto=format&fit=crop 1800w"
-             sizes="100vw" alt="Kolam renang villa di antara pohon kelapa dan atap alang-alang, dengan perbukitan di belakang" fetchpriority="high">
-        <div class="hero-body">
-          <div>
-            <div class="hero-eyebrow">
-              <svg class="ico" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
-              Tegallalang · 15 menit dari pusat Ubud
-            </div>
-            <h1>Villa tiga kamar dengan kolam pribadi di tepi sawah</h1>
-            <p class="hero-sub">Untuk keluarga atau rombongan hingga 6 orang. Sarapan tiap pagi, staf villa dari 07.00 sampai 22.00, dan Wi‑Fi 100 Mbps untuk yang tetap kerja.</p>
-            <div class="hero-actions">
-              <a href="#booking" class="btn btn-accent" data-open-cal>Cek ketersediaan</a>
-              <a href="#galeri" class="btn btn-ghost">Lihat foto</a>
-            </div>
-          </div>
-          <aside class="hero-card" aria-label="Ringkasan harga">
-            <div class="row">
-              <div class="price-big num">Rp3,2 jt <span>/ malam</span></div>
-            </div>
-            <div class="row" style="margin-top:6px">
-              <span style="font-size:13px;color:var(--text-3)">Harga mulai, musim sepi</span>
-              <span class="rating"><svg class="star"><use href="#i-star"/></svg>4,92</span>
-            </div>
-            <hr>
-            <div class="hero-facts">
-              <div><b>3</b><span>Kamar</span></div>
-              <div><b>6</b><span>Tamu</span></div>
-              <div><b>12 m</b><span>Kolam</span></div>
-            </div>
-          </aside>
-        </div>
+    <img class="hero-img" src="https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?w=2000&q=75&auto=format&fit=crop" alt="Beranda kayu villa menghadap lembah hijau saat matahari terbit" fetchpriority="high">
+    <div class="wrap hero-c">
+      <span class="eyebrow mono"><i class="dot"></i>Sayan, Ubud · Bali</span>
+      <h1>Villa tiga kamar di tepi <em>sawah</em> Sayan</h1>
+      <p class="hero-sub">Kolam renang pribadi 12 meter, sarapan setiap pagi, dan 12 menit ke pusat Ubud. Untuk hingga 6 tamu.</p>
+      <div class="hero-meta">
+        <span><svg class="star"><use href="#i-star"/></svg><b class="num">4,95</b>&nbsp;· 128 ulasan</span>
+        <span>3 kamar tidur</span>
+                <span>Sarapan termasuk</span>
       </div>
-
-      <div class="strip">
-        <div><span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M3 18c2 1.3 4 1.3 6 0s4-1.3 6 0 4 1.3 6 0"/><path d="M8 15V5a2 2 0 0 1 4 0M16 15V5a2 2 0 0 0-4 0M8 9h8"/></svg></span><div><b>Kolam pribadi 12 m</b><span>Menghadap sawah</span></div></div>
-        <div><span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M3 9h18M5 9v10M19 9v10M3 19h18"/><path d="M8 5h8l2 4H6z"/></svg></span><div><b>Sarapan harian</b><span>Dimasak staf villa</span></div></div>
-        <div><span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a14.5 14.5 0 0 1 20 0"/><circle cx="12" cy="19.5" r=".8" fill="currentColor"/></svg></span><div><b>Wi‑Fi 100 Mbps</b><span>Fiber + cadangan 4G</span></div></div>
-        <div><span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg></span><div><b>Batal gratis</b><span>Hingga 14 hari sebelum</span></div></div>
+      <div class="bookbar" role="group" aria-label="Cek ketersediaan">
+        <button class="bb-f" data-open-cal="in"><small>Check-in</small><b id="bbIn">Pilih tanggal</b></button>
+        <button class="bb-f" data-open-cal="out"><small>Check-out</small><b id="bbOut">Pilih tanggal</b></button>
+        <button class="bb-f" data-go-guests><small>Tamu</small><b id="bbGuests">4 tamu</b></button>
+        <button class="btn btn-dark" data-open-cal>Cek ketersediaan</button>
       </div>
     </div>
   </section>
 
-  <!-- Gallery -->
   <section class="sec" id="galeri" style="padding-bottom:0">
     <div class="wrap">
-      <div class="gal-head">
+      <div class="gallery">
+        <button class="g g-1" data-photo="0" aria-label="Lihat foto: kolam renang"><img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1400&q=75&auto=format&fit=crop" alt="Kolam renang dikelilingi pohon kelapa dan atap rumah Bali" loading="lazy"><span class="g-cap">Kolam renang</span></button>
+        <button class="g g-2" data-photo="1" aria-label="Lihat foto: kamar utama"><img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&q=75&auto=format&fit=crop" alt="Kamar tidur utama berdinding kayu dengan pintu ke taman" loading="lazy"><span class="g-cap">Kamar utama</span></button>
+        <button class="g g-3" data-photo="2" aria-label="Lihat foto: kamar mandi"><img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=800&q=75&auto=format&fit=crop" alt="Kamar mandi dengan bak berendam batu dan tanaman" loading="lazy"><span class="g-cap">Kamar mandi</span></button>
+        <button class="g g-4" data-photo="3" aria-label="Lihat foto: sarapan"><img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=800&q=75&auto=format&fit=crop" alt="Sarapan buah, wafel dan jus di meja" loading="lazy"><span class="g-cap">Sarapan</span></button>
+        <div class="g g-5"><button class="g" style="position:absolute;inset:0" data-photo="4" aria-label="Lihat foto: jalan setapak taman"><img src="https://images.unsplash.com/photo-1586375300773-8384e3e4916f?w=800&q=75&auto=format&fit=crop" alt="Jalan setapak di antara pepohonan menuju villa" loading="lazy"></button>
+          <button class="g-all" data-photo="0"><svg class="i" style="width:16px;height:16px"><use href="#i-grid"/></svg>Lihat semua foto</button></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="villa">
+    <div class="wrap ov">
+      <div>
+        <span class="kicker mono">Tentang villa</span>
+        <h2 class="h2">Rumah kayu dan batu, <em>menghadap sawah</em></h2>
+        <div class="facts">
+          <div class="fact"><b class="num">3</b><span>Kamar tidur</span></div>
+          <div class="fact"><b class="num">3</b><span>Kamar mandi</span></div>
+          <div class="fact"><b class="num">6</b><span>Tamu maks.</span></div>
+          <div class="fact"><b class="num">420 m²</b><span>Luas lahan</span></div>
+        </div>
+        <div class="desc">
+          <p>Villa Sawah berdiri di ujung jalan kecil di Sayan, dikelilingi sawah yang masih digarap. Ruang tamu terbuka menghadap kolam, dapur lengkap, dan tiga kamar dengan kamar mandi masing-masing.</p>
+          <p>Staf kami datang setiap pagi untuk menyiapkan sarapan dan merapikan villa. Di sore hari, jalan setapak di belakang taman membawa Anda ke tepi Sungai Ayung dalam lima menit.</p>
+        </div>
+        <div class="host">
+          <div class="host-av">
+            <img src="https://api.dicebear.com/9.x/notionists/svg?seed=Made&backgroundColor=f3e2cf" alt="">
+            <img src="https://api.dicebear.com/9.x/notionists/svg?seed=Komang&backgroundColor=dfe7d6" alt="">
+          </div>
+          <div><b>Dikelola oleh Made &amp; Komang</b><span>Tinggal di Sayan · biasanya membalas dalam 1 jam</span></div>
+        </div>
+
+        <h3 class="h3">Kamar</h3>
+        <div class="rooms">
+          <div class="room"><svg class="i"><use href="#i-bed"/></svg><b>Kamar utama</b><span>King bed · bak berendam</span></div>
+          <div class="room"><svg class="i"><use href="#i-bed"/></svg><b>Kamar taman</b><span>Queen bed · shower luar</span></div>
+          <div class="room"><svg class="i"><use href="#i-bed"/></svg><b>Kamar sawah</b><span>2 single bed · balkon</span></div>
+        </div>
+
+        <h3 class="h3">Fasilitas</h3>
+        <ul class="amen">
+          <li><span class="chip"><svg class="i"><use href="#i-pool"/></svg></span><div>Kolam renang pribadi<small>12 × 4 m, air garam</small></div></li>
+          <li><span class="chip"><svg class="i"><use href="#i-coffee"/></svg></span><div>Sarapan setiap pagi<small>Dimasak di villa, 07.00–10.30</small></div></li>
+          <li><span class="chip"><svg class="i"><use href="#i-wifi"/></svg></span><div>Wi-Fi fiber<small>100 Mbps, di seluruh villa</small></div></li>
+          <li><span class="chip"><svg class="i"><use href="#i-snow"/></svg></span><div>AC di setiap kamar<small>Plus kipas plafon</small></div></li>
+          <li><span class="chip"><svg class="i"><use href="#i-cook"/></svg></span><div>Dapur lengkap<small>Kompor, oven, kulkas besar</small></div></li>
+          <li><span class="chip"><svg class="i"><use href="#i-spark"/></svg></span><div>Pembersihan harian<small>Handuk diganti setiap hari</small></div></li>
+          <li><span class="chip"><svg class="i"><use href="#i-plane"/></svg></span><div>Antar-jemput bandara<small>Gratis untuk 4 malam atau lebih</small></div></li>
+          <li><span class="chip"><svg class="i"><use href="#i-car"/></svg></span><div>Parkir pribadi<small>2 mobil, plus motor</small></div></li>
+          <li><span class="chip"><svg class="i"><use href="#i-tv"/></svg></span><div>Smart TV 55 inci<small>Netflix dan YouTube</small></div></li>
+          <li><span class="chip"><svg class="i"><use href="#i-laptop"/></svg></span><div>Meja kerja<small>Di kamar utama</small></div></li>
+          <li><span class="chip"><svg class="i"><use href="#i-baby"/></svg></span><div>Ramah anak<small>Boks bayi dan kursi makan</small></div></li>
+          <li><span class="chip"><svg class="i"><use href="#i-leaf"/></svg></span><div>Taman tropis<small>Gazebo dan bale-bale</small></div></li>
+        </ul>
+      </div>
+
+      <aside class="bk" id="pesan" aria-label="Pemesanan">
+        <div class="bk-top">
+          <div class="bk-price num"><span id="bkRate">Rp3.850.000</span> <small>/ malam</small></div>
+          <a class="bk-rate" href="#ulasan"><svg class="star"><use href="#i-star"/></svg><b class="num">4,95</b>&nbsp;· 128</a>
+        </div>
+        <div class="bk-season mono" id="bkSeason">Musim normal · min. 2 malam</div>
+
+        <div class="fields" id="fields">
+          <div class="fields-row">
+            <button class="fld" id="fIn" aria-expanded="false" aria-controls="cal"><small>Check-in</small><b id="vIn">Pilih tanggal</b></button>
+            <button class="fld" id="fOut" aria-expanded="false" aria-controls="cal"><small>Check-out</small><b id="vOut">Pilih tanggal</b></button>
+          </div>
+          <div class="guests" id="guestsRow">
+            <div><small>Tamu</small><b id="vGuests">4 tamu</b></div>
+            <div class="step">
+              <button id="gMinus" aria-label="Kurangi tamu"><svg class="i" style="width:16px;height:16px"><use href="#i-minus"/></svg></button>
+              <output id="gCount" class="num" aria-live="polite">4</output>
+              <button id="gPlus" aria-label="Tambah tamu"><svg class="i" style="width:16px;height:16px"><use href="#i-plus"/></svg></button>
+            </div>
+          </div>
+
+          <div class="cal" id="cal" role="dialog" aria-label="Pilih tanggal menginap">
+            <div class="cal-head">
+              <div><b id="calTitle">Pilih check-in</b><br><span id="calSub">Tanggal bergaris sudah terisi</span></div>
+              <div class="cal-nav">
+                <button id="calPrev" aria-label="Bulan sebelumnya"><svg class="i" style="width:18px;height:18px"><use href="#i-left"/></svg></button>
+                <button id="calNext" aria-label="Bulan berikutnya"><svg class="i" style="width:18px;height:18px"><use href="#i-right"/></svg></button>
+              </div>
+            </div>
+            <div class="months" id="months"></div>
+            <div class="cal-foot">
+              <span class="legend"><i></i>Terisi</span>
+              <div class="btns">
+                <button class="link" id="calClear">Hapus tanggal</button>
+                <button class="btn btn-dark btn-sm" id="calDone">Selesai</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="sumWrap"></div>
+        <div class="bk-err" id="bkErr" role="alert"></div>
+        <button class="btn btn-dark btn-block" id="bookBtn">Pesan sekarang</button>
+        <p class="bk-note">Belum ada tagihan. Deposit 30% setelah dikonfirmasi</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="sec rates-band" id="harga">
+    <div class="wrap rates">
+      <div>
+        <span class="kicker mono">Harga per malam</span>
+        <h2 class="h2">Satu harga untuk <em>seluruh villa</em></h2>
+        <p class="lede">Harga untuk villa lengkap hingga 6 tamu, bukan per kamar. Belum termasuk pajak dan layanan 21%.</p>
+        <ul class="incl">
+          <li><svg class="i"><use href="#i-check"/></svg>Sarapan untuk semua tamu setiap pagi</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Pembersihan harian dan ganti handuk</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Antar-jemput bandara untuk 4 malam atau lebih</li>
+          <li><svg class="i"><use href="#i-check"/></svg>Diskon 10% untuk 7 malam atau lebih</li>
+        </ul>
+      </div>
+      <div>
+        <table class="rt">
+          <thead><tr><th>Periode</th><th class="p">Per malam</th></tr></thead>
+          <tbody id="rateRows"></tbody>
+        </table>
+        <div class="rate-notes mono">
+          <span>Check-in 14.00</span><span>Check-out 12.00</span><span>Batal gratis hingga 14 hari sebelumnya</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="ulasan">
+    <div class="wrap">
+      <div class="rv-top">
         <div>
-          <div class="eyebrow">Galeri</div>
-          <h2 class="h2">Bangun dengan pemandangan sawah</h2>
-        </div>
-        <div class="gal-side"><p class="lead" style="max-width:40ch;margin:0">Tiga kamar menghadap ke kolam, ruang keluarga terbuka, dan gazebo untuk pijat atau yoga pagi.</p><button class="btn btn-ghost" type="button" id="galAll"><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>Semua foto</button></div>
-      </div>
-      <div class="gallery" id="gallery"></div>
-    </div>
-  </section>
-
-  <!-- Main -->
-  <section class="sec">
-    <div class="wrap main">
-      <div>
-        <div class="block about">
-          <div class="eyebrow">Tentang villa</div>
-          <h2 class="h2">Tenang, dekat dengan semuanya</h2>
-          <p class="lead">Villa Sawah berdiri di lahan 800 m² di ujung jalan desa Tegallalang. Cukup jauh dari jalan utama untuk mendengar suara air irigasi, cukup dekat untuk makan malam di Ubud.</p>
-          <p style="margin-top:14px">Setiap pagi Pak Wayan dan timnya menyiapkan sarapan di gazebo: nasi goreng, pancake pisang, atau buah dan yogurt. Mau makan malam di villa? Pesan sehari sebelumnya, belanja dihitung sesuai struk.</p>
-          <div class="host">
-            <img src="https://api.dicebear.com/9.x/notionists/svg?seed=Wayan&backgroundColor=fde7d3" alt="" width="48" height="48">
-            <div><b>Dikelola oleh Made &amp; Wayan</b><span>Tuan rumah sejak 2019</span></div>
-          </div>
-        </div>
-
-        <div class="block">
-          <div class="eyebrow">Kamar</div>
-          <h2 class="h2">3 kamar tidur, 3 kamar mandi</h2>
-          <div class="rooms">
-            <div class="room">
-              <span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 15h18M3 18v2M21 18v2"/><path d="M6 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3M12 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg></span>
-              <h3>Kamar utama</h3>
-              <p>King bed, kamar mandi semi-outdoor dengan bathtub, akses langsung ke kolam.</p>
-            </div>
-            <div class="room">
-              <span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 15h18M3 18v2M21 18v2"/><path d="M6 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3M12 10V7a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/></svg></span>
-              <h3>Kamar sawah</h3>
-              <p>Queen bed, jendela kaca penuh ke arah sawah, kamar mandi dalam.</p>
-            </div>
-            <div class="room">
-              <span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M2 18v-5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v5M12 18v-5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v5M2 15h20M2 18v2M22 18v2"/></svg></span>
-              <h3>Kamar taman</h3>
-              <p>Dua single bed (bisa digabung), cocok untuk anak atau teman.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="block" id="fasilitas">
-          <div class="eyebrow">Fasilitas</div>
-          <h2 class="h2">Yang sudah termasuk</h2>
-          <ul class="clean amen" id="amen"></ul>
-        </div>
-
-        <div class="block" id="harga">
-          <div class="eyebrow">Harga per malam</div>
-          <h2 class="h2">Harga sesuai musim</h2>
-          <p class="lead">Harga untuk seluruh villa (maks. 6 tamu), sudah termasuk sarapan. Minimal menginap 2 malam.</p>
-          <div class="rates" id="rates"></div>
-        </div>
-      </div>
-
-      <!-- Booking -->
-      <div class="book-col" id="booking">
-        <div class="book">
-          <div class="book-top">
+          <span class="kicker mono">Ulasan tamu</span>
+          <div class="score">
+            <b class="num" id="scoreBig">4,95</b>
             <div>
-              <div class="price-big num" id="bkRate">Rp3.200.000 <span>/ malam</span></div>
-              <div class="book-sub" id="bkRateNote">Musim sepi · untuk seluruh villa</div>
-            </div>
-            <a href="#ulasan" class="rating" style="text-decoration:none;padding:11px 0"><svg class="star"><use href="#i-star"/></svg>4,92</a>
-          </div>
-
-          <div class="fields">
-            <div class="dates">
-              <button class="field" id="fIn" type="button" aria-haspopup="dialog" aria-expanded="false"><small>Check-in</small><span id="vIn">Pilih tanggal</span></button>
-              <button class="field" id="fOut" type="button" aria-haspopup="dialog" aria-expanded="false"><small>Check-out</small><span id="vOut">Pilih tanggal</span></button>
-            </div>
-            <div class="guests">
-              <div><small>Tamu</small><span id="vGuests" class="num">2 tamu</span></div>
-              <div class="stepper">
-                <button class="step" id="gMinus" type="button" aria-label="Kurangi tamu"><svg class="ico" viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
-                <button class="step" id="gPlus" type="button" aria-label="Tambah tamu"><svg class="ico" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
-              </div>
-            </div>
-            <div class="cal" id="cal" role="dialog" aria-label="Pilih tanggal menginap">
-              <div class="cal-head">
-                <button class="cal-nav" id="cPrev" type="button" aria-label="Bulan sebelumnya"><svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
-                <b id="cTitle"></b>
-                <button class="cal-nav" id="cNext" type="button" aria-label="Bulan berikutnya"><svg class="ico" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
-              </div>
-              <div class="cal-grid" id="cGrid"></div>
-              <div class="cal-foot">
-                <span id="cHint">Pilih tanggal check-in</span>
-                <button type="button" id="cClear">Hapus</button>
-              </div>
+              <div class="stars"><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg></div>
+              <p>dari 128 ulasan tamu<br>sejak Maret 2022</p>
             </div>
           </div>
-
-          <div class="msg err" id="bkErr" role="alert"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span></span></div>
-
-          <div class="breakdown" id="bd" aria-live="polite"></div>
-
-          <button class="btn btn-dark btn-block" id="bookBtn" type="button">Pilih tanggal</button>
-          <p class="book-note">Belum ada pembayaran. Kami konfirmasi lewat WhatsApp.</p>
         </div>
-        <a class="wa" href="https://wa.me/6281200000000?text=Halo%2C%20saya%20mau%20tanya%20Villa%20Sawah" target="_blank" rel="noopener">
-          <span class="chip-ico"><svg class="ico" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2z"/></svg></span>
-          <div><b>Tanya dulu lewat WhatsApp</b><span>Dibalas 08.00–21.00 WITA</span></div>
-          <svg class="ico chev" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-        </a>
+        <div class="cats" id="cats"></div>
+      </div>
+
+      <div class="rv-grid">
+        <article class="rv rv-feat">
+          <div class="rv-photo"><img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?w=1000&q=75&auto=format&fit=crop" alt="Sarapan buah, wafel dan telur di meja" loading="lazy"></div>
+          <div class="rv-h"><div class="rv-stars"><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg></div><span class="rv-stay mono">Okt 2026 · 5 malam · keluarga</span></div>
+          <q>Bangun pagi, sarapan sudah siap di bale, dan di depan kami hanya sawah. Anak-anak berenang dari pagi sampai sore.</q>
+          <div class="who"><img src="https://api.dicebear.com/9.x/notionists/svg?seed=Rina&backgroundColor=f3e2cf" alt=""><div><b>Rina Hartono</b><span>Jakarta</span></div></div>
+        </article>
+        <article class="rv">
+          <div class="rv-h"><div class="rv-stars"><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg></div><span class="rv-stay mono">Sep 2026 · 9 malam</span></div>
+          <q>Wi-Fi-nya cepat dan stabil, saya bisa rapat video dari meja di kamar utama tanpa putus. Komang sangat membantu soal sopir.</q>
+          <div class="who"><img src="https://api.dicebear.com/9.x/notionists/svg?seed=Daniel&backgroundColor=dde6ee" alt=""><div><b>Daniel Weber</b><span>München</span></div></div>
+        </article>
+        <article class="rv">
+          <div class="rv-h"><div class="rv-stars"><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg></div><span class="rv-stay mono">Agu 2026 · 4 malam · pasangan</span></div>
+          <q>Persis seperti di foto. Tenang sekali di malam hari, hanya suara kodok dari sawah. Ke pusat Ubud cukup naik Grab.</q>
+          <div class="who"><img src="https://api.dicebear.com/9.x/notionists/svg?seed=Sarah&backgroundColor=e9e1f0" alt=""><div><b>Sarah Mitchell</b><span>Melbourne</span></div></div>
+        </article>
+        <article class="rv">
+          <div class="rv-h"><div class="rv-stars"><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg></div><span class="rv-stay mono">Jul 2026 · 3 malam · grup</span></div>
+          <q>Kami bertiga keluarga menginap bareng, tiap kamar punya kamar mandi sendiri jadi tidak antre. Makan malam Bali dari koki villa juara.</q>
+          <div class="who"><img src="https://api.dicebear.com/9.x/notionists/svg?seed=Dimas&backgroundColor=dfe7d6" alt=""><div><b>Dimas Prasetyo</b><span>Surabaya</span></div></div>
+        </article>
+        <article class="rv">
+          <div class="rv-h"><div class="rv-stars"><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg><svg class="star"><use href="#i-star"/></svg></div><span class="rv-stay mono">Jun 2026 · 6 malam · pasangan</span></div>
+          <q>Jalan menuju villa agak sempit untuk mobil besar, tapi begitu sampai semuanya sepadan. Kolamnya bersih setiap hari.</q>
+          <div class="who"><img src="https://api.dicebear.com/9.x/notionists/svg?seed=Emma&backgroundColor=f6e3dc" alt=""><div><b>Emma Laurent</b><span>Lyon</span></div></div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- Reviews -->
-  <section class="reviews sec" id="ulasan">
-    <div class="wrap rv-top">
-      <div>
-        <div class="eyebrow">Ulasan tamu</div>
-        <h2 class="h2">Kata tamu yang sudah menginap</h2>
-        <div class="score num">4,92 <small>dari 128 ulasan</small></div>
-        <div class="stars" aria-label="Rating 4,92 dari 5"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div>
-        <div class="bars" id="bars"></div>
-      </div>
-      <div>
-        <div class="rv-grid" id="rvGrid"></div>
-        <div class="rv-more"><button class="btn btn-ghost" id="rvMore" type="button">Tampilkan ulasan lain</button></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Location -->
-  <section class="sec" id="lokasi">
+  <section class="sec" id="lokasi" style="padding-top:0">
     <div class="wrap loc">
-      <div class="map" role="img" aria-label="Peta sederhana lokasi villa di Tegallalang, utara Ubud">
-        <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <rect width="500" height="400" fill="#EAE7E1"/>
-          <g fill="#DCE5CF">
-            <path d="M0 0h190c-10 60 20 110 0 170-20 50-90 60-190 50z"/>
-            <path d="M310 0h190v150c-60 20-130 10-170-30-30-30-30-80-20-120z"/>
-            <path d="M320 260c50-20 120-10 180 20v120H300c-20-50-20-110 20-140z"/>
-            <path d="M0 290c50-10 110 0 140 40 20 30 20 50 10 70H0z"/>
-          </g>
-          <g stroke="#C9D6B8" stroke-width="1" fill="none">
-            <path d="M20 40c50 10 100 10 150 0M15 80c55 12 110 12 160 0M10 120c55 12 110 12 165 0M330 40c50 10 100 10 150 0M325 80c55 12 110 12 160 0"/>
-          </g>
-          <path d="M240 -10c10 80-20 140 0 210s-10 150 10 210" stroke="#BFD3E0" stroke-width="8" fill="none" stroke-linecap="round"/>
-          <path d="M260 410c-10-70 0-130 20-180s20-140 0-240" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round"/>
-          <path d="M-10 250c90-10 170 0 290-40s170-20 230-10" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round"/>
-          <path d="M280 200c-10-30-20-40-20-60" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
-        </svg>
-        <span class="map-lbl" style="left:8%;top:12%">Sawah Tegallalang</span>
-        <span class="map-lbl" style="left:58%;top:84%">ke Ubud ↓</span>
-        <span class="map-lbl" style="left:6%;top:66%">Jl. Raya Tegallalang</span>
-        <div class="pin"><div class="pin-card"><span class="logo-mark"></span>Villa Sawah</div></div>
+      <div class="loc-img">
+        <img src="https://images.unsplash.com/photo-1559628233-100c798642d4?w=1400&q=75&auto=format&fit=crop" alt="Pemandangan udara sawah dan hutan di sekitar Ubud saat matahari terbit" loading="lazy">
+        <div class="pin"><span class="pdot"><svg class="i" style="width:18px;height:18px"><use href="#i-pin"/></svg></span><div><b>Jl. Raya Sayan, Ubud</b><span>Gianyar, Bali 80571</span></div></div>
       </div>
       <div>
-        <div class="eyebrow">Lokasi</div>
-        <h2 class="h2">Di desa, bukan di jalan raya</h2>
-        <p class="lead">Jalan masuk 200 m terakhir cukup untuk satu mobil. Parkir untuk dua mobil di depan gerbang. Alamat lengkap dikirim setelah booking dikonfirmasi. Waktu tempuh dengan mobil:</p>
-        <ul class="clean dist" id="dist"></ul>
+        <span class="kicker mono">Lokasi</span>
+        <h2 class="h2">Sepi, tapi dekat <em>ke mana-mana</em></h2>
+        <p class="lede">Di sisi barat Ubud, jauh dari jalan utama. Sopir kami bisa disewa Rp650.000 per hari.</p>
+        <ul class="dist">
+          <li>Sungai Ayung<span class="mono">5 mnt jalan kaki</span></li>
+          <li>Pusat Ubud &amp; Pasar Seni<span class="mono">12 mnt berkendara</span></li>
+          <li>Bukit Campuhan<span class="mono">15 mnt berkendara</span></li>
+          <li>Sawah Tegallalang<span class="mono">25 mnt berkendara</span></li>
+          <li>Bandara Ngurah Rai<span class="mono">75 mnt berkendara</span></li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="sec" style="padding-top:0">
-    <div class="wrap faq">
-      <div>
-        <div class="eyebrow">Pertanyaan</div>
-        <h2 class="h2">Sebelum Anda memesan</h2>
-        <div class="contact-card">
-          <div class="host">
-            <img src="https://api.dicebear.com/9.x/notionists/svg?seed=MadeAyu&backgroundColor=e0ecd9" alt="" width="48" height="48">
-            <div><b>Made Ayu</b><span>Reservasi</span></div>
-          </div>
-          <p>Ada pertanyaan soal tanggal, acara keluarga, atau kebutuhan khusus? Tanya langsung, kami balas di hari yang sama.</p>
-          <a class="btn btn-ghost" href="mailto:reservasi@villasawah.example">reservasi@villasawah.example</a>
-        </div>
+  <section class="sec" style="padding-top:0" id="faq">
+    <div class="wrap">
+      <div class="sec-h"><div><span class="kicker mono">Pertanyaan</span><h2 class="h2">Sebelum Anda memesan</h2></div><a class="btn btn-light" href="https://wa.me/6281234567890" target="_blank" rel="noopener"><svg class="i" style="width:18px;height:18px"><use href="#i-msg"/></svg>Chat WhatsApp</a></div>
+      <div class="faq">
+        <div class="qa"><div><h3>Bagaimana cara membayar?</h3><p>Deposit 30% lewat transfer bank atau kartu kredit setelah pesanan dikonfirmasi. Sisanya dibayar saat check-in.</p></div></div>
+        <div class="qa"><div><h3>Bagaimana kebijakan pembatalan?</h3><p>Batal gratis hingga 14 hari sebelum check-in. Setelah itu deposit tidak dapat dikembalikan, tetapi tanggal bisa diubah sekali.</p></div></div>
+        <div class="qa"><div><h3>Apakah cocok untuk anak kecil?</h3><p>Ya. Tersedia boks bayi, kursi makan anak, dan pagar kolam yang bisa dipasang sebelum Anda tiba.</p></div></div>
+        <div class="qa"><div><h3>Bisa pesan makan malam di villa?</h3><p>Koki kami memasak makan malam Bali untuk hingga 6 orang, mulai Rp1.200.000. Pesan paling lambat pukul 14.00.</p></div></div>
+        <div class="qa"><div><h3>Bisa check-in lebih awal?</h3><p>Bisa jika malam sebelumnya kosong. Kalau tidak, kami simpan koper Anda dan kolam boleh dipakai sejak pukul 11.00.</p></div></div>
+        <div class="qa"><div><h3>Apakah ada listrik cadangan?</h3><p>Ada genset otomatis untuk seluruh villa, termasuk AC dan pompa kolam, jika listrik PLN padam.</p></div></div>
       </div>
-      <div class="qa" id="qa"></div>
     </div>
   </section>
 
-  <!-- Closing -->
   <section class="close">
-    <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1800&q=70&auto=format&fit=crop" alt="Terasering sawah hijau dengan pohon kelapa di Tegallalang" loading="lazy">
-    <div class="wrap" style="width:100%;padding-top:56px;padding-bottom:56px">
-      <h2>Tanggal di bulan Desember cepat penuh</h2>
-      <p>Libur Natal dan tahun baru biasanya penuh sejak awal bulan. Cek tanggal Anda sekarang, kami konfirmasi dalam 1 jam.</p>
-      <div class="hero-actions">
-        <a href="#booking" class="btn btn-accent" data-open-cal>Cek ketersediaan</a>
-        <a class="btn btn-ghost" href="https://wa.me/6281200000000" target="_blank" rel="noopener">Chat WhatsApp</a>
+    <img src="https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1800&q=70&auto=format&fit=crop" alt="">
+    <div class="wrap">
+      <h2>Desember masih ada beberapa malam kosong</h2>
+      <p>Pilih tanggal dan kirim permintaan. Made atau Komang akan mengonfirmasi lewat WhatsApp dalam satu jam.</p>
+      <div class="acts">
+        <a class="btn btn-white" href="#pesan" data-open-cal>Pilih tanggal</a>
+        <a class="btn btn-ghost" href="https://wa.me/6281234567890" target="_blank" rel="noopener">Chat WhatsApp</a>
       </div>
     </div>
   </section>
@@ -693,336 +700,310 @@ dialog::backdrop{background:rgba(12,10,9,.6);backdrop-filter:blur(4px)}
 
 <footer>
   <div class="wrap">
-    <div class="foot">
+    <div class="ft">
       <div>
-        <a href="#top" class="logo"><span class="logo-mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18c3-2 6-2 9 0s6 2 9 0"/><path d="M3 13c3-2 6-2 9 0s6 2 9 0"/><path d="M12 3v7M9 6l3-3 3 3"/></svg></span><span>Villa Sawah<small>Tegallalang, Ubud</small></span></a>
-        <p>Banjar Kebon, Tegallalang, Gianyar, Bali 80561. Villa pribadi, dikelola keluarga sejak 2019.</p>
+        <a class="mark" href="#top"><svg viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="8" fill="#fff"/><path d="M6 18.5c2.7 0 2.7-2 5.3-2s2.7 2 5.4 2 2.6-2 5.3-2" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M8 13.5 14 8l6 5.5" stroke="#111" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Villa Sawah</a>
+        <p style="margin-top:14px;max-width:32ch">Jl. Raya Sayan, Ubud, Gianyar, Bali 80571</p>
       </div>
-      <div><h2 class="fh">Villa</h2><ul class="clean"><li><a href="#galeri">Galeri</a></li><li><a href="#fasilitas">Fasilitas</a></li><li><a href="#harga">Harga</a></li><li><a href="#ulasan">Ulasan</a></li></ul></div>
-      <div><h2 class="fh">Info</h2><ul class="clean"><li><a href="#lokasi">Lokasi</a></li><li><a href="#qa">Tanya jawab</a></li><li><a href="#qa">Kebijakan pembatalan</a></li><li><a href="#qa">Aturan villa</a></li></ul></div>
-      <div><h2 class="fh">Kontak</h2><ul class="clean"><li><a href="https://wa.me/6281200000000">WhatsApp</a></li><li><a href="mailto:reservasi@villasawah.example">Email</a></li><li><a href="#">Instagram</a></li></ul></div>
+      <div><h3>Villa</h3><ul><li><a href="#galeri">Galeri</a></li><li><a href="#villa">Fasilitas</a></li><li><a href="#harga">Harga</a></li></ul></div>
+      <div><h3>Tamu</h3><ul><li><a href="#ulasan">Ulasan</a></li><li><a href="#lokasi">Lokasi</a></li><li><a href="#faq">Pertanyaan</a></li></ul></div>
+      <div><h3>Kontak</h3><ul><li><a href="https://wa.me/6281234567890">+62 812 3456 7890</a></li><li><a href="mailto:halo@villasawah.id">halo@villasawah.id</a></li><li><a href="#">Instagram</a></li></ul></div>
     </div>
-    <div class="legal"><span>© 2026 Villa Sawah Tegallalang</span><span>Harga dalam Rupiah · WITA (GMT+8)</span></div>
+    <div class="ft-b"><span>© 2026 Villa Sawah</span><span class="mono">Waktu Bali (WITA) · UTC+8</span></div>
   </div>
 </footer>
 
 <div class="mbar" id="mbar">
-  <div><b class="num" id="mbPrice">Rp3.200.000</b><span id="mbNote">/ malam · ★ 4,92</span></div>
-  <a href="#booking" class="btn btn-dark" data-open-cal>Cek tanggal</a>
+  <div><b class="num" id="mRate">Rp3.850.000</b><span id="mSub">per malam</span></div>
+  <a class="btn btn-dark" href="#pesan" id="mBtn">Pesan</a>
 </div>
 
-<!-- Lightbox -->
-<dialog class="lb" id="lb" aria-label="Galeri foto">
-  <div class="lb-in">
-    <img id="lbImg" alt="">
-    <div class="lb-cap" id="lbCap"></div>
-    <button class="lb-btn lb-close" id="lbClose" aria-label="Tutup"><svg class="ico" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <button class="lb-btn lb-prev" id="lbPrev" aria-label="Foto sebelumnya"><svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
-    <button class="lb-btn lb-next" id="lbNext" aria-label="Foto berikutnya"><svg class="ico" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
-  </div>
-</dialog>
+<div class="ov-bg" id="modalBg">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" id="modal"></div>
+</div>
 
-<!-- Booking modal -->
-<dialog class="modal" id="modal" aria-labelledby="mTitle">
-  <div class="modal-in" id="modalIn"></div>
-</dialog>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Galeri foto">
+  <div class="lb-top"><span class="mono" id="lbCount">1 / 8</span><button class="x" id="lbClose" aria-label="Tutup galeri"><svg class="i" style="width:18px;height:18px"><use href="#i-x"/></svg></button></div>
+  <div class="lb-stage">
+    <button class="lb-nav" id="lbPrev" aria-label="Foto sebelumnya"><svg class="i"><use href="#i-left"/></svg></button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-nav" id="lbNext" aria-label="Foto berikutnya"><svg class="i"><use href="#i-right"/></svg></button>
+  </div>
+</div>
 
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
-  const IMG = (id, w) => `https://images.unsplash.com/photo-${id}?w=${w}&q=72&auto=format&fit=crop`;
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const rp = n => 'Rp' + Math.round(n).toLocaleString('id-ID');
-  const ico = p => `<svg class="ico" viewBox="0 0 24 24">${p}</svg>`;
-  const star = '<svg><use href="#i-star"/></svg>';
-
-  /* ---------- Gallery ---------- */
-  const photos = [
-    { id: '1520250497591-112f2f40a3f4', cap: 'Kolam & taman' },
-    { id: '1578683010236-d716f9a3f461', cap: 'Kamar utama' },
-    { id: '1555400038-63f5ba517a47', cap: 'Sawah belakang villa' },
-    { id: '1610641818989-c2051b5e2cfd', cap: 'Kolam sore hari' },
-    { id: '1544161515-4ab6ce6db874', cap: 'Pijat di gazebo' },
-  ];
-  const gal = $('#gallery');
-  gal.innerHTML = photos.map((p, i) => `
-    <button class="g-item" type="button" data-i="${i}" aria-label="Buka foto: ${p.cap}">
-      <img src="${IMG(p.id, i === 0 ? 1000 : 640)}" alt="${p.cap}" loading="lazy">
-      <span class="g-cap">${p.cap}</span>
-    </button>`).join('');
-  const lb = $('#lb'); let cur = 0;
-  const showLb = i => { cur = (i + photos.length) % photos.length; $('#lbImg').src = IMG(photos[cur].id, 1800); $('#lbImg').alt = photos[cur].cap; $('#lbCap').innerHTML = `${photos[cur].cap}<span>${cur + 1} / ${photos.length}</span>`; };
-  gal.addEventListener('click', e => { const b = e.target.closest('.g-item'); if (!b) return; showLb(+b.dataset.i); lb.showModal(); });
-  $('#galAll').onclick = () => { showLb(0); lb.showModal(); };
-  $('#lbClose').onclick = () => lb.close();
-  $('#lbPrev').onclick = () => showLb(cur - 1);
-  $('#lbNext').onclick = () => showLb(cur + 1);
-  lb.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') showLb(cur - 1); if (e.key === 'ArrowRight') showLb(cur + 1); });
-  lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('lb-in')) lb.close(); });
-
-  /* ---------- Amenities ---------- */
-  const amen = [
-    ['Kolam renang pribadi', 'Air garam, 12 × 4 m', '<path d="M3 18c2 1.3 4 1.3 6 0s4-1.3 6 0 4 1.3 6 0"/><path d="M8 15V5a2 2 0 0 1 4 0M16 15V5a2 2 0 0 0-4 0M8 9h8"/>'],
-    ['Sarapan setiap pagi', 'Untuk semua tamu', '<path d="M17 8h1a3 3 0 0 1 0 6h-1"/><path d="M3 8h14v6a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5z"/><path d="M7 2v3M11 2v3"/>'],
-    ['Wi‑Fi 100 Mbps', 'Fiber, cadangan 4G', '<path d="M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0M2 9a14.5 14.5 0 0 1 20 0"/><path d="M12 19.5h.01"/>'],
-    ['AC di setiap kamar', 'Plus kipas langit-langit', '<path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/><path d="M9.5 4.5L12 7l2.5-2.5M9.5 19.5L12 17l2.5 2.5"/>'],
-    ['Dapur lengkap', 'Kompor, kulkas, oven', '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M8 6h.01M12 6h.01"/><rect x="8" y="12" width="8" height="5" rx="1"/>'],
-    ['Staf villa', '07.00–22.00, housekeeping harian', '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'],
-    ['Parkir 2 mobil', 'Di dalam gerbang', '<path d="M5 17h14M6 17v2M18 17v2"/><path d="M5 17l1.5-6A2 2 0 0 1 8.4 9.5h7.2a2 2 0 0 1 1.9 1.5L19 17"/><path d="M7.5 14h.01M16.5 14h.01"/>'],
-    ['Genset cadangan', 'Listrik tetap menyala', '<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>'],
-    ['Antar-jemput bandara', 'Rp450.000 sekali jalan', '<path d="M2 16l20-7-2-3-7 2.5L7 4 5 5l4 5-5 2-2-1-1 1z"/><path d="M3 21h18"/>', 'Tambahan'],
-    ['Pijat di villa', 'Rp250.000 / 60 menit', '<path d="M12 21c-4-3-8-6.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 4.5-4 8-8 11z"/>', 'Tambahan'],
-  ];
-  $('#amen').innerHTML = amen.map(([t, s, p, tag]) => `
-    <li><span class="chip-ico">${ico(p)}</span><div><b>${t}${tag ? `<span class="tag">${tag}</span>` : ''}</b><span>${s}</span></div></li>`).join('');
-
-  /* ---------- Seasons & rates ---------- */
-  const SEASONS = {
-    low:  { name: 'Musim sepi',  price: 3200000, color: '#A8A29E', when: 'Februari–Maret, November' },
-    reg:  { name: 'Reguler',     price: 3850000, color: '#111111', when: 'Januari (6–31), April–Juni, September–Oktober, 1–19 Desember' },
-    peak: { name: 'Musim ramai', price: 4900000, color: '#F97316', when: 'Juli–Agustus, 20 Desember–5 Januari' },
-  };
-  const seasonOf = d => {
-    const m = d.getMonth(), day = d.getDate();
-    if (m === 6 || m === 7 || (m === 11 && day >= 20) || (m === 0 && day <= 5)) return 'peak';
-    if (m === 1 || m === 2 || m === 10) return 'low';
-    return 'reg';
-  };
-  const CLEAN = 350000, TAX = 0.10;
-  $('#rates').innerHTML = ['low', 'reg', 'peak'].map(k => {
-    const s = SEASONS[k];
-    return `<div class="rate"><div><h3><span class="dot" style="background:${s.color}"></span>${s.name}</h3><p>${s.when}</p></div>
-      <div class="p num">${rp(s.price)}<small>per malam</small></div></div>`;
-  }).join('') + `<div class="rate-notes">
-      <span>${ico('<path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/>')}Biaya kebersihan ${rp(CLEAN)} sekali</span>
-      <span>${ico('<path d="M9 14l6-6M9.5 8.5h.01M14.5 13.5h.01"/><rect x="4" y="3" width="16" height="18" rx="2"/>')}Pajak & layanan 10%</span>
-      <span>${ico('<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>')}Min. 2 malam</span>
-    </div>`;
-
-  /* ---------- Booking state ---------- */
-  const TODAY = new Date(); TODAY.setHours(0, 0, 0, 0);
-  const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
-  const key = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-  // Nights already taken (relative to today so the demo always has some)
-  const BOOKED = new Set();
-  [[4, 3], [12, 4], [21, 2], [33, 5], [38, 6], [52, 3], [70, 4]].forEach(([s, n]) => { for (let i = 0; i < n; i++) BOOKED.add(key(addDays(TODAY, s + i))); });
-
-  const MONTHS = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
   const MON = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-  const DOW = ['Sen','Sel','Rab','Kam','Jum','Sab','Min'];
-  const fmt = d => `${['Min','Sen','Sel','Rab','Kam','Jum','Sab'][d.getDay()]}, ${d.getDate()} ${MON[d.getMonth()]} ${d.getFullYear()}`;
-  const fmtShort = d => `${d.getDate()} ${MON[d.getMonth()]}`;
+  const MONF = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+  const DOW = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+  const D = (y, m, d) => new Date(y, m, d);
+  const key = d => d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  const addDays = (d, n) => D(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const fmt = d => `${DOW[d.getDay()]}, ${d.getDate()} ${MON[d.getMonth()]}`;
+  const fmtLong = d => `${d.getDate()} ${MON[d.getMonth()]} ${d.getFullYear()}`;
 
-  const st = { in: null, out: null, guests: 2, view: new Date(TODAY.getFullYear(), TODAY.getMonth(), 1), picking: 'in' };
-  const MAXG = 6, MAX_VIEW = new Date(TODAY.getFullYear() + 1, TODAY.getMonth(), 1);
+  // Today (fixed to keep sample availability consistent)
+  const TODAY = D(2026, 10, 16);
 
-  const cal = $('#cal'), fIn = $('#fIn'), fOut = $('#fOut');
-  const openCal = which => { st.picking = which || (st.in && !st.out ? 'out' : 'in'); cal.classList.add('open'); fIn.setAttribute('aria-expanded', 'true'); fOut.setAttribute('aria-expanded', 'true'); renderCal(); };
-  const closeCal = () => { cal.classList.remove('open'); fIn.setAttribute('aria-expanded', 'false'); fOut.setAttribute('aria-expanded', 'false'); renderFields(); };
+  // Seasons: priced per night
+  const SEASONS = [
+    { id: 'nye', name: 'Natal & Tahun Baru', range: '20 Des – 5 Jan', rate: 5900000, min: 5, test: d => (d.getMonth() === 11 && d.getDate() >= 20) || (d.getMonth() === 0 && d.getDate() <= 5) },
+    { id: 'peak', name: 'Musim ramai', range: '1 Jul – 31 Agu', rate: 4650000, min: 3, test: d => d.getMonth() === 6 || d.getMonth() === 7 },
+    { id: 'normal', name: 'Musim normal', range: 'Sepanjang tahun lainnya', rate: 3850000, min: 2, test: () => true },
+  ];
+  const seasonOf = d => SEASONS.find(s => s.test(d));
 
-  const rangeHasBooked = (a, b) => { for (let d = new Date(a); d < b; d = addDays(d, 1)) if (BOOKED.has(key(d))) return true; return false; };
+  // Nights already booked (the night of each date)
+  const BOOKED = new Set();
+  const block = (a, b) => { for (let d = a; d < b; d = addDays(d, 1)) BOOKED.add(key(d)); };
+  block(D(2026,10,16), D(2026,10,20));
+  block(D(2026,10,24), D(2026,10,29));
+  block(D(2026,11,10), D(2026,11,14));
+  block(D(2026,11,21), D(2027,0,3));
+  block(D(2027,0,9), D(2027,0,13));
+  block(D(2027,0,24), D(2027,0,28));
 
+  const state = { start: D(2026,11,4), end: D(2026,11,8), guests: 4, mode: 'in', view: D(2026,10,1) };
+
+  // Rate table
+  const cur = seasonOf(TODAY).id;
+  $('#rateRows').innerHTML = SEASONS.map(s => `
+    <tr class="${s.id === cur ? 'cur' : ''}">
+      <td><b>${s.name}${s.id === cur ? '<span class="tag">Saat ini</span>' : ''}</b><small>${s.range} · min. ${s.min} malam</small></td>
+      <td class="p num"><b>${rp(s.rate)}</b><small>${rp(s.rate * 1.21)} dengan pajak</small></td>
+    </tr>`).join('');
+
+  // Review categories, overall score derived from them
+  const CATS = [['Kebersihan',5.0],['Akurasi',4.9],['Komunikasi',5.0],['Lokasi',4.9],['Check-in',5.0],['Nilai',4.9]];
+  const avg = CATS.reduce((a, c) => a + c[1], 0) / CATS.length;
+  const score = avg.toFixed(2).replace('.', ',');
+  $$('.num').forEach(el => { if (el.textContent === '4,95') el.textContent = score; });
+  $('#cats').innerHTML = CATS.map(([n, v]) => `<div class="cat"><div><span>${n}</span><span class="num">${v.toFixed(1).replace('.', ',')}</span></div><div class="bar"><i style="width:${v / 5 * 100}%"></i></div></div>`).join('');
+
+  // Pricing for a stay
+  function quote(s, e) {
+    const nights = [];
+    for (let d = s; d < e; d = addDays(d, 1)) nights.push(d);
+    const groups = {};
+    nights.forEach(d => { const se = seasonOf(d); (groups[se.id] ||= { se, n: 0 }).n++; });
+    const sub = nights.reduce((a, d) => a + seasonOf(d).rate, 0);
+    const min = Math.max(...nights.map(d => seasonOf(d).min));
+    const disc = nights.length >= 7 ? sub * 0.10 : 0;
+    const tax = (sub - disc) * 0.21;
+    return { nights: nights.length, groups: Object.values(groups), sub, disc, tax, total: sub - disc + tax, min, transfer: nights.length >= 4 };
+  }
+  const rangeFree = (s, e) => { for (let d = s; d < e; d = addDays(d, 1)) if (BOOKED.has(key(d))) return false; return true; };
+
+  // Render booking card
+  function render() {
+    const { start, end, guests } = state;
+    $('#vIn').textContent = start ? fmt(start) : 'Pilih tanggal';
+    $('#vOut').textContent = end ? fmt(end) : 'Pilih tanggal';
+    $('#bbIn').textContent = start ? fmt(start) : 'Pilih tanggal';
+    $('#bbOut').textContent = end ? fmt(end) : 'Pilih tanggal';
+    $('#vGuests').textContent = $('#bbGuests').textContent = `${guests} tamu`;
+    $('#gCount').textContent = guests;
+    $('#gMinus').disabled = guests <= 1;
+    $('#gPlus').disabled = guests >= 6;
+    $('#bkErr').classList.remove('on');
+
+    const se = seasonOf(start || TODAY);
+    $('#bkRate').textContent = rp(se.rate);
+    $('#bkSeason').textContent = `${se.name} · min. ${se.min} malam`;
+    $('#mRate').textContent = rp(se.rate);
+
+    const wrap = $('#sumWrap');
+    if (start && end) {
+      const q = quote(start, end);
+      $('#mSub').textContent = `${q.nights} malam · ${rp(q.total)}`;
+      wrap.innerHTML = `<ul class="sum num">
+        ${q.groups.map(g => `<li><span>${rp(g.se.rate)} × ${g.n} malam</span><span>${rp(g.se.rate * g.n)}</span></li>`).join('')}
+        ${q.disc ? `<li class="disc"><span>Diskon 7+ malam (10%)</span><span>−${rp(q.disc)}</span></li>` : ''}
+        <li><span>Pajak &amp; layanan 21%</span><span>${rp(q.tax)}</span></li>
+        <li><span>Antar-jemput bandara</span><span class="${q.transfer ? 'free' : ''}">${q.transfer ? 'Gratis' : rp(450000) + ' sekali jalan'}</span></li>
+        <li class="tot"><span>Total</span><span>${rp(q.total)}</span></li>
+      </ul>`;
+    } else {
+      $('#mSub').textContent = 'per malam';
+      wrap.innerHTML = `<p class="sum-empty">${start ? 'Pilih tanggal check-out untuk melihat total harga' : 'Pilih tanggal untuk melihat total harga'}</p>`;
+    }
+    renderCal();
+  }
+
+  // Calendar
+  const cal = $('#cal');
+  function monthHTML(first) {
+    const y = first.getFullYear(), m = first.getMonth();
+    const lead = first.getDay();
+    const count = new Date(y, m + 1, 0).getDate();
+    let cells = '';
+    for (let i = 0; i < lead; i++) cells += '<span></span>';
+    for (let d = 1; d <= count; d++) {
+      const dt = D(y, m, d), k = key(dt);
+      const past = dt < TODAY;
+      // A date can be a check-in if its night is free; a check-out if the previous night is free
+      const asCheckout = state.mode === 'out' && state.start && dt > state.start;
+      const booked = asCheckout ? BOOKED.has(key(addDays(dt, -1))) : BOOKED.has(k);
+      const cls = ['day'];
+      if (past) cls.push('past'); else if (booked) cls.push('booked');
+      const s = state.start && key(state.start), e = state.end && key(state.end);
+      if (s && k === s) cls.push('start');
+      if (e && k === e) cls.push('end');
+      if (s && e && k > s && k < e) cls.push('in');
+      if (k === key(TODAY)) cls.push('today');
+      const label = `${d} ${MONF[m]} ${y}${booked && !past ? ', terisi' : ''}`;
+      cells += `<button class="${cls.join(' ')}" data-k="${k}" ${past || booked ? 'disabled' : ''} aria-label="${label}"><span>${d}</span></button>`;
+    }
+    return `<div class="month"><div class="month-t">${MONF[m]} ${y}</div><div class="dow">${DOW.map(x => `<span>${x}</span>`).join('')}</div><div class="days">${cells}</div></div>`;
+  }
   function renderCal() {
-    const v = st.view, y = v.getFullYear(), m = v.getMonth();
-    $('#cTitle').textContent = `${MONTHS[m]} ${y}`;
-    $('#cPrev').disabled = v <= new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
-    $('#cNext').disabled = v >= MAX_VIEW;
-    const first = (new Date(y, m, 1).getDay() + 6) % 7;
-    const days = new Date(y, m + 1, 0).getDate();
-    let html = DOW.map(d => `<div class="cal-dow">${d}</div>`).join('');
-    for (let i = 0; i < first; i++) html += '<span></span>';
-    for (let d = 1; d <= days; d++) {
-      const dt = new Date(y, m, d), k = key(dt), s = seasonOf(dt);
-      const past = dt < TODAY, booked = BOOKED.has(k);
-      // check-in needs the next night free too (minimum stay is 2 nights)
-      let dis = past || booked || BOOKED.has(key(addDays(dt, 1)));
-      // when choosing check-out, the night before must be free; check-out may land on a booked night's start
-      if (st.picking === 'out' && st.in) {
-        dis = past || dt <= st.in || rangeHasBooked(st.in, dt);
-      }
-      const cls = ['day', s === 'peak' ? 'peak' : '', booked ? 'booked' : '',
-        st.in && +dt === +st.in ? 'start' : '', st.out && +dt === +st.out ? 'end' : '',
-        st.in && st.out && dt > st.in && dt < st.out ? 'in-range' : ''].join(' ');
-      const p = (SEASONS[s].price / 1e6).toLocaleString('id-ID', { maximumFractionDigits: 2 });
-      html += `<button type="button" class="${cls}" data-k="${k}" ${dis ? 'disabled' : ''} aria-label="${fmt(dt)}${booked ? ', sudah dipesan' : `, ${rp(SEASONS[s].price)} per malam`}">${d}<i>${booked || past ? '' : p + 'jt'}</i></button>`;
-    }
-    $('#cGrid').innerHTML = html;
-    $('#cHint').textContent = st.picking === 'in' ? 'Pilih tanggal check-in' : `Check-in ${fmtShort(st.in)} · pilih check-out`;
-    fIn.classList.toggle('active', st.picking === 'in');
-    fOut.classList.toggle('active', st.picking === 'out');
+    const v = state.view;
+    $('#months').innerHTML = monthHTML(v) + monthHTML(D(v.getFullYear(), v.getMonth() + 1, 1));
+    $('#calPrev').disabled = v <= D(TODAY.getFullYear(), TODAY.getMonth(), 1);
+    $('#calNext').disabled = v >= D(2027, 9, 1);
+    $('#calTitle').textContent = state.mode === 'in' ? 'Pilih check-in' : 'Pilih check-out';
+    if (state.start && state.end) {
+      const n = Math.round((state.end - state.start) / 864e5);
+      $('#calSub').textContent = `${fmtLong(state.start)} – ${fmtLong(state.end)} · ${n} malam`;
+    } else $('#calSub').textContent = 'Tanggal bergaris sudah terisi';
+    $('#fIn').setAttribute('aria-expanded', cal.classList.contains('on') && state.mode === 'in');
+    $('#fOut').setAttribute('aria-expanded', cal.classList.contains('on') && state.mode === 'out');
   }
+  function openCal(mode = 'in') {
+    state.mode = mode === 'out' && state.start ? 'out' : 'in';
+    if (state.start) state.view = D(state.start.getFullYear(), state.start.getMonth(), 1);
+    cal.classList.add('on');
+    renderCal();
+  }
+  const closeCal = () => { cal.classList.remove('on'); renderCal(); };
 
-  $('#cGrid').addEventListener('click', e => {
+  $('#months').addEventListener('click', e => {
     const b = e.target.closest('.day'); if (!b || b.disabled) return;
-    const [y, m, d] = b.dataset.k.split('-').map(Number), dt = new Date(y, m - 1, d);
-    hideErr();
-    if (st.picking === 'in') { st.in = dt; st.out = null; st.picking = 'out'; renderCal(); update(); }
-    else {
-      const n = Math.round((dt - st.in) / 864e5);
-      if (n < 2) { showErr('Minimal menginap 2 malam. Pilih check-out paling cepat ' + fmtShort(addDays(st.in, 2)) + '.'); return; }
-      st.out = dt; closeCal(); update();
+    const k = +b.dataset.k, dt = D(Math.floor(k / 10000), Math.floor(k / 100) % 100 - 1, k % 100);
+    if (state.mode === 'out' && state.start && dt > state.start && rangeFree(state.start, dt)) {
+      state.end = dt; state.mode = 'in';
+    } else {
+      state.start = dt; state.end = null; state.mode = 'out';
     }
+    render();
   });
-  $('#cPrev').onclick = () => { st.view = new Date(st.view.getFullYear(), st.view.getMonth() - 1, 1); renderCal(); };
-  $('#cNext').onclick = () => { st.view = new Date(st.view.getFullYear(), st.view.getMonth() + 1, 1); renderCal(); };
-  $('#cClear').onclick = () => { st.in = st.out = null; st.picking = 'in'; hideErr(); renderCal(); update(); };
-  fIn.onclick = () => cal.classList.contains('open') && st.picking === 'in' ? closeCal() : openCal('in');
-  fOut.onclick = () => openCal(st.in ? 'out' : 'in');
-  document.addEventListener('click', e => {
-    if (!cal.classList.contains('open')) return;
-    // composedPath survives the grid re-render that detaches the clicked day
-    const inside = e.composedPath().some(n => n.classList && (n.classList.contains('fields') || n.hasAttribute('data-open-cal')));
-    if (!inside) closeCal();
-  });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && cal.classList.contains('open')) { closeCal(); fIn.focus(); } });
+  $('#fIn').onclick = () => cal.classList.contains('on') && state.mode === 'in' ? closeCal() : openCal('in');
+  $('#fOut').onclick = () => openCal('out');
+  $('#calPrev').onclick = () => { state.view = D(state.view.getFullYear(), state.view.getMonth() - 1, 1); renderCal(); };
+  $('#calNext').onclick = () => { state.view = D(state.view.getFullYear(), state.view.getMonth() + 1, 1); renderCal(); };
+  $('#calClear').onclick = () => { state.start = state.end = null; state.mode = 'in'; render(); };
+  $('#calDone').onclick = closeCal;
+  document.addEventListener('click', e => { if (cal.classList.contains('on') && !$('#fields').contains(e.target) && !e.target.closest('[data-open-cal]')) closeCal(); });
 
-  document.querySelectorAll('[data-open-cal]').forEach(a => a.addEventListener('click', () => {
-    $('#mMenu').classList.remove('open');
-    setTimeout(() => { if (!st.out) openCal('in'); }, 450);
+  // Buttons elsewhere that open the calendar
+  $$('[data-open-cal]').forEach(el => el.addEventListener('click', e => {
+    e.preventDefault();
+    $('#pesan').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+    setTimeout(() => openCal(el.dataset.openCal || 'in'), 350);
   }));
+  $('[data-go-guests]').addEventListener('click', () => { $('#pesan').scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => $('#gPlus').focus({ preventScroll: true }), 400); });
 
-  const showErr = t => { const m = $('#bkErr'); m.querySelector('span').textContent = t; m.classList.add('show'); };
-  const hideErr = () => $('#bkErr').classList.remove('show');
+  $('#gMinus').onclick = () => { state.guests = Math.max(1, state.guests - 1); render(); };
+  $('#gPlus').onclick = () => { state.guests = Math.min(6, state.guests + 1); render(); };
 
-  function renderFields() {
-    $('#vIn').textContent = st.in ? fmt(st.in) : 'Pilih tanggal'; $('#vIn').classList.toggle('set', !!st.in);
-    $('#vOut').textContent = st.out ? fmt(st.out) : 'Pilih tanggal'; $('#vOut').classList.toggle('set', !!st.out);
-    if (!cal.classList.contains('open')) { fIn.classList.remove('active'); fOut.classList.remove('active'); }
-  }
+  // Booking
+  const bg = $('#modalBg'), modal = $('#modal');
+  let lastFocus = null;
+  function showErr(t) { const el = $('#bkErr'); el.textContent = t; el.classList.add('on'); }
+  $('#bookBtn').onclick = () => {
+    const { start, end } = state;
+    if (!start || !end) { showErr('Pilih tanggal check-in dan check-out dulu'); openCal(start ? 'out' : 'in'); return; }
+    const q = quote(start, end);
+    if (q.nights < q.min) { showErr(`Untuk tanggal ini minimal ${q.min} malam`); return; }
+    openModal(q);
+  };
+  $('#mBtn').addEventListener('click', e => { e.preventDefault(); $('#pesan').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
 
-  function quote() {
-    if (!st.in || !st.out) return null;
-    const groups = {}; let n = 0;
-    for (let d = new Date(st.in); d < st.out; d = addDays(d, 1)) { const s = seasonOf(d); groups[s] = (groups[s] || 0) + 1; n++; }
-    const lines = Object.entries(groups).map(([s, c]) => ({ label: `${rp(SEASONS[s].price)} × ${c} malam`, amt: SEASONS[s].price * c, s }));
-    const sub = lines.reduce((a, l) => a + l.amt, 0);
-    const tax = Math.round((sub + CLEAN) * TAX);
-    return { n, lines, sub, clean: CLEAN, tax, total: sub + CLEAN + tax };
-  }
-
-  function update() {
-    renderFields();
-    const g = st.guests;
-    $('#vGuests').textContent = `${g} tamu`;
-    $('#gMinus').disabled = g <= 1; $('#gPlus').disabled = g >= MAXG;
-    const q = quote(), bd = $('#bd'), btn = $('#bookBtn');
-    const s = SEASONS[seasonOf(st.in || TODAY)];
-    $('#bkRate').innerHTML = `${rp(q ? Math.round(q.sub / q.n) : s.price)} <span>/ malam${q && q.lines.length > 1 ? ' rata-rata' : ''}</span>`;
-    $('#bkRateNote').textContent = (q && q.lines.length > 1 ? 'Gabungan dua musim' : s.name) + ' · untuk seluruh villa';
-    $('#mbPrice').textContent = q ? rp(q.total) : rp(s.price);
-    $('#mbNote').textContent = q ? `total · ${q.n} malam` : '/ malam · ★ 4,92';
-    if (q) {
-      bd.innerHTML = q.lines.map(l => `<div class="bd-row"><span>${l.label}</span><span>${rp(l.amt)}</span></div>`).join('') +
-        `<div class="bd-row"><span>Biaya kebersihan</span><span>${rp(q.clean)}</span></div>
-         <div class="bd-row"><span>Pajak & layanan 10%</span><span>${rp(q.tax)}</span></div>
-         <div class="bd-total"><span>Total ${q.n} malam</span><span class="num">${rp(q.total)}</span></div>`;
-      bd.classList.add('show');
-      btn.textContent = 'Pesan sekarang';
-    } else { bd.classList.remove('show'); btn.textContent = st.in ? 'Pilih tanggal check-out' : 'Pilih tanggal'; }
-  }
-  $('#gMinus').onclick = () => { st.guests = Math.max(1, st.guests - 1); update(); };
-  $('#gPlus').onclick = () => { st.guests = Math.min(MAXG, st.guests + 1); update(); };
-
-  /* ---------- Booking modal ---------- */
-  const modal = $('#modal'), mIn = $('#modalIn');
-  $('#bookBtn').onclick = e => {
-    e.stopPropagation();
-    const q = quote();
-    if (!q) { openCal(st.in ? 'out' : 'in'); return; }
-    mIn.innerHTML = `
-      <div class="modal-head"><h3 id="mTitle">Lengkapi data pemesanan</h3><button class="x" type="button" data-close aria-label="Tutup">${ico('<path d="M6 6l12 12M18 6L6 18"/>')}</button></div>
-      <div class="summary"><img src="${IMG(photos[0].id, 200)}" alt=""><div><b>Villa Sawah · ${q.n} malam, ${st.guests} tamu</b><span>${fmt(st.in)} – ${fmt(st.out)}</span><span style="color:var(--ink);font-weight:600;margin-top:2px" class="num">Total ${rp(q.total)}</span></div></div>
-      <form class="form" id="bkForm" novalidate>
-        <div><label for="fName">Nama lengkap</label><input id="fName" name="name" autocomplete="name" required><div class="err-t">Isi nama sesuai identitas.</div></div>
-        <div class="two">
-          <div><label for="fWa">Nomor WhatsApp</label><input id="fWa" name="wa" type="tel" inputmode="tel" autocomplete="tel" placeholder="0812…" required><div class="err-t">Masukkan nomor yang aktif di WhatsApp.</div></div>
-          <div><label for="fMail">Email</label><input id="fMail" name="email" type="email" autocomplete="email" required><div class="err-t">Email belum valid.</div></div>
+  function openModal(q) {
+    lastFocus = document.activeElement;
+    modal.innerHTML = `
+      <div class="modal-h"><h2 id="mTitle">Kirim permintaan pesan</h2><button class="x" data-close aria-label="Tutup"><svg class="i" style="width:18px;height:18px"><use href="#i-x"/></svg></button></div>
+      <div class="trip"><img src="https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?w=200&q=70&auto=format&fit=crop" alt=""><div><b>${fmt(state.start)} – ${fmt(state.end)}</b><span class="num">${q.nights} malam · ${state.guests} tamu · ${rp(q.total)}</span></div></div>
+      <form class="form" novalidate>
+        <label data-f="name">Nama lengkap<input name="name" autocomplete="name" placeholder="Nama sesuai identitas"><span class="msg">Isi nama Anda</span></label>
+        <div class="row2">
+          <label data-f="phone">WhatsApp<input name="phone" type="tel" autocomplete="tel" placeholder="+62 812…"><span class="msg">Isi nomor WhatsApp</span></label>
+          <label data-f="email">Email<input name="email" type="email" autocomplete="email" placeholder="nama@email.com"><span class="msg">Email belum valid</span></label>
         </div>
-        <div><label for="fNote">Catatan (opsional)</label><textarea id="fNote" name="note" placeholder="Jam tiba, antar-jemput bandara, perayaan…"></textarea></div>
-        <button class="btn btn-dark btn-block" type="submit" style="height:52px">Kirim permintaan booking</button>
-        <p class="book-note" style="margin:0">Pembayaran DP 30% dilakukan setelah kami konfirmasi ketersediaan.</p>
+        <label>Catatan (opsional)<textarea name="note" placeholder="Jam tiba, perlu boks bayi, alergi makanan"></textarea></label>
+        <button class="btn btn-dark btn-block" type="submit">Kirim permintaan</button>
+        <p class="bk-note" style="margin:0">Belum ada tagihan. Deposit ${rp(q.total * 0.3)} setelah dikonfirmasi</p>
       </form>`;
-    modal.showModal();
-    $('#fName').focus();
-    $('#bkForm').onsubmit = ev => {
+    bg.classList.add('on');
+    document.body.style.overflow = 'hidden';
+    $('input', modal).focus();
+    $('form', modal).onsubmit = ev => {
       ev.preventDefault();
-      const f = ev.target; let ok = true;
-      const chk = (el, valid) => { el.setAttribute('aria-invalid', valid ? 'false' : 'true'); if (!valid && ok) { el.focus(); ok = false; } };
-      chk(f.name, f.name.value.trim().length >= 3);
-      chk(f.wa, f.wa.value.replace(/\D/g, '').length >= 9);
-      chk(f.email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email.value.trim()));
-      if (!ok) return;
-      const btn = f.querySelector('[type=submit]'); btn.disabled = true; btn.textContent = 'Mengirim…';
+      const f = ev.target, v = n => f[n].value.trim();
+      const bad = { name: !v('name'), phone: v('phone').replace(/\D/g, '').length < 9, email: !/^\S+@\S+\.\S+$/.test(v('email')) };
+      $$('[data-f]', f).forEach(l => l.classList.toggle('err', bad[l.dataset.f]));
+      const first = Object.keys(bad).find(k => bad[k]);
+      if (first) { f[first].focus(); return; }
+      const btn = $('button[type=submit]', f); btn.disabled = true; btn.textContent = 'Mengirim…';
       setTimeout(() => {
-        const code = 'VS-' + key(st.in).slice(2).replace(/-/g, '') + '-' + String(Math.floor(Math.random() * 900 + 100));
-        mIn.innerHTML = `<div class="done">
-          <div class="ok-badge">${ico('<path d="M5 12.5l4.5 4.5L19 7.5"/>')}</div>
-          <h3 id="mTitle">Permintaan terkirim</h3>
-          <p>Terima kasih, ${f.name.value.trim().split(' ')[0]}. Kami cek ketersediaan ${fmtShort(st.in)}–${fmtShort(st.out)} dan membalas lewat WhatsApp dalam 1 jam (08.00–21.00 WITA).</p>
-          <div class="code">${code}</div>
-          <button class="btn btn-dark btn-block" type="button" data-close style="margin-top:24px">Selesai</button>
-        </div>`;
-      }, 900);
+        modal.innerHTML = `<div class="done"><div class="ok"><svg class="i" style="width:26px;height:26px"><use href="#i-check"/></svg></div>
+          <h2 id="mTitle">Permintaan terkirim</h2>
+          <p>Terima kasih, ${f.name.value.trim().split(' ')[0]}. Made akan mengonfirmasi ${fmt(state.start)} – ${fmt(state.end)} lewat WhatsApp dalam satu jam.</p>
+          <button class="btn btn-dark" data-close>Selesai</button></div>`;
+        $('[data-close]', modal).focus();
+      }, 700);
     };
-  };
-  modal.addEventListener('click', e => { if (e.target === modal || e.target.closest('[data-close]')) modal.close(); });
+  }
+  function closeModal() { bg.classList.remove('on'); document.body.style.overflow = ''; lastFocus && lastFocus.focus(); }
+  bg.addEventListener('click', e => { if (e.target === bg || e.target.closest('[data-close]')) closeModal(); });
 
-  /* ---------- Reviews ---------- */
-  const cats = [['Kebersihan', 4.95], ['Akurasi foto', 4.93], ['Staf', 4.98], ['Lokasi', 4.71], ['Nilai harga', 4.86]];
-  $('#bars').innerHTML = cats.map(([n, v]) => `<div class="bar-row"><span>${n}</span><div class="bar"><i style="width:${(v / 5) * 100}%"></i></div><b>${v.toLocaleString('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b></div>`).join('');
-  const reviews = [
-    { n: 'Rina Kusuma', w: 'Jakarta · Oktober 2026', bg: 'fde7d3', feat: true, t: 'Kami datang bertiga keluarga, 6 orang termasuk dua anak. Kolamnya jadi tempat anak-anak seharian. Pak Wayan bikin nasi goreng terenak yang pernah kami makan, dan sore hari sawahnya kelihatan keemasan dari kamar.' },
-    { n: 'Tom Hargreaves', w: 'Melbourne · Oktober 2026', bg: 'dbeafe', t: 'Wi‑Fi was genuinely fast. I took two video calls a day from the gazebo with no drops. Quiet at night, just frogs and the water in the rice fields.' },
-    { n: 'Dimas Pratama', w: 'Surabaya · September 2026', bg: 'e0ecd9', t: 'Jalan masuknya agak sempit, tapi staf sudah kirim video petunjuk arah lewat WhatsApp. Kamar bersih, handuk diganti setiap hari.' },
-    { n: 'Sarah Whitfield', w: 'London · September 2026', bg: 'fce7f3', t: 'The massage in the gazebo on our last afternoon was the highlight. Airport pick-up was on time at 1am, driver waited with a sign.' },
-    { n: 'Ayu Lestari', w: 'Bandung · Agustus 2026', bg: 'fef3c7', t: 'Cocok buat yang mau tenang. Kalau mau ke café di Ubud cukup 15 menit naik Grab. Satu-satunya catatan: kamar taman agak kecil untuk dua orang dewasa.' },
-    { n: 'Kenji Watanabe', w: 'Osaka · Agustus 2026', bg: 'ede9fe', t: 'Very clean, very quiet. The pool is longer than it looks in the photos. We booked dinner at the villa twice, both times excellent.' },
-    { n: 'Putri Maharani', w: 'Denpasar · Juli 2026', bg: 'e0f2fe', t: 'Staycation ulang tahun mama. Staf bantu dekor meja makan dengan bunga kamboja tanpa diminta. Pasti balik lagi.' },
-    { n: 'Lukas Becker', w: 'München · Juli 2026', bg: 'f5f5f4', t: 'Good value for a group of five. Kitchen had everything we needed. Bring mosquito repellent for the evenings by the pool.' },
+  // Lightbox
+  const PHOTOS = [
+    ['1520250497591-112f2f40a3f4', 'Kolam renang'],
+    ['1611892440504-42a792e24d32', 'Kamar utama'],
+    ['1507652313519-d4e9174996dd', 'Kamar mandi'],
+    ['1504754524776-8f4f37790ca0', 'Sarapan'],
+    ['1586375300773-8384e3e4916f', 'Jalan ke sungai'],
+    ['1615880484746-a134be9a6ecf', 'Beranda pagi hari'],
+    ['1555400038-63f5ba517a47', 'Sawah di sekitar villa'],
+    ['1559628233-100c798642d4', 'Ubud dari udara'],
   ];
-  const rvHtml = (r, i) => `<article class="rv${r.feat ? ' feat' : ''}${i >= 5 ? ' hidden' : ''}">
-      <div class="stars" aria-label="5 dari 5">${star.repeat(5)}</div>
-      <q>${r.t}</q>
-      <div class="rv-who"><img src="https://api.dicebear.com/9.x/notionists/svg?seed=${encodeURIComponent(r.n)}&backgroundColor=${r.bg}" alt="" width="40" height="40" loading="lazy"><div><b>${r.n}</b><span>${r.w}</span></div></div>
-    </article>`;
-  $('#rvGrid').innerHTML = reviews.map(rvHtml).join('');
-  $('#rvMore').onclick = function () {
-    const hidden = document.querySelectorAll('.rv.hidden');
-    if (hidden.length) { hidden.forEach(el => el.classList.remove('hidden')); this.textContent = 'Tampilkan lebih sedikit'; }
-    else { document.querySelectorAll('.rv').forEach((el, i) => i >= 5 && el.classList.add('hidden')); this.textContent = 'Tampilkan ulasan lain'; $('#ulasan').scrollIntoView(); }
-  };
+  const lb = $('#lb'); let li = 0;
+  function showPhoto(i) {
+    li = (i + PHOTOS.length) % PHOTOS.length;
+    const [id, cap] = PHOTOS[li];
+    $('#lbImg').src = `https://images.unsplash.com/photo-${id}?w=1800&q=80&auto=format&fit=crop`;
+    $('#lbImg').alt = cap;
+    $('#lbCount').textContent = `${li + 1} / ${PHOTOS.length} · ${cap}`;
+  }
+  $$('[data-photo]').forEach(b => b.addEventListener('click', () => { lastFocus = b; showPhoto(+b.dataset.photo); lb.classList.add('on'); document.body.style.overflow = 'hidden'; $('#lbClose').focus(); }));
+  const closeLb = () => { lb.classList.remove('on'); document.body.style.overflow = ''; lastFocus && lastFocus.focus(); };
+  $('#lbClose').onclick = closeLb;
+  $('#lbPrev').onclick = () => showPhoto(li - 1);
+  $('#lbNext').onclick = () => showPhoto(li + 1);
+  lb.addEventListener('click', e => { if (e.target.classList.contains('lb-stage')) closeLb(); });
 
-  /* ---------- Distances ---------- */
-  const dist = [
-    ['Tegallalang Rice Terrace', '5 menit', '<path d="M3 18c3-2 6-2 9 0s6 2 9 0M3 13c3-2 6-2 9 0s6 2 9 0"/>'],
-    ['Pusat Ubud & Pasar Seni', '15 menit', '<path d="M3 21h18M5 21V10l7-6 7 6v11"/><path d="M10 21v-5h4v5"/>'],
-    ['Minimarket & ATM', '4 menit', '<path d="M3 7h18l-2 10H5z"/><path d="M8 7V5a4 4 0 0 1 8 0v2"/>'],
-    ['Klinik 24 jam', '12 menit', '<path d="M12 7v10M7 12h10"/><rect x="3" y="3" width="18" height="18" rx="4"/>'],
-    ['Bandara Ngurah Rai', '75–90 menit', '<path d="M2 16l20-7-2-3-7 2.5L7 4 5 5l4 5-5 2-2-1-1 1z"/><path d="M3 21h18"/>'],
-  ];
-  $('#dist').innerHTML = dist.map(([t, d, p]) => `<li><span class="chip-ico">${ico(p)}</span><b>${t}</b><span class="t">${d}</span></li>`).join('');
+  document.addEventListener('keydown', e => {
+    if (lb.classList.contains('on')) { if (e.key === 'Escape') closeLb(); if (e.key === 'ArrowLeft') showPhoto(li - 1); if (e.key === 'ArrowRight') showPhoto(li + 1); return; }
+    if (e.key === 'Escape') { if (bg.classList.contains('on')) closeModal(); else if (cal.classList.contains('on')) closeCal(); }
+  });
 
-  /* ---------- FAQ ---------- */
-  const faq = [
-    ['Jam check-in dan check-out?', 'Check-in mulai 14.00, check-out sampai 12.00. Early check-in atau late check-out bisa diatur jika tanggal sebelumnya/sesudahnya kosong, gratis sampai 2 jam.'],
-    ['Bagaimana cara pembayarannya?', 'Setelah kami konfirmasi lewat WhatsApp, bayar DP 30% via transfer bank atau kartu kredit dalam 24 jam. Sisanya dibayar paling lambat 7 hari sebelum check-in.'],
-    ['Apa kebijakan pembatalannya?', 'Batal hingga 14 hari sebelum check-in: DP dikembalikan penuh. 7–13 hari sebelum: dikembalikan 50%. Kurang dari 7 hari: tidak dapat dikembalikan, tapi bisa pindah tanggal sekali.'],
-    ['Boleh membawa anak kecil?', 'Boleh. Tersedia baby cot dan kursi makan anak tanpa biaya. Kolam tidak berpagar, jadi anak perlu didampingi. Bayi di bawah 2 tahun tidak dihitung dalam 6 tamu.'],
-    ['Apakah bisa untuk acara atau pemotretan?', 'Makan malam keluarga hingga 12 orang boleh dengan pemberitahuan. Pemotretan komersial dan pesta dengan musik keras tidak diizinkan karena villa berada di lingkungan desa.'],
-  ];
-  $('#qa').innerHTML = faq.map(([q, a], i) => `<details${i === 0 ? ' open' : ''}><summary>${q}<span class="pm">${ico('<path d="M12 5v14M5 12h14"/>')}</span></summary><p>${a}</p></details>`).join('');
+  // Mobile menu
+  const mb = $('#menuBtn'), menu = $('#menu');
+  mb.onclick = () => { const on = menu.classList.toggle('on'); mb.setAttribute('aria-expanded', on); };
+  $$('a', menu).forEach(a => a.addEventListener('click', () => { menu.classList.remove('on'); mb.setAttribute('aria-expanded', false); }));
 
-  /* ---------- Chrome ---------- */
-  const nav = $('#nav'), mbar = $('#mbar'), bookEl = $('#booking');
-  const onScroll = () => {
-    nav.classList.toggle('scrolled', scrollY > 8);
-    const r = bookEl.getBoundingClientRect();
-    mbar.classList.toggle('show', scrollY > 500 && (r.bottom < 0 || r.top > innerHeight));
-  };
-  addEventListener('scroll', onScroll, { passive: true }); onScroll();
-  $('#menuBtn').onclick = function () { const o = $('#mMenu').classList.toggle('open'); this.setAttribute('aria-expanded', o); };
-  $('#mMenu').addEventListener('click', e => { if (e.target.tagName === 'A') $('#mMenu').classList.remove('open'); });
+  // Mobile bottom bar: show after hero, hide while booking card is visible
+  const mbar = $('#mbar');
+  let pastHero = false, cardVisible = false;
+  const sync = () => mbar.classList.toggle('on', pastHero && !cardVisible);
+  new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; sync(); }).observe($('.hero'));
+  new IntersectionObserver(([e]) => { cardVisible = e.isIntersecting; sync(); }, { threshold: .2 }).observe($('#pesan'));
 
-  update();
+  render();
 })();
 </script>
 </body>

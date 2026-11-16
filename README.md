@@ -102,7 +102,7 @@ Current models are already decent at some of these. These are the cases where be
 
 ### Ten more prompts, no judges
 
-After the skill was finished, ten new prompts were run the same way, both sides, and are shown as they came out. Nothing was ranked or picked by a judge, and all ten are here: six below and four in the fold.
+Ten new prompts, run the same way with the current version of the skill, both sides shown as they came out. Nothing was ranked or picked by a judge, and all ten are here: six below and four in the fold.
 
 <table>
 <tr>
