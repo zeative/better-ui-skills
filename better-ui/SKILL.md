@@ -21,6 +21,7 @@ Two things are non-negotiable throughout: the interface must work (real states, 
 
 - **An existing product** (styles, components, tokens, a Tailwind theme, a brand guide, screenshots): read the tokens and a few screens and work inside that system. Do not add a second font, accent or component style. Apply the craft in this skill within it.
 - **A redesign of a live product**, even "redesign everything" or "rombak total": its users should still recognise it. Keep the logo, the brand colour, the character of the type (a mono or tabular face stays) and, above all, the **density** and the information on each screen. Change what is actually wrong: hierarchy, alignment, inconsistent components, missing states, cramped or broken mobile layouts, empty screens. Before building, write down what the current design does well and keep it. A redesign that swaps a product's identity for this skill's defaults is a downgrade, however polished.
+- **Size the change to the problem.** Before changing an existing screen, audit it: render it, then list every problem you see with where it is (the checklist in `references/critique.md`). Then decide honestly. *Many problems* across colour, type, spacing and copy: rebuild it with this skill. *A few*: polish only those, keeping the palette, type, layout and visuals, and offer bigger ideas as suggestions. *None that matter*: say so and suggest two or three small refinements. Never change a good screen just to make it look different, and never replace removed decoration with new decoration.
 - **A direction from the user** (a reference, a brand, "make it look like X"): that wins over the defaults below.
 - **A blank slate**: continue.
 
@@ -35,6 +36,11 @@ Note for yourself: what the product is, who uses it and where (phone on the go, 
 - *Showcase site* (portfolio, studio, restaurant, event): imagery and type; read `references/editorial.md`.
 - *Docs or reading*: typography and calm.
 
+Then write two more lines for yourself:
+
+- **Character:** two or three concrete words for how it should feel ("calm, exact, a little warm"; "fast, technical"). Not clean, modern, sleek, minimal or premium: those describe every template.
+- **Signature:** one small detail only this product would have, used consistently where it belongs (a live status dot for a monitoring tool, keycaps for a developer tool, a route line for a delivery app). One, not five.
+
 Then write the real content before any layout: a product name, the headline, labels, numbers, names, dates. Plain product language, the way a good team's app talks: "3 of 5 done today", "$595 left this month", "Best streak 12 days". No metaphors in the copy, no jokes, no notes that describe the interface to the viewer. Sample data is plausible, internally consistent and right for the locale, and it reads like real life: transactions from familiar kinds of merchants with ordinary names (a supermarket, a coffee chain, a streaming service, a fuel station; well-known merchant names as transaction text are fine, logos are not), people with ordinary names, habits people actually keep. Invented-sounding filler ("Northwind Studio", "Juniper Café", "Kite Mobile") gives a mock-up away. So does the set every generated finance app reaches for (Blue Bottle Coffee, Trader Joe's, Whole Foods, Starbucks, Chipotle, Uber), and so does hyper-local trivia that reads as researched: mix a few well-known national names with plain descriptive ones ("Corner bakery", "Rent – May", "Electric bill").
 
 Copy that gives a mock-up away, and that real products never ship:
@@ -42,6 +48,8 @@ Copy that gives a mock-up away, and that real products never ship:
 - **Numbers that disagree.** A streak of 0 next to a workout done today, a ring at 60% beside "2 of 5". Derive every count, streak, percentage and total from the same sample data in code.
 - **Contradictions** between parts of a screen ("Rest day" above a button saying "Train leg day today"). Read each screen top to bottom once as a user would.
 - **Developer phrasing** ("Saved on this device", "Remove the example habits", "Sample data").
+- **Changes without a reference.** "+12%" says nothing; "+12% vs last month" does.
+- **Shouting and filler.** No exclamation marks, no hype words (seamless, supercharge, unlock, magic), no "New ✨" or "AI-powered" badges, no trailing periods on labels, buttons and headings, sentence case rather than uppercase tracked labels. In work tools and dashboards the title names the page or period ("October 2026"), not a greeting; personal consumer apps may greet the user.
 
 Never show a note about sample data on the main screens. Put "Clear sample data" or "Start fresh" in a settings screen or menu, and mention it in the handoff.
 
@@ -116,4 +124,5 @@ Tell the user briefly: what you built, the assumptions you made, and what is pla
 - **Oversized type.** A 96px number on a phone. Hero figures in apps are 28 to 40px; landing headlines 40 to 56px.
 - **Browser defaults showing.** A native date picker, select arrow or checkbox inside an app screen. Style every control.
 - **Wireframe content.** "Item 1", lorem ipsum, a grey box labelled "chart". Real names, figures and a real chart.
+- **Decoration as filler.** A sparkline, icon chip and different hue on every stat tile, "New" badges, a promo card in the sidebar, a bento grid where each tile has its own gimmick. A stat tile is a label, a figure and its change; richness goes into one or two real moments, not spread over the chrome.
 - **Stopping after the first render.** The first render is a draft.

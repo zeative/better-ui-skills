@@ -40,7 +40,7 @@ Test: put a screenshot beside the real tool it competes with. If yours shows les
 
 ## Modules
 
-A rich overview dashboard for a business tool (not a professional data tool, see above) has ten or more distinct modules. Draw from these and vary them:
+An overview dashboard for a business tool (not a professional data tool, see above) has six to ten modules, each answering a different question. A module that only fills space (a promo card, a tip, a second chart saying the same thing) makes it look generated; leave it out. Draw from these:
 
 - A **hero module:** the key figure on a contrast surface (dark or accent card) with a delta badge, a sparkline or mini area chart, and a comparison line.
 - A row of **KPI tiles** (below).
@@ -49,13 +49,13 @@ A rich overview dashboard for a business tool (not a professional data tool, see
 - A **needs-attention** list with counts, icon chips and action buttons.
 - A **table or list** of recent items with thumbnails, avatars and status pills.
 - A **ranked list** with thumbnails, a bar for share, and a secondary fact (stock, trend).
-- **Activity or timeline**, **people** (avatars with roles or status), **goal progress** rings, a **calendar strip**, a **promo or tip card** with an illustration, a **quick actions** panel.
+- **Activity or timeline**, **people** (avatars with roles or status), **goal progress**, a **calendar strip**, a **quick actions** panel.
 
-Arrange them in a grid with mixed spans so the layout has a clear focal area, not uniform rows. Balance the columns so they end together, leave no empty band in the sidebar (fill it with a compact widget: a status card, a goal, a promo), and size each chart to what it shows: seven bars do not need 400px of height.
+Arrange them in a grid with mixed spans so the layout has a clear focal area, not uniform rows. Balance the columns so they end together, leave no empty band in the sidebar (a compact status or goal widget, if the product has one), and size each chart to what it shows: seven bars do not need 400px of height.
 
 ## Tiles and figures
 
-A KPI tile has: an icon chip in its own hue, a small label, a large figure (28 to 40px, weight 600 to 700, tabular), a delta badge in a soft pill coloured by whether the change is good, and a mini visual (sparkline, bar, ring). Give each tile in a row a different hue and a different mini visual.
+A KPI tile is a number: a small label, a large figure (24 to 36px, weight 500 to 600, tabular) and the change with what it compares to ("+8.2% vs last month"), coloured by whether the change is good. That is enough. Tiles in one row share one treatment and one neutral surface: no hue per tile, no icon chip in its own colour, no sparkline, ring or mini bar added to fill a tile. A sparkline earns its place only where the trend is the point (a watchlist, a table row), and then every row gets one. Vary the grid instead: three or four compact tiles above one wide chart, or a wide chart beside a narrow list.
 
 - Every number has a unit, a period and a comparison.
 - Use the locale's formats for currency, thousands and dates.
@@ -69,9 +69,9 @@ See `showpiece.md` for how to draw them. In product UI:
 
 - Choose the form from the question: change over time is a line or area (bars for few periods); comparison is sorted horizontal bars; share is a donut or a single stacked bar.
 - Always include grid lines, axis labels, direct value labels or a tooltip on a highlighted point, and a legend when there is more than one series.
-- Use the accent for the series or point that matters and a muted tone for the rest; category palettes for categories.
+- One accent per chart: the series, bar or point that matters gets it and everything else sits in neutral steps. Several hues only when the chart must tell series apart, and even then one leads.
 - Show an incomplete period honestly (a lighter or hatched bar, a note).
-- Three or more chart forms across a dashboard.
+- Charts have a hierarchy: one main chart, clearly the largest thing on the screen and drawn with the most care; anything else that shows data is smaller and different in kind (a ranked list with thin bars, a short table), never a second chart of the same size.
 - The chart, the totals and the tables are computed from the same sample data.
 
 ## Lists and tables

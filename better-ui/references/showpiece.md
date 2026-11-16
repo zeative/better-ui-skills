@@ -121,7 +121,7 @@ Position the tooltip as an HTML element over the highlighted point: a small dark
 
 **Donut and ring.** `stroke-dasharray` on a circle: `r=42`, circumference ≈ 264; a segment of 68% is `stroke-dasharray="180 264"`. Rotate -90 degrees to start at the top, use `stroke-linecap="round"`, put the big number in the centre.
 
-**Sparkline.** A 80×28 polyline with no axes, coloured by direction, placed in the corner of a KPI tile.
+**Sparkline.** A 80×28 polyline with no axes, coloured by direction, placed in a watchlist or table row where the trend is the point; not added to every KPI tile.
 
 **Heatmap or calendar grid.** A CSS grid of small rounded squares in four or five tints of one hue.
 

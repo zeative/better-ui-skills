@@ -886,8 +886,8 @@ function report(results, facts, focus, runtime, args) {
     if (thin.length) problem('RICHNESS', `${thin.length} of ${R.bands.length} desktop screenfuls have nothing to look at but text (around y=${thin.slice(0, 5).map((b) => b.from).join(', ')}px). Give each section a visual of its own: a mini interface, chart, illustration, thumbnails, icon chips.`);
     const total = R.textOnPage + R.textOnSurface;
     if (total > 400 && R.textOnPage / total > 0.6) problem('RICHNESS', `${Math.round(100 * R.textOnPage / total)}% of the text sits directly on the page background. Put content on surfaces (cards, panels, a shell) so the page has levels; text on a bare page reads as a document.`);
-    if (R.icons < 4 && R.bigGraphics < 3) problem('RICHNESS', `Very little imagery: ${R.icons} icon-sized and ${R.bigGraphics} larger graphics on the whole page. Lists want thumbnails or avatars, tiles want icon chips or mini visuals.`);
-    if (Object.keys(widest.shadows).length <= 1 && R.surfaces > 3) problem('RICHNESS', `Depth is flat: ${Object.keys(widest.shadows).length} shadow style across ${R.surfaces} surfaces. Use a layered shadow scale with distinct resting, raised and showpiece levels (references/polish.md).`);
+    if (R.icons < 4 && R.bigGraphics < 3) problem('RICHNESS', `Very little imagery: ${R.icons} icon-sized and ${R.bigGraphics} larger graphics on the whole page. Lists of products, places or people want thumbnails or avatars; stat tiles do not need decoration, so ignore this note for data-led screens.`);
+    if (Object.keys(widest.shadows).length <= 1 && R.surfaces > 3) problem('RICHNESS', `Depth is flat: ${Object.keys(widest.shadows).length} shadow style across ${R.surfaces} surfaces. On light themes use a small neutral shadow scale (resting, raised); on dark themes depth comes from surface steps and hairlines instead.`);
   }
   if (Rn) {
     const [pw, ph] = Rn.foldLargest, firstTwo = Rn.bands.slice(0, 2);

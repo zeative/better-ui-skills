@@ -272,6 +272,7 @@ Skills and writing this one learned from:
 
 - Anthropic, [frontend-design skill](https://github.com/anthropics/skills/tree/main/skills/frontend-design), [Improving frontend design through Skills](https://claude.com/resources/articles/improving-frontend-design-through-skills), [Harness design for long-running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps)
 - Paul Bakaus, [Impeccable](https://github.com/pbakaus/impeccable)
+- Damir Sokolovsky, [unslop](https://github.com/heydamir/unslop) (CC BY 4.0): sizing the change to an audit, stat tiles as plain numbers, chart hierarchy, the template check
 - [taste-skill](https://github.com/Leonxlnx/taste-skill) and [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
 - Vercel, [Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines)
 - Emil Kowalski, [design engineering skill](https://github.com/emilkowalski/skills); Jakub Krehel, [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)

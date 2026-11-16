@@ -91,17 +91,17 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 
 ## Micro-details
 
-These are what make a screen look designed. Use many, each with a reason:
+Small details that make a screen look made, used where the content calls for them. Never add one to fill space: a badge, chip or sparkline with no job is decoration, and decoration is what makes a screen look generated.
 
-- **Pills and badges:** status pills with a dot, delta badges (`▲ 12.4%` in a soft green pill), "New" tags, counts in nav items.
-- **Icon chips** beside labels and in tiles (see `showpiece.md`).
+- **Status and counts:** status as a dot plus text or a quiet pill; counts in nav items as muted text. No "New", "Pro" or "Beta" badges unless the product really has that state.
+- **Icon chips** for items in consumer lists (see `showpiece.md`), not on every tile and label.
 - **Avatars and avatar stacks** wherever a person is implied.
-- **Thumbnails** in every list of items.
-- **Sparklines and mini progress** inside tiles and rows.
+- **Thumbnails** in lists of things that have a picture (products, places, people).
+- **Sparklines and mini progress** in table rows or watchlists where the trend is the point.
 - **Key hints** (`⌘K`, `Enter`) in small bordered keys.
 - **Dividers** as hairlines, dotted leaders between a label and a value, or a small centred ornament.
 - **Meta rows:** a small icon plus text for dates, locations, durations.
-- **Kickers and captions** in the mono or small-caps style.
+- **Captions and meta** in a muted tone or the mono face, in sentence case.
 - **A designed footer:** columns of links, the wordmark, a small status or locale control, a closing line.
 
 ## Spacing rhythm
@@ -116,12 +116,12 @@ These are what make a screen look designed. Use many, each with a reason:
 
 Sets of similar things must not be clones, and no region of the page should be a column of same-weight white cards.
 
-- **Every column or region has a heavy tile:** a dark or saturated contrast tile, or one markedly larger than its neighbours.
+- **Each region has a clear lead:** one element larger or more important than its neighbours, so the eye knows where to start.
 - **Fill each card.** Content should occupy its card with intent. A wide card holding a title and a small widget in one corner looks unfinished: enlarge the visual, add a secondary element, or make the card smaller.
 - **Break the grid once or twice:** let an element overlap the edge of its card or section (a floating chip, an object that pokes out, a card that straddles two surfaces).
 
-- **Bento grids:** mix tile sizes (one spans two columns, one is tall), and give tiles different treatments: one dark, one accent-filled, one with a big figure, one with a mini chart, one with an illustration.
-- **KPI rows:** different icon chip hues, different mini-visuals (sparkline, ring, bar, avatar stack).
+- **Grids of tiles:** vary size and span (a wide chart beside a narrow list), not colour and treatment. A bento grid where every tile has its own fill, hue and gimmick is a template.
+- **KPI rows:** one treatment for every tile in the row; the figures and their changes are the content.
 - **Feature sections:** alternate the side of the visual, the kind of visual, and the surface.
 - **Lists:** vary content length, status and thumbnail colour.
 
