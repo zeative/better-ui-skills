@@ -48,12 +48,12 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 
 ## Type finishing
 
-- **Landing headlines:** `font-size: clamp(36px, 5vw, 56px); line-height: 1.1; letter-spacing: -0.02em; text-wrap: balance;` in the UI sans at weight 600. Six to ten words over two lines. Product UI titles are 20 to 24px.
+- **Landing headlines:** `font-size: clamp(36px, 5vw, 56px); line-height: 1.08; letter-spacing: -0.025em; text-wrap: balance;` in the UI sans at weight 500 or 600 (or the display face, if the page has one). Six to ten words over two lines. Product UI titles are 20 to 24px.
 - **Emphasis**, if any: one word or phrase of a landing headline in the brand colour or in the muted grey. Nothing on product UI.
 - **Eyebrow pill** above a headline when it carries information: a small pill with a dot or icon and a short label.
 - **Scale:** use the compact scale in `system.md`. Hierarchy comes from weight (400/500/600) and colour (text vs. muted grey) as much as size. The key figure in an app or dashboard is 28 to 36px; KPI figures 22 to 28px; labels 12 to 13px in muted grey.
 - **Key numerals:** weight 600, slight negative tracking, decimals and currency signs smaller or muted, tabular figures.
-- **One family.** Everything in the UI sans. No display serif, no mono labels, no condensed headings on product UI.
+- **One family, plus a mono for meta.** Everything in the UI sans, with the mono partner only for meta (see `typography.md`). No display serif and no condensed headings on product UI.
 - **Small labels:** 12 to 13px, weight 500, sentence case, muted grey. Uppercase tracked labels are rare.
 - `font-variant-numeric: tabular-nums` on all figures; `font-feature-settings: "ss01", "cv11"` where the face has nicer alternates.
 - Body text stays calm: 15 to 17px, line-height 1.55, max 65ch, muted ink for secondary copy, and always above 4.5:1 contrast.

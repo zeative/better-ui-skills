@@ -40,7 +40,14 @@ Use what the argument needs, and give each a visual idea. A strong page usually 
 - **FAQ:** an accordion with real buyer questions, in a two-column layout with a short intro or a contact card.
 - **Closing band** (below).
 
-Give unequal things unequal space, and change the surface between sections so the page has shape when seen as a thumbnail. This is required, not optional: a dark page needs at least one fully light section and a light page at least one dark one, plus a tinted band. A long page in one tone from navigation to footer is monotone however good each section is.
+Give unequal things unequal space, and give the page a calm rhythm of backgrounds so it has shape when seen as a thumbnail:
+
+- **Most sections sit on the page canvas.** Space and the section headers separate them; no rules or dividers between sections, and no section wrapped in its own rounded card.
+- **One tinted band** (the canvas one step darker or warmer, full width) for a section that should read as a group, such as logos and testimonials or the feature grid. At most one every two or three sections.
+- **One dark band at most**, for the peak of the page: the main demonstration, the stat band or the closing call to action. A footer may share it.
+- **Bands run full width with the content inside at the page's one content width.** Never a band inside a band, or a card inside a card inside a band.
+- **Section headers follow one pattern** across the page (optional eyebrow, a 32 to 40px title, a one-line lede at 17 to 18px in the secondary tone), aligned the same way, left for most pages.
+- Section padding 96 to 128px on desktop, 64 to 80px on phones; a tinted or dark band uses the same padding so the rhythm holds.
 
 Vary the recipe too. If every section is "small label, headline on the left, paragraph on the right, row of cards", the page reads as stacked blocks. Centre some section headers, run one visual at full width, split another, and let the rhythm of spacing change: closer together where sections belong to one thought, further apart at a change of subject. Avoid stretches of more than about 120px of empty ground between sections.
 
@@ -72,7 +79,7 @@ End on a visual, not a form on a blank strip. A full-width band on a contrast su
 
 ## Rhythm
 
-- Section padding `clamp(72px, 10vw, 140px)`; consistent content width; one grid.
+- Section padding `clamp(64px, 9vw, 128px)`; one content width (1120 to 1200px) for every section; one grid.
 - A peak every one or two screens: the hero, the main demonstration, pricing, the closing band.
 - Let visuals overlap section boundaries so the page feels continuous.
 - No large empty areas: if a column is short, enlarge its visual or rebalance.

@@ -19,7 +19,8 @@ Write the choice as one line in a comment at the top of the stylesheet ("Look: s
 
 ## Type
 
-- **One sans-serif family** with a little character: Plus Jakarta Sans, Manrope, Outfit, Urbanist, Sora, DM Sans, Figtree, Onest, Geist or Inter, or the system stack (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`). Load from Google Fonts with `display=swap`, with the system stack as fallback. A second family only for a mono partner or when the brand already has a display face.
+- **Read `typography.md`** for choosing and pairing faces, weights, and tracking and leading per size. In short:
+- **One sans-serif family** chosen for the character: Inter, Inter Tight, Geist, Instrument Sans, Manrope, DM Sans, Hanken Grotesk, Schibsted Grotesk, Figtree, Onest, Plus Jakarta Sans or IBM Plex Sans, or the system stack (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`). Load from Google Fonts with `display=swap`, with the system stack as fallback. A second family only for a mono partner or when the brand already has a display face.
 - **A mono partner for meta** (Geist Mono, JetBrains Mono, IBM Plex Mono, DM Mono) is one of the cheapest ways to make a dashboard or tool look made: use it for the change and its comparison ("+12% vs last month"), axis labels, counts in navigation, section labels, invoice and card numbers, keycaps and timestamps. Never for headings, body or buttons.
 - **Two-tone titles.** A page title can carry its context in a quieter tone: "October" in primary and "2026" in tertiary, or "Revenue" with the period muted beside it.
 - **Weights 400, 500 and 600.** 700 sparingly for the largest figure. No 800/900 on UI.
@@ -55,6 +56,14 @@ Pick one that fits, then vary its exact hue so it is not a stock value. Avoid th
 - **Depth:** either a hairline border (`1px solid #EEF0F3`) or a soft shadow, usually not both strongly. A good soft shadow: `0 1px 2px rgba(16,24,40,.04), 0 8px 24px -12px rgba(16,24,40,.10)`. Floating elements (tab bar, sheets, popovers): `0 12px 32px -8px rgba(16,24,40,.18)`.
 - **Material, quietly.** What makes a well-made surface feel physical is small: a tone shift inside one neutral (the top of a card 2 to 4% lighter than the bottom), a 1px highlight along the top edge (`inset 0 1px 0 rgba(255,255,255,.05)` on dark, `rgba(255,255,255,.8)` on light), a hairline border, and on light themes a small soft shadow. The active navigation item is a raised step of the same material, not a coloured pill. Recipes are in `showpiece.md` (Surfaces with material).
 - **No** textures, noise, paper, heavy bevels, coloured glows on chrome, coloured offset shadows, gradient borders, or gradients from one hue to another on product UI.
+
+## Surface levels in product UI
+
+- **Three levels at most:** the canvas, the surface (cards, panels, the sidebar if it is set apart) and a raised level (menus, popovers, the active item). A fourth tone is almost always one too many.
+- **Separate canvas and surface clearly but quietly:** a light canvas 2 to 4% darker than white cards (`#F6F6F4` canvas, `#FFFFFF` cards), or a white canvas with hairline-bordered cards. White cards on a white canvas with no border have no edges; grey cards on a grey canvas have no contrast.
+- **The sidebar** is either the canvas itself (divided by a hairline) or one deliberate contrast (a dark sidebar beside a light canvas). Not a third shade of grey.
+- **Insets** (search fields, wells, code) one step darker than the surface they sit on.
+- **Colour fills** are for the one summary card, not for whole regions. Section backgrounds inside an app stay on the canvas.
 
 ## Radius and spacing
 

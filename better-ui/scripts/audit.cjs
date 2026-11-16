@@ -339,6 +339,66 @@ function measure(targetWidth) {
     if (fs / lf < 1.6) weakFig.push(`${describe(el)} (${fs}px over a ${lf}px label)`);
   }
   out.weakFigures = weakFig.slice(0, 5);
+  // (b6) large type set with body defaults: loose tracking, loose leading, heavy weight
+  const looseHead = [], heavyHead = [];
+  for (const el of document.querySelectorAll('body *')) {
+    if (!isVisible(el)) continue;
+    const own = [...el.childNodes].filter((n) => n.nodeType === 3).map((n) => n.nodeValue).join('').trim();
+    if (own.length < 4 || !/[A-Za-z]{3,}/.test(own)) continue;
+    const cs = getComputedStyle(el), fs = parseFloat(cs.fontSize);
+    if (fs < 28) continue;
+    if (/mono/i.test(cs.fontFamily) || cs.textTransform === 'uppercase' || own === own.toUpperCase()) continue;
+    const ls = cs.letterSpacing === 'normal' ? 0 : parseFloat(cs.letterSpacing);
+    const lh = cs.lineHeight === 'normal' ? fs * 1.2 : parseFloat(cs.lineHeight);
+    const lines = Math.round(el.getBoundingClientRect().height / lh);
+    if (fs >= 32 && ls >= 0) looseHead.push(`${describe(el)} (${fs}px, letter-spacing ${cs.letterSpacing})`);
+    else if (fs >= 32 && lines >= 2 && lh / fs > 1.3) looseHead.push(`${describe(el)} (${fs}px, line-height ${(lh / fs).toFixed(2)})`);
+    if (+cs.fontWeight >= 700) heavyHead.push(`${describe(el)} (${fs}px at ${cs.fontWeight})`);
+  }
+  out.looseHeadings = looseHead.slice(0, 4); out.heavyHeadings = heavyHead.slice(0, 4);
+  // (b7) how many different background tones the large regions of the page use
+  const regionSet = new Set();
+  for (const el of document.querySelectorAll('body, body *')) {
+    const r = el.getBoundingClientRect(); if (r.width < innerWidth * 0.6 || r.height < 160) continue;
+    const bg = getComputedStyle(el).backgroundColor;
+    if (!bg || /rgba?\(0, 0, 0, 0\)|transparent/.test(bg)) continue;
+    const m = bg.match(/[\d.]+/g).map(Number); if (m.length > 3 && m[3] < 0.5) continue;
+    regionSet.add(m.slice(0, 3).map((v) => Math.round(v / 6) * 6).join(','));
+  }
+  out.regionTones = regionSet.size;
+  // (b8) copy that does not fit: buttons that wrap, siblings whose text runs very different lengths
+  const wrapBtn = [];
+  for (const el of document.querySelectorAll('button, a[class*="btn"], a[class*="button"], [role="tab"]')) {
+    if (!isVisible(el)) continue; const t = (el.innerText || '').trim(); if (!t || t.length > 40 || t.split(/\s+/).length > 6) continue;
+    // a button used as a card (several blocks, an image) wraps by design
+    if (el.querySelector('img, picture, video') || [...el.querySelectorAll('*')].filter((x) => !(x instanceof SVGElement)).length > 2 || /\n/.test(el.innerText)) continue;
+    const cs = getComputedStyle(el), lh = cs.lineHeight === 'normal' ? parseFloat(cs.fontSize) * 1.25 : parseFloat(cs.lineHeight);
+    // count lines of the label's text only, so an icon stacked above it is not a second line
+    const tops = [];
+    const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+      if (!n.nodeValue.trim()) continue; const rg = document.createRange(); rg.selectNodeContents(n);
+      for (const r of rg.getClientRects()) if (r.width > 2) tops.push(r.top);
+    }
+    const lines = new Set(tops.map((t0) => Math.round(t0 / (lh * 0.6)))).size;
+    // label text split across separate spans on purpose (a title and a meta line) is not wrapping
+    const textNodes = [...el.querySelectorAll('*')].filter((x) => !(x instanceof SVGElement) && [...x.childNodes].some((c) => c.nodeType === 3 && c.nodeValue.trim())).length;
+    if (textNodes > 1) continue;
+    if (lines >= 2) wrapBtn.push(describe(el));
+  }
+  out.wrappingButtons = wrapBtn.slice(0, 5);
+  const unevenTxt = [];
+  for (const el of document.querySelectorAll('body *')) {
+    const kids = [...el.children].filter(isVisible); if (kids.length < 3 || kids.length > 6) continue;
+    const cs = getComputedStyle(el); if (!(cs.display.includes('grid') || cs.display.includes('flex'))) continue;
+    const sig = (k) => k.tagName + '.' + (k.getAttribute('class') || '');
+    if (!kids.every((k) => sig(k) === sig(kids[0]))) continue;
+    const tops = kids.map((k) => Math.round(k.getBoundingClientRect().top)); if (Math.max(...tops) - Math.min(...tops) > 4) continue;
+    const lens = kids.map((k) => { const p = k.querySelector('p'); return p ? (p.innerText || '').trim().length : 0; });
+    if (lens.some((l) => l < 30)) continue;
+    if (Math.max(...lens) / Math.min(...lens) > 1.8) unevenTxt.push(`${describe(kids[0]).split(' "')[0]} (${Math.min(...lens)} to ${Math.max(...lens)} characters)`);
+  }
+  out.unevenCopy = unevenTxt.slice(0, 4);
   // (b3) the largest chart on the first screen drawn as plain bars
   let bigSvg = null, bigArea = 0;
   for (const g of document.querySelectorAll('svg')) {
@@ -948,6 +1008,11 @@ function report(results, facts, focus, runtime, args) {
   if (stubW) problem('CRAFT', `${stubW.m.wrapStubCount} short text(s) wrap leaving a stub on the last line at ${stubW.width}px: ${stubW.m.wrapStubs.slice(0, 5).join('; ')}. Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).`);
   if (widest.leftNumbers && widest.leftNumbers.length) problem('CRAFT', `Numbers in table columns are left-aligned at ${results[results.length - 1].width}px: ${widest.leftNumbers.slice(0, 3).join('; ')}. Right-align numeric columns (and their headers) with tabular figures so digits line up (references/hierarchy.md).`);
   if (widest.weakFigures && widest.weakFigures.length) problem('CRAFT', `Figures barely larger than their labels: ${widest.weakFigures.slice(0, 3).join('; ')}. A figure should be about 2 to 2.5 times its label to lead (references/hierarchy.md).`);
+  if (widest.looseHeadings && widest.looseHeadings.length) problem('CRAFT', `Large headings set with body defaults: ${widest.looseHeadings.slice(0, 3).join('; ')}. Tighten tracking (about -0.02em at 32px, -0.025em at 48px) and leading (1.05 to 1.2) as in references/typography.md.`);
+  if (widest.heavyHeadings && widest.heavyHeadings.length) problem('CRAFT', `Headings at weight 700 or more: ${widest.heavyHeadings.slice(0, 3).join('; ')}. Large type reads more refined at 500 to 600 (references/typography.md).`);
+  if (widest.regionTones > 4) problem('CRAFT', `The large regions of the page use ${widest.regionTones} different background tones. Keep to the canvas, one tinted band and at most one dark band (or canvas, surface and one raised level in an app).`);
+  for (const { width, m } of results) { if (m.wrappingButtons && m.wrappingButtons.length) { problem('CRAFT', `Buttons or tabs whose label wraps at ${width}px: ${m.wrappingButtons.slice(0, 4).join('; ')}. Shorten the label (1 to 3 words) rather than letting it break (references/copy.md).`); break; } }
+  if (widest.unevenCopy && widest.unevenCopy.length) problem('CRAFT', `Side-by-side cards whose body copy runs very different lengths: ${widest.unevenCopy.slice(0, 3).join('; ')}. Write siblings to within about 20% of each other so the row ends level (references/copy.md).`);
   if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }

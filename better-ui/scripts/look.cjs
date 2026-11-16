@@ -6,7 +6,7 @@
 //   category: finance | fitness | habits | wellness | productivity | commerce | saas | health | food | travel | other
 //   --not <n> skips the nth option (to re-deal if the first does not suit the brief)
 //
-// Prints the look, canvas, brand colour, accent and font. Treat it as the starting point for
+// Prints the look, canvas, brand colour, accent, font and its mono partner. Treat it as the starting point for
 // system.md's tokens; adjust shades for contrast, keep the character.
 
 const LOOKS = {
@@ -17,18 +17,18 @@ const LOOKS = {
     { look: 'soft tint', canvas: '#F5F1EA', brand: '#1C3A2E', accent: '#F2B880', font: 'DM Sans', note: 'warm sand canvas, deep forest cards and buttons, apricot highlights' },
   ],
   fitness: [
-    { look: 'dark with one neon', canvas: '#0B0B0D', brand: '#D4FF3A', accent: '#FFFFFF', font: 'Sora', note: 'near-black, lime for the progress ring, current bar and start button' },
+    { look: 'dark with one neon', canvas: '#0B0B0D', brand: '#D4FF3A', accent: '#FFFFFF', font: 'Geist', note: 'near-black, lime for the progress ring, current bar and start button' },
     { look: 'soft tint', canvas: '#F1EEFB', brand: '#141414', accent: '#C9F158', font: 'Plus Jakarta Sans', note: 'lilac canvas, black controls and tab bar, lime highlights' },
     { look: 'bright and clean', canvas: '#F6F6F4', brand: '#FF5A1F', accent: '#141414', font: 'Manrope', note: 'orange for progress and actions, one black stat card' },
-    { look: 'colour blocks', canvas: '#F5F5F0', brand: '#111111', accent: '#FF7A45', font: 'Outfit', note: 'lime, lilac and peach stat cards, black hero card' },
+    { look: 'colour blocks', canvas: '#F5F5F0', brand: '#111111', accent: '#FF7A45', font: 'Instrument Sans', note: 'lime, lilac and peach stat cards, black hero card' },
     { look: 'fresh gradient', canvas: '#EEF4FF', brand: '#2E5BFF', accent: '#FF8A3D', font: 'Onest', note: 'blue-to-sky gradient on the hero, white cards' },
   ],
   habits: [
     { look: 'soft tint', canvas: '#EEF3EC', brand: '#1F2A24', accent: '#7BD389', font: 'Plus Jakarta Sans', note: 'sage canvas, deep green-black summary card, mint completion' },
-    { look: 'colour blocks', canvas: '#F7F5F0', brand: '#111111', accent: '#FFC94A', font: 'Outfit', note: 'each habit a soft colour block, black summary card' },
-    { look: 'dark with one neon', canvas: '#0F0F12', brand: '#FF8A3D', accent: '#FFFFFF', font: 'Sora', note: 'dark rows, each habit its own tint, orange for today' },
+    { look: 'colour blocks', canvas: '#F7F5F0', brand: '#111111', accent: '#FFC94A', font: 'Instrument Sans', note: 'each habit a soft colour block, black summary card' },
+    { look: 'dark with one neon', canvas: '#0F0F12', brand: '#FF8A3D', accent: '#FFFFFF', font: 'Geist', note: 'dark rows, each habit its own tint, orange for today' },
     { look: 'bright and clean', canvas: '#F6F7FB', brand: '#FF6B4A', accent: '#2B2D42', font: 'Figtree', note: 'coral for progress and actions, ink summary card' },
-    { look: 'soft tint', canvas: '#FBF1EC', brand: '#2D1E2F', accent: '#FF9F7A', font: 'Urbanist', note: 'peach canvas, aubergine controls, apricot rings' },
+    { look: 'soft tint', canvas: '#FBF1EC', brand: '#2D1E2F', accent: '#FF9F7A', font: 'Figtree', note: 'peach canvas, aubergine controls, apricot rings' },
   ],
   wellness: 'habits', health: [
     { look: 'bright and clean', canvas: '#F4F7F8', brand: '#0E9F9A', accent: '#2F6FEB', font: 'Plus Jakarta Sans', note: 'teal for care actions, blue for data' },
@@ -52,7 +52,7 @@ const LOOKS = {
     { look: 'dark with one neon', canvas: '#0B0D10', brand: '#A3E635', accent: '#FFFFFF', font: 'Onest', note: 'dark page, lime CTA and highlights' },
   ],
   food: [
-    { look: 'colour blocks', canvas: '#FBF7F0', brand: '#1F1F1F', accent: '#FF7043', font: 'Outfit', note: 'warm cream, tomato accents, colour-blocked categories' },
+    { look: 'colour blocks', canvas: '#FBF7F0', brand: '#1F1F1F', accent: '#FF7043', font: 'Instrument Sans', note: 'warm cream, tomato accents, colour-blocked categories' },
     { look: 'bright and clean', canvas: '#F7F7F5', brand: '#E4572E', accent: '#2E7D32', font: 'Plus Jakarta Sans', note: 'paprika actions, herb green for healthy tags' },
   ],
   travel: [
@@ -65,6 +65,8 @@ const LOOKS = {
     { look: 'soft tint', canvas: '#F1F0EC', brand: '#1F2A24', accent: '#C6F432', font: 'Manrope', note: 'stone canvas, dark controls, lime highlights' },
   ],
 };
+
+const MONO = {"Inter": "JetBrains Mono", "Geist": "Geist Mono", "Manrope": "DM Mono", "Plus Jakarta Sans": "DM Mono", "DM Sans": "DM Mono", "Onest": "JetBrains Mono", "Figtree": "DM Mono", "Instrument Sans": "Geist Mono"};
 
 const args = process.argv.slice(2);
 const name = args[0];
@@ -83,5 +85,6 @@ console.log(`Look for "${name}" (${cat}, option ${i} of ${list.length}):
   brand:   ${p.brand}
   accent:  ${p.accent}
   font:    ${p.font}
+  mono:    ${MONO[p.font] || 'JetBrains Mono'} (meta, axis labels, counts)
   how:     ${p.note}
-Use these as the starting tokens in system.md. Keep the character; adjust shades only for contrast.`);
+Use these as the starting tokens in system.md, and set the type per typography.md (weights 400/500/600, tracking and leading by size). Keep the character; adjust shades only for contrast.`);
