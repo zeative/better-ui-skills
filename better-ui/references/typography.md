@@ -2,7 +2,31 @@
 
 Type is most of what a screen is made of, and most of what makes it read as elegant or cheap. Elegance here is not a fancy face: it is a good family, few sizes, restrained weights, tracking and leading set per size, and details that a default stylesheet never sets.
 
-Contents: choosing a face · pairing · weights · size, tracking and leading · details that make it look set · what makes type look cheap · loading
+Contents: what the research says · choosing a face · pairing · weights · size, tracking and leading · details that make it look set · what makes type look cheap · loading
+
+## What the research says
+
+These are the rules UX courses and platform guidelines agree on. The exact sizes for each context are fixed in `spec.md`.
+
+| Rule | Value | Source |
+|:---|:---|:---|
+| Body text on phones | 16px or more (Apple uses 17pt; Material Body Large is 16/24) | Apple HIG Typography; Material 3; Learn UI Design; Nielsen Norman Group |
+| Body text in dense desktop apps | 14px (13px for secondary) | Vercel Geist; Learn UI Design |
+| Inputs on phones | 16px or more, or iOS zooms the page | Learn UI Design |
+| Smallest text | 11pt, and only for tab labels and similar | Apple HIG |
+| Sizes per screen | three to five, each step about 25% or more from the next | Nielsen Norman Group; Refactoring UI; Learn UI Design |
+| Weights | two or three (400, 500, 600); never below 400 for UI text | Refactoring UI; Practical UI; Apple HIG |
+| Line height | about 1.5 for body; 1.1 to 1.25 for large headings | Refactoring UI; Practical UI |
+| Line length | 45 to 75 characters; shrink the type or reflow if fewer than about 30 fit | Refactoring UI; Practical UI; Learn UI Design |
+| Tracking | slightly negative on large type (about −1% to −2.5%); about +5% on uppercase; zero on body | Learn UI Design; Apple; Refactoring UI |
+| Contrast | 4.5:1 for text, 3:1 for large text (18pt or 14pt bold and up) | WCAG; Apple HIG; Practical UI |
+| Alignment | left-aligned; centre at most two or three lines; numbers right-aligned in columns | Practical UI; Refactoring UI |
+| Emphasis | weight and colour before size; quieten labels (smaller, text-2) rather than enlarging values | Refactoring UI; Learn UI Design |
+| Families | one sans-serif with a tall x-height and five or more weights; at most one partner (a mono for meta, or a display cut for headings) | Practical UI; Learn UI Design; Linear (Inter Display) |
+| Scaling | layouts survive text enlarged to 200%; rows stack instead of truncating | Apple HIG Accessibility |
+| Uppercase | short labels only; never for sentences or headings | Practical UI; Nielsen Norman Group |
+| Front-loading | the information-bearing word first; people read about the first two words of an item | Nielsen Norman Group |
+| Units | px or rem, never em for font sizes | Refactoring UI |
 
 ## Choosing a face
 

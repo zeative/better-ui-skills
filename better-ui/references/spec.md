@@ -29,7 +29,7 @@ Grouping is fixed:
 | Element | Value |
 |:---|:---|
 | Screen gutter (left and right) | 20 |
-| Header | 56 tall; brand mark 28, product name 17/22 weight 600; icon buttons 40 (24 icon) |
+| Header | 56 tall; brand mark 28, product name 16/24 weight 600; icon buttons 40 (24 icon) |
 | Content top, under the header | 8 |
 | Tab bar | 64 tall plus the safe area; 4 or 5 items; icon 24; label 11/13 weight 500; active item in the brand colour |
 | Space kept free above a bottom bar or dock | dock height plus 24 |
@@ -40,12 +40,14 @@ Grouping is fixed:
 |:---|:---|
 | Display (the one hero figure) | 44/48, 600, −0.02em, tabular figures; cents or currency at 28/32 in text-2 |
 | Title (page title when there is no hero figure) | 28/34, 600, −0.015em |
-| Headline (section titles, list item titles, card titles) | 17/22, 600, −0.005em |
-| Body | 15/20, 400 |
-| Body strong (values in rows, button text in rows) | 15/20, 500 |
+| Headline (section titles, card titles) | 20/26, 600, −0.01em |
+| Body (list item titles, paragraphs, inputs) | 16/24, 400 |
+| Body strong (values in rows, list item titles that lead) | 16/24, 500 |
 | Caption (meta, secondary lines) | 13/18, 400, text-2 |
 | Mono meta (changes with their comparison, axis labels, codes) | 12/16, 500, mono |
 | Tab label | 11/13, 500 |
+
+Each step is at least about 25% larger than the one below it (44, 28, 20, 16, 13), so every level reads as a different level; sizes one or two pixels apart look like mistakes.
 
 A greeting is a caption (13/18 text-2) above the title or the hero, never a title of its own.
 
@@ -65,11 +67,11 @@ A greeting is a caption (13/18 text-2) above the title or the hero, never a titl
 
 | Component | Value |
 |:---|:---|
-| List row | 64 tall; leading visual 40 (radius 12 neutral chip, or a 40 avatar, or a 40 photo); headline-size title 15/20 500 and caption under it; trailing value body strong, tabular; separator hairline inset 72 from the left |
+| List row | 64 tall; leading visual 40 (radius 12 neutral chip, or a 40 avatar, or a 40 photo); title body strong 16/24 and caption 13/18 under it; trailing value body strong, tabular; separator hairline inset 72 from the left |
 | List grouping | rows sit on the canvas, or in one grouped surface (radius 16); never one card per row |
 | Card (for peer groups of mixed content only) | padding 16, radius 16, 12 between cards; no card around the hero or around a list of same-type items |
-| Primary button | 52 tall, radius 14, 17/22 weight 600, full width inside a sheet or dock |
-| Secondary button | 44 tall, radius 12, 15/20 weight 500, outline or surface-2 fill |
+| Primary button | 52 tall, radius 14, 16/24 weight 600, full width inside a sheet or dock |
+| Secondary button | 44 tall, radius 12, 16/24 weight 500, outline or surface-2 fill |
 | Compact button (panel or section action) | 32 tall, radius 8, 13/18 weight 500, 12 side padding, outline |
 | Icon button | 40 (24 icon), target 44 |
 | Chip | 32 tall, radius full, 13/18 weight 500, 12 side padding |
@@ -89,9 +91,9 @@ A greeting is a caption (13/18 text-2) above the title or the hero, never a titl
 | Grid gap between cards | 24 |
 | Card | padding 24, radius 12, 1px line border, no shadow |
 | Page title | 24/32, 600, −0.015em |
-| Card or section title | 15/20, 600 |
+| Card or section title | 18/24, 600, −0.01em |
 | Body | 14/20, 400 |
-| Caption | 13/18, 400, text-2 |
+| Caption | 12/16, 400, text-2 |
 | Mono meta | 12/16, 500 |
 | KPI figure | 32/40, 600, −0.02em, tabular; the one hero KPI 40/48 |
 | KPI tile | at most 4 in a row; label caption above, figure, change mono meta with its comparison; no icon chip, no sparkline unless the trend is the point |
