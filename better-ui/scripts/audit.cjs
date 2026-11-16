@@ -301,6 +301,44 @@ function measure(targetWidth) {
     if (off >= Math.max(1, later.length / 2)) ragged.push(describe(el));
   }
   out.raggedStrips = ragged.slice(0, 5);
+  // (b4) numbers in table columns that are not right-aligned
+  const leftNums = [];
+  for (const t of document.querySelectorAll('table')) {
+    if (!isVisible(t)) continue;
+    const rows = [...t.querySelectorAll('tbody tr')].slice(0, 12); if (rows.length < 3) continue;
+    const n = Math.max(...rows.map((r) => r.cells.length));
+    for (let c = 1; c < n; c++) {
+      const cells = rows.map((r) => r.cells[c]).filter(Boolean);
+      const num = cells.filter((td) => /^[\s+\-−$€£¥₹Rp]*[\d.,]+\s*(%|[kKMBT]|bp|x|×)?\s*$/.test(td.innerText || ''));
+      if (num.length < 3 || num.length < cells.length * 0.7) continue;
+      const left = num.filter((td) => { const a = getComputedStyle(td).textAlign; const w = td.scrollWidth, r = td.getBoundingClientRect();
+        const kid = td.firstElementChild; const ka = kid ? getComputedStyle(kid).textAlign : a;
+        return /left|start/.test(a) && /left|start/.test(ka) && !getComputedStyle(td).display.includes('flex'); });
+      if (left.length >= num.length * 0.7) leftNums.push(describe(num[0]));
+    }
+  }
+  out.leftNumbers = leftNums.slice(0, 5);
+  // (b5) a stat figure barely larger than its own label
+  const weakFig = [];
+  for (const el of document.querySelectorAll('body *')) {
+    if (!isVisible(el) || el.children.length > 3) continue;
+    const t = (el.innerText || '').trim(); if (!/^[\s+\-−$€£¥₹Rp]*[\d.,]+\s*(%|[kKMBT])?$/.test(t) || t.length > 14) continue;
+    const fs = parseFloat(getComputedStyle(el).fontSize); if (fs < 18) continue;
+    const r = el.getBoundingClientRect(); if (r.top > innerHeight * 1.5) continue;
+    const box = el.parentElement && el.parentElement.parentElement; if (!box) continue;
+    let label = null;
+    for (const c of box.querySelectorAll('*')) {
+      if (c === el || c.contains(el) || el.contains(c) || !isVisible(c)) continue;
+      const ct = [...c.childNodes].filter((n) => n.nodeType === 3).map((n) => n.nodeValue).join('').trim();
+      if (!/[A-Za-z]{3,}/.test(ct)) continue;
+      const cr = c.getBoundingClientRect(); if (cr.bottom > r.top + 2 || r.top - cr.bottom > 40) continue;
+      label = c; break;
+    }
+    if (!label) continue;
+    const lf = parseFloat(getComputedStyle(label).fontSize);
+    if (fs / lf < 1.6) weakFig.push(`${describe(el)} (${fs}px over a ${lf}px label)`);
+  }
+  out.weakFigures = weakFig.slice(0, 5);
   // (b3) the largest chart on the first screen drawn as plain bars
   let bigSvg = null, bigArea = 0;
   for (const g of document.querySelectorAll('svg')) {
@@ -908,6 +946,8 @@ function report(results, facts, focus, runtime, args) {
   }
   const stubW = results.filter(({ m }) => m.wrapStubCount).sort((p, q) => q.m.wrapStubCount - p.m.wrapStubCount)[0];
   if (stubW) problem('CRAFT', `${stubW.m.wrapStubCount} short text(s) wrap leaving a stub on the last line at ${stubW.width}px: ${stubW.m.wrapStubs.slice(0, 5).join('; ')}. Widen the column, shorten the text, or keep the last words together (text-wrap: balance, a non-breaking space).`);
+  if (widest.leftNumbers && widest.leftNumbers.length) problem('CRAFT', `Numbers in table columns are left-aligned at ${results[results.length - 1].width}px: ${widest.leftNumbers.slice(0, 3).join('; ')}. Right-align numeric columns (and their headers) with tabular figures so digits line up (references/hierarchy.md).`);
+  if (widest.weakFigures && widest.weakFigures.length) problem('CRAFT', `Figures barely larger than their labels: ${widest.weakFigures.slice(0, 3).join('; ')}. A figure should be about 2 to 2.5 times its label to lead (references/hierarchy.md).`);
   if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }
