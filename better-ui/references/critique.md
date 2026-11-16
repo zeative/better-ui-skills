@@ -6,7 +6,7 @@ Contents: what the bar looks like · the two failures · how to review · the ch
 
 ## What the bar looks like
 
-**Mobile apps.** A native-feeling screen: a header with a greeting or title and an avatar or icon buttons; a summary card in the brand colour (or dark) with the key figure and one clean chart or ring; one or two sections of rows or tiles on white cards, each row with a soft-tinted icon chip, a name, a grey secondary line and a control or figure; a bottom tab bar. One clean sans-serif. A light grey canvas, white cards, one brand colour, soft tints for categories. Real names and numbers. Nothing themed.
+**Mobile apps.** A native-feeling screen: a header with a greeting or title and an avatar or icon buttons; a neutral summary card that leads by size, with the key figure and one clean chart or ring; one or two sections of rows or tiles on white cards, each row with a soft-tinted icon chip, a name, a grey secondary line and a control or figure; a bottom tab bar. One clean sans-serif. A light grey canvas, white cards, one brand colour, soft tints for categories. Real names and numbers. Nothing themed.
 
 **Dashboards.** A sidebar with icons and a clear active item (often a dark sidebar), a top bar with search, notifications and an avatar, a row of four to six KPI tiles (icon chip, label, figure, delta pill), a main chart, then tables with product thumbnails or avatars and status pills, and a few secondary modules. Dense, aligned, even gutters. One brand colour plus semantic colours.
 

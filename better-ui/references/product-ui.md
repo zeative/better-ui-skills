@@ -45,7 +45,7 @@ Test: put a screenshot beside the real tool it competes with. If yours shows les
 
 An overview dashboard for a business tool (not a professional data tool, see above) has six to ten modules, each answering a different question. A module that only fills space (a promo card, a tip, a second chart saying the same thing) makes it look generated; leave it out. Draw from these:
 
-- A **hero module:** the key figure on a contrast surface (dark or accent card) with a delta badge, a sparkline or mini area chart, and a comparison line.
+- A **hero module:** the key figure, larger than everything else, on the same neutral surface as the other cards, with a delta, a well-drawn chart and a comparison line.
 - A row of **KPI tiles** (below).
 - The **main chart** with a range control, legend and tooltip.
 - A **secondary chart** of a different form (donut by category, bars by channel, a goal gauge, a heatmap).
@@ -99,7 +99,7 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
 
 1. **Safe area and header, with the brand.** The product's mark and name are visible on the home screen (in the header, or as the wordmark above the greeting): a product with no name on its main screen reads as a template. 12 to 16px top padding (plus `env(safe-area-inset-top)`). A header row: either a greeting ("Good morning, Sam" at 20 to 24px with the date in grey above or below) with a circular avatar or icon button on the right, or a page title with one or two round icon buttons (search, notifications, add). A small brand mark if there is no greeting.
 2. **Optional date or filter strip.** A horizontal week strip (seven day pills with the day letter and number, today filled with the brand colour), or segmented tabs (Today / Week / Month) in a pill control.
-3. **The summary card** (see `showpiece.md`): the brand-filled or dark card with the key figure (28 to 36px), a short line of context, and one clean visual (ring, mini chart, day dots, progress bar).
+3. **The summary card** (see `showpiece.md`): a neutral card that leads by size, with the key figure (32 to 40px), a short line of context, and one clean visual in the brand colour (ring, chart, day dots, progress bar).
 4. **One or two sections**, each with a title row (16 to 18px, weight 600) and a "See all" link on the right:
    - **A list of items** in white cards or one grouped white card with hairline separators. A row: a 40 to 44px icon chip (line icon or 3D emoji on a neutral grey chip, or a photo), the name (15 to 16px, weight 500) with one line of secondary text (13 to 14px grey), and on the right the main control or figure: a round check button, a value, a chevron, a small progress ring. Row height 56 to 72px.
    - **A small stats grid** of two or three tiles (an icon chip, a label, a figure, a tiny bar or sparkline), or **one chart card** (weekly bars with the current day in the brand colour, a clean line chart).
@@ -112,18 +112,18 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
    ```
 
 **Each category has a signature moment** that popular shots almost always include. Build the one for your product as the summary card or right beneath it, drawn with care:
-- *Finance and banking (personal budgeting too):* a designed payment card. If it stands for one account, it can be the balance card itself (that account's balance, its masked number, a chip). If the top figure is a total across accounts, keep the total card plain and show the cards as a small stack or carousel beneath it; never put a chip on a total (brand gradient or deep solid colour, a subtle pattern or large soft shapes, chip, network mark drawn as simple circles, masked number, name), often slightly stacked over a second card; quick actions as round buttons below it; a category breakdown drawn as something other than a default donut (proportional bubbles, a segmented bar with labels, stacked pills).
+- *Finance and banking (personal budgeting too):* a designed payment card as an object (graphite or metal, real card proportions, about a third of the screen width or a small stack), placed beside or below the balance on a neutral card, not a full-width block of colour; never put a chip on a total (brand gradient or deep solid colour, a subtle pattern or large soft shapes, chip, network mark drawn as simple circles, masked number, name), often slightly stacked over a second card; quick actions as round buttons below it; a category breakdown drawn as something other than a default donut (proportional bubbles, a segmented bar with labels, stacked pills).
 - *Finance stays restrained:* deep, calm colour (black, forest, navy, ink) with one accent; no candy pastels across the account tiles and no 3D objects stuck onto cards. A 3D object only belongs in an empty state or onboarding.
 - *Fitness and workout:* a large progress visual for today (ring or arc with the key figure), a weekly bar chart with the current bar highlighted, and an activity card with a small route map or a session timeline.
 - *Habits and wellness:* a week strip with per-day completion rings, colour-coded habit rows, and a streak or consistency chart.
 - *Dashboards:* the KPI row and one large chart with a highlighted point and tooltip.
 
-**Character comes from:** the brand colour on the summary card and active states, photographs and artwork, friendly icons or emoji per item, a good sans at clean sizes, and real names and figures. Not from themes, metaphors, textures or decorative fonts.
+**Character comes from:** the brand colour in the chart, the primary action and active states, photographs and artwork, friendly icons or emoji per item, a good sans at clean sizes, and real names and figures. Not from themes, metaphors, textures or decorative fonts.
 
 **Rules:**
 
 - **Open with data.** Ship believable sample data in a mid-use state (some done, some pending, a week of history) so the first view is full. Offer "Clear sample data" in a settings screen or menu; never put a sample-data note on the main screens. Design the empty state too.
-- **One dominant thing on the first screen.** The element the screen is about (the balance with its chart, today's session, the now-playing artwork, the active order) takes 35 to 50% of the first screen, drawn large and well; everything else is clearly smaller. A first screen of five medium cards of similar size has no focus, however neat. The main chart sits above the fold, not cut by the tab bar.
+- **One dominant thing on the first screen.** The element the screen is about (the balance with its chart, today's session, the now-playing artwork, the active order) takes 35 to 50% of the first screen, drawn large and well; everything else is clearly smaller. It leads through size, a large figure and a large visual (chart, artwork, photo), not through a big fill of brand colour or black: a third of the screen in saturated orange, navy or purple feels loud and dated. A first screen of five medium cards of similar size has no focus, however neat. The main chart sits above the fold, not cut by the tab bar.
 - **Keep it calm.** One summary card, then white cards. Three to five things on the first screen, not ten. No module repeats information another already shows.
 - **Transaction rows lead with a clear mark:** a line icon for the category in a soft chip, or a person's avatar for transfers. Keep one style for every row.
 - **Every item has its own icon.** Two different exercises, categories or accounts never share the same glyph; draw or pick a distinct one for each.

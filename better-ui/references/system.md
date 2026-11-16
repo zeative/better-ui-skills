@@ -8,7 +8,7 @@ Contents: choose a look · type · colour · brand colour by category · surface
 
 A clean system with no point of view reads as a component-library template. Popular shots each have one recognisable, contemporary *look*: a palette and surface treatment, not a theme. Pick the one that suits the product and audience, and apply it consistently. These are styles, not concepts: nothing about the product's world is drawn into the interface.
 
-- **Bright and clean:** white or very light grey canvas, white cards, one saturated brand colour on the summary card, buttons and active states. The safe default for finance, productivity and admin.
+- **Bright and clean:** white or very light grey canvas, white cards, one saturated brand colour in the main chart, buttons and active states. The safe default for finance, productivity and admin.
 - **Dark with one neon:** near-black canvas, dark grey cards, white text, one vivid accent (lime `#C6F432`, orange `#FF6A2B`, electric blue) for the hero figure, chart and primary control. Common in fitness, crypto, music.
 - **Monochrome:** black, white and greys with one small accent; strong type; crisp hairlines. Common in fintech and SaaS.
 - **Fresh gradient:** a soft blue or sky gradient behind the hero or summary card, glass-like white cards with a light blur. Common in banking and SaaS landing pages.
@@ -34,10 +34,10 @@ Write the choice as one line in a comment at the top of the stylesheet ("Look: m
 - **Canvas:** a light neutral, slightly cool or warm: `#F5F6F8`, `#F4F5F7`, `#F7F7F5`, `#F2F4F7`. White canvas with light grey cards also works. For a dark app use graphite, not blue-black or purple-black: `#0E0E0F` to `#141415` canvas, `#18181A` to `#1C1C1E` surfaces, `#232326` raised, borders `rgba(255,255,255,.07)`.
 - **Surfaces:** white (`#FFFFFF`) cards on the canvas; an inner panel one step darker than the card (`#F6F7F9`).
 - **Text:** primary `#0F172A`-ish (near-black, not pure), secondary `#64748B`-ish, tertiary for placeholders `#94A3B8`. Hairlines `#E9ECF1`.
-- **One brand colour** (see below), used for: the primary button, the active tab and nav item, links, the main chart series, selected states, and at most one large filled card (a summary card) per screen. A light tint of it (6 to 10% opacity on the canvas) for chips and selected backgrounds.
+- **One brand colour** (see below), used for: the primary button, the active tab and nav item, links, the main chart series, selected states, and small filled elements (a status pill, a small tile). Not large filled cards: big blocks of brand colour or black are loud. A light tint of it (6 to 10% opacity on the canvas) for chips and selected backgrounds.
 - **Semantic colours:** success green, warning amber, danger red, as coloured text with a dot or a very light pill (`#ECF7F0` background, `#15803D` text) for statuses and deltas. Never as large fills.
 - **Category colours** (habits, spending categories, muscle groups): five or six clear, mid-saturation hues used only as small marks: a dot, an icon's stroke, a chart series, a thin bar. Icon chips sit on a neutral grey (`#F2F2F0` on light, `#232326` on dark) with the icon in the category colour, not on a pastel square. Never as card backgrounds.
-- A dark surface (a near-black card or a dark sidebar) is a good single contrast element on a light screen.
+- **Colour by area:** on a light screen, saturated or dark fills cover no more than about 10 to 15% of the first screen in total (buttons, pills, small tiles, a payment card object, a dark sidebar in a desktop shell). The rest is neutral, so the colour that is there reads as intentional.
 
 ## Brand colour by category
 

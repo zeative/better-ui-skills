@@ -63,7 +63,7 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 - Derive tints with `color-mix` instead of inventing new colours, and keep them small: 6 to 10% brand on surface for a selected row or a focus ring, never for whole cards.
 - A **category palette** for things that come in kinds (item types, statuses, team members): four to six clear hues at matched lightness and saturation, used as marks (dots, icon strokes, chart series), not pastel fills. Use it in small doses: the item's object or icon tile and its own data marks. Do not also tint the whole card, its border and its button, or the screen turns into a rainbow and loses its identity.
 - **One brand colour** defines the screen. Viewed as a thumbnail, the page reads as a neutral base with one colour, plus category colours as small sparks.
-- **One filled card per screen at most** (the summary card) in the brand colour or near-black. The rest are white cards. Do not tint every tile a different pastel.
+- **No large blocks of colour.** Cards stay neutral; the brand colour goes into the chart, the primary button, active states and small pills. A card filled with brand colour or black only when it is small. Do not tint every tile a different pastel either.
 - **Dark apps** use near-black ground, slightly lighter surfaces, white text, and the brand colour on the primary control, active states and chart series.
 - Status colours are separate and always paired with a label or icon.
 - Gradients are subtle and rare: a gentle one on the summary card or the landing hero background. Within about 30 degrees of hue.

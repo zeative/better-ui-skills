@@ -378,6 +378,27 @@ function measure(targetWidth) {
     const c = toHsl(+m[0], +m[1], +m[2]);
     if (c.l > 0.8 && c.l < 0.975 && c.s > 0.33) pastel.push({ h: Math.round(c.h / 30) * 30, d: describe(el) });
   }
+  // share of the first screen covered by saturated or dark fills on a light page
+  const canvasL = (() => { const m = (getComputedStyle(document.body).backgroundColor || '').match(/[\d.]+/g); if (!m || (m.length > 3 && +m[3] < 0.5)) return 1; return toHsl(+m[0], +m[1], +m[2]).l; })();
+  let loudArea = 0; const loudEg = [];
+  if (canvasL > 0.6) {
+    const cand = [...document.querySelectorAll('body *')].filter((el) => {
+      const r = el.getBoundingClientRect(); if (r.top > innerHeight || r.bottom < 0 || r.width * r.height < 160 * 90) return false;
+      const cs = getComputedStyle(el);
+      // photographs and artwork are imagery, not a block of colour
+      if (/url\(/.test(cs.backgroundImage) || [...el.querySelectorAll('img, video, picture')].some((im) => { const q = im.getBoundingClientRect(); return q.width * q.height > r.width * r.height * 0.4; })) return false;
+      let m = (cs.backgroundColor || '').match(/[\d.]+/g);
+      if ((!m || (m.length > 3 && +m[3] < 0.6)) && /gradient/.test(cs.backgroundImage)) m = (cs.backgroundImage.match(/rgba?\([^)]*\)/) || [''])[0].match(/[\d.]+/g);
+      if (!m || (m.length > 3 && +m[3] < 0.6)) return false;
+      const c = toHsl(+m[0], +m[1], +m[2]); return (c.s > 0.45 && c.l > 0.2 && c.l < 0.75) || c.l < 0.2;
+    });
+    for (const el of cand) {
+      if (cand.some((o) => o !== el && o.contains(el))) continue;
+      const r = el.getBoundingClientRect(); const w = Math.min(r.right, innerWidth) - Math.max(r.left, 0), h = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0);
+      if (w > 0 && h > 0) { loudArea += w * h; loudEg.push(`${describe(el).split(' "')[0]} (${Math.round(100 * w * h / (innerWidth * innerHeight))}%)`); }
+    }
+  }
+  out.loudFill = { share: Math.round(100 * loudArea / (innerWidth * innerHeight)), eg: loudEg.slice(0, 4) };
   out.pastel = { n: pastel.length, hues: [...new Set(pastel.map((x) => x.h))].length, eg: pastel.slice(0, 4).map((x) => x.d) };
   // (b8) copy that does not fit: buttons that wrap, siblings whose text runs very different lengths
   const wrapBtn = [];
@@ -1091,6 +1112,7 @@ function report(results, facts, focus, runtime, args) {
   if (widest.nativeControls && widest.nativeControls.length) problem('CRAFT', `Browser-default controls showing: ${widest.nativeControls.slice(0, 4).join('; ')}. A native date or time picker shows the browser's format (05/28/2025) and its own glyph; use date chips or a styled picker in the locale's format, and selects with appearance: none and your own chevron (references/product-ui.md).`);
   for (const { width, m } of results) { if (m.barPeek && m.barPeek.length) { problem('CRAFT', `Content collides with a floating bottom bar at ${width}px: ${m.barPeek.slice(0, 3).join('; ')}. Put the bars in one fixed dock with a solid or fading backdrop (references/product-ui.md, bottom tab bar).`); break; } }
   if (widest.pastel && (widest.pastel.n >= 3 || widest.pastel.eg.some((d) => /^body|^html|^main|^div#app|^\.app/.test(d)))) problem('CRAFT', `${widest.pastel.n} large pastel fills (light surfaces that still carry a hue) in ${widest.pastel.hues} hue(s): ${widest.pastel.eg.slice(0, 3).join('; ')}. Pastel canvases and candy-coloured cards are the palette of generated UI; keep canvases and cards neutral and let one saturated brand colour, photos and data carry the colour (references/system.md, No pastels).`);
+  for (const { width, m } of results) { if (m.loudFill && m.loudFill.share > 18) { problem('CRAFT', `Saturated or dark blocks cover ${m.loudFill.share}% of the first screen at ${width}px: ${m.loudFill.eg.join('; ')}. On a light screen keep large fills under about 15%; let the main card lead by size and put the brand colour in its chart and controls (references/system.md, Colour by area).`); break; } }
   if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }
