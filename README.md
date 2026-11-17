@@ -5,44 +5,50 @@
 <br>
 
 [![Agent skill](https://img.shields.io/badge/agent-skill-15161A?style=for-the-badge)](better-ui/SKILL.md)&nbsp;&nbsp;
-[![Claude Code](https://img.shields.io/badge/Claude_Code-ready-FF6B4A?style=for-the-badge)](#quick-start)&nbsp;&nbsp;
-[![Tested against Dribbble](https://img.shields.io/badge/tested_against-Dribbble-ea4c89?style=for-the-badge)](#results)&nbsp;&nbsp;
+[![Claude Code](https://img.shields.io/badge/Claude_Code-ready-FF6B4A?style=for-the-badge)](#install)&nbsp;&nbsp;
+[![Benchmarks](https://img.shields.io/badge/benchmarks-40%2B_prompts-2E69FD?style=for-the-badge)](#benchmarks)&nbsp;&nbsp;
 [![No dependencies](https://img.shields.io/badge/runtime_deps-0-1F9D55?style=for-the-badge)](#whats-inside)&nbsp;&nbsp;
 [![MIT license](https://img.shields.io/badge/license-MIT-5E6166?style=for-the-badge)](LICENSE)
 
-**Ask an agent for a page. Get something a product team would ship.**
+### Ask an agent for a page. Get something a design team would ship.
 
-[Quick start](#quick-start) · [Before and after](#before-and-after) · [Results](#results) · [How it works](#how-it-works) · [FAQ](#faq)
+[Install](#install) · [Before and after](#before-and-after) · [What's different](#whats-different) · [Benchmarks](#benchmarks) · [How it works](#how-it-works) · [FAQ](#faq)
+
+<br>
+
+<img src="docs/images/showcase.jpg" alt="Twelve screens built by agents with better-ui: a conference poster, a Japanese restaurant, a Bali villa, five phone apps, a photographer portfolio, a POS landing page and an invoicing SaaS" width="100%">
+
+<sub>Every screen above was built by an agent from a one-line prompt, in one run, with no edits.</sub>
 
 </div>
 
 <br>
 
-AI agents build interfaces that are either **too plain** (default components, no brand, it reads as rendered HTML) or **too much** (invented themes, textures, display fonts, it reads as a costume). **better-ui** is an agent skill that aims at the narrow middle where popular Dribbble work lives: familiar patterns, executed with precision.
+Left alone, AI agents build interfaces that are **too plain** (default components, no hierarchy, it reads as rendered HTML) or **too much** (invented themes, textures, a purple gradient, it reads as a template). **better-ui** is an agent skill that gives the agent what a good designer brings to the job: a fixed system of sizes and spaces, a colour system built from one brand colour, the conventional anatomy of each kind of screen, art direction for web pages, and the habit of rendering, measuring and reviewing its own work.
 
 You don't call it. Ask for any screen and the agent loads it on its own.
 
-## Quick start
+## Install
 
 ```bash
 npx skills add zeative/better-ui-skills
 ```
 
-That uses the open [skills CLI](https://github.com/vercel-labs/skills) and works with Claude Code, Codex, Cursor and other agents that read `SKILL.md`. Prefer to copy it yourself?
+That uses the open [skills CLI](https://github.com/vercel-labs/skills) and works with Claude Code, Codex, Cursor and other agents that read `SKILL.md`. Or copy it yourself:
 
 ```bash
 git clone https://github.com/zeative/better-ui-skills.git && cp -r better-ui-skills/better-ui ~/.claude/skills/
 ```
 
-Then ask for something visual:
+Then ask for something visual, in any language:
 
 ```text
-make me a habit tracker web app. i want to add habits, tick them off each day and see my streaks
+landing page for a two-day design conference in Jakarta: speakers, schedule, venue, tickets
 ```
 
 ## Before and after
 
-Same prompt. Same model. Each page was built by a separate agent session in its own empty folder; the one on the right had better-ui installed and was never told about it. Nothing was edited by hand.
+Same prompt, same model. Each page was built by a separate headless agent session in its own empty folder; the one on the right had better-ui installed and was never told about it. One run each, nothing edited, nothing picked.
 
 <table>
 <tr>
@@ -55,122 +61,15 @@ Same prompt. Same model. Each page was built by a separate agent session in its 
 </tr>
 </table>
 
-<table>
-<tr>
-<th width="50%">Without better-ui</th>
-<th width="50%">With better-ui</th>
-</tr>
-<tr><td colspan="2"><b>Dental clinic dashboard</b> · <i>"Buatkan dashboard untuk klinik gigi kecil: jadwal janji temu hari ini, pasien yang sedang menunggu, dokter yang bertugas, dan pendapatan minggu ini."</i></td></tr>
-<tr>
-<td><a href="docs/images/compare/clinic-dashboard-before.jpg"><img src="docs/images/compare/clinic-dashboard-before.jpg" alt="Clinic dashboard without better-ui"></a></td>
-<td><a href="docs/images/compare/clinic-dashboard-after.jpg"><img src="docs/images/compare/clinic-dashboard-after.jpg" alt="Clinic dashboard with better-ui"></a></td>
-</tr>
-<tr><td colspan="2"><b>Store admin dashboard</b> · <i>"Bikin halaman dashboard admin untuk toko online kecil yang jualan biji kopi. Tampilkan ringkasan penjualan hari ini, grafik penjualan 7 hari terakhir, pesanan terbaru, dan produk terlaris."</i></td></tr>
-<tr>
-<td><a href="docs/images/compare/store-admin-dashboard-before.jpg"><img src="docs/images/compare/store-admin-dashboard-before.jpg" alt="Store dashboard without better-ui"></a></td>
-<td><a href="docs/images/compare/store-admin-dashboard-after.jpg"><img src="docs/images/compare/store-admin-dashboard-after.jpg" alt="Store dashboard with better-ui"></a></td>
-</tr>
-<tr><td colspan="2"><b>Habit tracker</b> · <i>"make me a habit tracker web app. i want to add habits, tick them off each day and see my streaks. single index.html file, and it should work on my phone too"</i></td></tr>
-<tr>
-<td align="center"><a href="docs/images/compare/habit-tracker-app-before.jpg"><img src="docs/images/compare/habit-tracker-app-before.jpg" alt="Habit tracker without better-ui" width="72%"></a></td>
-<td align="center"><a href="docs/images/compare/habit-tracker-app-after.jpg"><img src="docs/images/compare/habit-tracker-app-after.jpg" alt="Habit tracker with better-ui" width="72%"></a></td>
-</tr>
-</table>
-
-<details>
-<summary><b>One more pair, where the difference is smaller</b></summary>
+<details open>
+<summary><b>Web pages</b>: landing, event, restaurant, portfolio, property</summary>
 
 <br>
 
-Current models are already decent at some of these. This is the case where better-ui changed the least.
+For web pages the agent writes three concepts in different art directions, picks the strongest and carries it through every section, from the hero to the footer.
 
 <table>
 <tr><th width="50%">Without better-ui</th><th width="50%">With better-ui</th></tr>
-<tr><td colspan="2"><b>Personal finance app</b> · <i>"build a personal finance app: balance, recent transactions, spending by category and a monthly budget."</i></td></tr>
-<tr>
-<td align="center"><img src="docs/images/compare/finance-app-before.jpg" alt="Finance app without better-ui" width="72%"></td>
-<td align="center"><img src="docs/images/compare/finance-app-after.jpg" alt="Finance app with better-ui" width="72%"></td>
-</tr>
-</table>
-
-</details>
-
-### Ten more prompts, no judges
-
-Ten new prompts, run the same way, both sides shown as they came out. Coffee, crypto and analytics were re-run after the colour system was added. Nothing was ranked or picked by a judge: six are below, three in the fold, and the villa page is under web pages.
-
-<table>
-<tr>
-<th width="50%">Without better-ui</th>
-<th width="50%">With better-ui</th>
-</tr>
-<tr><td colspan="2"><b>Coffee ordering app</b> · <i>"Bikin aplikasi pesan kopi buat kedai kopi kecil: menu, keranjang, dan status pesanan. Satu file index.html, mobile first."</i></td></tr>
-<tr>
-<td align="center"><a href="docs/images/compare/coffee-order-before.jpg"><img src="docs/images/compare/coffee-order-before.jpg" alt="Coffee ordering app without better-ui" width="72%"></a></td>
-<td align="center"><a href="docs/images/compare/coffee-order-after.jpg"><img src="docs/images/compare/coffee-order-after.jpg" alt="Coffee ordering app with better-ui" width="72%"></a></td>
-</tr>
-<tr><td colspan="2"><b>Kanban board</b> · <i>"make a kanban board web app for a small product team: columns, task cards with assignees and due dates, and a way to add tasks. single index.html"</i></td></tr>
-<tr>
-<td><a href="docs/images/compare/kanban-board-before.jpg"><img src="docs/images/compare/kanban-board-before.jpg" alt="Kanban board without better-ui"></a></td>
-<td><a href="docs/images/compare/kanban-board-after.jpg"><img src="docs/images/compare/kanban-board-after.jpg" alt="Kanban board with better-ui"></a></td>
-</tr>
-<tr><td colspan="2"><b>SaaS analytics dashboard</b> · <i>"build a web analytics dashboard for a SaaS product: visitors, signups, conversion, traffic sources and top pages. dummy data, single index.html"</i></td></tr>
-<tr>
-<td><a href="docs/images/compare/analytics-dashboard-before.jpg"><img src="docs/images/compare/analytics-dashboard-before.jpg" alt="SaaS analytics dashboard without better-ui"></a></td>
-<td><a href="docs/images/compare/analytics-dashboard-after.jpg"><img src="docs/images/compare/analytics-dashboard-after.jpg" alt="SaaS analytics dashboard with better-ui"></a></td>
-</tr>
-<tr><td colspan="2"><b>Meditation and sleep app</b> · <i>"make a meditation and sleep app: today&#x27;s session, a library of guided sessions, and a weekly mindfulness streak. single index.html, mobile first"</i></td></tr>
-<tr>
-<td align="center"><a href="docs/images/compare/meditation-app-before.jpg"><img src="docs/images/compare/meditation-app-before.jpg" alt="Meditation and sleep app without better-ui" width="72%"></a></td>
-<td align="center"><a href="docs/images/compare/meditation-app-after.jpg"><img src="docs/images/compare/meditation-app-after.jpg" alt="Meditation and sleep app with better-ui" width="72%"></a></td>
-</tr>
-<tr><td colspan="2"><b>Student dashboard</b> · <i>"Bikin dashboard siswa untuk aplikasi belajar online: jadwal kelas hari ini, tugas yang belum dikumpulkan, nilai, dan progres kursus. Data dummy, satu file index.html."</i></td></tr>
-<tr>
-<td><a href="docs/images/compare/student-dashboard-before.jpg"><img src="docs/images/compare/student-dashboard-before.jpg" alt="Student dashboard without better-ui"></a></td>
-<td><a href="docs/images/compare/student-dashboard-after.jpg"><img src="docs/images/compare/student-dashboard-after.jpg" alt="Student dashboard with better-ui"></a></td>
-</tr>
-<tr><td colspan="2"><b>Music player</b> · <i>"make a music player app: now playing with controls, a queue, and a library of playlists. single index.html, mobile first"</i></td></tr>
-<tr>
-<td align="center"><a href="docs/images/compare/music-player-before.jpg"><img src="docs/images/compare/music-player-before.jpg" alt="Music player without better-ui" width="72%"></a></td>
-<td align="center"><a href="docs/images/compare/music-player-after.jpg"><img src="docs/images/compare/music-player-after.jpg" alt="Music player with better-ui" width="72%"></a></td>
-</tr>
-</table>
-
-<details>
-<summary><b>The other three</b></summary>
-
-<br>
-
-<table>
-<tr><th width="50%">Without better-ui</th><th width="50%">With better-ui</th></tr>
-<tr><td colspan="2"><b>Crypto portfolio tracker</b> · <i>"build a crypto portfolio tracker app: total balance, holdings with price changes, a chart and recent transactions. single index.html, mobile first"</i></td></tr>
-<tr>
-<td align="center"><a href="docs/images/compare/crypto-portfolio-before.jpg"><img src="docs/images/compare/crypto-portfolio-before.jpg" alt="Crypto portfolio tracker without better-ui" width="72%"></a></td>
-<td align="center"><a href="docs/images/compare/crypto-portfolio-after.jpg"><img src="docs/images/compare/crypto-portfolio-after.jpg" alt="Crypto portfolio tracker with better-ui" width="72%"></a></td>
-</tr>
-<tr><td colspan="2"><b>Recipe app</b> · <i>"make a recipe app: browse recipes by category, a recipe detail with ingredients and steps, and saved favourites. single index.html, mobile first"</i></td></tr>
-<tr>
-<td align="center"><a href="docs/images/compare/recipe-app-before.jpg"><img src="docs/images/compare/recipe-app-before.jpg" alt="Recipe app without better-ui" width="72%"></a></td>
-<td align="center"><a href="docs/images/compare/recipe-app-after.jpg"><img src="docs/images/compare/recipe-app-after.jpg" alt="Recipe app with better-ui" width="72%"></a></td>
-</tr>
-<tr><td colspan="2"><b>Sneaker product page</b> · <i>"build a product page for an online sneaker store: gallery, sizes, colours, price, reviews and add to cart. single index.html"</i></td></tr>
-<tr>
-<td><a href="docs/images/compare/sneaker-product-before.jpg"><img src="docs/images/compare/sneaker-product-before.jpg" alt="Sneaker product page without better-ui"></a></td>
-<td><a href="docs/images/compare/sneaker-product-after.jpg"><img src="docs/images/compare/sneaker-product-after.jpg" alt="Sneaker product page with better-ui"></a></td>
-</tr>
-</table>
-
-</details>
-
-### Web pages, with an art direction
-
-For landing pages, event pages, restaurants and portfolios, better-ui has the agent write three concepts in different directions (editorial serif, poster, cinematic photo, colour field, live product demo and others in [`web-directions.md`](better-ui/references/web-directions.md)), pick the strongest, and carry it through every section. One run each, as they came out.
-
-<table>
-<tr>
-<th width="50%">Without better-ui</th>
-<th width="50%">With better-ui</th>
-</tr>
 <tr><td colspan="2"><b>Design conference</b> · <i>"landing page for a two-day design conference in Jakarta: speakers, schedule, venue, tickets with early-bird pricing. single index.html"</i></td></tr>
 <tr>
 <td><a href="docs/images/compare/conference-landing-before.jpg"><img src="docs/images/compare/conference-landing-before.jpg" alt="Design conference without better-ui"></a></td>
@@ -203,42 +102,190 @@ For landing pages, event pages, restaurants and portfolios, better-ui has the ag
 </tr>
 </table>
 
-Every page is in [`examples/`](examples). Open them in a browser and click around.
+</details>
 
-## Results
+<details>
+<summary><b>Phone apps</b>: ordering, habits, crypto, workouts, sleep, music, recipes, money</summary>
 
-A screenshot proves little on its own, so each page was **hidden among eight popular Dribbble shots** of the same category and a judge ranked all nine, flagging anything that looked AI-made.
+<br>
+
+<table>
+<tr><th width="50%">Without better-ui</th><th width="50%">With better-ui</th></tr>
+<tr><td colspan="2"><b>Coffee ordering app</b> · <i>"Bikin aplikasi pesan kopi buat kedai kopi kecil: menu, keranjang, dan status pesanan. Satu file index.html, mobile first."</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/coffee-order-before.jpg"><img src="docs/images/compare/coffee-order-before.jpg" alt="Coffee ordering app without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/coffee-order-after.jpg"><img src="docs/images/compare/coffee-order-after.jpg" alt="Coffee ordering app with better-ui" width="72%"></a></td>
+</tr>
+<tr><td colspan="2"><b>Habit tracker</b> · <i>"make me a habit tracker web app. i want to add habits, tick them off each day and see my streaks. single index.html file, and it should work on my phone too"</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/habit-tracker-app-before.jpg"><img src="docs/images/compare/habit-tracker-app-before.jpg" alt="Habit tracker without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/habit-tracker-app-after.jpg"><img src="docs/images/compare/habit-tracker-app-after.jpg" alt="Habit tracker with better-ui" width="72%"></a></td>
+</tr>
+<tr><td colspan="2"><b>Crypto portfolio</b> · <i>"build a crypto portfolio tracker app: total balance, holdings with price changes, a chart and recent transactions. single index.html, mobile first"</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/crypto-portfolio-before.jpg"><img src="docs/images/compare/crypto-portfolio-before.jpg" alt="Crypto portfolio without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/crypto-portfolio-after.jpg"><img src="docs/images/compare/crypto-portfolio-after.jpg" alt="Crypto portfolio with better-ui" width="72%"></a></td>
+</tr>
+<tr><td colspan="2"><b>Workout tracker</b> · <i>"make a workout tracker app. today's workout with exercises, sets and reps i can tick off, and my progress for the week. single index.html, mobile first"</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/workout-app-before.jpg"><img src="docs/images/compare/workout-app-before.jpg" alt="Workout tracker without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/workout-app-after.jpg"><img src="docs/images/compare/workout-app-after.jpg" alt="Workout tracker with better-ui" width="72%"></a></td>
+</tr>
+<tr><td colspan="2"><b>Meditation and sleep</b> · <i>"make a meditation and sleep app: today's session, a library of guided sessions, and a weekly mindfulness streak. single index.html, mobile first"</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/meditation-app-before.jpg"><img src="docs/images/compare/meditation-app-before.jpg" alt="Meditation and sleep without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/meditation-app-after.jpg"><img src="docs/images/compare/meditation-app-after.jpg" alt="Meditation and sleep with better-ui" width="72%"></a></td>
+</tr>
+<tr><td colspan="2"><b>Music player</b> · <i>"make a music player app: now playing with controls, a queue, and a library of playlists. single index.html, mobile first"</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/music-player-before.jpg"><img src="docs/images/compare/music-player-before.jpg" alt="Music player without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/music-player-after.jpg"><img src="docs/images/compare/music-player-after.jpg" alt="Music player with better-ui" width="72%"></a></td>
+</tr>
+<tr><td colspan="2"><b>Recipe app</b> · <i>"make a recipe app: browse recipes by category, a recipe detail with ingredients and steps, and saved favourites. single index.html, mobile first"</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/recipe-app-before.jpg"><img src="docs/images/compare/recipe-app-before.jpg" alt="Recipe app without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/recipe-app-after.jpg"><img src="docs/images/compare/recipe-app-after.jpg" alt="Recipe app with better-ui" width="72%"></a></td>
+</tr>
+<tr><td colspan="2"><b>Personal finance</b> · <i>"build a personal finance app: balance, recent transactions, spending by category and a monthly budget. single index.html, mobile first but should look good on desktop too"</i></td></tr>
+<tr>
+<td align="center"><a href="docs/images/compare/finance-app-before.jpg"><img src="docs/images/compare/finance-app-before.jpg" alt="Personal finance without better-ui" width="72%"></a></td>
+<td align="center"><a href="docs/images/compare/finance-app-after.jpg"><img src="docs/images/compare/finance-app-after.jpg" alt="Personal finance with better-ui" width="72%"></a></td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary><b>Dashboards and tools</b>: clinic, store admin, analytics, kanban, school</summary>
+
+<br>
+
+<table>
+<tr><th width="50%">Without better-ui</th><th width="50%">With better-ui</th></tr>
+<tr><td colspan="2"><b>Dental clinic dashboard</b> · <i>"Buatkan dashboard untuk klinik gigi kecil: jadwal janji temu hari ini, pasien yang sedang menunggu, dokter yang bertugas, dan pendapatan minggu ini. Data dummy. Satu file index.html."</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/clinic-dashboard-before.jpg"><img src="docs/images/compare/clinic-dashboard-before.jpg" alt="Dental clinic dashboard without better-ui"></a></td>
+<td><a href="docs/images/compare/clinic-dashboard-after.jpg"><img src="docs/images/compare/clinic-dashboard-after.jpg" alt="Dental clinic dashboard with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Store admin dashboard</b> · <i>"Bikin halaman dashboard admin untuk toko online kecil yang jualan biji kopi. Tampilkan ringkasan penjualan hari ini, grafik penjualan 7 hari terakhir, pesanan terbaru, dan produk terlaris. Datanya dummy aja. Satu file index.html."</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/store-admin-dashboard-before.jpg"><img src="docs/images/compare/store-admin-dashboard-before.jpg" alt="Store admin dashboard without better-ui"></a></td>
+<td><a href="docs/images/compare/store-admin-dashboard-after.jpg"><img src="docs/images/compare/store-admin-dashboard-after.jpg" alt="Store admin dashboard with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>SaaS analytics</b> · <i>"build a web analytics dashboard for a SaaS product: visitors, signups, conversion, traffic sources and top pages. dummy data, single index.html"</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/analytics-dashboard-before.jpg"><img src="docs/images/compare/analytics-dashboard-before.jpg" alt="SaaS analytics without better-ui"></a></td>
+<td><a href="docs/images/compare/analytics-dashboard-after.jpg"><img src="docs/images/compare/analytics-dashboard-after.jpg" alt="SaaS analytics with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Kanban board</b> · <i>"make a kanban board web app for a small product team: columns, task cards with assignees and due dates, and a way to add tasks. single index.html"</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/kanban-board-before.jpg"><img src="docs/images/compare/kanban-board-before.jpg" alt="Kanban board without better-ui"></a></td>
+<td><a href="docs/images/compare/kanban-board-after.jpg"><img src="docs/images/compare/kanban-board-after.jpg" alt="Kanban board with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Student dashboard</b> · <i>"Bikin dashboard siswa untuk aplikasi belajar online: jadwal kelas hari ini, tugas yang belum dikumpulkan, nilai, dan progres kursus. Data dummy, satu file index.html."</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/student-dashboard-before.jpg"><img src="docs/images/compare/student-dashboard-before.jpg" alt="Student dashboard without better-ui"></a></td>
+<td><a href="docs/images/compare/student-dashboard-after.jpg"><img src="docs/images/compare/student-dashboard-after.jpg" alt="Student dashboard with better-ui"></a></td>
+</tr>
+</table>
+
+</details>
+
+<details>
+<summary><b>Shops and pricing</b>: product pages, a category page, pricing</summary>
+
+<br>
+
+<table>
+<tr><th width="50%">Without better-ui</th><th width="50%">With better-ui</th></tr>
+<tr><td colspan="2"><b>Sneaker product page</b> · <i>"build a product page for an online sneaker store: gallery, sizes, colours, price, reviews and add to cart. single index.html"</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/sneaker-product-before.jpg"><img src="docs/images/compare/sneaker-product-before.jpg" alt="Sneaker product page without better-ui"></a></td>
+<td><a href="docs/images/compare/sneaker-product-after.jpg"><img src="docs/images/compare/sneaker-product-after.jpg" alt="Sneaker product page with better-ui"></a></td>
+</tr>
+</table>
+
+</details>
+
+Every page is in [`examples/`](examples), with its prompt. Open them in a browser and click around.
+
+## What's different
+
+Most UI skills are a list of taste rules. This one is a system an agent can follow and measure:
+
+| | What the agent gets | Where |
+|:---|:---|:---|
+| **Fixed values, not adjectives** | One value for every size, space, radius and type style per context (phone, desktop app, data tool, landing page), taken from Apple's and Google's guidelines, Refactoring UI, Practical UI and Nielsen Norman Group. Five type sizes per screen, spacing on one scale. | [`spec.md`](better-ui/references/spec.md), [`tokens.css`](better-ui/assets/tokens.css) |
+| **Colour with depth** | One brand colour becomes a 12-step scale, greys tinted toward it, status colours, tinted shadows and role tokens, in OKLCH, light and dark. The brand is used at several strengths, so screens stop looking flat. | [`palette.cjs`](better-ui/scripts/palette.cjs), [`color.md`](better-ui/references/color.md) |
+| **Hierarchy you can check** | Laws of perception (Gestalt, Fitts, Hick, von Restorff) as rules, plus a review method: predicted gaze order, squint test, five-second test, heuristics. | [`ux-laws.md`](better-ui/references/ux-laws.md), [`hierarchy.md`](better-ui/references/hierarchy.md) |
+| **Art direction for the web** | Twelve directions researched from current award-winning sites (poster, editorial serif, cinematic photo, Swiss catalogue, live product demo and more). Explore three, commit to one, carry it everywhere. | [`web-directions.md`](better-ui/references/web-directions.md) |
+| **The right anatomy per kind** | Native app anatomy, the dashboard shell, dense pro tools edge to edge, product pages with a sticky buy box, pricing that answers the buyer's questions. | [`product-ui.md`](better-ui/references/product-ui.md), [`commerce.md`](better-ui/references/commerce.md), [`marketing.md`](better-ui/references/marketing.md) |
+| **Type and words that fit** | Faces chosen for the character, tracking and leading by size, a mono partner for meta; copy written for the space it sits in, in the user's language. | [`typography.md`](better-ui/references/typography.md), [`copy.md`](better-ui/references/copy.md) |
+| **Real content** | Real photographs, real maps, believable sample data in a mid-use state. No lorem ipsum, no grey boxes, no stock merchant names. | [`system.md`](better-ui/references/system.md) |
+| **It checks its own work** | Renders every page at three widths and measures overflow, overlap, contrast, tap targets, spacing off the scale, font-size count, flat colour, then reviews the screenshots. | [`audit.cjs`](better-ui/scripts/audit.cjs) |
+
+On web pages the system is a floor, not a ceiling: a chosen direction may bring its own display face, giant type, colour fields and motion.
+
+## Benchmarks
+
+Over forty prompts across phone apps, dashboards, data tools, web pages and shops, each built twice in isolated sessions (with and without the skill), one run each, and shown as they came out. The audit numbers below are measured, not judged.
+
+**Ten unseen prompts** (ride hailing, CI/CD dashboard, conference, checkout, email client, property listings, mobile banking, SaaS billing, restaurant, language learning):
+
+| Measured by `audit.cjs` | Without better-ui | With better-ui |
+|:---|:---:|:---:|
+| Pages with a broken layout (overflow, covered text, overlaps) | 5 of 10 | 0 of 10 ✱ |
+| Font sizes on the first screen | 5 to 20 | 4 to 6 |
+
+<sub>✱ After fixing one false positive in the audit itself (preview text clipped with an ellipsis was counted as covered).</sub>
+
+**An earlier set of seventeen prompts**: spacing values off the 4px scale went from 16 to 186 per page without the skill to 0 on 16 of 17 pages with it.
+
+Side by side, judged by eye: of the ten unseen prompts, better-ui was clearly better on five, about the same on four, and worse on one (the conference page, which looked like a SaaS page; the poster direction was added and it now leads). On nine web pages after the art directions were added, it was better on seven and about the same on the two most conventional ones (a pricing page and a product page), which led to the pricing and commerce guidance.
+
+<details>
+<summary><b>Earlier: hidden among Dribbble shots</b></summary>
+
+<br>
+
+An earlier version was tested by hiding each page among eight popular Dribbble shots of the same category and asking a judge to rank all nine and flag anything that looked AI-made.
 
 | Case | Rank among 9 | Judged |
 |:---|:---:|:---|
-| Habit tracker | 🥇 **1st** | genuine |
-| Dental clinic dashboard ✱ | 🥇 **1st** | genuine |
-| Workout tracker | 🥇 **1st** | possibly AI-made |
-| POS landing page ✱ | 🥇 **1st** | possibly AI-made |
-| Store admin dashboard | 🥇 **1st** | possibly AI-made |
+| Habit tracker | **1st** | genuine |
+| Dental clinic dashboard ✱ | **1st** | genuine |
+| Workout tracker | **1st** | possibly AI-made |
+| POS landing page ✱ | **1st** | possibly AI-made |
+| Store admin dashboard | **1st** | possibly AI-made |
 | SaaS landing page | **1st**, **3rd** | possibly AI-made |
 | Personal finance app | **1st**, **7th** | possibly AI-made |
 
-<sub>✱ Prompts never used while developing the skill. On the same test, a page built without the skill ranked 8th of 9, and an earlier version of this skill that pushed themed concepts also ranked 8th.</sub>
+<sub>✱ Prompts never used while developing the skill. On the same test, a page built without the skill ranked 8th of 9. The judge was calibrated against one person's verdicts on earlier pages and agreed every time.</sub>
 
-## What it changes
+</details>
 
-- **No themes, no costumes.** A habit tracker is not a stamp card and a budget is not an abacus. Character comes from colour, type, icons and finish.
-- **A look that isn't the default.** Left alone, agents reach for the same indigo gradient or emerald green. `look.cjs` deals a contemporary palette and font for the product's category.
-- **The conventional layout, done well.** Native app anatomy, a real dashboard shell, the landing sections people expect, plus one signature chart drawn the way current shots draw them.
-- **Apps open alive.** Believable sample data in a mid-use state, never an empty shell.
-- **Copy a real product would ship.** No captions explaining the chart, no "these are sample habits", no contradictions, no stock merchant names.
-- **It checks its own work.** It renders the page at three widths, measures it, and has a fresh reviewer ask one question: would this pass as a real product?
+<details>
+<summary><b>What failed along the way</b></summary>
+
+<br>
+
+- **Restraint alone** produced honest pages that judges called wireframes.
+- **"One ownable idea" per product** produced stamp-card habit trackers and abacus budget apps: themed, forced, a costume.
+- **Taste rules with ranges** ("16 to 24px padding") let the agent drift; fixing one value per context removed most of the inconsistency.
+- **Pastel cards and big colour blocks** read as generated; neutral surfaces with the brand at several strengths fixed it.
+- **The conventional layout everywhere** made web pages safe and forgettable; art direction for web pages, with the system as a floor, fixed that.
+
+</details>
 
 ## How it works
 
 ```text
 1. Whose design is it?       existing product → fit its system · a brand → follow it · blank → continue
 2. Understand the job        what the screen is for and who uses it; write the real content first
-3. Set up the system         deal a look; fixed spec and tokens; palette from one brand colour
-4. Layout or direction      app anatomy · dashboard shell · a committed art direction for web pages
+3. Set up the system         deal a look; the palette from one brand colour; fixed spec and tokens
+4. Layout or direction       app anatomy · dashboard shell · shop · a committed art direction for web pages
 5. Build it properly         every width, every state, the accessibility floor, the finish
-6. Render, audit, review     screenshot, measure, independent review, fix
+6. Render, audit, review     screenshots at 3 widths, measured problems, review by method, fix
 7. Hand off plainly          what was built and what is placeholder
 ```
 
@@ -251,20 +298,20 @@ better-ui/
 │   └── tokens.css           spacing, radius, type ramp, motion: copied into every build
 ├── references/
 │   ├── spec.md              one fixed value for every size, space, radius and colour role
-│   ├── web-directions.md    twelve art directions for web pages; explore three, commit to one
 │   ├── color.md             colour with depth: scale steps and their jobs, surfaces, tints, charts
+│   ├── web-directions.md    twelve art directions for web pages; explore three, commit to one
 │   ├── typography.md        faces, pairing, weights, tracking and leading by size
 │   ├── hierarchy.md         levels, grouping, numbers, tables, charts, button weight
 │   ├── ux-laws.md           Gestalt, Fitts, Hick and the method used to review every render
 │   ├── copy.md              copy that fits its layout; lengths per element, locale
 │   ├── system.md            looks, surfaces, icons, imagery, photos and maps
-│   ├── product-ui.md        mobile apps, dashboards, admin; signature moments per category
-│   ├── marketing.md         landing and pricing pages; the stock AI hero recipe to avoid
+│   ├── product-ui.md        mobile apps, dashboards, admin, dense pro tools
+│   ├── marketing.md         landing and pricing pages
 │   ├── commerce.md          product pages, listings, the bag and checkout
 │   ├── editorial.md         portfolios, studios, restaurants and other image-led sites
 │   ├── showpiece.md         summary cards, product mocks, charts, avatars, icons in code
 │   ├── polish.md            micro-details, controls, motion
-│   ├── critique.md          what the bar looks like, the two failures, the reviewer brief
+│   ├── critique.md          the bar, the failure modes, the reviewer brief
 │   └── craft.md             contrast, layout, states, accessibility
 └── scripts/
     ├── audit.cjs            renders a page at 3 widths and reports measured problems
@@ -285,17 +332,19 @@ node better-ui/scripts/audit.cjs path/to/index.html --out .ui-audit
 
 | Group | Checks |
 |:---|:---|
-| Broken | horizontal overflow, console errors, text covered by other elements, content under fixed bars, words run together |
+| Broken | horizontal overflow, console errors, text covered by other elements, content under fixed bars, failed requests |
 | Accessibility | WCAG AA contrast, visible focus, labels and names, tap targets, heading order |
-| Craft | textures and noise, serif or second text family on product UI, oversized type, one icon reused for different items, clipped text, half-empty cards, near-miss alignment, awkward wraps |
-| Richness | first screen with no visual, screens of text only, text on a bare page, a pastel rainbow |
+| Spec | spacing off the scale, more than five font sizes, a boxed main chart, colour blocks over 15%, pastel fills |
+| Colour | tinted backgrounds, coloured text, untinted greys, black shadows: flags flat colour |
+| Craft | near-miss alignment, uneven gutters, clipped text, awkward wraps, squeezed text columns |
+| Inventory | font sizes, families, weights, colours, radii, and a predicted gaze order with a squint screenshot |
 
-Options: `--setup seed.js` runs a script first, `--register showcase` relaxes card checks for image-led sites, plus `--dark`, `--widths` and `--json`. It needs Node and a Chromium that Playwright can drive.
+Options: `--register showcase` for web pages with an art direction, `--register dense` for professional data tools, `--widths 1280,1440` for desktop-only briefs, plus `--setup`, `--dark` and `--json`. It needs Node and a Chromium that Playwright can drive.
 
 </details>
 
 <details>
-<summary><b><code>look.cjs</code>: dealing a look</b></summary>
+<summary><b><code>look.cjs</code> and <code>palette.cjs</code>: a look and a colour system</b></summary>
 
 <br>
 
@@ -310,52 +359,15 @@ how:     deep blue payment card with a soft sky gradient, white glassy cards
 palette: node better-ui/scripts/palette.cjs "#1F4BFF"
 ```
 
-Same product name, same look, every time. Categories: finance, crypto, fitness, habits, wellness, sleep, health, productivity, commerce, saas, food, travel, media, other.
-
-</details>
-
-<details>
-<summary><b><code>palette.cjs</code>: one brand colour, the whole colour system</b></summary>
-
-<br>
+Same product name, same look, every time, so the agent does not land on the indigo every generated app uses. Categories: finance, crypto, fitness, habits, wellness, sleep, health, productivity, commerce, saas, food, travel, media, other.
 
 ```bash
-node better-ui/scripts/palette.cjs "#1F4BFF"            # light, plus a dark block
-node better-ui/scripts/palette.cjs "#A3E635" --dark     # dark-first
+node better-ui/scripts/palette.cjs "#1F4BFF"                     # light, plus a dark block
+node better-ui/scripts/palette.cjs "#A3E635" --dark              # dark-first
 node better-ui/scripts/palette.cjs "#16A34A" --solid "#111111"   # monochrome: black controls, green tints
 ```
 
-It builds a 12-step brand scale and a 12-step neutral scale tinted toward the brand hue (OKLCH, with the step roles of Radix Colors), soft and solid status colours, role tokens (canvas, surface, well, text, brand, tint, callout, focus, chart) and shadows tinted with the brand hue. It picks white or dark text for the brand colour by contrast, nudging a mid-tone brand just enough for 4.5:1, lifts a deep brand for dark themes, and prints the contrast of each text role. Flat screens come from a brand used at one strength and pure greys; this is what fixes that.
-
-</details>
-
-## How it was tested
-
-<details>
-<summary><b>The line-up test</b></summary>
-
-<br>
-
-1. **Build in isolation.** A headless agent session in an empty folder gets a one-line prompt that never mentions the skill.
-2. **Present it like a shot.** The page is rendered the way Dribbble shows designs: phones in device frames, dashboards in a browser window, landing pages as a long scroll, with the clock frozen to a neutral date.
-3. **Hide it.** The shot is shuffled among eight popular shots of the same category.
-4. **Judge blind.** The judge is told only that some shots may be AI-made fakes. It ranks all nine and flags fakes. A page passes when it ranks in the top half and is not flagged as likely fake.
-
-Before it was trusted, the test was calibrated against a human reviewer's verdicts on earlier pages, and agreed every time: plain pages ranked 8th ("rendered HTML"), themed pages the human had rejected ranked 8th ("costume, not function").
-
-</details>
-
-<details>
-<summary><b>What failed along the way</b></summary>
-
-<br>
-
-About twenty rounds of build → judge → change, each scored with the judges' reasons.
-
-- **Restraint alone** produced honest pages that judges called wireframes.
-- **Art-direction libraries and detailed showpieces** lifted scores but still read as templates.
-- **"One ownable idea" per product** won on an AI rubric and produced stamp-card habit trackers and abacus budget apps that a human found forced. The rubric was the problem, so the test became the line-up.
-- **Conventional anatomy, a strict system and plain copy** fixed the overdesign. Dealing the look, banning give-away copy and one signature chart fixed the "generic template" verdicts.
+`palette.cjs` builds a 12-step brand scale and a 12-step neutral scale tinted toward the brand hue (OKLCH, with the step roles of Radix Colors), status colours, role tokens and tinted shadows. It picks white or dark text for the brand by contrast, lifts a deep brand for dark themes, and prints the contrast of each text role.
 
 </details>
 
@@ -364,51 +376,54 @@ About twenty rounds of build → judge → change, each scored with the judges' 
 **Which agents does it work with?**
 It was built and tested with Claude Code. The format is the open `SKILL.md` standard, so agents that support skills can load it; the render-and-audit step needs one that can run Node.
 
-**Does it need a browser?**
-For the audit, yes: Node plus a Chromium that Playwright can drive. Without one the skill still works and reviews the source instead, and says so in its handoff.
+**Does it limit the agent's creativity?**
+On product UI it keeps the agent on the conventional pattern, because that is what makes apps easy to use. On web pages it asks for more creativity, not less: the agent has to explore three directions and commit to a bold one, and the system only guarantees legibility and finish.
 
 **Will it restyle my existing app?**
-No. In a codebase with a design system it reads your tokens and components and works inside them. The look, fonts and palette rules only apply to a blank slate.
+No. In a codebase with a design system it reads your tokens and components and works inside them. Before changing a screen it audits it and sizes the change to what it found.
+
+**Does it need a browser?**
+For the audit, yes: Node plus a Chromium that Playwright can drive. Without one the skill still works and reviews the source instead, and says so.
 
 **Why not just write a better prompt?**
-A prompt can ask for "clean and modern". The skill adds the parts a prompt can't carry: a tested system, the conventional anatomy for each kind of screen, a list of give-aways to avoid, an audit that measures the result, and a review loop.
+A prompt can ask for "clean and modern". The skill brings what a prompt can't carry: fixed values, a colour system, the anatomy of each kind of screen, researched directions, a list of give-aways, an audit that measures the result, and a review loop.
 
 **What does it cost?**
-Roughly 10 to 20 minutes and 2 to 5 dollars of model usage per page, against 2 to 4 minutes without it, because it renders, audits and reviews its own work.
+Roughly 5 to 20 minutes per page, against 3 to 10 without it, because it renders, audits and reviews its own work.
 
 **Is the sample content real?**
-No. Names, figures, testimonials and logos are fictional. Replace them before you publish anything.
-
-**Who judged the results?**
-AI judges, calibrated against one person's verdicts. Ranks move by a place or two between judges. Your own eye is the real test, which is why every page is in the repo.
+No. Names, figures, testimonials and logos are fictional; photographs are from Unsplash. Replace them before you publish anything.
 
 ## Sources
 
 <details>
-<summary>Writing on the problem, and skills this one learned from</summary>
+<summary>Design research, writing on the problem, and skills this one learned from</summary>
 
 <br>
+
+Design systems and research behind the fixed values and the colour system:
+
+- Apple, [Human Interface Guidelines](https://developer.apple.com/design/human-interface-guidelines); Google, [Material 3](https://m3.material.io/)
+- Adam Wathan and Steve Schoger, [Refactoring UI](https://www.refactoringui.com/); Adham Dannaway, [Practical UI](https://www.practical-ui.com/); Erik Kennedy, [Learn UI Design](https://www.learnui.design/)
+- Nielsen Norman Group, [articles on visual hierarchy and usability](https://www.nngroup.com/); Jon Yablonski, [Laws of UX](https://lawsofux.com/)
+- [Radix Colors](https://www.radix-ui.com/colors) (12-step scales); Evil Martians, [OKLCH in CSS](https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl); Josh Comeau, [designing shadows](https://www.joshwcomeau.com/css/designing-shadows/)
+- Stephen Few and Edward Tufte on charts; Datawrapper on colour in data visualisation; Baymard Institute on e-commerce
+- [Awwwards](https://www.awwwards.com/websites/sites_of_the_day/), [siteinspire](https://www.siteinspire.com/) and [Httpster](https://httpster.net/) for the web directions
 
 On AI-made interfaces:
 
 - Adrian Krebs, [design slop analysis of 1,590 Show HN pages](https://www.adriankrebs.ch/blog/design-slop/) and [ai-design-checker](https://github.com/AdrianKrebs/ai-design-checker)
-- Kosta Canatselis, [Spot the slop: a UI designer's guide to fixing AI defaults](https://world.hey.com/kostac/spot-the-slop-a-ui-designer-s-guide-to-fixing-ai-defaults-4c448c9c)
-- The Fountain Institute, [signs of a vibe-coded UI](https://www.thefountaininstitute.com/blog/signs-vibe-coded-ui)
-- codemyspec, [why vibe-coded websites look the same](https://codemyspec.com/blog/vibe-coded-websites-look-the-same)
+- Kosta Canatselis, [Spot the slop](https://world.hey.com/kostac/spot-the-slop-a-ui-designer-s-guide-to-fixing-ai-defaults-4c448c9c); The Fountain Institute, [signs of a vibe-coded UI](https://www.thefountaininstitute.com/blog/signs-vibe-coded-ui)
 - Aaron Ross, [The eyes have it: closing the agentic design loop](https://dev.to/ashmortar/the-eyes-have-it-closing-the-agentic-design-loop-3819)
-- Hacker News threads [47864393](https://news.ycombinator.com/item?id=47864393), [49290499](https://news.ycombinator.com/item?id=49290499), [49867038](https://news.ycombinator.com/item?id=49867038)
 
 Skills and writing this one learned from:
 
-- Anthropic, [frontend-design skill](https://github.com/anthropics/skills/tree/main/skills/frontend-design), [Improving frontend design through Skills](https://claude.com/resources/articles/improving-frontend-design-through-skills), [Harness design for long-running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps)
-- Paul Bakaus, [Impeccable](https://github.com/pbakaus/impeccable)
-- Damir Sokolovsky, [unslop](https://github.com/heydamir/unslop) (CC BY 4.0): sizing the change to an audit, stat tiles as plain numbers, chart hierarchy, the template check
-- [taste-skill](https://github.com/Leonxlnx/taste-skill) and [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
-- Vercel, [Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines)
-- Emil Kowalski, [design engineering skill](https://github.com/emilkowalski/skills); Jakub Krehel, [make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)
-- Matthew Butterick, [Practical Typography](https://practicaltypography.com/summary-of-key-rules.html); Evil Martians, [OKLCH in CSS](https://evilmartians.com/chronicles/oklch-in-css-why-quit-rgb-hsl)
+- Anthropic, [frontend-design skill](https://github.com/anthropics/skills/tree/main/skills/frontend-design) and [Improving frontend design through Skills](https://claude.com/resources/articles/improving-frontend-design-through-skills)
+- Damir Sokolovsky, [unslop](https://github.com/heydamir/unslop) (CC BY 4.0): sizing the change to an audit, stat tiles as plain numbers, chart hierarchy
+- Paul Bakaus, [Impeccable](https://github.com/pbakaus/impeccable); [taste-skill](https://github.com/Leonxlnx/taste-skill); [ui-ux-pro-max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)
+- Vercel, [Web Interface Guidelines](https://github.com/vercel-labs/web-interface-guidelines); Emil Kowalski, [design engineering skill](https://github.com/emilkowalski/skills); Matthew Butterick, [Practical Typography](https://practicaltypography.com/summary-of-key-rules.html)
 
-The Dribbble reference shots used for judging are not stored in this repository. 3D icons in some outputs are Microsoft's [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) (MIT).
+3D icons in some outputs are Microsoft's [Fluent Emoji](https://github.com/microsoft/fluentui-emoji) (MIT). Photographs in the examples are from [Unsplash](https://unsplash.com/license).
 
 </details>
 
