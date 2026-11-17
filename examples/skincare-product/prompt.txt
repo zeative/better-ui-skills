@@ -1,0 +1,1 @@
+Bikin halaman produk untuk brand skincare lokal: serum vitamin C, dengan galeri, varian ukuran, harga, ulasan, dan tombol tambah ke keranjang. Satu file index.html.

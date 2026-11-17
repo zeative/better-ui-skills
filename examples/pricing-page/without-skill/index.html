@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pricing — Marquee</title>
+<meta name="description" content="Marquee pricing: a free plan for sketching, Pro for working designers, and Studio for teams. Save 20% with yearly billing.">
+<style>
+  :root {
+    --bg: #f6f3ec;
+    --surface: #fffdf8;
+    --ink: #1a1814;
+    --muted: #686256;
+    --line: #e0d9ca;
+    --accent: #c8391d;
+    --accent-ink: #ffffff;
+    --tint: #efe9dc;
+    --feat-bg: #1a1814;
+    --feat-ink: #f6f3ec;
+    --feat-muted: #b3ab9b;
+    --feat-line: #3a362e;
+    --feat-accent: #ff7a5c;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141310;
+      --surface: #1c1a16;
+      --ink: #f1ede4;
+      --muted: #a39c8e;
+      --line: #322f28;
+      --accent: #ff7a5c;
+      --accent-ink: #1a1814;
+      --tint: #211f1a;
+      --feat-bg: #f1ede4;
+      --feat-ink: #1a1814;
+      --feat-muted: #686256;
+      --feat-line: #d6cfbf;
+      --feat-accent: #c8391d;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.55 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, p, ul, figure { margin: 0; }
+  ul { padding: 0; list-style: none; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+  .sr {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
+  .wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
+
+  /* Billing toggle drives everything via :has() — no JS */
+  html:has(#bill-y:checked) .if-m,
+  html:has(#bill-m:checked) .if-y { display: none; }
+
+  /* ---------- Header ---------- */
+  .top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 0;
+  }
+  .logo {
+    display: inline-flex; align-items: center; gap: 10px;
+    font: 600 20px/1 var(--serif); letter-spacing: -0.01em; text-decoration: none;
+  }
+  .logo svg { display: block; }
+  .top nav { display: flex; align-items: center; gap: 28px; font-size: 14.5px; }
+  .top nav a { text-decoration: none; color: var(--muted); }
+  .top nav a:hover, .top nav a[aria-current] { color: var(--ink); }
+  .top nav .btn { color: var(--ink); }
+  @media (max-width: 640px) { .top nav a:not(.btn) { display: none; } }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 44px; padding: 0 20px;
+    border: 1.5px solid var(--ink); border-radius: 999px;
+    font: 600 15px/1 var(--sans); text-decoration: none; color: var(--ink);
+    transition: background-color .15s, color .15s, transform .15s;
+  }
+  .btn:hover { background: var(--ink); color: var(--bg); }
+  .btn:active { transform: translateY(1px); }
+  .btn.sm { min-height: 36px; padding: 0 14px; font-size: 14px; }
+  .btn.solid { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn.solid:hover { filter: brightness(1.08); background: var(--accent); color: var(--accent-ink); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 64px 0 44px; text-align: center; }
+  .eyebrow {
+    font: 500 12.5px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 22px;
+  }
+  h1 {
+    font: 500 clamp(2.4rem, 6.4vw, 4.5rem)/1.04 var(--serif);
+    letter-spacing: -0.025em; text-wrap: balance;
+    max-width: 15ch; margin-inline: auto;
+  }
+  /* A selection box, like the one you'd drag in the tool */
+  .sel {
+    position: relative; display: inline-block; padding: 0 .12em; margin: 0 -.04em;
+    font-style: italic;
+    box-shadow: inset 0 0 0 1.5px var(--accent);
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+  }
+  .sel i {
+    position: absolute; width: 9px; height: 9px;
+    background: var(--bg); border: 1.5px solid var(--accent);
+  }
+  .sel i:nth-child(1) { top: -4px; left: -4px; }
+  .sel i:nth-child(2) { top: -4px; right: -4px; }
+  .sel i:nth-child(3) { bottom: -4px; left: -4px; }
+  .sel i:nth-child(4) { bottom: -4px; right: -4px; }
+  .lede {
+    max-width: 52ch; margin: 28px auto 0;
+    font-size: clamp(1rem, 1.6vw, 1.15rem); color: var(--muted); text-wrap: pretty;
+  }
+
+  /* ---------- Toggle ---------- */
+  .billing { border: 0; padding: 0; margin: 36px 0 0; min-width: 0; }
+  .seg {
+    position: relative; display: inline-grid; grid-template-columns: 1fr 1fr;
+    padding: 4px; border-radius: 999px;
+    background: var(--tint); border: 1px solid var(--line);
+  }
+  .seg::before {
+    content: ""; position: absolute; top: 4px; bottom: 4px; left: 4px;
+    width: calc(50% - 4px); border-radius: 999px;
+    background: var(--surface);
+    box-shadow: 0 1px 2px rgb(0 0 0 / .12), 0 0 0 1px var(--line);
+    transition: transform .25s cubic-bezier(.3, .7, .2, 1);
+  }
+  .seg:has(#bill-y:checked)::before { transform: translateX(100%); }
+  .seg input { position: absolute; opacity: 0; pointer-events: none; }
+  .seg label {
+    position: relative; display: flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 40px; padding: 0 22px; border-radius: 999px;
+    font-weight: 600; font-size: 15px; color: var(--muted); cursor: pointer;
+    transition: color .15s; white-space: nowrap;
+  }
+  .seg input:checked + label { color: var(--ink); }
+  .seg input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .save {
+    font: 600 11.5px/1 var(--mono); padding: 4px 6px; border-radius: 5px;
+    background: color-mix(in srgb, var(--accent) 14%, transparent); color: var(--accent);
+  }
+
+  /* ---------- Plans ---------- */
+  .plans {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    align-items: stretch; padding-bottom: 28px;
+  }
+  .plan {
+    display: flex; flex-direction: column;
+    padding: 30px 28px 28px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  }
+  .plan h2 {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    font: 500 1.6rem/1.1 var(--serif); letter-spacing: -0.01em;
+  }
+  .tag {
+    font: 600 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+    padding: 6px 8px; border-radius: 5px;
+    background: var(--feat-accent); color: var(--feat-bg);
+  }
+  .plan .for { margin-top: 8px; color: var(--muted); font-size: 15px; min-height: 3.1em; }
+  .price { display: flex; align-items: baseline; gap: 10px; margin-top: 22px; }
+  .amt {
+    font: 500 3.5rem/1 var(--serif); letter-spacing: -0.03em;
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  .per { font-size: 14px; color: var(--muted); line-height: 1.3; }
+  .bill { margin-top: 8px; font-size: 13.5px; color: var(--muted); min-height: 1.6em; }
+  .bill s { opacity: .75; }
+  .plan .btn { margin-top: 22px; width: 100%; }
+  .plan ul {
+    margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line);
+    display: grid; gap: 11px; font-size: 15px;
+  }
+  .plan li { display: grid; grid-template-columns: 18px 1fr; gap: 10px; align-items: start; }
+  .plan li::before {
+    content: ""; width: 18px; height: 18px; margin-top: 3px;
+    background: var(--accent);
+    -webkit-mask: var(--check) center / contain no-repeat; mask: var(--check) center / contain no-repeat;
+  }
+  .plan .lead { font-weight: 600; }
+  .plan li.lead { grid-template-columns: 1fr; }
+  .plan li.lead::before { display: none; }
+
+  .plan.feat {
+    background: var(--feat-bg); color: var(--feat-ink); border-color: var(--feat-bg);
+    box-shadow: 0 24px 48px -24px rgb(0 0 0 / .45);
+  }
+  .plan.feat .for, .plan.feat .per, .plan.feat .bill { color: var(--feat-muted); }
+  .plan.feat ul { border-color: var(--feat-line); }
+  .plan.feat li::before { background: var(--feat-accent); }
+  .plan.feat .btn { background: var(--feat-accent); border-color: var(--feat-accent); color: var(--feat-bg); }
+  .plan.feat .btn:hover { filter: brightness(1.08); }
+  .plan.feat :focus-visible { outline-color: var(--feat-accent); }
+
+  :root {
+    --check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 9.5l3.5 3.5 7.5-8'/%3E%3C/svg%3E");
+  }
+
+  .fine { text-align: center; font-size: 14px; color: var(--muted); padding-bottom: 88px; }
+
+  @media (max-width: 900px) {
+    .plans { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
+    .plan .for { min-height: 0; }
+  }
+
+  /* ---------- Section headings ---------- */
+  .sec { padding: 0 0 96px; }
+  .sec > header { margin-bottom: 28px; }
+  .sec h2.title {
+    font: 500 clamp(1.8rem, 3.6vw, 2.6rem)/1.1 var(--serif); letter-spacing: -0.02em;
+  }
+  .sec > header p { margin-top: 10px; color: var(--muted); max-width: 56ch; }
+
+  /* ---------- Comparison table ---------- */
+  table { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; }
+  col.f { width: 37%; }
+  th, td { padding: 14px 16px; text-align: center; border-bottom: 1px solid var(--line); }
+  tbody th[scope="row"] { text-align: left; font-weight: 400; }
+  tbody td { font-size: 15px; font-variant-numeric: tabular-nums; }
+  thead th {
+    position: sticky; top: 0; z-index: 2;
+    background: var(--bg); padding: 18px 16px;
+    border-bottom: 1.5px solid var(--ink); vertical-align: bottom;
+  }
+  thead th:first-child { text-align: left; }
+  thead .name { display: block; font: 500 1.3rem/1.1 var(--serif); }
+  thead .cost { display: block; margin-top: 4px; font-size: 13.5px; font-weight: 400; color: var(--muted); }
+  thead .btn { margin-top: 12px; }
+  thead .hint { font: 500 12px/1.4 var(--mono); color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+  tr.grp th {
+    text-align: left; padding: 34px 16px 10px;
+    font: 600 12px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+    border-bottom-color: var(--line);
+  }
+  tbody td:nth-child(3), thead th:nth-child(3) {
+    background: color-mix(in srgb, var(--accent) 6%, var(--bg));
+  }
+  tbody tr:not(.grp):hover > * { background: var(--tint); }
+  tbody tr:not(.grp):hover > td:nth-child(3) { background: color-mix(in srgb, var(--accent) 10%, var(--tint)); }
+  .yes, .no { display: inline-block; vertical-align: middle; }
+  .yes {
+    width: 18px; height: 18px; background: var(--accent);
+    -webkit-mask: var(--check) center / contain no-repeat; mask: var(--check) center / contain no-repeat;
+  }
+  .no { width: 12px; height: 1.5px; background: var(--muted); opacity: .55; }
+  @media (max-width: 700px) {
+    col.f { width: 34%; }
+    th, td { padding: 12px 6px; }
+    tbody th[scope="row"], tr.grp th, thead th:first-child { padding-left: 0; }
+    tbody th[scope="row"] { font-size: 14px; line-height: 1.35; }
+    tbody td { font-size: 13px; line-height: 1.3; }
+    thead .name { font-size: 1.05rem; }
+    thead .cost { font-size: 12px; }
+    thead .btn, thead .hint { display: none; }
+    thead .cost .unit { display: none; }
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; align-items: start; }
+  .faq > header { position: sticky; top: 32px; margin: 0; }
+  .faq > header a { color: var(--ink); text-underline-offset: 3px; }
+  .qa { border-top: 1.5px solid var(--ink); }
+  details { border-bottom: 1px solid var(--line); }
+  summary {
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    padding: 20px 0; cursor: pointer; list-style: none;
+    font: 500 1.2rem/1.3 var(--serif);
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: ""; flex: none; width: 14px; height: 14px;
+    background:
+      linear-gradient(currentColor, currentColor) center / 100% 1.5px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 1.5px 100% no-repeat;
+    transition: transform .2s;
+  }
+  details[open] summary::after { transform: rotate(45deg); }
+  summary:hover { color: var(--accent); }
+  details p { padding: 0 34px 22px 0; color: var(--muted); max-width: 62ch; }
+  details p + p { margin-top: -10px; }
+  @media (max-width: 800px) {
+    .faq { grid-template-columns: 1fr; gap: 24px; }
+    .faq > header { position: static; }
+  }
+
+  /* ---------- Closing CTA + footer ---------- */
+  .cta {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px;
+    padding: 44px; margin-bottom: 56px;
+    background: var(--feat-bg); color: var(--feat-ink); border-radius: var(--radius);
+  }
+  .cta h2 { font: 500 clamp(1.6rem, 3.2vw, 2.3rem)/1.1 var(--serif); letter-spacing: -0.02em; }
+  .cta p { margin-top: 8px; color: var(--feat-muted); }
+  .cta .btn { background: var(--feat-accent); border-color: var(--feat-accent); color: var(--feat-bg); }
+  .cta .btn:hover { filter: brightness(1.08); }
+  .cta :focus-visible { outline-color: var(--feat-accent); }
+  @media (max-width: 560px) { .cta { padding: 30px 24px; } }
+  footer {
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px;
+    padding: 24px 0 40px; border-top: 1px solid var(--line);
+    font-size: 14px; color: var(--muted);
+  }
+  footer nav { display: flex; gap: 22px; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="#" aria-label="Marquee home">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="4" y="4" width="16" height="16" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 2.5"/>
+        <rect x="1.5" y="1.5" width="5" height="5" fill="var(--accent)"/>
+        <rect x="17.5" y="17.5" width="5" height="5" fill="var(--accent)"/>
+      </svg>
+      Marquee
+    </a>
+    <nav aria-label="Primary">
+      <a href="#">Product</a>
+      <a href="#">Templates</a>
+      <a href="#" aria-current="page">Pricing</a>
+      <a href="#">Sign in</a>
+      <a class="btn sm" href="#">Start free</a>
+    </nav>
+  </header>
+</div>
+
+<main>
+  <section class="hero wrap">
+    <p class="eyebrow">Pricing</p>
+    <h1>Pay for editors. <span class="sel">Everyone else<i></i><i></i><i></i><i></i></span> is on us.</h1>
+    <p class="lede">Viewers, commenters and developers inspecting specs never cost a thing. Start on the free plan and upgrade when the work gets serious.</p>
+
+    <fieldset class="billing">
+      <legend class="sr">Billing period</legend>
+      <div class="seg">
+        <input type="radio" name="billing" id="bill-m">
+        <label for="bill-m">Monthly</label>
+        <input type="radio" name="billing" id="bill-y" checked>
+        <label for="bill-y">Yearly <span class="save">−20%</span></label>
+      </div>
+    </fieldset>
+  </section>
+
+  <section class="wrap" aria-label="Plans">
+    <div class="plans">
+
+      <article class="plan">
+        <h2>Free</h2>
+        <p class="for">For sketching ideas and learning the tool.</p>
+        <p class="price"><span class="amt">$0</span> <span class="per">forever</span></p>
+        <p class="bill">No card required</p>
+        <a class="btn" href="#">Start designing</a>
+        <ul>
+          <li>3 design files</li>
+          <li>Unlimited viewers and commenters</li>
+          <li>Vector editing and auto layout</li>
+          <li>7-day version history</li>
+          <li>PNG, JPG and SVG export</li>
+        </ul>
+      </article>
+
+      <article class="plan feat">
+        <h2>Pro <span class="tag">Most popular</span></h2>
+        <p class="for">For freelancers and designers shipping real work.</p>
+        <p class="price">
+          <span class="amt"><span class="if-m">$15</span><span class="if-y">$12</span></span>
+          <span class="per">per editor<br>per month</span>
+        </p>
+        <p class="bill">
+          <span class="if-m">Billed monthly. Cancel anytime.</span>
+          <span class="if-y">Billed $144 yearly <s>$180</s></span>
+        </p>
+        <a class="btn" href="#">Try Pro free for 14 days</a>
+        <ul>
+          <li class="lead">Everything in Free, plus:</li>
+          <li>Unlimited files and projects</li>
+          <li>Interactive prototypes with variables</li>
+          <li>Shared component libraries</li>
+          <li>Developer handoff with code snippets</li>
+          <li>90-day version history</li>
+        </ul>
+      </article>
+
+      <article class="plan">
+        <h2>Studio</h2>
+        <p class="for">For teams running a design system across products.</p>
+        <p class="price">
+          <span class="amt"><span class="if-m">$35</span><span class="if-y">$28</span></span>
+          <span class="per">per editor<br>per month</span>
+        </p>
+        <p class="bill">
+          <span class="if-m">Billed monthly. Cancel anytime.</span>
+          <span class="if-y">Billed $336 yearly <s>$420</s></span>
+        </p>
+        <a class="btn" href="#">Start a team trial</a>
+        <ul>
+          <li class="lead">Everything in Pro, plus:</li>
+          <li>Design tokens synced to code</li>
+          <li>Branching, merging and review</li>
+          <li>SSO, SCIM and audit log</li>
+          <li>Unlimited version history</li>
+          <li>Priority support with a 4-hour response</li>
+        </ul>
+      </article>
+
+    </div>
+    <p class="fine">Prices in USD, excluding tax. Students and educators get Pro free — <a href="#faq">see the FAQ</a>.</p>
+  </section>
+
+  <section class="sec wrap" aria-labelledby="compare-h">
+    <header>
+      <h2 class="title" id="compare-h">Compare plans</h2>
+      <p>Every plan includes the full editor. The difference is how much you can keep, share and govern.</p>
+    </header>
+
+    <table>
+      <caption class="sr">Feature comparison across Free, Pro and Studio plans</caption>
+      <colgroup><col class="f"><col><col><col></colgroup>
+      <thead>
+        <tr>
+          <th scope="col"><span class="sr">Feature</span><span class="hint" aria-hidden="true"><span class="if-m">Monthly billing</span><span class="if-y">Yearly billing</span></span></th>
+          <th scope="col">
+            <span class="name">Free</span>
+            <span class="cost">$0</span>
+            <a class="btn sm" href="#">Start<span class="sr"> on Free</span></a>
+          </th>
+          <th scope="col">
+            <span class="name">Pro</span>
+            <span class="cost"><span class="if-m">$15</span><span class="if-y">$12</span><span class="unit"> / editor / mo</span></span>
+            <a class="btn sm solid" href="#">Try free<span class="sr"> — Pro</span></a>
+          </th>
+          <th scope="col">
+            <span class="name">Studio</span>
+            <span class="cost"><span class="if-m">$35</span><span class="if-y">$28</span><span class="unit"> / editor / mo</span></span>
+            <a class="btn sm" href="#">Try free<span class="sr"> — Studio</span></a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="grp"><th colspan="4" scope="colgroup">Design</th></tr>
+        <tr><th scope="row">Design files</th><td>3</td><td>Unlimited</td><td>Unlimited</td></tr>
+        <tr><th scope="row">Pages per file</th><td>5</td><td>Unlimited</td><td>Unlimited</td></tr>
+        <tr><th scope="row">Vector editing and auto layout</th><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Components and variants</th><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Interactive prototypes</th><td>Basic links</td><td>Variables and logic</td><td>Variables and logic</td></tr>
+        <tr><th scope="row">Custom fonts</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Version history</th><td>7 days</td><td>90 days</td><td>Unlimited</td></tr>
+
+        <tr class="grp"><th colspan="4" scope="colgroup">Collaboration</th></tr>
+        <tr><th scope="row">Viewers and commenters</th><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
+        <tr><th scope="row">Real-time multiplayer editing</th><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Shared component libraries</th><td><i class="no" role="img" aria-label="Not included"></i></td><td>3 libraries</td><td>Unlimited</td></tr>
+        <tr><th scope="row">Private projects</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Branching, merging and review</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Library usage analytics</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+
+        <tr class="grp"><th colspan="4" scope="colgroup">Handoff</th></tr>
+        <tr><th scope="row">PNG, JPG and SVG export</th><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">PDF export and batch export</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Inspect mode with code snippets</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Design tokens synced to code</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Plugins and REST API</th><td>Community plugins</td><td><i class="yes" role="img" aria-label="Included"></i></td><td>Plus private plugins</td></tr>
+
+        <tr class="grp"><th colspan="4" scope="colgroup">Admin and security</th></tr>
+        <tr><th scope="row">Two-factor authentication</th><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Password-protected share links</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">SSO (SAML) and SCIM provisioning</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Roles, permissions and audit log</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Centralized billing and invoicing</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+
+        <tr class="grp"><th colspan="4" scope="colgroup">Support</th></tr>
+        <tr><th scope="row">Help center and community forum</th><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+        <tr><th scope="row">Email support</th><td><i class="no" role="img" aria-label="Not included"></i></td><td>Within 1 business day</td><td>Within 4 hours</td></tr>
+        <tr><th scope="row">Onboarding session for your team</th><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="no" role="img" aria-label="Not included"></i></td><td><i class="yes" role="img" aria-label="Included"></i></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="sec wrap faq" id="faq" aria-labelledby="faq-h">
+    <header>
+      <h2 class="title" id="faq-h">Questions, answered</h2>
+      <p>Something else on your mind? <a href="mailto:hello@marquee.example">Write to us</a> and a human will reply.</p>
+    </header>
+
+    <div class="qa">
+      <details open>
+        <summary>Who counts as an editor?</summary>
+        <p>Anyone who can create or change designs in your workspace. People who only view files, leave comments, play prototypes or inspect specs are free on every plan, and there's no limit on how many you invite.</p>
+      </details>
+      <details>
+        <summary>How does yearly billing work?</summary>
+        <p>You pay for twelve months up front at a 20% discount: $144 per editor on Pro, $336 per editor on Studio. If you add an editor partway through the year, we charge a prorated amount for the months remaining so everyone renews on the same date.</p>
+      </details>
+      <details>
+        <summary>Can I switch plans or billing period later?</summary>
+        <p>Yes, at any time from workspace settings. Upgrades take effect immediately and you pay only the prorated difference. Downgrades and switches from yearly to monthly take effect at the end of your current billing period.</p>
+      </details>
+      <details>
+        <summary>What happens to my files if I cancel?</summary>
+        <p>Nothing is deleted. Your workspace moves to the Free plan, and files beyond the three-file limit become view-only. You can still open, export and share them, and they unlock again if you resubscribe.</p>
+      </details>
+      <details>
+        <summary>Do I need a credit card for the free trial?</summary>
+        <p>No. Pro and Studio trials run for 14 days with every feature unlocked and no card on file. If you don't pick a plan when the trial ends, the workspace drops back to Free.</p>
+      </details>
+      <details>
+        <summary>Do you offer discounts for students or nonprofits?</summary>
+        <p>Pro is free for students and educators with a verified school email. Registered nonprofits get 50% off Pro and Studio on either billing period.</p>
+      </details>
+      <details>
+        <summary>Which payment methods do you accept?</summary>
+        <p>All major credit and debit cards. Studio workspaces on yearly billing with ten or more editors can also pay by invoice and bank transfer.</p>
+      </details>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="cta" aria-labelledby="cta-h">
+      <div>
+        <h2 id="cta-h">Open a blank canvas.</h2>
+        <p>Free for as long as you like. Upgrade when you outgrow it.</p>
+      </div>
+      <a class="btn" href="#">Start designing free</a>
+    </section>
+  </div>
+</main>
+
+<div class="wrap">
+  <footer>
+    <span>© 2026 Marquee Labs</span>
+    <nav aria-label="Footer">
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#">Status</a>
+    </nav>
+  </footer>
+</div>
+
+</body>
+</html>

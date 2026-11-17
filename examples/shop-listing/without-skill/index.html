@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Living Room Furniture | Halden</title>
+<style>
+  :root {
+    --bg: #f5f1ea;
+    --surface: #fffdf9;
+    --ink: #211e1a;
+    --muted: #6b645a;
+    --line: #ddd5c8;
+    --line-strong: #bfb5a4;
+    --accent: #a8472a;
+    --green: #2f5a41;
+    --tile: #ece5d8;
+    --radius: 10px;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --ease: cubic-bezier(.2, .7, .2, 1);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html.locked { overflow: hidden; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 var(--sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  a { color: inherit; }
+  h1, h2, h3, p { margin: 0; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 4px; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
+  .wrap { max-width: 1320px; margin: 0 auto; padding: 0 28px; }
+
+  /* ───────── Header ───────── */
+  .promo {
+    background: var(--ink); color: #f2ece1; text-align: center;
+    font-size: 13px; padding: 8px 16px; letter-spacing: .01em;
+  }
+  .site-header {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-header .wrap { display: flex; align-items: center; gap: 36px; height: 64px; }
+  .logo {
+    font-family: var(--serif); font-size: 26px; letter-spacing: .02em;
+    text-decoration: none; line-height: 1;
+  }
+  .nav { display: flex; gap: 26px; flex: 1; }
+  .nav a {
+    text-decoration: none; color: var(--muted); padding: 22px 0 20px;
+    border-bottom: 2px solid transparent; font-size: 14.5px;
+  }
+  .nav a:hover { color: var(--ink); }
+  .nav a[aria-current] { color: var(--ink); border-bottom-color: var(--ink); }
+  .cart-btn {
+    margin-left: auto; display: inline-flex; align-items: center; gap: 10px;
+    height: 44px; padding: 0 16px 0 14px;
+    background: transparent; border: 1px solid var(--line-strong); border-radius: 999px;
+    transition: background .15s, border-color .15s;
+  }
+  .cart-btn:hover { background: var(--surface); border-color: var(--ink); }
+  .cart-btn svg { width: 20px; height: 20px; }
+  .cart-count {
+    min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px;
+    background: var(--ink); color: #fff; font-size: 12px; font-weight: 600;
+    display: inline-grid; place-items: center; font-variant-numeric: tabular-nums;
+  }
+  .cart-count.bump { animation: bump .35s var(--ease); }
+  @keyframes bump { 40% { transform: scale(1.3); } }
+
+  /* ───────── Category intro ───────── */
+  .intro { padding: 28px 0 26px; }
+  .crumbs { display: flex; gap: 8px; font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .crumbs a { text-decoration: none; }
+  .crumbs a:hover { text-decoration: underline; }
+  .intro h1 {
+    font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 5vw, 52px);
+    line-height: 1.05; letter-spacing: -.01em;
+  }
+  .intro p { margin-top: 12px; max-width: 56ch; color: var(--muted); font-size: 16px; }
+
+  /* ───────── Layout ───────── */
+  .layout {
+    display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 44px;
+    align-items: start; padding-bottom: 80px;
+  }
+  .sidebar {
+    position: sticky; top: 84px; max-height: calc(100vh - 100px);
+    overflow-y: auto; padding-right: 6px; margin-right: -6px;
+  }
+
+  /* ───────── Filters ───────── */
+  .filters fieldset { border: 0; margin: 0; padding: 18px 0; border-top: 1px solid var(--line); min-width: 0; }
+  .filters fieldset:first-of-type { border-top: 0; padding-top: 0; }
+  .filters legend {
+    padding: 0; float: left; width: 100%; margin-bottom: 10px;
+    font-size: 12.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .filters legend + * { clear: both; }
+  .opt {
+    display: flex; align-items: center; gap: 10px; min-height: 36px;
+    cursor: pointer; border-radius: 6px;
+  }
+  .opt input {
+    appearance: none; flex: none; width: 18px; height: 18px; margin: 0;
+    border: 1.5px solid var(--line-strong); border-radius: 4px; background: var(--surface);
+    display: grid; place-items: center; cursor: pointer; transition: background .12s, border-color .12s;
+  }
+  .opt input::after {
+    content: ""; width: 9px; height: 5px; margin-top: -2px;
+    border-left: 2px solid #fff; border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) scale(0); transition: transform .12s;
+  }
+  .opt input:checked { background: var(--ink); border-color: var(--ink); }
+  .opt input:checked::after { transform: rotate(-45deg) scale(1); }
+  .opt:hover input:not(:disabled) { border-color: var(--ink); }
+  .opt .count { margin-left: auto; color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .opt.is-empty { color: var(--line-strong); cursor: default; }
+  .opt.is-empty .count { color: inherit; }
+  .opt.is-empty input { cursor: default; }
+
+  .colour-opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .colour-opt { position: relative; }
+  .colour-opt input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+  .colour-opt span {
+    display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 12px 0 8px;
+    border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface);
+    font-size: 13.5px; transition: border-color .12s, box-shadow .12s;
+  }
+  .colour-opt i {
+    width: 16px; height: 16px; border-radius: 50%; background: var(--c);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .15);
+  }
+  .colour-opt input:hover + span { border-color: var(--ink); }
+  .colour-opt input:checked + span { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .colour-opt input:focus-visible + span { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .colour-opt input:disabled { cursor: default; }
+  .colour-opt input:disabled + span { opacity: .4; border-color: var(--line); }
+
+  /* dual range */
+  .price-out { font-variant-numeric: tabular-nums; margin-bottom: 6px; }
+  .range { position: relative; height: 32px; --lo: 0%; --hi: 100%; }
+  .range::before, .range::after {
+    content: ""; position: absolute; top: 14px; height: 4px; border-radius: 2px;
+  }
+  .range::before { left: 0; right: 0; background: var(--line); }
+  .range::after { left: var(--lo); right: calc(100% - var(--hi)); background: var(--ink); }
+  .range input {
+    position: absolute; inset: 0; width: 100%; height: 32px; margin: 0;
+    appearance: none; -webkit-appearance: none; background: none; pointer-events: none; z-index: 1;
+  }
+  .range input::-webkit-slider-runnable-track { background: none; height: 32px; }
+  .range input::-moz-range-track { background: none; }
+  .range input::-webkit-slider-thumb {
+    -webkit-appearance: none; pointer-events: auto; cursor: grab;
+    width: 22px; height: 22px; margin-top: 5px; border-radius: 50%;
+    background: var(--surface); border: 2px solid var(--ink);
+  }
+  .range input::-moz-range-thumb {
+    pointer-events: auto; cursor: grab; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--surface); border: 2px solid var(--ink);
+  }
+  .range input:focus-visible { outline: none; }
+  .range input:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .range input:focus-visible::-moz-range-thumb { outline: 2px solid var(--ink); outline-offset: 2px; }
+  .range-ends { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--muted); }
+
+  /* ───────── Toolbar ───────── */
+  .toolbar { display: flex; align-items: center; gap: 14px; min-height: 44px; }
+  .result-count { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .result-count strong { color: var(--ink); font-weight: 600; }
+  .result-count:focus { outline: none; }
+  .sort { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .sort label { color: var(--muted); font-size: 14px; }
+  .sort select {
+    appearance: none; height: 44px; padding: 0 38px 0 14px;
+    border: 1px solid var(--line-strong); border-radius: 8px; cursor: pointer;
+    background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%23211e1a' stroke-width='1.6'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 14px center;
+  }
+  .sort select:hover { border-color: var(--ink); }
+  .filter-toggle {
+    display: none; height: 44px; padding: 0 16px; align-items: center; gap: 8px;
+    border: 1px solid var(--line-strong); border-radius: 8px; background: var(--surface);
+  }
+  .filter-toggle svg { width: 16px; height: 16px; }
+  .filter-toggle b {
+    min-width: 20px; height: 20px; border-radius: 999px; background: var(--ink); color: #fff;
+    font-size: 12px; display: inline-grid; place-items: center; padding: 0 5px;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .chips:empty { display: none; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 10px 0 13px;
+    background: var(--tile); border: 0; border-radius: 999px; font-size: 13.5px;
+  }
+  .chip:hover { background: var(--line); }
+  .chip svg { width: 10px; height: 10px; }
+  .clear-all {
+    height: 34px; padding: 0 6px; background: none; border: 0;
+    text-decoration: underline; text-underline-offset: 3px; font-size: 13.5px;
+  }
+
+  /* ───────── Grid & cards ───────── */
+  .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+    gap: 36px 24px; margin-top: 22px;
+  }
+  .card { display: flex; flex-direction: column; min-width: 0; }
+  .tile {
+    position: relative; aspect-ratio: 6 / 5; border-radius: var(--radius); overflow: hidden;
+    background: color-mix(in srgb, var(--tint) 15%, var(--tile));
+    transition: background .25s;
+  }
+  .tile svg.art { position: absolute; inset: 0; width: 100%; height: 100%; transition: transform .45s var(--ease); }
+  .card:hover .tile svg.art { transform: translateY(-4px) scale(1.03); }
+  .badges { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; z-index: 1; }
+  .badge {
+    padding: 3px 9px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    background: var(--surface); letter-spacing: .01em;
+  }
+  .badge.sale { background: var(--accent); color: #fff; }
+  .card-body { display: flex; flex-direction: column; flex: 1; padding-top: 12px; }
+  .card .meta { font-size: 12.5px; color: var(--muted); }
+  .card h3 { font-family: var(--serif); font-weight: 400; font-size: 19px; line-height: 1.25; margin-top: 2px; }
+  .row { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-top: 6px; }
+  .price { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .price s { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 6px; }
+  .price.on-sale { color: var(--accent); }
+  .rating { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .rating::before { content: "★ "; color: #b8862e; }
+  .swatch-row { display: flex; align-items: center; gap: 2px; margin: 8px 0 0 -6px; min-height: 32px; }
+  .swatch {
+    width: 32px; height: 32px; padding: 0; border: 0; background: none;
+    display: grid; place-items: center; border-radius: 50%;
+  }
+  .swatch i {
+    width: 18px; height: 18px; border-radius: 50%; background: var(--c);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .18);
+  }
+  .swatch[aria-pressed="true"] i { box-shadow: inset 0 0 0 1px rgba(0,0,0,.18), 0 0 0 2px var(--bg), 0 0 0 3.5px var(--ink); }
+  .variant-name { margin-left: 6px; font-size: 13px; color: var(--muted); }
+  .stock { font-size: 13px; color: var(--muted); margin: 6px 0 12px; display: flex; align-items: center; gap: 7px; }
+  .stock::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--line-strong); }
+  .stock.in::before { background: var(--green); }
+  .stock.mto::before { background: #c08a2b; }
+  .add {
+    margin-top: auto; height: 44px; width: 100%;
+    background: transparent; border: 1px solid var(--ink); border-radius: 8px; font-weight: 500;
+    transition: background .15s, color .15s;
+  }
+  .add:hover:not(:disabled) { background: var(--ink); color: #fff; }
+  .add:active:not(:disabled) { transform: translateY(1px); }
+  .add:disabled { border-color: var(--line); color: var(--muted); cursor: not-allowed; }
+
+  .empty {
+    margin-top: 22px; padding: 64px 24px; text-align: center;
+    border: 1px dashed var(--line-strong); border-radius: var(--radius);
+  }
+  .empty h2 { font-family: var(--serif); font-weight: 400; font-size: 26px; }
+  .empty p { color: var(--muted); margin: 8px 0 20px; }
+  .btn {
+    height: 48px; padding: 0 22px; border-radius: 8px; border: 1px solid var(--ink);
+    background: var(--ink); color: #fff; font-weight: 500;
+  }
+  .btn:hover { background: #3a352e; }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--tile); }
+  .btn.block { width: 100%; }
+
+  /* ───────── Drawers (cart + mobile filters) ───────── */
+  dialog.drawer {
+    position: fixed; inset: 0 0 0 auto; margin: 0; padding: 0; border: 0;
+    width: min(440px, 100vw); height: 100dvh; max-width: 100vw; max-height: 100dvh;
+    background: var(--surface); color: var(--ink);
+    transform: translateX(100%); transition: transform .3s var(--ease);
+    box-shadow: -12px 0 40px rgba(33, 30, 26, .14);
+  }
+  dialog.drawer.left { inset: 0 auto 0 0; width: min(380px, 92vw); transform: translateX(-100%); }
+  dialog.drawer.is-open { transform: none; }
+  dialog.drawer::backdrop { background: rgba(33, 30, 26, 0); transition: background .3s; }
+  dialog.drawer.is-open::backdrop { background: rgba(33, 30, 26, .42); }
+  .drawer-inner { display: flex; flex-direction: column; height: 100%; }
+  .drawer-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 16px 16px 24px; border-bottom: 1px solid var(--line);
+  }
+  .drawer-head h2 { font-family: var(--serif); font-weight: 400; font-size: 24px; }
+  .drawer-head h2 small { font-family: var(--sans); font-size: 14px; color: var(--muted); margin-left: 6px; }
+  .icon-btn {
+    width: 44px; height: 44px; display: grid; place-items: center;
+    background: none; border: 0; border-radius: 50%;
+  }
+  .icon-btn:hover { background: var(--tile); }
+  .icon-btn svg { width: 16px; height: 16px; }
+  .drawer-body { flex: 1; overflow-y: auto; padding: 0 24px; overscroll-behavior: contain; }
+  .drawer-foot { padding: 18px 24px 22px; border-top: 1px solid var(--line); background: var(--surface); }
+
+  .ship { padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+  .ship-bar { height: 4px; border-radius: 2px; background: var(--line); margin-top: 9px; overflow: hidden; }
+  .ship-bar i { display: block; height: 100%; background: var(--green); border-radius: 2px; transition: width .35s var(--ease); }
+
+  .line { display: grid; grid-template-columns: 84px 1fr; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .line .thumb {
+    position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden;
+    background: color-mix(in srgb, var(--tint) 15%, var(--tile));
+  }
+  .line .thumb svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .line-top { display: flex; justify-content: space-between; gap: 12px; }
+  .line h3 { font-family: var(--serif); font-weight: 400; font-size: 17px; line-height: 1.25; }
+  .line .v { font-size: 13px; color: var(--muted); }
+  .line .lp { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .line-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+  .qty { display: inline-flex; align-items: center; border: 1px solid var(--line-strong); border-radius: 8px; }
+  .qty button { width: 36px; height: 36px; background: none; border: 0; font-size: 18px; line-height: 1; border-radius: 7px; }
+  .qty button:hover:not(:disabled) { background: var(--tile); }
+  .qty button:disabled { color: var(--line-strong); cursor: default; }
+  .qty span { min-width: 26px; text-align: center; font-variant-numeric: tabular-nums; }
+  .remove { background: none; border: 0; padding: 8px 0; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; font-size: 13.5px; }
+  .remove:hover { color: var(--ink); }
+
+  .cart-empty { text-align: center; padding: 72px 12px; }
+  .cart-empty svg { width: 120px; height: 100px; }
+  .cart-empty h3 { font-family: var(--serif); font-weight: 400; font-size: 22px; margin-top: 6px; }
+  .cart-empty p { color: var(--muted); margin: 6px 0 20px; }
+
+  .totals { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; font-variant-numeric: tabular-nums; }
+  .totals dt { color: var(--muted); }
+  .totals dd { margin: 0; text-align: right; }
+  .totals .total { color: var(--ink); font-weight: 600; font-size: 17px; padding-top: 10px; margin-top: 4px; border-top: 1px solid var(--line); }
+  .drawer-foot .btn { margin-top: 16px; }
+  .foot-note { margin-top: 10px; font-size: 13px; color: var(--muted); text-align: center; min-height: 1.5em; }
+
+  .site-footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 13.5px; }
+  .site-footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 32px; }
+
+  /* ───────── Responsive ───────── */
+  @media (max-width: 940px) {
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    .sidebar { display: none; }
+    .filter-toggle { display: inline-flex; }
+    .nav { display: none; }
+    .result-count { display: none; }
+    .sort label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 16px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 12px; }
+    .card h3 { font-size: 17px; }
+    .row { flex-direction: column; gap: 2px; }
+    .variant-name { display: none; }
+    .sort select { max-width: 180px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after, ::backdrop { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="promo">Free delivery on orders over $1,500 · 30-day returns</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Halden home">Halden</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#" aria-current="page">Living room</a>
+      <a href="#">Dining</a>
+      <a href="#">Bedroom</a>
+      <a href="#">Workspace</a>
+      <a href="#">Outdoor</a>
+    </nav>
+    <button class="cart-btn" id="cartBtn" type="button" aria-haspopup="dialog">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3.5 6.5h13l-1 10h-11z"/><path d="M7 6.5V5a3 3 0 0 1 6 0v1.5"/></svg>
+      <span>Cart</span>
+      <span class="cart-count" id="cartCount" aria-hidden="true">0</span>
+      <span class="sr-only" id="cartCountSr"></span>
+    </button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="intro">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="#">Home</a><span aria-hidden="true">/</span>
+      <a href="#">Furniture</a><span aria-hidden="true">/</span>
+      <span aria-current="page">Living room</span>
+    </nav>
+    <h1>Living room</h1>
+    <p>Sofas to sink into, tables that earn their place, and lighting for the hours after dinner. Built from solid timber, natural stone and hard-wearing fabrics.</p>
+  </section>
+
+  <div class="layout">
+    <aside class="sidebar" id="sidebar" aria-label="Filters">
+      <form class="filters" id="filters" onsubmit="return false">
+        <fieldset>
+          <legend>Category</legend>
+          <div id="f-type"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Price</legend>
+          <div class="price-out" id="priceOut"></div>
+          <div class="range" id="range">
+            <input type="range" id="pMin" aria-label="Minimum price">
+            <input type="range" id="pMax" aria-label="Maximum price">
+          </div>
+          <div class="range-ends"><span id="pLo"></span><span id="pHi"></span></div>
+        </fieldset>
+        <fieldset>
+          <legend>Colour</legend>
+          <div class="colour-opts" id="f-col"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Material</legend>
+          <div id="f-mat"></div>
+        </fieldset>
+        <fieldset>
+          <legend>Availability</legend>
+          <div id="f-flags"></div>
+        </fieldset>
+      </form>
+    </aside>
+
+    <section aria-label="Products">
+      <div class="toolbar">
+        <button class="filter-toggle" id="filterToggle" type="button" aria-haspopup="dialog">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 4h14M4 8h8M6.5 12h3"/></svg>
+          Filters <b id="filterBadge" hidden></b>
+        </button>
+        <p class="result-count" id="resultCount" tabindex="-1" aria-live="polite"></p>
+        <div class="sort">
+          <label for="sort">Sort by</label>
+          <select id="sort">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: low to high</option>
+            <option value="price-desc">Price: high to low</option>
+            <option value="newest">Newest</option>
+            <option value="rating">Top rated</option>
+          </select>
+        </div>
+      </div>
+      <div class="chips" id="chips"></div>
+      <ul class="grid" id="grid"></ul>
+      <div class="empty" id="empty" hidden>
+        <h2>Nothing matches those filters</h2>
+        <p>Try widening the price range or removing a filter.</p>
+        <button class="btn" type="button" data-clear>Clear all filters</button>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap"><span>© 2026 Halden Furniture Co.</span><span>Demo storefront: products and prices are illustrative.</span></div>
+</footer>
+
+<!-- Mobile filters -->
+<dialog class="drawer left" id="filterDrawer" aria-labelledby="filterTitle">
+  <div class="drawer-inner">
+    <div class="drawer-head">
+      <h2 id="filterTitle">Filters</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Close filters">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body" id="filterSlot" style="padding-top:20px"></div>
+    <div class="drawer-foot" style="display:flex;gap:10px">
+      <button class="btn ghost" type="button" data-clear>Clear</button>
+      <button class="btn" type="button" data-close id="filterApply" style="flex:1"></button>
+    </div>
+  </div>
+</dialog>
+
+<!-- Cart -->
+<dialog class="drawer" id="cartDrawer" aria-labelledby="cartTitle">
+  <div class="drawer-inner">
+    <div class="drawer-head">
+      <h2 id="cartTitle" tabindex="-1">Your cart <small id="cartTitleCount"></small></h2>
+      <button class="icon-btn" type="button" data-close aria-label="Close cart">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 2l12 12M14 2L2 14"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body" id="cartBody"></div>
+    <div class="drawer-foot" id="cartFoot">
+      <dl class="totals">
+        <dt>Subtotal</dt><dd id="tSub"></dd>
+        <dt>Delivery</dt><dd id="tShip"></dd>
+        <dt class="total">Total</dt><dd class="total" id="tTotal"></dd>
+      </dl>
+      <button class="btn block" type="button" id="checkout">Checkout</button>
+      <p class="foot-note" id="footNote" role="status">Taxes calculated at checkout.</p>
+    </div>
+  </div>
+</dialog>
+
+<div class="sr-only" id="live" aria-live="polite"></div>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ───────── Data ───────── */
+  const FAMILIES = {
+    cream: ['Cream', '#e9dfcc'], grey: ['Grey', '#8d8f8c'], green: ['Green', '#5f7355'],
+    blue: ['Blue', '#2f4460'], terracotta: ['Terracotta', '#b9623f'], brown: ['Brown', '#7a4a2c'],
+    black: ['Black', '#2a2826'], oak: ['Oak', '#c9a06b'],
+  };
+  const TYPES = { sofa: 'Sofas', armchair: 'Armchairs', coffee: 'Coffee tables', side: 'Side tables', light: 'Lighting', storage: 'Storage' };
+  const TYPE_SINGULAR = { sofa: 'Sofa', armchair: 'Armchair', coffee: 'Coffee table', side: 'Side table', light: 'Lighting', storage: 'Storage' };
+  const MATERIALS = ['Fabric', 'Bouclé', 'Leather', 'Solid wood', 'Metal', 'Stone'];
+
+  const V = {
+    oat: ['Oat', '#ddd0b8', 'cream'], ivory: ['Ivory', '#ece4d3', 'cream'], cream: ['Cream', '#e6dcc8', 'cream'],
+    travertine: ['Travertine', '#d9cbb3', 'cream'],
+    moss: ['Moss', '#5f7355', 'green'], sage: ['Sage', '#8a9a80', 'green'],
+    slate: ['Slate', '#6d7275', 'grey'], fog: ['Fog', '#a9aaa6', 'grey'],
+    ink: ['Ink', '#2f4460', 'blue'], clay: ['Clay', '#b9623f', 'terracotta'],
+    cognac: ['Cognac', '#8f5530', 'brown'], walnut: ['Walnut', '#6f4a32', 'brown'],
+    black: ['Black', '#2a2826', 'black'], nero: ['Nero', '#34312e', 'black'], oak: ['Oak', '#c9a06b', 'oak'],
+  };
+  const v = (...keys) => keys.map(k => ({ name: V[k][0], hex: V[k][1], fam: V[k][2] }));
+
+  // Array order = "Featured" order. `added` is higher for newer products.
+  const PRODUCTS = [
+    { id: 'alder', name: 'Alder 3-Seat Sofa', type: 'sofa', art: 'sofa3', material: 'Fabric', price: 1890, variants: v('oat', 'moss', 'slate'), rating: 4.7, reviews: 212, stock: 'in', added: 8 },
+    { id: 'tove', name: 'Tove Armchair', type: 'armchair', art: 'armchair', material: 'Bouclé', price: 640, variants: v('ivory', 'moss', 'clay'), rating: 4.8, reviews: 164, stock: 'in', added: 11 },
+    { id: 'lund', name: 'Lund Coffee Table', type: 'coffee', art: 'coffee', material: 'Solid wood', price: 480, variants: v('oak', 'walnut', 'black'), rating: 4.6, reviews: 98, stock: 'in', added: 5 },
+    { id: 'arc', name: 'Arc Floor Lamp', type: 'light', art: 'floorLamp', material: 'Metal', price: 260, variants: v('black', 'cream'), rating: 4.5, reviews: 77, stock: 'in', added: 9 },
+    { id: 'fenn', name: 'Fenn Loveseat', type: 'sofa', art: 'sofa', material: 'Bouclé', price: 1240, was: 1460, variants: v('ivory', 'clay'), rating: 4.4, reviews: 59, stock: 'in', added: 7 },
+    { id: 'stile', name: 'Stile Open Shelving', type: 'storage', art: 'shelf', material: 'Solid wood', price: 780, variants: v('oak', 'walnut'), rating: 4.7, reviews: 41, stock: 'in', added: 6 },
+    { id: 'rune', name: 'Rune Lounge Chair', type: 'armchair', art: 'lounge', material: 'Leather', price: 890, was: 1050, variants: v('cognac', 'black'), rating: 4.9, reviews: 133, stock: 'in', added: 4 },
+    { id: 'orbit', name: 'Orbit Round Coffee Table', type: 'coffee', art: 'coffeeRound', material: 'Stone', price: 720, variants: v('travertine', 'nero'), rating: 4.6, reviews: 52, stock: 'in', added: 14 },
+    { id: 'mora', name: 'Mora Compact Sofa', type: 'sofa', art: 'sofa', material: 'Fabric', price: 980, variants: v('ink', 'fog', 'oat'), rating: 4.3, reviews: 18, stock: 'in', added: 19, isNew: true },
+    { id: 'pip', name: 'Pip Side Table', type: 'side', art: 'side', material: 'Metal', price: 140, variants: v('black', 'clay', 'sage', 'cream'), rating: 4.5, reviews: 301, stock: 'in', added: 3 },
+    { id: 'brae', name: 'Brae Leather Sofa', type: 'sofa', art: 'sofa3', material: 'Leather', price: 2190, variants: v('cognac', 'black'), rating: 4.8, reviews: 86, stock: 'mto', weeks: 6, added: 10 },
+    { id: 'dune', name: 'Dune Table Lamp', type: 'light', art: 'tableLamp', material: 'Stone', price: 130, was: 165, variants: v('travertine', 'clay'), rating: 4.2, reviews: 45, stock: 'in', added: 12 },
+    { id: 'hollis', name: 'Hollis Sideboard', type: 'storage', art: 'sideboard', material: 'Solid wood', price: 1320, variants: v('oak', 'walnut', 'black'), rating: 4.7, reviews: 64, stock: 'mto', weeks: 4, added: 13 },
+    { id: 'pell', name: 'Pell Accent Chair', type: 'armchair', art: 'armchair', material: 'Fabric', price: 420, variants: v('ink', 'fog'), rating: 4.1, reviews: 12, stock: 'in', added: 18, isNew: true },
+    { id: 'nook', name: 'Nook Side Table', type: 'side', art: 'side', material: 'Solid wood', price: 190, variants: v('oak', 'walnut'), rating: 4.4, reviews: 120, stock: 'in', added: 2 },
+    { id: 'kite', name: 'Kite Steel Coffee Table', type: 'coffee', art: 'coffee', material: 'Metal', price: 340, was: 400, variants: v('black', 'sage'), rating: 4.0, reviews: 37, stock: 'in', added: 1 },
+    { id: 'grid', name: 'Grid Steel Shelf', type: 'storage', art: 'shelf', material: 'Metal', price: 450, variants: v('black', 'sage'), rating: 4.3, reviews: 9, stock: 'in', added: 17, isNew: true },
+    { id: 'sola', name: 'Sola Lounge Chair', type: 'armchair', art: 'lounge', material: 'Fabric', price: 560, variants: v('oat', 'slate'), rating: 4.6, reviews: 71, stock: 'out', added: 15 },
+    { id: 'marlow', name: 'Marlow Pedestal Table', type: 'side', art: 'pedestal', material: 'Stone', price: 310, variants: v('travertine', 'nero'), rating: 4.5, reviews: 6, stock: 'in', added: 20, isNew: true },
+    { id: 'linea', name: 'Linea Tripod Lamp', type: 'light', art: 'tripodLamp', material: 'Solid wood', price: 210, variants: v('oak', 'walnut'), rating: 4.4, reviews: 88, stock: 'in', added: 16 },
+  ];
+  const BY_ID = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
+
+  const STEP = 50;
+  const PMIN = Math.floor(Math.min(...PRODUCTS.map(p => p.price)) / STEP) * STEP;
+  const PMAX = Math.ceil(Math.max(...PRODUCTS.map(p => p.price)) / 100) * 100;
+  const FREE_SHIP = 1500, SHIP_FEE = 79, MAX_QTY = 9;
+
+  /* ───────── Illustrations ───────── */
+  function mix(hex, target, amt) {
+    const a = parseInt(hex.slice(1), 16), b = parseInt(target.slice(1), 16);
+    const ch = s => Math.round(((a >> s) & 255) * (1 - amt) + ((b >> s) & 255) * amt);
+    return '#' + [16, 8, 0].map(s => ch(s).toString(16).padStart(2, '0')).join('');
+  }
+  function lum(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
+  }
+  const WOOD = '#a87b4f', LINEN = '#fbf7ef';
+  const ART = {
+    sofa: (c, d) => `
+      <rect x="46" y="70" width="148" height="62" rx="14" fill="${d}"/>
+      <rect x="54" y="104" width="64" height="30" rx="8" fill="${c}"/>
+      <rect x="122" y="104" width="64" height="30" rx="8" fill="${c}"/>
+      <rect x="32" y="92" width="26" height="52" rx="12" fill="${c}"/>
+      <rect x="182" y="92" width="26" height="52" rx="12" fill="${c}"/>
+      <rect x="50" y="130" width="140" height="14" rx="5" fill="${d}"/>
+      <rect x="52" y="144" width="6" height="16" rx="2" fill="${WOOD}"/><rect x="182" y="144" width="6" height="16" rx="2" fill="${WOOD}"/>`,
+    sofa3: (c, d) => `
+      <rect x="28" y="72" width="184" height="60" rx="14" fill="${d}"/>
+      <rect x="36" y="104" width="54" height="30" rx="8" fill="${c}"/>
+      <rect x="93" y="104" width="54" height="30" rx="8" fill="${c}"/>
+      <rect x="150" y="104" width="54" height="30" rx="8" fill="${c}"/>
+      <rect x="14" y="94" width="26" height="50" rx="12" fill="${c}"/>
+      <rect x="200" y="94" width="26" height="50" rx="12" fill="${c}"/>
+      <rect x="32" y="130" width="176" height="14" rx="5" fill="${d}"/>
+      <rect x="34" y="144" width="6" height="16" rx="2" fill="${WOOD}"/><rect x="200" y="144" width="6" height="16" rx="2" fill="${WOOD}"/>`,
+    armchair: (c, d) => `
+      <rect x="78" y="56" width="84" height="76" rx="18" fill="${d}"/>
+      <rect x="86" y="102" width="68" height="30" rx="9" fill="${c}"/>
+      <rect x="64" y="90" width="26" height="52" rx="12" fill="${c}"/>
+      <rect x="150" y="90" width="26" height="52" rx="12" fill="${c}"/>
+      <rect x="80" y="128" width="80" height="14" rx="5" fill="${d}"/>
+      <path d="M84 142l-4 18M156 142l4 18" stroke="${WOOD}" stroke-width="6" stroke-linecap="round"/>`,
+    lounge: (c, d) => `
+      <path d="M78 112l-10 48M160 98l6 62M70 98h96M74 126h90" stroke="${WOOD}" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <rect x="72" y="46" width="28" height="70" rx="12" transform="rotate(-10 86 81)" fill="${d}"/>
+      <rect x="78" y="102" width="88" height="22" rx="9" fill="${c}"/>`,
+    coffee: (c, d) => `
+      <path d="M58 106l-8 54M182 106l8 54" stroke="${d}" stroke-width="6" stroke-linecap="round"/>
+      <rect x="58" y="134" width="124" height="5" rx="2.5" fill="${d}"/>
+      <rect x="36" y="96" width="168" height="12" rx="6" fill="${c}"/>`,
+    coffeeRound: (c, d) => `
+      <rect x="84" y="104" width="72" height="54" rx="6" fill="${d}"/>
+      <ellipse cx="120" cy="104" rx="78" ry="14" fill="${d}"/>
+      <ellipse cx="120" cy="99" rx="78" ry="14" fill="${c}"/>`,
+    side: (c, d) => `
+      <rect x="116" y="84" width="8" height="72" fill="${d}"/>
+      <ellipse cx="120" cy="158" rx="32" ry="6" fill="${d}"/>
+      <ellipse cx="120" cy="86" rx="46" ry="9" fill="${d}"/>
+      <ellipse cx="120" cy="82" rx="46" ry="9" fill="${c}"/>`,
+    pedestal: (c, d) => `
+      <path d="M100 92h40l-8 66h-24z" fill="${d}"/>
+      <ellipse cx="120" cy="92" rx="48" ry="10" fill="${d}"/>
+      <ellipse cx="120" cy="87" rx="48" ry="10" fill="${c}"/>`,
+    floorLamp: (c, d) => `
+      <rect x="118" y="80" width="4" height="80" fill="${d}"/>
+      <ellipse cx="120" cy="161" rx="26" ry="5" fill="${d}"/>
+      <path d="M100 36h40l16 48H84z" fill="${c}"/>
+      <path d="M84 84h72l-2-6H86z" fill="${d}"/>`,
+    tripodLamp: (c) => `
+      <path d="M120 82L92 160M120 82v78M120 82l28 78" stroke="${c}" stroke-width="5" stroke-linecap="round"/>
+      <path d="M96 34h48l12 50H84z" fill="${LINEN}"/>
+      <path d="M84 84h72" stroke="${mix(LINEN, '#000000', .12)}" stroke-width="3"/>`,
+    tableLamp: (c, d) => `
+      <rect x="115" y="92" width="10" height="14" fill="${d}"/>
+      <ellipse cx="120" cy="134" rx="26" ry="29" fill="${c}"/>
+      <rect x="100" y="156" width="40" height="6" rx="3" fill="${d}"/>
+      <path d="M94 50h52l14 44H80z" fill="${LINEN}"/>
+      <path d="M80 94h80" stroke="${mix(LINEN, '#000000', .12)}" stroke-width="3"/>`,
+    shelf: (c, d) => `
+      <rect x="84" y="50" width="8" height="24" rx="1" fill="${mix(c, '#ffffff', .45)}"/><rect x="94" y="44" width="7" height="30" rx="1" fill="${d}"/><rect x="103" y="52" width="9" height="22" rx="1" fill="${mix(c, '#ffffff', .25)}"/>
+      <ellipse cx="146" cy="100" rx="9" ry="11" fill="${mix(c, '#ffffff', .45)}"/>
+      <rect x="84" y="122" width="34" height="7" rx="1" fill="${d}"/><rect x="88" y="115" width="28" height="7" rx="1" fill="${mix(c, '#ffffff', .3)}"/>
+      <rect x="134" y="134" width="22" height="22" rx="2" fill="${mix(c, '#ffffff', .25)}"/>
+      <rect x="70" y="30" width="6" height="132" fill="${d}"/><rect x="164" y="30" width="6" height="132" fill="${d}"/>
+      <rect x="70" y="30" width="100" height="6" fill="${c}"/><rect x="70" y="74" width="100" height="6" fill="${c}"/>
+      <rect x="70" y="111" width="100" height="6" fill="${c}"/><rect x="70" y="156" width="100" height="6" fill="${c}"/>`,
+    sideboard: (c, d) => `
+      <rect x="46" y="140" width="6" height="20" fill="${d}"/><rect x="188" y="140" width="6" height="20" fill="${d}"/>
+      <rect x="32" y="78" width="176" height="64" rx="5" fill="${c}"/>
+      <path d="M91 82v56M149 82v56" stroke="${d}" stroke-width="2"/>
+      <circle cx="84" cy="110" r="2.5" fill="${d}"/><circle cx="98" cy="110" r="2.5" fill="${d}"/><circle cx="156" cy="110" r="2.5" fill="${d}"/>
+      <rect x="32" y="78" width="176" height="6" rx="3" fill="${d}"/>`,
+  };
+  function art(p, variant) {
+    const c = variant.hex;
+    const d = lum(c) < 0.3 ? mix(c, '#ffffff', .2) : mix(c, '#000000', .16);
+    return `<svg class="art" viewBox="0 0 240 200" aria-hidden="true" focusable="false">
+      <ellipse cx="120" cy="163" rx="88" ry="6" fill="#000" opacity=".07"/>${ART[p.art](c, d)}</svg>`;
+  }
+
+  /* ───────── State ───────── */
+  const fmt = n => '$' + n.toLocaleString('en-US');
+  const $ = id => document.getElementById(id);
+  const esc = s => s.replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+
+  const state = { type: new Set(), mat: new Set(), col: new Set(), min: PMIN, max: PMAX, stock: false, sale: false, sort: 'featured' };
+  const picks = {};          // product id -> variant index chosen by the user
+  let cart = [];             // [{ id, v, qty }]
+
+  function readUrl() {
+    const q = new URLSearchParams(location.search);
+    const list = (key, valid) => new Set((q.get(key) || '').split(',').filter(x => valid.includes(x)));
+    state.type = list('type', Object.keys(TYPES));
+    state.mat = list('material', MATERIALS);
+    state.col = list('colour', Object.keys(FAMILIES));
+    const num = (key, dflt) => { const n = parseInt(q.get(key), 10); return Number.isFinite(n) ? Math.min(PMAX, Math.max(PMIN, n)) : dflt; };
+    state.min = num('min', PMIN); state.max = num('max', PMAX);
+    if (state.min > state.max - STEP) { state.min = PMIN; state.max = PMAX; }
+    state.stock = q.get('instock') === '1';
+    state.sale = q.get('sale') === '1';
+    const s = q.get('sort');
+    if ([...$('sort').options].some(o => o.value === s)) state.sort = s;
+  }
+  function writeUrl() {
+    const q = new URLSearchParams();
+    if (state.type.size) q.set('type', [...state.type].join(','));
+    if (state.mat.size) q.set('material', [...state.mat].join(','));
+    if (state.col.size) q.set('colour', [...state.col].join(','));
+    if (state.min > PMIN) q.set('min', state.min);
+    if (state.max < PMAX) q.set('max', state.max);
+    if (state.stock) q.set('instock', '1');
+    if (state.sale) q.set('sale', '1');
+    if (state.sort !== 'featured') q.set('sort', state.sort);
+    const s = q.toString().replace(/%2C/g, ',');
+    try { history.replaceState(null, '', s ? '?' + s : location.pathname); } catch (e) { /* file:// in some browsers */ }
+  }
+
+  /* ───────── Filtering ───────── */
+  function passes(p, skip) {
+    if (skip !== 'type' && state.type.size && !state.type.has(p.type)) return false;
+    if (skip !== 'mat' && state.mat.size && !state.mat.has(p.material)) return false;
+    if (skip !== 'col' && state.col.size && !p.variants.some(x => state.col.has(x.fam))) return false;
+    if (p.price < state.min || p.price > state.max) return false;
+    if (skip !== 'stock' && state.stock && p.stock !== 'in') return false;
+    if (skip !== 'sale' && state.sale && !p.was) return false;
+    return true;
+  }
+  const SORTS = {
+    'featured': null,
+    'price-asc': (a, b) => a.price - b.price,
+    'price-desc': (a, b) => b.price - a.price,
+    'newest': (a, b) => b.added - a.added,
+    'rating': (a, b) => b.rating - a.rating || b.reviews - a.reviews,
+  };
+  function visible() {
+    const list = PRODUCTS.filter(p => passes(p));
+    return SORTS[state.sort] ? list.sort(SORTS[state.sort]) : list;
+  }
+  function variantIndex(p) {
+    if (picks[p.id] != null) return picks[p.id];
+    if (state.col.size) { const i = p.variants.findIndex(x => state.col.has(x.fam)); if (i > -1) return i; }
+    return 0;
+  }
+  function activeCount() {
+    return state.type.size + state.mat.size + state.col.size + (state.stock ? 1 : 0) + (state.sale ? 1 : 0) + (state.min > PMIN || state.max < PMAX ? 1 : 0);
+  }
+
+  /* ───────── Filter UI (built once, updated in place) ───────── */
+  function buildFilters() {
+    const check = (group, value, label) =>
+      `<label class="opt"><input type="checkbox" data-group="${group}" value="${value}"><span>${label}</span><span class="count"></span></label>`;
+    $('f-type').innerHTML = Object.entries(TYPES).map(([k, l]) => check('type', k, l)).join('');
+    $('f-mat').innerHTML = MATERIALS.map(m => check('mat', m, m)).join('');
+    $('f-flags').innerHTML = check('stock', '1', 'In stock, ships now') + check('sale', '1', 'On sale');
+    $('f-col').innerHTML = Object.entries(FAMILIES).map(([k, [l, hex]]) =>
+      `<label class="colour-opt"><input type="checkbox" data-group="col" value="${k}"><span><i style="--c:${hex}"></i>${l}</span></label>`).join('');
+
+    const lo = $('pMin'), hi = $('pMax');
+    for (const el of [lo, hi]) { el.min = PMIN; el.max = PMAX; el.step = STEP; }
+    $('pLo').textContent = fmt(PMIN); $('pHi').textContent = fmt(PMAX);
+    lo.addEventListener('input', () => { state.min = Math.min(+lo.value, state.max - STEP); update(); });
+    hi.addEventListener('input', () => { state.max = Math.max(+hi.value, state.min + STEP); update(); });
+
+    $('filters').addEventListener('change', e => {
+      const el = e.target, g = el.dataset.group;
+      if (!g) return;
+      if (g === 'stock' || g === 'sale') state[g] = el.checked;
+      else el.checked ? state[g].add(el.value) : state[g].delete(el.value);
+      if (g === 'col') for (const k in picks) delete picks[k];
+      update();
+    });
+  }
+
+  function syncFilters() {
+    const matchers = {
+      type: (p, val) => p.type === val,
+      mat: (p, val) => p.material === val,
+      col: (p, val) => p.variants.some(x => x.fam === val),
+      stock: p => p.stock === 'in',
+      sale: p => !!p.was,
+    };
+    for (const el of $('filters').querySelectorAll('input[data-group]')) {
+      const g = el.dataset.group;
+      el.checked = (g === 'stock' || g === 'sale') ? state[g] : state[g].has(el.value);
+      const n = PRODUCTS.filter(p => passes(p, g) && matchers[g](p, el.value)).length;
+      el.disabled = n === 0 && !el.checked;
+      const label = el.closest('label');
+      label.classList.toggle('is-empty', el.disabled);
+      const count = label.querySelector('.count');
+      if (count) count.textContent = n;
+    }
+    const lo = $('pMin'), hi = $('pMax');
+    lo.value = state.min; hi.value = state.max;
+    const pct = n => ((n - PMIN) / (PMAX - PMIN)) * 100 + '%';
+    $('range').style.setProperty('--lo', pct(state.min));
+    $('range').style.setProperty('--hi', pct(state.max));
+    $('priceOut').textContent = `${fmt(state.min)} – ${fmt(state.max)}`;
+    lo.setAttribute('aria-valuetext', fmt(state.min));
+    hi.setAttribute('aria-valuetext', fmt(state.max));
+    // keep the lower thumb reachable when both sit at the far right
+    lo.style.zIndex = state.min > PMAX - 200 ? 2 : 1;
+  }
+
+  /* ───────── Chips ───────── */
+  const X = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 1l8 8M9 1L1 9"/></svg>';
+  function renderChips() {
+    const chips = [];
+    const add = (label, group, value = '') =>
+      chips.push(`<button class="chip" type="button" data-group="${group}" data-value="${value}" aria-label="Remove filter: ${esc(label)}">${esc(label)}${X}</button>`);
+    state.type.forEach(t => add(TYPES[t], 'type', t));
+    if (state.min > PMIN || state.max < PMAX) add(`${fmt(state.min)} – ${fmt(state.max)}`, 'price');
+    state.col.forEach(c => add(FAMILIES[c][0], 'col', c));
+    state.mat.forEach(m => add(m, 'mat', m));
+    if (state.stock) add('In stock', 'stock');
+    if (state.sale) add('On sale', 'sale');
+    if (chips.length) chips.push('<button class="clear-all" type="button" data-clear>Clear all</button>');
+    $('chips').innerHTML = chips.join('');
+  }
+  $('chips').addEventListener('click', e => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    const { group, value } = chip.dataset;
+    if (group === 'price') { state.min = PMIN; state.max = PMAX; }
+    else if (group === 'stock' || group === 'sale') state[group] = false;
+    else state[group].delete(value);
+    update();
+    $('resultCount').focus();
+  });
+  function clearAll() {
+    state.type.clear(); state.mat.clear(); state.col.clear();
+    state.min = PMIN; state.max = PMAX; state.stock = state.sale = false;
+    for (const k in picks) delete picks[k];
+    update();
+  }
+  document.addEventListener('click', e => {
+    if (!e.target.closest('[data-clear]')) return;
+    const inDialog = e.target.closest('dialog');
+    clearAll();
+    if (!inDialog) $('resultCount').focus();
+  });
+
+  /* ───────── Grid ───────── */
+  function stockLine(p) {
+    if (p.stock === 'in') return '<p class="stock in">In stock, ships in 2–4 days</p>';
+    if (p.stock === 'mto') return `<p class="stock mto">Made to order, ${p.weeks} weeks</p>`;
+    return '<p class="stock">Sold out</p>';
+  }
+  function cardHtml(p) {
+    const i = variantIndex(p), cur = p.variants[i];
+    const off = p.was ? Math.round((1 - p.price / p.was) * 100) : 0;
+    const badges = (p.isNew ? '<span class="badge">New</span>' : '') + (p.was ? `<span class="badge sale">−${off}%</span>` : '');
+    const swatches = p.variants.map((x, n) =>
+      `<button class="swatch" type="button" data-v="${n}" aria-pressed="${n === i}" aria-label="${x.name}" title="${x.name}"><i style="--c:${x.hex}"></i></button>`).join('');
+    return `<li class="card" data-id="${p.id}">
+      <div class="tile" style="--tint:${cur.hex}">${badges ? `<div class="badges">${badges}</div>` : ''}${art(p, cur)}</div>
+      <div class="card-body">
+        <p class="meta">${TYPE_SINGULAR[p.type]} · ${p.material}</p>
+        <h3>${esc(p.name)}</h3>
+        <div class="row">
+          <p class="price${p.was ? ' on-sale' : ''}">${p.was ? '<span class="sr-only">Sale price </span>' : ''}${fmt(p.price)}${p.was ? `<s><span class="sr-only">was </span>${fmt(p.was)}</s>` : ''}</p>
+          <p class="rating" aria-label="Rated ${p.rating} out of 5 from ${p.reviews} reviews">${p.rating.toFixed(1)} (${p.reviews})</p>
+        </div>
+        <div class="swatch-row" role="group" aria-label="Colour">${swatches}<span class="variant-name">${cur.name}</span></div>
+        ${stockLine(p)}
+        <button class="add" type="button" ${p.stock === 'out' ? 'disabled' : ''} aria-label="${p.stock === 'out' ? 'Sold out' : 'Add to cart'}: ${esc(p.name)}">${p.stock === 'out' ? 'Sold out' : 'Add to cart'}</button>
+      </div>
+    </li>`;
+  }
+  function renderGrid() {
+    const list = visible();
+    $('grid').innerHTML = list.map(cardHtml).join('');
+    $('grid').hidden = !list.length;
+    $('empty').hidden = !!list.length;
+    $('resultCount').innerHTML = `<strong>${list.length}</strong> of ${PRODUCTS.length} products`;
+    $('filterApply').textContent = list.length ? `Show ${list.length} product${list.length === 1 ? '' : 's'}` : 'No products match';
+    const n = activeCount(), badge = $('filterBadge');
+    badge.hidden = !n; badge.textContent = n;
+  }
+  $('grid').addEventListener('click', e => {
+    const card = e.target.closest('.card');
+    if (!card) return;
+    const p = BY_ID[card.dataset.id];
+    const sw = e.target.closest('.swatch');
+    if (sw) {
+      const i = +sw.dataset.v, cur = p.variants[i];
+      picks[p.id] = i;
+      const tile = card.querySelector('.tile');
+      tile.style.setProperty('--tint', cur.hex);
+      tile.querySelector('svg.art').outerHTML = art(p, cur);
+      card.querySelectorAll('.swatch').forEach((b, n) => b.setAttribute('aria-pressed', n === i));
+      card.querySelector('.variant-name').textContent = cur.name;
+      return;
+    }
+    if (e.target.closest('.add')) addToCart(p.id, variantIndex(p), e.target.closest('.add'));
+  });
+
+  function update() {
+    syncFilters(); renderChips(); renderGrid(); writeUrl();
+  }
+
+  $('sort').addEventListener('change', e => { state.sort = e.target.value; renderGrid(); writeUrl(); });
+
+  /* ───────── Drawers ───────── */
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  function openDrawer(d) {
+    if (d.open) return;
+    const root = document.documentElement;   // lock page scroll without a layout shift
+    root.style.paddingRight = (innerWidth - root.clientWidth) + 'px';
+    root.classList.add('locked');
+    d.showModal();
+    void d.offsetWidth;            // commit the closed position so the slide-in transitions
+    d.classList.add('is-open');
+  }
+  function closeDrawer(d) {
+    if (!d.open || !d.classList.contains('is-open')) return;
+    d.classList.remove('is-open');
+    setTimeout(() => d.close(), reduced.matches ? 0 : 300);
+  }
+  for (const d of document.querySelectorAll('dialog.drawer')) {
+    d.addEventListener('close', () => {
+      document.documentElement.classList.remove('locked');
+      document.documentElement.style.paddingRight = '';
+    });
+    d.addEventListener('cancel', e => { e.preventDefault(); closeDrawer(d); });
+    d.addEventListener('click', e => { if (e.target === d || e.target.closest('[data-close]')) closeDrawer(d); });
+  }
+
+  // Mobile filters reuse the same form node, moved into the drawer while it is open.
+  const filterDrawer = $('filterDrawer');
+  $('filterToggle').addEventListener('click', () => { $('filterSlot').append($('filters')); openDrawer(filterDrawer); });
+  filterDrawer.addEventListener('close', () => $('sidebar').append($('filters')));
+  matchMedia('(min-width: 941px)').addEventListener('change', e => { if (e.matches) closeDrawer(filterDrawer); });
+
+  /* ───────── Cart ───────── */
+  const cartDrawer = $('cartDrawer');
+  const key = l => `${l.id}:${l.v}`;
+  function loadCart() {
+    try {
+      const raw = JSON.parse(localStorage.getItem('halden-cart') || '[]');
+      cart = raw.filter(l => BY_ID[l.id] && BY_ID[l.id].variants[l.v] && l.qty > 0)
+                .map(l => ({ id: l.id, v: l.v, qty: Math.min(MAX_QTY, l.qty | 0) }));
+    } catch (e) { cart = []; }
+  }
+  function saveCart() { try { localStorage.setItem('halden-cart', JSON.stringify(cart)); } catch (e) {} }
+  function say(msg) { const el = $('live'); el.textContent = ''; setTimeout(() => { el.textContent = msg; }, 50); }
+
+  function addToCart(id, vi, btn) {
+    const p = BY_ID[id];
+    const line = cart.find(l => l.id === id && l.v === vi);
+    if (line) line.qty = Math.min(MAX_QTY, line.qty + 1);
+    else cart.push({ id, v: vi, qty: 1 });
+    saveCart(); renderCart();
+    const badge = $('cartCount');
+    badge.classList.remove('bump'); void badge.offsetWidth; badge.classList.add('bump');
+    say(`${p.name}, ${p.variants[vi].name}, added to cart.`);
+    openDrawer(cartDrawer);
+    $('cartTitle').focus();
+  }
+
+  function renderCart() {
+    const count = cart.reduce((n, l) => n + l.qty, 0);
+    const sub = cart.reduce((n, l) => n + l.qty * BY_ID[l.id].price, 0);
+    $('cartCount').textContent = count;
+    $('cartCountSr').textContent = `, ${count} item${count === 1 ? '' : 's'}`;
+    $('cartTitleCount').textContent = count ? `(${count})` : '';
+    $('cartFoot').hidden = !count;
+
+    if (!count) {
+      $('cartBody').innerHTML = `<div class="cart-empty">
+        <svg viewBox="0 0 240 200" aria-hidden="true"><ellipse cx="120" cy="163" rx="88" ry="6" fill="#000" opacity=".07"/>${ART.armchair('#ddd5c8', '#cbc1b1')}</svg>
+        <h3>Your cart is empty</h3><p>Pieces you add will wait for you here.</p>
+        <button class="btn" type="button" data-close>Continue shopping</button></div>`;
+      return;
+    }
+
+    const left = FREE_SHIP - sub;
+    const ship = `<div class="ship"><span>${left > 0 ? `Add <strong>${fmt(left)}</strong> more for free delivery` : 'Your order qualifies for <strong>free delivery</strong>'}</span>
+      <div class="ship-bar"><i style="width:${Math.min(100, (sub / FREE_SHIP) * 100)}%"></i></div></div>`;
+    const lines = cart.map(l => {
+      const p = BY_ID[l.id], x = p.variants[l.v], k = key(l);
+      return `<li class="line">
+        <div class="thumb" style="--tint:${x.hex}">${art(p, x)}</div>
+        <div>
+          <div class="line-top"><div><h3>${esc(p.name)}</h3><p class="v">${x.name}${p.stock === 'mto' ? ` · Made to order, ${p.weeks} weeks` : ''}</p></div><p class="lp">${fmt(p.price * l.qty)}</p></div>
+          <div class="line-bottom">
+            <div class="qty" role="group" aria-label="Quantity for ${esc(p.name)}">
+              <button type="button" data-key="${k}" data-act="dec" aria-label="Decrease quantity" ${l.qty <= 1 ? 'disabled' : ''}>−</button>
+              <span aria-live="polite">${l.qty}</span>
+              <button type="button" data-key="${k}" data-act="inc" aria-label="Increase quantity" ${l.qty >= MAX_QTY ? 'disabled' : ''}>+</button>
+            </div>
+            <button class="remove" type="button" data-key="${k}" data-act="remove" aria-label="Remove ${esc(p.name)}, ${x.name}">Remove</button>
+          </div>
+        </div></li>`;
+    }).join('');
+    $('cartBody').innerHTML = `${ship}<ul>${lines}</ul>`;
+
+    const fee = sub >= FREE_SHIP ? 0 : SHIP_FEE;
+    $('tSub').textContent = fmt(sub);
+    $('tShip').textContent = fee ? fmt(fee) : 'Free';
+    $('tTotal').textContent = fmt(sub + fee);
+  }
+
+  $('cartBody').addEventListener('click', e => {
+    const btn = e.target.closest('[data-act]');
+    if (!btn) return;
+    const { key: k, act } = btn.dataset;
+    const i = cart.findIndex(l => key(l) === k);
+    if (i < 0) return;
+    if (act === 'remove') { say(`${BY_ID[cart[i].id].name} removed from cart.`); cart.splice(i, 1); }
+    else cart[i].qty = Math.max(1, Math.min(MAX_QTY, cart[i].qty + (act === 'inc' ? 1 : -1)));
+    saveCart(); renderCart();
+    // list was re-rendered: put focus back where the user was
+    const again = $('cartBody').querySelector(`[data-key="${k}"][data-act="${act}"]:not(:disabled)`)
+      || $('cartBody').querySelector(`[data-key="${k}"]:not(:disabled)`);
+    (again || $('cartTitle')).focus();
+  });
+
+  $('cartBtn').addEventListener('click', () => { $('footNote').textContent = 'Taxes calculated at checkout.'; openDrawer(cartDrawer); });
+  $('checkout').addEventListener('click', () => { $('footNote').textContent = 'This is a demo storefront, so checkout isn’t connected.'; });
+
+  /* ───────── Init ───────── */
+  buildFilters();
+  readUrl();
+  $('sort').value = state.sort;
+  loadCart();
+  update();
+  renderCart();
+})();
+</script>
+</body>
+</html>

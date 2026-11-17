@@ -1,0 +1,1 @@
+build the category page of an online furniture store: filters, sorting, product grid, and a slide-out cart. single index.html

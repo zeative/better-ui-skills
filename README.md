@@ -198,10 +198,30 @@ For web pages the agent writes three concepts in different art directions, picks
 
 <table>
 <tr><th width="50%">Without better-ui</th><th width="50%">With better-ui</th></tr>
+<tr><td colspan="2"><b>Pricing page</b> · <i>"build a pricing page for a design tool with three plans, a monthly/yearly toggle, a feature comparison table and an FAQ. single index.html"</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/pricing-page-before.jpg"><img src="docs/images/compare/pricing-page-before.jpg" alt="Pricing page without better-ui"></a></td>
+<td><a href="docs/images/compare/pricing-page-after.jpg"><img src="docs/images/compare/pricing-page-after.jpg" alt="Pricing page with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Usage-based pricing</b> · <i>"pricing page for a product analytics tool that charges by monthly tracked users. plans, a comparison and FAQ. single index.html"</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/pricing-analytics-before.jpg"><img src="docs/images/compare/pricing-analytics-before.jpg" alt="Usage-based pricing without better-ui"></a></td>
+<td><a href="docs/images/compare/pricing-analytics-after.jpg"><img src="docs/images/compare/pricing-analytics-after.jpg" alt="Usage-based pricing with better-ui"></a></td>
+</tr>
 <tr><td colspan="2"><b>Sneaker product page</b> · <i>"build a product page for an online sneaker store: gallery, sizes, colours, price, reviews and add to cart. single index.html"</i></td></tr>
 <tr>
 <td><a href="docs/images/compare/sneaker-product-before.jpg"><img src="docs/images/compare/sneaker-product-before.jpg" alt="Sneaker product page without better-ui"></a></td>
 <td><a href="docs/images/compare/sneaker-product-after.jpg"><img src="docs/images/compare/sneaker-product-after.jpg" alt="Sneaker product page with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Skincare product page</b> · <i>"Bikin halaman produk untuk brand skincare lokal: serum vitamin C, dengan galeri, varian ukuran, harga, ulasan, dan tombol tambah ke keranjang. Satu file index.html."</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/skincare-product-before.jpg"><img src="docs/images/compare/skincare-product-before.jpg" alt="Skincare product page without better-ui"></a></td>
+<td><a href="docs/images/compare/skincare-product-after.jpg"><img src="docs/images/compare/skincare-product-after.jpg" alt="Skincare product page with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Furniture category page</b> · <i>"build the category page of an online furniture store: filters, sorting, product grid, and a slide-out cart. single index.html"</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/shop-listing-before.jpg"><img src="docs/images/compare/shop-listing-before.jpg" alt="Furniture category page without better-ui"></a></td>
+<td><a href="docs/images/compare/shop-listing-after.jpg"><img src="docs/images/compare/shop-listing-after.jpg" alt="Furniture category page with better-ui"></a></td>
 </tr>
 </table>
 
@@ -241,7 +261,7 @@ Over forty prompts across phone apps, dashboards, data tools, web pages and shop
 
 **An earlier set of seventeen prompts**: spacing values off the 4px scale went from 16 to 186 per page without the skill to 0 on 16 of 17 pages with it.
 
-Side by side, judged by eye: of the ten unseen prompts, better-ui was clearly better on five, about the same on four, and worse on one (the conference page, which looked like a SaaS page; the poster direction was added and it now leads). On nine web pages after the art directions were added, it was better on seven and about the same on the two most conventional ones (a pricing page and a product page), which led to the pricing and commerce guidance.
+Side by side, judged by eye: of the ten unseen prompts, better-ui was clearly better on five, about the same on four, and worse on one (the conference page, which looked like a SaaS page; the poster direction was added and it now leads). On nine web pages after the art directions were added, it was better on seven and about the same on the two most conventional ones (a pricing page and a product page), which led to the pricing and commerce guidance. With it, both lead: pricing pages now open with a live calculator, and product pages use real photography, a sticky buy box and a story section (see Shops and pricing). Across these five shop and pricing prompts, pages without the skill used 11 to 20 font sizes; with it, 4 to 6.
 
 <details>
 <summary><b>Earlier: hidden among Dribbble shots</b></summary>

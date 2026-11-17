@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Serum Vitamin C 10% Sinar Pagi — Jenar Skincare</title>
+<meta name="description" content="Serum Vitamin C 10% dari Jenar: ringan, cepat meresap, dibuat di Indonesia untuk kulit tropis. Tersedia ukuran 15 ml, 30 ml, dan 50 ml.">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #FBF6EC;
+    --surface: #FFFDF8;
+    --ink: #2A2118;
+    --ink-soft: #6B5D4F;
+    --line: #E6DAC6;
+    --accent: #C8660F;
+    --accent-soft: #FBE3C2;
+    --sun: #F6B24A;
+    --leaf: #47633A;
+    --radius: 18px;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.15; margin: 0; letter-spacing: -0.01em; }
+  p { margin: 0; }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Header ---------- */
+  .promo {
+    background: var(--ink); color: var(--bg);
+    text-align: center; font-size: 13px; padding: 8px 16px; letter-spacing: .02em;
+  }
+  .header {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(251, 246, 236, .92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-family: var(--serif); font-size: 24px; letter-spacing: .28em; text-decoration: none; font-weight: 600; }
+  .brand span { color: var(--accent); }
+  .cart-btn {
+    position: relative; display: inline-flex; align-items: center; gap: 8px;
+    background: none; border: 1px solid var(--line); border-radius: 999px;
+    padding: 9px 16px; font-size: 14px; font-weight: 500;
+    transition: border-color .15s, background .15s;
+  }
+  .cart-btn:hover { border-color: var(--ink); background: var(--surface); }
+  .cart-count {
+    min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px;
+    background: var(--ink); color: var(--bg);
+    font-size: 12px; font-weight: 600; display: inline-grid; place-items: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Product ---------- */
+  .crumbs { font-size: 13px; color: var(--ink-soft); padding: 20px 0 0; }
+  .product {
+    display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: 56px; padding: 24px 0 72px; align-items: start;
+  }
+  .gallery { position: sticky; top: 88px; }
+  .stage {
+    position: relative; aspect-ratio: 1; border-radius: 24px; overflow: hidden;
+    background: #F3E6D3; touch-action: pan-y;
+  }
+  .stage svg { display: block; width: 100%; height: 100%; }
+  .stage-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%; border: 0;
+    background: rgba(255, 253, 248, .9); display: grid; place-items: center;
+    box-shadow: 0 2px 10px rgba(42, 33, 24, .12);
+    transition: background .15s, transform .15s;
+  }
+  .stage-nav:hover { background: #fff; }
+  .stage-nav.prev { left: 14px; }
+  .stage-nav.next { right: 14px; }
+  .stage-count {
+    position: absolute; right: 16px; bottom: 14px;
+    background: rgba(42, 33, 24, .7); color: #fff;
+    font-size: 12px; padding: 3px 10px; border-radius: 999px; font-variant-numeric: tabular-nums;
+  }
+  .thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 12px; }
+  .thumb {
+    padding: 0; border: 2px solid transparent; border-radius: 14px; overflow: hidden;
+    background: none; aspect-ratio: 1; opacity: .7; transition: opacity .15s, border-color .15s;
+  }
+  .thumb svg { display: block; width: 100%; height: 100%; }
+  .thumb:hover { opacity: 1; }
+  .thumb[aria-current="true"] { border-color: var(--ink); opacity: 1; }
+
+  .eyebrow { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--leaf); font-weight: 600; }
+  .info h1 { font-size: clamp(32px, 4vw, 46px); margin-top: 10px; }
+  .tagline { color: var(--ink-soft); margin-top: 12px; font-size: 17px; max-width: 46ch; }
+
+  .rating-link {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
+    font-size: 14px; text-decoration: none;
+  }
+  .rating-link u { text-underline-offset: 3px; color: var(--ink-soft); }
+  .stars { position: relative; display: inline-block; font-size: 16px; line-height: 1; letter-spacing: 2px; color: #DCCDB4; white-space: nowrap; }
+  .stars::before { content: "★★★★★"; }
+  .stars i { position: absolute; inset: 0 auto 0 0; overflow: hidden; color: var(--accent); font-style: normal; }
+  .stars i::before { content: "★★★★★"; }
+
+  .price-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+  .price { font-family: var(--serif); font-size: 36px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .was { color: var(--ink-soft); text-decoration: line-through; font-variant-numeric: tabular-nums; }
+  .off { background: var(--accent-soft); color: #8A4308; font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+  .per-ml { font-size: 13px; color: var(--ink-soft); margin-top: 2px; font-variant-numeric: tabular-nums; }
+
+  fieldset { border: 0; padding: 0; margin: 28px 0 0; min-width: 0; }
+  legend { padding: 0; font-weight: 600; font-size: 14px; margin-bottom: 10px; }
+  legend span { font-weight: 400; color: var(--ink-soft); }
+  .variants { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .variant { position: relative; display: block; cursor: pointer; }
+  .variant input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .variant-card {
+    display: flex; flex-direction: column; gap: 2px; height: 100%;
+    border: 1.5px solid var(--line); border-radius: 14px; padding: 12px 14px;
+    background: var(--surface); transition: border-color .15s, box-shadow .15s, background .15s;
+  }
+  .variant:hover .variant-card { border-color: #BDAA8C; }
+  .variant input:checked + .variant-card { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); background: #fff; }
+  .variant input:focus-visible + .variant-card { outline: 2px solid var(--ink); outline-offset: 3px; }
+  .variant-size { font-weight: 600; font-size: 17px; }
+  .variant-price { font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+  .variant-note { font-size: 11px; color: var(--leaf); font-weight: 600; letter-spacing: .03em; margin-top: 4px; }
+
+  .buy { display: flex; gap: 12px; margin-top: 24px; }
+  .stepper {
+    display: inline-flex; align-items: center; border: 1.5px solid var(--line);
+    border-radius: 999px; background: var(--surface); flex: none;
+  }
+  .stepper button {
+    width: 44px; height: 52px; border: 0; background: none; font-size: 20px; line-height: 1; border-radius: 999px;
+  }
+  .stepper button:disabled { opacity: .3; cursor: not-allowed; }
+  .stepper input {
+    width: 34px; border: 0; background: none; text-align: center; font-weight: 600;
+    font-variant-numeric: tabular-nums; -moz-appearance: textfield; appearance: textfield; padding: 0;
+  }
+  .stepper input::-webkit-outer-spin-button, .stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    border: 0; border-radius: 999px; background: var(--ink); color: var(--bg);
+    font-weight: 600; font-size: 16px; height: 55px; padding: 0 28px;
+    transition: background .15s, transform .1s;
+  }
+  .btn:hover { background: #45372A; }
+  .btn:active { transform: scale(.985); }
+  .btn.wide { flex: 1; min-width: 0; }
+  .btn.ghost { background: none; color: var(--ink); border: 1.5px solid var(--line); }
+  .btn.ghost:hover { border-color: var(--ink); background: none; }
+
+  .perks { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 8px; font-size: 14px; color: var(--ink-soft); }
+  .perks li { display: flex; gap: 10px; align-items: flex-start; }
+  .perks svg { flex: none; margin-top: 3px; color: var(--leaf); }
+
+  .details { margin-top: 30px; border-top: 1px solid var(--line); }
+  .details details { border-bottom: 1px solid var(--line); }
+  .details summary {
+    list-style: none; cursor: pointer; padding: 16px 0; font-weight: 600;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .details summary::-webkit-details-marker { display: none; }
+  .details summary::after { content: "+"; font-size: 22px; font-weight: 400; line-height: 1; color: var(--ink-soft); }
+  .details details[open] summary::after { content: "–"; }
+  .details .body { padding: 0 0 18px; color: var(--ink-soft); font-size: 15px; max-width: 58ch; }
+  .details ul, .details ol { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+  .details strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Reviews ---------- */
+  .reviews { border-top: 1px solid var(--line); padding: 64px 0 88px; scroll-margin-top: 70px; }
+  .reviews h2 { font-size: clamp(28px, 3.2vw, 36px); }
+  .reviews-grid { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 56px; margin-top: 32px; align-items: start; }
+  .summary { position: sticky; top: 96px; }
+  .avg { display: flex; align-items: baseline; gap: 8px; }
+  .avg b { font-family: var(--serif); font-size: 60px; line-height: 1; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .avg span { color: var(--ink-soft); }
+  .summary .stars { font-size: 20px; margin-top: 10px; }
+  .summary .total { font-size: 14px; color: var(--ink-soft); margin-top: 6px; }
+  .bars { margin-top: 20px; display: grid; gap: 4px; }
+  .bar {
+    display: grid; grid-template-columns: 34px 1fr 20px; gap: 10px; align-items: center;
+    background: none; border: 0; padding: 6px 8px; margin: 0 -8px; border-radius: 8px;
+    font-size: 13px; text-align: left; font-variant-numeric: tabular-nums;
+  }
+  .bar:hover:not(:disabled) { background: #F3EADA; }
+  .bar:disabled { cursor: default; color: #A89A88; }
+  .bar[aria-pressed="true"] { background: var(--accent-soft); font-weight: 600; }
+  .bar .track { height: 8px; border-radius: 999px; background: #EADFCB; overflow: hidden; }
+  .bar .fill { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+  .bar .n { text-align: right; color: var(--ink-soft); }
+  .reset { margin-top: 12px; background: none; border: 0; padding: 0; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
+
+  .list-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .list-head p { font-size: 14px; color: var(--ink-soft); }
+  .list-head label { font-size: 14px; display: inline-flex; align-items: center; gap: 8px; color: var(--ink-soft); }
+  .list-head select { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 7px 12px; color: var(--ink); }
+  .review { padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .review-top { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .review time { font-size: 13px; color: var(--ink-soft); }
+  .review h3 { font-family: var(--sans); font-size: 16px; font-weight: 600; margin-top: 10px; letter-spacing: 0; line-height: 1.4; }
+  .review p.text { margin-top: 6px; max-width: 65ch; }
+  .review-meta { margin-top: 12px; font-size: 13px; color: var(--ink-soft); display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; }
+  .review-meta b { color: var(--ink); font-weight: 600; }
+  .verified { color: var(--leaf); font-weight: 600; }
+  .more { margin-top: 24px; }
+  .empty { padding: 32px 0; color: var(--ink-soft); }
+
+  footer { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 13px; color: var(--ink-soft); }
+
+  /* ---------- Cart drawer ---------- */
+  dialog.cart {
+    margin: 0 0 0 auto; width: min(420px, 100vw); max-width: 100vw;
+    height: 100dvh; max-height: 100dvh; border: 0; padding: 0;
+    background: var(--bg); color: var(--ink); flex-direction: column;
+    box-shadow: -12px 0 40px rgba(42, 33, 24, .18);
+  }
+  dialog.cart[open] { display: flex; animation: slide .25s ease-out; }
+  dialog.cart::backdrop { background: rgba(42, 33, 24, .45); }
+  @keyframes slide { from { transform: translateX(40px); opacity: 0; } }
+  .cart-head { display: flex; justify-content: space-between; align-items: center; padding: 18px 22px; border-bottom: 1px solid var(--line); }
+  .cart-head h2 { font-size: 22px; }
+  .icon-btn { width: 40px; height: 40px; border-radius: 50%; border: 0; background: none; display: grid; place-items: center; }
+  .icon-btn:hover { background: #F0E6D4; }
+  .cart-body { flex: 1; overflow-y: auto; padding: 4px 22px; }
+  .cart-empty { text-align: center; padding: 64px 12px; color: var(--ink-soft); }
+  .cart-empty b { display: block; font-family: var(--serif); font-size: 20px; color: var(--ink); margin-bottom: 6px; font-weight: 600; }
+  .line { display: grid; grid-template-columns: 68px 1fr auto; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .line-img { width: 68px; height: 68px; border-radius: 12px; overflow: hidden; }
+  .line-img svg { display: block; width: 100%; height: 100%; }
+  .line-name { font-weight: 600; font-size: 15px; line-height: 1.35; }
+  .line-var { font-size: 13px; color: var(--ink-soft); }
+  .line-price { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .line-ctrl { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+  .line .stepper button { width: 34px; height: 34px; font-size: 17px; }
+  .line .stepper span { min-width: 22px; text-align: center; font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .remove { background: none; border: 0; padding: 4px 0; font-size: 13px; color: var(--ink-soft); text-decoration: underline; text-underline-offset: 3px; }
+  .remove:hover { color: var(--ink); }
+  .cart-foot { border-top: 1px solid var(--line); padding: 18px 22px 22px; background: var(--surface); }
+  .ship-note { font-size: 13px; color: var(--ink-soft); margin-bottom: 12px; }
+  .ship-note.ok { color: var(--leaf); font-weight: 600; }
+  .subtotal { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+  .subtotal b { font-family: var(--serif); font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .cart-foot .btn { width: 100%; }
+  .checkout-note { font-size: 13px; color: var(--ink-soft); margin-top: 10px; text-align: center; }
+
+  /* ---------- Toast + sticky bar ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; z-index: 40;
+    transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
+    background: var(--ink); color: var(--bg); border-radius: 999px;
+    padding: 10px 10px 10px 20px; display: flex; align-items: center; gap: 14px;
+    font-size: 14px; box-shadow: 0 10px 30px rgba(42, 33, 24, .25);
+    transition: opacity .2s, transform .2s; max-width: calc(100vw - 32px);
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  .toast button { background: var(--bg); color: var(--ink); border: 0; border-radius: 999px; padding: 6px 14px; font-weight: 600; font-size: 13px; white-space: nowrap; }
+  .sticky-buy { display: none; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .product { grid-template-columns: 1fr; gap: 28px; padding-bottom: 48px; }
+    .gallery, .summary { position: static; }
+    .reviews-grid { grid-template-columns: 1fr; gap: 32px; }
+    .reviews { padding: 48px 0 64px; }
+    .sticky-buy {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      background: var(--surface); border-top: 1px solid var(--line);
+      transform: translateY(110%); transition: transform .2s; visibility: hidden;
+    }
+    .sticky-buy.show { transform: none; visibility: visible; }
+    .sticky-buy .s-info { min-width: 0; line-height: 1.3; }
+    .sticky-buy .s-var { font-size: 12px; color: var(--ink-soft); }
+    .sticky-buy .s-price { font-weight: 600; font-variant-numeric: tabular-nums; }
+    .sticky-buy .btn { height: 46px; font-size: 15px; padding: 0 20px; flex: none; }
+    .toast { bottom: 84px; }
+    footer { padding-bottom: 96px; }
+  }
+  @media (max-width: 520px) {
+    .wrap { padding: 0 16px; }
+    .stage { border-radius: 18px; }
+    .thumbs { gap: 8px; }
+    .variant-card { padding: 10px; }
+    .buy { flex-wrap: wrap; }
+    .btn.wide { flex-basis: 180px; }
+    .cart-btn .cart-label { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Ilustrasi produk (SVG inline, tanpa file gambar eksternal) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="g-glass" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#B85A14"/><stop offset=".45" stop-color="#F0A03C"/><stop offset="1" stop-color="#B4560F"/>
+    </linearGradient>
+    <linearGradient id="g-bg1" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#FCEBCB"/><stop offset="1" stop-color="#F6CFA0"/>
+    </linearGradient>
+    <radialGradient id="g-drop" cx=".35" cy=".3" r=".8">
+      <stop offset="0" stop-color="#FFE9B0"/><stop offset="1" stop-color="#EE9A2B"/>
+    </radialGradient>
+
+    <symbol id="bottle" viewBox="0 0 120 280">
+      <rect x="44" y="0" width="32" height="48" rx="14" fill="#2A2118"/>
+      <rect x="38" y="42" width="44" height="26" rx="4" fill="#3B2E22"/>
+      <rect x="38" y="62" width="44" height="6" fill="#C99A4B"/>
+      <rect x="46" y="68" width="28" height="16" fill="url(#g-glass)"/>
+      <rect x="10" y="80" width="100" height="198" rx="22" fill="url(#g-glass)"/>
+      <rect x="57" y="82" width="6" height="56" rx="3" fill="#fff" opacity=".22"/>
+      <rect x="10" y="140" width="100" height="94" fill="#FBF6EC"/>
+      <text x="60" y="164" text-anchor="middle" font-family="Georgia, serif" font-size="13" letter-spacing="4" fill="#2A2118">JENAR</text>
+      <rect x="44" y="171" width="32" height="1" fill="#C8660F"/>
+      <text x="60" y="198" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#C8660F">C 10%</text>
+      <text x="60" y="216" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" letter-spacing="2" fill="#6B5D4F">SINAR PAGI SERUM</text>
+      <rect x="20" y="94" width="7" height="170" rx="3.5" fill="#fff" opacity=".3"/>
+    </symbol>
+
+    <symbol id="slice" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="48" fill="#EE8420"/>
+      <circle cx="50" cy="50" r="42" fill="#FFEBBD"/>
+      <circle cx="50" cy="50" r="38" fill="#FBB040"/>
+      <g stroke="#FFEBBD" stroke-width="3" stroke-linecap="round">
+        <path d="M50 12v76M12 50h76M23 23l54 54M77 23L23 77"/>
+      </g>
+      <circle cx="50" cy="50" r="5" fill="#FFEBBD"/>
+    </symbol>
+
+    <symbol id="leaf" viewBox="0 0 100 60">
+      <path d="M0 30C30 0 70 0 100 30 70 60 30 60 0 30Z" fill="#5C7A4A"/>
+      <path d="M6 30h88" stroke="#47633A" stroke-width="2"/>
+    </symbol>
+
+    <symbol id="scene-0" viewBox="0 0 600 600">
+      <rect width="600" height="600" fill="url(#g-bg1)"/>
+      <circle cx="300" cy="285" r="195" fill="#F7C263"/>
+      <circle cx="300" cy="285" r="235" fill="none" stroke="#F7C263" stroke-width="2" opacity=".6"/>
+      <use href="#leaf" x="395" y="420" width="150" height="90" transform="rotate(-25 470 465)"/>
+      <use href="#slice" x="62" y="398" width="140" height="140"/>
+      <ellipse cx="300" cy="528" rx="120" ry="16" fill="#2A2118" opacity=".16"/>
+      <use href="#bottle" x="210" y="108" width="180" height="420"/>
+    </symbol>
+
+    <symbol id="scene-1" viewBox="0 0 600 600">
+      <rect width="600" height="600" fill="#F8D38C"/>
+      <path d="M70 330c-20-120 90-230 230-220s250 90 240 220-130 200-260 190S90 450 70 330Z" fill="#FBE2AE"/>
+      <circle cx="260" cy="330" r="92" fill="url(#g-drop)"/>
+      <ellipse cx="228" cy="292" rx="24" ry="14" fill="#fff" opacity=".7" transform="rotate(-30 228 292)"/>
+      <circle cx="400" cy="400" r="46" fill="url(#g-drop)"/>
+      <ellipse cx="386" cy="382" rx="11" ry="7" fill="#fff" opacity=".7" transform="rotate(-30 386 382)"/>
+      <circle cx="170" cy="460" r="24" fill="url(#g-drop)"/>
+      <circle cx="440" cy="300" r="14" fill="url(#g-drop)"/>
+      <g transform="rotate(35 400 150)">
+        <rect x="384" y="-30" width="32" height="70" rx="14" fill="#2A2118"/>
+        <rect x="378" y="36" width="44" height="22" rx="4" fill="#3B2E22"/>
+        <rect x="391" y="58" width="18" height="170" rx="8" fill="#fff" opacity=".55"/>
+        <rect x="394" y="130" width="12" height="95" rx="6" fill="#EE9A2B"/>
+      </g>
+    </symbol>
+
+    <symbol id="scene-2" viewBox="0 0 600 600">
+      <rect width="600" height="600" fill="#E9EDD6"/>
+      <use href="#leaf" x="40" y="70" width="220" height="132" transform="rotate(20 150 136)"/>
+      <use href="#leaf" x="350" y="420" width="210" height="126" transform="rotate(-150 455 483)"/>
+      <use href="#leaf" x="380" y="60" width="130" height="78" transform="rotate(-40 445 99)"/>
+      <use href="#slice" x="150" y="170" width="280" height="280"/>
+      <use href="#slice" x="390" y="210" width="150" height="150"/>
+      <use href="#slice" x="70" y="400" width="130" height="130"/>
+      <circle cx="270" cy="505" r="20" fill="url(#g-drop)"/>
+      <circle cx="320" cy="530" r="11" fill="url(#g-drop)"/>
+    </symbol>
+
+    <symbol id="scene-3" viewBox="0 0 600 600">
+      <rect width="600" height="600" fill="#F3E6D3"/>
+      <rect y="470" width="600" height="130" fill="#EAD9BF"/>
+      <ellipse cx="300" cy="474" rx="250" ry="12" fill="#2A2118" opacity=".1"/>
+      <use href="#bottle" x="76" y="250" width="96" height="224"/>
+      <use href="#bottle" x="230" y="180" width="126" height="294"/>
+      <use href="#bottle" x="400" y="110" width="156" height="364"/>
+      <g font-family="Georgia, serif" font-size="24" fill="#2A2118" text-anchor="middle">
+        <text x="124" y="530">15 ml</text><text x="293" y="530">30 ml</text><text x="478" y="530">50 ml</text>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<p class="promo">Gratis ongkir se-Indonesia untuk belanja di atas Rp&nbsp;200.000</p>
+
+<header class="header">
+  <div class="wrap">
+    <a class="brand" href="#" aria-label="Jenar Skincare, beranda">JENAR<span>.</span></a>
+    <button class="cart-btn" id="openCart" type="button" aria-haspopup="dialog">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8h12l1 12H5L6 8Z"/><path d="M9 8V7a3 3 0 0 1 6 0v1"/></svg>
+      <span class="cart-label">Keranjang</span>
+      <span class="cart-count" id="cartCount" aria-hidden="true">0</span>
+      <span class="sr-only" id="cartCountSr">0 barang</span>
+    </button>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="crumbs">Perawatan Wajah / Serum / Vitamin C 10% Sinar Pagi</p>
+
+  <section class="product" aria-labelledby="title">
+    <!-- Galeri -->
+    <div class="gallery" aria-label="Galeri foto produk">
+      <div class="stage" id="stage">
+        <svg id="stageImg" role="img" aria-label=""><use id="stageUse" href="#scene-0"/></svg>
+        <button class="stage-nav prev" id="prev" type="button" aria-label="Foto sebelumnya">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <button class="stage-nav next" id="next" type="button" aria-label="Foto berikutnya">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <span class="stage-count" id="stageCount" aria-hidden="true">1 / 4</span>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+
+    <!-- Info & pembelian -->
+    <div class="info">
+      <p class="eyebrow">Dibuat di Bandung · Untuk kulit tropis</p>
+      <h1 id="title">Serum Vitamin C 10% Sinar Pagi</h1>
+      <p class="tagline">Serum ringan berbahan vitamin C stabil dan ekstrak jeruk Kintamani. Cepat meresap, tidak lengket, nyaman dipakai di cuaca lembap.</p>
+
+      <a class="rating-link" href="#ulasan">
+        <span class="stars" aria-hidden="true"><i id="topStars"></i></span>
+        <span><b id="topAvg"></b> <u id="topCount"></u></span>
+      </a>
+
+      <div class="price-row" aria-live="polite">
+        <span class="price" id="price"></span>
+        <span class="was" id="was"></span>
+        <span class="off" id="off"></span>
+      </div>
+      <p class="per-ml" id="perMl"></p>
+
+      <form id="buyForm">
+        <fieldset>
+          <legend>Ukuran <span id="sizeNote"></span></legend>
+          <div class="variants">
+            <label class="variant">
+              <input type="radio" name="size" value="15">
+              <span class="variant-card">
+                <span class="variant-size">15 ml</span>
+                <span class="variant-price" data-price-for="15"></span>
+                <span class="variant-note">Ukuran coba</span>
+              </span>
+            </label>
+            <label class="variant">
+              <input type="radio" name="size" value="30" checked>
+              <span class="variant-card">
+                <span class="variant-size">30 ml</span>
+                <span class="variant-price" data-price-for="30"></span>
+                <span class="variant-note">Paling laris</span>
+              </span>
+            </label>
+            <label class="variant">
+              <input type="radio" name="size" value="50">
+              <span class="variant-card">
+                <span class="variant-size">50 ml</span>
+                <span class="variant-price" data-price-for="50"></span>
+                <span class="variant-note">Paling hemat</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="buy">
+          <div class="stepper" role="group" aria-label="Jumlah">
+            <button type="button" id="qtyMinus" aria-label="Kurangi jumlah">−</button>
+            <input id="qty" type="number" inputmode="numeric" min="1" max="10" value="1" aria-label="Jumlah">
+            <button type="button" id="qtyPlus" aria-label="Tambah jumlah">+</button>
+          </div>
+          <button class="btn wide" id="addBtn" type="submit">
+            <span id="addLabel">Tambah ke Keranjang</span>
+          </button>
+        </div>
+      </form>
+
+      <ul class="perks">
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Dikirim dari Bandung, pesanan sebelum pukul 14.00 diproses hari yang sama</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Garansi tukar 14 hari jika produk rusak saat diterima</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>Tanpa alkohol, tanpa pewangi tambahan</li>
+      </ul>
+
+      <div class="details">
+        <details open>
+          <summary>Manfaat</summary>
+          <div class="body">
+            <ul>
+              <li>Membantu wajah kusam tampak lebih cerah dan segar</li>
+              <li>Membantu menyamarkan tampilan noda bekas jerawat</li>
+              <li>Antioksidan untuk melengkapi perlindungan tabir surya di pagi hari</li>
+              <li>Tekstur cair yang ringan, cocok di bawah pelembap dan makeup</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>Kandungan utama</summary>
+          <div class="body">
+            <ul>
+              <li><strong>3-O-Ethyl Ascorbic Acid 10%</strong> — turunan vitamin C yang lebih stabil dan lembut di kulit</li>
+              <li><strong>Ekstrak kulit jeruk Kintamani</strong> — sumber antioksidan alami</li>
+              <li><strong>Ferulic Acid &amp; Vitamin E</strong> — menjaga kestabilan vitamin C</li>
+              <li><strong>Sodium Hyaluronate</strong> — menjaga kelembapan kulit</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>Cara pakai</summary>
+          <div class="body">
+            <ol>
+              <li>Bersihkan wajah, lalu keringkan dengan lembut.</li>
+              <li>Teteskan 2–3 tetes ke telapak tangan, tepuk-tepuk ke wajah dan leher.</li>
+              <li>Lanjutkan dengan pelembap. Di pagi hari, selalu akhiri dengan tabir surya.</li>
+            </ol>
+            <p style="margin-top:10px">Baru pertama kali pakai vitamin C? Mulai 2–3 kali seminggu dan lakukan uji tempel di belakang telinga terlebih dulu.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Penyimpanan</summary>
+          <div class="body">
+            <p>Simpan di tempat sejuk dan jauh dari sinar matahari langsung. Tutup rapat setelah dipakai dan habiskan dalam 3 bulan setelah dibuka. Warna serum bisa sedikit menguning seiring waktu; ini wajar untuk produk vitamin C.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ulasan -->
+  <section class="reviews" id="ulasan" aria-labelledby="reviewsTitle">
+    <h2 id="reviewsTitle">Ulasan pembeli</h2>
+    <div class="reviews-grid">
+      <div class="summary">
+        <div class="avg"><b id="avg"></b><span>dari 5</span></div>
+        <div><span class="stars" aria-hidden="true"><i id="avgStars"></i></span></div>
+        <p class="total" id="total"></p>
+        <div class="bars" id="bars" role="group" aria-label="Saring ulasan menurut bintang"></div>
+        <button class="reset" id="reset" type="button" hidden>Tampilkan semua ulasan</button>
+      </div>
+      <div>
+        <div class="list-head">
+          <p id="listInfo" aria-live="polite"></p>
+          <label>Urutkan
+            <select id="sort">
+              <option value="new">Terbaru</option>
+              <option value="high">Rating tertinggi</option>
+              <option value="low">Rating terendah</option>
+            </select>
+          </label>
+        </div>
+        <div id="reviewList"></div>
+        <button class="btn ghost more" id="more" type="button">Tampilkan ulasan lainnya</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Jenar Skincare · Bandung, Indonesia</div>
+</footer>
+
+<!-- Bar beli (mobile) -->
+<div class="sticky-buy" id="stickyBuy">
+  <div class="s-info">
+    <div class="s-var" id="stickyVar"></div>
+    <div class="s-price" id="stickyPrice"></div>
+  </div>
+  <button class="btn" id="stickyAdd" type="button">Tambah ke Keranjang</button>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span id="toastText"></span>
+  <button type="button" id="toastOpen">Lihat keranjang</button>
+</div>
+
+<!-- Keranjang -->
+<dialog class="cart" id="cart" aria-labelledby="cartTitle">
+  <div class="cart-head">
+    <h2 id="cartTitle">Keranjang</h2>
+    <button class="icon-btn" id="closeCart" type="button" aria-label="Tutup keranjang">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="cart-foot" id="cartFoot">
+    <p class="ship-note" id="shipNote"></p>
+    <div class="subtotal"><span>Subtotal</span><b id="subtotal"></b></div>
+    <button class="btn" id="checkout" type="button">Lanjut ke Pembayaran</button>
+    <p class="checkout-note" id="checkoutNote" hidden>Pembayaran belum tersambung di halaman ini.</p>
+  </div>
+</dialog>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ---------- Data ---------- */
+  const PRODUCT = 'Serum Vitamin C 10% Sinar Pagi';
+  const FREE_SHIP = 200000;
+  const MAX_QTY = 10;
+  const VARIANTS = {
+    '15': { label: '15 ml', ml: 15, price: 89000,  was: null },
+    '30': { label: '30 ml', ml: 30, price: 149000, was: 169000 },
+    '50': { label: '50 ml', ml: 50, price: 219000, was: 249000 },
+  };
+  const SLIDES = [
+    'Botol Serum Vitamin C 10% Sinar Pagi dengan pipet, berlatar warna jingga hangat',
+    'Tekstur serum: tetesan bening keemasan dari pipet',
+    'Bahan utama: irisan jeruk Kintamani dan dedaunan',
+    'Perbandingan tiga ukuran botol: 15 ml, 30 ml, dan 50 ml',
+  ];
+  const REVIEWS = [
+    { name: 'Dinda A.', city: 'Bandung', date: '2026-11-08', rating: 5, size: '30 ml', skin: 'Berminyak',
+      title: 'Ringan banget, nggak lengket',
+      text: 'Udah botol kedua. Dipakai pagi sebelum sunscreen, meresapnya cepat dan nggak bikin muka kilap. Bekas jerawat di pipi pelan-pelan memudar setelah kurang lebih sebulan.' },
+    { name: 'Rizky P.', city: 'Surabaya', date: '2026-10-29', rating: 5, size: '50 ml', skin: 'Kombinasi',
+      title: 'Cocok buat cuaca panas',
+      text: 'Biasanya serum vitamin C bikin gerah di muka, yang ini enggak. Wanginya samar jeruk dan cepat hilang. Ukuran 50 ml awet dipakai berdua sama istri.' },
+    { name: 'Maya S.', city: 'Yogyakarta', date: '2026-10-21', rating: 4, size: '30 ml', skin: 'Sensitif',
+      title: 'Aman di kulit sensitif, hasilnya bertahap',
+      text: 'Awalnya takut perih, ternyata aman. Aku mulai dua kali seminggu dulu. Efek cerahnya nggak instan, baru kelihatan di minggu ketiga. Minus satu bintang karena pipetnya kadang ngambil terlalu sedikit.' },
+    { name: 'Putri L.', city: 'Medan', date: '2026-10-12', rating: 5, size: '15 ml', skin: 'Normal',
+      title: 'Ukuran coba yang pas',
+      text: 'Beli 15 ml dulu buat tes, pengirimannya rapi pakai bubble wrap tebal. Habis dalam tiga minggu dan langsung order yang 30 ml.' },
+    { name: 'Andi W.', city: 'Makassar', date: '2026-09-30', rating: 3, size: '30 ml', skin: 'Kering',
+      title: 'Bagus, tapi kurang lembap buat kulit kering',
+      text: 'Serumnya enak dan nggak iritasi, cuma di kulitku yang kering harus ditumpuk pelembap yang lumayan tebal. Pengiriman ke Makassar makan waktu lima hari.' },
+    { name: 'Sari N.', city: 'Denpasar', date: '2026-09-18', rating: 5, size: '50 ml', skin: 'Berminyak',
+      title: 'Senang ada brand lokal sebagus ini',
+      text: 'Muka kelihatan lebih segar pas bangun tidur. Aku pakai pagi dan malam. Botolnya kaca gelap jadi tenang soal oksidasi.' },
+    { name: 'Fajar H.', city: 'Jakarta', date: '2026-09-05', rating: 4, size: '30 ml', skin: 'Kombinasi',
+      title: 'Worth it untuk harganya',
+      text: 'Dibanding serum impor yang pernah kupakai, hasilnya mirip dengan harga jauh lebih ramah. Semoga nanti ada opsi isi ulang.' },
+    { name: 'Nadia K.', city: 'Semarang', date: '2026-08-22', rating: 5, size: '30 ml', skin: 'Normal',
+      title: 'Jadi andalan sebelum makeup',
+      text: 'Nggak bikin foundation geser atau menggumpal. Kulit terasa lebih halus setelah rutin dua minggu.' },
+  ];
+
+  /* ---------- Helpers ---------- */
+  const $ = (id) => document.getElementById(id);
+  const rp = (n) => 'Rp ' + n.toLocaleString('id-ID');
+  const fmtDate = new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Galeri ---------- */
+  let slide = 0;
+  const thumbs = $('thumbs');
+  SLIDES.forEach((alt, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'thumb';
+    b.setAttribute('aria-label', `Foto ${i + 1}: ${alt}`);
+    b.innerHTML = `<svg aria-hidden="true"><use href="#scene-${i}"/></svg>`;
+    b.addEventListener('click', () => showSlide(i));
+    thumbs.appendChild(b);
+  });
+
+  function showSlide(i) {
+    slide = (i + SLIDES.length) % SLIDES.length;
+    $('stageUse').setAttribute('href', `#scene-${slide}`);
+    $('stageImg').setAttribute('aria-label', SLIDES[slide]);
+    $('stageCount').textContent = `${slide + 1} / ${SLIDES.length}`;
+    [...thumbs.children].forEach((t, n) => t.setAttribute('aria-current', n === slide ? 'true' : 'false'));
+    if (!reduceMotion && $('stageImg').animate) {
+      $('stageImg').animate([{ opacity: .3 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' });
+    }
+  }
+  $('prev').addEventListener('click', () => showSlide(slide - 1));
+  $('next').addEventListener('click', () => showSlide(slide + 1));
+  $('stage').addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') showSlide(slide - 1);
+    if (e.key === 'ArrowRight') showSlide(slide + 1);
+  });
+  let swipeX = null;
+  $('stage').addEventListener('pointerdown', (e) => { swipeX = e.pointerType === 'mouse' ? null : e.clientX; });
+  $('stage').addEventListener('pointerup', (e) => {
+    if (swipeX === null) return;
+    const dx = e.clientX - swipeX;
+    swipeX = null;
+    if (Math.abs(dx) > 40) showSlide(slide + (dx < 0 ? 1 : -1));
+  });
+  showSlide(0);
+
+  /* ---------- Varian, harga, jumlah ---------- */
+  const form = $('buyForm');
+  const qtyInput = $('qty');
+  const currentSize = () => form.elements.size.value;
+
+  document.querySelectorAll('[data-price-for]').forEach((el) => {
+    el.textContent = rp(VARIANTS[el.dataset.priceFor].price);
+  });
+
+  function renderPrice() {
+    const v = VARIANTS[currentSize()];
+    $('price').textContent = rp(v.price);
+    $('was').textContent = v.was ? rp(v.was) : '';
+    $('was').hidden = !v.was;
+    $('off').hidden = !v.was;
+    if (v.was) {
+      $('off').textContent = `Hemat ${Math.round((1 - v.price / v.was) * 100)}%`;
+      $('was').setAttribute('aria-label', `Harga normal ${rp(v.was)}`);
+    }
+    $('perMl').textContent = `${rp(Math.round(v.price / v.ml))} per ml`;
+    $('sizeNote').textContent = `· ${v.label}`;
+    $('stickyVar').textContent = `Vitamin C 10% · ${v.label}`;
+    $('stickyPrice').textContent = rp(v.price);
+  }
+  form.addEventListener('change', (e) => {
+    if (e.target.name === 'size') renderPrice();
+  });
+
+  function getQty() {
+    const n = parseInt(qtyInput.value, 10);
+    return Math.min(MAX_QTY, Math.max(1, Number.isFinite(n) ? n : 1));
+  }
+  function setQty(n) {
+    const q = Math.min(MAX_QTY, Math.max(1, n));
+    qtyInput.value = q;
+    $('qtyMinus').disabled = q <= 1;
+    $('qtyPlus').disabled = q >= MAX_QTY;
+  }
+  $('qtyMinus').addEventListener('click', () => setQty(getQty() - 1));
+  $('qtyPlus').addEventListener('click', () => setQty(getQty() + 1));
+  qtyInput.addEventListener('change', () => setQty(getQty()));
+  setQty(1);
+  renderPrice();
+
+  /* ---------- Keranjang ---------- */
+  const STORE_KEY = 'jenar-cart-v1';
+  let cart = {};
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+    for (const id of Object.keys(VARIANTS)) {
+      const q = parseInt(saved[id], 10);
+      if (q > 0) cart[id] = Math.min(MAX_QTY, q);
+    }
+  } catch (_) { cart = {}; }
+  const saveCart = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(cart)); } catch (_) {} };
+
+  const dialog = $('cart');
+  function renderCart() {
+    const ids = Object.keys(cart);
+    const count = ids.reduce((s, id) => s + cart[id], 0);
+    const total = ids.reduce((s, id) => s + cart[id] * VARIANTS[id].price, 0);
+
+    $('cartCount').textContent = count;
+    $('cartCountSr').textContent = `${count} barang`;
+    $('cartTitle').textContent = count ? `Keranjang (${count})` : 'Keranjang';
+    $('cartFoot').hidden = !count;
+
+    const body = $('cartBody');
+    if (!count) {
+      body.innerHTML = '<div class="cart-empty"><b>Keranjangmu masih kosong</b>Pilih ukuran serum, lalu tambahkan ke keranjang.</div>';
+      return;
+    }
+    body.innerHTML = ids.map((id) => {
+      const v = VARIANTS[id], q = cart[id];
+      return `<div class="line">
+        <div class="line-img"><svg aria-hidden="true"><use href="#scene-0"/></svg></div>
+        <div>
+          <div class="line-name">${PRODUCT}</div>
+          <div class="line-var">${v.label} · ${rp(v.price)}</div>
+          <div class="line-ctrl">
+            <div class="stepper" role="group" aria-label="Jumlah ${v.label}">
+              <button type="button" data-act="dec" data-id="${id}" aria-label="Kurangi jumlah ${v.label}">−</button>
+              <span aria-live="polite">${q}</span>
+              <button type="button" data-act="inc" data-id="${id}" aria-label="Tambah jumlah ${v.label}" ${q >= MAX_QTY ? 'disabled' : ''}>+</button>
+            </div>
+            <button type="button" class="remove" data-act="del" data-id="${id}" aria-label="Hapus ${v.label} dari keranjang">Hapus</button>
+          </div>
+        </div>
+        <div class="line-price">${rp(v.price * q)}</div>
+      </div>`;
+    }).join('');
+
+    $('subtotal').textContent = rp(total);
+    const note = $('shipNote');
+    if (total >= FREE_SHIP) {
+      note.textContent = 'Pesananmu sudah dapat gratis ongkir.';
+      note.classList.add('ok');
+    } else {
+      note.textContent = `Tambah ${rp(FREE_SHIP - total)} lagi untuk gratis ongkir.`;
+      note.classList.remove('ok');
+    }
+  }
+
+  $('cartBody').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-act]');
+    if (!btn) return;
+    const { act, id } = btn.dataset;
+    if (act === 'inc') cart[id] = Math.min(MAX_QTY, cart[id] + 1);
+    if (act === 'dec') cart[id] -= 1;
+    if (act === 'del' || cart[id] <= 0) delete cart[id];
+    saveCart();
+    renderCart();
+    // Fokus hilang setelah render ulang; kembalikan ke kontrol yang sama bila masih ada.
+    const again = $('cartBody').querySelector(`[data-act="${act}"][data-id="${id}"]:not(:disabled)`)
+      || $('cartBody').querySelector('button:not(:disabled)') || $('closeCart');
+    again.focus();
+  });
+
+  function openCart() {
+    $('checkoutNote').hidden = true;
+    if (!dialog.open) dialog.showModal();
+  }
+  $('openCart').addEventListener('click', openCart);
+  $('closeCart').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  $('checkout').addEventListener('click', () => { $('checkoutNote').hidden = false; });
+
+  let toastTimer, labelTimer;
+  function toast(msg) {
+    $('toastText').textContent = msg;
+    $('toast').classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => $('toast').classList.remove('show'), 4000);
+  }
+  $('toastOpen').addEventListener('click', () => { $('toast').classList.remove('show'); openCart(); });
+
+  function addToCart() {
+    const id = currentSize(), q = getQty();
+    const before = cart[id] || 0;
+    const after = Math.min(MAX_QTY, before + q);
+    cart[id] = after;
+    saveCart();
+    renderCart();
+    if (after === before) {
+      toast(`Maksimal ${MAX_QTY} botol per ukuran.`);
+      return;
+    }
+    toast(`${after - before} × ${VARIANTS[id].label} masuk keranjang`);
+    $('addLabel').textContent = '✓ Ditambahkan';
+    clearTimeout(labelTimer);
+    labelTimer = setTimeout(() => { $('addLabel').textContent = 'Tambah ke Keranjang'; }, 1600);
+    setQty(1);
+  }
+  form.addEventListener('submit', (e) => { e.preventDefault(); addToCart(); });
+  $('stickyAdd').addEventListener('click', addToCart);
+  renderCart();
+
+  // Bar beli di mobile muncul saat tombol utama tidak terlihat.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      $('stickyBuy').classList.toggle('show', !entry.isIntersecting);
+    }).observe($('addBtn'));
+  }
+
+  /* ---------- Ulasan ---------- */
+  const total = REVIEWS.length;
+  const average = REVIEWS.reduce((s, r) => s + r.rating, 0) / total;
+  const avgText = average.toLocaleString('id-ID', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const pct = (average / 5 * 100).toFixed(1) + '%';
+
+  $('topAvg').textContent = avgText;
+  $('topCount').textContent = `${total} ulasan`;
+  $('topStars').style.width = pct;
+  document.querySelector('.rating-link').setAttribute('aria-label', `Rating ${avgText} dari 5, lihat ${total} ulasan`);
+  $('avg').textContent = avgText;
+  $('avgStars').style.width = pct;
+  $('total').textContent = `Berdasarkan ${total} ulasan pembeli terverifikasi`;
+
+  const PAGE = 4;
+  let filter = 0, shown = PAGE;
+
+  function renderBars() {
+    $('bars').innerHTML = [5, 4, 3, 2, 1].map((star) => {
+      const n = REVIEWS.filter((r) => r.rating === star).length;
+      return `<button type="button" class="bar" data-star="${star}" aria-pressed="${filter === star}" ${n ? '' : 'disabled'}
+          aria-label="Bintang ${star}, ${n} ulasan">
+        <span aria-hidden="true">${star} ★</span>
+        <span class="track" aria-hidden="true"><span class="fill" style="width:${n / total * 100}%"></span></span>
+        <span class="n" aria-hidden="true">${n}</span>
+      </button>`;
+    }).join('');
+    $('reset').hidden = filter === 0;
+  }
+
+  function renderReviews() {
+    const sort = $('sort').value;
+    const list = REVIEWS.filter((r) => !filter || r.rating === filter).sort((a, b) => {
+      if (sort === 'high') return b.rating - a.rating || b.date.localeCompare(a.date);
+      if (sort === 'low') return a.rating - b.rating || b.date.localeCompare(a.date);
+      return b.date.localeCompare(a.date);
+    });
+    const visible = list.slice(0, shown);
+
+    $('listInfo').textContent = filter
+      ? `Menampilkan ${visible.length} dari ${list.length} ulasan bintang ${filter}`
+      : `Menampilkan ${visible.length} dari ${list.length} ulasan`;
+
+    $('reviewList').innerHTML = visible.length ? visible.map((r) => `
+      <article class="review">
+        <div class="review-top">
+          <span class="stars" role="img" aria-label="${r.rating} dari 5 bintang"><i style="width:${r.rating * 20}%"></i></span>
+          <time datetime="${r.date}">${fmtDate.format(new Date(r.date + 'T00:00:00'))}</time>
+        </div>
+        <h3>${r.title}</h3>
+        <p class="text">${r.text}</p>
+        <div class="review-meta">
+          <b>${r.name}</b><span>${r.city}</span><span aria-hidden="true">·</span>
+          <span>Ukuran ${r.size}</span><span aria-hidden="true">·</span>
+          <span>Kulit ${r.skin.toLowerCase()}</span><span aria-hidden="true">·</span>
+          <span class="verified">✓ Pembeli terverifikasi</span>
+        </div>
+      </article>`).join('') : '<p class="empty">Belum ada ulasan untuk pilihan ini.</p>';
+
+    $('more').hidden = list.length <= shown;
+  }
+
+  $('bars').addEventListener('click', (e) => {
+    const b = e.target.closest('.bar');
+    if (!b || b.disabled) return;
+    const star = Number(b.dataset.star);
+    filter = filter === star ? 0 : star;
+    shown = PAGE;
+    renderBars();
+    renderReviews();
+    const target = $('bars').querySelector(`[data-star="${star}"]`);
+    if (target) target.focus();
+  });
+  $('reset').addEventListener('click', () => {
+    filter = 0; shown = PAGE;
+    renderBars(); renderReviews();
+    $('bars').querySelector('.bar:not(:disabled)').focus();
+  });
+  $('sort').addEventListener('change', () => { shown = PAGE; renderReviews(); });
+  $('more').addEventListener('click', () => {
+    const prev = shown;
+    shown += PAGE;
+    renderReviews();
+    const next = $('reviewList').children[prev];
+    if (next) { next.tabIndex = -1; next.focus({ preventScroll: true }); }
+  });
+  renderBars();
+  renderReviews();
+})();
+</script>
+</body>
+</html>

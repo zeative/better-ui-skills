@@ -1,0 +1,1 @@
+build a pricing page for a design tool with three plans, a monthly/yearly toggle, a feature comparison table and an FAQ. single index.html
