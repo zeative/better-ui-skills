@@ -260,6 +260,7 @@ better-ui/
 │   ├── system.md            looks, surfaces, icons, imagery, photos and maps
 │   ├── product-ui.md        mobile apps, dashboards, admin; signature moments per category
 │   ├── marketing.md         landing and pricing pages; the stock AI hero recipe to avoid
+│   ├── commerce.md          product pages, listings, the bag and checkout
 │   ├── editorial.md         portfolios, studios, restaurants and other image-led sites
 │   ├── showpiece.md         summary cards, product mocks, charts, avatars, icons in code
 │   ├── polish.md            micro-details, controls, motion

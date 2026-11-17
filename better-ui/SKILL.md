@@ -35,6 +35,7 @@ Note for yourself: what the product is, who uses it and where (phone on the go, 
 - *Dashboard or admin*: an app shell with data.
 - *Professional or data-dense tool* (trading terminal, market data, analytics workbench, ops console, developer tool): people use it for hours and read it like a table; density is the feature. Read "Dense professional tools" in `references/product-ui.md` first: most of the dashboard advice does not apply.
 - *Landing or marketing page*: sells a product.
+- *Shop* (product page, category listing, bag, checkout): read `references/commerce.md`.
 - *Showcase site* (portfolio, studio, restaurant, event): imagery and type; read `references/editorial.md`.
 - *Docs or reading*: typography and calm.
 
@@ -80,6 +81,7 @@ Popular shots are not novel layouts; they are the standard layout of their kind,
 - `references/product-ui.md` for mobile-first apps, dashboards and admin.
 - `references/web-directions.md` first for any web page (landing, marketing, event, showcase): choose and commit to a direction. Then `references/marketing.md` for landing and pricing pages (an event, conference, festival or venue page takes its poster hero, "When there is no software product").
 - `references/editorial.md` for showcase sites.
+- `references/commerce.md` for shops: product pages, listings, the bag and checkout.
 
 Every screen also needs **one signature chart**: the main chart drawn in a form that current shots use rather than the library default. This period mirrored against the last (colour above the axis, grey below); series coloured to match dots shown beside their categories elsewhere on the screen; a hatched or striped bar for the current period among plain ones; ghost bars for the previous period; pill-shaped bars with a value chip above the highlighted one; a category breakdown as proportional bubbles or a segmented pill bar instead of a donut; radial segments; a single gradient-highlighted bar with a tooltip. Plain lines and plain donuts read as a template.
 
