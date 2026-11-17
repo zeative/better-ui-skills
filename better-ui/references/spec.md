@@ -44,7 +44,7 @@ Grouping is fixed:
 | Body (list item titles, paragraphs, inputs) | 16/24, 400 |
 | Body strong (values in rows, list item titles that lead) | 16/24, 500 |
 | Caption (meta, secondary lines) | 13/18, 400, text-2 |
-| Mono meta (changes with their comparison, axis labels, codes) | 13/18, 500, mono (the caption size, in the mono) |
+| Mono meta (changes with their comparison, axis labels, codes) | 13/18, 500, mono (the caption size, in the mono); never for prices or amounts, which stay in the sans with tabular figures; consumer apps (food, travel, shopping, wellness) may skip the mono entirely |
 | Tab label | 11/13, 500 |
 
 Each step is at least about 25% larger than the one below it (44, 28, 20, 16, 13), so every level reads as a different level; sizes one or two pixels apart look like mistakes.

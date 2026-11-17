@@ -53,7 +53,7 @@ Avoid as the main face unless the brand already uses it: Poppins, Montserrat, Ra
 ## Pairing
 
 - **One family for the interface.** Hierarchy comes from size, weight and tone within it.
-- **Plus a mono partner** for meta (changes and their comparison, axis labels, counts, IDs, keycaps): Geist Mono, JetBrains Mono, IBM Plex Mono or DM Mono. Its x-height should sit close to the sans; set it 1px smaller than the text beside it if it looks bigger.
+- **Plus a mono partner** for meta (changes and their comparison, axis labels, counts, IDs, keycaps): Geist Mono, JetBrains Mono, IBM Plex Mono or DM Mono. Prices, balances and amounts are never mono: set them in the UI sans with tabular figures. In consumer apps (food, travel, shopping, wellness) use the mono sparingly or not at all; it reads as a tool. Its x-height should sit close to the sans; set it 1px smaller than the text beside it if it looks bigger.
 - **Plus, on landing pages only, an optional display face** for the hero headline and section titles.
 - Never two sans families. Never more than three families in total.
 
