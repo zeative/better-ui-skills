@@ -55,7 +55,7 @@ Pick one that fits, then vary its exact hue so it is not a stock value. Avoid th
 - **Cards:** white, radius 16 to 24 on mobile and 12 to 16 on desktop, padding 16 to 20 (mobile) or 20 to 24 (desktop).
 - **Depth:** a lightness step, a hairline (`--line`) and a quiet shadow tinted with the brand hue (`--shadow-card`), together and each small. Floating elements (tab bar, sheets, popovers) use `--shadow-pop` or `--shadow-sheet` with `--highlight`. All from `palette.cjs`; see `color.md`.
 - **Material, quietly.** What makes a well-made surface feel physical is small: a tone shift inside one neutral (the top of a card 2 to 4% lighter than the bottom), a 1px highlight along the top edge (`inset 0 1px 0 rgba(255,255,255,.05)` on dark, `rgba(255,255,255,.8)` on light), a hairline border, and on light themes a small soft shadow. The active navigation item is a raised step of the same material, not a coloured pill. Recipes are in `showpiece.md` (Surfaces with material).
-- **No** textures, noise, paper, heavy bevels, coloured glows on chrome, coloured offset shadows, gradient borders, or gradients from one hue to another on product UI.
+- **No** textures, noise, paper, heavy bevels, coloured glows on chrome, coloured offset shadows, gradient borders, or gradients from one hue to another on product UI. Web pages follow their chosen direction in `web-directions.md` instead.
 
 ## Surface levels in product UI
 

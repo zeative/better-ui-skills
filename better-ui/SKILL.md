@@ -122,7 +122,7 @@ Tell the user briefly: what you built, the assumptions you made, and what is pla
 ## Ways this goes wrong
 
 - **A theme instead of a product.** The habit tracker becomes a stamp card, the budget an abacus, the workout a barbell. Real products use the standard pattern (a list, a ring, a progress bar) and get their character from colour, type, icons and finish. Drop the metaphor.
-- **Costume finishes.** Paper texture, grain, wood, brass, ticket notches, postmarks, chalk, neon glows, heavy offset shadows. Flat, clean surfaces.
+- **Costume finishes on product UI.** Paper texture, grain, wood, brass, ticket notches, postmarks, chalk, neon glows, heavy offset shadows. Flat, clean surfaces. (A web page whose chosen direction is tactile or brutalist may use its finish deliberately and consistently.)
 - **Display fonts on product UI.** A serif or condensed display face for app headings and numbers. Use the one sans family; let size and weight do the work.
 - **Clever copy.** Puns, metaphors and narrative labels ("Two to go", "postmark", "links closed"), or text that explains the design to the viewer. Write what a shipped app says.
 - **Too plain.** No brand mark, no header, no tab bar, rows of identical default cards, one colour used for everything, nothing a designer drew. Add the app chrome, a summary card, item icons and one clear visual moment.

@@ -46,7 +46,7 @@ Choose by the character in the brief and by how much text the screen carries. Al
 | **Plus Jakarta Sans** | wide, polished | consumer and fintech apps (lighter weights only) |
 | **IBM Plex Sans** + **IBM Plex Mono** | engineered, serious | enterprise, data, terminals |
 
-For a landing headline only, when the direction wants it: **Instrument Serif** or **Newsreader** at display sizes over a sans body; **Bricolage Grotesque** for a confident, slightly quirky voice. Never for product UI.
+For web pages, the direction chosen in `web-directions.md` decides the display face: **Instrument Serif**, **Newsreader**, **Fraunces** or **Cormorant** for editorial and hospitality; **Archivo** (wide or condensed), **Anton** or **Familjen Grotesk** for posters and giant wordmarks; **Bricolage Grotesque** for a confident, slightly quirky voice; a mono (JetBrains Mono, IBM Plex Mono) for brutalist and Swiss directions. Display faces only at display sizes, over the UI sans for body; never for product UI.
 
 Avoid as the main face unless the brand already uses it: Poppins, Montserrat, Raleway, Nunito and Space Grotesk read as template defaults; Outfit, Urbanist and Sora get heavy and toy-like above weight 500.
 
