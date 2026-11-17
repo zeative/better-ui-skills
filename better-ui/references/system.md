@@ -90,7 +90,8 @@ Popular shots always have something to look at besides text: 3D icons, avatars, 
   ```
   Use the emoji's exact code points: `🏋️` is `1f3cb-fe0f`, `☕` is `2615`. A larger one (96 to 140px) makes a good empty-state or onboarding image.
 - **Avatars:** never initials for the signed-in user or in consumer apps. Use illustrated avatars from DiceBear's `notionists` or `lorelei` styles (`https://api.dicebear.com/9.x/notionists/svg?seed=<name>&backgroundColor=<hex>`), each on a different soft background, or simple SVG portraits. Initials on a tint are acceptable in dense admin tables.
-- **Products and places:** a real photograph where there is one (see `editorial.md`), otherwise a 3D emoji (`🎧`, `👟`, `☕`, `🏠`) on a neutral rounded square. Never an empty grey box.
+- **Products, food, drinks and places:** a real photograph from Unsplash by default (see `editorial.md`): a menu item, a hotel, a dish, a product, a destination. A 3D emoji on a neutral rounded square is the fallback only without a network, or for abstract items that have no photograph. Never an empty grey box, and never emoji where a photograph of the real thing exists.
+- **Maps:** a real map, never a drawn grid with pins. Leaflet 1.9.4 from cdnjs with CARTO's basemaps (`https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png`, `dark_all` for dark themes) and their attribution ("© OpenStreetMap contributors © CARTO"); disable the zoom control and scroll-zoom in small previews, draw the route as a 3px `--brand` polyline and the stops as numbered markers in the brand colour. Give the map a fixed height (160 to 200 on phones) and radius 16. A drawn map is the fallback only without a network.
 - **Charts:** clean and minimal (see `showpiece.md`).
 - If the network may be unavailable where the page is used, keep the fallbacks: the layout must hold with native emoji and initials.
 

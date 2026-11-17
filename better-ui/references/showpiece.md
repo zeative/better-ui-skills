@@ -278,7 +278,7 @@ If the project already has real product photos or the user supplies images, use 
   .chip-ic { width: 40px; aspect-ratio: 1; border-radius: 12px; display: grid; place-items: center;
              background: color-mix(in srgb, var(--c) 14%, var(--surface)); color: var(--c); }
   ```
-- Give categories different hues (`--c`) on the icon or a small dot so a list is easy to scan; the chip itself stays neutral. No pastel square behind every item.
+- Give categories different hues (`--c`) on the icon or a small dot so a list is easy to scan; the chip itself stays neutral. No pastel square behind every item. The product's own features and quick actions are the exception: `--tint` chip with the icon in `--brand-text` (`color.md`, section 4).
 - In consumer apps, a native or 3D emoji on the same neutral chip is a common, friendly alternative for item icons (habits, categories, exercises). One approach per app.
 - Navigation items, KPI tiles, feature rows, list items and empty states all take an icon.
 
