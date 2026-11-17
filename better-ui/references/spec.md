@@ -34,17 +34,17 @@ Grouping is fixed:
 | Tab bar | 64 tall plus the safe area; 4 or 5 items; icon 24; label 11/13 weight 500; active item in the brand colour |
 | Space kept free above a bottom bar or dock | dock height plus 24 |
 
-**Type ramp** (size/line height, weight, tracking). Use at most five of these on one screen besides the tab labels.
+**Type ramp** (size/line height, weight, tracking). Exactly five sizes exist (44, 28, 20, 16, 13) plus the tab label; nothing else.
 
 | Role | Value |
 |:---|:---|
-| Display (the one hero figure) | 44/48, 600, −0.02em, tabular figures; cents or currency at 28/32 in text-2 |
+| Display (the one hero figure) | 44/48, 600, −0.02em, tabular figures; cents or currency at the title size 28/34 in text-2 |
 | Title (page title when there is no hero figure) | 28/34, 600, −0.015em |
 | Headline (section titles, card titles) | 20/26, 600, −0.01em |
 | Body (list item titles, paragraphs, inputs) | 16/24, 400 |
 | Body strong (values in rows, list item titles that lead) | 16/24, 500 |
 | Caption (meta, secondary lines) | 13/18, 400, text-2 |
-| Mono meta (changes with their comparison, axis labels, codes) | 12/16, 500, mono |
+| Mono meta (changes with their comparison, axis labels, codes) | 13/18, 500, mono (the caption size, in the mono) |
 | Tab label | 11/13, 500 |
 
 Each step is at least about 25% larger than the one below it (44, 28, 20, 16, 13), so every level reads as a different level; sizes one or two pixels apart look like mistakes.
@@ -60,8 +60,10 @@ A greeting is a caption (13/18 text-2) above the title or the hero, never a titl
 | Label above the figure | caption 13/18 text-2, 4 above the figure |
 | Change line under the figure | mono meta, 8 below the figure, up colour or down colour on the change only |
 | Main chart | 200 tall, full screen width (0 gutter), 24 below the change line; one series in the brand colour 2px, the comparison 1.5px text-3 dashed; no gridlines, no box |
-| Range control under the chart | 16 below the chart; segmented control 36 tall, segments 32 tall, mono 12/16 |
+| Range control under the chart | 16 below the chart; segmented control 36 tall, segments 32 tall, mono meta 13/18 |
 | Quick actions | 24 below; round buttons 56 (icon 24), label caption 13/18, 8 between button and label; 3 or 4 actions |
+
+**Dashboards and data screens on a phone**: one hero metric at display size with the main chart (unboxed, as above); the other figures in a 2-column grid below it, each a caption label, the figure at headline 20/26 weight 600 tabular, and its change in mono meta. Never four equal tiles at the top: on a phone one number leads.
 
 **Components**
 
@@ -90,19 +92,20 @@ A greeting is a caption (13/18 text-2) above the title or the hero, never a titl
 | Content padding | 32; max content width 1280 |
 | Grid gap between cards | 24 |
 | Card | padding 24, radius 12, 1px line border, no shadow |
+| Type ramp | exactly five sizes: 32 (KPI figures), 24 (page title), 18 (card and section titles), 14 (body, table cells, buttons, inputs), 12 (captions, table headers, mono meta) |
 | Page title | 24/32, 600, −0.015em |
 | Card or section title | 18/24, 600, −0.01em |
 | Body | 14/20, 400 |
 | Caption | 12/16, 400, text-2 |
 | Mono meta | 12/16, 500 |
-| KPI figure | 32/40, 600, −0.02em, tabular; the one hero KPI 40/48 |
+| KPI figure | 32/40, 600, −0.02em, tabular; the lead KPI is first and gets the brand-coloured chart, not a bigger size |
 | KPI tile | at most 4 in a row; label caption above, figure, change mono meta with its comparison; no icon chip, no sparkline unless the trend is the point |
 | Main chart | 320 tall, full card width |
 | Supporting chart | 160 tall |
 | Table | row 48; header 12/16 weight 500 text-2; cell 14/20; 16 side padding per cell; numbers right-aligned, tabular |
 | Primary button | 36 tall, radius 8, 14/20 weight 500, 16 side padding |
 | Secondary button | 36 tall, outline |
-| Compact button | 32 tall, 13/18, 12 side padding |
+| Compact button | 32 tall, 12/16 weight 500, 12 side padding |
 | Input | 36 tall, radius 8, 14px text |
 | Icon | 16 in tables and buttons, 18 in navigation |
 
@@ -123,17 +126,19 @@ A greeting is a caption (13/18 text-2) above the title or the hero, never a titl
 | Element | Desktop | Phone |
 |:---|:---|:---|
 | Content width | 1200 max | gutter 20 |
-| Navigation | 72 tall; links 15/20 weight 500 | 64 tall, one menu button |
+| Type ramp | exactly five sizes: 64, 40, 20, 16, 13 | exactly five: 40, 28, 18, 16, 13 |
+| Navigation | 72 tall; links 16/24 weight 500 | 64 tall, one menu button |
 | Section padding (top and bottom) | 128 | 80 |
 | Hero headline | 64/68, 600, −0.03em | 40/44, 600, −0.025em |
-| Hero lede | 20/30, text-2, max 560 wide | 17/26 |
-| Hero buttons | 52 tall, radius 12, 17/22 weight 600, 24 side padding; one primary, one secondary | same, full width |
-| Section title | 44/48, 600, −0.025em | 32/38 |
-| Section lede | 18/28, text-2, max 640 wide | 17/26 |
+| Hero lede | 20/30, text-2, max 560 wide | 18/28 |
+| Hero buttons | 52 tall, radius 12, 16/24 weight 600, 24 side padding; one primary, one secondary | same, full width |
+| Section title | 40/44, 600, −0.025em | 28/34 |
+| Section lede | 20/30, text-2, max 640 wide | 18/28 |
 | Card title | 20/28, 600 | 18/24 |
-| Card body | 16/26, text-2 | 15/24 |
+| Card body and body text | 16/26, text-2 for card body | 16/26 |
+| Eyebrow, caption, meta | 13/18, 500 | 13/18 |
 | Card | padding 32, radius 20, 24 between cards | padding 24 |
-| Body text | 17/28 | 16/26 |
+| Headline face | the UI sans; for hospitality, food, travel, culture and editorial pages the display serif partner from `typography.md` (Instrument Serif or Newsreader) at weight 400 for the hero and section titles only | same |
 
 ## Colour roles and budget
 

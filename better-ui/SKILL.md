@@ -103,7 +103,7 @@ node <this-skill-dir>/scripts/audit.cjs http://localhost:5173/ --setup seed.js  
 node <this-skill-dir>/scripts/audit.cjs screener.html --register dense            # professional data tool
 ```
 
-The script screenshots the page at 375, 768 and 1440px and prints measured problems: overflow, contrast, focus, tap targets, clipped text, uneven gutters, near-miss alignment, awkward wraps. Fix everything under BROKEN and ACCESSIBILITY and resolve the rest. Open every screenshot part, the phone ones included.
+The script screenshots the page at 375, 768 and 1440px and prints measured problems: overflow, contrast, focus, tap targets, clipped text, uneven gutters, near-miss alignment, awkward wraps. Fix everything under BROKEN and ACCESSIBILITY, and every spec item under CRAFT (spacing off the scale, more than five font sizes, a boxed main chart, colour blocks, pastel fills, squeezed text): those are measured breaches of `spec.md`, not suggestions. Then resolve the rest. Open every screenshot part, the phone ones included.
 
 For a site with several pages, audit **every page after the last change**, not a sample, and do not hand off while any page still has a BROKEN item. If subagents build pages, each one audits its own pages, and you run the audit again on all pages at the end, because later fixes to shared CSS break pages that passed earlier. Overlapping text in a tab row or toolbar on a phone is the usual casualty: make such rows scroll sideways with `flex: none` items and `white-space: nowrap`.
 
