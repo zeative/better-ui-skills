@@ -92,7 +92,7 @@ The standard hero visual: the product's own interface, built for real.
 
 ```css
 .mock { border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line); overflow: hidden;
-  box-shadow: 0 1px 1px rgba(16,24,40,.04), 0 12px 24px -8px rgba(16,24,40,.10), 0 40px 80px -24px rgba(16,24,40,.22); }
+  box-shadow: 0 1px 1px oklch(0.30 0.03 var(--hue) / .04), 0 12px 24px -8px oklch(0.30 0.03 var(--hue) / .10), 0 40px 80px -24px oklch(0.30 0.03 var(--hue) / .22); }
 .mock-bar { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--surface-2); }
 .dots i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--line); margin-right: 5px; }
 .mock-body { display: grid; grid-template-columns: 180px 1fr; min-height: 420px; }
@@ -112,7 +112,7 @@ Two to four small cards lifted out of the product, overlapping the mock's edges.
 ```css
 .hero-visual { position: relative; }
 .float { position: absolute; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md); padding: 12px 14px;
-  box-shadow: 0 2px 4px rgba(16,24,40,.06), 0 18px 40px -12px rgba(16,24,40,.25); }
+  box-shadow: 0 2px 4px oklch(0.30 0.03 var(--hue) / .06), 0 18px 40px -12px oklch(0.30 0.03 var(--hue) / .25); }
 .float.a { left: -36px; top: 22%; transform: rotate(-2deg); }
 .float.b { right: -28px; bottom: 16%; transform: rotate(1.5deg); }
 ```

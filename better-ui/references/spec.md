@@ -2,7 +2,7 @@
 
 Every size, space, radius and colour role here is a single value, chosen from Apple's and Google's platform guidelines, Refactoring UI, Practical UI, Learn UI Design and Nielsen Norman Group research. Use these values exactly. Do not interpolate, do not pick "something between", and do not invent new ones. Where any other reference in this skill gives a range, this file decides.
 
-Start every build by copying `assets/tokens.css` to the top of the stylesheet and filling in the brand colours dealt by `look.cjs`. Then build only from those tokens.
+Start every build by running the `palette.cjs` command that `look.cjs` prints, pasting its output at the top of the stylesheet, and copying `assets/tokens.css` below it. Then build only from those tokens.
 
 Contents: spacing · phone app · desktop app and dashboard · professional data tool · landing page · colour roles and budget · radius, borders and depth · motion · budgets per screen
 
@@ -142,22 +142,32 @@ A greeting is a caption (13/18 text-2) above the title or the hero, never a titl
 
 ## Colour roles and budget
 
-Neutrals are fixed; only the brand and its accent come from `look.cjs`.
+Every colour comes from `scripts/palette.cjs`, run with the brand colour (the exact command is printed by `look.cjs`). It builds a 12-step brand scale and a 12-step neutral scale tinted toward the brand hue, in OKLCH, and the roles below. Never write a hex for a grey or a brand shade by hand. How to use the steps so the screen has depth is in `color.md`.
 
-| Role | Light | Dark |
-|:---|:---|:---|
-| canvas | #F7F7F5 | #0E0E10 |
-| surface | #FFFFFF | #17171A |
-| surface-2 (insets, chips, segmented track) | #F0F0ED | #1F1F23 |
-| line | rgba(17,17,20,.08) | rgba(255,255,255,.08) |
-| text-1 | #16161A | #F4F4F5 |
-| text-2 | #5E5E66 | #A1A1AA |
-| text-3 (axis labels, placeholders only) | #8A8A93 | #71717A |
-| up | #15803D | #22C55E |
-| down | #DC2626 | #F87171 |
-| warning | #B45309 | #FBBF24 |
+| Role | Token | Light | Dark |
+|:---|:---|:---|:---|
+| canvas | `--canvas` | n2 | n1 |
+| card, panel | `--surface` | white | n2 |
+| raised (popover, active segment, floating bar) | `--surface-raised` | white + shadow | n3 |
+| well, inset, segmented track, search field | `--well` | n3 | n1 |
+| hairline | `--line` | n6 | n6 |
+| input border | `--line-input` | n7 | n7 |
+| text-1 (titles, figures) | `--text-1` | n12 | n12 |
+| text-2 (body, secondary) | `--text-2` | n11 | n11 |
+| text-3 (axis labels, placeholders only) | `--text-3` | n9 | n9 |
+| solid brand (primary button, active tab icon, main chart line, progress) | `--brand` | b9 | b9 |
+| text on the solid brand | `--brand-ink` | white or n12, chosen for 4.5:1 | same |
+| brand text and icons (links, icon on a tint) | `--brand-text` | b11 | b11 |
+| tinted background (selected, active nav, badge, feature icon chip) | `--tint` | b3 | b3 |
+| callout background and its border | `--callout`, `--tint-line` | b2, b6 | b2, b6 |
+| focus ring | `--focus` | 2px b9, 2px offset | same |
+| up, down, warning (changes and status text) | `--up`, `--down`, `--warning` | green, red, amber step 11 | same |
+| soft status badge | `--ok-3` + `--ok-11` (and warn, bad) | | |
+| chart: main series, comparison, grid, area | `--chart-1`, `--chart-compare`, `--chart-grid`, `--chart-area` | b9 2px, n8 1.5px dashed, n4, b9 20%→0% | same |
 
-**Budget per screen:** the brand colour on the primary button, the active tab or nav item, the main chart series, and links; at most three brand-coloured elements on the first screen besides the chart. Saturated or dark fills cover at most 15% of a light first screen. No pastel fills. Up and down colours only on changes.
+**Budget per screen, by area:** neutrals 85 to 90%; tints and soft status backgrounds (b2 to b6, ok-3…) up to 10%; solid brand and other saturated fills up to 3 to 5%. At most three solid-brand elements on the first screen besides the chart. No pastel canvases or pastel cards. Up and down colours only on changes.
+
+**Never flat:** the brand appears at more than one strength on every screen: solid on the primary action, tinted on the selected or active state and the product's own icon chips, as text on links. Surfaces separate by a lightness step, a hairline and a tinted shadow together (`color.md`, section 3).
 
 ## Radius, borders and depth
 
@@ -172,7 +182,7 @@ Neutrals are fixed; only the brand and its accent come from `look.cjs`.
 | Sheet, modal | 24 |
 | Chip, pill, avatar | full |
 
-Borders: 1px `line`. Depth on light themes: cards use the border and no shadow; popovers `0 4px 6px rgba(17,17,20,.07), 0 2px 4px rgba(17,17,20,.05)`; sheets and modals `0 20px 25px rgba(17,17,20,.10), 0 10px 10px rgba(17,17,20,.04)`. On dark themes: no shadows, elevation by surface step plus a 1px top highlight `inset 0 1px 0 rgba(255,255,255,.05)`.
+Borders: 1px `--line`. Depth on light themes: cards `--shadow-card` with the hairline; popovers, floating bars and active segments `--shadow-pop` plus `--highlight`; sheets and modals `--shadow-sheet`. All shadows are the tinted two-layer values from `palette.cjs`, never `rgba(0,0,0,…)`. On dark themes: no shadows; elevation by surface step (n1 canvas, n2 card, n3 raised), a 1px `--line` and `--highlight` on raised elements. One primary button per view may carry a one-hue top-to-bottom gradient with `--highlight` and `--shadow-brand` (recipe in `color.md`).
 
 ## Motion
 

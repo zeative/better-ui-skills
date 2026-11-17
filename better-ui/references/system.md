@@ -31,7 +31,7 @@ Write the choice as one line in a comment at the top of the stylesheet ("Look: m
 
 ## Colour
 
-- **Canvas:** a light neutral, slightly cool or warm: `#F5F6F8`, `#F4F5F7`, `#F7F7F5`, `#F2F4F7`. White canvas with light grey cards also works. For a dark app use graphite, not blue-black or purple-black: `#0E0E0F` to `#141415` canvas, `#18181A` to `#1C1C1E` surfaces, `#232326` raised, borders `rgba(255,255,255,.07)`.
+- **Canvas:** a light neutral tinted toward the brand hue (`--canvas` from `palette.cjs`, cool for a blue brand, warm for an orange one). White canvas with light grey cards also works. For a dark app use graphite, not blue-black or purple-black: `#0E0E0F` to `#141415` canvas, `#18181A` to `#1C1C1E` surfaces, `#232326` raised, borders `rgba(255,255,255,.07)`.
 - **Surfaces:** white (`#FFFFFF`) cards on the canvas; an inner panel one step darker than the card (`#F6F7F9`).
 - **Text:** primary `#0F172A`-ish (near-black, not pure), secondary `#64748B`-ish, tertiary for placeholders `#94A3B8`. Hairlines `#E9ECF1`.
 - **One brand colour** (see below), used for: the primary button, the active tab and nav item, links, the main chart series, selected states, and small filled elements (a status pill, a small tile). Not large filled cards: big blocks of brand colour or black are loud. A light tint of it (6 to 10% opacity on the canvas) for chips and selected backgrounds.
@@ -53,7 +53,7 @@ Pick one that fits, then vary its exact hue so it is not a stock value. Avoid th
 ## Surfaces and depth
 
 - **Cards:** white, radius 16 to 24 on mobile and 12 to 16 on desktop, padding 16 to 20 (mobile) or 20 to 24 (desktop).
-- **Depth:** either a hairline border (`1px solid #EEF0F3`) or a soft shadow, usually not both strongly. A good soft shadow: `0 1px 2px rgba(16,24,40,.04), 0 8px 24px -12px rgba(16,24,40,.10)`. Floating elements (tab bar, sheets, popovers): `0 12px 32px -8px rgba(16,24,40,.18)`.
+- **Depth:** a lightness step, a hairline (`--line`) and a quiet shadow tinted with the brand hue (`--shadow-card`), together and each small. Floating elements (tab bar, sheets, popovers) use `--shadow-pop` or `--shadow-sheet` with `--highlight`. All from `palette.cjs`; see `color.md`.
 - **Material, quietly.** What makes a well-made surface feel physical is small: a tone shift inside one neutral (the top of a card 2 to 4% lighter than the bottom), a 1px highlight along the top edge (`inset 0 1px 0 rgba(255,255,255,.05)` on dark, `rgba(255,255,255,.8)` on light), a hairline border, and on light themes a small soft shadow. The active navigation item is a raised step of the same material, not a coloured pill. Recipes are in `showpiece.md` (Surfaces with material).
 - **No** textures, noise, paper, heavy bevels, coloured glows on chrome, coloured offset shadows, gradient borders, or gradients from one hue to another on product UI.
 
@@ -73,7 +73,7 @@ Pick one that fits, then vary its exact hue so it is not a stock value. Avoid th
 ## Icons
 
 - One line-icon set at one stroke width (1.5 to 2px), drawn as inline SVG in the Lucide/Feather style: home, chart, calendar, user, plus, bell, search, settings, chevrons.
-- Icon chips: a 36 to 44px rounded square or circle in a neutral grey, the icon in the text colour or the item's category colour.
+- Icon chips: 40px, radius 12. The product's own features and actions (quick actions, onboarding steps, a settings group) use `--tint` with the icon in `--brand-text`; the user's items (merchants, categories, people) use the neutral `--well` with the icon in `--text-1` or the item's category colour. One treatment per kind of item.
 - In consumer apps, items (habits, categories, exercises) may use native emoji on a neutral chip instead. Pick one approach per app.
 
 ## Imagery
@@ -96,17 +96,4 @@ Popular shots always have something to look at besides text: 3D icons, avatars, 
 
 ## Starting tokens
 
-```css
-:root {
-  --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --canvas: #F5F6F8; --surface: #FFFFFF; --surface-2: #F6F7F9; --line: #ECEEF2;
-  --text: #0F172A; --text-2: #64748B; --text-3: #94A3B8;
-  --brand: #4F46E5; --brand-tint: #EEF0FF; --on-brand: #FFFFFF;
-  --ok: #16A34A; --ok-tint: #E8F7EE; --warn: #D97706; --warn-tint: #FEF4E2; --bad: #DC2626; --bad-tint: #FDECEC;
-  --r-sm: 10px; --r-md: 16px; --r-lg: 24px; --r-full: 999px;
-  --shadow: 0 1px 2px rgba(16,24,40,.04), 0 8px 24px -12px rgba(16,24,40,.10);
-  --shadow-float: 0 12px 32px -8px rgba(16,24,40,.18);
-}
-```
-
-Change the brand colour and canvas tone to suit the product; keep the structure.
+Colours come from `scripts/palette.cjs` (the command is printed by `look.cjs`), everything else from `assets/tokens.css`; values in `spec.md`, colour usage in `color.md`. Do not start from a hand-written palette.

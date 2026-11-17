@@ -401,6 +401,23 @@ function measure(targetWidth) {
     }
   }
   out.loudFill = { share: Math.round(100 * loudArea / (innerWidth * innerHeight)), eg: loudEg.slice(0, 4) };
+  // colour depth: is the brand used at more than one strength, are the greys tinted, are the shadows tinted
+  {
+    const rgb = (v) => { const m = (v || '').match(/[\d.]+/g); return m && !(m.length > 3 && +m[3] < 0.5) ? m.slice(0, 3).map(Number) : null; };
+    let tints = 0, solids = 0, brandText = 0, blackShadow = 0; const greys = new Set();
+    for (const el of document.querySelectorAll('body *')) {
+      if (!isVisible(el)) continue; const r = el.getBoundingClientRect(); if (r.top > innerHeight * 2 || r.width < 12 || r.height < 12) continue;
+      const cs = getComputedStyle(el), bg = rgb(cs.backgroundColor);
+      if (bg) { const c = toHsl(...bg); if (canvasL > 0.5 ? (c.l > 0.84 && c.l < 0.985 && c.s > 0.25) : (c.l > 0.08 && c.l < 0.32 && c.s > 0.2)) tints++; else if (c.s > 0.35 && c.l > 0.2 && c.l < 0.8) solids++; }
+      if ([...el.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim())) {
+        const fg = rgb(cs.color); if (fg) { const c = toHsl(...fg);
+          if (c.s > 0.35 && c.l > 0.2 && c.l < 0.75) brandText++;
+          if (fg[0] === fg[1] && fg[1] === fg[2] && fg[0] > 20 && fg[0] < 235) greys.add('#' + fg.map((x) => x.toString(16).padStart(2, '0')).join('')); }
+      }
+      if (/rgba\(0, 0, 0, 0?\.[1-9]/.test(cs.boxShadow)) blackShadow++;
+    }
+    out.colour = { tints, solids, brandText, greys: [...greys], blackShadow };
+  }
   out.pastel = { n: pastel.length, hues: [...new Set(pastel.map((x) => x.h))].length, eg: pastel.slice(0, 4).map((x) => x.d) };
   // (b8) copy that does not fit: buttons that wrap, siblings whose text runs very different lengths
   const wrapBtn = [];
@@ -1197,6 +1214,12 @@ function report(results, facts, focus, runtime, args) {
   if (widest.loudInPanel && widest.loudInPanel.length) problem('CRAFT', `A filled, coloured button outweighs a small panel title: ${widest.loudInPanel.slice(0, 3).join('; ')}. Panel actions are compact outline or neutral buttons, 28 to 32px (references/hierarchy.md, Controls).`);
   if (widest.nativeControls && widest.nativeControls.length) problem('CRAFT', `Browser-default controls showing: ${widest.nativeControls.slice(0, 4).join('; ')}. A native date or time picker shows the browser's format (05/28/2025) and its own glyph; use date chips or a styled picker in the locale's format, and selects with appearance: none and your own chevron (references/product-ui.md).`);
   for (const { width, m } of results) { if (m.barPeek && m.barPeek.length) { problem('CRAFT', `Content collides with a floating bottom bar at ${width}px: ${m.barPeek.slice(0, 3).join('; ')}. Put the bars in one fixed dock with a solid or fading backdrop (references/product-ui.md, bottom tab bar).`); break; } }
+  if (widest.colour) {
+    const c = widest.colour;
+    if (c.tints === 0 && c.brandText <= 2) problem('CRAFT', `Colour is flat: no tinted backgrounds and ${c.brandText} coloured text elements, so the brand appears at one strength at most. Use the palette's steps: --tint (b3) behind the selected or active item, badges and the product's own icon chips, --brand-text (b11) for links and icons on a tint, --callout (b2) for a tip (references/color.md, sections 1 and 4).`);
+    if (c.greys.length >= 3) problem('CRAFT', `Untinted greys in text (${c.greys.slice(0, 4).join(', ')}): pure greys look dead beside a coloured brand. Use --text-1/2/3 from palette.cjs, which are tinted toward the brand hue (references/color.md, section 2).`);
+    if (c.blackShadow >= 3) problem('CRAFT', `${c.blackShadow} elements use black shadows (rgba(0,0,0,…)); use the tinted two-layer --shadow-card / --shadow-pop from palette.cjs (references/color.md, section 3).`);
+  }
   if (widest.pastel && (widest.pastel.n >= 3 || widest.pastel.eg.some((d) => /^body|^html|^main|^div#app|^\.app/.test(d)))) problem('CRAFT', `${widest.pastel.n} large pastel fills (light surfaces that still carry a hue) in ${widest.pastel.hues} hue(s): ${widest.pastel.eg.slice(0, 3).join('; ')}. Pastel canvases and candy-coloured cards are the palette of generated UI; keep canvases and cards neutral and let one saturated brand colour, photos and data carry the colour (references/system.md, No pastels).`);
   for (const { width, m } of results) { if (m.loudFill && m.loudFill.share > 18) { problem('CRAFT', `Saturated or dark blocks cover ${m.loudFill.share}% of the first screen at ${width}px: ${m.loudFill.eg.join('; ')}. On a light screen keep large fills under about 15%; let the main card lead by size and put the brand colour in its chart and controls (references/system.md, Colour by area).`); break; } }
   for (const { width, m } of results) { if (m.squeezed && m.squeezed.length && width < 500) { problem('CRAFT', `Text squeezed into narrow columns at ${width}px: ${m.squeezed.slice(0, 4).join('; ')}. Give the text at least 60% of its card, keep card titles and meta on one line, and clamp card body text to two lines (references/copy.md, Give text room).`); break; } }
@@ -1273,6 +1296,7 @@ function report(results, facts, focus, runtime, args) {
   L.push(`  Radii        ${rad.map(([k, v]) => `${k}×${v}`).join('  ') || 'none'}`);
   L.push(`  Shadows      ${sh} distinct`);
   if (widest.richness) L.push(`  Visuals      ${widest.richness.bigGraphics} large graphics, ${widest.richness.icons} icons, ${widest.richness.surfaces} surfaces; largest graphic in the first screen ${widest.richness.foldLargest.join('×')}px`);
+  if (widest.colour) { const c = widest.colour; L.push(`  Colour       tinted backgrounds ${c.tints}  solid fills ${c.solids}  coloured text ${c.brandText}  untinted greys ${c.greys.length ? c.greys.slice(0, 4).join(' ') : 'none'}  black shadows ${c.blackShadow}`); }
   for (const { width, m } of [results[0], results[results.length - 1]]) if (m.gaze && m.gaze.length) L.push(`  Gaze ${width}px  ${m.gaze.slice(0, 5).map((g, i) => `${i + 1}. ${g.d.slice(0, 38)} [${g.kind} ${g.w}]`).join('  ')}`);
   L.push(`  Interaction  ${widest.interactiveCount} interactive elements; ${facts.hover} :hover rules, ${facts.focusVisible} :focus-visible rules; reduced-motion ${facts.reducedMotion ? 'handled' : 'not handled'}; dark scheme ${facts.darkScheme ? 'defined' : 'not defined'}`);
   if (facts.unreadable) L.push(`  (${facts.unreadable} cross-origin stylesheet(s) could not be inspected)`);

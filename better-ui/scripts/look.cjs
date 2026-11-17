@@ -6,7 +6,7 @@
 //   category: finance | crypto | fitness | habits | wellness | sleep | health | productivity | commerce | saas | food | travel | media | other
 //   --not <n> skips the nth option (to re-deal if the first does not suit the brief)
 //
-// Prints the look, canvas, brand colour, accent, font and its mono partner. Treat it as the starting point for
+// Prints the look, canvas, brand colour, accent, font, its mono partner and the palette.cjs command. Treat it as the starting point for
 // system.md's tokens; adjust shades for contrast, keep the character.
 
 const LOOKS = {
@@ -97,6 +97,12 @@ const list = LOOKS[cat] || LOOKS.other;
 let h = 0x811c9dc5; for (const ch of name.toLowerCase()) { h ^= ch.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; }
 let i = h % list.length; if (i === skip) i = (i + 1) % list.length;
 const p = list[i];
+// the palette command: hue from the brand, or from the accent when the brand is a near-black or near-white
+const lc = (hx) => { const v = [1, 3, 5].map((k) => parseInt(hx.slice(k, k + 2), 16) / 255); const mx = Math.max(...v), mn = Math.min(...v); return { l: (mx + mn) / 2, s: mx - mn }; };
+const darkLook = lc(p.canvas).l < 0.3, mono = lc(p.brand).s < 0.08;
+const hueFrom = mono && lc(p.accent).s >= 0.08 ? p.accent : p.brand;
+const tint = /food|travel|wellness|sleep/.test(cat) ? ' --tint 0.016' : '';
+const paletteCmd = `node ${require("path").join(__dirname, "palette.cjs")} "${hueFrom}"${darkLook ? ' --dark' : ''}${hueFrom !== p.brand ? ` --solid "${p.brand}"` : ''}${tint}`;
 console.log(`Look for "${name}" (${cat}, option ${i} of ${list.length}):
   look:    ${p.look}
   canvas:  ${p.canvas}
@@ -105,4 +111,5 @@ console.log(`Look for "${name}" (${cat}, option ${i} of ${list.length}):
   font:    ${p.font}
   mono:    ${MONO[p.font] || 'JetBrains Mono'} (meta, axis labels, counts)
   how:     ${p.note}
-Use these as the starting tokens in system.md, and set the type per typography.md (weights 400/500/600, tracking and leading by size). Keep the character; adjust shades only for contrast.`);
+  palette: ${paletteCmd}
+Run the palette command and paste its output at the top of the stylesheet, then assets/tokens.css below it; use colour as references/color.md describes. Set the type per typography.md and spec.md. Keep the character.`);

@@ -13,10 +13,10 @@ Content sits on surfaces: cards, panels, tiles, a shell. A page of text rows sep
 One blur at one opacity looks flat and dated. Use layered shadows: a tight one for the contact edge and one or two wide soft ones for the ambient lift, tinted toward the ink colour, always offset downward.
 
 ```css
---sh-1: 0 1px 2px rgba(16,24,40,.06), 0 1px 1px rgba(16,24,40,.04);
---sh-2: 0 1px 2px rgba(16,24,40,.05), 0 6px 14px -4px rgba(16,24,40,.10);
---sh-3: 0 2px 4px rgba(16,24,40,.05), 0 14px 30px -8px rgba(16,24,40,.14), 0 30px 60px -20px rgba(16,24,40,.12);
---sh-4: 0 4px 8px rgba(16,24,40,.06), 0 24px 48px -12px rgba(16,24,40,.22), 0 60px 110px -30px rgba(16,24,40,.25);
+--sh-1: 0 1px 2px oklch(0.30 0.03 var(--hue) / .06), 0 1px 1px oklch(0.30 0.03 var(--hue) / .04);
+--sh-2: 0 1px 2px oklch(0.30 0.03 var(--hue) / .05), 0 6px 14px -4px oklch(0.30 0.03 var(--hue) / .10);
+--sh-3: 0 2px 4px oklch(0.30 0.03 var(--hue) / .05), 0 14px 30px -8px oklch(0.30 0.03 var(--hue) / .14), 0 30px 60px -20px oklch(0.30 0.03 var(--hue) / .12);
+--sh-4: 0 4px 8px oklch(0.30 0.03 var(--hue) / .06), 0 24px 48px -12px oklch(0.30 0.03 var(--hue) / .22), 0 60px 110px -30px oklch(0.30 0.03 var(--hue) / .25);
 ```
 
 - Tint the shadow colour to the direction: cool navy for cool palettes, warm brown for warm ones, the card's own hue under coloured cards.
@@ -43,7 +43,7 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 
 - A barely visible vertical gradient makes a card feel lit: `background: linear-gradient(180deg, var(--surface), color-mix(in srgb, var(--surface) 94%, var(--ink)))`.
 - Glass needs something colourful behind it: `background: rgba(255,255,255,.62); backdrop-filter: blur(24px) saturate(1.4); border: 1px solid rgba(255,255,255,.7);` with a soft shadow. Body text on glass needs a strong enough panel to pass contrast.
-- Insets (search fields, code, wells) go one step darker than their card with an inner shadow: `box-shadow: inset 0 1px 2px rgba(16,24,40,.06)`.
+- Insets (search fields, code, wells) go one step darker than their card with an inner shadow: `box-shadow: inset 0 1px 2px oklch(0.30 0.03 var(--hue) / .06)`.
 
 ## Type finishing
 
@@ -74,9 +74,9 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 ```css
 .btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border-radius: var(--r-pill); font-weight: 600; font-size: 15px;
   background: var(--accent); color: var(--accent-ink); border: 0; cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 1px 2px rgba(16,24,40,.2), 0 6px 16px -6px color-mix(in srgb, var(--accent) 70%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 1px 2px oklch(0.30 0.03 var(--hue) / .2), 0 6px 16px -6px color-mix(in srgb, var(--accent) 70%, transparent);
   transition: transform .15s ease-out, box-shadow .15s ease-out, background-color .15s ease-out; }
-@media (hover: hover) { .btn:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 2px 4px rgba(16,24,40,.2), 0 12px 24px -8px color-mix(in srgb, var(--accent) 80%, transparent); } }
+@media (hover: hover) { .btn:hover { transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 2px 4px oklch(0.30 0.03 var(--hue) / .2), 0 12px 24px -8px color-mix(in srgb, var(--accent) 80%, transparent); } }
 .btn:active { transform: translateY(0) scale(.98); }
 .btn .arrow { transition: transform .15s ease-out; } .btn:hover .arrow { transform: translateX(3px); }
 .btn-ghost { background: var(--surface); color: var(--ink); border: 1px solid var(--line); box-shadow: var(--sh-1); }

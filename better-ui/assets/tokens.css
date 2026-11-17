@@ -1,16 +1,13 @@
-/* better-ui tokens. Copy verbatim to the top of the stylesheet; fill --brand and --accent from look.cjs.
+/* better-ui tokens. Copy verbatim below the palette.cjs output; fill the font families from look.cjs.
    Every value comes from references/spec.md. Build only from these; do not invent sizes or spaces. */
 :root {
-  /* brand (from look.cjs) */
-  --brand: #111111;            /* replace */
-  --brand-ink: #FFFFFF;        /* text on the brand colour; must reach 4.5:1 */
-  --accent: #FF5C35;           /* replace */
-  --brand-tint: color-mix(in srgb, var(--brand) 8%, var(--surface)); /* small things only */
-
-  /* neutrals, light */
-  --canvas: #F7F7F5; --surface: #FFFFFF; --surface-2: #F0F0ED; --line: rgba(17,17,20,.08);
-  --text-1: #16161A; --text-2: #5E5E66; --text-3: #8A8A93;
-  --up: #15803D; --down: #DC2626; --warning: #B45309;
+  /* COLOUR: paste the output of `node scripts/palette.cjs "<brand hex>"` ABOVE this file. It defines
+     --b1..--b12, --n1..--n12, --ok/--warn/--bad, and the roles used below (--canvas, --surface, --well,
+     --line, --text-1/2/3, --brand, --brand-ink, --brand-text, --tint, --callout, --focus, --up, --down,
+     shadows and --highlight). Never write a hex value for a neutral or a shade of the brand by hand. */
+  --accent: var(--b9);                       /* a second colour from look.cjs only if the look calls for one */
+  --surface-2: var(--well);                  /* alias kept for older names */
+  --brand-tint: var(--tint);                 /* alias */
 
   /* spacing: the only values allowed */
   --s-0: 0; --s-2: 2px; --s-4: 4px; --s-8: 8px; --s-12: 12px; --s-16: 16px; --s-20: 20px; --s-24: 24px;
@@ -18,11 +15,6 @@
 
   /* radius */
   --r-badge: 6px; --r-sm: 8px; --r-md: 12px; --r-btn: 14px; --r-card: 16px; --r-lg: 20px; --r-sheet: 24px; --r-full: 999px;
-
-  /* depth (light) */
-  --shadow-pop: 0 4px 6px rgba(17,17,20,.07), 0 2px 4px rgba(17,17,20,.05);
-  --shadow-sheet: 0 20px 25px rgba(17,17,20,.10), 0 10px 10px rgba(17,17,20,.04);
-  --highlight: none;
 
   /* motion */
   --ease: cubic-bezier(.2,.8,.2,1); --t-fast: 150ms; --t-move: 240ms;
@@ -32,13 +24,7 @@
   --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;                  /* replace family */
 }
 
-/* dark: use when the look is dark (put these on :root instead) */
-.theme-dark, :root[data-theme="dark"] {
-  --canvas: #0E0E10; --surface: #17171A; --surface-2: #1F1F23; --line: rgba(255,255,255,.08);
-  --text-1: #F4F4F5; --text-2: #A1A1AA; --text-3: #71717A;
-  --up: #22C55E; --down: #F87171; --warning: #FBBF24;
-  --shadow-pop: none; --shadow-sheet: none; --highlight: inset 0 1px 0 rgba(255,255,255,.05);
-}
+/* dark: palette.cjs prints the dark block (.theme-dark, :root[data-theme="dark"]); --dark puts it on :root. */
 
 /* type ramp, phone (spec.md): exactly 44, 28, 20, 16, 13 (+11 tab labels). Desktop 32/24/18/14/12 and landing 64/40/20/16/13 are in spec.md. */
 .t-display  { font: 600 44px/48px var(--font); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
