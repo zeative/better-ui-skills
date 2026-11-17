@@ -17,6 +17,8 @@ The professional middle is narrow and specific: **the conventional layout for th
 
 Two things are non-negotiable throughout: the interface must work (real states, responsive, readable contrast), and the content must be specific and honest.
 
+**Web pages are judged differently.** Landing pages, marketing sites, event pages, restaurants, portfolios and other sites people visit rather than use all day are compared with the best of Awwwards and Godly, where art direction wins and the conventional layout looks like a template. For these, explore before you build and commit to one bold direction (`references/web-directions.md`). The fixed values, budgets and audit in this skill are a **floor** (hierarchy, legibility, spacing, accessibility, no broken layout), **not a ceiling on creativity**: a chosen direction may bring its own display face and sizes, colour fields, full-bleed imagery, unusual grids and motion, as long as it stays legible, consistent and right for the brand.
+
 ## 1. Find out whose design this is
 
 - **An existing product** (styles, components, tokens, a Tailwind theme, a brand guide, screenshots): read the tokens and a few screens and work inside that system. Do not add a second font, accent or component style. Apply the craft in this skill within it.
@@ -76,7 +78,7 @@ Read `references/spec.md` first: it fixes every size, space, radius, type style 
 Popular shots are not novel layouts; they are the standard layout of their kind, filled with real content and finished. Read the reference for your kind and follow its anatomy:
 
 - `references/product-ui.md` for mobile-first apps, dashboards and admin.
-- `references/marketing.md` for landing and pricing pages; an event, conference, festival or venue page takes its poster hero ("When there is no software product").
+- `references/web-directions.md` first for any web page (landing, marketing, event, showcase): choose and commit to a direction. Then `references/marketing.md` for landing and pricing pages (an event, conference, festival or venue page takes its poster hero, "When there is no software product").
 - `references/editorial.md` for showcase sites.
 
 Every screen also needs **one signature chart**: the main chart drawn in a form that current shots use rather than the library default. This period mirrored against the last (colour above the axis, grey below); series coloured to match dots shown beside their categories elsewhere on the screen; a hatched or striped bar for the current period among plain ones; ghost bars for the previous period; pill-shaped bars with a value chip above the highlighted one; a category breakdown as proportional bubbles or a segmented pill bar instead of a donut; radial segments; a single gradient-highlighted bar with a tooltip. Plain lines and plain donuts read as a template.
@@ -102,6 +104,7 @@ node <this-skill-dir>/scripts/audit.cjs path/to/index.html --out .ui-audit
 node <this-skill-dir>/scripts/audit.cjs http://localhost:5173/ --setup seed.js   # app with state
 node <this-skill-dir>/scripts/audit.cjs screener.html --register dense            # professional data tool
 node <this-skill-dir>/scripts/audit.cjs mail.html --widths 1280,1440              # a brief that says desktop only
+node <this-skill-dir>/scripts/audit.cjs site.html --register showcase             # a web page with an art direction (poster, editorial, colour field)
 ```
 
 The script screenshots the page at 375, 768 and 1440px and prints measured problems: overflow, contrast, focus, tap targets, clipped text, uneven gutters, near-miss alignment, awkward wraps. Fix everything under BROKEN and ACCESSIBILITY, and every spec item under CRAFT (spacing off the scale, more than five font sizes, a boxed main chart, colour blocks, pastel fills, squeezed text): those are measured breaches of `spec.md`, not suggestions. Then resolve the rest. Open every screenshot part, the phone ones included.
@@ -126,7 +129,8 @@ Tell the user briefly: what you built, the assumptions you made, and what is pla
 - **A component-library default.** Inter, grey-100 cards, an indigo-to-violet gradient card, emoji tiles for every category: correct but with no point of view. Choose a look, a font with a little character, and 3D icons or avatars, so the screen is recognisably designed.
 - **Everything styled.** Every card a different colour or treatment, gradients on everything, five accent colours. One brand colour, quiet surfaces, colour where it means something.
 - **Dribbble-izing a professional tool.** A trading terminal or data tool turned into a consumer dashboard: a gradient hero card with a glow, a sparkline in every tile, letter-badge "logos" on every ticker, an "insights" card with coloured icon chips, half the rows it used to show. It looks like every generated fintech template and is worse to use. Pro tools stay dense, flat and tabular, and their main table or chart runs edge to edge instead of sitting inside a padded card.
-- **Oversized type.** A 96px number on a phone. Hero figures in apps are 28 to 40px; landing headlines 40 to 56px.
+- **Oversized type in product UI.** A 96px number on a phone. Hero figures in apps are 28 to 44px. (On web pages, oversized type is a legitimate direction when it is the idea of the page.)
+- **The safe web page.** Centred headline, two buttons, a screenshot or stock photo, then rows of three cards: correct, and indistinguishable from every generated landing page. Pick a direction from `references/web-directions.md` and carry it through every section, not only the hero.
 - **Browser defaults showing.** A native date picker, select arrow or checkbox inside an app screen. Style every control.
 - **Wireframe content.** "Item 1", lorem ipsum, a grey box labelled "chart". Real names, figures and a real chart.
 - **Decoration as filler.** A sparkline, icon chip and different hue on every stat tile, "New" badges, a promo card in the sidebar, a bento grid where each tile has its own gimmick. A stat tile is a label, a figure and its change; richness goes into one or two real moments, not spread over the chrome.

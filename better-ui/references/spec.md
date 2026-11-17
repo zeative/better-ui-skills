@@ -123,6 +123,8 @@ A greeting is a caption (13/18 text-2) above the title or the hero, never a titl
 
 ## Landing page
 
+These are the defaults for a landing page. A direction chosen from `web-directions.md` may replace the display sizes (one display size up to 160px, set with `clamp()`), the headline face and the colour budget, because on web pages art direction is the point; spacing, body sizes, contrast and the button and input sizes still hold.
+
 | Element | Desktop | Phone |
 |:---|:---|:---|
 | Content width | 1200 max | gutter 20 |
