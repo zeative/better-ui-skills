@@ -165,6 +165,8 @@ Directions mix: a cinematic hero with editorial sections, a poster hero with a S
 - Six testimonial cards with avatars and five stars.
 - A footer of four link columns and nothing else.
 
+- And the new defaults that appear once agents learn the directions above: an oversized wordmark in every footer, a "Fig. 01" caption on everything, a giant serif on every page whatever the brand. A move belongs to its direction; use it where the direction calls for it, not as a habit.
+
 Any of these on the page needs a reason, or it goes.
 
 ## 6. Checks
