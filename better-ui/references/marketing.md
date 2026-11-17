@@ -61,11 +61,26 @@ Show the product working, state specifics, and use placeholder social proof hone
 
 ## Pricing
 
-- Cards on a tinted or contrasting section, as many plans as the business has.
-- One **featured plan** made unmistakable: a dark or accent fill, a gradient border, a larger size or a lift, and a small label saying who it is for.
-- Each card: plan name, a one-line "for whom", a large price with period, the main button, and a short list of what is included with check icons. Higher plans list what they add.
-- A billing toggle that really changes the figures and states the saving.
-- The reassurance line (trial, cancellation, card) under the buttons.
+A pricing page is read by someone who already half wants the product and is now doing arithmetic. The generated default (three identical cards, "Most popular" pill on the middle one, ten checkmarks each, an FAQ accordion) answers none of their questions. Answer them, in this order, and let the page's art direction (`web-directions.md`) carry through it like any other page.
+
+**1. What will I pay?** Make the price concrete for this visitor:
+- A **calculator** when the price depends on usage or seats: a slider or stepper (editors, seats, invoices, GB) that updates every plan's total live, with the per-unit price and the yearly total in currency ("$1,152 a year for 8 editors"). This is the strongest single move on a pricing page.
+- A billing toggle that really changes the figures and states the saving in currency, not only as a percentage.
+- Prices large, in the display face or at the title size, tabular figures, with the period and the unit in small text beside them.
+
+**2. Which plan is mine?** Help the choice, do not just list:
+- Each plan names who it is for in its first line ("For one designer", "For product teams"), and its button says what happens ("Start free", "Start 14-day trial", "Talk to sales").
+- The featured plan is set apart by **one bold choice that fits the direction**: a dark or brand-coloured column, a larger column, a column that breaks the grid, or the only plan with a filled button. Not a pill on an otherwise identical card.
+- Plans can be **columns of one table** (shared rows, aligned features, hairlines) rather than separate floating cards; that is how most well-made pricing pages read now (Linear, Vercel, Figma).
+- Features listed as the few that differ between plans ("Everything in Free, plus"), five or six per plan, not ten checkmarks that repeat.
+
+**3. What exactly is included?** A full comparison table below the plans: grouped rows with group headings, a sticky header row with the plan names and buttons, values rather than only ticks ("3 projects", "Unlimited", "90 days"), and a dash for "not included". On phones, plan tabs above the table instead of a sideways scroll.
+
+**4. What if...?** Objections answered in place: the trial, cancelling, what counts as a seat, discounts for students and non-profits, payment methods, invoices, security. A two-column FAQ (questions on the left, answers open on the right) reads better than a stack of closed accordions.
+
+**5. Proof and a way out.** A quote from a customer on the plan they chose, logos as one quiet row, and an enterprise or custom band ("Over 100 editors? Talk to us") with one button.
+
+Avoid: three equal cards as the whole page; a "Most popular" pill as the only difference; prices without a unit; a toggle that changes nothing; "Contact us" as the only price.
 
 ## The closing band and footer
 
