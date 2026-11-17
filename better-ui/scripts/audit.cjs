@@ -845,8 +845,15 @@ function measure(targetWidth) {
     let hidden = 0; const pts = [];
     for (const q of lineRects) for (const f of [0.08, 0.3, 0.5, 0.7, 0.92]) pts.push([q.left + q.width * f, q.top + q.height / 2]);
     let by = null;
+    // the visible box of the text: its own clip (an ellipsis) and every clipping ancestor; probes outside it are text that is not drawn
+    let clip = { l: -1e9, t: -1e9, r: 1e9, b: 1e9 };
+    for (let n = el; n && n !== document.body; n = n.parentElement) {
+      const ns = getComputedStyle(n); if (ns.overflowX === 'visible' && ns.overflowY === 'visible') continue;
+      const q = n.getBoundingClientRect(); clip = { l: Math.max(clip.l, q.left), t: Math.max(clip.t, q.top), r: Math.min(clip.r, q.right), b: Math.min(clip.b, q.bottom) };
+    }
     for (const [x, y] of pts) {
       if (x < 0 || x >= window.innerWidth) continue;
+      if (x < clip.l || x > clip.r || y < clip.t || y > clip.b) continue;
       const top = document.elementFromPoint(x, y);
       if (!top || top === el || el.contains(top) || top.contains(el)) continue;
       const ts = getComputedStyle(top);
@@ -1221,7 +1228,7 @@ function report(results, facts, focus, runtime, args) {
     if (c.blackShadow >= 3) problem('CRAFT', `${c.blackShadow} elements use black shadows (rgba(0,0,0,…)); use the tinted two-layer --shadow-card / --shadow-pop from palette.cjs (references/color.md, section 3).`);
   }
   if (widest.pastel && (widest.pastel.n >= 3 || widest.pastel.eg.some((d) => /^body|^html|^main|^div#app|^\.app/.test(d)))) problem('CRAFT', `${widest.pastel.n} large pastel fills (light surfaces that still carry a hue) in ${widest.pastel.hues} hue(s): ${widest.pastel.eg.slice(0, 3).join('; ')}. Pastel canvases and candy-coloured cards are the palette of generated UI; keep canvases and cards neutral and let one saturated brand colour, photos and data carry the colour (references/system.md, No pastels).`);
-  for (const { width, m } of results) { if (m.loudFill && m.loudFill.share > 18) { problem('CRAFT', `Saturated or dark blocks cover ${m.loudFill.share}% of the first screen at ${width}px: ${m.loudFill.eg.join('; ')}. On a light screen keep large fills under about 15%; let the main card lead by size and put the brand colour in its chart and controls (references/system.md, Colour by area).`); break; } }
+  for (const { width, m } of results) { if (!showcase && m.loudFill && m.loudFill.share > 18) { problem('CRAFT', `Saturated or dark blocks cover ${m.loudFill.share}% of the first screen at ${width}px: ${m.loudFill.eg.join('; ')}. On a light screen keep large fills under about 15%; let the main card lead by size and put the brand colour in its chart and controls (references/system.md, Colour by area).`); break; } }
   for (const { width, m } of results) { if (m.squeezed && m.squeezed.length && width < 500) { problem('CRAFT', `Text squeezed into narrow columns at ${width}px: ${m.squeezed.slice(0, 4).join('; ')}. Give the text at least 60% of its card, keep card titles and meta on one line, and clamp card body text to two lines (references/copy.md, Give text room).`); break; } }
   for (const { width, m } of results) { const g = m.gaze || []; const sig = (x) => x.d.split(' "')[0]; if (g.length >= 2 && g[1].w > g[0].w * 0.88 && sig(g[0]) !== sig(g[1])) { problem('CRAFT', `No clear first thing at ${width}px: the two heaviest elements on the first screen weigh almost the same (${g[0].d.slice(0, 40)} ${g[0].w}, ${g[1].d.slice(0, 40)} ${g[1].w}). Make the primary clearly heavier by size, weight or contrast, or quieten the other (references/ux-laws.md, Visual weight).`); break; } }
   for (const { width, m } of results) { if (m.boxedChart) { problem('CRAFT', `The main chart is boxed in a card on the phone: ${m.boxedChart}. Put the summary directly on the canvas and let its chart run the full width of the screen (references/product-ui.md, The summary, unboxed).`); break; } }
