@@ -4,11 +4,11 @@
 
 <br>
 
-[![Agent skill](https://img.shields.io/badge/agent-skill-15161A?style=for-the-badge)](better-ui/SKILL.md)
-[![Claude Code](https://img.shields.io/badge/Claude_Code-ready-FF6B4A?style=for-the-badge)](#quick-start)
-[![Tested against Dribbble](https://img.shields.io/badge/tested_against-Dribbble-ea4c89?style=for-the-badge)](#results)
-[![No dependencies](https://img.shields.io/badge/runtime_deps-0-1F9D55?style=for-the-badge)](#whats-inside)
-[![MIT license](https://img.shields.io/badge/license-MIT-5E6166?style=for-the-badge)](LICENSE)
+[![Agent skill](https://img.shields.io/badge/agent-skill-15161A?style=for-the-badge)](better-ui/SKILL.md)&nbsp;&nbsp;
+[![Claude Code](https://img.shields.io/badge/Claude_Code-ready-FF6B4A?style=for-the-badge)](#quick-start)&nbsp;&nbsp;
+[![Tested against Dribbble](https://img.shields.io/badge/tested_against-Dribbble-ea4c89?style=for-the-badge)](#results)&nbsp;&nbsp;
+[![No dependencies](https://img.shields.io/badge/runtime_deps-0-1F9D55?style=for-the-badge)](#whats-inside)&nbsp;&nbsp;
+[![MIT license](https://img.shields.io/badge/license-MIT-5E6166?style=for-the-badge)](LICENSE)&nbsp;&nbsp;
 
 **Ask an agent for a page. Get something a product team would ship.**
 
