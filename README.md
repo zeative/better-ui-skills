@@ -102,7 +102,7 @@ Current models are already decent at some of these. These are the cases where be
 
 ### Ten more prompts, no judges
 
-Ten new prompts, run the same way with the current version of the skill, both sides shown as they came out. Nothing was ranked or picked by a judge, and all ten are here: six below and four in the fold.
+Ten new prompts, run the same way, both sides shown as they came out. Coffee, crypto, analytics and the villa page were re-run after the colour system was added. Nothing was ranked or picked by a judge, and all ten are here: six below and four in the fold.
 
 <table>
 <tr>
@@ -204,7 +204,7 @@ A screenshot proves little on its own, so each page was **hidden among eight pop
 ```text
 1. Whose design is it?       existing product → fit its system · a brand → follow it · blank → continue
 2. Understand the job        what the screen is for and who uses it; write the real content first
-3. Set up the system         deal a look; one sans family, compact type scale, one brand colour
+3. Set up the system         deal a look; fixed spec and tokens; palette from one brand colour
 4. Conventional layout       native app anatomy · dashboard shell · landing sections · a signature chart
 5. Build it properly         every width, every state, the accessibility floor, the finish
 6. Render, audit, review     screenshot, measure, independent review, fix
@@ -216,21 +216,30 @@ A screenshot proves little on its own, so each page was **hidden among eight pop
 ```text
 better-ui/
 ├── SKILL.md                 the process the agent follows
+├── assets/
+│   └── tokens.css           spacing, radius, type ramp, motion: copied into every build
 ├── references/
-│   ├── system.md            looks, type, colour by category, surfaces, icons, imagery, tokens
+│   ├── spec.md              one fixed value for every size, space, radius and colour role
+│   ├── color.md             colour with depth: scale steps and their jobs, surfaces, tints, charts
+│   ├── typography.md        faces, pairing, weights, tracking and leading by size
+│   ├── hierarchy.md         levels, grouping, numbers, tables, charts, button weight
+│   ├── ux-laws.md           Gestalt, Fitts, Hick and the method used to review every render
+│   ├── copy.md              copy that fits its layout; lengths per element, locale
+│   ├── system.md            looks, surfaces, icons, imagery, photos and maps
 │   ├── product-ui.md        mobile apps, dashboards, admin; signature moments per category
 │   ├── marketing.md         landing and pricing pages; the stock AI hero recipe to avoid
 │   ├── editorial.md         portfolios, studios, restaurants and other image-led sites
 │   ├── showpiece.md         summary cards, product mocks, charts, avatars, icons in code
-│   ├── polish.md            surfaces, shadows, type, colour, controls, motion
+│   ├── polish.md            micro-details, controls, motion
 │   ├── critique.md          what the bar looks like, the two failures, the reviewer brief
-│   └── craft.md             contrast, type scale, layout, states, accessibility
+│   └── craft.md             contrast, layout, states, accessibility
 └── scripts/
     ├── audit.cjs            renders a page at 3 widths and reports measured problems
-    └── look.cjs             deals a contemporary look per category
+    ├── look.cjs             deals a contemporary look per category
+    └── palette.cjs          turns one brand colour into the full colour system
 ```
 
-Markdown plus two Node scripts. No runtime dependencies.
+Markdown, one stylesheet and three Node scripts. No runtime dependencies.
 
 <details>
 <summary><b><code>audit.cjs</code>: what it measures</b></summary>
@@ -260,14 +269,30 @@ Options: `--setup seed.js` runs a script first, `--register showcase` relaxes ca
 ```console
 $ node better-ui/scripts/look.cjs "Tally" finance
 look:    fresh gradient
-canvas:  #F3F6FB
 brand:   #1F4BFF
 accent:  #7DD3FC
 font:    Plus Jakarta Sans
+mono:    DM Mono (meta, axis labels, counts)
 how:     deep blue payment card with a soft sky gradient, white glassy cards
+palette: node better-ui/scripts/palette.cjs "#1F4BFF"
 ```
 
-Same product name, same look, every time. Categories: finance, fitness, habits, wellness, health, productivity, commerce, saas, food, travel, other.
+Same product name, same look, every time. Categories: finance, crypto, fitness, habits, wellness, sleep, health, productivity, commerce, saas, food, travel, media, other.
+
+</details>
+
+<details>
+<summary><b><code>palette.cjs</code>: one brand colour, the whole colour system</b></summary>
+
+<br>
+
+```bash
+node better-ui/scripts/palette.cjs "#1F4BFF"            # light, plus a dark block
+node better-ui/scripts/palette.cjs "#A3E635" --dark     # dark-first
+node better-ui/scripts/palette.cjs "#16A34A" --solid "#111111"   # monochrome: black controls, green tints
+```
+
+It builds a 12-step brand scale and a 12-step neutral scale tinted toward the brand hue (OKLCH, with the step roles of Radix Colors), soft and solid status colours, role tokens (canvas, surface, well, text, brand, tint, callout, focus, chart) and shadows tinted with the brand hue. It picks white or dark text for the brand colour by contrast, nudging a mid-tone brand just enough for 4.5:1, lifts a deep brand for dark themes, and prints the contrast of each text role. Flat screens come from a brand used at one strength and pure greys; this is what fixes that.
 
 </details>
 
