@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asagiri 朝霧 — Japanese kitchen in Bandung</title>
+<meta name="description" content="Asagiri is a twelve-seat Japanese kitchen in Cihapit, Bandung. Seasonal omakase and à la carte cooking by chef Raka Wiradinata, using West Java produce.">
+<meta name="theme-color" content="#f4f1ea">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23c8452c'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='%23f4f1ea' font-family='serif'%3E霧%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4f1ea;
+    --paper-2: #ebe6da;
+    --ink: #1c1b19;
+    --muted: #645f55;
+    --line: #d6cfbf;
+    --indigo: #22355a;
+    --indigo-deep: #18263f;
+    --seal: #c8452c;
+    --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", Georgia, serif;
+    --sans: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --wrap: 1120px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg, iframe { display: block; max-width: 100%; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.15; margin: 0; text-wrap: balance; }
+  p { margin: 0 0 1em; }
+  :focus-visible { outline: 2px solid var(--seal); outline-offset: 3px; }
+
+  .wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
+  .skip { position: absolute; left: -9999px; }
+  .skip:focus { left: 16px; top: 16px; z-index: 100; background: var(--ink); color: var(--paper); padding: 8px 14px; }
+
+  /* ---------- Header ---------- */
+  .site-header {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(244, 241, 234, .92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-header .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; min-height: 60px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: baseline; gap: 10px; text-decoration: none; }
+  .brand b { font-family: var(--serif); font-weight: 600; font-size: 1.3rem; letter-spacing: .04em; }
+  .brand span { font-family: var(--serif); color: var(--seal); font-size: 1.05rem; }
+  nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; align-items: center; }
+  nav a { text-decoration: none; font-size: .92rem; letter-spacing: .06em; text-transform: uppercase; padding: 8px 0; }
+  nav a:hover { color: var(--seal); }
+  nav a.cta { background: var(--ink); color: var(--paper); padding: 9px 18px; border-radius: 2px; }
+  nav a.cta:hover { background: var(--seal); color: #fff; }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero .wrap {
+    display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+    gap: 48px; align-items: center;
+    padding-top: 72px; padding-bottom: 72px;
+  }
+  .eyebrow {
+    font-size: .8rem; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 20px; display: flex; align-items: center; gap: 12px;
+  }
+  .eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--seal); }
+  .hero h1 { font-size: clamp(2.5rem, 6vw, 4.4rem); letter-spacing: -.01em; }
+  .hero h1 em { font-style: normal; color: var(--indigo); }
+  .lede { font-size: 1.15rem; color: var(--muted); max-width: 34em; margin: 24px 0 32px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .btn {
+    display: inline-block; text-decoration: none; cursor: pointer;
+    font: 500 1rem var(--sans); letter-spacing: .03em;
+    padding: 14px 26px; border-radius: 2px; border: 1px solid var(--ink);
+    background: var(--ink); color: var(--paper);
+    transition: background .15s, color .15s, border-color .15s;
+  }
+  .btn:hover { background: var(--seal); border-color: var(--seal); color: #fff; }
+  .btn.ghost { background: transparent; color: var(--ink); }
+  .btn.ghost:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .status { margin-top: 28px; font-size: .92rem; color: var(--muted); display: flex; align-items: center; gap: 10px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #9a9486; flex: none; }
+  .dot.open { background: #3c8a55; }
+
+  .hero-art { position: relative; }
+  .hero-art svg { width: 100%; height: auto; border-radius: 2px; }
+  .kanji-v {
+    position: absolute; top: 22px; right: 24px;
+    writing-mode: vertical-rl; font-family: var(--serif);
+    font-size: clamp(2.6rem, 5.5vw, 4.2rem); line-height: 1; letter-spacing: .12em;
+    color: var(--paper);
+  }
+  .seal {
+    position: absolute; left: 22px; bottom: 22px;
+    width: 54px; height: 54px; background: var(--seal); color: var(--paper);
+    display: grid; place-items: center; font-family: var(--serif); font-size: 1.7rem; border-radius: 4px;
+  }
+
+  /* ---------- Sections ---------- */
+  section { padding: 96px 0; }
+  .section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 32px; align-items: end; margin-bottom: 56px; }
+  .section-head h2 { font-size: clamp(2rem, 4vw, 3rem); }
+  .section-head h2 small { display: block; font-size: 1rem; color: var(--seal); letter-spacing: .3em; margin-bottom: 12px; font-weight: 400; }
+  .section-head p { color: var(--muted); margin: 0; max-width: 36em; }
+
+  /* ---------- Menu ---------- */
+  .omakase {
+    background: var(--indigo); color: var(--paper);
+    padding: 40px; margin-bottom: 64px; border-radius: 2px;
+    display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 40px; align-items: center;
+  }
+  .omakase h3 { font-size: 1.9rem; margin-bottom: 12px; }
+  .omakase p { color: #cdd3df; margin: 0; }
+  .omakase .tiers { display: grid; gap: 0; }
+  .tier { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 14px 0; border-top: 1px solid rgba(244, 241, 234, .22); }
+  .tier:last-child { border-bottom: 1px solid rgba(244, 241, 234, .22); }
+  .tier span { color: #cdd3df; font-size: .92rem; display: block; }
+  .tier b { font-family: var(--serif); font-weight: 500; font-size: 1.25rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  .menu-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 72px; }
+  .menu-cat h3 {
+    font-size: 1.45rem; padding-bottom: 14px; margin-bottom: 8px; border-bottom: 1px solid var(--ink);
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  }
+  .menu-cat h3 span { font-size: 1rem; color: var(--seal); font-weight: 400; }
+  .menu-cat ul { list-style: none; margin: 0; padding: 0; }
+  .menu-cat li { padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .item-top { display: flex; align-items: baseline; gap: 10px; }
+  .item-top .name { font-weight: 700; }
+  .item-top .jp { color: var(--muted); font-size: .88rem; font-family: var(--serif); }
+  .item-top .fill { flex: 1; border-bottom: 1px dotted #a9a292; transform: translateY(-4px); min-width: 16px; }
+  .item-top .price { font-family: var(--serif); font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+  .menu-cat li p { margin: 4px 0 0; color: var(--muted); font-size: .95rem; max-width: 34em; }
+  .tag { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; border: 1px solid currentColor; padding: 1px 6px; border-radius: 2px; color: #3f6b46; white-space: nowrap; }
+  .menu-note { margin-top: 48px; color: var(--muted); font-size: .92rem; display: flex; flex-wrap: wrap; gap: 8px 28px; }
+
+  /* ---------- Chef ---------- */
+  .chef { background: var(--paper-2); border-block: 1px solid var(--line); }
+  .chef-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 64px; align-items: start; }
+  .chef-card {
+    background: var(--indigo-deep); color: var(--paper); padding: 40px 36px; border-radius: 2px;
+    position: sticky; top: 92px;
+    display: grid; grid-template-columns: 1fr auto; gap: 28px;
+  }
+  .chef-card blockquote { margin: 0; font-family: var(--serif); font-size: 1.45rem; line-height: 1.45; }
+  .chef-card cite { display: block; margin-top: 24px; font: normal .9rem var(--sans); color: #b9c1d1; }
+  .chef-card .v { writing-mode: vertical-rl; font-family: var(--serif); font-size: 1.9rem; letter-spacing: .3em; color: #e0795f; }
+  .chef-story h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 28px; }
+  .chef-story h2 small { display: block; font-size: 1rem; color: var(--seal); letter-spacing: .3em; margin-bottom: 12px; font-weight: 400; }
+  .chef-story p { max-width: 38em; }
+  .chef-story p:first-of-type { font-size: 1.15rem; }
+  .timeline { list-style: none; margin: 40px 0 0; padding: 0; border-top: 1px solid var(--ink); }
+  .timeline li { display: grid; grid-template-columns: 96px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .timeline b { font-family: var(--serif); font-weight: 500; font-variant-numeric: tabular-nums; color: var(--indigo); }
+
+  /* ---------- Reservations ---------- */
+  .reserve-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 64px; align-items: start; }
+  .reserve-info h2 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 20px; }
+  .reserve-info h2 small { display: block; font-size: 1rem; color: var(--seal); letter-spacing: .3em; margin-bottom: 12px; font-weight: 400; }
+  .reserve-info p { color: var(--muted); max-width: 30em; }
+  .reserve-info ul { margin: 24px 0 0; padding: 0; list-style: none; }
+  .reserve-info li { padding: 12px 0 12px 26px; border-top: 1px solid var(--line); position: relative; font-size: .97rem; }
+  .reserve-info li::before { content: ""; position: absolute; left: 4px; top: 22px; width: 8px; height: 8px; background: var(--seal); border-radius: 50%; }
+
+  form { background: #fbf9f4; border: 1px solid var(--line); padding: 36px; border-radius: 2px; }
+  .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .field.full { grid-column: 1 / -1; }
+  label, legend { font-size: .82rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  input, select, textarea {
+    font: inherit; color: var(--ink); width: 100%;
+    background: #fff; border: 1px solid #bdb6a6; border-radius: 2px; padding: 12px 14px; min-height: 48px;
+  }
+  textarea { min-height: 92px; resize: vertical; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--indigo); outline-offset: 1px; border-color: var(--indigo); }
+  fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 6px; }
+  .seg label {
+    text-transform: none; letter-spacing: 0; font-size: 1rem; color: var(--ink); font-weight: 400;
+    border: 1px solid #bdb6a6; background: #fff; min-height: 48px; display: grid; place-items: center; cursor: pointer; padding: 0 8px; text-align: center;
+  }
+  .seg label + input + label { border-left: 0; }
+  .seg input { position: absolute; opacity: 0; width: 1px; height: 1px; min-height: 0; padding: 0; }
+  .seg input:checked + label { background: var(--indigo); border-color: var(--indigo); color: #fff; }
+  .seg input:focus-visible + label { outline: 2px solid var(--seal); outline-offset: 2px; }
+  .hint { font-size: .85rem; color: var(--muted); }
+  .error { font-size: .88rem; color: #a3301b; min-height: 1.2em; }
+  .form-foot { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .form-foot .btn { border: 0; }
+  .form-foot p { margin: 0; font-size: .88rem; color: var(--muted); flex: 1; min-width: 200px; }
+  .confirm { margin-top: 20px; padding: 16px 18px; background: #e7efe6; border-left: 3px solid #3c8a55; font-size: .95rem; }
+  .confirm[hidden] { display: none; }
+
+  /* ---------- Visit ---------- */
+  .visit { background: var(--indigo-deep); color: var(--paper); }
+  .visit .section-head h2 small { color: #e0795f; }
+  .visit .section-head p { color: #b9c1d1; }
+  .visit-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 56px; align-items: stretch; }
+  .visit h3 { font-size: 1.05rem; font-family: var(--sans); font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: #b9c1d1; margin-bottom: 12px; }
+  .visit address { font-style: normal; font-family: var(--serif); font-size: 1.35rem; line-height: 1.5; margin-bottom: 36px; }
+  .hours { width: 100%; border-collapse: collapse; margin-bottom: 36px; }
+  .hours td { padding: 11px 0; border-top: 1px solid rgba(244, 241, 234, .2); font-variant-numeric: tabular-nums; }
+  .hours tr:last-child td { border-bottom: 1px solid rgba(244, 241, 234, .2); }
+  .hours td:last-child { text-align: right; }
+  .hours .closed td { color: #8f9ab0; }
+  .contact a { display: block; padding: 4px 0; text-decoration-color: rgba(244, 241, 234, .4); text-underline-offset: 4px; }
+  .contact a:hover { color: #e0795f; }
+  .map { min-height: 420px; border-radius: 2px; overflow: hidden; background: #2a3a59; display: flex; flex-direction: column; }
+  .map iframe { width: 100%; flex: 1; border: 0; min-height: 360px; filter: saturate(.75); }
+  .map a { display: block; padding: 14px 18px; background: var(--paper); color: var(--ink); text-decoration: none; font-weight: 500; }
+  .map a:hover { background: var(--seal); color: #fff; }
+  .getting { margin-top: 28px; color: #b9c1d1; font-size: .95rem; }
+
+  /* ---------- Footer ---------- */
+  footer { background: var(--indigo-deep); color: #8f9ab0; border-top: 1px solid rgba(244, 241, 234, .15); padding: 28px 0; font-size: .88rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    section { padding: 64px 0; }
+    .hero .wrap, .section-head, .omakase, .menu-grid, .chef-grid, .reserve-grid, .visit-grid { grid-template-columns: minmax(0, 1fr); }
+    .hero .wrap { padding-top: 48px; padding-bottom: 48px; gap: 36px; }
+    .section-head { gap: 16px; margin-bottom: 36px; }
+    .menu-grid { gap: 44px; }
+    .chef-grid, .reserve-grid, .visit-grid { gap: 40px; }
+    .chef-card { position: static; }
+    .omakase { padding: 28px 24px; gap: 24px; }
+  }
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .site-header .wrap { padding-top: 10px; padding-bottom: 6px; gap: 2px 16px; }
+    nav { width: 100%; }
+    nav ul { gap: 0; justify-content: space-between; }
+    nav a { font-size: .8rem; display: block; padding: 10px 0; }
+    nav a.cta { padding: 7px 12px; }
+    html { scroll-padding-top: 104px; }
+    form { padding: 22px 18px; }
+    .fields { grid-template-columns: minmax(0, 1fr); }
+    .item-top { flex-wrap: wrap; }
+    .item-top .fill { display: none; }
+    .item-top .price { margin-left: auto; }
+    .timeline li { grid-template-columns: 72px 1fr; }
+    .actions .btn { flex: 1 1 100%; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+  @media print {
+    .site-header, .hero-art, form, .map, .actions { display: none !important; }
+    section { padding: 24px 0; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Asagiri, home">
+      <b>Asagiri</b><span lang="ja">朝霧</span>
+    </a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#chef">Chef</a></li>
+        <li><a href="#visit">Visit</a></li>
+        <li><a class="cta" href="#reserve">Reserve</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Hero -->
+  <div class="hero" id="top">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Japanese kitchen · Cihapit, Bandung</div>
+        <h1>Twelve seats, one counter, and whatever the <em>highlands</em> sent this morning.</h1>
+        <p class="lede">Asagiri means morning mist. We cook Japanese food with West Java produce — vegetables from Lembang, fish from Pangandaran, tea from Ciwidey — and serve it across a cypress counter, a few plates at a time.</p>
+        <div class="actions">
+          <a class="btn" href="#reserve">Reserve a seat</a>
+          <a class="btn ghost" href="#menu">See the menu</a>
+        </div>
+        <div class="status" aria-live="polite">
+          <span class="dot" id="statusDot"></span>
+          <span id="statusText">Tue–Sun · lunch 11:30–14:30 · dinner 17:30–22:00</span>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 520 600" role="img" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#18263f"/>
+              <stop offset=".55" stop-color="#3b527d"/>
+              <stop offset="1" stop-color="#c9c4b8"/>
+            </linearGradient>
+            <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f4f1ea" stop-opacity="0"/>
+              <stop offset="1" stop-color="#f4f1ea" stop-opacity=".95"/>
+            </linearGradient>
+          </defs>
+          <rect width="520" height="600" fill="url(#sky)"/>
+          <circle cx="150" cy="210" r="58" fill="#c8452c"/>
+          <!-- Tangkuban Perahu: the flat-topped volcano north of Bandung -->
+          <path d="M-20 420 L120 330 Q150 312 190 312 L330 312 Q370 312 400 332 L540 420 L540 600 L-20 600 Z" fill="#22355a"/>
+          <path d="M-20 470 Q90 400 200 440 T420 430 T540 460 L540 600 L-20 600 Z" fill="#2f4570"/>
+          <rect y="360" width="520" height="120" fill="url(#mist)" opacity=".55"/>
+          <path d="M-20 520 Q110 470 240 505 T540 500 L540 600 L-20 600 Z" fill="#4a5f86"/>
+          <rect y="440" width="520" height="160" fill="url(#mist)"/>
+          <g stroke="#f4f1ea" stroke-opacity=".5" stroke-width="1.5" fill="none" stroke-linecap="round">
+            <path d="M40 392 H250"/><path d="M290 404 H480"/><path d="M90 452 H330"/><path d="M20 492 H210"/><path d="M260 480 H500"/>
+          </g>
+        </svg>
+        <div class="kanji-v" lang="ja">朝霧</div>
+        <div class="seal" lang="ja">霧</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <section id="menu">
+    <div class="wrap">
+      <div class="section-head">
+        <h2><small lang="ja">お品書き</small>Menu</h2>
+        <p>The menu is short and changes with the market. What's printed here is the current season; the counter board has the day's fish and anything that came in too small a batch to list.</p>
+      </div>
+
+      <div class="omakase">
+        <div>
+          <h3>Omakase <span lang="ja" style="font-size:1.1rem;color:#e0795f">おまかせ</span></h3>
+          <p>Leave it to the chef. A sequence of small courses built around the day's catch, ending with rice, miso soup and pickles, then something sweet. Counter seats only, booked a day ahead.</p>
+        </div>
+        <div class="tiers">
+          <div class="tier"><div>Lunch · 6 courses<span>Tue–Sun, 11:30 seating</span></div><b>Rp 285k</b></div>
+          <div class="tier"><div>Dinner · 9 courses<span>Tue–Sun, 18:00 &amp; 20:15 seatings</span></div><b>Rp 520k</b></div>
+          <div class="tier"><div>Tea pairing<span>Four West Java teas, hot and cold</span></div><b>Rp 95k</b></div>
+        </div>
+      </div>
+
+      <div class="menu-grid">
+        <div class="menu-cat">
+          <h3>Small plates <span lang="ja">前菜</span></h3>
+          <ul>
+            <li>
+              <div class="item-top"><span class="name">Chawanmushi</span><span class="jp" lang="ja">茶碗蒸し</span><span class="fill"></span><span class="price">42</span></div>
+              <p>Steamed egg custard, prawn, shiitake, a few drops of yuzu.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Agedashi tofu</span><span class="jp" lang="ja">揚げ出し豆腐</span><span class="fill"></span><span class="price">38</span></div>
+              <p>Tofu from Cibuntu, fried and set in warm dashi with grated daikon.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Lembang greens, goma-ae</span><span class="tag">Vegan</span><span class="fill"></span><span class="price">34</span></div>
+              <p>Blanched spinach and long beans in roasted sesame dressing.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Sashimi of the day</span><span class="jp" lang="ja">刺身</span><span class="fill"></span><span class="price">98</span></div>
+              <p>Three kinds, seven slices. Ask what came in from Pangandaran.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Nasu dengaku</span><span class="tag">Vegan</span><span class="fill"></span><span class="price">36</span></div>
+              <p>Grilled aubergine under sweet white miso, toasted until it blisters.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="menu-cat">
+          <h3>From the grill <span lang="ja">焼き物</span></h3>
+          <ul>
+            <li>
+              <div class="item-top"><span class="name">Saba shioyaki</span><span class="jp" lang="ja">鯖の塩焼き</span><span class="fill"></span><span class="price">78</span></div>
+              <p>Salt-grilled mackerel, crisp skin, lime and grated daikon.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Chicken yakitori, five skewers</span><span class="fill"></span><span class="price">65</span></div>
+              <p>Free-range kampung chicken over coconut-shell charcoal: thigh, wing, tsukune, skin, leek.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Gindara saikyo-yaki</span><span class="jp" lang="ja">西京焼き</span><span class="fill"></span><span class="price">145</span></div>
+              <p>Black cod cured for two days in Kyoto-style miso.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Wagyu tataki</span><span class="fill"></span><span class="price">168</span></div>
+              <p>Seared beef striploin, ponzu, fried garlic, spring onion.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">King oyster mushroom</span><span class="tag">Vegan</span><span class="fill"></span><span class="price">44</span></div>
+              <p>Grilled thick, brushed with soy and a little sansho.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="menu-cat">
+          <h3>Rice &amp; noodles <span lang="ja">ご飯・麺</span></h3>
+          <ul>
+            <li>
+              <div class="item-top"><span class="name">Oyakodon</span><span class="jp" lang="ja">親子丼</span><span class="fill"></span><span class="price">68</span></div>
+              <p>Chicken and soft egg simmered in dashi over Cianjur-grown Japanese rice.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Chirashi bowl</span><span class="jp" lang="ja">ちらし</span><span class="fill"></span><span class="price">128</span></div>
+              <p>Sushi rice scattered with the day's fish, tamago and ikura.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Cold soba, tempura</span><span class="jp" lang="ja">天ざる</span><span class="fill"></span><span class="price">82</span></div>
+              <p>House-cut buckwheat noodles, prawn and vegetable tempura on the side.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Ochazuke</span><span class="jp" lang="ja">お茶漬け</span><span class="fill"></span><span class="price">48</span></div>
+              <p>Rice, grilled salmon and nori, with hot Ciwidey green tea poured over at the counter.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="menu-cat">
+          <h3>Sweets &amp; drinks <span lang="ja">甘味・飲み物</span></h3>
+          <ul>
+            <li>
+              <div class="item-top"><span class="name">Hojicha purin</span><span class="fill"></span><span class="price">36</span></div>
+              <p>Roasted-tea custard made with Pangalengan milk, palm sugar syrup.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Warabi mochi</span><span class="jp" lang="ja">わらび餅</span><span class="tag">Vegan</span><span class="fill"></span><span class="price">32</span></div>
+              <p>Soft, cold, dusted with kinako.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Matcha, whisked to order</span><span class="fill"></span><span class="price">38</span></div>
+              <p>Hot or over ice.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Pot of West Java tea</span><span class="fill"></span><span class="price">28</span></div>
+              <p>Green, roasted or white — from estates in Ciwidey and Malabar.</p>
+            </li>
+            <li>
+              <div class="item-top"><span class="name">Yuzu soda</span><span class="fill"></span><span class="price">30</span></div>
+              <p>House cordial, sparkling water, shiso leaf.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="menu-note">
+        <span>Prices in thousands of rupiah, before 10% tax and 5% service.</span>
+        <span>No pork or lard is used in our kitchen.</span>
+        <span>Tell us about allergies when you book.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chef -->
+  <section class="chef" id="chef">
+    <div class="wrap chef-grid">
+      <aside class="chef-card">
+        <blockquote>
+          “In Kanazawa I learned to cook what the sea gave us that day. Coming home, I only had to change which sea, and which mountain.”
+          <cite>Raka Wiradinata, chef-owner</cite>
+        </blockquote>
+        <div class="v" lang="ja" aria-hidden="true">一期一会</div>
+      </aside>
+
+      <div class="chef-story">
+        <h2><small lang="ja">料理人</small>The chef's story</h2>
+        <p>Raka Wiradinata grew up in Dago, the son of a tea trader, and left Bandung at nineteen for a hospitality course in Osaka that he did not finish. A summer job washing rice at a small kappo restaurant in Kanazawa turned into eleven years.</p>
+        <p>He started at the sink and ended at the counter. His teacher, Mr. Morita, cooked for fourteen guests a night and bought fish at Omicho market every morning before six. There was no fixed menu; there was the market, the weather, and whoever was sitting down that evening. Raka spent three years on rice and dashi alone before he was allowed near a knife in front of guests.</p>
+        <p>He came home in 2019 with the idea that the method would travel better than the ingredients. Bandung sits at 700 metres, cool enough for daikon, shiso and mizuna to grow an hour up the road in Lembang. The south coast lands mackerel, snapper and squid overnight. So the kitchen flies in very little: kombu, katsuobushi, good soy. Everything else comes from within a few hours' drive.</p>
+        <p>Asagiri opened in 2021 in a converted house near Cihapit market, with a counter built from a single plank of hinoki that took eight months to arrive. It seats twelve. Raka still cooks every service, and his mother still chooses the tea.</p>
+
+        <ul class="timeline">
+          <li><b>2008</b><span>Leaves Bandung for Osaka</span></li>
+          <li><b>2009–19</b><span>Trains under Chef Morita in Kanazawa</span></li>
+          <li><b>2019</b><span>Returns home; a year of visiting farms and fish landings across West Java</span></li>
+          <li><b>2021</b><span>Asagiri opens in Cihapit</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reservations -->
+  <section id="reserve">
+    <div class="wrap reserve-grid">
+      <div class="reserve-info">
+        <h2><small lang="ja">ご予約</small>Reservations</h2>
+        <p>With twelve counter seats and two small tables, we fill up most evenings. Send a request here and we'll confirm on WhatsApp, usually within the hour during opening times.</p>
+        <ul>
+          <li>Omakase needs a day's notice, and is served at the counter.</li>
+          <li>Tables seat up to four. For five or more, please call and we'll work something out.</li>
+          <li>We hold seats for 15 minutes past the booking time.</li>
+          <li>Closed every Monday.</li>
+        </ul>
+      </div>
+
+      <form id="reserveForm" novalidate>
+        <div class="fields">
+          <div class="field">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required>
+          </div>
+          <div class="field">
+            <label for="time">Time</label>
+            <select id="time" name="time" required>
+              <option value="">Choose a time</option>
+              <optgroup label="Lunch">
+                <option>11:30</option><option>12:00</option><option>12:30</option><option>13:00</option><option>13:30</option>
+              </optgroup>
+              <optgroup label="Dinner">
+                <option>17:30</option><option>18:00</option><option>18:30</option><option>19:00</option><option>19:30</option><option>20:15</option><option>20:45</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="field">
+            <label for="guests">Guests</label>
+            <select id="guests" name="guests" required>
+              <option value="1">1 guest</option>
+              <option value="2" selected>2 guests</option>
+              <option value="3">3 guests</option>
+              <option value="4">4 guests</option>
+            </select>
+          </div>
+          <fieldset class="field">
+            <legend>Seating</legend>
+            <div class="seg">
+              <input type="radio" name="seating" id="seatCounter" value="Counter" checked>
+              <label for="seatCounter">Counter</label>
+              <input type="radio" name="seating" id="seatTable" value="Table">
+              <label for="seatTable">Table</label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="phone">WhatsApp number</label>
+            <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="0812 3456 7890" required>
+          </div>
+          <fieldset class="field full">
+            <legend>Dining</legend>
+            <div class="seg">
+              <input type="radio" name="dining" id="dineCarte" value="À la carte" checked>
+              <label for="dineCarte">À la carte</label>
+              <input type="radio" name="dining" id="dineOmakase" value="Omakase">
+              <label for="dineOmakase">Omakase</label>
+            </div>
+          </fieldset>
+          <div class="field full">
+            <label for="notes">Allergies or notes <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+            <textarea id="notes" name="notes"></textarea>
+          </div>
+        </div>
+
+        <div class="error" id="formError" role="alert"></div>
+
+        <div class="form-foot">
+          <button class="btn" type="submit">Request via WhatsApp</button>
+          <p>Opens WhatsApp with your request filled in. Your booking is confirmed once we reply.</p>
+        </div>
+
+        <div class="confirm" id="formConfirm" hidden>
+          Your request is ready in WhatsApp — press send there and we'll reply to confirm.
+          If WhatsApp didn't open, <a id="waFallback" href="#">tap here</a> or call us on <a class="tel-link" href="#"></a>.
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Visit -->
+  <section class="visit" id="visit">
+    <div class="wrap">
+      <div class="section-head">
+        <h2><small lang="ja">アクセス</small>Find us</h2>
+        <p>A white house with a blue noren over the door, two minutes' walk from Cihapit market. Look for the lantern; the sign is small.</p>
+      </div>
+
+      <div class="visit-grid">
+        <div>
+          <h3>Address</h3>
+          <address>
+            Jl. Cihapit No. 12<br>
+            Bandung Wetan, Kota Bandung<br>
+            Jawa Barat 40114
+          </address>
+
+          <h3>Hours</h3>
+          <table class="hours">
+            <tbody>
+              <tr class="closed"><td>Monday</td><td>Closed</td></tr>
+              <tr><td>Tuesday – Sunday, lunch</td><td>11:30 – 14:30</td></tr>
+              <tr><td>Tuesday – Sunday, dinner</td><td>17:30 – 22:00</td></tr>
+              <tr><td>Last order</td><td>14:00 · 21:15</td></tr>
+            </tbody>
+          </table>
+
+          <h3>Contact</h3>
+          <div class="contact">
+            <a class="tel-link" href="#"></a>
+            <a class="wa-link" href="#">WhatsApp us</a>
+            <a href="mailto:halo@asagiri.example">halo@asagiri.example</a>
+          </div>
+
+          <p class="getting">Street parking on Jl. Cihapit and Jl. Sabang; motorbikes can park in our front yard. About 10 minutes by car from Bandung Station and 15 from the Pasteur toll gate, traffic permitting.</p>
+        </div>
+
+        <div class="map">
+          <iframe title="Map showing Asagiri on Jl. Cihapit, Bandung" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Jl.+Cihapit+No.+12,+Bandung+Wetan,+Bandung&z=16&output=embed"></iframe>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Jl.+Cihapit+No.+12,+Bandung+Wetan,+Bandung" target="_blank" rel="noopener">Get directions in Google Maps →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year">2026</span> Asagiri <span lang="ja">朝霧</span> · Bandung</span>
+    <span>Terima kasih · ありがとうございます</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // ---- Edit these to match the real restaurant ----
+  var PHONE_INTL = '6281234567890';       // WhatsApp number, digits only, country code first
+  var PHONE_DISPLAY = '+62 812 3456 7890';
+  var CLOSED_DAY = 1;                     // 0 = Sunday, 1 = Monday
+  var SERVICES = [[11.5, 14.5], [17.5, 22]]; // opening windows, decimal hours, Bandung time
+  // -------------------------------------------------
+
+  var $ = function (id) { return document.getElementById(id); };
+  var TZ = 'Asia/Jakarta';
+
+  document.querySelectorAll('.tel-link').forEach(function (a) {
+    a.href = 'tel:+' + PHONE_INTL; a.textContent = PHONE_DISPLAY;
+  });
+  document.querySelectorAll('.wa-link').forEach(function (a) {
+    a.href = 'https://wa.me/' + PHONE_INTL; a.target = '_blank'; a.rel = 'noopener';
+  });
+  $('year').textContent = new Date().getFullYear();
+
+  // Current date and time in Bandung, regardless of the visitor's timezone
+  function bandungNow() {
+    var parts = {};
+    new Intl.DateTimeFormat('en-CA', {
+      timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hourCycle: 'h23', weekday: 'short'
+    }).formatToParts(new Date()).forEach(function (p) { parts[p.type] = p.value; });
+    return {
+      iso: parts.year + '-' + parts.month + '-' + parts.day,
+      day: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(parts.weekday),
+      hours: Number(parts.hour) + Number(parts.minute) / 60
+    };
+  }
+  function fmt(h) {
+    var hh = Math.floor(h), mm = Math.round((h - hh) * 60);
+    return (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm;
+  }
+
+  // Open / closed indicator
+  try {
+    var now = bandungNow(), text, open = false;
+    if (now.day === CLOSED_DAY) {
+      text = 'Closed today · back tomorrow at ' + fmt(SERVICES[0][0]);
+    } else {
+      var current = SERVICES.filter(function (s) { return now.hours >= s[0] && now.hours < s[1]; })[0];
+      var next = SERVICES.filter(function (s) { return now.hours < s[0]; })[0];
+      if (current) { open = true; text = 'Open now · until ' + fmt(current[1]); }
+      else if (next) { text = 'Closed now · opens at ' + fmt(next[0]); }
+      else {
+        text = ((now.day + 1) % 7 === CLOSED_DAY)
+          ? 'Closed now · closed tomorrow'
+          : 'Closed now · opens tomorrow at ' + fmt(SERVICES[0][0]);
+      }
+    }
+    $('statusText').textContent = text + ' (Bandung time)';
+    $('statusDot').classList.toggle('open', open);
+    $('date').min = now.iso;
+  } catch (e) { /* keep the static hours text */ }
+
+  // Reservation form → WhatsApp message
+  var form = $('reserveForm'), error = $('formError'), confirmBox = $('formConfirm');
+
+  function weekday(iso) { return new Date(iso + 'T12:00:00').getDay(); }
+
+  $('date').addEventListener('change', function () {
+    error.textContent = (this.value && weekday(this.value) === CLOSED_DAY)
+      ? 'We are closed on Mondays. Please pick another day.' : '';
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    confirmBox.hidden = true;
+    var f = form.elements, problem = '', focus = null;
+
+    if (!f.date.value) { problem = 'Please choose a date.'; focus = f.date; }
+    else if (f.date.min && f.date.value < f.date.min) { problem = 'That date has already passed.'; focus = f.date; }
+    else if (weekday(f.date.value) === CLOSED_DAY) { problem = 'We are closed on Mondays. Please pick another day.'; focus = f.date; }
+    else if (!f.time.value) { problem = 'Please choose a time.'; focus = f.time; }
+    else if (!f.name.value.trim()) { problem = 'Please tell us your name.'; focus = f.name; }
+    else if (f.phone.value.replace(/\D/g, '').length < 8) { problem = 'Please enter a WhatsApp number we can reach you on.'; focus = f.phone; }
+    else if (f.dining.value === 'Omakase' && f.seating.value !== 'Counter') { problem = 'Omakase is served at the counter. Please switch seating to Counter.'; focus = $('seatCounter'); }
+    else if (f.dining.value === 'Omakase' && f.date.min && f.date.value === f.date.min) { problem = 'Omakase needs a day’s notice. Please pick a later date or choose à la carte.'; focus = f.date; }
+
+    error.textContent = problem;
+    if (problem) { focus.focus(); return; }
+
+    var niceDate = new Date(f.date.value + 'T12:00:00').toLocaleDateString('en-GB', {
+      weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+    });
+    var lines = [
+      'Hello Asagiri, I would like to reserve:',
+      '',
+      'Date: ' + niceDate,
+      'Time: ' + f.time.value,
+      'Guests: ' + f.guests.value,
+      'Seating: ' + f.seating.value,
+      'Dining: ' + f.dining.value,
+      'Name: ' + f.name.value.trim(),
+      'Phone: ' + f.phone.value.trim()
+    ];
+    if (f.notes.value.trim()) lines.push('Notes: ' + f.notes.value.trim());
+
+    var url = 'https://wa.me/' + PHONE_INTL + '?text=' + encodeURIComponent(lines.join('\n'));
+    $('waFallback').href = url;
+    $('waFallback').target = '_blank';
+    confirmBox.hidden = false;
+    window.open(url, '_blank', 'noopener');
+  });
+})();
+</script>
+</body>
+</html>

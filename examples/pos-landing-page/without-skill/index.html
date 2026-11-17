@@ -4,813 +4,798 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Warungku — Aplikasi Kasir untuk Warung & UMKM</title>
-<meta name="description" content="Warungku adalah aplikasi kasir (POS) untuk warung dan UMKM. Catat penjualan, pantau stok, kelola kasbon, dan lihat untung harian langsung dari HP.">
+<meta name="description" content="Warungku: aplikasi kasir (POS) di HP untuk warung dan UMKM. Catat penjualan, stok, dan kasbon pelanggan dalam satu aplikasi. Bisa dipakai tanpa internet.">
+<meta name="theme-color" content="#0F6B4F">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230F6B4F'/%3E%3Cpath d='M14 30l4-12h28l4 12v4H14z' fill='%23F4B63F'/%3E%3Crect x='18' y='34' width='28' height='14' fill='%23FBF5E9'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#1c2620;
-    --ink-soft:#4a574f;
-    --green:#1f5c3f;
-    --green-deep:#143d2a;
-    --green-tint:#e3efe7;
-    --kunyit:#f2b33d;
-    --kunyit-soft:#fbe7b8;
-    --chili:#d4462a;
-    --cream:#faf5ea;
-    --paper:#fffdf8;
-    --line:#e6dfcf;
-    --radius:18px;
-    --shadow:0 1px 2px rgba(28,38,32,.06),0 12px 32px -12px rgba(28,38,32,.18);
-    --mono:'JetBrains Mono',ui-monospace,monospace;
+  :root {
+    --bg: #FBF5E9;
+    --surface: #FFFDF8;
+    --ink: #1D1A16;
+    --muted: #675F54;
+    --line: #E9DFCB;
+    --brand: #0F6B4F;
+    --brand-dark: #0A4634;
+    --brand-soft: #DCEDE4;
+    --kunyit: #F4B63F;
+    --kunyit-soft: #FDF0CF;
+    --sambal: #D2452A;
+    --radius: 18px;
+    --shadow: 0 1px 2px rgba(29,26,22,.05), 0 12px 32px -12px rgba(29,26,22,.18);
+    --wrap: 1120px;
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    font-family:'Plus Jakarta Sans',system-ui,sans-serif;
-    color:var(--ink);background:var(--cream);
-    line-height:1.6;-webkit-font-smoothing:antialiased;
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
   }
-  img,svg{display:block}
-  a{color:inherit}
-  .wrap{width:min(1160px,100% - 40px);margin-inline:auto}
-  :focus-visible{outline:3px solid var(--kunyit);outline-offset:3px;border-radius:6px}
+  h1, h2, h3, p { margin: 0; }
+  h1, h2, h3 { line-height: 1.12; letter-spacing: -0.025em; text-wrap: balance; }
+  p { text-wrap: pretty; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  :focus-visible { outline: 3px solid var(--kunyit); outline-offset: 3px; border-radius: 6px; }
+  .wrap { width: min(100% - 40px, var(--wrap)); margin-inline: auto; }
+  section { padding: 88px 0; scroll-margin-top: 72px; }
+  .eyebrow {
+    display: inline-block;
+    font-size: 13px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: 14px;
+  }
+  .section-head { max-width: 640px; margin-bottom: 48px; }
+  .section-head h2 { font-size: clamp(30px, 4.2vw, 44px); font-weight: 800; }
+  .section-head p { margin-top: 16px; color: var(--muted); font-size: 18px; }
 
-  /* ---------- Buttons ---------- */
-  .btn{
-    display:inline-flex;align-items:center;gap:.5rem;
-    font:inherit;font-weight:700;font-size:1rem;text-decoration:none;
-    padding:.9rem 1.4rem;border-radius:999px;border:2px solid transparent;
-    cursor:pointer;transition:transform .15s,background .15s,box-shadow .15s;
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 52px; padding: 0 26px;
+    border: 2px solid transparent; border-radius: 999px;
+    font-weight: 700; font-size: 16px; text-decoration: none; white-space: nowrap;
+    transition: transform .15s ease, background-color .15s ease, box-shadow .15s ease;
   }
-  .btn:active{transform:translateY(1px)}
-  .btn-primary{background:var(--green);color:#fff;box-shadow:0 6px 0 var(--green-deep)}
-  .btn-primary:hover{background:#246b49}
-  .btn-primary:active{box-shadow:0 3px 0 var(--green-deep);transform:translateY(3px)}
-  .btn-ghost{border-color:var(--ink);color:var(--ink);background:transparent}
-  .btn-ghost:hover{background:var(--ink);color:var(--cream)}
-  .btn-kunyit{background:var(--kunyit);color:var(--ink);box-shadow:0 6px 0 #c98d1c}
-  .btn-kunyit:active{box-shadow:0 3px 0 #c98d1c;transform:translateY(3px)}
+  .btn:active { transform: translateY(1px); }
+  .btn-primary { background: var(--brand); color: #fff; box-shadow: 0 4px 0 var(--brand-dark); }
+  .btn-primary:hover { background: #127a5a; }
+  .btn-primary:active { box-shadow: 0 2px 0 var(--brand-dark); }
+  .btn-ghost { border-color: var(--ink); background: transparent; }
+  .btn-ghost:hover { background: var(--ink); color: var(--bg); }
+  .btn-kunyit { background: var(--kunyit); color: var(--ink); box-shadow: 0 4px 0 #c98d1c; }
+  .btn-kunyit:hover { background: #f7c35e; }
+  .btn-sm { min-height: 42px; padding: 0 18px; font-size: 15px; box-shadow: none; }
 
-  /* ---------- Nav ---------- */
-  header.nav{
-    position:sticky;top:0;z-index:50;
-    background:rgba(250,245,234,.88);backdrop-filter:blur(10px);
-    border-bottom:1px solid transparent;transition:border-color .2s;
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(251,245,233,.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
   }
-  header.nav.scrolled{border-color:var(--line)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:72px}
-  .logo{display:flex;align-items:center;gap:.55rem;font-weight:800;font-size:1.25rem;text-decoration:none;letter-spacing:-.02em}
-  .logo-mark{
-    width:36px;height:36px;border-radius:10px;background:var(--green);
-    display:grid;place-items:center;
-  }
-  .nav-links{display:flex;gap:2rem;list-style:none}
-  .nav-links a{text-decoration:none;font-weight:600;color:var(--ink-soft);font-size:.95rem}
-  .nav-links a:hover{color:var(--ink)}
-  .nav-cta{display:flex;gap:.75rem;align-items:center}
-  .nav-cta .btn{padding:.6rem 1.1rem;font-size:.92rem;box-shadow:none}
-  .nav-login{font-weight:600;text-decoration:none;font-size:.95rem}
-  @media (max-width:860px){.nav-links,.nav-login{display:none}}
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 24px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 21px; letter-spacing: -0.03em; text-decoration: none; }
+  .logo svg { width: 34px; height: 34px; flex: none; }
+  .nav-links { display: flex; gap: 30px; list-style: none; margin: 0; padding: 0; font-size: 15px; font-weight: 600; }
+  .nav-links a { text-decoration: none; color: var(--muted); }
+  .nav-links a:hover { color: var(--ink); }
 
-  /* ---------- Hero ---------- */
-  .hero{padding:64px 0 96px;position:relative;overflow:hidden}
-  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
-  .pill{
-    display:inline-flex;align-items:center;gap:.5rem;
-    background:var(--paper);border:1px solid var(--line);
-    padding:.35rem .85rem .35rem .4rem;border-radius:999px;font-size:.85rem;font-weight:600;
-  }
-  .pill b{background:var(--kunyit);padding:.1rem .55rem;border-radius:999px;font-size:.75rem}
-  h1{
-    font-size:clamp(2.4rem,5.4vw,4.1rem);line-height:1.05;letter-spacing:-.035em;
-    font-weight:800;margin:1.2rem 0 1.25rem;
-  }
-  h1 .hl{
-    background:linear-gradient(transparent 62%,var(--kunyit) 62%,var(--kunyit) 92%,transparent 92%);
-    padding:0 .1em;
-  }
-  .hero p.lead{font-size:1.15rem;color:var(--ink-soft);max-width:34rem}
-  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin:2rem 0 1.5rem}
-  .hero-note{display:flex;gap:1.25rem;flex-wrap:wrap;font-size:.9rem;color:var(--ink-soft)}
-  .hero-note span{display:inline-flex;align-items:center;gap:.4rem}
-  .check{width:18px;height:18px;flex:none}
-
-  /* ---------- Phone demo ---------- */
-  .demo-stage{position:relative;display:flex;justify-content:center}
-  .demo-stage::before{
-    content:"";position:absolute;inset:6% -4% -2% 8%;
-    background:var(--green);border-radius:40px;transform:rotate(4deg);
-  }
-  .phone{
-    position:relative;width:340px;max-width:100%;
-    background:#111;border-radius:42px;padding:12px;
-    box-shadow:0 30px 60px -20px rgba(20,61,42,.55);
-  }
-  .screen{
-    background:var(--paper);border-radius:32px;overflow:hidden;
-    height:580px;display:flex;flex-direction:column;position:relative;
-  }
-  .scr-top{
-    background:var(--green);color:#fff;padding:22px 18px 14px;
-  }
-  .scr-top small{opacity:.75;font-size:.72rem;display:block}
-  .scr-top strong{font-size:1rem}
-  .scr-row{display:flex;justify-content:space-between;align-items:flex-end}
-  .scr-omzet{font-family:var(--mono);font-size:.78rem;background:rgba(255,255,255,.14);padding:.25rem .55rem;border-radius:8px}
-  .products{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px;
-  }
-  .prod{
-    font:inherit;border:1px solid var(--line);background:#fff;border-radius:14px;
-    padding:10px 6px 8px;cursor:pointer;text-align:center;position:relative;
-    transition:transform .12s,border-color .12s,background .12s;
-  }
-  .prod:hover{border-color:var(--green)}
-  .prod:active{transform:scale(.95)}
-  .prod .emo{font-size:1.5rem;line-height:1}
-  .prod .nm{display:block;font-size:.7rem;font-weight:600;margin-top:4px;line-height:1.2}
-  .prod .pr{display:block;font-family:var(--mono);font-size:.65rem;color:var(--ink-soft)}
-  .prod .qty{
-    position:absolute;top:-6px;right:-6px;background:var(--chili);color:#fff;
-    font-size:.68rem;font-weight:700;min-width:20px;height:20px;border-radius:10px;
-    display:none;place-items:center;padding:0 5px;
-  }
-  .prod.on{background:var(--green-tint);border-color:var(--green)}
-  .prod.on .qty{display:grid}
-  .cart{
-    margin-top:auto;border-top:1px dashed var(--line);padding:12px 16px 16px;background:#fff;
-  }
-  .cart-lines{font-family:var(--mono);font-size:.72rem;color:var(--ink-soft);min-height:76px;max-height:76px;overflow:auto}
-  .cart-lines div{display:flex;justify-content:space-between}
-  .cart-empty{opacity:.6}
-  .cart-total{display:flex;justify-content:space-between;align-items:baseline;margin:8px 0 10px}
-  .cart-total span{font-size:.8rem;font-weight:600}
-  .cart-total strong{font-family:var(--mono);font-size:1.3rem}
-  .cart-actions{display:grid;grid-template-columns:auto 1fr;gap:8px}
-  .cart-actions button{
-    font:inherit;font-weight:700;border:none;border-radius:12px;padding:.75rem;cursor:pointer;font-size:.9rem;
-  }
-  .btn-reset{background:var(--cream);color:var(--ink)}
-  .btn-pay{background:var(--green);color:#fff}
-  .btn-pay:disabled{background:#b9c7bf;cursor:not-allowed}
-
-  .receipt{
-    position:absolute;inset:0;background:rgba(28,38,32,.55);
-    display:flex;align-items:center;justify-content:center;padding:20px;
-    opacity:0;pointer-events:none;transition:opacity .2s;
-  }
-  .receipt.show{opacity:1;pointer-events:auto}
-  .slip{
-    background:#fff;width:100%;font-family:var(--mono);font-size:.72rem;padding:18px 16px 22px;
-    transform:translateY(24px);transition:transform .25s;
-    -webkit-mask:radial-gradient(circle 6px at 50% 100%,transparent 98%,#000) 0 0/14px 100%;
-            mask:radial-gradient(circle 6px at 50% 100%,transparent 98%,#000) 0 0/14px 100% ;
-  }
-  .receipt.show .slip{transform:none}
-  .slip h4{text-align:center;font-size:.85rem}
-  .slip .c{text-align:center;color:var(--ink-soft)}
-  .slip hr{border:none;border-top:1px dashed #bbb;margin:8px 0}
-  .slip .r{display:flex;justify-content:space-between}
-  .slip .big{font-weight:600;font-size:.82rem}
-  .slip .ok{
-    margin:12px auto 0;display:block;font:inherit;font-weight:600;background:var(--kunyit);
-    border:none;border-radius:8px;padding:.5rem 1rem;cursor:pointer;
-  }
-  .demo-hint{
-    position:absolute;left:-8px;top:120px;background:var(--kunyit);font-weight:700;font-size:.85rem;
-    padding:.5rem .8rem;border-radius:12px;transform:rotate(-6deg);box-shadow:var(--shadow);z-index:2;
-  }
-  .demo-hint::after{
-    content:"";position:absolute;right:-8px;top:50%;border:8px solid transparent;border-left-color:var(--kunyit);
-    transform:translateY(-50%);border-right:0;
-  }
-  @media (max-width:960px){
-    .hero-grid{grid-template-columns:1fr}
-    .demo-hint{left:auto;right:4px;top:-18px}
-    .demo-hint::after{display:none}
-    .demo-stage::before{inset:6% 0 -2% 6%}
+  /* Awning — tenda warung */
+  .awning {
+    height: 36px;
+    background: repeating-linear-gradient(90deg, var(--brand) 0 32px, var(--surface) 32px 64px);
+    -webkit-mask: linear-gradient(#000 0 0) top / 100% 20px no-repeat,
+                  radial-gradient(circle at 16px 0, #000 15.5px, transparent 16px) 0 20px / 32px 16px repeat-x;
+            mask: linear-gradient(#000 0 0) top / 100% 20px no-repeat,
+                  radial-gradient(circle at 16px 0, #000 15.5px, transparent 16px) 0 20px / 32px 16px repeat-x;
+    filter: drop-shadow(0 3px 0 rgba(29,26,22,.08));
   }
 
-  /* ---------- Strip ---------- */
-  .strip{background:var(--ink);color:var(--cream);padding:22px 0;overflow:hidden}
-  .strip-track{display:flex;gap:3rem;white-space:nowrap;animation:scroll 32s linear infinite;width:max-content}
-  .strip-track span{font-weight:700;font-size:1.05rem;display:inline-flex;align-items:center;gap:3rem}
-  .strip-track span::after{content:"✦";color:var(--kunyit)}
-  @keyframes scroll{to{transform:translateX(-50%)}}
-  @media (prefers-reduced-motion:reduce){.strip-track{animation:none}html{scroll-behavior:auto}}
+  /* Hero */
+  .hero { padding: 56px 0 88px; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 14px 7px 10px; border-radius: 999px;
+    background: var(--kunyit-soft); border: 1px solid #f1d58d;
+    font-size: 14px; font-weight: 600;
+  }
+  .pill i { width: 8px; height: 8px; border-radius: 50%; background: var(--sambal); }
+  .hero h1 { margin-top: 22px; font-size: clamp(40px, 6.2vw, 68px); font-weight: 800; }
+  .hero h1 em {
+    font-style: normal; color: var(--brand);
+    background: linear-gradient(transparent 68%, var(--kunyit) 68% 92%, transparent 92%);
+  }
+  .hero .lead { margin-top: 22px; font-size: clamp(18px, 2vw, 20px); color: var(--muted); max-width: 520px; }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+  .hero-notes { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 26px 0 0; padding: 0; list-style: none; font-size: 15px; font-weight: 500; color: var(--muted); }
+  .hero-notes li { display: flex; align-items: center; gap: 7px; }
+  .hero-notes svg { width: 18px; height: 18px; color: var(--brand); flex: none; }
 
-  /* ---------- Sections ---------- */
-  section{padding:104px 0}
-  .eyebrow{font-weight:700;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
-  h2{font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.12;letter-spacing:-.03em;font-weight:800;margin:.6rem 0 1rem;max-width:22ch}
-  .sec-lead{color:var(--ink-soft);font-size:1.08rem;max-width:40rem}
+  /* Phone demo */
+  .demo { position: relative; justify-self: center; }
+  .demo::before {
+    content: ""; position: absolute; inset: 8% -14% 4% -14%; z-index: -1;
+    background: var(--kunyit); border-radius: 46% 54% 52% 48% / 50% 44% 56% 50%;
+    transform: rotate(-6deg);
+  }
+  .phone {
+    width: 312px; max-width: 100%;
+    padding: 10px; border-radius: 40px;
+    background: var(--ink);
+    box-shadow: 0 30px 60px -20px rgba(29,26,22,.45);
+  }
+  .screen { position: relative; overflow: hidden; border-radius: 31px; background: var(--surface); height: 590px; display: flex; flex-direction: column; }
+  .app-top { background: var(--brand); color: #fff; padding: 18px 18px 14px; }
+  .app-top small { display: block; font-size: 12px; opacity: .8; font-weight: 500; }
+  .app-top strong { font-size: 17px; }
+  .app-top .row { display: flex; justify-content: space-between; align-items: center; }
+  .badge-open { font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 999px; background: rgba(255,255,255,.18); }
+  .hint { font-size: 12px; font-weight: 600; color: var(--muted); padding: 12px 16px 4px; }
+  .products { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; padding: 8px 14px; flex: 1; align-content: start; }
+  .product {
+    position: relative; text-align: left;
+    padding: 10px 11px; border-radius: 14px;
+    background: #fff; border: 1.5px solid var(--line);
+    transition: border-color .12s, transform .12s, background-color .12s;
+  }
+  .product:hover { border-color: var(--brand); }
+  .product:active { transform: scale(.96); }
+  .product.has { border-color: var(--brand); background: #f4faf6; }
+  .product .emo { font-size: 24px; line-height: 1; display: block; margin-bottom: 6px; }
+  .product .nm { display: block; font-size: 13px; font-weight: 600; line-height: 1.25; }
+  .product .pr { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .product .qty {
+    position: absolute; top: 8px; right: 8px;
+    min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px;
+    background: var(--sambal); color: #fff; font-size: 12px; font-weight: 700;
+    display: none; align-items: center; justify-content: center;
+  }
+  .product.has .qty { display: flex; }
+  .cart { border-top: 1px solid var(--line); padding: 12px 14px 16px; background: #fff; }
+  .methods { display: flex; gap: 6px; margin-bottom: 10px; }
+  .method {
+    flex: 1; height: 34px; border-radius: 10px;
+    border: 1.5px solid var(--line); background: #fff;
+    font-size: 12.5px; font-weight: 700; color: var(--muted);
+  }
+  .method[aria-pressed="true"] { border-color: var(--brand); background: var(--brand-soft); color: var(--brand-dark); }
+  .pay {
+    width: 100%; height: 50px; border: 0; border-radius: 14px;
+    background: var(--brand); color: #fff; font-weight: 700; font-size: 15px;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
+  }
+  .pay:disabled { background: #cfc8ba; cursor: not-allowed; }
+  .receipt {
+    position: absolute; inset: 0; z-index: 2;
+    background: rgba(29,26,22,.55);
+    display: flex; align-items: flex-end;
+    opacity: 0; visibility: hidden; transition: opacity .2s, visibility .2s;
+  }
+  .receipt.show { opacity: 1; visibility: visible; }
+  .receipt-card {
+    width: 100%; background: #fff; border-radius: 22px 22px 0 0; padding: 22px 18px 18px;
+    transform: translateY(24px); transition: transform .25s ease;
+  }
+  .receipt.show .receipt-card { transform: none; }
+  .receipt-ok { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; }
+  .receipt-ok span { width: 32px; height: 32px; border-radius: 50%; background: var(--brand); color: #fff; display: grid; place-items: center; font-size: 17px; }
+  .receipt-lines { list-style: none; margin: 14px 0 0; padding: 12px 0; border-block: 1.5px dashed var(--line); font-size: 13px; max-height: 150px; overflow: auto; }
+  .receipt-lines li { display: flex; justify-content: space-between; gap: 10px; padding: 2px 0; }
+  .receipt-total { display: flex; justify-content: space-between; font-weight: 800; font-size: 16px; margin-top: 12px; }
+  .receipt-note { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+  .receipt-card button { margin-top: 14px; width: 100%; height: 46px; border-radius: 12px; border: 0; background: var(--ink); color: #fff; font-weight: 700; font-size: 14px; }
+  .demo-caption { text-align: center; font-size: 14px; font-weight: 600; margin-top: 18px; }
 
-  /* Problem */
-  .problem{background:var(--paper);border-block:1px solid var(--line)}
-  .compare{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
-  .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:32px}
-  .compare .before{background:repeating-linear-gradient(#fff 0 31px,#eef0f5 31px 32px);}
-  .compare .before h3::before{content:"📒 ";}
-  .compare .after{background:var(--green);color:#fff;border-color:var(--green)}
-  .compare .after h3::before{content:"📱 ";}
-  .compare h3{font-size:1.2rem;margin-bottom:1rem}
-  .compare ul{list-style:none;display:grid;gap:.85rem}
-  .compare li{display:flex;gap:.7rem;align-items:flex-start}
-  .compare .before li::before{content:"✕";color:var(--chili);font-weight:800;flex:none}
-  .compare .after li::before{content:"✓";color:var(--kunyit);font-weight:800;flex:none}
-  @media (max-width:760px){.compare{grid-template-columns:1fr}}
+  /* Strip */
+  .strip { padding: 0; }
+  .strip ul {
+    list-style: none; margin: 0; padding: 26px 0;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    border-block: 1px solid var(--line);
+    font-weight: 700; font-size: 16px;
+  }
+  .strip li { display: flex; align-items: center; gap: 12px; }
+  .strip svg { width: 26px; height: 26px; flex: none; color: var(--brand); }
 
   /* Features */
-  .feat-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:20px;margin-top:56px}
-  .feat{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;grid-column:span 2;transition:transform .2s,box-shadow .2s}
-  .feat:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-  .feat.wide{grid-column:span 3}
-  .feat-ic{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;margin-bottom:1.1rem;background:var(--green-tint)}
-  .feat:nth-child(2) .feat-ic,.feat:nth-child(5) .feat-ic{background:var(--kunyit-soft)}
-  .feat:nth-child(3) .feat-ic{background:#fbe0d9}
-  .feat h3{font-size:1.15rem;margin-bottom:.4rem;letter-spacing:-.01em}
-  .feat p{color:var(--ink-soft);font-size:.96rem}
-  .kasbon-mini{margin-top:1.2rem;border:1px solid var(--line);border-radius:12px;font-size:.85rem;overflow:hidden}
-  .kasbon-mini div{display:flex;justify-content:space-between;padding:.55rem .85rem;border-top:1px solid var(--line)}
-  .kasbon-mini div:first-child{border-top:none}
-  .kasbon-mini b{font-family:var(--mono);color:var(--chili);font-weight:600}
-  .kasbon-mini .lunas b{color:var(--green)}
-  .bars{display:flex;align-items:flex-end;gap:8px;height:90px;margin-top:1.2rem}
-  .bars i{flex:1;background:var(--green-tint);border-radius:6px 6px 2px 2px;position:relative}
-  .bars i.today{background:var(--green)}
-  .bars-lbl{display:flex;gap:8px;font-size:.7rem;color:var(--ink-soft);margin-top:4px}
-  .bars-lbl span{flex:1;text-align:center}
-  @media (max-width:960px){.feat,.feat.wide{grid-column:span 3}}
-  @media (max-width:640px){.feat,.feat.wide{grid-column:span 6}}
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .feature { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
+  .feature .ico { width: 48px; height: 48px; border-radius: 14px; background: var(--brand-soft); color: var(--brand); display: grid; place-items: center; margin-bottom: 20px; }
+  .feature:nth-child(3n+2) .ico { background: var(--kunyit-soft); color: #9a6a08; }
+  .feature:nth-child(3n) .ico { background: #fbe1da; color: var(--sambal); }
+  .feature .ico svg { width: 24px; height: 24px; }
+  .feature h3 { font-size: 20px; font-weight: 700; }
+  .feature p { margin-top: 10px; color: var(--muted); font-size: 16px; }
+
+  /* Kasbon band */
+  .band { background: var(--brand-dark); color: #F3EEE2; }
+  .band .eyebrow { color: var(--kunyit); }
+  .band-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .band h2 { font-size: clamp(30px, 4.2vw, 44px); font-weight: 800; color: #fff; }
+  .band p.lead { margin-top: 18px; font-size: 18px; color: #c9dbd2; }
+  .checks { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 14px; }
+  .checks li { display: flex; gap: 12px; align-items: flex-start; }
+  .checks svg { width: 22px; height: 22px; flex: none; margin-top: 3px; color: var(--kunyit); }
+  .ledger { background: var(--surface); color: var(--ink); border-radius: 22px; padding: 24px; box-shadow: 0 30px 60px -24px rgba(0,0,0,.5); transform: rotate(1.5deg); }
+  .ledger-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 14px; border-bottom: 1.5px dashed var(--line); }
+  .ledger-head strong { font-size: 18px; }
+  .ledger-head span { font-size: 14px; color: var(--muted); }
+  .ledger-head b { color: var(--sambal); }
+  .ledger ul { list-style: none; margin: 0; padding: 0; }
+  .ledger li { display: grid; grid-template-columns: 40px 1fr auto; gap: 12px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .ledger li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 15px; background: var(--kunyit-soft); }
+  .ledger .who { font-weight: 700; font-size: 15px; line-height: 1.3; }
+  .ledger .who small { display: block; font-weight: 500; color: var(--muted); font-size: 13px; }
+  .ledger .amt { text-align: right; font-weight: 800; font-size: 15px; line-height: 1.3; }
+  .tag { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: #dff3e2; color: #1b6a2c; }
+  .tag.late { background: #fbe1da; color: #a5301a; }
+  .tag.paid { background: var(--brand-soft); color: var(--brand-dark); }
 
   /* Steps */
-  .steps{background:var(--green-deep);color:var(--cream)}
-  .steps .eyebrow{color:var(--kunyit)}
-  .steps .sec-lead{color:#c6d6cc}
-  .step-list{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px;counter-reset:s;list-style:none}
-  .step-list li{border-top:2px solid rgba(255,255,255,.2);padding-top:24px;counter-increment:s}
-  .step-list li::before{
-    content:counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;
-    background:var(--kunyit);color:var(--ink);font-weight:800;font-size:1.15rem;margin-bottom:1rem;
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; counter-reset: step; list-style: none; margin: 0; padding: 0; }
+  .steps li { counter-increment: step; position: relative; padding-top: 68px; }
+  .steps li::before {
+    content: counter(step);
+    position: absolute; top: 0; left: 0;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: var(--kunyit); color: var(--ink);
+    display: grid; place-items: center; font-weight: 800; font-size: 21px;
+    box-shadow: 0 4px 0 #c98d1c;
   }
-  .step-list h3{font-size:1.2rem;margin-bottom:.4rem}
-  .step-list p{color:#c6d6cc}
-  @media (max-width:760px){.step-list{grid-template-columns:1fr}}
+  .steps li:not(:last-child)::after {
+    content: ""; position: absolute; top: 25px; left: 64px; right: -14px;
+    border-top: 2px dashed #d8cbb0;
+  }
+  .steps h3 { font-size: 21px; font-weight: 700; }
+  .steps p { margin-top: 10px; color: var(--muted); }
 
   /* Pricing */
-  .price-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
-  .toggle{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px}
-  .toggle button{font:inherit;font-weight:700;font-size:.9rem;border:none;background:none;padding:.55rem 1.1rem;border-radius:999px;cursor:pointer;color:var(--ink-soft)}
-  .toggle button[aria-pressed="true"]{background:var(--ink);color:var(--cream)}
-  .toggle em{font-style:normal;background:var(--kunyit);color:var(--ink);font-size:.7rem;padding:.1rem .45rem;border-radius:999px;margin-left:.35rem}
-  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;align-items:stretch}
-  .plan{background:#fff;border:1px solid var(--line);border-radius:22px;padding:32px;display:flex;flex-direction:column}
-  .plan.pop{border:2px solid var(--green);position:relative;box-shadow:var(--shadow)}
-  .plan.pop::before{
-    content:"Paling laris";position:absolute;top:-14px;left:32px;background:var(--green);color:#fff;
-    font-size:.78rem;font-weight:700;padding:.25rem .8rem;border-radius:999px;
-  }
-  .plan h3{font-size:1.15rem}
-  .plan .for{color:var(--ink-soft);font-size:.92rem;min-height:2.9em}
-  .amount{margin:1.25rem 0 .25rem;display:flex;align-items:baseline;gap:.3rem}
-  .amount strong{font-size:2.4rem;letter-spacing:-.03em;font-weight:800}
-  .amount span{color:var(--ink-soft);font-size:.92rem}
-  .billed{font-size:.82rem;color:var(--ink-soft);min-height:1.3em}
-  .plan ul{list-style:none;display:grid;gap:.6rem;margin:1.5rem 0 2rem;font-size:.95rem}
-  .plan li{display:flex;gap:.6rem}
-  .plan li::before{content:"✓";font-weight:800;color:var(--green)}
-  .plan .btn{margin-top:auto;justify-content:center}
-  .plan .btn-ghost{padding:.8rem}
-  @media (max-width:900px){.plans{grid-template-columns:1fr;max-width:480px}}
+  .pricing-bg { background: #F4EBD8; }
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: stretch; }
+  .plan { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 30px 28px; display: flex; flex-direction: column; }
+  .plan.featured { border: 2px solid var(--brand); box-shadow: var(--shadow); }
+  .plan-flag { position: absolute; top: -14px; left: 28px; background: var(--brand); color: #fff; font-size: 12.5px; font-weight: 700; padding: 5px 12px; border-radius: 999px; }
+  .plan h3 { font-size: 20px; font-weight: 700; }
+  .plan .for { color: var(--muted); font-size: 15px; margin-top: 6px; min-height: 48px; }
+  .price { margin-top: 16px; font-size: 40px; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+  .price small { font-size: 15px; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+  .plan ul { list-style: none; margin: 24px 0 28px; padding: 0; display: grid; gap: 11px; font-size: 15.5px; flex: 1; align-content: start; }
+  .plan li { display: flex; gap: 10px; align-items: flex-start; }
+  .plan li svg { width: 19px; height: 19px; flex: none; margin-top: 3px; color: var(--brand); }
+  .plan .btn { width: 100%; }
+  .price-note { margin-top: 26px; text-align: center; color: var(--muted); font-size: 15px; }
 
   /* Testimonials */
-  .testi{background:var(--paper);border-block:1px solid var(--line)}
-  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
-  .quote{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;gap:1.25rem}
-  .quote blockquote{font-size:1.02rem;line-height:1.6}
-  .quote blockquote::before{content:"“";font-size:3rem;line-height:.6;display:block;color:var(--kunyit);font-weight:800;margin-bottom:.4rem}
-  .who{display:flex;gap:.8rem;align-items:center;margin-top:auto}
-  .av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;flex:none}
-  .who b{display:block;font-size:.95rem}
-  .who small{color:var(--ink-soft)}
-  @media (max-width:900px){.quotes{grid-template-columns:1fr}}
+  .quotes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .quote { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: flex; flex-direction: column; gap: 22px; }
+  .quote blockquote { margin: 0; font-size: 17px; font-weight: 500; flex: 1; }
+  .quote figcaption { display: flex; align-items: center; gap: 12px; font-size: 14.5px; line-height: 1.35; }
+  .quote figcaption b { display: block; font-size: 15.5px; }
+  .quote figcaption span { color: var(--muted); }
+  .quote:nth-child(2) .avatar { background: var(--brand-soft); }
+  .quote:nth-child(3) .avatar { background: #fbe1da; }
 
   /* FAQ */
-  .faq-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px}
-  details{border-bottom:1px solid var(--line);padding:1.25rem 0}
-  details:first-child{border-top:1px solid var(--line)}
-  summary{cursor:pointer;font-weight:700;font-size:1.05rem;list-style:none;display:flex;justify-content:space-between;gap:1rem}
-  summary::-webkit-details-marker{display:none}
-  summary::after{content:"+";font-size:1.5rem;line-height:1;font-weight:500;transition:transform .2s;flex:none}
-  details[open] summary::after{transform:rotate(45deg)}
-  details p{color:var(--ink-soft);margin-top:.7rem;max-width:56ch}
-  @media (max-width:860px){.faq-grid{grid-template-columns:1fr;gap:24px}}
+  .faq-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 56px; }
+  .faq-grid .section-head { margin-bottom: 0; }
+  details { border-bottom: 1px solid var(--line); }
+  details:first-of-type { border-top: 1px solid var(--line); }
+  summary { list-style: none; cursor: pointer; padding: 20px 0; font-weight: 700; font-size: 18px; display: flex; justify-content: space-between; gap: 18px; align-items: center; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--brand-soft); color: var(--brand-dark); display: grid; place-items: center; font-size: 20px; font-weight: 600; transition: transform .2s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { padding: 0 48px 22px 0; color: var(--muted); }
 
   /* CTA */
-  .cta{padding:0 0 104px}
-  .cta-box{
-    background:var(--kunyit);border-radius:32px;padding:64px;display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:center;
-    position:relative;overflow:hidden;
+  .cta-section { padding-top: 0; }
+  .cta-box { position: relative; overflow: hidden; background: var(--brand); color: #fff; border-radius: 30px; padding: 64px 48px; text-align: center; }
+  .cta-box::before, .cta-box::after { content: ""; position: absolute; border-radius: 50%; background: rgba(244,182,63,.9); }
+  .cta-box::before { width: 220px; height: 220px; left: -80px; bottom: -110px; }
+  .cta-box::after { width: 140px; height: 140px; right: -50px; top: -60px; background: rgba(255,255,255,.1); }
+  .cta-box > * { position: relative; z-index: 1; }
+  .cta-box h2 { font-size: clamp(30px, 4.6vw, 48px); font-weight: 800; }
+  .cta-box p { margin: 16px auto 0; max-width: 520px; color: #d3e7de; font-size: 18px; }
+  .signup { margin: 32px auto 0; display: flex; gap: 10px; max-width: 500px; }
+  .signup input {
+    flex: 1; min-width: 0; height: 56px; padding: 0 22px;
+    border: 2px solid transparent; border-radius: 999px;
+    font: inherit; font-weight: 500; color: var(--ink); background: #fff;
   }
-  .cta-box::after{
-    content:"";position:absolute;right:-80px;bottom:-80px;width:280px;height:280px;border-radius:50%;
-    border:40px solid rgba(255,255,255,.25);
-  }
-  .cta-box h2{max-width:none;margin-top:0}
-  .cta-box p{font-size:1.05rem}
-  .cta-actions{display:flex;flex-direction:column;gap:.85rem;align-items:flex-start;position:relative;z-index:1}
-  .cta-actions .btn-ghost{background:rgba(255,255,255,.4);border-color:transparent}
-  .cta-actions .btn-ghost:hover{background:var(--ink)}
-  @media (max-width:860px){.cta-box{grid-template-columns:1fr;padding:40px 28px}}
+  .signup input:focus { outline: none; border-color: var(--kunyit); }
+  .signup .btn { min-height: 56px; }
+  .form-msg { min-height: 26px; margin-top: 14px !important; font-size: 15.5px !important; font-weight: 600; color: #fff !important; }
+  .form-msg.err { color: #ffd9cf !important; }
 
   /* Footer */
-  footer{background:var(--ink);color:#b9c3bd;padding:64px 0 32px;font-size:.92rem}
-  .foot-grid{display:grid;grid-template-columns:1.5fr repeat(3,1fr);gap:32px}
-  footer .logo{color:var(--cream);margin-bottom:.8rem}
-  footer h4{color:var(--cream);font-size:.95rem;margin-bottom:.8rem}
-  footer ul{list-style:none;display:grid;gap:.5rem}
-  footer a{text-decoration:none}
-  footer a:hover{color:var(--cream)}
-  .foot-bottom{border-top:1px solid rgba(255,255,255,.12);margin-top:48px;padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
-  @media (max-width:760px){.foot-grid{grid-template-columns:1fr 1fr}.foot-grid>div:first-child{grid-column:1/-1}}
+  footer { border-top: 1px solid var(--line); padding: 36px 0 44px; font-size: 15px; color: var(--muted); }
+  .foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 18px; }
+  .foot nav { display: flex; flex-wrap: wrap; gap: 22px; }
+  .foot nav a { text-decoration: none; }
+  .foot nav a:hover { color: var(--ink); text-decoration: underline; }
 
-  /* Reveal */
-  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s,transform .6s}
-  .reveal.in{opacity:1;transform:none}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    section { padding: 68px 0; }
+    .hero { padding: 40px 0 68px; }
+    .hero-grid, .band-grid, .faq-grid { grid-template-columns: 1fr; gap: 48px; }
+    .features, .quotes { grid-template-columns: 1fr 1fr; }
+    .plans { grid-template-columns: 1fr; max-width: 460px; margin-inline: auto; }
+    .plan .for { min-height: 0; }
+    .strip ul { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .ledger { transform: none; }
+  }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .features, .quotes, .steps { grid-template-columns: 1fr; }
+    .steps li:not(:last-child)::after { display: none; }
+    .cta-row .btn { flex: 1 1 100%; }
+    .cta-box { padding: 48px 22px; border-radius: 24px; }
+    .signup { flex-direction: column; }
+    .strip ul { font-size: 15px; gap: 16px; }
+    details p { padding-right: 0; }
+    .demo::before { inset: 8% -4% 4% -4%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { transition: none !important; }
+  }
 </style>
 </head>
 <body>
 
-<header class="nav" id="nav">
-  <div class="wrap nav-inner">
-    <a href="#" class="logo" aria-label="Warungku beranda">
-      <span class="logo-mark" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 9l2-5h14l2 5" stroke="#f2b33d" stroke-width="2.2" stroke-linejoin="round"/><path d="M3 9c0 1.7 1.3 3 3 3s3-1.3 3-3c0 1.7 1.3 3 3 3s3-1.3 3-3c0 1.7 1.3 3 3 3s3-1.3 3-3" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M5 12v8h14v-8" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/></svg>
-      </span>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="logo" aria-label="Warungku, ke beranda">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#0F6B4F"/><path d="M13 30l4.5-13h29L51 30v3.5H13z" fill="#F4B63F"/><rect x="18" y="33.5" width="28" height="15" rx="1.5" fill="#FBF5E9"/><rect x="28" y="38" width="8" height="10.5" fill="#0F6B4F"/></svg>
       Warungku
     </a>
-    <nav aria-label="Navigasi utama">
-      <ul class="nav-links">
-        <li><a href="#fitur">Fitur</a></li>
-        <li><a href="#cara">Cara Pakai</a></li>
-        <li><a href="#harga">Harga</a></li>
-        <li><a href="#faq">FAQ</a></li>
-      </ul>
-    </nav>
-    <div class="nav-cta">
-      <a href="#" class="nav-login">Masuk</a>
-      <a href="#harga" class="btn btn-primary">Coba Gratis</a>
-    </div>
+    <ul class="nav-links">
+      <li><a href="#fitur">Fitur</a></li>
+      <li><a href="#kasbon">Kasbon</a></li>
+      <li><a href="#harga">Harga</a></li>
+      <li><a href="#faq">Tanya Jawab</a></li>
+    </ul>
+    <a href="#daftar" class="btn btn-primary btn-sm">Coba Gratis</a>
   </div>
 </header>
+<div class="awning" aria-hidden="true"></div>
 
 <main>
-<!-- HERO -->
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="pill"><b>Baru</b> Terima QRIS langsung dari aplikasi</span>
-      <h1>Kasir warung yang <span class="hl">semudah</span> nyatet di buku.</h1>
-      <p class="lead">Warungku bantu kamu catat jualan, pantau stok, urus kasbon pelanggan, dan tahu untung hari ini — cukup dari HP Android yang sudah kamu punya.</p>
-      <div class="hero-actions">
-        <a href="#harga" class="btn btn-primary">
-          Mulai Gratis
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-        <a href="#cara" class="btn btn-ghost">Lihat cara kerjanya</a>
-      </div>
-      <div class="hero-note">
-        <span><svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#1f5c3f"/><path d="M7.5 12.5l3 3 6-6.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Tanpa kartu kredit</span>
-        <span><svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#1f5c3f"/><path d="M7.5 12.5l3 3 6-6.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Jalan tanpa internet</span>
-        <span><svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#1f5c3f"/><path d="M7.5 12.5l3 3 6-6.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Siap dalam 5 menit</span>
-      </div>
-    </div>
-
-    <div class="demo-stage">
-      <div class="demo-hint" aria-hidden="true">Coba klik! 👆</div>
-      <div class="phone" role="region" aria-label="Demo interaktif aplikasi kasir Warungku">
-        <div class="screen">
-          <div class="scr-top">
-            <div class="scr-row">
-              <div><small>Warung</small><strong>Bu Sri Barokah</strong></div>
-              <span class="scr-omzet" id="omzet">Hari ini Rp 845.000</span>
-            </div>
-          </div>
-          <div class="products" id="products"></div>
-          <div class="cart">
-            <div class="cart-lines" id="cartLines" aria-live="polite"><div class="cart-empty">Ketuk barang untuk menambah…</div></div>
-            <div class="cart-total"><span>Total</span><strong id="total">Rp 0</strong></div>
-            <div class="cart-actions">
-              <button class="btn-reset" id="resetBtn" type="button">Hapus</button>
-              <button class="btn-pay" id="payBtn" type="button" disabled>Bayar</button>
-            </div>
-          </div>
-          <div class="receipt" id="receipt" role="dialog" aria-modal="true" aria-labelledby="slipTitle">
-            <div class="slip">
-              <h4 id="slipTitle">WARUNG BU SRI BAROKAH</h4>
-              <p class="c">Jl. Melati No. 12</p>
-              <p class="c" id="slipTime"></p>
-              <hr>
-              <div id="slipLines"></div>
-              <hr>
-              <div class="r big"><span>TOTAL</span><span id="slipTotal"></span></div>
-              <div class="r"><span>Tunai</span><span id="slipCash"></span></div>
-              <div class="r"><span>Kembali</span><span id="slipChange"></span></div>
-              <hr>
-              <p class="c">Terima kasih, sehat selalu 🙏</p>
-              <button class="ok" id="okBtn" type="button">Transaksi baru</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="strip" aria-hidden="true">
-  <div class="strip-track">
-    <span>Warung kelontong</span><span>Toko sembako</span><span>Kedai kopi</span><span>Warmindo</span><span>Konter pulsa</span><span>Toko bangunan</span><span>Laundry kiloan</span><span>Bakso & mie ayam</span>
-    <span>Warung kelontong</span><span>Toko sembako</span><span>Kedai kopi</span><span>Warmindo</span><span>Konter pulsa</span><span>Toko bangunan</span><span>Laundry kiloan</span><span>Bakso & mie ayam</span>
-  </div>
-</div>
-
-<!-- PROBLEM -->
-<section class="problem">
-  <div class="wrap">
-    <p class="eyebrow reveal">Kenapa pindah?</p>
-    <h2 class="reveal">Buku catatan nggak bisa bilang kamu untung berapa.</h2>
-    <p class="sec-lead reveal">Banyak pemilik warung baru sadar rugi setelah modal habis. Warungku menghitung semuanya otomatis, setiap kali barang terjual.</p>
-    <div class="compare">
-      <div class="card before reveal">
-        <h3>Pakai buku & kalkulator</h3>
-        <ul>
-          <li>Hitung kembalian manual, rawan salah pas lagi ramai</li>
-          <li>Stok habis baru ketahuan waktu pembeli nanya</li>
-          <li>Kasbon tetangga ditulis di kertas, sering lupa ditagih</li>
-          <li>Tutup warung masih harus rekap sampai malam</li>
-        </ul>
-      </div>
-      <div class="card after reveal">
-        <h3>Pakai Warungku</h3>
-        <ul>
-          <li>Ketuk barang, total & kembalian langsung muncul</li>
-          <li>Notifikasi stok menipis sebelum barang habis</li>
-          <li>Daftar kasbon rapi, tagih lewat WhatsApp sekali ketuk</li>
-          <li>Laporan untung-rugi siap otomatis setiap hari</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section id="fitur">
-  <div class="wrap">
-    <p class="eyebrow reveal">Fitur</p>
-    <h2 class="reveal">Semua yang warung butuhkan, nggak lebih ribet.</h2>
-    <p class="sec-lead reveal">Dibuat bareng pemilik warung sungguhan. Tombolnya besar, bahasanya sehari-hari, dan bisa dipakai siapa saja — termasuk anak atau karyawan yang bantu jaga.</p>
-
-    <div class="feat-grid">
-      <article class="feat wide reveal">
-        <div class="feat-ic" aria-hidden="true">📒</div>
-        <h3>Buku kasbon digital</h3>
-        <p>Catat utang pelanggan per orang, lengkap dengan tanggal dan barangnya. Kirim pengingat sopan lewat WhatsApp tanpa canggung.</p>
-        <div class="kasbon-mini" aria-label="Contoh daftar kasbon">
-          <div><span>Pak RT Joko</span><b>Rp 125.000</b></div>
-          <div><span>Mbak Wati</span><b>Rp 42.500</b></div>
-          <div class="lunas"><span>Mas Dedi</span><b>Lunas ✓</b></div>
-        </div>
-      </article>
-      <article class="feat wide reveal">
-        <div class="feat-ic" aria-hidden="true">📈</div>
-        <h3>Untung harian, bukan cuma omzet</h3>
-        <p>Masukkan harga modal sekali, Warungku hitung laba bersih tiap transaksi. Lihat hari mana paling ramai dan barang apa paling laku.</p>
-        <div class="bars" aria-hidden="true">
-          <i style="height:45%"></i><i style="height:62%"></i><i style="height:38%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:88%"></i><i class="today" style="height:76%"></i>
-        </div>
-        <div class="bars-lbl" aria-hidden="true"><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span><span>Min</span></div>
-      </article>
-      <article class="feat reveal">
-        <div class="feat-ic" aria-hidden="true">📦</div>
-        <h3>Stok otomatis</h3>
-        <p>Stok berkurang sendiri tiap ada penjualan. Dapat peringatan saat barang tinggal sedikit, plus daftar belanja ke grosir.</p>
-      </article>
-      <article class="feat reveal">
-        <div class="feat-ic" aria-hidden="true">📶</div>
-        <h3>Tetap jalan saat offline</h3>
-        <p>Sinyal hilang? Transaksi tetap tersimpan di HP dan disinkronkan otomatis begitu internet kembali.</p>
-      </article>
-      <article class="feat reveal">
-        <div class="feat-ic" aria-hidden="true">🔳</div>
-        <h3>QRIS & struk digital</h3>
-        <p>Terima pembayaran QRIS dari semua e-wallet dan m-banking. Cetak struk via printer Bluetooth atau kirim lewat WhatsApp.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- STEPS -->
-<section class="steps" id="cara">
-  <div class="wrap">
-    <p class="eyebrow reveal">Cara pakai</p>
-    <h2 class="reveal">Buka warung digital dalam waktu seduh kopi.</h2>
-    <p class="sec-lead reveal">Nggak perlu beli mesin kasir mahal. HP Android kamu sudah cukup.</p>
-    <ol class="step-list">
-      <li class="reveal">
-        <h3>Unduh & daftar</h3>
-        <p>Pasang Warungku dari Play Store, daftar pakai nomor WhatsApp. Selesai dalam satu menit.</p>
-      </li>
-      <li class="reveal">
-        <h3>Masukkan barang</h3>
-        <p>Scan barcode pakai kamera, atau pilih dari 20.000+ katalog produk warung yang sudah tersedia.</p>
-      </li>
-      <li class="reveal">
-        <h3>Mulai jualan</h3>
-        <p>Ketuk barang, terima uang, beres. Laporan dan stok terupdate dengan sendirinya.</p>
-      </li>
-    </ol>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="harga">
-  <div class="wrap">
-    <div class="price-head">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
       <div>
-        <p class="eyebrow reveal">Harga</p>
-        <h2 class="reveal">Lebih murah dari sebungkus rokok per hari.</h2>
-        <p class="sec-lead reveal">Mulai gratis selamanya. Upgrade kalau warung makin ramai.</p>
+        <span class="pill"><i></i> Kasir di HP, tanpa alat tambahan</span>
+        <h1>Warung kecil, <em>catatan rapi.</em></h1>
+        <p class="lead">Warungku mencatat penjualan, stok, dan kasbon pelanggan langsung dari HP Anda. Tutup warung, langsung tahu untung hari ini — tanpa buku tulis, tanpa kalkulator.</p>
+        <div class="cta-row">
+          <a href="#daftar" class="btn btn-primary">Coba gratis sekarang</a>
+          <a href="#fitur" class="btn btn-ghost">Lihat fiturnya</a>
+        </div>
+        <ul class="hero-notes">
+          <li><svg><use href="#i-check"/></svg> Gratis selamanya untuk 1 warung</li>
+          <li><svg><use href="#i-check"/></svg> Bisa tanpa internet</li>
+          <li><svg><use href="#i-check"/></svg> Tanpa kartu kredit</li>
+        </ul>
       </div>
-      <div class="toggle reveal" role="group" aria-label="Periode tagihan">
-        <button type="button" aria-pressed="true" data-period="month">Bulanan</button>
-        <button type="button" aria-pressed="false" data-period="year">Tahunan <em>Hemat 20%</em></button>
+
+      <div class="demo">
+        <div class="phone">
+          <div class="screen">
+            <div class="app-top">
+              <div class="row">
+                <div><small>Kasir</small><strong>Warung Bu Sari</strong></div>
+                <span class="badge-open">● Buka</span>
+              </div>
+            </div>
+            <div class="hint">Ketuk barang untuk menambah ke keranjang</div>
+            <div class="products" id="products"></div>
+            <div class="cart">
+              <div class="methods" role="group" aria-label="Cara bayar">
+                <button class="method" type="button" aria-pressed="true">Tunai</button>
+                <button class="method" type="button" aria-pressed="false">QRIS</button>
+                <button class="method" type="button" aria-pressed="false">Kasbon</button>
+              </div>
+              <button class="pay" id="pay" type="button" disabled>
+                <span id="payLabel">Keranjang kosong</span><span id="payTotal"></span>
+              </button>
+            </div>
+            <div class="receipt" id="receipt" role="dialog" aria-label="Struk" aria-hidden="true">
+              <div class="receipt-card">
+                <div class="receipt-ok"><span>✓</span> <span id="rTitle" style="all:unset">Lunas</span></div>
+                <ul class="receipt-lines" id="rLines"></ul>
+                <div class="receipt-total"><span>Total</span><span id="rTotal"></span></div>
+                <p class="receipt-note" id="rNote"></p>
+                <button type="button" id="rNew">Transaksi baru</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="demo-caption">👆 Coba sendiri — ini bisa diketuk</p>
       </div>
     </div>
+  </section>
 
-    <div class="plans">
-      <article class="plan reveal">
-        <h3>Gratis</h3>
-        <p class="for">Untuk warung yang baru mulai catat jualan.</p>
-        <div class="amount"><strong>Rp 0</strong><span>/selamanya</span></div>
-        <p class="billed">&nbsp;</p>
-        <ul>
-          <li>1 perangkat kasir</li>
-          <li>Hingga 100 jenis barang</li>
-          <li>Catat kasbon pelanggan</li>
-          <li>Laporan penjualan harian</li>
-        </ul>
-        <a href="#" class="btn btn-ghost">Pakai Gratis</a>
-      </article>
-      <article class="plan pop reveal">
-        <h3>Juragan</h3>
-        <p class="for">Untuk warung yang sudah ramai dan ingin tahu untung pasti.</p>
-        <div class="amount"><strong data-month="49.000" data-year="39.000">Rp 49.000</strong><span>/bulan</span></div>
-        <p class="billed" data-month="&nbsp;" data-year="Ditagih Rp 468.000 per tahun">&nbsp;</p>
-        <ul>
-          <li>3 perangkat kasir</li>
-          <li>Barang tanpa batas</li>
-          <li>Laporan laba-rugi & barang terlaris</li>
-          <li>QRIS & struk WhatsApp</li>
-          <li>Pengingat kasbon otomatis</li>
-        </ul>
-        <a href="#" class="btn btn-primary">Coba 30 Hari Gratis</a>
-      </article>
-      <article class="plan reveal">
-        <h3>Cabang</h3>
-        <p class="for">Untuk UMKM dengan lebih dari satu toko atau gudang.</p>
-        <div class="amount"><strong data-month="129.000" data-year="103.000">Rp 129.000</strong><span>/bulan</span></div>
-        <p class="billed" data-month="&nbsp;" data-year="Ditagih Rp 1.236.000 per tahun">&nbsp;</p>
-        <ul>
-          <li>Perangkat & cabang tanpa batas</li>
-          <li>Akun karyawan dengan hak akses</li>
-          <li>Transfer stok antar cabang</li>
-          <li>Ekspor laporan ke Excel</li>
-          <li>Bantuan prioritas via WhatsApp</li>
-        </ul>
-        <a href="#" class="btn btn-ghost">Hubungi Kami</a>
-      </article>
+  <!-- STRIP -->
+  <section class="strip" aria-label="Keunggulan singkat">
+    <div class="wrap">
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18h3"/></svg> Cukup pakai HP Android</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a14 14 0 0118 0M6.5 12.5a9 9 0 0111 0M10 16a4 4 0 014 0"/><path d="M3 3l18 18"/></svg> Tetap jalan saat offline</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Siap dipakai dalam 5 menit</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M20 20v.01M17 20v.01M20 17v.01"/></svg> Terima QRIS &amp; tunai</li>
+      </ul>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- TESTIMONIALS -->
-<section class="testi">
-  <div class="wrap">
-    <p class="eyebrow reveal">Cerita pengguna</p>
-    <h2 class="reveal">Dari warung kecil sampai toko tiga cabang.</h2>
-    <div class="quotes">
-      <figure class="quote reveal">
-        <blockquote>Dulu kasbon tetangga cuma saya tulis di belakang kalender. Sekarang tinggal kirim WhatsApp, yang bayar malah lebih cepat.</blockquote>
-        <figcaption class="who"><span class="av" style="background:#1f5c3f">SR</span><span><b>Bu Sri Rahayu</b><small>Warung kelontong, Klaten</small></span></figcaption>
-      </figure>
-      <figure class="quote reveal">
-        <blockquote>Ternyata rokok itu omzetnya besar tapi untungnya tipis. Dari laporan Warungku saya baru tahu harus fokus jualan apa.</blockquote>
-        <figcaption class="who"><span class="av" style="background:#d4462a">AF</span><span><b>Ahmad Fauzi</b><small>Toko sembako, Bekasi</small></span></figcaption>
-      </figure>
-      <figure class="quote reveal">
-        <blockquote>Saya punya tiga warmindo. Dari rumah bisa cek stok dan setoran tiap cabang, nggak perlu telepon karyawan satu-satu.</blockquote>
-        <figcaption class="who"><span class="av" style="background:#c98d1c">DL</span><span><b>Dewi Lestari</b><small>Pemilik 3 warmindo, Bandung</small></span></figcaption>
-      </figure>
+  <!-- FITUR -->
+  <section id="fitur">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Fitur</span>
+        <h2>Semua urusan warung, beres di satu aplikasi</h2>
+        <p>Dibuat untuk pemilik warung yang sibuk melayani pembeli — bukan untuk akuntan. Tombolnya besar, bahasanya sederhana.</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 13.5H12L11 22l8.5-11.5H12z"/></svg></div>
+          <h3>Kasir super cepat</h3>
+          <p>Ketuk barang, pilih cara bayar, selesai. Kembalian dihitung otomatis, jadi antrean tidak menumpuk saat jam ramai.</p>
+        </article>
+        <article class="feature">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8L12 3.5 20.5 8v8L12 20.5 3.5 16z"/><path d="M3.5 8L12 12.5 20.5 8M12 12.5v8"/></svg></div>
+          <h3>Stok terpantau otomatis</h3>
+          <p>Stok berkurang sendiri tiap ada penjualan. Dapat pengingat sebelum barang habis, lengkap dengan daftar belanja ke agen.</p>
+        </article>
+        <article class="feature">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3.5h11a3 3 0 013 3v14H8a3 3 0 01-3-3z"/><path d="M9 8.5h6M9 12.5h6M9 16.5h3"/></svg></div>
+          <h3>Buku kasbon digital</h3>
+          <p>Catat utang pelanggan saat transaksi. Tahu persis siapa berutang berapa, dan ingatkan dengan sopan lewat WhatsApp.</p>
+        </article>
+        <article class="feature">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg></div>
+          <h3>Laporan untung harian</h3>
+          <p>Omzet, modal, dan untung bersih tersaji tiap tutup warung. Lihat juga barang paling laku dan jam paling ramai.</p>
+        </article>
+        <article class="feature">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9.5 8h5M9.5 12h5"/></svg></div>
+          <h3>Struk lewat WhatsApp</h3>
+          <p>Kirim struk ke pembeli tanpa kertas, atau cetak dengan printer Bluetooth kalau Anda punya. Dua-duanya bisa.</p>
+        </article>
+        <article class="feature">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0M16 4.8a3.5 3.5 0 010 6.4M18.5 14.5a6 6 0 013 5.5"/></svg></div>
+          <h3>Akun untuk karyawan</h3>
+          <p>Titip warung dengan tenang. Karyawan bisa melayani pembeli, tapi laporan untung dan harga modal hanya Anda yang lihat.</p>
+        </article>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FAQ -->
-<section id="faq">
-  <div class="wrap faq-grid">
-    <div>
-      <p class="eyebrow">FAQ</p>
-      <h2>Yang sering ditanyakan.</h2>
-      <p class="sec-lead">Masih ragu? Tim kami siap bantu lewat WhatsApp setiap hari, jam 07.00–21.00 WIB.</p>
-    </div>
-    <div>
-      <details open>
-        <summary>Apakah harus beli mesin kasir atau printer?</summary>
-        <p>Tidak. Warungku berjalan di HP Android (versi 8 ke atas) dan tablet. Printer struk Bluetooth bersifat opsional — kamu juga bisa kirim struk digital lewat WhatsApp.</p>
-      </details>
-      <details>
-        <summary>Kalau internet mati, data hilang nggak?</summary>
-        <p>Tidak. Semua transaksi tersimpan di HP dulu, lalu otomatis dicadangkan ke server begitu ada sinyal. Ganti HP pun data tetap aman.</p>
-      </details>
-      <details>
-        <summary>Saya gaptek, apakah bisa pakai?</summary>
-        <p>Bisa. Tampilan Warungku dibuat sesederhana mungkin dengan tombol besar dan bahasa sehari-hari. Ada juga video panduan singkat dan bantuan langsung lewat WhatsApp.</p>
-      </details>
-      <details>
-        <summary>Berapa biaya QRIS-nya?</summary>
-        <p>Biaya MDR QRIS mengikuti ketentuan Bank Indonesia untuk usaha mikro. Dana masuk ke rekening kamu setiap hari kerja.</p>
-      </details>
-      <details>
-        <summary>Bisa berhenti langganan kapan saja?</summary>
-        <p>Bisa. Tidak ada kontrak. Kalau berhenti, akun kembali ke paket Gratis dan data penjualan tetap bisa kamu lihat.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<div class="cta">
-  <div class="wrap">
-    <div class="cta-box reveal">
+  <!-- KASBON -->
+  <section class="band" id="kasbon">
+    <div class="wrap band-grid">
       <div>
-        <h2>Warung rapi, untung jelas, tidur lebih tenang.</h2>
-        <p>Gabung dengan ribuan pemilik warung yang sudah naik kelas bareng Warungku.</p>
+        <span class="eyebrow">Kasbon</span>
+        <h2>“Bu, bon dulu ya.” Boleh — asal tercatat.</h2>
+        <p class="lead">Kasbon itu bagian dari warung. Yang bikin rugi bukan utangnya, tapi lupa mencatatnya. Warungku menjaga catatan itu untuk Anda.</p>
+        <ul class="checks">
+          <li><svg><use href="#i-check"/></svg><span>Pilih <b>Kasbon</b> saat bayar, utang langsung masuk atas nama pelanggan.</span></li>
+          <li><svg><use href="#i-check"/></svg><span>Pengingat WhatsApp dengan bahasa yang sopan, sekali ketuk.</span></li>
+          <li><svg><use href="#i-check"/></svg><span>Bisa dicicil — sisa utang dihitung otomatis.</span></li>
+        </ul>
       </div>
-      <div class="cta-actions">
-        <a href="#" class="btn btn-primary">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 3.5v17l9.5-8.5L4 3.5zm10.9 7.2l2.6-2.3L6.6 2.3l8.3 8.4zm0 2.6l-8.3 8.4 10.9-6.1-2.6-2.3zm5.6-2.5l-2.4-1.4-2.8 2.6 2.8 2.6 2.4-1.4c.8-.5.8-1.9 0-2.4z"/></svg>
-          Unduh di Google Play
-        </a>
-        <a href="#" class="btn btn-ghost">Tanya via WhatsApp</a>
+      <div class="ledger" aria-label="Contoh tampilan buku kasbon">
+        <div class="ledger-head">
+          <strong>Buku Kasbon</strong>
+          <span>Belum lunas: <b>Rp187.500</b></span>
+        </div>
+        <ul>
+          <li>
+            <span class="avatar">PD</span>
+            <span class="who">Pak Darto <small>3 transaksi · sejak 2 Nov</small></span>
+            <span class="amt">Rp96.000<br><span class="tag late">Lewat 2 minggu</span></span>
+          </li>
+          <li>
+            <span class="avatar">MR</span>
+            <span class="who">Mbak Rini <small>Cicil Rp20.000 kemarin</small></span>
+            <span class="amt">Rp54.500<br><span class="tag">Dicicil</span></span>
+          </li>
+          <li>
+            <span class="avatar">BY</span>
+            <span class="who">Bu Yati <small>1 transaksi · hari ini</small></span>
+            <span class="amt">Rp37.000<br><span class="tag">Baru</span></span>
+          </li>
+          <li>
+            <span class="avatar">MA</span>
+            <span class="who">Mas Agus <small>Lunas 15 Nov</small></span>
+            <span class="amt">Rp0<br><span class="tag paid">Lunas</span></span>
+          </li>
+        </ul>
       </div>
     </div>
-  </div>
-</div>
+  </section>
+
+  <!-- CARA MULAI -->
+  <section id="cara">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Cara mulai</span>
+        <h2>Pasang pagi ini, pakai jualan siang ini</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Unduh &amp; daftar</h3>
+          <p>Pasang aplikasinya, daftar pakai nomor HP. Tidak perlu email, tidak perlu isi formulir panjang.</p>
+        </li>
+        <li>
+          <h3>Masukkan barang</h3>
+          <p>Foto atau scan barcode barang dagangan Anda, isi harga jual. Barang umum warung sudah ada daftarnya.</p>
+        </li>
+        <li>
+          <h3>Mulai jualan</h3>
+          <p>Layani pembeli seperti biasa. Penjualan, stok, dan kasbon tercatat sendiri di belakang layar.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- HARGA -->
+  <section id="harga" class="pricing-bg">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Harga</span>
+        <h2>Mulai gratis. Bayar kalau warung sudah berkembang.</h2>
+        <p>Tanpa biaya pasang, tanpa kontrak. Bisa berhenti kapan saja.</p>
+      </div>
+      <div class="plans">
+        <div class="plan">
+          <h3>Rintisan</h3>
+          <p class="for">Untuk warung yang baru mulai mencatat.</p>
+          <p class="price">Rp0 <small>selamanya</small></p>
+          <ul>
+            <li><svg><use href="#i-check"/></svg> 1 warung, 1 pengguna</li>
+            <li><svg><use href="#i-check"/></svg> Kasir &amp; hingga 100 barang</li>
+            <li><svg><use href="#i-check"/></svg> Buku kasbon</li>
+            <li><svg><use href="#i-check"/></svg> Laporan harian</li>
+          </ul>
+          <a href="#daftar" class="btn btn-ghost">Mulai gratis</a>
+        </div>
+        <div class="plan featured">
+          <span class="plan-flag">Paling banyak dipilih</span>
+          <h3>Juragan</h3>
+          <p class="for">Untuk warung dan toko yang ramai tiap hari.</p>
+          <p class="price">Rp49rb <small>/ bulan</small></p>
+          <ul>
+            <li><svg><use href="#i-check"/></svg> Semua di paket Rintisan</li>
+            <li><svg><use href="#i-check"/></svg> Barang tanpa batas</li>
+            <li><svg><use href="#i-check"/></svg> 3 akun karyawan</li>
+            <li><svg><use href="#i-check"/></svg> Pengingat stok &amp; kasbon via WhatsApp</li>
+            <li><svg><use href="#i-check"/></svg> Laporan untung-rugi bulanan</li>
+          </ul>
+          <a href="#daftar" class="btn btn-primary">Coba 14 hari gratis</a>
+        </div>
+        <div class="plan">
+          <h3>Cabang</h3>
+          <p class="for">Untuk usaha dengan lebih dari satu lokasi.</p>
+          <p class="price">Rp149rb <small>/ bulan</small></p>
+          <ul>
+            <li><svg><use href="#i-check"/></svg> Semua di paket Juragan</li>
+            <li><svg><use href="#i-check"/></svg> Hingga 5 cabang</li>
+            <li><svg><use href="#i-check"/></svg> Karyawan tanpa batas</li>
+            <li><svg><use href="#i-check"/></svg> Pindah stok antar cabang</li>
+            <li><svg><use href="#i-check"/></svg> Bantuan prioritas</li>
+          </ul>
+          <a href="#daftar" class="btn btn-ghost">Hubungi kami</a>
+        </div>
+      </div>
+      <p class="price-note">Bayar tahunan, gratis 2 bulan. Harga sudah termasuk pajak.</p>
+    </div>
+  </section>
+
+  <!-- TESTIMONI -->
+  <section id="cerita">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Cerita pengguna</span>
+        <h2>Dari pemilik warung, untuk pemilik warung</h2>
+      </div>
+      <div class="quotes">
+        <figure class="quote">
+          <blockquote>“Dulu kasbon saya tulis di buku, sering lupa siapa yang sudah bayar. Sekarang tinggal buka HP, semua kelihatan.”</blockquote>
+          <figcaption><span class="avatar">SR</span><span><b>Bu Sari</b><span>Warung sembako, Sleman</span></span></figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>“Baru tahu ternyata untung paling besar itu dari es dan gorengan, bukan rokok. Belanja saya jadi lebih tepat.”</blockquote>
+          <figcaption><span class="avatar">HD</span><span><b>Pak Hendra</b><span>Warung kopi, Bekasi</span></span></figcaption>
+        </figure>
+        <figure class="quote">
+          <blockquote>“Saya tinggal ke pasar, anak yang jaga. Pulang-pulang tinggal cek laporan, uangnya pas dengan catatan.”</blockquote>
+          <figcaption><span class="avatar">NN</span><span><b>Mbak Nining</b><span>Toko kelontong, Medan</span></span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="padding-top:0">
+    <div class="wrap faq-grid">
+      <div class="section-head">
+        <span class="eyebrow">Tanya jawab</span>
+        <h2>Yang sering ditanyakan</h2>
+        <p>Masih bingung? Kirim pesan ke tim kami lewat WhatsApp, kami bantu sampai bisa.</p>
+      </div>
+      <div>
+        <details open>
+          <summary>Apakah bisa dipakai tanpa internet?</summary>
+          <p>Bisa. Semua transaksi tetap tercatat di HP saat offline, lalu otomatis dicadangkan begitu ada sinyal lagi.</p>
+        </details>
+        <details>
+          <summary>Saya gaptek, apa tidak susah?</summary>
+          <p>Kalau Anda bisa pakai WhatsApp, Anda bisa pakai Warungku. Ada video panduan singkat, dan tim kami siap membantu pemasangan awal.</p>
+        </details>
+        <details>
+          <summary>Perlu beli alat kasir atau printer?</summary>
+          <p>Tidak perlu. Cukup HP Android. Printer struk Bluetooth dan scanner barcode bisa disambungkan kalau Anda mau, tapi tidak wajib.</p>
+        </details>
+        <details>
+          <summary>Kalau HP saya hilang atau rusak, datanya ke mana?</summary>
+          <p>Data Anda dicadangkan otomatis. Masuk lagi dengan nomor HP yang sama di perangkat baru, semua catatan kembali seperti semula.</p>
+        </details>
+        <details>
+          <summary>Paket gratis benar-benar gratis?</summary>
+          <p>Ya. Paket Rintisan gratis selamanya, tanpa iklan dan tanpa kartu kredit. Anda baru membayar kalau butuh fitur paket di atasnya.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="daftar">
+    <div class="wrap">
+      <div class="cta-box">
+        <h2>Tutup warung malam ini,<br>sudah tahu untungnya.</h2>
+        <p>Masukkan nomor WhatsApp Anda. Kami kirim tautan unduh dan panduan memulai.</p>
+        <!-- TODO: sambungkan form ini ke backend / layanan pendaftaran Anda -->
+        <form class="signup" id="signup" novalidate>
+          <label class="sr-only" for="wa">Nomor WhatsApp</label>
+          <input id="wa" name="wa" type="tel" inputmode="tel" autocomplete="tel" placeholder="Contoh: 0812 3456 7890" required>
+          <button class="btn btn-kunyit" type="submit">Kirim tautan</button>
+        </form>
+        <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
-  <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <a href="#" class="logo">
-          <span class="logo-mark" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 9l2-5h14l2 5" stroke="#f2b33d" stroke-width="2.2" stroke-linejoin="round"/><path d="M3 9c0 1.7 1.3 3 3 3s3-1.3 3-3c0 1.7 1.3 3 3 3s3-1.3 3-3c0 1.7 1.3 3 3 3s3-1.3 3-3" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/><path d="M5 12v8h14v-8" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/></svg>
-          </span>
-          Warungku
-        </a>
-        <p>Aplikasi kasir untuk warung dan UMKM Indonesia.</p>
-      </div>
-      <div>
-        <h4>Produk</h4>
-        <ul><li><a href="#fitur">Fitur</a></li><li><a href="#harga">Harga</a></li><li><a href="#">Printer struk</a></li><li><a href="#">Pembaruan</a></li></ul>
-      </div>
-      <div>
-        <h4>Bantuan</h4>
-        <ul><li><a href="#faq">FAQ</a></li><li><a href="#">Video panduan</a></li><li><a href="#">WhatsApp</a></li><li><a href="#">Status layanan</a></li></ul>
-      </div>
-      <div>
-        <h4>Perusahaan</h4>
-        <ul><li><a href="#">Tentang kami</a></li><li><a href="#">Karier</a></li><li><a href="#">Kebijakan privasi</a></li><li><a href="#">Syarat & ketentuan</a></li></ul>
-      </div>
-    </div>
-    <div class="foot-bottom">
-      <span>© <span id="year">2026</span> Warungku. Dibuat dengan ☕ di Indonesia.</span>
-      <span>Jl. Contoh No. 1, Jakarta</span>
-    </div>
+  <div class="wrap foot">
+    <span>© 2026 Warungku. Dibuat untuk warung dan UMKM Indonesia.</span>
+    <nav aria-label="Tautan kaki">
+      <a href="#fitur">Fitur</a>
+      <a href="#harga">Harga</a>
+      <a href="#faq">Bantuan</a>
+      <a href="#">Kebijakan Privasi</a>
+    </nav>
   </div>
 </footer>
 
 <script>
-(function(){
-  const rp = n => 'Rp ' + n.toLocaleString('id-ID');
+(function () {
+  var rp = function (n) { return 'Rp' + n.toLocaleString('id-ID'); };
 
-  /* ---- Demo kasir ---- */
-  const items = [
-    {id:'mie',  emo:'🍜', nm:'Mi goreng',    pr:3500},
-    {id:'kopi', emo:'☕', nm:'Kopi sachet',  pr:2000},
-    {id:'telur',emo:'🥚', nm:'Telur ¼ kg',   pr:7500},
-    {id:'gula', emo:'🍚', nm:'Gula 1 kg',    pr:17000},
-    {id:'teh',  emo:'🧋', nm:'Es teh',       pr:4000},
-    {id:'gas',  emo:'🛢️', nm:'Gas 3 kg',     pr:22000},
-    {id:'roti', emo:'🍞', nm:'Roti isi',     pr:5000},
-    {id:'sabun',emo:'🧼', nm:'Sabun mandi',  pr:4500},
-    {id:'air',  emo:'💧', nm:'Air mineral',  pr:3000},
+  /* ---------- Demo kasir ---------- */
+  var items = [
+    { e: '🍜', n: 'Mi instan goreng', p: 3500 },
+    { e: '☕', n: 'Kopi sachet', p: 2000 },
+    { e: '🥚', n: 'Telur ¼ kg', p: 7500 },
+    { e: '🍚', n: 'Beras 1 kg', p: 14000 },
+    { e: '🧊', n: 'Es teh manis', p: 4000 },
+    { e: '🧼', n: 'Sabun cuci', p: 5000 }
   ];
-  const cart = {};
-  let omzet = 845000;
+  var qty = items.map(function () { return 0; });
+  var method = 'Tunai';
 
-  const $ = id => document.getElementById(id);
-  const grid = $('products'), lines = $('cartLines'), totalEl = $('total'),
-        payBtn = $('payBtn'), receipt = $('receipt');
+  var grid = document.getElementById('products');
+  var pay = document.getElementById('pay');
+  var payLabel = document.getElementById('payLabel');
+  var payTotal = document.getElementById('payTotal');
+  var receipt = document.getElementById('receipt');
 
-  items.forEach(it => {
-    const b = document.createElement('button');
-    b.type = 'button'; b.className = 'prod'; b.dataset.id = it.id;
-    b.setAttribute('aria-label', `Tambah ${it.nm}, ${rp(it.pr)}`);
-    b.innerHTML = `<span class="qty">0</span><span class="emo" aria-hidden="true">${it.emo}</span><span class="nm">${it.nm}</span><span class="pr">${it.pr.toLocaleString('id-ID')}</span>`;
-    b.addEventListener('click', () => { cart[it.id] = (cart[it.id]||0) + 1; render(); });
+  items.forEach(function (it, i) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'product';
+    b.innerHTML = '<span class="qty" aria-hidden="true"></span><span class="emo" aria-hidden="true">' + it.e +
+      '</span><span class="nm">' + it.n + '</span><span class="pr">' + rp(it.p) + '</span>';
+    b.addEventListener('click', function () { qty[i]++; render(); });
     grid.appendChild(b);
   });
 
-  function total(){ return items.reduce((s,it)=> s + (cart[it.id]||0)*it.pr, 0); }
+  function total() { return items.reduce(function (s, it, i) { return s + it.p * qty[i]; }, 0); }
+  function count() { return qty.reduce(function (a, b) { return a + b; }, 0); }
 
-  function render(){
-    const t = total();
-    grid.querySelectorAll('.prod').forEach(b => {
-      const q = cart[b.dataset.id]||0;
-      b.classList.toggle('on', q>0);
-      b.querySelector('.qty').textContent = q;
+  function render() {
+    Array.prototype.forEach.call(grid.children, function (el, i) {
+      el.classList.toggle('has', qty[i] > 0);
+      el.querySelector('.qty').textContent = qty[i];
+      el.setAttribute('aria-label', items[i].n + ', ' + rp(items[i].p) + (qty[i] ? ', ' + qty[i] + ' di keranjang' : ''));
     });
-    const chosen = items.filter(it => cart[it.id]);
-    lines.innerHTML = chosen.length
-      ? chosen.map(it => `<div><span>${cart[it.id]}× ${it.nm}</span><span>${(cart[it.id]*it.pr).toLocaleString('id-ID')}</span></div>`).join('')
-      : '<div class="cart-empty">Ketuk barang untuk menambah…</div>';
-    lines.scrollTop = lines.scrollHeight;
-    totalEl.textContent = rp(t);
-    payBtn.disabled = t === 0;
+    var c = count();
+    pay.disabled = c === 0;
+    payLabel.textContent = c === 0 ? 'Keranjang kosong' : (method === 'Kasbon' ? 'Catat kasbon' : 'Bayar') + ' · ' + c + ' barang';
+    payTotal.textContent = c === 0 ? '' : rp(total());
   }
 
-  function cashFor(t){
-    const notes = [2000,5000,10000,20000,50000,100000];
-    for (const n of notes) if (n >= t) return n;
-    return Math.ceil(t/50000)*50000;
-  }
-
-  payBtn.addEventListener('click', () => {
-    const t = total(); if (!t) return;
-    const cash = cashFor(t);
-    const chosen = items.filter(it => cart[it.id]);
-    $('slipLines').innerHTML = chosen.map(it => `<div class="r"><span>${cart[it.id]}× ${it.nm}</span><span>${(cart[it.id]*it.pr).toLocaleString('id-ID')}</span></div>`).join('');
-    $('slipTotal').textContent = rp(t);
-    $('slipCash').textContent = rp(cash);
-    $('slipChange').textContent = rp(cash - t);
-    const d = new Date();
-    $('slipTime').textContent = d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'}) + ' · ' + d.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
-    omzet += t;
-    $('omzet').textContent = 'Hari ini ' + rp(omzet);
-    receipt.classList.add('show');
-    $('okBtn').focus();
+  var methodBtns = document.querySelectorAll('.method');
+  Array.prototype.forEach.call(methodBtns, function (m) {
+    m.addEventListener('click', function () {
+      method = m.textContent;
+      Array.prototype.forEach.call(methodBtns, function (x) { x.setAttribute('aria-pressed', x === m); });
+      render();
+    });
   });
 
-  function closeReceipt(){
+  pay.addEventListener('click', function () {
+    var lines = document.getElementById('rLines');
+    lines.innerHTML = '';
+    items.forEach(function (it, i) {
+      if (!qty[i]) return;
+      var li = document.createElement('li');
+      li.innerHTML = '<span>' + qty[i] + '× ' + it.n + '</span><span>' + rp(it.p * qty[i]) + '</span>';
+      lines.appendChild(li);
+    });
+    document.getElementById('rTotal').textContent = rp(total());
+    document.getElementById('rTitle').textContent = method === 'Kasbon' ? 'Kasbon tercatat' : 'Lunas · ' + method;
+    document.getElementById('rNote').textContent = method === 'Kasbon'
+      ? 'Masuk ke buku kasbon. Stok sudah dikurangi.'
+      : 'Stok sudah dikurangi. Struk siap dikirim ke WhatsApp.';
+    receipt.classList.add('show');
+    receipt.setAttribute('aria-hidden', 'false');
+    document.getElementById('rNew').focus({ preventScroll: true });
+  });
+
+  document.getElementById('rNew').addEventListener('click', function () {
+    qty = qty.map(function () { return 0; });
     receipt.classList.remove('show');
-    Object.keys(cart).forEach(k => delete cart[k]);
+    receipt.setAttribute('aria-hidden', 'true');
     render();
-    payBtn.focus();
-  }
-  $('okBtn').addEventListener('click', closeReceipt);
-  receipt.addEventListener('keydown', e => { if (e.key === 'Escape') closeReceipt(); });
-  $('resetBtn').addEventListener('click', () => { Object.keys(cart).forEach(k => delete cart[k]); render(); });
+  });
+
   render();
 
-  /* ---- Toggle harga ---- */
-  const toggles = document.querySelectorAll('.toggle button');
-  toggles.forEach(btn => btn.addEventListener('click', () => {
-    const p = btn.dataset.period;
-    toggles.forEach(b => b.setAttribute('aria-pressed', b === btn));
-    document.querySelectorAll('.amount strong[data-month]').forEach(el => el.textContent = 'Rp ' + el.dataset[p]);
-    document.querySelectorAll('.billed[data-month]').forEach(el => el.innerHTML = el.dataset[p]);
-  }));
-
-  /* ---- Nav border on scroll ---- */
-  const nav = $('nav');
-  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
-  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
-
-  /* ---- Reveal on scroll ---- */
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(es => es.forEach(e => {
-      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-    }), {threshold:.12});
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  } else {
-    document.querySelectorAll('.reveal').forEach(el => el.classList.add('in'));
-  }
-
-  $('year').textContent = new Date().getFullYear();
+  /* ---------- Form pendaftaran (belum tersambung ke server) ---------- */
+  var form = document.getElementById('signup');
+  var msg = document.getElementById('formMsg');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var raw = form.wa.value.replace(/[\s\-().]/g, '');
+    var ok = /^(\+62|62|0)8\d{7,11}$/.test(raw);
+    msg.classList.toggle('err', !ok);
+    if (!ok) {
+      msg.textContent = 'Nomornya belum benar. Contoh: 0812 3456 7890';
+      form.wa.focus();
+      return;
+    }
+    msg.textContent = 'Terima kasih! Tautan unduh akan kami kirim ke ' + form.wa.value.trim() + '.';
+    form.reset();
+  });
 })();
 </script>
 </body>

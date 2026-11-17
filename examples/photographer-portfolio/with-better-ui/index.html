@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raka Aditya — Wedding and portrait photographer, Bandung</title>
+<meta name="description" content="Raka Aditya is a freelance wedding and portrait photographer based in Bandung, West Java. Now booking weddings for 2027.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f3f1ec;
+  --paper-2: #e9e6df;
+  --ink: #1b211d;
+  --ink-2: #555b55;
+  --rule: #1b211d26;
+  --night: #141815;
+  --on-night: #f3f1ec;
+  --on-night-2: #b9bdb6;
+  --clay: #9a4a2c;
+  --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --sans: "Manrope", system-ui, sans-serif;
+  --mono: "DM Mono", ui-monospace, Menlo, monospace;
+  --gutter: 32px;
+  --gap: 24px;
+  --section: 128px;
+}
+@media (max-width: 760px) { :root { --gutter: 20px; --gap: 16px; --section: 80px; } }
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+img { display: block; width: 100%; height: 100%; object-fit: cover; }
+a { color: inherit; }
+h1, h2, h3, p, figure, ul, ol, dl, dd { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+::selection { background: var(--ink); color: var(--paper); }
+
+.wrap { padding-inline: var(--gutter); }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gap); }
+.meta { font: 400 13px/1.4 var(--mono); letter-spacing: 0.01em; }
+.skip { position: absolute; left: 16px; top: -64px; z-index: 20; background: var(--ink); color: var(--paper); padding: 12px 16px; }
+.skip:focus { top: 16px; }
+
+/* ---------- Hero ---------- */
+.hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: space-between; background: var(--night); color: var(--on-night); overflow: hidden; isolation: isolate; }
+.hero-photo { position: absolute; inset: 0; z-index: -2; }
+.hero-photo img { object-position: 50% 62%; transform: scale(1.7); transform-origin: 0% 100%; }
+.hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to bottom, #0f1310b3 0%, #0f131033 26%, #0f13101a 48%, #0f1310d9 100%); }
+
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px var(--gutter); }
+.nav-name { font: 400 20px/1 var(--serif); text-decoration: none; padding: 12px 12px 12px 0; min-width: 44px; }
+.nav ul { display: flex; gap: 8px; margin-right: -8px; }
+.nav li a { display: block; min-width: 44px; padding: 12px 8px; text-align: center; font: 500 13px/20px var(--sans); text-decoration: none; background: linear-gradient(currentColor, currentColor) 8px calc(100% - 8px) / 0 1px no-repeat; transition: background-size .3s ease; }
+.nav li a:hover { background-size: calc(100% - 16px) 1px; }
+
+.hero-foot { padding: 0 var(--gutter) 24px; }
+.hero-line { position: relative; z-index: 1; display: flex; justify-content: flex-start; align-items: flex-end; gap: 64px; }
+.hero-line p:first-child { max-width: 30ch; font: 400 20px/1.4 var(--sans); }
+.hero-line .meta { color: var(--on-night); padding-bottom: 4px; }
+.mark { font: 300 clamp(72px, 17.6vw, 340px)/0.9 var(--serif); letter-spacing: -0.035em; white-space: nowrap; margin: 16px 0 0 -0.04em; padding-bottom: 0.14em; font-variation-settings: "opsz" 144; }
+.mark em { font-style: italic; font-weight: 300; }
+
+@media (max-width: 760px) {
+  .nav ul { gap: 0; }
+  .hero-photo { bottom: 30%; }
+  .hero-photo img { transform: none; object-position: 52% 50%; }
+  .hero::after { background: linear-gradient(to bottom, #0f1310b3 0%, #0f131026 22%, #0f13101a 48%, #141815 70%); }
+  .hero-line { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .mark { font-size: 27vw; white-space: normal; line-height: 0.86; }
+  .mark span { display: block; }
+}
+
+/* ---------- Statement ---------- */
+.statement { padding-block: var(--section); }
+.statement h2 { grid-column: 1 / 10; font: 300 clamp(28px, 3.9vw, 64px)/1.14 var(--serif); letter-spacing: -0.02em; text-wrap: balance; }
+.statement h2 em { font-style: italic; color: var(--clay); }
+.statement .facts { grid-column: 10 / -1; align-self: end; }
+.facts li { display: flex; justify-content: space-between; gap: 16px; padding-block: 12px; border-top: 1px solid var(--rule); }
+.facts li:last-child { border-bottom: 1px solid var(--rule); }
+.facts span:first-child { color: var(--ink-2); }
+@media (max-width: 1000px) {
+  .statement h2 { grid-column: 1 / -1; }
+  .statement .facts { grid-column: 1 / -1; margin-top: 48px; }
+}
+
+/* ---------- Work ---------- */
+.chapter-head { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; border-top: 1px solid var(--ink); padding-top: 16px; margin-bottom: 48px; }
+.chapter-head h2 { font: 300 clamp(40px, 5.6vw, 96px)/1 var(--serif); letter-spacing: -0.03em; }
+.chapter-head h2 em { font-style: italic; }
+.chapter-head .meta { color: var(--ink-2); text-align: right; }
+
+.frame { align-self: start; }
+.frame .pic { overflow: hidden; background: var(--paper-2); }
+.frame img { filter: saturate(.86) contrast(1.03); transition: scale 1.2s cubic-bezier(.2, .7, .2, 1); }
+.frame:hover img { scale: 1.03; }
+.frame figcaption span { text-wrap: balance; }
+.frame figcaption { display: flex; gap: 16px; padding-top: 12px; color: var(--ink-2); }
+.frame figcaption b { font-weight: 500; color: var(--ink); white-space: nowrap; }
+
+.r-3x2 { aspect-ratio: 3 / 2; } .r-3x4 { aspect-ratio: 3 / 4; } .r-4x5 { aspect-ratio: 4 / 5; } .r-1x1 { aspect-ratio: 1; } .r-wide { aspect-ratio: 21 / 9; }
+
+.weddings .f1 { grid-column: 1 / 9; }
+.weddings .f2 { grid-column: 9 / -1; margin-top: 128px; }
+.weddings .f3 { grid-column: 2 / 5; margin-top: 96px; }
+.weddings .f4 { grid-column: 6 / -1; margin-top: 96px; }
+.bleed { margin: var(--section) calc(-1 * var(--gutter)) 0; }
+.bleed figcaption { padding-inline: var(--gutter); }
+.weddings .f5 { grid-column: 1 / 6; margin-top: 96px; }
+.weddings .f6 { grid-column: 8 / 12; margin-top: 224px; }
+
+.portraits { padding-top: var(--section); }
+.portraits .p1 { grid-column: 1 / 6; }
+.portraits .p2 { grid-column: 7 / 10; margin-top: 160px; }
+.portraits .p3 { grid-column: 10 / -1; margin-top: 48px; }
+
+@media (max-width: 760px) {
+  .chapter-head { margin-bottom: 24px; }
+  .work .frame { grid-column: 1 / -1 !important; margin-top: 40px !important; }
+  .work .frame:first-child { margin-top: 0 !important; }
+  .work .f3 { grid-column: 1 / 9 !important; }
+  .work .p2 { grid-column: 4 / -1 !important; }
+  .bleed { margin-top: 40px; }
+  .r-wide { aspect-ratio: 4 / 3; }
+}
+
+/* ---------- Quote ---------- */
+.quote { padding-block: var(--section); }
+.quote blockquote { grid-column: 3 / 12; margin: 0; }
+.quote p { font: italic 300 clamp(28px, 3.9vw, 64px)/1.16 var(--serif); letter-spacing: -0.02em; text-wrap: balance; }
+.quote footer { margin-top: 32px; color: var(--ink-2); }
+@media (max-width: 760px) { .quote blockquote { grid-column: 1 / -1; } }
+
+/* ---------- About (dark ground) ---------- */
+.about { background: var(--night); color: var(--on-night); padding-block: var(--section); --rule: #f3f1ec2e; }
+.about .pic { grid-column: 1 / 6; aspect-ratio: 4 / 5; overflow: hidden; }
+.about .pic img { filter: saturate(.8); }
+.about .text { grid-column: 7 / 12; align-self: end; }
+.about h2 { font: 300 clamp(40px, 5.6vw, 96px)/1 var(--serif); letter-spacing: -0.03em; margin-bottom: 32px; }
+.about h2 em { font-style: italic; }
+.about .text > p { color: var(--on-night-2); max-width: 54ch; }
+.about .text > p + p { margin-top: 16px; }
+.about .facts { margin-top: 48px; }
+.about .facts span:first-child { color: var(--on-night-2); }
+@media (max-width: 900px) {
+  .about .pic { grid-column: 1 / 10; }
+  .about .text { grid-column: 1 / -1; margin-top: 48px; }
+}
+
+/* ---------- Rates ---------- */
+.rates { padding-block: var(--section); }
+.rates .side { grid-column: 1 / 5; }
+.contact h2 { text-wrap: balance; }
+.rates h2, .contact h2 { font: 300 clamp(40px, 5.6vw, 96px)/1 var(--serif); letter-spacing: -0.03em; }
+.rates h2 em, .contact h2 em { font-style: italic; }
+.rates .side p { margin-top: 24px; color: var(--ink-2); max-width: 36ch; }
+.rates .list { grid-column: 6 / -1; }
+.price { display: grid; grid-template-columns: 1fr auto; column-gap: 24px; row-gap: 4px; padding-block: 24px; border-top: 1px solid var(--rule); }
+.price:last-child { border-bottom: 1px solid var(--rule); }
+.price h3 { font: 400 20px/1.3 var(--serif); font-size: clamp(20px, 2.2vw, 28px); letter-spacing: -0.01em; }
+.price .amount { font: 500 16px/1.9 var(--sans); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.price .amount small { font: 400 13px/1 var(--mono); color: var(--ink-2); margin-right: 8px; }
+.price p:last-child { grid-column: 1 / -1; color: var(--ink-2); max-width: 58ch; }
+
+.steps { margin-top: var(--section); border-top: 1px solid var(--ink); }
+.steps ol { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--gap); padding-top: 16px; }
+.steps li .meta { color: var(--ink-2); }
+.steps li h3 { font: 400 20px/1.3 var(--serif); letter-spacing: -0.01em; margin: 24px 0 8px; }
+.steps li p { color: var(--ink-2); max-width: 30ch; text-wrap: pretty; }
+@media (max-width: 900px) {
+  .rates .side, .rates .list { grid-column: 1 / -1; }
+  .rates .list { margin-top: 48px; }
+  .steps ol { grid-template-columns: 1fr 1fr; row-gap: 40px; }
+  .steps li h3 { margin-top: 12px; }
+}
+@media (max-width: 520px) {
+  .steps ol { grid-template-columns: 1fr; row-gap: 24px; }
+  .price { grid-template-columns: 1fr; }
+  .price .amount { text-align: left; }
+}
+
+/* ---------- Contact ---------- */
+.contact { background: var(--paper-2); padding-block: var(--section); }
+.contact .lead { grid-column: 1 / 7; }
+.contact .lead > p { margin-top: 24px; color: var(--ink-2); max-width: 40ch; }
+.mail { display: inline-block; margin-top: 48px; padding-block: 8px; font: 300 clamp(20px, 2.9vw, 40px)/1.2 var(--serif); letter-spacing: -0.01em; text-decoration-thickness: 1px; text-underline-offset: 8px; overflow-wrap: anywhere; }
+.mail:hover { color: var(--clay); }
+.contact .ways { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 0 24px; }
+.contact .ways a { display: inline-block; padding-block: 12px; text-underline-offset: 4px; }
+.contact form { grid-column: 8 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-content: start; }
+.field { display: grid; gap: 4px; }
+.field.full { grid-column: 1 / -1; }
+.field label { color: var(--ink-2); }
+.field input, .field select, .field textarea { width: 100%; min-height: 48px; padding: 8px 0; border: 0; border-bottom: 1px solid var(--ink); border-radius: 0; background: transparent; color: var(--ink); font: 400 16px/1.5 var(--sans); appearance: none; -webkit-appearance: none; }
+.field textarea { min-height: 96px; resize: vertical; }
+.field select { padding-right: 24px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%231b211d' stroke-width='1.2'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E") right 2px center no-repeat; }
+.field input::placeholder, .field textarea::placeholder { color: #6d736c; }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 0; border-bottom-width: 2px; padding-bottom: 7px; }
+.field .err { color: var(--clay); min-height: 0; }
+.field .err:empty { display: none; }
+.field [aria-invalid="true"] { border-bottom-color: var(--clay); }
+.send { grid-column: 1 / -1; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.btn { min-height: 48px; padding: 12px 32px; border: 1px solid var(--ink); border-radius: 0; background: var(--ink); color: var(--paper); font: 500 16px/1.5 var(--sans); cursor: pointer; transition: background .2s, color .2s; }
+.btn:hover { background: transparent; color: var(--ink); }
+.btn:active { translate: 0 1px; }
+.send .meta { color: var(--ink-2); }
+@media (max-width: 900px) {
+  .contact .lead, .contact form { grid-column: 1 / -1; }
+  .contact form { margin-top: 64px; }
+}
+@media (max-width: 520px) { .contact form { grid-template-columns: 1fr; } .field { grid-column: 1 / -1; } }
+
+/* ---------- Footer ---------- */
+.foot { background: var(--night); color: var(--on-night); padding: 64px var(--gutter) 24px; overflow: hidden; }
+.foot-top { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+.foot-top p { color: var(--on-night-2); }
+.foot-top p strong { display: block; font-weight: 400; color: var(--on-night); }
+.foot-top ul { display: flex; gap: 24px; flex-wrap: wrap; }
+.foot-top a { display: inline-block; padding-block: 12px; text-underline-offset: 4px; }
+.foot-top p { padding-top: 12px; }
+.foot .mark { margin-top: 64px; }
+.foot-base { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 24px; padding-top: 16px; border-top: 1px solid #f3f1ec2e; color: var(--on-night-2); }
+
+/* ---------- Motion ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-photo img { animation: settle 2.4s cubic-bezier(.2, .7, .2, 1) both; }
+  .nav, .hero-line, .hero .mark { animation: rise .9s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i, 0) * 120ms + 200ms); }
+  @supports (animation-timeline: view()) {
+    .reveal { animation: up linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+  }
+}
+@keyframes settle { from { scale: 1.06; } }
+@keyframes rise { from { opacity: 0; translate: 0 24px; } }
+@keyframes up { from { opacity: 0; translate: 0 40px; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#work">Skip to work</a>
+
+<header class="hero">
+  <div class="hero-photo">
+    <img src="https://images.unsplash.com/photo-1532712938310-34cb3982ef74?w=2000&q=75&auto=format&fit=crop" alt="A couple walking away across open hills under an overcast sky" fetchpriority="high">
+  </div>
+  <nav class="nav" aria-label="Main" style="--i:0">
+    <a class="nav-name" href="#top" aria-label="Raka Aditya, home">R.A.</a>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#rates">Rates</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="hero-foot" id="top">
+    <div class="hero-line" style="--i:1">
+      <p>Wedding and portrait photographer in Bandung, West Java</p>
+      <p class="meta">Fr. 0312 · Lembang, 2026<br>Booking weddings for 2027</p>
+    </div>
+    <h1 class="mark" style="--i:2"><span>Raka</span> <span><em>Aditya</em></span></h1>
+  </div>
+</header>
+
+<main>
+  <section class="statement wrap grid" aria-label="Introduction">
+    <h2 class="reveal">I photograph weddings and people the way they happen: <em>quietly</em>, in the light that's already there, without stopping the day to pose it.</h2>
+    <ul class="facts meta reveal">
+      <li><span>Based in</span><span>Bandung</span></li>
+      <li><span>Working since</span><span>2016</span></li>
+      <li><span>Weddings a year</span><span>20 at most</span></li>
+    </ul>
+  </section>
+
+  <section class="work weddings wrap" id="work" aria-labelledby="h-weddings">
+    <div class="chapter-head">
+      <h2 id="h-weddings"><em>Weddings</em></h2>
+      <p class="meta">Selected frames<br>2024 to 2026</p>
+    </div>
+    <div class="grid">
+      <figure class="frame f1 reveal">
+        <div class="pic r-3x2"><img loading="lazy" src="https://images.unsplash.com/photo-1544078751-58fee2d8a03b?w=1600&q=75&auto=format&fit=crop" alt="A bride and groom standing small on a dark beach with sea rocks behind them"></div>
+        <figcaption class="meta"><b>Fr. 0147</b><span>Prewedding on the south coast, 2025</span></figcaption>
+      </figure>
+      <figure class="frame f2 reveal">
+        <div class="pic r-3x4"><img loading="lazy" src="https://images.unsplash.com/photo-1546032996-6dfacbacbf3f?w=1000&q=75&auto=format&fit=crop" alt="A couple embracing under a veil in a dry grass field"></div>
+        <figcaption class="meta"><b>Fr. 0209</b><span>After the akad, Lembang, 2025</span></figcaption>
+      </figure>
+      <figure class="frame f3 reveal">
+        <div class="pic r-1x1"><img loading="lazy" src="https://images.unsplash.com/photo-1509927083803-4bd519298ac4?w=800&q=75&auto=format&fit=crop" alt="The shoes of a bride and groom on a wooden floor"></div>
+        <figcaption class="meta"><b>Fr. 0052</b><span>Before the ceremony, 2024</span></figcaption>
+      </figure>
+      <figure class="frame f4 reveal">
+        <div class="pic r-3x2"><img loading="lazy" src="https://images.unsplash.com/photo-1481653125770-b78c206c59d4?w=1600&q=75&auto=format&fit=crop" alt="Close view of a couple's joined hands during their first dance"></div>
+        <figcaption class="meta"><b>Fr. 0388</b><span>First dance, Dago Pakar, 2026</span></figcaption>
+      </figure>
+    </div>
+    <figure class="frame bleed reveal">
+      <div class="pic r-wide"><img loading="lazy" src="https://images.unsplash.com/photo-1519741497674-611481863552?w=2000&q=75&auto=format&fit=crop" alt="A bouquet held in warm backlight at dusk"></div>
+      <figcaption class="meta"><b>Fr. 0271</b><span>Last light at the reception, Ciwidey, 2025</span></figcaption>
+    </figure>
+    <div class="grid">
+      <figure class="frame f5 reveal">
+        <div class="pic r-4x5"><img loading="lazy" src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=1200&q=75&auto=format&fit=crop" alt="A bride and groom holding hands, their shadows on the grass"></div>
+        <figcaption class="meta"><b>Fr. 0301</b><span>Garden ceremony, Parongpong, 2026</span></figcaption>
+      </figure>
+      <figure class="frame f6 reveal">
+        <div class="pic r-3x4"><img loading="lazy" src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=1000&q=75&auto=format&fit=crop" alt="A couple walking together beneath a large palm"></div>
+        <figcaption class="meta"><b>Fr. 0419</b><span>Leaving the venue, 2026</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="quote wrap grid" aria-label="Words from a couple">
+    <blockquote class="reveal">
+      <p>“We barely noticed him all day. Then the photographs arrived and he had seen everything, even my father crying behind the door.”</p>
+      <footer class="meta">Dinda and Farhan · married in Lembang, August 2025</footer>
+    </blockquote>
+  </section>
+
+  <section class="work portraits wrap" aria-labelledby="h-portraits" style="padding-top:0">
+    <div class="chapter-head">
+      <h2 id="h-portraits"><em>Portraits</em></h2>
+      <p class="meta">Studio and location<br>2024 to 2026</p>
+    </div>
+    <div class="grid">
+      <figure class="frame p1 reveal">
+        <div class="pic r-4x5"><img loading="lazy" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=1200&q=75&auto=format&fit=crop" alt="Studio portrait of a woman in a dark blouse against a grey wall"></div>
+        <figcaption class="meta"><b>Fr. 0118</b><span>Studio session, Braga, 2025</span></figcaption>
+      </figure>
+      <figure class="frame p2 reveal">
+        <div class="pic r-3x4"><img loading="lazy" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=900&q=75&auto=format&fit=crop" alt="Low-key portrait of a man in a knitted jumper"></div>
+        <figcaption class="meta"><b>Fr. 0233</b><span>Actor's headshots, 2025</span></figcaption>
+      </figure>
+      <figure class="frame p3 reveal">
+        <div class="pic r-3x4"><img loading="lazy" src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=900&q=75&auto=format&fit=crop" alt="Profile portrait of a woman lit with coloured light"></div>
+        <figcaption class="meta"><b>Fr. 0346</b><span>Personal work, 2026</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div style="height: var(--section)"></div>
+
+  <section class="about" id="about" aria-labelledby="h-about">
+    <div class="wrap grid">
+      <div class="pic reveal"><img loading="lazy" src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=1200&q=75&auto=format&fit=crop" alt="A hand holding a camera up against a bright sky"></div>
+      <div class="text">
+        <h2 id="h-about">About <em>Raka</em></h2>
+        <p>I grew up in Bandung and started out photographing friends' bands in Dago. A cousin asked me to cover her wedding in 2016, and I have been doing this full time ever since.</p>
+        <p>I work alone or with one second shooter, carry two cameras and very little else, and stay from the morning preparations until the last guests leave. You get the whole day back, not only the posed parts.</p>
+        <ul class="facts meta">
+          <li><span>Shoots with</span><span>Digital and 35mm film</span></li>
+          <li><span>Languages</span><span>Indonesian, Sundanese, English</span></li>
+          <li><span>Travels</span><span>Across Indonesia</span></li>
+          <li><span>Delivery</span><span>Four weeks</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="rates wrap" id="rates" aria-labelledby="h-rates">
+    <div class="grid">
+      <div class="side">
+        <h2 id="h-rates"><em>Rates</em></h2>
+        <p>Starting prices for 2027. Travel outside Greater Bandung is quoted separately.</p>
+      </div>
+      <div class="list">
+        <article class="price">
+          <h3>Wedding day</h3>
+          <p class="amount"><small>from</small>Rp 14.000.000</p>
+          <p>Up to ten hours, from preparations through akad and reception. Around 600 edited photographs in an online gallery.</p>
+        </article>
+        <article class="price">
+          <h3>Akad or intimate wedding</h3>
+          <p class="amount"><small>from</small>Rp 7.500.000</p>
+          <p>Up to four hours for ceremonies with fewer than 80 guests. Around 250 edited photographs.</p>
+        </article>
+        <article class="price">
+          <h3>Prewedding session</h3>
+          <p class="amount">Rp 4.500.000</p>
+          <p>Half a day at one or two locations around Bandung. 60 edited photographs.</p>
+        </article>
+        <article class="price">
+          <h3>Portrait session</h3>
+          <p class="amount">Rp 1.800.000</p>
+          <p>Ninety minutes in the studio or on location, for individuals, actors and working professionals. 20 edited photographs.</p>
+        </article>
+        <article class="price">
+          <h3>Family portrait</h3>
+          <p class="amount">Rp 2.500.000</p>
+          <p>Two hours at home or outdoors, up to eight people. 40 edited photographs.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="steps" aria-label="How booking works">
+      <ol>
+        <li><span class="meta">01</span><h3>Write to me</h3><p>Tell me your date, the venue and what you have in mind. I reply within two days.</p></li>
+        <li><span class="meta">02</span><h3>We meet</h3><p>Over coffee in Bandung or on a video call, to see whether we suit each other.</p></li>
+        <li><span class="meta">03</span><h3>Hold the date</h3><p>A signed agreement and a 30% deposit reserve your day.</p></li>
+        <li><span class="meta">04</span><h3>Your gallery</h3><p>A preview within three days, the full gallery within four weeks.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="h-contact">
+    <div class="wrap grid">
+      <div class="lead">
+        <h2 id="h-contact">Tell me about <em>your day</em></h2>
+        <p>Now booking weddings for 2027. Portrait sessions are open most weekdays.</p>
+        <a class="mail" href="mailto:halo@rakaaditya.example">halo@rakaaditya.example</a>
+        <p class="ways meta"><a href="#contact">WhatsApp +62 812 0000 0000</a><a href="#contact">Instagram @rakaaditya</a></p>
+      </div>
+      <form id="enquiry" novalidate>
+        <div class="field">
+          <label class="meta" for="f-name">Your name</label>
+          <input id="f-name" name="name" autocomplete="name" required aria-describedby="e-name">
+          <span class="err meta" id="e-name" role="alert"></span>
+        </div>
+        <div class="field">
+          <label class="meta" for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email">
+          <span class="err meta" id="e-email" role="alert"></span>
+        </div>
+        <div class="field">
+          <label class="meta" for="f-type">Session</label>
+          <select id="f-type" name="type">
+            <option>Wedding day</option>
+            <option>Akad or intimate wedding</option>
+            <option>Prewedding session</option>
+            <option>Portrait session</option>
+            <option>Family portrait</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="meta" for="f-date">Date or month</label>
+          <input id="f-date" name="date" placeholder="e.g. 14 August 2027">
+        </div>
+        <div class="field full">
+          <label class="meta" for="f-msg">A few words about it</label>
+          <textarea id="f-msg" name="message" rows="3" placeholder="Venue, number of guests, anything you'd like me to know"></textarea>
+        </div>
+        <div class="send">
+          <button class="btn" type="submit">Send enquiry</button>
+          <span class="meta">Opens in your email app</span>
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot-top meta">
+    <p><strong>Bandung, West Java, Indonesia</strong>6.9175° S, 107.6191° E</p>
+    <ul>
+      <li><a href="#contact">Instagram</a></li>
+      <li><a href="#contact">WhatsApp</a></li>
+      <li><a href="mailto:halo@rakaaditya.example">Email</a></li>
+      <li><a href="#top">Back to top</a></li>
+    </ul>
+  </div>
+  <p class="mark" aria-hidden="true"><span>Raka</span> <span><em>Aditya</em></span></p>
+  <div class="foot-base meta">
+    <span>© 2026 Raka Aditya</span>
+    <span>Fr. 0420 · End of roll</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var form = document.getElementById('enquiry');
+  var to = 'halo@rakaaditya.example';
+  function check(input, msg) {
+    var err = document.getElementById('e-' + input.name);
+    var bad = !input.value.trim() || (input.type === 'email' && !/^\S+@\S+\.\S+$/.test(input.value.trim()));
+    input.setAttribute('aria-invalid', bad ? 'true' : 'false');
+    err.textContent = bad ? msg : '';
+    return !bad;
+  }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var okName = check(form.elements.name, 'Please add your name');
+    var okEmail = check(form.elements.email, 'Please add a valid email');
+    if (!okName) { form.elements.name.focus(); return; }
+    if (!okEmail) { form.elements.email.focus(); return; }
+    var f = form.elements;
+    var subject = f.type.value + ' enquiry' + (f.date.value ? ', ' + f.date.value : '');
+    var body = 'Name: ' + f.name.value + '\nEmail: ' + f.email.value + '\nSession: ' + f.type.value +
+      '\nDate: ' + (f.date.value || 'Not decided yet') + '\n\n' + f.message.value;
+    window.location.href = 'mailto:' + to + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  });
+  ['name', 'email'].forEach(function (n) {
+    form.elements[n].addEventListener('input', function () {
+      if (this.getAttribute('aria-invalid') === 'true') check(this, n === 'name' ? 'Please add your name' : 'Please add a valid email');
+    });
+  });
+})();
+</script>
+</body>
+</html>

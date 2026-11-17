@@ -78,19 +78,14 @@ Same prompt. Same model. Each page was built by a separate agent session in its 
 </table>
 
 <details>
-<summary><b>Two more pairs, where the difference is smaller</b></summary>
+<summary><b>One more pair, where the difference is smaller</b></summary>
 
 <br>
 
-Current models are already decent at some of these. These are the cases where better-ui changed the least.
+Current models are already decent at some of these. This is the case where better-ui changed the least.
 
 <table>
 <tr><th width="50%">Without better-ui</th><th width="50%">With better-ui</th></tr>
-<tr><td colspan="2"><b>SaaS landing page</b> · <i>"Build a landing page for Ledgerly, an invoicing tool for freelancers. It needs a hero, a features section, pricing, and a signup call to action."</i></td></tr>
-<tr>
-<td><img src="docs/images/compare/saas-landing-page-before.jpg" alt="Landing page without better-ui"></td>
-<td><img src="docs/images/compare/saas-landing-page-after.jpg" alt="Landing page with better-ui"></td>
-</tr>
 <tr><td colspan="2"><b>Personal finance app</b> · <i>"build a personal finance app: balance, recent transactions, spending by category and a monthly budget."</i></td></tr>
 <tr>
 <td align="center"><img src="docs/images/compare/finance-app-before.jpg" alt="Finance app without better-ui" width="72%"></td>
@@ -102,7 +97,7 @@ Current models are already decent at some of these. These are the cases where be
 
 ### Ten more prompts, no judges
 
-Ten new prompts, run the same way, both sides shown as they came out. Coffee, crypto, analytics and the villa page were re-run after the colour system was added. Nothing was ranked or picked by a judge, and all ten are here: six below and four in the fold.
+Ten new prompts, run the same way, both sides shown as they came out. Coffee, crypto and analytics were re-run after the colour system was added. Nothing was ranked or picked by a judge: six are below, three in the fold, and the villa page is under web pages.
 
 <table>
 <tr>
@@ -142,7 +137,7 @@ Ten new prompts, run the same way, both sides shown as they came out. Coffee, cr
 </table>
 
 <details>
-<summary><b>The other four</b></summary>
+<summary><b>The other three</b></summary>
 
 <br>
 
@@ -158,11 +153,6 @@ Ten new prompts, run the same way, both sides shown as they came out. Coffee, cr
 <td align="center"><a href="docs/images/compare/recipe-app-before.jpg"><img src="docs/images/compare/recipe-app-before.jpg" alt="Recipe app without better-ui" width="72%"></a></td>
 <td align="center"><a href="docs/images/compare/recipe-app-after.jpg"><img src="docs/images/compare/recipe-app-after.jpg" alt="Recipe app with better-ui" width="72%"></a></td>
 </tr>
-<tr><td colspan="2"><b>Bali villa landing page</b> · <i>"Bikin landing page buat villa sewaan di Bali: foto, fasilitas, harga per malam, ulasan tamu, dan tombol booking. Satu file index.html."</i></td></tr>
-<tr>
-<td><a href="docs/images/compare/villa-landing-before.jpg"><img src="docs/images/compare/villa-landing-before.jpg" alt="Bali villa landing page without better-ui"></a></td>
-<td><a href="docs/images/compare/villa-landing-after.jpg"><img src="docs/images/compare/villa-landing-after.jpg" alt="Bali villa landing page with better-ui"></a></td>
-</tr>
 <tr><td colspan="2"><b>Sneaker product page</b> · <i>"build a product page for an online sneaker store: gallery, sizes, colours, price, reviews and add to cart. single index.html"</i></td></tr>
 <tr>
 <td><a href="docs/images/compare/sneaker-product-before.jpg"><img src="docs/images/compare/sneaker-product-before.jpg" alt="Sneaker product page without better-ui"></a></td>
@@ -171,6 +161,47 @@ Ten new prompts, run the same way, both sides shown as they came out. Coffee, cr
 </table>
 
 </details>
+
+### Web pages, with an art direction
+
+For landing pages, event pages, restaurants and portfolios, better-ui has the agent write three concepts in different directions (editorial serif, poster, cinematic photo, colour field, live product demo and others in [`web-directions.md`](better-ui/references/web-directions.md)), pick the strongest, and carry it through every section. One run each, as they came out.
+
+<table>
+<tr>
+<th width="50%">Without better-ui</th>
+<th width="50%">With better-ui</th>
+</tr>
+<tr><td colspan="2"><b>Design conference</b> · <i>"landing page for a two-day design conference in Jakarta: speakers, schedule, venue, tickets with early-bird pricing. single index.html"</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/conference-landing-before.jpg"><img src="docs/images/compare/conference-landing-before.jpg" alt="Design conference without better-ui"></a></td>
+<td><a href="docs/images/compare/conference-landing-after.jpg"><img src="docs/images/compare/conference-landing-after.jpg" alt="Design conference with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Japanese restaurant</b> · <i>"website for a small Japanese restaurant in Bandung: menu, story of the chef, reservations and location. single index.html"</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/restaurant-site-before.jpg"><img src="docs/images/compare/restaurant-site-before.jpg" alt="Japanese restaurant without better-ui"></a></td>
+<td><a href="docs/images/compare/restaurant-site-after.jpg"><img src="docs/images/compare/restaurant-site-after.jpg" alt="Japanese restaurant with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Wedding photographer</b> · <i>"I need a portfolio website for a freelance wedding and portrait photographer called Raka Aditya, based in Bandung. One index.html."</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/photographer-portfolio-before.jpg"><img src="docs/images/compare/photographer-portfolio-before.jpg" alt="Wedding photographer without better-ui"></a></td>
+<td><a href="docs/images/compare/photographer-portfolio-after.jpg"><img src="docs/images/compare/photographer-portfolio-after.jpg" alt="Wedding photographer with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Bali villa</b> · <i>"Bikin landing page buat villa sewaan di Bali: foto, fasilitas, harga per malam, ulasan tamu, dan tombol booking. Satu file index.html."</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/villa-landing-before.jpg"><img src="docs/images/compare/villa-landing-before.jpg" alt="Bali villa without better-ui"></a></td>
+<td><a href="docs/images/compare/villa-landing-after.jpg"><img src="docs/images/compare/villa-landing-after.jpg" alt="Bali villa with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>POS app for small shops</b> · <i>"Bikin landing page buat Warungku, aplikasi kasir (POS) buat warung dan UMKM. Satu file index.html."</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/pos-landing-page-before.jpg"><img src="docs/images/compare/pos-landing-page-before.jpg" alt="POS app for small shops without better-ui"></a></td>
+<td><a href="docs/images/compare/pos-landing-page-after.jpg"><img src="docs/images/compare/pos-landing-page-after.jpg" alt="POS app for small shops with better-ui"></a></td>
+</tr>
+<tr><td colspan="2"><b>Invoicing SaaS</b> · <i>"Build a landing page for Ledgerly, an invoicing tool for freelancers. It needs a hero, a features section, pricing, and a signup call to action. Put everything in a single index.html."</i></td></tr>
+<tr>
+<td><a href="docs/images/compare/saas-landing-page-before.jpg"><img src="docs/images/compare/saas-landing-page-before.jpg" alt="Invoicing SaaS without better-ui"></a></td>
+<td><a href="docs/images/compare/saas-landing-page-after.jpg"><img src="docs/images/compare/saas-landing-page-after.jpg" alt="Invoicing SaaS with better-ui"></a></td>
+</tr>
+</table>
 
 Every page is in [`examples/`](examples). Open them in a browser and click around.
 
@@ -205,7 +236,7 @@ A screenshot proves little on its own, so each page was **hidden among eight pop
 1. Whose design is it?       existing product → fit its system · a brand → follow it · blank → continue
 2. Understand the job        what the screen is for and who uses it; write the real content first
 3. Set up the system         deal a look; fixed spec and tokens; palette from one brand colour
-4. Conventional layout       native app anatomy · dashboard shell · landing sections · a signature chart
+4. Layout or direction      app anatomy · dashboard shell · a committed art direction for web pages
 5. Build it properly         every width, every state, the accessibility floor, the finish
 6. Render, audit, review     screenshot, measure, independent review, fix
 7. Hand off plainly          what was built and what is placeholder
@@ -220,6 +251,7 @@ better-ui/
 │   └── tokens.css           spacing, radius, type ramp, motion: copied into every build
 ├── references/
 │   ├── spec.md              one fixed value for every size, space, radius and colour role
+│   ├── web-directions.md    twelve art directions for web pages; explore three, commit to one
 │   ├── color.md             colour with depth: scale steps and their jobs, surfaces, tints, charts
 │   ├── typography.md        faces, pairing, weights, tracking and leading by size
 │   ├── hierarchy.md         levels, grouping, numbers, tables, charts, button weight
