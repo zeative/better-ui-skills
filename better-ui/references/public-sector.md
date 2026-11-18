@@ -49,7 +49,7 @@ Excellent city sites carry identity in a few disciplined moves (Helsinki: flat c
 5. **Landmark photography** of real places with caption and credit (Situ Buleud for Purwakarta, the Karangsambung geopark for Kebumen, Gunung Papandayan for Garut), from Unsplash or the site's own photos. Not a stock city skyline, not an official-photo collage.
 6. **A regional voice** in the headline, and optionally a greeting in bahasa daerah (with its script via Noto Sans Sundanese or Javanese) as decoration, never as a task label.
 
-Five regions redesigned with this skill must look like five different places. If the headlines, colours and heroes could be swapped between them, the identity work is not done.
+Five regions redesigned with this skill must look like five different places. The usual failure is one composition for all of them (a flat colour band with the headline and search on the left and a task card on the right). Choose the hero from the region's own strongest asset: a landmark photograph full bleed with the task panel over it (a region known for its landscape), a typographic hero with the wordmark large (a region with a strong name or brand), a map of the kecamatan beside the tasks (a large rural regency), an editorial spread (a heritage city), a plain search column (an agency). Two regions with the same emblem colour still differ in typeface, motif, photograph and composition. If the headlines, colours and heroes could be swapped between them, the identity work is not done.
 
 ## 4. Directions
 
