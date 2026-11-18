@@ -54,6 +54,9 @@ Five regions redesigned with this skill must look like five different places. Th
 
 ## 4. Directions
 
+Build on the `civic` kit (`kits.md`) unless the direction says otherwise: `editorial` for a heritage or tourism-led city, `swiss` for a transparency or data portal. The emblem colour goes into `--brand`.
+
+
 Choose one (see the method in `web-directions.md`) and carry it through:
 
 1. **Layanan-first calm** (GOV.UK, Amsterdam). For agencies with many transactions (Dukcapil). A large search and a plain list of eight tasks with chevrons; white, ink, one emblem colour for links and the strip; a single 720 to 840px column above the fold; nothing decorative.

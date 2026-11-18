@@ -2,7 +2,7 @@
 
 Every size, space, radius and colour role here is a single value, chosen from Apple's and Google's platform guidelines, Refactoring UI, Practical UI, Learn UI Design and Nielsen Norman Group research. Use these values exactly. Do not interpolate, do not pick "something between", and do not invent new ones. Where any other reference in this skill gives a range, this file decides.
 
-Start every build by running the `palette.cjs` command that `look.cjs` prints, pasting its output at the top of the stylesheet, and copying `assets/tokens.css` below it. Then build only from those tokens.
+Start every build by copying `assets/tokens.css` and then the chosen kit from `assets/kits/` (`kits.md`) into the stylesheet; the kit sets fonts, colours, radii and shadows, this file sets spacing and sizes. On web pages the kit's type scale replaces the landing ramp below. Build only from those tokens.
 
 Contents: spacing · phone app · desktop app and dashboard · professional data tool · landing page · colour roles and budget · radius, borders and depth · motion · budgets per screen
 

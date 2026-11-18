@@ -1,4 +1,4 @@
-/* better-ui tokens. Copy verbatim below the palette.cjs output; fill the font families from look.cjs.
+/* better-ui tokens: spacing, radius scale, motion and the phone type ramp. Copy verbatim first; then the chosen kit from assets/kits/ (which sets fonts, colours, radii and shadows and wins where they overlap).
    Every value comes from references/spec.md. Build only from these; do not invent sizes or spaces. */
 :root {
   /* COLOUR: paste the output of `node scripts/palette.cjs "<brand hex>"` ABOVE this file. It defines

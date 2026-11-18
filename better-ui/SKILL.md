@@ -63,19 +63,22 @@ Never show a note about sample data on the main screens. Put "Clear sample data"
 
 When the brief is thin, assume specifically, build, and list your assumptions at the end. Never use real company logos, real people's names or faces, or invented claims about real results; fictional names and example figures are fine.
 
-## 3. Set up the system
+## 3. Set up the system: choose one kit
 
-Read `references/spec.md` first: it fixes every size, space, radius, type style and colour role as one value for phone apps, desktop apps and dashboards, professional data tools and landing pages, chosen from Apple's and Google's guidelines, Refactoring UI, Practical UI and Nielsen Norman Group research. Run the palette command that `look.cjs` prints and paste its output at the top of the stylesheet, copy `assets/tokens.css` verbatim below it, and build only from those tokens; never interpolate or invent a value. Where any other file gives a range, `spec.md` decides. Then read `references/system.md` for the look. In short:
+**Choose a design kit before anything else** (`references/kits.md`). A kit is fonts, palette, radius, shadow, borders, buttons, inputs and type scale already tuned to each other: `precision`, `precision-dark`, `editorial`, `swiss`, `soft`, `civic`, `showroom` or `warm`. Pages look assembled, not designed, when these are chosen one by one; a kit makes them one decision. `look.cjs` suggests a brand colour and two kits for the category:
 
-- **A look:** one contemporary look (bright and clean, dark with one neon, monochrome, fresh gradient) on a neutral canvas; no pastel canvases or candy-coloured cards: a palette and surface treatment, not a theme. On a blank slate, deal it rather than choosing by habit, because habit lands on the same indigo or emerald every generated app uses:
-  ```bash
-  node <this-skill-dir>/scripts/look.cjs "<product name>" <finance|crypto|fitness|habits|wellness|sleep|health|productivity|commerce|saas|food|travel|media|other>
-  ```
-  Pick the closest category: `media` for music, video, podcasts and games; `crypto` for crypto, trading and investing; `sleep` for meditation and sleep. These lean dark, because their content (artwork, charts, calm) reads best on a dark ground. It prints a look, brand colour, accent, font, mono and a `palette.cjs` command that turns the brand into the full colour system (a 12-step brand scale, neutrals tinted toward it, roles, tinted shadows) for light and dark. Re-deal with `--not <n>` only if the result clearly does not suit the brief.
-- **Type:** read `references/typography.md`. One sans-serif family chosen for the character (Inter, Geist, Instrument Sans, Manrope, DM Sans, Hanken Grotesk and others listed there) plus a mono partner for meta, weights 400/500/600, tracking and line height set per size (large headings tighter and closer), tabular figures for numbers. Exactly five sizes per context, fixed in `spec.md` (phone 44/28/20/16/13, desktop 32/24/18/14/12, landing 64/40/20/16/13). Serif or display faces only for showcase sites or when the brand already has one.
-- **Colour:** read `references/color.md`. All colour comes from the palette: neutrals tinted toward the brand hue, surfaces that separate by a lightness step plus a hairline plus a tinted shadow, and the brand used at several strengths (solid on the primary action and main chart, tinted on selected states, badges and feature icon chips, as text on links), never at one strength only, which looks flat. By area: 85 to 90% neutral, up to 10% tints, up to 3 to 5% solid. Category colours, if needed, are small marks, never pastel fills.
-- **Shape and depth:** one radius scale (for example 8, 12, 16, 24, full), hairline borders or a soft two-layer shadow, never both heavy. Surfaces get a quiet material (a tone shift inside one neutral, a 1px top highlight, a hairline); no textures, grain, paper, heavy bevels or glows behind text. A mono partner font for meta (changes with their comparison, axis labels, counts, keycaps) makes tools and dashboards look made.
-- **Icons and imagery:** one line-icon set at one stroke width for navigation and controls; 3D icons (Fluent 3D emoji from a pinned CDN, see `system.md`) in soft chips for items in consumer apps; illustrated avatars for people; real Unsplash photographs for food, products, hotels and places, and a real map (Leaflet with CARTO tiles) wherever there is a location. A screen of text and line icons alone looks unfinished.
+```bash
+node <this-skill-dir>/scripts/look.cjs "<product name>" <finance|crypto|fitness|habits|wellness|sleep|health|productivity|commerce|saas|food|travel|media|government|other>
+```
+
+Then, in this order at the top of the stylesheet: `assets/tokens.css` (spacing scale, motion), then the kit file from `assets/kits/` verbatim with its font `<link>`, with only `--brand`, `--brand-ink` and `--accent` set to the brand. Run `palette.cjs` with the same brand colour only when you need tints and states of it (`--b1`…`--b12`). An existing product (`improve.md`) gets the kit closest to its character, with its own brand colour, logo and fonts if they are good.
+
+Stay inside the kit's shape language: every element takes its radius, border, shadow and type. Never mix two kits, never add a pill, gradient or soft shadow the kit does not have, never a second display face.
+
+- **Sizes and spacing:** `references/spec.md` fixes spacing, component sizes and the type ramp for product UI (phone 44/28/20/16/13, desktop 32/24/18/14/12); on web pages the kit's type scale replaces the landing ramp. Never interpolate or invent a value.
+- **Type details:** `references/typography.md` for tracking, leading, figures and what makes type look cheap.
+- **Colour use:** `references/color.md`: the brand at more than one strength, 85 to 90% neutral by area, semantic colours for meaning only.
+- **Icons and imagery:** one line-icon set, inline at text size; real Unsplash photographs for food, products, hotels and places; a real map (Leaflet with CARTO tiles) wherever there is a location; 3D icons only for items in consumer apps (`system.md`).
 
 ## 4. Use the conventional layout for this kind of screen
 

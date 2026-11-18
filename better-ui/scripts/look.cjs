@@ -3,10 +3,10 @@
 // that every generated app uses. Deterministic: the same product name always gets the same pick.
 //
 // usage: node look.cjs "<product name>" <category> [--not <n>]
-//   category: finance | crypto | fitness | habits | wellness | sleep | health | productivity | commerce | saas | food | travel | media | other
+//   category: finance | crypto | fitness | habits | wellness | sleep | health | productivity | commerce | saas | food | travel | media | government | other
 //   --not <n> skips the nth option (to re-deal if the first does not suit the brief)
 //
-// Prints the look, canvas, brand colour, accent, font, its mono partner and the palette.cjs command. Treat it as the starting point for
+// Prints two suggested design kits, a brand colour, an accent and the palette.cjs command. Treat it as the starting point for
 // system.md's tokens; adjust shades for contrast, keep the character.
 
 const LOOKS = {
@@ -84,6 +84,7 @@ const LOOKS = {
   ],
 };
 
+const KITS = { finance: ['soft', 'showroom'], crypto: ['precision-dark', 'precision'], fitness: ['soft', 'precision-dark'], habits: ['soft', 'warm'], wellness: ['soft', 'warm'], sleep: ['precision-dark', 'soft'], health: ['soft', 'civic'], productivity: ['precision', 'precision-dark'], commerce: ['showroom', 'editorial'], saas: ['precision', 'precision-dark'], food: ['warm', 'soft'], travel: ['editorial', 'warm'], media: ['precision-dark', 'swiss'], government: ['civic', 'editorial'], other: ['precision', 'editorial'] };
 const MONO = {"Inter": "JetBrains Mono", "Geist": "Geist Mono", "Manrope": "DM Mono", "Plus Jakarta Sans": "DM Mono", "DM Sans": "DM Mono", "Onest": "JetBrains Mono", "Figtree": "DM Mono", "Instrument Sans": "Geist Mono"};
 
 const args = process.argv.slice(2);
@@ -92,6 +93,7 @@ let cat = (args[1] || 'other').toLowerCase();
 const notIdx = args.indexOf('--not');
 const skip = notIdx >= 0 ? Number(args[notIdx + 1]) : -1;
 if (!name) { console.error('usage: node look.cjs "<product name>" <category> [--not <n>]'); process.exit(1); }
+const kitCat = cat; if (cat === 'government') cat = 'other';
 if (typeof LOOKS[cat] === 'string') cat = LOOKS[cat];
 const list = LOOKS[cat] || LOOKS.other;
 let h = 0x811c9dc5; for (const ch of name.toLowerCase()) { h ^= ch.codePointAt(0); h = Math.imul(h, 0x01000193) >>> 0; }
@@ -103,13 +105,11 @@ const darkLook = lc(p.canvas).l < 0.3, mono = lc(p.brand).s < 0.08;
 const hueFrom = mono && lc(p.accent).s >= 0.08 ? p.accent : p.brand;
 const tint = /food|travel|wellness|sleep/.test(cat) ? ' --tint 0.016' : '';
 const paletteCmd = `node ${require("path").join(__dirname, "palette.cjs")} "${hueFrom}"${darkLook ? ' --dark' : ''}${hueFrom !== p.brand ? ` --solid "${p.brand}"` : ''}${tint}`;
-console.log(`Look for "${name}" (${cat}, option ${i} of ${list.length}):
-  look:    ${p.look}
-  canvas:  ${p.canvas}
-  brand:   ${p.brand}
-  accent:  ${p.accent}
-  font:    ${p.font}
-  mono:    ${MONO[p.font] || 'JetBrains Mono'} (meta, axis labels, counts)
-  how:     ${p.note}
-  palette: ${paletteCmd}
-Run the palette command and paste its output at the top of the stylesheet, then assets/tokens.css below it; use colour as references/color.md describes. Set the type per typography.md and spec.md. Keep the character.`);
+const kits = KITS[kitCat] || KITS.other;
+const gov = kitCat === 'government';
+console.log(`Look for "${name}" (${kitCat}, option ${i} of ${list.length}):
+  kits:    ${kits[0]} (first choice) or ${kits[1]}  -> assets/kits/<kit>.css, see references/kits.md
+  brand:   ${gov ? "the main colour of the official emblem (darken it to 4.5:1 with white)" : p.brand}
+  accent:  ${gov ? 'none, or the emblem\'s second colour as a thin strip' : p.accent}
+  palette: ${gov ? 'node ' + require('path').join(__dirname, 'palette.cjs') + ' "<emblem hex>"' : paletteCmd}   (only for tints and states of the brand)
+Use the kit's fonts, neutrals, radii and shadows unchanged; set only --brand, --brand-ink and --accent. Never mix kits.`);

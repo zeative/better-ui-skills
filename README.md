@@ -315,9 +315,11 @@ An earlier version was tested by hiding each page among eight popular Dribbble s
 better-ui/
 ├── SKILL.md                 the process the agent follows
 ├── assets/
-│   └── tokens.css           spacing, radius, type ramp, motion: copied into every build
+│   ├── tokens.css           spacing, radius, type ramp, motion: copied into every build
+│   └── kits/                eight coherent design kits: precision, precision-dark, editorial, swiss, soft, civic, showroom, warm
 ├── references/
 │   ├── improve.md           improving an existing UI: measure, scope, keep what must not break, work in the stack
+│   ├── kits.md              choosing and using a kit: one decision for type, colour, radius and depth
 │   ├── spec.md              one fixed value for every size, space, radius and colour role
 │   ├── color.md             colour with depth: scale steps and their jobs, surfaces, tints, charts
 │   ├── web-directions.md    twelve art directions for web pages; explore three, commit to one

@@ -48,7 +48,8 @@ After building, check each of these against the original (a quick diff of links,
 ## 5. Carry the brand
 
 - **The logo** stays as it is. If it is poor quality, say so and suggest a redraw; do not invent a new one.
-- **The brand colour** becomes the input to `palette.cjs` (`node <this-skill-dir>/scripts/palette.cjs "<their hex>"`), so the new system is built from their colour. If the brand colour fails contrast, the palette adjusts the solid step; keep the hue.
+- **The kit:** choose the kit in `kits.md` closest to the existing character (a sharp SaaS page → `precision`; a rounded consumer page → `soft`; a hotel → `editorial` or `warm`), so the improvement has one coherent language instead of patches on the old styles.
+- **The brand colour** goes into the kit's `--brand`, and into `palette.cjs` (`node <this-skill-dir>/scripts/palette.cjs "<their hex>"`), so the new system is built from their colour. If the brand colour fails contrast, the palette adjusts the solid step; keep the hue.
 - **Fonts:** keep the brand's font if it is decent and pair it properly (`typography.md`); replace only a template default (Poppins, Montserrat, a system stack) and say why.
 - **Their imagery:** reuse their photographs and product screenshots, cropped and placed better, before adding stock images.
 - **Their voice:** keep their tone; tighten, do not rebrand.
