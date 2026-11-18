@@ -140,4 +140,5 @@ Tell the user briefly: what you built, the assumptions you made, and what is pla
 - **Browser defaults showing.** A native date picker, select arrow or checkbox inside an app screen. Style every control.
 - **Wireframe content.** "Item 1", lorem ipsum, a grey box labelled "chart". Real names, figures and a real chart.
 - **Decoration as filler.** A sparkline, icon chip and different hue on every stat tile, "New" badges, a promo card in the sidebar, a bento grid where each tile has its own gimmick. A stat tile is a label, a figure and its change; richness goes into one or two real moments, not spread over the chrome.
+- **Component confetti.** Rounded bordered cards around everything (often cards inside cards), a tinted icon square on every item, pills and status dots, mono captions, a small label above every section title. Each is fine once; together they are the most recognisable generated look. Set content on the page with type, space and hairlines, and keep boxes, icons, pills and mono for where they mean something (`critique.md`, "What reads as generated").
 - **Stopping after the first render.** The first render is a draft.

@@ -69,6 +69,6 @@ Follow the rest of `SKILL.md` within the chosen scope: the spec and palette (ste
 ## 8. Prove it
 
 - Audit again with the same widths: `--out .ui-audit/after`.
-- Compare: broken items, font sizes, spacing off the scale, contrast failures, before and after.
+- Compare: broken items, font sizes, spacing off the scale, contrast failures, and the audit's **Generated** line (boxes, nested boxes, icon chips, pills, dots, mono, eyebrows), before and after. An improvement lowers those counts; if your version has more boxes, chips and pills than the original, it looks more generated, not more designed.
 - Look at before and after screenshots side by side at 375 and 1440px; the after must be clearly better at both.
 - Hand off: the scope you chose, what changed (by area), what was deliberately kept, the measured before and after, the checks from section 4, and recommendations beyond the scope.

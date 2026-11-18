@@ -418,6 +418,42 @@ function measure(targetWidth) {
     }
     out.colour = { tints, solids, brandText, greys: [...greys], blackShadow };
   }
+  // the generated look: boxes in boxes, icon chips, pills and status dots everywhere, gratuitous mono, eyebrow on every section
+  {
+    const vis = (el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.height > 0 && getComputedStyle(el).visibility !== 'hidden'; };
+    const isBox = (el) => { const cs = getComputedStyle(el); const r = el.getBoundingClientRect();
+      if (r.width < 120 || r.height < 56 || r.width > innerWidth * 0.92) return false;
+      const bw = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderLeftWidth); const bc = cs.borderTopColor;
+      const border = bw >= 1 && !/rgba\(\d+, \d+, \d+, 0\)/.test(bc) && cs.borderTopStyle !== 'none';
+      const fill = (() => { const m = (cs.backgroundColor || '').match(/[\d.]+/g); if (!m || (m.length > 3 && +m[3] < 0.5)) return false; const par = el.parentElement && getComputedStyle(el.parentElement).backgroundColor; return cs.backgroundColor !== par; })();
+      const shadow = cs.boxShadow && cs.boxShadow !== 'none';
+      return parseFloat(cs.borderTopLeftRadius) >= 6 && (border || (fill && shadow) || (fill && border)); };
+    const boxes = [...document.querySelectorAll('body *')].filter((el) => vis(el) && !/^(BUTTON|INPUT|SELECT|TEXTAREA|IMG|SVG|LABEL)$/i.test(el.tagName) && isBox(el));
+    const boxSet = new Set(boxes);
+    const nested = boxes.filter((b) => { for (let n = b.parentElement; n && n !== document.body; n = n.parentElement) if (boxSet.has(n)) return true; return false; });
+    // icon chips: a small square-ish filled or bordered box holding only an icon
+    const chips = [...document.querySelectorAll('body *')].filter((el) => { if (!vis(el)) return false; const r = el.getBoundingClientRect(); if (r.width < 24 || r.width > 64 || Math.abs(r.width - r.height) > 6) return false;
+      const cs = getComputedStyle(el); const m = (cs.backgroundColor || '').match(/[\d.]+/g); const filled = m && !(m.length > 3 && +m[3] < 0.3);
+      return filled && parseFloat(cs.borderTopLeftRadius) >= 6 && el.querySelector('svg, img') && !(el.innerText || '').trim(); });
+    // pills and badges: short text in a fully rounded small box (not a button or link)
+    const pills = [...document.querySelectorAll('span, div, small, p, li')].filter((el) => { if (!vis(el)) return false; const r = el.getBoundingClientRect(); const t = (el.innerText || '').trim();
+      if (!t || t.length > 28 || r.height < 16 || r.height > 36 || el.closest('button, a, nav, [role="tab"], [role="tablist"]')) return false;
+      const cs = getComputedStyle(el); const m = (cs.backgroundColor || '').match(/[\d.]+/g); const filled = m && !(m.length > 3 && +m[3] < 0.3);
+      const bordered = parseFloat(cs.borderTopWidth) >= 1 && cs.borderTopStyle !== 'none';
+      return (filled || bordered) && parseFloat(cs.borderTopLeftRadius) >= r.height / 2 - 1; });
+    // status dots
+    const dots = [...document.querySelectorAll('body *')].filter((el) => { if (!vis(el)) return false; const r = el.getBoundingClientRect(); if (r.width < 4 || r.width > 10 || Math.abs(r.width - r.height) > 1) return false;
+      const cs = getComputedStyle(el); return parseFloat(cs.borderTopLeftRadius) >= r.width / 2 - 0.5 && !/rgba\(0, 0, 0, 0\)/.test(cs.backgroundColor); });
+    // mono text
+    const monoEls = [...document.querySelectorAll('body *')].filter((el) => vis(el) && [...el.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim().length > 1) && /mono|courier|menlo|consolas|plex mono|geist mono|dm mono/i.test(getComputedStyle(el).fontFamily));
+    // eyebrows: a short small line right before a section heading
+    const heads = [...document.querySelectorAll('h2')].filter(vis);
+    const eyebrows = heads.filter((h) => { let e = h.previousElementSibling; if (!e) e = h.parentElement && h.parentElement.previousElementSibling; if (!e) return false; const t = (e.innerText || '').trim(); const fs = parseFloat(getComputedStyle(e).fontSize); return t && t.length < 40 && fs <= 14; });
+    // share of text inside boxes
+    let inBox = 0, all = 0; const walk = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n = walk.nextNode(); n; n = walk.nextNode()) { const t = n.nodeValue.trim(); if (!t || !n.parentElement || !vis(n.parentElement)) continue; all += t.length; for (let q = n.parentElement; q && q !== document.body; q = q.parentElement) if (boxSet.has(q)) { inBox += t.length; break; } }
+    out.generated = { boxes: boxes.length, nested: nested.length, nestedEg: nested.slice(0, 3).map((e) => describe(e).split(' "')[0]), chips: chips.length, pills: pills.length, pillEg: [...new Set(pills.map((e) => (e.innerText || '').trim()))].slice(0, 5), dots: dots.length, mono: monoEls.length, monoEg: [...new Set(monoEls.map((e) => (e.innerText || '').trim().slice(0, 18)))].slice(0, 4), h2: heads.length, eyebrows: eyebrows.length, boxedShare: all ? Math.round(100 * inBox / all) : 0 };
+  }
   out.pastel = { n: pastel.length, hues: [...new Set(pastel.map((x) => x.h))].length, eg: pastel.slice(0, 4).map((x) => x.d) };
   // (b8) copy that does not fit: buttons that wrap, siblings whose text runs very different lengths
   const wrapBtn = [];
@@ -1221,6 +1257,17 @@ function report(results, facts, focus, runtime, args) {
   if (widest.loudInPanel && widest.loudInPanel.length) problem('CRAFT', `A filled, coloured button outweighs a small panel title: ${widest.loudInPanel.slice(0, 3).join('; ')}. Panel actions are compact outline or neutral buttons, 28 to 32px (references/hierarchy.md, Controls).`);
   if (widest.nativeControls && widest.nativeControls.length) problem('CRAFT', `Browser-default controls showing: ${widest.nativeControls.slice(0, 4).join('; ')}. A native date or time picker shows the browser's format (05/28/2025) and its own glyph; use date chips or a styled picker in the locale's format, and selects with appearance: none and your own chevron (references/product-ui.md).`);
   for (const { width, m } of results) { if (m.barPeek && m.barPeek.length) { problem('CRAFT', `Content collides with a floating bottom bar at ${width}px: ${m.barPeek.slice(0, 3).join('; ')}. Put the bars in one fixed dock with a solid or fading backdrop (references/product-ui.md, bottom tab bar).`); break; } }
+  if (widest.generated && !dense) {
+    const g = widest.generated, tells = [];
+    if (g.nested >= 3) tells.push(`${g.nested} boxes inside other boxes (${g.nestedEg.join('; ')})`);
+    if (g.boxedShare > 65 && g.boxes > 8) tells.push(`${g.boxedShare}% of the text sits inside bordered or filled boxes (${g.boxes} boxes)`);
+    if (g.chips > 6) tells.push(`${g.chips} icons in tinted chips`);
+    if (g.pills > 6) tells.push(`${g.pills} pills and badges (${g.pillEg.join(', ')})`);
+    if (g.dots > 4) tells.push(`${g.dots} status dots`);
+    if (g.mono > 14 && !showcase) tells.push(`${g.mono} texts in a mono face (${g.monoEg.join(', ')})`);
+    if (g.h2 >= 4 && g.eyebrows / g.h2 > 0.6) tells.push(`a small label above ${g.eyebrows} of ${g.h2} section titles`);
+    if (tells.length >= 2) problem('CRAFT', `The page has the generated look: ${tells.join('; ')}. Professional pages set most content directly on the page with type, alignment and hairlines, keep boxes for things that really are objects, and use chips, pills, dots and mono only where they carry meaning (references/critique.md, "What reads as generated").`);
+  }
   if (widest.colour) {
     const c = widest.colour;
     if (c.tints === 0 && c.brandText <= 2) problem('CRAFT', `Colour is flat: no tinted backgrounds and ${c.brandText} coloured text elements, so the brand appears at one strength at most. Use the palette's steps: --tint (b3) behind the selected or active item, badges and the product's own icon chips, --brand-text (b11) for links and icons on a tint, --callout (b2) for a tip (references/color.md, sections 1 and 4).`);
@@ -1250,9 +1297,7 @@ function report(results, facts, focus, runtime, args) {
     const [fw, fh] = R.foldLargest;
     if (fw * fh < 260 * 180) problem('RICHNESS', `The first desktop screen has no substantial visual (largest graphic or composed surface is ${fw}×${fh}px). Lead with a showpiece: a detailed product visual, chart or illustration (references/showpiece.md).`);
     const thin = R.bands.filter((b, i) => i > 0 && b.big === 0 && b.small < 3);
-    if (thin.length) problem('RICHNESS', `${thin.length} of ${R.bands.length} desktop screenfuls have nothing to look at but text (around y=${thin.slice(0, 5).map((b) => b.from).join(', ')}px). Give each section a visual of its own: a mini interface, chart, illustration, thumbnails, icon chips.`);
     const total = R.textOnPage + R.textOnSurface;
-    if (total > 400 && R.textOnPage / total > 0.6) problem('RICHNESS', `${Math.round(100 * R.textOnPage / total)}% of the text sits directly on the page background. Put content on surfaces (cards, panels, a shell) so the page has levels; text on a bare page reads as a document.`);
     if (R.icons < 4 && R.bigGraphics < 3) problem('RICHNESS', `Very little imagery: ${R.icons} icon-sized and ${R.bigGraphics} larger graphics on the whole page. Lists of products, places or people want thumbnails or avatars; stat tiles do not need decoration, so ignore this note for data-led screens.`);
     if (Object.keys(widest.shadows).length <= 1 && R.surfaces > 3) problem('RICHNESS', `Depth is flat: ${Object.keys(widest.shadows).length} shadow style across ${R.surfaces} surfaces. On light themes use a small neutral shadow scale (resting, raised); on dark themes depth comes from surface steps and hairlines instead.`);
   }
@@ -1303,6 +1348,7 @@ function report(results, facts, focus, runtime, args) {
   L.push(`  Radii        ${rad.map(([k, v]) => `${k}×${v}`).join('  ') || 'none'}`);
   L.push(`  Shadows      ${sh} distinct`);
   if (widest.richness) L.push(`  Visuals      ${widest.richness.bigGraphics} large graphics, ${widest.richness.icons} icons, ${widest.richness.surfaces} surfaces; largest graphic in the first screen ${widest.richness.foldLargest.join('×')}px`);
+  if (widest.generated) { const g = widest.generated; L.push(`  Generated    boxes ${g.boxes} (nested ${g.nested}), text in boxes ${g.boxedShare}%, icon chips ${g.chips}, pills ${g.pills}, status dots ${g.dots}, mono texts ${g.mono}, eyebrows ${g.eyebrows}/${g.h2} section titles`); }
   if (widest.colour) { const c = widest.colour; L.push(`  Colour       tinted backgrounds ${c.tints}  solid fills ${c.solids}  coloured text ${c.brandText}  untinted greys ${c.greys.length ? c.greys.slice(0, 4).join(' ') : 'none'}  black shadows ${c.blackShadow}`); }
   for (const { width, m } of [results[0], results[results.length - 1]]) if (m.gaze && m.gaze.length) L.push(`  Gaze ${width}px  ${m.gaze.slice(0, 5).map((g, i) => `${i + 1}. ${g.d.slice(0, 38)} [${g.kind} ${g.w}]`).join('  ')}`);
   L.push(`  Interaction  ${widest.interactiveCount} interactive elements; ${facts.hover} :hover rules, ${facts.focusVisible} :focus-visible rules; reduced-motion ${facts.reducedMotion ? 'handled' : 'not handled'}; dark scheme ${facts.darkScheme ? 'defined' : 'not defined'}`);

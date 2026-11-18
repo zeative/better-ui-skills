@@ -69,6 +69,24 @@ On both the phone and the desktop screenshot:
 - **Consistency.** Same radius, padding and shadow for cards of the same kind; one icon style.
 - **Colour meaning.** The brand colour means action or selection; green, amber and red mean status.
 
+## What reads as generated
+
+A page can pass every rule in this skill and still look machine-made, because generated pages over-use the same small components. The audit counts them (the "Generated" line). Professional pages are made of **type, space, alignment and a few real images**; components appear only where they are the thing itself.
+
+| Generated | Professional |
+|:---|:---|
+| Everything in a rounded bordered card; cards inside cards (a mock inside a card inside a section card) | Content set directly on the page, separated by space and hairlines; a box only around a real object (a product screenshot, a pricing plan, a form, a photo) and never a box inside a box |
+| A tinted icon square at the top of every card and link | No icon, or an inline icon at text size where it helps scanning; a real image where there is one |
+| Pills, badges and status dots everywhere ("New", "Live ●", "Popular", "Wilujeng sumping") | One status pill where state really changes; labels as plain text |
+| Mono text for URLs, times, captions and labels on a marketing or public page | The UI sans for everything; mono only for code, data tables or one deliberate use |
+| A small coloured label above every section title, then a generic grey lede | A title, alone; the label only where it numbers or names something, the lede only where it adds a fact |
+| Every section the same shape (label, title, lede, grid of three or four cards) | Sections of different shapes: a list, a full-bleed image, a large quote, a table, a split |
+| A hand-built mini interface in every tile, each with its own borders and pills | One real product view, large and flat, shown once or twice |
+| 1200px centred container all the way down | Full-bleed moments, asymmetric splits, text measured to about 65 characters |
+| Many small type sizes at similar weights | Fewer sizes with real contrast: a large title, a comfortable 17 to 18px body, quiet small text |
+
+The test: **remove a third of the elements** (boxes, icons, pills, labels, ledes) and look again. If the page got better, keep going. The audit flags the page when two or more of these appear at once.
+
 ## Brief for an independent reviewer
 
 A builder misses what a stranger sees in seconds. Hand the reviewer the screenshots and this brief, and nothing about your intentions:

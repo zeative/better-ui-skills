@@ -31,12 +31,12 @@ A hero without a detailed product visual is the single most common reason a land
 Use what the argument needs, and give each a visual idea. A strong page usually has five to eight of these:
 
 - **Logo strip** directly under the hero: five or six fictional wordmarks in muted ink.
-- **Feature bento:** a grid of tiles in mixed sizes. Each tile has a short title, one line of copy and its own miniature interface or illustration filling the rest of the tile, cropped at the tile edge: a notification stack, a mini chart with a tooltip, a row of avatars with cursors, a toggle panel, a currency switcher, a calendar strip. One tile is dark or accent-filled. Never a tile with only an icon and text.
-- **Large demonstration:** one capability shown big, as a split section with a framed visual on one side and three short points with icon chips on the other. Alternate sides between consecutive sections.
+- **Features as a numbered list or chapters:** each a short claim and two lines of copy set directly on the page, separated by hairlines or space, with one real crop of the product beside the group. A bento only when each tile shows a real crop of the product, and then once per page; never tiles that each contain their own little bordered mock with pills inside.
+- **Large demonstration:** one capability shown big, as a split section with a framed visual on one side and three short points as a plain list on the other. Alternate sides between consecutive sections.
 - **How it works:** three steps, each with its own small visual and a connecting line. Only when the steps are real.
 - **Stat band:** three or four big figures with labels on a contrast surface. Only figures you can stand behind, or clearly marked as examples.
-- **Testimonials:** cards of mixed sizes with quotes, portraits and roles, one of them featured large, perhaps with a result figure.
-- **Integrations or ecosystem:** chips or tiles arranged on orbit rings or a grid around the product mark.
+- **Testimonials:** one large quote set on the page in the display size, with name, role and a portrait; two or three more as plain text beside or below it. Not a row of equal quote cards with stars.
+- **Integrations or ecosystem:** one row of real logos or names, in muted ink.
 - **Comparison:** before and after, or this product against the old way, as two contrasting panels.
 - **Pricing** (below).
 - **FAQ:** an accordion with real buyer questions, in a two-column layout with a short intro or a contact card.
@@ -48,7 +48,7 @@ Give unequal things unequal space, and give the page a calm rhythm of background
 - **One tinted band** (the canvas one step darker or warmer, full width) for a section that should read as a group, such as logos and testimonials or the feature grid. At most one every two or three sections.
 - **One dark band at most**, for the peak of the page: the main demonstration, the stat band or the closing call to action. A footer may share it.
 - **Bands run full width with the content inside at the page's one content width.** Never a band inside a band, or a card inside a card inside a band.
-- **Section headers follow one pattern** across the page (optional eyebrow, a 32 to 40px title, a one-line lede at 17 to 18px in the secondary tone), aligned the same way, left for most pages.
+- **Section headers are a title, usually nothing more.** A small label above it only when it carries information (a step number, a chapter), and then not above every title. A lede under it only when it says something the title does not; delete generic ones ("Everything you need to…").
 - Section padding 96 to 128px on desktop, 64 to 80px on phones; a tinted or dark band uses the same padding so the rhythm holds.
 
 Vary the recipe too. If every section is "small label, headline on the left, paragraph on the right, row of cards", the page reads as stacked blocks. Centre some section headers, run one visual at full width, split another, and let the rhythm of spacing change: closer together where sections belong to one thought, further apart at a change of subject. Avoid stretches of more than about 120px of empty ground between sections.

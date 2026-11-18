@@ -10,7 +10,7 @@ Every visual here should look like something a real product would show. No inven
 
 ## The rule of detail
 
-A visual reads as real when it has the density of a real thing. Count the distinct designed pieces in your showpiece: a navigation with an active item, a title, a control row, four figures with deltas, a chart with grid, axis and a highlighted point, five table rows each with an avatar, a name, a figure and a status pill. That is thirty-plus pieces, and that is the level to work at. Five grey bars is a wireframe.
+A visual reads as real when it has the density of a real thing. Count the distinct designed pieces in your showpiece: a navigation with an active item, a title, a control row, four figures with deltas, a chart with grid, axis and a highlighted point, five table rows each with an avatar, a name, a figure and a status pill. That is thirty-plus pieces, and that is the level to work at. Five grey bars is a wireframe. Build it like a screenshot of one real screen, flat inside its frame: rows, hairlines and type, not a stack of bordered boxes and pills inside the mock.
 
 Use the product's real nouns and plausible numbers. Vary the content: different names, different lengths, different statuses.
 
@@ -273,14 +273,9 @@ If the project already has real product photos or the user supplies images, use 
 ## Icons and icon chips
 
 - Use one inline SVG set: 24×24 viewBox, `fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"`. Draw the dozen you need; keep them simple and consistent.
-- An **icon chip** is the workhorse of rich UI: a 36 to 44px rounded square in a neutral grey, with the icon in the text colour or its category colour.
-  ```css
-  .chip-ic { width: 40px; aspect-ratio: 1; border-radius: 12px; display: grid; place-items: center;
-             background: color-mix(in srgb, var(--c) 14%, var(--surface)); color: var(--c); }
-  ```
-- Give categories different hues (`--c`) on the icon or a small dot so a list is easy to scan; the chip itself stays neutral. No pastel square behind every item. The product's own features and quick actions are the exception: `--tint` chip with the icon in `--brand-text` (`color.md`, section 4).
-- In consumer apps, a native or 3D emoji on the same neutral chip is a common, friendly alternative for item icons (habits, categories, exercises). One approach per app.
-- Navigation items, KPI tiles, feature rows, list items and empty states all take an icon.
+- **Icons inline, at text size, in the text colour** (18 to 20px beside a label) where they help scanning: navigation, list rows, buttons with a clear verb. That is most of their job.
+- **An icon chip** (a 40px rounded square with the icon inside) is for the **user's items in app lists** (categories, merchants, accounts, habits), where a list of many similar rows needs a picture per row. Neutral grey chip, the icon in the text colour or its category colour; in consumer apps a native or 3D emoji on the same chip. One approach per app.
+- **Not on marketing and web pages**: no icon chip on feature cards, section headers, contact blocks, stat tiles or service links. A row of cards each starting with a tinted icon square is the most recognisable generated pattern there is. Use the words, a real image or nothing.
 
 ## Empty-state illustration
 

@@ -36,6 +36,7 @@ A ministry or agency (Dukcapil, BPJS, a hospital) follows the same order with it
 - **Group by topic or life event, never by dinas.** People do not know which agency runs a service (LifeSG found people failed to book a barbecue pit because they had to know the agency first). Never by audience ("Warga / Investor / Wisatawan").
 - **One list per view.** Never three grids of equal cards in a row; vary the pattern between sections (a list, a band, a lead story, a figure strip).
 - **Search shows real queries,** not category chips.
+- **Tasks are a list, not cards:** the verb in the text size of a title, one line of detail, a chevron, hairlines between. No tinted icon square on each task, no bordered card per task (`critique.md`, "What reads as generated").
 - **External subdomains** (sigenduk.x.go.id, spse) are the destination, not the label: write the task, show the domain only in the footer directory or on hover.
 
 ## 3. Identity without hurting usability

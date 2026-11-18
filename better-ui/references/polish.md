@@ -49,7 +49,7 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 
 - **Landing headlines:** `font-size: clamp(36px, 5vw, 56px); line-height: 1.08; letter-spacing: -0.025em; text-wrap: balance;` in the UI sans at weight 500 or 600 (or the display face, if the page has one). Six to ten words over two lines. Product UI titles are 20 to 24px.
 - **Emphasis**, if any: one word or phrase of a landing headline in the brand colour or in the muted grey. Nothing on product UI.
-- **Eyebrow pill** above a headline when it carries information: a small pill with a dot or icon and a short label.
+- **No pill above the headline** unless it announces something real and dated ("New in March: offline mode"); then plain small text, not a pill with a dot.
 - **Scale:** use the compact scale in `system.md`. Hierarchy comes from weight (400/500/600) and colour (text vs. muted grey) as much as size. The key figure in an app or dashboard is 28 to 36px; KPI figures 22 to 28px; labels 12 to 13px in muted grey.
 - **Key numerals:** weight 600, slight negative tracking, decimals and currency signs smaller or muted, tabular figures.
 - **One family, plus a mono for meta.** Everything in the UI sans, with the mono partner only for meta (see `typography.md`). No display serif and no condensed headings on product UI.
