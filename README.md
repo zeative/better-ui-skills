@@ -328,6 +328,7 @@ better-ui/
 │   ├── product-ui.md        mobile apps, dashboards, admin, dense pro tools
 │   ├── marketing.md         landing and pricing pages
 │   ├── commerce.md          product pages, listings, the bag and checkout
+│   ├── public-sector.md     government sites: top tasks, life events, identity from the emblem
 │   ├── editorial.md         portfolios, studios, restaurants and other image-led sites
 │   ├── showpiece.md         summary cards, product mocks, charts, avatars, icons in code
 │   ├── polish.md            micro-details, controls, motion
