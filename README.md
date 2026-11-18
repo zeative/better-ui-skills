@@ -317,6 +317,7 @@ better-ui/
 ├── assets/
 │   └── tokens.css           spacing, radius, type ramp, motion: copied into every build
 ├── references/
+│   ├── improve.md           improving an existing UI: measure, scope, keep what must not break, work in the stack
 │   ├── spec.md              one fixed value for every size, space, radius and colour role
 │   ├── color.md             colour with depth: scale steps and their jobs, surfaces, tints, charts
 │   ├── web-directions.md    twelve art directions for web pages; explore three, commit to one
