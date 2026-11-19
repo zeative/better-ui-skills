@@ -84,7 +84,7 @@ const STYLES = [
 
   if (cmd === 'board') {
     const color = opt('color', '#1F6FEB'); const out = opt('out', 'icons-board.png');
-    if (opt('words')) { const words = opt('words').split(',').map((w) => w.trim()).filter(Boolean); STYLES.length = 0;
+    if (opt('words')) { const words = opt('words').split(/[\s,]+/).map((w) => w.trim()).filter(Boolean); STYLES.length = 0;
       for (const [label, prefix, ok] of WORD_STYLES) { const ids = [];
         for (const w of words) { let j = { icons: [] }; try { j = JSON.parse(await get(`${API}/search?query=${encodeURIComponent(w)}&prefix=${prefix}&limit=96`)); } catch (_) { /* none */ }
           const base = (id) => id.split(':')[1].replace(/-(outline-rounded|rounded|outline|24-regular|24-filled|linear|bold-duotone|duotone|filled|negative)$/, '');
@@ -101,7 +101,9 @@ const STYLES = [
       .l{font-weight:600}.l small{display:block;font-weight:400;color:#6b7280;font-size:11px}.ic{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
       .p svg{width:24px;height:24px;color:#1d2330;display:block}.c{width:44px;height:44px;border-radius:14px;background:color-mix(in oklch,${color} 12%,white);color:${color};display:grid;place-items:center}
       .c svg{width:22px;height:22px}.c.d{background:${color};color:#fff;border-radius:50%}</style>
-      <h1>Icon styles · ${opt('words') ? opt('words').split(',').join(', ') : 'home, calendar, bell, user, search, heart, document, settings'} — plain, then on a tinted chip and a solid circle (${color}). Blank = the set has no such icon.</h1>${STYLES.map(row).join('')}`);
+      <h1>Icon styles · ${opt('words') ? opt('words').split(/[\s,]+/).join(', ') : 'home, calendar, bell, user, search, heart, document, settings'} — plain, then on a tinted chip and a solid circle (${color}). Blank = the set has no such icon.</h1>${STYLES.map(row).join('')}`);
+    const found = STYLES.reduce((a, [, ids]) => a + ids.filter((id) => !id.endsWith(':none') && svgs[id]).length, 0);
+    if (!found) console.error('No icons resolved. Check the words (separate them with commas or spaces) and that api.iconify.design is reachable (icons.cjs find stethoscope).');
     await page.screenshot({ path: out, fullPage: true });
     console.log(`Icon style board → ${out}\nOpen it beside the reference's icons. Match: outline or filled, stroke weight, rounded or sharp ends, one tone or two (duotone), and the container (none, tinted circle, rounded square, solid). Then: node icons.cjs find <word> --set <prefix> --style <suffix>, and sprite.`);
   }
