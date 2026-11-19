@@ -143,6 +143,20 @@ function drawMap(c, W, st, ms) {
     g.fillStyle = '#0060d0'; g.fillText(h > 22 ? \`\${h}px: icon or several lines\` : \`\${h}px ink ≈ \${fs}px type\`, pad + W * 2 + 8, (a + h / 2) * 2); });
   if (ms.textInset > 0) { g.strokeStyle = 'rgba(0,160,90,.9)'; g.setLineDash([6, 6]); g.beginPath(); g.moveTo(pad + ms.textInset * 2, 0); g.lineTo(pad + ms.textInset * 2, H * 2); g.moveTo(pad + (W - ms.textInset) * 2, 0); g.lineTo(pad + (W - ms.textInset) * 2, H * 2); g.stroke(); g.setLineDash([]); }
   return o; }
+
+// content signature: for each 40px window, how much ink there is and how many items sit side by side
+function signature(c, W, win) {
+  const H = Math.round(c.height * W / c.width); const s = document.createElement('canvas'); s.width = W; s.height = H; const g = s.getContext('2d'); g.drawImage(c, 0, 0, W, H);
+  const d = g.getImageData(0, 0, W, H).data; const px = (x, y) => { const i = (y * W + x) * 4; return [d[i], d[i + 1], d[i + 2]]; };
+  const dist = (a, b) => Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]) + Math.abs(a[2] - b[2]);
+  const out = []; const x0 = Math.round(W * .04), x1 = Math.round(W * .96);
+  for (let y0 = 0; y0 + win <= H; y0 += win / 2) { const col = new Uint8Array(W); let ink = 0;
+    for (let y = y0; y < y0 + win; y++) { const bins = new Map(); for (let x = 0; x < W; x += 3) { const p = px(x, y); const k = (p[0] >> 4) << 8 | (p[1] >> 4) << 4 | (p[2] >> 4); bins.set(k, (bins.get(k) || 0) + 1); }
+      let bk = 0, n = 0; for (const [k, v] of bins) if (v > n) { n = v; bk = k; } const bg = [((bk >> 8) & 15) * 16 + 8, ((bk >> 4) & 15) * 16 + 8, (bk & 15) * 16 + 8];
+      for (let x = x0; x < x1; x++) if (dist(px(x, y), bg) > 100) { col[x] = 1; ink++; } }
+    let items = 0, gap = 99, w = 0; for (let x = x0; x < x1; x++) { if (col[x]) { if (gap >= 10) { items++; } gap = 0; w++; } else gap++; }
+    out.push({ y: y0, ink: ink / ((x1 - x0) * win), items }); }
+  return out; }
 `;
 function roles(p) {
   return p.map((c, i) => ({ ...c, role: i === 0 ? 'canvas' : c.chroma > 25 ? 'accent' : c.L < 35 ? 'text / dark surface' : c.L > 85 ? 'surface' : 'muted / line' }));
@@ -223,7 +237,7 @@ const fmt = (p) => roles(p).map((c) => `  ${c.hex}  ${String(c.share).padStart(5
       const o = document.createElement('canvas'); o.width = rw + ow + 60; o.height = H + 40; const g = o.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, o.width, o.height);
       g.font = 'bold 18px system-ui'; g.fillStyle = '#111'; g.fillText('Reference', 10, 24); g.fillText('Yours', rw + 50, 24);
       g.drawImage(rc, 10, 36, rw, H); g.drawImage(oc, rw + 50, 36, ow, H); document.body.innerHTML = ''; document.body.appendChild(o);
-      return { size: [o.width, o.height], ref: palette(rc), ours: palette(oc), rs: structure(rc, W), os: structure(oc, W), rm: measures(rc, W), om: measures(oc, W), rec }; }, [dataUrl(img), crop, dataUrl(shotPath), width, crop2, brandRgb]);
+      return { size: [o.width, o.height], ref: palette(rc), ours: palette(oc), rs: structure(rc, W), os: structure(oc, W), rm: measures(rc, W), om: measures(oc, W), rsig: signature(rc, W, 40), osig: signature(oc, W, 40), rec }; }, [dataUrl(img), crop, dataUrl(shotPath), width, crop2, brandRgb]);
     await page.setViewportSize({ width: res.size[0], height: res.size[1] }); await page.screenshot({ path: out, clip: { x: 0, y: 0, width: res.size[0], height: res.size[1] } });
     const lines = [], lineChroma = [];
     for (const r of roles(res.ref)) { if (r.share < 1.5) continue; lineChroma.push(r.chroma); const best = res.ours.map((o) => ({ o, d: dE(r.lab, o.lab) })).sort((x, y) => x.d - y.d)[0];
@@ -249,6 +263,14 @@ const fmt = (p) => roles(p).map((c) => `  ${c.hex}  ${String(c.share).padStart(5
     for (let y = 0; y <= H; y++) { const diff = y < H && res.rs.tones[y] !== res.os.tones[y];
       if (diff && t0 < 0) t0 = y; if (!diff && t0 >= 0) { if (y - t0 >= 16) fails.push(`layout y${t0}–${y}: the reference is ${res.rs.tones[t0]} here (${res.rs.rowHex[t0 + 4]}), yours is ${res.os.tones[t0]} (${res.os.rowHex[t0 + 4]}): a band, card or section is missing, moved or a different height`); t0 = -1; } }
     for (const r of rb) { const m = ob.find((o) => o.start < r.end && o.end > r.start && tone(o) === tone(r)); if (m && r.gradient !== m.gradient && r.h >= 40) fails.push(`block y${r.start}–${r.end}: the reference is ${r.gradient ? 'a gradient ' + r.top + ' → ' + r.bot : 'flat ' + r.top}, yours is ${m.gradient ? 'a gradient ' + m.top + ' → ' + m.bot : 'flat'}`); }
+    // content per window: the same kind of content at about the same place (±24px)
+    { let run = null; const flush = () => { if (run) { fails.push(`content y${run.a}–${run.b + 40}: the reference has ${run.r}, yours has ${run.o}. A block of the slice list is missing, replaced or a different size here; build the reference's block (with this product's content)`); run = null; } };
+      const desc = (w) => (w.ink < 0.004 ? 'nothing (space)' : w.items >= 3 ? `${w.items} items side by side` : w.items === 2 ? 'two items (e.g. a label and an action)' : 'one item (a line, a field, a single card)');
+      for (const r of res.rsig) { if (r.y < 44) continue; if (r.y + 40 > H) break; const cands = res.osig.filter((o) => Math.abs(o.y - r.y) <= 24);
+        const okw = cands.some((o) => (r.ink < 0.004) === (o.ink < 0.004) && Math.abs(o.items - r.items) <= (r.items >= 3 ? 1 : 1));
+        if (okw) { flush(); continue; } const o = cands.sort((a, b) => Math.abs(a.y - r.y) - Math.abs(b.y - r.y))[0];
+        const rd = desc(r), od = o ? desc(o) : 'nothing'; if (run && run.r === rd) run.b = r.y; else { flush(); run = { a: r.y, b: r.y, r: rd, o: od }; } }
+      flush(); }
     // padding and sizing, in px at this width
     const mrow = (name, r, o, tol, hint) => { if (r > 0 && o > 0 && Math.abs(o - r) > tol) fails.push(`${name}: reference ${r}px, yours ${o}px (${o > r ? '+' : ''}${o - r}): ${hint}`); };
     mrow('surface inset (screen edge to cards, fields, banners)', res.rm.surfaceInset, res.om.surfaceInset, 2, 'set the screen padding to the reference value');
@@ -262,8 +284,8 @@ const fmt = (p) => roles(p).map((c) => `  ${c.hex}  ${String(c.share).padStart(5
     console.log(`Compare → ${out}  (your render: ${shotPath})\n\nReference palette:\n${fmt(res.ref)}\n\nYours:\n${fmt(res.ours)}\n\nReference colour → your closest:\n${lines.join('\n')}` +
       `\n\nMeasures at ${width}px (reference → yours): surface inset ${res.rm.surfaceInset} → ${res.om.surfaceInset}, text inset ${res.rm.textInset} → ${res.om.textInset}, line height ${res.rs.rowMed} → ${res.os.rowMed}, row gap ${res.rs.gapMed} → ${res.os.gapMed}` + (res.rec ? `\nReference recoloured from hue ${res.rec.refHue}° to the brand's ${res.rec.brandHue}° before comparing: every colour must match.` : '') +
       `\n\nLayout blocks at ${width}px (y start–end, height, colour):\n  reference:\n${rb.map((x) => '    ' + blockRow(x)).join('\n')}\n  yours:\n${ob.map((x) => '    ' + blockRow(x)).join('\n')}\n\nContent rows: reference ${res.rs.rows} (avg ${res.rs.rowH}px), yours ${res.os.rows} (avg ${res.os.rowH}px)` +
-      (fails.length ? `\n\nRESULT: FAIL (${fails.length})\n${fails.map((f) => '  - ' + f).join('\n')}\n\nFix these, then run compare again. A difference may stay only when a floor (spec.md), the user's direction or the product's content requires it; list each such one with its reason in the handoff.`
-        : `\n\nRESULT: PASS on colour, layout and density.`) +
+      (fails.length ? `\n\nRESULT: FAIL (${fails.length})\n${fails.map((f) => '  - ' + f).join('\n')}\n\nFix these, then run compare again. A difference may stay only when a floor requires it (text below 4.5:1 contrast, a hit area below 44px: and meet those without changing what is seen), when the user asked for it, or when the product has no such content; list each with its reason in the handoff. Readability preferences and this skill's defaults (14px body, 16px padding) are not reasons: the reference's size is the design.`
+        : `\n\nRESULT: PASS on colour, layout, content, padding, sizes and density.`) +
       `\n\nThe numbers cannot see type, icons and shadows. Look at ${out} and check each: font character and weights, icon style (outline, filled, duotone) and containers, shadow softness and colour, gradients and overlays. Write every difference you see and fix it.`);
     if (fails.length) process.exitCode = 1;
   }
