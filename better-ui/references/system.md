@@ -72,8 +72,8 @@ Pick one that fits, then vary its exact hue so it is not a stock value. Avoid th
 
 ## Icons
 
-- One line-icon set at one stroke width (1.5 to 2px), drawn as inline SVG in the Lucide/Feather style: home, chart, calendar, user, plus, bell, search, settings, chevrons.
-- Icon chips: 40px, radius 12. The product's own features and actions (quick actions, onboarding steps, a settings group) use `--tint` with the icon in `--brand-text`; the user's items (merchants, categories, people) use the neutral `--well` with the icon in `--text-1` or the item's category colour. One treatment per kind of item.
+- **Icons follow the references:** their style (outline, bold, filled, duotone, two-tone), stroke, ends and containers. Run `scripts/icons.cjs board`, pick the closest set (Solar, Phosphor, Fluent, Material Symbols, Hugeicons, Tabler, Lucide and others) and inline the icons with `icons.cjs sprite`. Without references: one line-icon set at one stroke width (1.5 to 2px), inline SVG in the Lucide style.
+- Icon chips (the default when the references show none): 40px, radius 12. The product's own features and actions (quick actions, onboarding steps, a settings group) use `--tint` with the icon in `--brand-text`; the user's items (merchants, categories, people) use the neutral `--well` with the icon in `--text-1` or the item's category colour. One treatment per kind of item.
 - In consumer apps, items (habits, categories, exercises) may use native emoji on a neutral chip instead. Pick one approach per app.
 
 ## Imagery

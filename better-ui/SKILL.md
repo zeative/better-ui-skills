@@ -24,11 +24,11 @@ Two things are non-negotiable throughout: the interface must work (real states, 
 Every task, new or redesign, app or website, goes through these four steps. Skipping one is the most common reason the result looks generic:
 
 1. **References.** Search for this exact topic and kind with `scripts/refs.cjs` and choose two or three strong references (step 3, `references/references.md`).
-2. **Measure.** Write the reference spec: numbers for paddings, gaps, heights, radii, type sizes and weights, borders, shadows, colours and their areas, read with `scripts/match.cjs grid` and `palette`.
+2. **Measure.** Write the slice list (the reference's blocks top to bottom, from `scripts/match.cjs blocks`) and the reference spec: paddings, gaps, heights, radii, type sizes and weights, typeface, borders, shadows, gradients and overlays, icon style and containers, colours and their areas, read with `match.cjs grid` and `palette` and `scripts/icons.cjs board`.
 3. **Build from the numbers**, inside the existing product's identity when there is one (`improve.md`).
-4. **Compare** each main screen with its reference using `scripts/match.cjs compare` and fix every difference; then audit (step 7).
+4. **Compare** each main screen with its reference using `scripts/match.cjs compare` until it prints **PASS** (or each remaining FAIL is required by a floor, the user or the content), then check by eye what it cannot measure: typeface, icon style, shadows, gradients. One round is never enough. Then audit (step 7).
 
-The handoff shows the reference links, the spec table and the final comparison. If you cannot produce them, a step was skipped: go back and do it. Only without a network do you continue with the kits alone, and you say so.
+The handoff shows the reference links, the slice list, the spec table and the final comparison result. If you cannot produce them, a step was skipped: go back and do it. Only without a network do you continue with the kits alone, and you say so.
 
 ## Order of authority
 
@@ -36,7 +36,7 @@ When two instructions disagree, the higher one wins:
 
 1. **The user's explicit direction, and the existing product's identity and function:** its brand, logo, content, links, forms and data (`improve.md`).
 2. **The floors**, which nothing overrides: contrast 4.5:1 for text, 44px touch targets, 16px inputs on phones, no overflow or overlap at any width, every state working (`craft.md`, the floors in `spec.md`).
-3. **The reference spec:** the numbers measured from the chosen references (layout, sizes, spacing, radii, type, borders, shadows, colours and their areas, texture, signature components). These win over every default below.
+3. **The reference spec:** what was measured from the chosen references (the slice list of blocks, sizes, spacing, radii, typeface and weights, borders, shadows, gradients and overlays, icon style, colours and their areas, texture, signature components). These win over every default below.
 4. **This skill's defaults:** the kits, the values in `spec.md`, the colour budgets in `color.md`, the type rules in `typography.md`, the anatomies in `product-ui.md`, `marketing.md`, `commerce.md` and `public-sector.md`, the directions, chart forms and visual moments. Use them where the references are silent, to choose between references, and when there is no network.
 
 The filters in `critique.md` ("What reads as generated") and the audit apply at every level: a reference that has the generated look is a bad reference, not a licence.
@@ -94,7 +94,7 @@ node <this-skill-dir>/scripts/refs.cjs "<topic> app" "<topic> <main screen>" "<h
 node <this-skill-dir>/scripts/refs.cjs --site <an exemplary live site of this kind> --out .refs
 ```
 
-Open each `board.png`, then the full images you choose. **Measure the main reference of each screen** with `scripts/match.cjs grid` and `palette` and write a reference spec table of numbers (paddings, gaps, heights, radii, type sizes and weights, borders, shadows, colours and their areas); build from those numbers; then run `match.cjs compare` against the reference and fix every difference until none is visible. References are the measure of the result, not decoration. Never copy logos, illustrations, photographs or text; credit the references in the handoff. Without a network, say so and continue with the kits.
+Open each `board.png`, then the full images you choose. **Measure the main reference of each screen**: its slice list with `scripts/match.cjs blocks`, then a reference spec (paddings, gaps, heights, radii, typeface, type sizes and weights, borders, shadows, gradients and overlays, icon style and containers with `scripts/icons.cjs board`, colours and their areas) with `match.cjs grid` and `palette`; build from it; then run `match.cjs compare` until it prints PASS and no visible difference remains. References are the measure of the result, not decoration. Never copy logos, illustrations, photographs or text; credit the references in the handoff. Without a network, say so and continue with the kits.
 
 ## 4. Set up the system: tokens from the references, or a kit
 
@@ -111,7 +111,7 @@ One shape language per product: every element takes the same radius, border, sha
 - **Sizes and spacing:** the reference spec first. `references/spec.md` gives the defaults (phone 44/28/20/16/13, desktop 32/24/18/14/12, spacing on a 4px scale) for whatever the references do not show, and its floors always hold. Do not invent values that are in neither.
 - **Type details:** `references/typography.md` for tracking, leading, figures and what makes type look cheap.
 - **Colour use:** `references/color.md`: the brand at more than one strength, 85 to 90% neutral by area, semantic colours for meaning only.
-- **Icons and imagery:** one line-icon set, inline at text size; real Unsplash photographs for food, products, hotels and places; a real map (Leaflet with CARTO tiles) wherever there is a location; 3D icons only for items in consumer apps (`system.md`).
+- **Icons and imagery:** the references' icon style (outline, bold, filled or duotone, with their containers), from the set `scripts/icons.cjs board` shows closest, inlined as a sprite; without references, one line-icon set at text size; real Unsplash photographs for food, products, hotels and places; a real map (Leaflet with CARTO tiles) wherever there is a location; 3D icons only for items in consumer apps (`system.md`).
 
 ## 5. Layout: the references' composition, checked against the anatomy
 
@@ -164,7 +164,7 @@ Tell the user briefly: what you built, the references it was sliced from (with l
 ## Ways this goes wrong
 
 - **A theme instead of a product.** The habit tracker becomes a stamp card, the budget an abacus, the workout a barbell. Real products use the standard pattern (a list, a ring, a progress bar) and get their character from colour, type, icons and finish. Drop the metaphor.
-- **Costume finishes on product UI.** Paper texture, grain, wood, brass, ticket notches, postmarks, chalk, neon glows, heavy offset shadows. Flat, clean surfaces. (A web page whose chosen direction is tactile or brutalist may use its finish deliberately and consistently.)
+- **Costume finishes on product UI.** Paper texture, grain, wood, brass, ticket notches, postmarks, chalk, neon glows, heavy offset shadows that no reference has. (A pattern, gradient or translucency the references use is part of the spec: build it as they do. A web page whose chosen direction is tactile or brutalist may use its finish deliberately and consistently.)
 - **Display fonts on product UI.** A serif or condensed display face for app headings and numbers when the references do not use one. Use the one sans family; let size and weight do the work.
 - **Clever copy.** Puns, metaphors and narrative labels ("Two to go", "postmark", "links closed"), or text that explains the design to the viewer. Write what a shipped app says.
 - **Too plain.** No brand mark, no header, no tab bar, rows of identical default cards, one colour used for everything, nothing a designer drew. Compare with the references: they have the chrome and a clear visual moment; slice both.

@@ -81,7 +81,7 @@ A greeting is a caption (13/18 text-2) above the title or the hero, never a titl
 | Chip | 32 tall, radius full, 13/18 weight 500, 12 side padding |
 | Input | 48 tall, radius 12, 16px text, 16 side padding; label caption 13/18 weight 500 above, 8 gap |
 | Sheet | radius 24 top corners, 24 padding, grabber 36×4 |
-| Icon | 20 in content, 24 in navigation; stroke 1.75 |
+| Icon | 20 in content, 24 in navigation; stroke 1.75 (style and stroke from the references when there are any) |
 | Avatar | 32 in rows of people, 40 in the header |
 | Small chart or sparkline | 72×32 |
 
