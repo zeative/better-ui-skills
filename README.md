@@ -340,7 +340,7 @@ better-ui/
 │   └── craft.md             contrast, layout, states, accessibility
 └── scripts/
     ├── refs.cjs             searches Dribbble by topic and screenshots live sites into a reference board
-    ├── match.cjs            measures references (layout blocks, pixel grid, palette) and compares your screen: PASS or FAIL
+    ├── match.cjs            maps a reference to tokens in your brand colours, measures it, and compares your screen: PASS or FAIL
     ├── icons.cjs            icon styles board, search and sprite, to match the references' icons
     ├── audit.cjs            renders a page at 3 widths and reports measured problems
     ├── look.cjs             deals a contemporary look per category

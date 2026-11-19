@@ -2,7 +2,7 @@
 
 Every size, space, radius and colour role here is a single value, chosen from Apple's and Google's platform guidelines, Refactoring UI, Practical UI, Learn UI Design and Nielsen Norman Group research. They are the **defaults**: with a reference spec (`references.md`), the values measured from the references win for sizes, spacing, radii, type and colour; these fill whatever the references do not show. Do not interpolate between them or invent values that are in neither. Where another file in this skill gives a range, this file decides the default.
 
-**Floors that nothing overrides:** text contrast 4.5:1 (3:1 for 24px and up); touch targets 44px; inputs 16px on phones; body text 16px on phones and 14px on desktop at the smallest; no horizontal overflow or overlapping text at any width.
+**Floors that nothing overrides:** text contrast 4.5:1 (3:1 for 24px and up); touch targets 44px (the hit area: an invisible `::after` around a smaller control counts); text inside inputs 16px on phones; no text under 11px; no horizontal overflow or overlapping text at any width. Body text is 16px on phones and 14px on desktop by default, and the reference's body size when it shows one (often 14 or 15).
 
 Start every build by copying `assets/tokens.css` and then the chosen kit from `assets/kits/` (`kits.md`) into the stylesheet, with its variables set to the reference spec. On web pages the kit's or the references' type scale replaces the landing ramp below. Build only from those tokens.
 

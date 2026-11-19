@@ -42,6 +42,20 @@ Write one line per pick: what you take from it.
 
 A reference only helps if its numbers end up in the build. For the main reference of each screen (and the component references), crop the one screen you are using and measure it:
 
+Start with the **reference map**. It turns the screen into numbers so the build does not depend on judgement:
+
+```bash
+node <this-skill-dir>/scripts/match.cjs map .refs/<query>/07.webp --crop x,y,w,h --brand <brand hex> --out .refs/map-home
+```
+
+It writes three files:
+
+- `map-home.png`: the reference **recoloured into the brand's hue at the same lightness and strength** (a deep muted teal becomes a deep muted version of the brand, not the bright brand colour), with every block, text line (and its estimated type size) and the padding lines drawn on it. This image is the target: the build should look like it.
+- `map-home.css`: the tokens: canvas, accents and surfaces already mapped to the brand by role and area, ink and muted colours, screen padding, inset of cards and fields, the typical gap between lines, type sizes from the ink heights, and the height of each block. Put them at the top of the stylesheet and point the kit's variables at them (`--canvas: var(--ref-canvas)`, `--pad: var(--ref-pad)`); confirm the type sizes on the grid, since the estimate is ±1px.
+- `map-home.md`: the slice list with each block's y, height and colour, to fill in with what each holds and what it becomes in the build.
+
+Then read what the map cannot give:
+
 ```bash
 node <this-skill-dir>/scripts/match.cjs blocks .refs/<query>/07.webp --crop x,y,w,h            # the layout: bands, cards and sections top to bottom
 node <this-skill-dir>/scripts/match.cjs grid .refs/<query>/07.webp --crop x,y,w,h --step 20   # a pixel grid to read sizes from
@@ -83,7 +97,15 @@ Read every row from the image, not from habit:
 - **Typeface:** name the character (geometric with round letters: Poppins, Urbanist, Outfit; neo-grotesk: Inter, which also stands in for SF Pro; humanist or rounded: Nunito Sans, Manrope, DM Sans; display serif: Fraunces, Playfair) and pick the closest Google Font. Dribbble shots often use SF Pro, Gilroy, Satoshi or Circular, which are not free: use Inter for SF Pro, Plus Jakarta Sans or Urbanist for Gilroy, Manrope or Outfit for Satoshi, DM Sans for Circular. Match the weights by role, not one weight everywhere; a product with its own font keeps it at the reference's weights and sizes.
 - **Icons:** the style (outline, bold, filled, duotone, two-tone, 3D), stroke weight, round or sharp ends, colour, and the container (none, tinted circle, rounded square, solid). Put `icons.cjs board` beside the reference and pick the closest set; get the icons with `icons.cjs find` and `icons.cjs sprite`. One style per role, as in the reference (navigation icons and category icons are often different styles).
 
-Then fill the **Build** column with the values you will use: the reference's, with the brand colour in the accent's place and the accessibility minimums from `spec.md` (44px targets, 16px inputs, 4.5:1 text) where the reference falls below them.
+Then fill the **Build** column with the values you will use: the reference's, with colours from the map.
+
+**Meet the floors without changing what is seen.** A reference that shows a 34px banner, a 40px icon button or 13px labels keeps those sizes; the floors apply to what they guard:
+
+- **44px targets** are hit areas, not visual sizes: give the control padding or an invisible hit area (`position: relative` and `::after { content: ""; position: absolute; inset: -6px 0; }`) so the 34px banner stays 34px on screen and takes a 44px tap.
+- **16px inputs** means the text inside a field (to stop iOS zooming), not the field's height or the labels around it.
+- **4.5:1** is contrast: deepen a text colour a step, not the size.
+
+"The skill's default is 16 or 20" is never a reason to change a measured value.
 
 ## 4. Slice
 
@@ -103,10 +125,10 @@ Build each screen from the reference spec, not from memory:
 Compare every main screen with its reference, side by side and by numbers:
 
 ```bash
-node <this-skill-dir>/scripts/match.cjs compare .refs/<query>/07.webp index.html --crop x,y,w,h --width 375   # or --width 1440 for a page
+node <this-skill-dir>/scripts/match.cjs compare .refs/<query>/07.webp index.html --crop x,y,w,h --brand <brand hex> --width 375   # or --width 1440 for a page
 ```
 
-It renders your screen beside the reference at the same width and compares colour (neutrals must match; the brand replaces the reference's accent at about the same area), layout (where the reference has a coloured band, card or section and yours does not, in px), gradients, and density (lines of content in the same height). It prints **RESULT: PASS** or **FAIL** with each difference and exits 1 on FAIL. Pass a screenshot of one screen with `--crop2` when your page shows several screens in device frames.
+It renders your screen beside the reference at the same width and compares colour (with `--brand`, against the recoloured reference, so every colour must match, accents included), layout (where the reference has a coloured band, card or section and yours does not, in px), gradients, padding (screen edge to cards and to text), line size and the gap between lines, each in px with a tolerance of 2 to 3px, and density (lines of content in the same height). It prints **RESULT: PASS** or **FAIL** with each difference and exits 1 on FAIL. Pass a screenshot of one screen with `--crop2` when your page shows several screens in device frames.
 
 The screen is not done until:
 

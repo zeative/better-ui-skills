@@ -10,7 +10,7 @@ These are the rules UX courses and platform guidelines agree on. The default siz
 
 | Rule | Value | Source |
 |:---|:---|:---|
-| Body text on phones | 16px or more (Apple uses 17pt; Material Body Large is 16/24) | Apple HIG Typography; Material 3; Learn UI Design; Nielsen Norman Group |
+| Body text on phones | 16px by default (Apple uses 17pt; Material Body Large is 16/24); the reference's size when it shows one, never under 14 for paragraphs | Apple HIG Typography; Material 3; Learn UI Design; Nielsen Norman Group |
 | Body text in dense desktop apps | 14px (13px for secondary) | Vercel Geist; Learn UI Design |
 | Inputs on phones | 16px or more, or iOS zooms the page | Learn UI Design |
 | Smallest text | 11pt, and only for tab labels and similar | Apple HIG |

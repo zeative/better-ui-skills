@@ -1064,6 +1064,10 @@ function measure(targetWidth) {
       const left = Math.min(r.left, lr.left), top = Math.min(r.top, lr.top);
       r = { left, top, width: Math.max(r.right, lr.right) - left, height: Math.max(r.bottom, lr.bottom) - top };
     }
+    // an invisible hit area (::before/::after positioned outside the box) counts as part of the target
+    for (const pe of ['::before', '::after']) { const cs = getComputedStyle(el, pe); if (cs.content === 'none' || cs.position !== 'absolute') continue;
+      const px = (v) => (v.endsWith('px') ? parseFloat(v) : 0); const t = px(cs.top), b = px(cs.bottom), l = px(cs.left), rr = px(cs.right);
+      if (t < 0 || b < 0 || l < 0 || rr < 0) { const top = r.top + Math.min(0, t), left = r.left + Math.min(0, l); r = { left, top, width: r.width - Math.min(0, l) - Math.min(0, rr), height: r.height - Math.min(0, t) - Math.min(0, b) }; } }
     const inlineLink = el.tagName === 'A' && getComputedStyle(el).display === 'inline' && el.parentElement && el.parentElement.innerText.trim().length > el.innerText.trim().length + 12;
     if (!inlineLink && (r.width < 24 || r.height < 24)) smallTargets.push({ el: describe(el), w: Math.round(r.width), h: Math.round(r.height), hard: true });
     else if (!inlineLink && vw <= 480 && (r.height < 44 || r.width < 44)) smallTargets.push({ el: describe(el), w: Math.round(r.width), h: Math.round(r.height), hard: false });

@@ -5,6 +5,10 @@
 //       The same eight icons in about twenty styles (outline, rounded, bold, filled, duotone, two-tone,
 //       broken), plain and on a tinted chip, in one image. Put it beside the reference's icons and pick the
 //       style that matches their weight, fill, corners and two-tone treatment.
+//   node icons.cjs board --words "stethoscope,tooth,baby,pill,lab,queue" [--color #hex]
+//       The same board for your product's own words, across sets that include domain icons (Healthicons for
+//       medicine, Material Symbols, Fluent, Phosphor, Solar, Tabler and others). Generic icons for domain
+//       items (a smiley for dentistry) look like a template; detailed domain icons look designed.
 //   node icons.cjs find <word> [more words] [--set solar] [--style bold-duotone]
 //       Icon names for each word in a set and style (from the Iconify index of 200+ open icon sets).
 //   node icons.cjs sprite <set:name> [more] [--out icons.svg]
@@ -35,6 +39,22 @@ const PH = ['house', 'calendar-blank', 'bell', 'user', 'magnifying-glass', 'hear
 const FL = ['home-24', 'calendar-24', 'alert-24', 'person-24', 'search-24', 'heart-24', 'document-text-24', 'settings-24'];
 const MS = ['home', 'calendar-month', 'notifications', 'person', 'search', 'favorite', 'description', 'settings'];
 const MG = ['home-3', 'calendar', 'notification', 'user-3', 'search', 'heart', 'file', 'settings-3'];
+const WORD_STYLES = [
+  ['Outline · healthicons (medical)', 'healthicons', (n) => n.endsWith('-outline')],
+  ['Filled · healthicons (medical)', 'healthicons', (n) => !/-(outline|negative)/.test(n)],
+  ['Outline rounded · material symbols', 'material-symbols', (n) => n.endsWith('-outline-rounded')],
+  ['Filled rounded · material symbols', 'material-symbols', (n) => n.endsWith('-rounded') && !n.endsWith('-outline-rounded')],
+  ['Regular · fluent', 'fluent', (n) => n.endsWith('-24-regular')],
+  ['Filled · fluent', 'fluent', (n) => n.endsWith('-24-filled')],
+  ['Linear · solar', 'solar', (n) => n.endsWith('-linear')],
+  ['Bold duotone · solar', 'solar', (n) => n.endsWith('-bold-duotone')],
+  ['Regular · phosphor', 'ph', (n) => !/-(bold|duotone|fill|light|thin)$/.test(n)],
+  ['Duotone · phosphor', 'ph', (n) => n.endsWith('-duotone')],
+  ['Outline · tabler', 'tabler', (n) => !n.endsWith('-filled')],
+  ['Outline · lucide', 'lucide', () => true],
+  ['Outline rounded · hugeicons', 'hugeicons', () => true],
+  ['Outline · material design icons', 'mdi', (n) => n.endsWith('-outline')],
+];
 const STYLES = [
   ['Outline thin · lucide', C('lucide', ['house', 'calendar', 'bell', 'user', 'search', 'heart', 'file-text', 'settings'])],
   ['Outline · tabler', C('tabler', ['home', 'calendar', 'bell', 'user', 'search', 'heart', 'file-text', 'settings'])],
@@ -64,16 +84,24 @@ const STYLES = [
 
   if (cmd === 'board') {
     const color = opt('color', '#1F6FEB'); const out = opt('out', 'icons-board.png');
+    if (opt('words')) { const words = opt('words').split(',').map((w) => w.trim()).filter(Boolean); STYLES.length = 0;
+      for (const [label, prefix, ok] of WORD_STYLES) { const ids = [];
+        for (const w of words) { let j = { icons: [] }; try { j = JSON.parse(await get(`${API}/search?query=${encodeURIComponent(w)}&prefix=${prefix}&limit=96`)); } catch (_) { /* none */ }
+          const base = (id) => id.split(':')[1].replace(/-(outline-rounded|rounded|outline|24-regular|24-filled|linear|bold-duotone|duotone|filled|negative)$/, '');
+          const toks = (id) => id.split(':')[1].split('-'); const has = (id) => toks(id).includes(w) && !toks(id).some((t) => ['off', 'slash', 'remove', 'cancel', 'x', 'minus', 'plus', 'add', 'alert', 'question', 'music', 'play', 'next', 'bluetooth'].includes(t));
+          const c = (j.icons || []).filter((id) => ok(id.split(':')[1]) && has(id)).sort((a, b) => (base(a) === w ? 0 : base(a).startsWith(w) ? 1 : 2) - (base(b) === w ? 0 : base(b).startsWith(w) ? 1 : 2) || a.length - b.length);
+          ids.push(c[0] || `${prefix}:none`); }
+        STYLES.push([label, ids]); } }
     const svgs = {}; await Promise.all(STYLES.flatMap(([, ids]) => ids).map(async (id) => { const [p, n] = id.split(':'); try { svgs[id] = await get(`${API}/${p}/${n}.svg?height=24`); } catch (_) { svgs[id] = ''; } }));
-    const row = ([label, ids]) => `<div class="r"><div class="l">${label}<small>${ids[0].split(':')[0]}:…${ids[0].split(':')[1].replace(/^[a-z0-9]+(-[0-9]+)?/, '') || ''}</small></div>
+    const row = ([label, ids]) => `<div class="r"><div class="l">${label}<small>${opt('words') ? ids.map((i) => i.split(':')[1]).join(' · ') : ids[0].split(':')[0]}</small></div>
       <div class="ic">${ids.map((id) => `<span class="p">${svgs[id]}</span>`).join('')}</div>
       <div class="ic">${ids.slice(0, 4).map((id) => `<span class="c">${svgs[id]}</span>`).join('')}<span class="c d">${svgs[ids[0]]}</span></div></div>`;
     await page.setContent(`<!doctype html><style>body{margin:0;padding:20px 24px;font:13px/1.3 system-ui,sans-serif;color:#1d2330;background:#fff;width:1130px}
-      h1{font-size:16px;margin:0 0 12px}.r{display:grid;grid-template-columns:260px 330px 1fr;align-items:center;gap:16px;padding:7px 0;border-top:1px solid #eceef2}
-      .l{font-weight:600}.l small{display:block;font-weight:400;color:#6b7280;font-size:11px}.ic{display:flex;gap:14px;align-items:center}
+      h1{font-size:16px;margin:0 0 12px}.r{display:grid;grid-template-columns:300px 360px 1fr;align-items:center;gap:16px;padding:7px 0;border-top:1px solid #eceef2}
+      .l{font-weight:600}.l small{display:block;font-weight:400;color:#6b7280;font-size:11px}.ic{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
       .p svg{width:24px;height:24px;color:#1d2330;display:block}.c{width:44px;height:44px;border-radius:14px;background:color-mix(in oklch,${color} 12%,white);color:${color};display:grid;place-items:center}
       .c svg{width:22px;height:22px}.c.d{background:${color};color:#fff;border-radius:50%}</style>
-      <h1>Icon styles · home, calendar, bell, user, search, heart, document, settings — plain, then on a tinted chip and a solid circle (${color})</h1>${STYLES.map(row).join('')}`);
+      <h1>Icon styles · ${opt('words') ? opt('words').split(',').join(', ') : 'home, calendar, bell, user, search, heart, document, settings'} — plain, then on a tinted chip and a solid circle (${color}). Blank = the set has no such icon.</h1>${STYLES.map(row).join('')}`);
     await page.screenshot({ path: out, fullPage: true });
     console.log(`Icon style board → ${out}\nOpen it beside the reference's icons. Match: outline or filled, stroke weight, rounded or sharp ends, one tone or two (duotone), and the container (none, tinted circle, rounded square, solid). Then: node icons.cjs find <word> --set <prefix> --style <suffix>, and sprite.`);
   }
