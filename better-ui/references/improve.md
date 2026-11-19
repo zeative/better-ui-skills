@@ -2,7 +2,7 @@
 
 Most people who install this skill already have a page: a landing page, a dashboard, an app. They ask to make it better ("bikin lebih bagus", "rapikan", "make it look more premium", "redesign"). The result must look clearly better **and** still be their product: the same brand, the same content and promises, the same links and forms, working in the same codebase. A redesign that breaks a form, loses the SEO tags, rewrites a React app into one HTML file, or replaces the brand with this skill's defaults is a failure however good it looks.
 
-Contents: 1 baseline · 2 read the code · 3 choose the scope · 4 what must not break · 5 carry the brand · 6 work in the stack · 7 build · 8 prove it
+Contents: 1 baseline · 1b references · 2 read the code · 3 choose the scope · 4 what must not break · 5 carry the brand · 6 work in the stack · 7 build · 8 prove it
 
 ## 1. Baseline: measure before you touch anything
 
@@ -12,6 +12,10 @@ Contents: 1 baseline · 2 read the code · 3 choose the scope · 4 what must not
   ```
 - Open every screenshot. Write a short list of what is wrong, by area (hierarchy, type, colour, spacing, components, mobile, copy, imagery), each with where it is. Note the audit's counts: broken items, font sizes on the first screen, spacing off the scale, contrast failures.
 - Write what is **good** and must stay: the logo, a colour people know, a strong photograph, a clear headline, a section that works.
+
+## 1b. References: what "better" looks like for this kind of screen
+
+Before designing, find and measure references exactly as in `references.md`: search with `scripts/refs.cjs` for this product's topic and kind ("clinic app", "patient booking app", "api landing page"), choose two or three, and write the reference spec of numbers with `scripts/match.cjs grid` and `palette`. The redesign keeps the product's identity (logo, brand colour, voice, content) and takes its proportions, spacing, type scale, component shapes and texture from the references. Without references, "better" defaults to this skill's habits, which is how redesigns end up generic.
 
 ## 2. Read the code before designing
 

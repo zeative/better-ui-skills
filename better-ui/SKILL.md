@@ -19,9 +19,20 @@ Two things are non-negotiable throughout: the interface must work (real states, 
 
 **Web pages are judged differently.** Landing pages, marketing sites, event pages, restaurants, portfolios and other sites people visit rather than use all day are compared with the best of Awwwards and Godly, where art direction wins and the conventional layout looks like a template. For these, explore before you build and commit to one bold direction (`references/web-directions.md`). The fixed values, budgets and audit in this skill are a **floor** (hierarchy, legibility, spacing, accessibility, no broken layout), **not a ceiling on creativity**: a chosen direction may bring its own display face and sizes, colour fields, full-bleed imagery, unusual grids and motion, as long as it stays legible, consistent and right for the brand.
 
+## The process you always follow
+
+Every task, new or redesign, app or website, goes through these four steps. Skipping one is the most common reason the result looks generic:
+
+1. **References.** Search for this exact topic and kind with `scripts/refs.cjs` and choose two or three strong references (step 3, `references/references.md`).
+2. **Measure.** Write the reference spec: numbers for paddings, gaps, heights, radii, type sizes and weights, borders, shadows, colours and their areas, read with `scripts/match.cjs grid` and `palette`.
+3. **Build from the numbers**, inside the existing product's identity when there is one (`improve.md`).
+4. **Compare** each main screen with its reference using `scripts/match.cjs compare` and fix every difference; then audit (step 7).
+
+The handoff shows the reference links, the spec table and the final comparison. If you cannot produce them, a step was skipped: go back and do it. Only without a network do you continue with the kits alone, and you say so.
+
 ## 1. Find out whose design this is
 
-**Improving something that already exists** ("make it better", "bikin lebih bagus", "rapikan", "redesign" of a page, component or app you were given): read `references/improve.md` first and follow it. It measures the page before and after, chooses the scope from the request and the audit, keeps the content, links, forms, SEO and brand intact, and works inside the existing stack instead of rewriting it.
+**Improving something that already exists** ("make it better", "bikin lebih bagus", "rapikan", "redesign" of a page, component or app you were given): read `references/improve.md` first and follow it, together with the references step: a redesign is measured against the best current examples of its kind, not only against its old self. It measures the page before and after, chooses the scope from the request and the audit, keeps the content, links, forms, SEO and brand intact, and works inside the existing stack instead of rewriting it.
 
 - **An existing product** (styles, components, tokens, a Tailwind theme, a brand guide, screenshots): read the tokens and a few screens and work inside that system. Do not add a second font, accent or component style. Apply the craft in this skill within it.
 - **A redesign of a live product**, even "redesign everything" or "rombak total": its users should still recognise it. Keep the logo, the brand colour, the character of the type (a mono or tabular face stays) and, above all, the **density** and the information on each screen. Change what is actually wrong: hierarchy, alignment, inconsistent components, missing states, cramped or broken mobile layouts, empty screens. Before building, write down what the current design does well and keep it. A redesign that swaps a product's identity for this skill's defaults is a downgrade, however polished. Density means the *working* screens of a tool; a dated public website whose problem is too much (thirty link cards, sliders, popups, banners of officials) keeps its information **reachable** (a top-tasks list, an A–Z page, the footer directory), not all on the homepage, and keeps its identity through the emblem's colours and the region's character, not through its old layout.
