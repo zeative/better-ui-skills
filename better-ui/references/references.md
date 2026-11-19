@@ -90,7 +90,7 @@ Then fill the **Build** column with the values you will use: the reference's, wi
 Build each screen from the reference spec, not from memory:
 
 - **Use the measured values** for paddings, gaps, heights, radii, type sizes and weights, borders and shadows. Put them in the tokens (the kit's variables or the project's theme) so every screen uses the same ones.
-- **Match the colour proportions:** the canvas, surfaces and accent at roughly the reference's shares of the area; the brand colour replaces the reference's accent at the same strength and area.
+- **Match the colour proportions and tone:** the canvas, surfaces and accent at roughly the reference's shares of the area. The brand replaces the reference's accent at the same area **and the same tone**: if the reference's header is a deep, muted teal (L38, low chroma), the build's header is a deep, muted version of the brand (the `palette.cjs` step closest in lightness, with less chroma), not the bright brand blue. The exact brand colour stays on the logo and the primary button. `compare` checks the lightness and strength.
 - **Match the layout:** the blocks of the slice list, in order and at their heights; overlaps as in the reference (a search field across the header edge, a card half over a band).
 - **Match the texture:** if the reference has flat white cards on a tinted canvas with no borders, so does the build; if it has hairline lists and no cards, so does the build. Gradients, patterns, translucency and shadows as in the spec, not added and not dropped.
 - **Match the type and icons:** the chosen typeface at the reference's weights, sizes and colours per role; the icon set whose style matches, in the reference's containers.

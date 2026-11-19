@@ -143,6 +143,10 @@ const fmt = (p) => roles(p).map((c) => `  ${c.hex}  ${String(c.share).padStart(5
     const ra = acc(res.ref), oa = acc(res.ours);
     for (const [i, l] of lines.entries()) if (/MISSING/.test(l) && !(lineChroma[i] > 18)) fails.push('colour missing:' + l.replace(/\s+/g, ' '));
     if (ra >= 3 && (oa < ra * 0.6 || oa > ra * 1.6)) fails.push(`accent/brand area ${oa.toFixed(0)}% vs the reference's ${ra.toFixed(0)}%: make the brand cover about the same area (header band, chips, icons) as the reference's accent`);
+    // the brand takes the reference accent's tone: about the same lightness and strength, in its own hue
+    const top = (p) => p.filter((c) => c.chroma > 18).sort((a, b) => b.share - a.share)[0];
+    const rA = top(res.ref), oA = top(res.ours);
+    if (rA && oA && rA.share >= 3 && (Math.abs(oA.L - rA.L) > 10 || oA.chroma > rA.chroma * 1.6 || oA.chroma < rA.chroma / 1.6)) fails.push(`accent tone: the reference's main accent ${rA.hex} is L${Math.round(rA.L)} C${Math.round(rA.chroma)}, yours ${oA.hex} is L${Math.round(oA.L)} C${Math.round(oA.chroma)}: for the large areas use the brand step closest in lightness (palette.cjs), muted or deepened toward the reference's strength; keep the exact brand colour for the logo and the primary button`);
     const extraN = extra.filter((e) => !(e.chroma > 18 && ra >= 3)); if (extraN.length) fails.push('colours the reference does not have: ' + extraN.map((e) => e.hex + ' ' + e.share + '%').join(', '));
     // layout: every reference block needs a counterpart at about the same place, size and treatment
     const H = Math.min(res.rs.H, res.os.H); const rb = res.rs.blocks.filter((x) => x.start < H), ob = res.os.blocks.filter((x) => x.start < H);
