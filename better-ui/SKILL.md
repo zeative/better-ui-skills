@@ -72,7 +72,7 @@ node <this-skill-dir>/scripts/refs.cjs "<topic> app" "<topic> <main screen>" "<h
 node <this-skill-dir>/scripts/refs.cjs --site <an exemplary live site of this kind> --out .refs
 ```
 
-Open each `board.png`, then the full images you choose. Never copy logos, illustrations, photographs or text; credit the references in the handoff. Without a network, say so and continue with the kits.
+Open each `board.png`, then the full images you choose. **Measure the main reference of each screen** with `scripts/match.cjs grid` and `palette` and write a reference spec table of numbers (paddings, gaps, heights, radii, type sizes and weights, borders, shadows, colours and their areas); build from those numbers; then run `match.cjs compare` against the reference and fix every difference until none is visible. References are the measure of the result, not decoration. Never copy logos, illustrations, photographs or text; credit the references in the handoff. Without a network, say so and continue with the kits.
 
 ## 4. Set up the system: tokens from the references, or a kit
 

@@ -340,12 +340,13 @@ better-ui/
 │   └── craft.md             contrast, layout, states, accessibility
 └── scripts/
     ├── refs.cjs             searches Dribbble by topic and screenshots live sites into a reference board
+    ├── match.cjs            measures references (pixel grid, palette) and compares your screen with them
     ├── audit.cjs            renders a page at 3 widths and reports measured problems
     ├── look.cjs             deals a contemporary look per category
     └── palette.cjs          turns one brand colour into the full colour system
 ```
 
-Markdown, stylesheets and four Node scripts. No runtime dependencies.
+Markdown, stylesheets and five Node scripts. No runtime dependencies.
 
 <details>
 <summary><b><code>audit.cjs</code>: what it measures</b></summary>

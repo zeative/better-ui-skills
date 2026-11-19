@@ -38,33 +38,56 @@ Open `board.png` for each query, then open the full images that look strongest. 
 
 Write one line per pick: what you take from it.
 
-## 3. Break them down
+## 3. Measure them: the reference spec
 
-For each chosen reference, write a short breakdown you will build from:
+A reference only helps if its numbers end up in the build. For the main reference of each screen (and the component references), crop the one screen you are using and measure it:
 
-- **Layout:** grid, margins, how the first screen is divided, what leads.
-- **Type:** the faces (or the closest Google Fonts), the sizes and weights of title, body and small text, the line heights and tracking.
-- **Colour:** canvas, surfaces, text tones, the accent and where it is used, how much of the screen it covers.
-- **Shape and depth:** radii, borders, shadows, how cards and lists are separated.
-- **Signature components:** the two or three pieces that make it look made (a large queue number, a segmented progress, a chart style, a bottom sheet).
+```bash
+node <this-skill-dir>/scripts/match.cjs grid .refs/<query>/07.webp --crop x,y,w,h --step 20   # a pixel grid to read sizes from
+node <this-skill-dir>/scripts/match.cjs palette .refs/<query>/07.webp --crop x,y,w,h          # colours and their share of the area
+```
+
+Convert pixels to CSS px with the scale (the screen's width in the image ÷ 375 for a phone, ÷ 1440 for a desktop page) and write a **reference spec** table before writing any CSS. Every row is a number, never an adjective:
+
+| Measure | Reference | Build |
+|:---|:---|:---|
+| Screen side padding | 20 | |
+| Header height, title size / weight | 56, 20/600 | |
+| Card padding, radius, border, shadow | 16, 20, none, 0 8 24 rgba(…, .08) | |
+| Gap between cards / between sections | 12 / 28 | |
+| List row height, avatar size | 64, 44 | |
+| Key figure size / weight | 40/600 | |
+| Body / caption sizes | 15 / 13 | |
+| Button height, radius, label size | 52, 26 (pill), 16/600 | |
+| Chip height, radius | 36, 18 | |
+| Icon size and stroke | 22, 1.75 | |
+| Canvas, surface, text, accent colours and their area | #F7F7F5 55%, #FFFFFF 30%, #16181D, #D9F99D 4% | |
+| Texture: surface treatment | flat white cards on a tinted canvas, no borders | |
+
+Then fill the **Build** column with the values you will use: the reference's, with the brand colour in the accent's place and the accessibility minimums from `spec.md` (44px targets, 16px inputs, 4.5:1 text) where the reference falls below them.
 
 ## 4. Slice
 
-Build each screen by re-creating those decisions with this product's content:
+Build each screen from the reference spec, not from memory:
 
-- Match the reference's **proportions and spacing rhythm** closely: the hero's height, the gutter, the gap between groups, the size of the key figure relative to the screen. Measure them from the image instead of approximating.
-- Match the **type scale and weights**, the **radius and shadow** language and the **colour proportions**; put the product's own brand colour where the reference put its accent.
-- Re-create the **signature components** in code, with real data.
-- Mix references by role (layout from one, a component from another), never by averaging them.
-- The design tokens follow the references: set the kit's variables (fonts, radii, shadows, neutrals) to the values you measured, or start from the closest kit in `kits.md` and adjust it. The spec in `spec.md` still holds for accessibility minimums (tap targets, body size, contrast).
-
-What is never copied: logos, illustrations, photographs, icons drawn by the designer, the reference's text and its brand name. The result must be this product's screen built to the reference's standard, not a clone of someone else's shot.
+- **Use the measured values** for paddings, gaps, heights, radii, type sizes and weights, borders and shadows. Put them in the tokens (the kit's variables or the project's theme) so every screen uses the same ones.
+- **Match the colour proportions:** the canvas, surfaces and accent at roughly the reference's shares of the area; the brand colour replaces the reference's accent at the same strength and area.
+- **Match the texture:** if the reference has flat white cards on a tinted canvas with no borders, so does the build; if it has hairline lists and no cards, so does the build.
+- **Re-create the signature components** in code, with real data, at the reference's size.
+- Mix references by role (layout from one, a component from another), never by averaging them; each screen has one main reference.
+- Never copy logos, illustrations, photographs, icons drawn by the designer, or the reference's text and brand.
 
 ## 5. Compare and iterate
 
-Render your screen and put it beside the references (open both). Ask:
+Compare every main screen with its reference, side by side and by numbers:
 
-- Does it sit among them, or is it visibly weaker? Name the exact difference: a size, a spacing, a weight, a radius, a colour proportion, a missing detail.
-- Fix the differences in that order and render again. Two or three rounds is normal.
+```bash
+node <this-skill-dir>/scripts/match.cjs compare .refs/<query>/07.webp index.html --crop x,y,w,h --width 375   # or --width 1440 for a page
+```
 
-In the handoff, list the references used with their links and what each contributed.
+It renders your screen beside the reference at the same height and compares the palettes. The screen is not done until:
+
+- every reference colour with 1.5% of the area or more is **match** or **close** in your build (or deliberately replaced by the brand colour at the same area), and no colour of yours covers 3% or more that the reference does not have, unless it is the brand;
+- looking at the comparison image, you can list **no visible difference** in padding, gap, size, weight, radius, border, shadow or colour area. Write the differences you see as a list with numbers ("card padding 24 vs 16", "title 600 vs 700"), fix them, and compare again. Two or three rounds is normal.
+
+In the handoff, include the reference spec table, the final comparison image for the main screen, and the references' links.
