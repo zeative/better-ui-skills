@@ -6,7 +6,7 @@ Contents: what the research says · choosing a face · pairing · weights · siz
 
 ## What the research says
 
-These are the rules UX courses and platform guidelines agree on. The exact sizes for each context are fixed in `spec.md`.
+These are the rules UX courses and platform guidelines agree on. The default sizes for each context are in `spec.md`; the reference spec's sizes replace them.
 
 | Rule | Value | Source |
 |:---|:---|:---|
@@ -60,7 +60,7 @@ Avoid as the main face unless the brand already uses it: Poppins, Montserrat, Ra
 ## Weights
 
 - **Body and labels 400,** emphasis and buttons 500, titles 600. Large display text (40px and above) often looks most elegant at 500, not 600 or 700, because size already carries it.
-- **No 700 to 900 on UI text,** except a single key figure where the face looks thin at 600.
+- **No 700 to 900 on UI text by default,** except a single key figure where the face looks thin at 600, or where the references or the kit set headings at 700 (`soft`, `civic`).
 - On dark backgrounds text looks bolder: drop one step (500 for titles), and set `-webkit-font-smoothing: antialiased`.
 - Use a variable font or load only the weights you use (usually 400, 500, 600).
 

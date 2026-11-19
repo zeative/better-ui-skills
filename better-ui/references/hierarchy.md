@@ -36,7 +36,7 @@ Contents: decide the levels · the type ramp · grouping and spacing · numbers 
 
 ## Tables
 
-- **Row height by density:** 28 to 32px for professional tools, 40px by default, 48 to 56px with avatars or two lines. One height per table.
+- **Row height by density:** 28 to 32px for professional tools, 48px by default on desktop (`spec.md`), 40px in compact views, 56px with avatars or two lines. One height per table.
 - **Columns sized to content,** the identifying column first and widest, numeric columns right-aligned with right-aligned headers. About seven to nine columns fit a desktop table before it needs to scroll; on narrow screens the first column stays sticky.
 - **Header** 12px in the secondary tone, weight 500, sentence case. Hairline row separators or zebra, not both.
 - **States read apart:** hover, selected and keyboard focus each have their own treatment.
@@ -52,7 +52,7 @@ Contents: decide the levels · the type ramp · grouping and spacing · numbers 
 ## Dashboards
 
 - A dashboard answers "how is it going, and is anything wrong?" at a glance and fits the question on one screen.
-- The most important figure top-left; five to seven key figures at most in the first row; supporting detail below and to the right.
+- The most important figure top-left; up to four key figures in the first row (`spec.md`), more grouped below; supporting detail below and to the right.
 - Group modules by the question they answer, not by the type of widget.
 - Each figure appears once. A second tile restating the same number in another form is noise.
 

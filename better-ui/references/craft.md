@@ -61,6 +61,6 @@ Useful: `clamp()` for fluid type and spacing, `min-height: 100dvh` on phones, `e
 2. For each text colour and the surface it sits on, compute contrast, starting with muted text and text on tinted or dark surfaces.
 3. At 375px, add up fixed widths, paddings and absolutely positioned elements in each section. Does anything exceed the viewport?
 4. Does every interactive element have hover, focus and pressed styles, and a handler?
-5. Does every list have thumbnails or avatars, every tile an icon or mini visual, every section a visual?
+5. Do lists of people, places or products show their real image (a photo, an avatar), while stat tiles stay a label, a figure and its change, and sections carry content rather than decoration?
 6. Is there a viewport tag, a `lang`, one `h1`, a label for every input?
 7. Score the page against `critique.md` from the source, imagining each screen.

@@ -1066,7 +1066,7 @@ function measure(targetWidth) {
     }
     const inlineLink = el.tagName === 'A' && getComputedStyle(el).display === 'inline' && el.parentElement && el.parentElement.innerText.trim().length > el.innerText.trim().length + 12;
     if (!inlineLink && (r.width < 24 || r.height < 24)) smallTargets.push({ el: describe(el), w: Math.round(r.width), h: Math.round(r.height), hard: true });
-    else if (!inlineLink && vw <= 480 && (r.height < 40 || r.width < 40)) smallTargets.push({ el: describe(el), w: Math.round(r.width), h: Math.round(r.height), hard: false });
+    else if (!inlineLink && vw <= 480 && (r.height < 44 || r.width < 44)) smallTargets.push({ el: describe(el), w: Math.round(r.width), h: Math.round(r.height), hard: false });
     const name = (el.innerText || '').trim() || el.getAttribute('aria-label') || el.getAttribute('title') || (el.getAttribute('aria-labelledby') ? 'x' : '') || (el.querySelector && el.querySelector('img[alt]:not([alt=""]), svg title') ? 'x' : '') || el.value;
     if (['BUTTON', 'A'].includes(el.tagName) || el.getAttribute('role') === 'button') { if (!name) unnamed.push(describe(el)); }
     if (['INPUT', 'SELECT', 'TEXTAREA'].includes(el.tagName) && !['submit', 'button', 'reset'].includes(el.type)) {
@@ -1179,9 +1179,10 @@ function report(results, facts, focus, runtime, args) {
   const widest = results[results.length - 1].m, narrow = results[0].m;
   const showcase = /^(showcase|editorial)$/.test(args.register || '');
   // checks that ask for surfaces, shadows, icons and colour fields do not apply to image-led editorial sites
-  const SKIP = /sits directly on the page background|Very little imagery|Depth is flat|use a single blur|Everything has equal weight|no large confident field|share one background tone|people are shown as initials/;
+  const SKIP = /Very little imagery|Depth is flat|Everything has equal weight|no large confident field|share one background tone/;
   // dense professional tools (terminals, market data, consoles) are judged on density and precision, not on imagery and surfaces
   const dense = /^(dense|pro)$/.test(args.register || '');
+  const REF = ' (If this value was measured from the reference spec or comes from the chosen kit, keep it and say so in the handoff.)';
   const problem = (sev, msg) => { if (showcase && sev === 'RICHNESS' && SKIP.test(msg)) return; if (dense && sev === 'RICHNESS') return; P.push({ sev, msg }); };
 
   // --- things that are simply broken
@@ -1208,7 +1209,7 @@ function report(results, facts, focus, runtime, args) {
   if (widest.imgNoAlt) problem('ACCESS', `${widest.imgNoAlt} <img> without an alt attribute (use alt="" if decorative).`);
   const hard = narrow.smallTargets.filter((t) => t.hard), soft = narrow.smallTargets.filter((t) => !t.hard);
   if (hard.length) problem('ACCESS', `Targets under 24px (fails WCAG 2.2 minimum): ${hard.slice(0, 6).map((t) => `${t.el} ${t.w}×${t.h}`).join('; ')}`);
-  if (soft.length) problem('TOUCH', `${narrow.smallTargetCount - hard.length} touch targets under 40px at ${results[0].width}px wide, e.g. ${soft.slice(0, 5).map((t) => `${t.el} ${t.w}×${t.h}`).join('; ')}`);
+  if (soft.length) problem('TOUCH', `${narrow.smallTargetCount - hard.length} touch targets under 44px at ${results[0].width}px wide, e.g. ${soft.slice(0, 5).map((t) => `${t.el} ${t.w}×${t.h}`).join('; ')}`);
   if (widest.h1Count !== 1) problem('ACCESS', `Page has ${widest.h1Count} visible <h1> elements; it should have exactly one.`);
   if (widest.headingSkips.length) problem('ACCESS', `Heading levels skip: ${widest.headingSkips.join(', ')}`);
   if (!widest.lang) problem('ACCESS', 'No lang attribute on <html>.');
@@ -1218,13 +1219,13 @@ function report(results, facts, focus, runtime, args) {
   // --- craft: these are prompts for judgment, each with the number behind it
   const sizeList = top(widest.fontSizes, 20).map(([k]) => +k).sort((a, b) => a - b);
   const allSizes = new Set(); results.forEach(({ m }) => Object.keys(m.fontSizes).forEach((k) => allSizes.add(+k)));
-  if (sizeList.length > 12) problem('CRAFT', `${sizeList.length} distinct font sizes at ${results[results.length - 1].width}px (${sizeList.join(', ')}). Even with a detailed product mock a page rarely needs more than 9–11; near-duplicates (13 and 13.5, 15 and 16) read as accidents.`);
+  if (sizeList.length > 12) problem('CRAFT', `${sizeList.length} distinct font sizes at ${results[results.length - 1].width}px (${sizeList.join(', ')}). The defaults in references/spec.md are five per screen; near-duplicates (13 and 13.5, 15 and 16) read as accidents.` + REF);
   const fams = Object.keys(widest.fontFamilies);
   if (facts.texture && !showcase) problem('CRAFT', `Noise or texture filters are used (${facts.texture}× feTurbulence). Grain, paper and material textures make product UI look like a themed concept; real products use clean, flat surfaces.`);
   const textFams = fams.filter((f) => !/mono|code|courier|consolas|menlo/i.test(f));
   if (textFams.length > 1 && !showcase) problem('CRAFT', `${textFams.length} text font families in use (${textFams.join(', ')}). Professional product UI uses one sans-serif family and gets hierarchy from size, weight and colour.`);
   const serifs = textFams.filter((f) => /serif|fraunces|playfair|instrument|garamond|lora|merriweather|georgia|times|bodoni|didot|caslon|libre baskerville|newsreader|dm serif|young serif|crimson|spectral/i.test(f) && !/sans/i.test(f));
-  if (serifs.length && !showcase) problem('CRAFT', `A serif or display face (${serifs.join(', ')}) is used on product UI. Real apps, dashboards and SaaS pages use a clean sans-serif; serif display type reads as a themed concept.`);
+  if (serifs.length && !showcase) problem('CRAFT', `A serif or display face (${serifs.join(', ')}) is used on product UI. Real apps, dashboards and SaaS pages use a clean sans-serif; serif display type reads as a themed concept.` + REF);
   if (narrow.smallText.length) problem('CRAFT', `Text under 12px: ${narrow.smallText.slice(0, 5).join('; ')}`);
   for (const { width, m } of results) {
     if (m.longLines.length) { problem('CRAFT', `Lines too long to read comfortably at ${width}px (aim for 45–75 characters): ${m.longLines.slice(0, 3).join('; ')}`); break; }
@@ -1232,7 +1233,7 @@ function report(results, facts, focus, runtime, args) {
   if (widest.tightLeading.length) problem('CRAFT', `Paragraph line-height under 1.35: ${widest.tightLeading.slice(0, 3).join('; ')}`);
   if (widest.centeredBlocks) problem('CRAFT', `${widest.centeredBlocks} long paragraph(s) are centre-aligned; centred text beyond two or three lines is hard to read.`);
   const rad = top(widest.radii, 12);
-  if (rad.length > 7) problem('CRAFT', `${rad.length} different corner radii (${rad.map(([k, v]) => `${k}×${v}`).join(', ')}). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).`);
+  if (rad.length > 7) problem('CRAFT', `${rad.length} different corner radii (${rad.map(([k, v]) => `${k}×${v}`).join(', ')}). Keep to a scale of four or five and nest them concentrically (inner = outer − padding).` + REF);
   const sh = Object.keys(widest.shadows).length;
   if (sh > 9) problem('CRAFT', `${sh} different box-shadows. Use a scale of four or five levels, not one per component.`);
   const ce = widest.columnEdges || [], near = [];
@@ -1249,7 +1250,7 @@ function report(results, facts, focus, runtime, args) {
   if (widest.leftNumbers && widest.leftNumbers.length) problem('CRAFT', `Numbers in table columns are left-aligned at ${results[results.length - 1].width}px: ${widest.leftNumbers.slice(0, 3).join('; ')}. Right-align numeric columns (and their headers) with tabular figures so digits line up (references/hierarchy.md).`);
   if (widest.weakFigures && widest.weakFigures.length) problem('CRAFT', `Figures barely larger than their labels: ${widest.weakFigures.slice(0, 3).join('; ')}. A figure should be about 2 to 2.5 times its label to lead (references/hierarchy.md).`);
   if (widest.looseHeadings && widest.looseHeadings.length) problem('CRAFT', `Large headings set with body defaults: ${widest.looseHeadings.slice(0, 3).join('; ')}. Tighten tracking (about -0.02em at 32px, -0.025em at 48px) and leading (1.05 to 1.2) as in references/typography.md.`);
-  if (widest.heavyHeadings && widest.heavyHeadings.length) problem('CRAFT', `Headings at weight 700 or more: ${widest.heavyHeadings.slice(0, 3).join('; ')}. Large type reads more refined at 500 to 600 (references/typography.md).`);
+  if (widest.heavyHeadings && widest.heavyHeadings.length) problem('CRAFT', `Headings at weight 700 or more: ${widest.heavyHeadings.slice(0, 3).join('; ')}. Large type reads more refined at 500 to 600 (references/typography.md).` + REF);
   if (widest.regionTones > 4) problem('CRAFT', `The large regions of the page use ${widest.regionTones} different background tones. Keep to the canvas, one tinted band and at most one dark band (or canvas, surface and one raised level in an app).`);
   for (const { width, m } of results) { if (m.wrappingButtons && m.wrappingButtons.length) { problem('CRAFT', `Buttons or tabs whose label wraps at ${width}px: ${m.wrappingButtons.slice(0, 4).join('; ')}. Shorten the label (1 to 3 words) rather than letting it break (references/copy.md).`); break; } }
   if (widest.unevenCopy && widest.unevenCopy.length) problem('CRAFT', `Side-by-side cards whose body copy runs very different lengths: ${widest.unevenCopy.slice(0, 3).join('; ')}. Write siblings to within about 20% of each other so the row ends level (references/copy.md).`);
@@ -1270,19 +1271,19 @@ function report(results, facts, focus, runtime, args) {
   }
   if (widest.colour) {
     const c = widest.colour;
-    if (c.tints === 0 && c.brandText <= 2) problem('CRAFT', `Colour is flat: no tinted backgrounds and ${c.brandText} coloured text elements, so the brand appears at one strength at most. Use the palette's steps: --tint (b3) behind the selected or active item, badges and the product's own icon chips, --brand-text (b11) for links and icons on a tint, --callout (b2) for a tip (references/color.md, sections 1 and 4).`);
-    if (c.greys.length >= 3) problem('CRAFT', `Untinted greys in text (${c.greys.slice(0, 4).join(', ')}): pure greys look dead beside a coloured brand. Use --text-1/2/3 from palette.cjs, which are tinted toward the brand hue (references/color.md, section 2).`);
-    if (c.blackShadow >= 3) problem('CRAFT', `${c.blackShadow} elements use black shadows (rgba(0,0,0,…)); use the tinted two-layer --shadow-card / --shadow-pop from palette.cjs (references/color.md, section 3).`);
+    if (c.tints === 0 && c.brandText <= 2) problem('CRAFT', `Colour is flat: no tinted backgrounds and ${c.brandText} coloured text elements, so the brand appears at one strength at most. Use the palette's steps: --tint (b3) behind the selected or active item, badges and the product's own icon chips, --brand-text (b11) for links and icons on a tint, --callout (b2) for a tip (references/color.md, sections 1 and 4). Skip this if the references or the kit are deliberately monochrome.` + REF);
+    if (c.greys.length >= 3) problem('CRAFT', `Untinted greys in text (${c.greys.slice(0, 4).join(', ')}): pure greys look dead beside a coloured brand. Use --text-1/2/3 from palette.cjs, which are tinted toward the brand hue (references/color.md, section 2).` + REF);
+    if (c.blackShadow >= 3) problem('CRAFT', `${c.blackShadow} elements use black shadows (rgba(0,0,0,…)); use the tinted two-layer --shadow-card / --shadow-pop from palette.cjs (references/color.md, section 3).` + REF);
   }
   if (widest.pastel && (widest.pastel.n >= 3 || widest.pastel.eg.some((d) => /^body|^html|^main|^div#app|^\.app/.test(d)))) problem('CRAFT', `${widest.pastel.n} large pastel fills (light surfaces that still carry a hue) in ${widest.pastel.hues} hue(s): ${widest.pastel.eg.slice(0, 3).join('; ')}. Pastel canvases and candy-coloured cards are the palette of generated UI; keep canvases and cards neutral and let one saturated brand colour, photos and data carry the colour (references/system.md, No pastels).`);
-  for (const { width, m } of results) { if (!showcase && m.loudFill && m.loudFill.share > 18) { problem('CRAFT', `Saturated or dark blocks cover ${m.loudFill.share}% of the first screen at ${width}px: ${m.loudFill.eg.join('; ')}. On a light screen keep large fills under about 15%; let the main card lead by size and put the brand colour in its chart and controls (references/system.md, Colour by area).`); break; } }
+  for (const { width, m } of results) { if (!showcase && m.loudFill && m.loudFill.share > 18) { problem('CRAFT', `Saturated or dark blocks cover ${m.loudFill.share}% of the first screen at ${width}px: ${m.loudFill.eg.join('; ')}. On a light screen keep large fills under about 15%; let the main card lead by size and put the brand colour in its chart and controls (references/system.md, Colour by area).` + REF); break; } }
   for (const { width, m } of results) { if (m.squeezed && m.squeezed.length && width < 500) { problem('CRAFT', `Text squeezed into narrow columns at ${width}px: ${m.squeezed.slice(0, 4).join('; ')}. Give the text at least 60% of its card, keep card titles and meta on one line, and clamp card body text to two lines (references/copy.md, Give text room).`); break; } }
   for (const { width, m } of results) { const g = m.gaze || []; const sig = (x) => x.d.split(' "')[0]; if (g.length >= 2 && g[1].w > g[0].w * 0.88 && sig(g[0]) !== sig(g[1])) { problem('CRAFT', `No clear first thing at ${width}px: the two heaviest elements on the first screen weigh almost the same (${g[0].d.slice(0, 40)} ${g[0].w}, ${g[1].d.slice(0, 40)} ${g[1].w}). Make the primary clearly heavier by size, weight or contrast, or quieten the other (references/ux-laws.md, Visual weight).`); break; } }
-  for (const { width, m } of results) { if (m.boxedChart) { problem('CRAFT', `The main chart is boxed in a card on the phone: ${m.boxedChart}. Put the summary directly on the canvas and let its chart run the full width of the screen (references/product-ui.md, The summary, unboxed).`); break; } }
-  { const off = widest.offScale || []; const n = off.reduce((a, [, c]) => a + c, 0); if (n >= 6) problem('CRAFT', `${n} spacing values are off the scale (${off.map(([v, c]) => `${v}px ×${c}`).join(', ')}). Use only 0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96 and 128 (references/spec.md, Spacing).`); }
-  for (const { width, m } of results) { const cap = showcase ? 6 : 5; if (m.firstSizes && m.firstSizes.length > cap) { problem('CRAFT', `${m.firstSizes.length} font sizes on the first screen at ${width}px (${m.firstSizes.join(', ')}px). Use at most ${cap} (${showcase ? 'the ramp plus one display size of the chosen direction' : 'the ramp in references/spec.md'}).`); break; } }
+  for (const { width, m } of results) { if (m.boxedChart) { problem('CRAFT', `The main chart is boxed in a card on the phone: ${m.boxedChart}. Put the summary directly on the canvas and let its chart run the full width of the screen (references/product-ui.md, The summary, unboxed).` + REF); break; } }
+  { const off = widest.offScale || []; const n = off.reduce((a, [, c]) => a + c, 0); if (n >= 6) problem('CRAFT', `${n} spacing values are off the scale (${off.map(([v, c]) => `${v}px ×${c}`).join(', ')}). Use only 0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96 and 128 (references/spec.md, Spacing).` + REF); }
+  for (const { width, m } of results) { const cap = showcase ? 6 : 5; if (m.firstSizes && m.firstSizes.length > cap) { problem('CRAFT', `${m.firstSizes.length} font sizes on the first screen at ${width}px (${m.firstSizes.join(', ')}px). Use at most ${cap} (${showcase ? 'the ramp plus one display size of the chosen direction' : 'the ramp in references/spec.md'}).` + REF); break; } }
   if (widest.sideBorder && widest.sideBorder.length) problem('CRAFT', `Cards with a coloured side or top border: ${widest.sideBorder.join('; ')}. A coloured edge on cards is one of the most recognisable tells of generated UI; group with spacing or a surface step instead.`);
-  if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).`);
+  if (widest.plainBarChart) problem('RICHNESS', `The main chart on the first screen is ${widest.plainBarChart} plain bars. A time series with more than seven points reads better as a smooth line or area with the previous period dashed or mirrored below the axis ("Choosing the main chart" in references/showpiece.md).` + REF);
   for (const { width, m } of results) {
     if (m.raggedStrips && m.raggedStrips.length) { problem('CRAFT', `A strip of figures wraps onto ragged lines at ${width}px (labels and values out of line): ${m.raggedStrips.slice(0, 3).join('; ')}. Use a grid of equal columns or one row that scrolls sideways.`); break; }
     if (m.lonelyItems && m.lonelyItems.length) { problem('CRAFT', `A wrapping row leaves one item alone on its last line at ${width}px: ${m.lonelyItems.slice(0, 3).join('; ')}.`); break; }
@@ -1299,7 +1300,7 @@ function report(results, facts, focus, runtime, args) {
     const thin = R.bands.filter((b, i) => i > 0 && b.big === 0 && b.small < 3);
     const total = R.textOnPage + R.textOnSurface;
     if (R.icons < 4 && R.bigGraphics < 3) problem('RICHNESS', `Very little imagery: ${R.icons} icon-sized and ${R.bigGraphics} larger graphics on the whole page. Lists of products, places or people want thumbnails or avatars; stat tiles do not need decoration, so ignore this note for data-led screens.`);
-    if (Object.keys(widest.shadows).length <= 1 && R.surfaces > 3) problem('RICHNESS', `Depth is flat: ${Object.keys(widest.shadows).length} shadow style across ${R.surfaces} surfaces. On light themes use a small neutral shadow scale (resting, raised); on dark themes depth comes from surface steps and hairlines instead.`);
+    if (Object.keys(widest.shadows).length <= 1 && R.surfaces > 3) problem('RICHNESS', `Depth is flat: ${Object.keys(widest.shadows).length} shadow style across ${R.surfaces} surfaces. On light themes use a small neutral shadow scale (resting, raised); on dark themes depth comes from surface steps and hairlines instead.` + REF);
   }
   if (Rn) {
     const [pw, ph] = Rn.foldLargest, firstTwo = Rn.bands.slice(0, 2);
@@ -1326,8 +1327,8 @@ function report(results, facts, focus, runtime, args) {
   const sl = widest.shadowLayers;
   const maxSize = Math.max(...Object.keys(widest.fontSizes).map(Number));
   const phoneMax = Math.max(...Object.keys(narrow.fontSizes).map(Number));
-  if (!showcase && phoneMax > 48) problem('CRAFT', `Oversized type on the phone: the largest text is ${phoneMax}px. In product UI the key figure is 28–36px and titles 20–24px; landing headlines 32–40px on a phone. Huge numerals read as a poster, not a product.`);
-  if (!showcase && maxSize > 72) problem('CRAFT', `Oversized type on desktop: the largest text is ${maxSize}px. Landing headlines sit at 40–56px, product figures at 28–36px.`);
+  if (!showcase && phoneMax > 48) problem('CRAFT', `Oversized type on the phone: the largest text is ${phoneMax}px. In product UI the key figure is 44px and titles 28px by default (references/spec.md); landing headlines 40px on a phone. Huge numerals read as a poster, not a product.` + REF);
+  if (!showcase && maxSize > 72) problem('CRAFT', `Oversized type on desktop: the largest text is ${maxSize}px. By default landing headlines are 64px and product KPI figures 32px (references/spec.md); a web direction may go larger with --register showcase.` + REF);
   const rainbow = (widest.pastelHues && widest.pastelHues.length >= 3) ? widest.pastelHues : (widest.fillHues && widest.fillHues.length >= 4 ? widest.fillHues : null);
   if (rainbow) problem('RICHNESS', `Colour is spread over ${rainbow.length} hue families in large fills (${rainbow.map((h) => h + '°').join(', ')}): tiles or panels each in a different tint. That reads as a pastel rainbow, not a palette. Commit to a neutral base, one dominant colour in large fields and one hot accent; give kinds of item tints of one or two hues.`);
 
@@ -1370,7 +1371,7 @@ function report(results, facts, focus, runtime, args) {
     items.forEach((p) => L.push('  • ' + p.msg));
     L.push('');
   }
-  L.push('This report cannot judge whether the design looks like a real, professional product. Open the screenshots and review them with references/critique.md.');
+  L.push('This report cannot judge whether the design looks like a real, professional product. Open the screenshots, compare the main screens with their references (scripts/match.cjs compare), then review them with references/critique.md.');
   return { text: L.join('\n'), problems: P };
 }
 
@@ -1379,7 +1380,7 @@ function report(results, facts, focus, runtime, args) {
   if (!args.target) { console.error('usage: node audit.cjs <file.html | url> [--out dir] [--widths 375,768,1440] [--dark] [--setup file.js] [--register showcase|dense] [--json] [--no-shots]'); process.exit(2); }
   const driver = loadDriver();
   if (!driver) {
-    console.error('audit: no browser driver found (tried playwright, playwright-core, @playwright/test, puppeteer).\nInstall one with `npm i -D playwright && npx playwright install chromium`, or review by hand using the checklist in SKILL.md.');
+    console.error('audit: no browser driver found (tried playwright, playwright-core, @playwright/test, puppeteer).\nInstall one with `npm i -D playwright && npx playwright install chromium`, or review by hand using the checklist in references/craft.md ("Checklist without a browser").');
     process.exit(2);
   }
   let url = args.target;

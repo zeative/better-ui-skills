@@ -6,8 +6,8 @@
 //   category: finance | crypto | fitness | habits | wellness | sleep | health | productivity | commerce | saas | food | travel | media | government | other
 //   --not <n> skips the nth option (to re-deal if the first does not suit the brief)
 //
-// Prints two suggested design kits, a brand colour, an accent and the palette.cjs command. Treat it as the starting point for
-// system.md's tokens; adjust shades for contrast, keep the character.
+// Prints two suggested design kits, a brand colour, an accent and the palette.cjs command. Use it when there are no references,
+// or to choose a brand colour for a new product; the reference spec wins where it exists.
 
 const LOOKS = {
   finance: [
@@ -112,4 +112,4 @@ console.log(`Look for "${name}" (${kitCat}, option ${i} of ${list.length}):
   brand:   ${gov ? "the main colour of the official emblem (darken it to 4.5:1 with white)" : p.brand}
   accent:  ${gov ? 'none, or the emblem\'s second colour as a thin strip' : p.accent}
   palette: ${gov ? 'node ' + require('path').join(__dirname, 'palette.cjs') + ' "<emblem hex>"' : paletteCmd}   (only for tints and states of the brand)
-Use the kit's fonts, neutrals, radii and shadows unchanged; set only --brand, --brand-ink and --accent. Never mix kits.`);
+Set the kit's variables to your reference spec (references.md); with no references, change only --brand, --brand-ink and --accent. Never mix kits.`);

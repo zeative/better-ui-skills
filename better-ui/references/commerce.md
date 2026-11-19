@@ -55,7 +55,7 @@ In this order, each part exact:
 
 ## Direction
 
-The anatomy above is fixed; the look is not. Pick a direction from `web-directions.md` that fits the brand and carry it through the header, the type, the image ground, the story section and the footer:
+The anatomy above is the default checklist; the look comes from the references. Pick a direction from `web-directions.md` that fits the brand and carry it through the header, the type, the image ground, the story section and the footer:
 
 - **Editorial serif** for beauty, fashion, home and food (Aesop): serif product names, warm paper ground, long story sections.
 - **Swiss catalogue** for hardware, audio, furniture and tools (Teenage Engineering): mono labels, numbered specs, cut-out products on grey, one signal colour.

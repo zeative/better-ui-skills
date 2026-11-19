@@ -6,11 +6,11 @@ Contents: what the bar looks like · the two failures · how to review · the ch
 
 ## What the bar looks like
 
-**Mobile apps.** A native-feeling screen: a header with a greeting or title and an avatar or icon buttons; a neutral summary card that leads by size, with the key figure and one clean chart or ring; one or two sections of rows or tiles on white cards, each row with a soft-tinted icon chip, a name, a grey secondary line and a control or figure; a bottom tab bar. One clean sans-serif. A light grey canvas, white cards, one brand colour, soft tints for categories. Real names and numbers. Nothing themed.
+**Mobile apps.** A native-feeling screen: a header with the title (a greeting, if any, as a small caption) and an avatar or icon buttons; the summary leading by size, directly on the canvas on a phone, with the key figure and one clean chart or ring; one or two sections of rows, each with the item's real image or a neutral icon chip for the user's items, a name, a secondary line and a control or figure; a bottom tab bar. One family, sizes and spacing as measured from the references. Real names and numbers. Nothing themed.
 
-**Dashboards.** A sidebar with icons and a clear active item (often a dark sidebar), a top bar with search, notifications and an avatar, a row of four to six KPI tiles (icon chip, label, figure, delta pill), a main chart, then tables with product thumbnails or avatars and status pills, and a few secondary modules. Dense, aligned, even gutters. One brand colour plus semantic colours.
+**Dashboards.** A sidebar with icons and a clear active item (often a dark sidebar), a top bar with search, notifications and an avatar, up to four KPI tiles (a label, a figure, its change with what it compares to), a main chart, then tables with real thumbnails or avatars where there are people or products and status as plain text or one quiet pill, and a few secondary modules. Dense, aligned, even gutters. One brand colour plus semantic colours.
 
-**Landing pages.** A clean nav; a centred or split hero with a two-line headline in a sans at 40 to 56px, one line of subcopy, two buttons; a product screenshot or app mock in a clean frame (sometimes with two or three small floating cards); a logo strip; feature sections with small interface previews; testimonials with avatars; pricing; FAQ; a closing call to action; a footer. Generous whitespace, light backgrounds, one accent.
+**Landing pages.** One committed direction (`web-directions.md`), taken from the strongest references of the kind and carried from the hero through every section to the footer: the product shown large and real, sections of different shapes (a list, a full-bleed image, a large quote, a table), proof, pricing that answers questions, a closing call to action. Not the centred-hero-plus-three-cards template.
 
 ## The two failures
 

@@ -1,4 +1,5 @@
-/* KIT: civic — plain, trustworthy, accessible public service (GOV.UK, Amsterdam, USWDS family)
+/* KIT (a starting point: set these variables to the reference spec when you have one; its bans below hold only while you have no reference saying otherwise):
+    civic — plain, trustworthy, accessible public service (GOV.UK, Amsterdam, USWDS family)
    Fits: government, ministries, agencies, public hospitals, utilities, NGOs, universities' service pages.   Avoid: product marketing, fashion, nightlife.
    Load: <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
    Shape language: radius 0-4, solid colour bands, thick underlined links, a 3px yellow focus ring, no shadows, no cards (lists with rules).

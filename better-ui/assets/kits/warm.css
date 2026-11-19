@@ -1,4 +1,5 @@
-/* KIT: warm — inviting, crafted, local (independent cafés, bakeries, boutique hotels, farm brands)
+/* KIT (a starting point: set these variables to the reference spec when you have one; its bans below hold only while you have no reference saying otherwise):
+    warm — inviting, crafted, local (independent cafés, bakeries, boutique hotels, farm brands)
    Fits: food and drink, small hospitality, local brands, crafts, community, tourism villages.   Avoid: SaaS, dashboards, fintech.
    Load: <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
    Shape language: medium radius (8 controls, 12 photos and cards), no borders on photos, a soft warm shadow only on floating elements.
@@ -18,7 +19,7 @@ body { background: var(--canvas); color: var(--ink); font: 400 17px/1.6 var(--fo
 .h3 { font: 600 18px/1.35 var(--font); }
 .lead { font-size: 20px; line-height: 1.55; color: var(--ink-2); max-width: 32em; }
 .small { font-size: 14px; color: var(--ink-2); }
-.label { font: 600 13px/1.4 var(--font); color: var(--brand); }
+.label { font: 600 13px/1.4 var(--font); color: var(--ink-3); }
 .btn { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 22px; border-radius: var(--r-control); font: 600 15px/1 var(--font); border: 1px solid transparent; text-decoration: none; cursor: pointer; transition: background .15s; }
 .btn-primary { background: var(--brand); color: var(--brand-ink); }
 .btn-primary:hover { background: color-mix(in oklch, var(--brand), black 10%); }

@@ -1,4 +1,5 @@
-/* KIT: editorial — a magazine on warm paper (Aesop, Kinfolk, The Gentlewoman family)
+/* KIT (a starting point: set these variables to the reference spec when you have one; its bans below hold only while you have no reference saying otherwise):
+    editorial — a magazine on warm paper (Aesop, Kinfolk, The Gentlewoman family)
    Fits: hospitality, restaurants, hotels, villas, architecture, culture, wine, beauty, portfolios, heritage cities.   Avoid: dense SaaS, dashboards, fintech apps.
    Load: <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,ital,wght@6..72,0,400;6..72,0,500;6..72,1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
    Shape language: square or nearly square (radius 0-2), hairlines in a warm grey, NO shadows, NO rounded cards, photographs with square corners.
@@ -19,7 +20,7 @@ body { background: var(--canvas); color: var(--ink); font: 400 17px/1.65 var(--f
 .h3 { font: 500 17px/1.4 var(--font); }
 .lead { font: 400 21px/1.55 var(--font-display); color: var(--ink-2); max-width: 32em; }
 .small { font-size: 14px; color: var(--ink-2); }
-.label { font: 500 12px/1.4 var(--font); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+.label { font: 500 12px/1.4 var(--font); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); }
 .btn { display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 22px; border-radius: var(--r-control); font: 500 15px/1 var(--font); border: 1px solid var(--ink); text-decoration: none; cursor: pointer; transition: background .2s, color .2s; }
 .btn-primary { background: var(--ink); color: var(--canvas); }
 .btn-primary:hover { background: var(--accent); border-color: var(--accent); }

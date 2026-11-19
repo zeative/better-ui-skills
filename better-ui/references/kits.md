@@ -17,16 +17,20 @@ With references (`references.md`), the system is the one in the references, meas
 
 ## How to use a kit
 
-1. **Choose one** from the table by the product's kind and the character you wrote in step 2. `look.cjs` suggests two for the category. An existing product (`improve.md`) gets the kit closest to its current character, with its own brand colour.
+1. **Choose the kit closest to the references** (and, for a redesign, to the existing character); without references, choose by the product's kind and the character you wrote in step 2. `look.cjs` suggests two for the category. An existing product (`improve.md`) gets the kit closest to its current character, with its own brand colour.
 2. **Copy the kit file** into the stylesheet (and its `<link>` for the fonts), after `tokens.css`. Its variables (`--canvas`, `--surface`, `--ink`, `--ink-2`, `--line`, `--brand`, `--r-card`, `--shadow-card`…) and classes (`.display`, `.h1`, `.h2`, `.h3`, `.lead`, `.small`, `.label`, `.btn .btn-primary .btn-secondary`, `.card`, `.input`, `.link`) are the vocabulary for the page.
 3. **Adjust to the references, otherwise only the brand.** When you have references (`references.md`), set the kit's fonts, radii, shadows and neutrals to the values measured from them, consistently for every element. Without references, customise only the brand: set `--brand` (and `--brand-ink` for text on it) to the brand colour, and `--accent` if the kit uses a separate link or highlight colour. For tints and states of the brand, run `palette.cjs` with the same colour and use its `--b*` steps. Keep the kit's neutrals, fonts, radii and shadows.
-4. **Stay inside its shape language.** Every new element takes the kit's radius, border and shadow rules: no pill badge in `editorial`, `swiss` or `civic`; no hairline-sharp card in `soft`; no drop shadow in `precision-dark`; no rounded photo in `editorial`. If an element does not exist in the kit, build it from the kit's variables.
+4. **Stay inside one shape language: the reference spec's, otherwise the kit's.** Every new element takes the kit's radius, border and shadow rules: no pill badge in `editorial`, `swiss` or `civic`; no hairline-sharp card in `soft`; no drop shadow in `precision-dark`; no rounded photo in `editorial`. If an element does not exist in the kit, build it from the kit's variables.
 5. **Never mix two kits** on one page, and never add a second display face.
+
+## Token names
+
+The kits use `--canvas`, `--surface`, `--surface-2`, `--ink`, `--ink-2`, `--ink-3`, `--line`, `--brand`, `--brand-ink`, `--accent`, `--r-control`, `--r-card`, `--r-lg`, `--shadow-card`, `--shadow-pop`. `palette.cjs` adds the scales (`--b1`…`--b12`, `--n1`…`--n12`) and its own role names (`--text-1/2/3` = the kit's `--ink`, `--ink-2`, `--ink-3`; `--well` = `--surface-2`). Use the kit's names in new code and map the others to them; older recipes in this skill that use `--bg`, `--sh-*` or `--r-pill` mean `--canvas`, the kit's shadows and `999px`.
 
 ## Kits and the rest of the skill
 
-- On **web pages**, the kit's type scale replaces the landing ramp in `spec.md`; spacing still comes from the scale in `tokens.css`. The art direction from `web-directions.md` is composed with the kit (a poster direction in `swiss`, a cinematic one in `editorial` or `showroom`, a live demo in `precision`), not instead of it.
-- In **product UI** (apps, dashboards, tools), use the kit for fonts, colour, radius and depth, and keep the sizes in `spec.md`. `precision`, `precision-dark`, `soft` and `civic` suit product UI; `editorial`, `swiss`, `showroom` and `warm` are for web pages.
+- On **web pages**, the reference spec's type scale (or the kit's) replaces the landing ramp in `spec.md`; spacing still comes from the scale in `tokens.css`. The art direction from `web-directions.md` is composed with the kit (a poster direction in `swiss`, a cinematic one in `editorial` or `showroom`, a live demo in `precision`), not instead of it.
+- In **product UI** (apps, dashboards, tools), sizes come from the reference spec, then from `spec.md` where the references are silent; the kit gives fonts, colour, radius and depth until the references say otherwise. `precision`, `precision-dark`, `soft` and `civic` suit product UI; `editorial`, `swiss`, `showroom` and `warm` are for web pages.
 - For **government** sites, `civic` is the default; `editorial` suits a heritage city's tourism-led site, `swiss` a transparency or data portal.
 
 ## Check

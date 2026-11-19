@@ -8,7 +8,7 @@ Contents: the shell · lead with what matters · dense professional tools · mod
 
 A dashboard or admin screen lives in an app shell, on a tinted canvas:
 
-- **Sidebar:** the wordmark with a glyph, grouped navigation items each with an icon, a clear active state (filled pill or accent bar plus tint), counts where useful, and a user or workspace card with an avatar at the bottom. A dark or tinted sidebar often anchors the composition. Full height.
+- **Sidebar:** the wordmark with a glyph, grouped navigation items each with an icon, a clear active state (a `--tint` background with the label in `--brand-text`, as in `color.md`, or the references' treatment), counts where useful, and a user or workspace card with an avatar at the bottom. A dark or tinted sidebar often anchors the composition. Full height.
 - **Top bar:** page title with a date or breadcrumb, a search field with a key hint, a date-range or filter control, a notifications button, a primary action, an avatar.
 - **Canvas:** the tinted ground, with all content in cards arranged on a grid (12 columns works), with consistent gaps. (Professional data tools are the exception: their main data surface is flush and edge to edge, see below.)
 
@@ -48,7 +48,7 @@ An overview dashboard for a business tool (not a professional data tool, see abo
 - A **hero module:** the key figure, larger than everything else, on the same neutral surface as the other cards, with a delta, a well-drawn chart and a comparison line.
 - A row of **KPI tiles** (below).
 - The **main chart** with a range control, legend and tooltip.
-- A **secondary chart** of a different form (donut by category, bars by channel, a goal gauge, a heatmap).
+- A **secondary chart** of a different form (share as a segmented bar or a donut for two to four parts, bars by channel, a goal gauge, a heatmap).
 - A **needs-attention** list with counts, icon chips and action buttons.
 - A **table or list** of recent items with thumbnails, avatars and status pills.
 - A **ranked list** with thumbnails, a bar for share, and a secondary fact (stock, trend).
@@ -70,8 +70,8 @@ A KPI tile is a number: a small label, a large figure (24 to 36px, weight 500 to
 
 See `showpiece.md` for how to draw them. In product UI:
 
-- Choose the form from the question: change over time is a line or area (bars for few periods); comparison is sorted horizontal bars; share is a donut or a single stacked bar.
-- Always include grid lines, axis labels, direct value labels or a tooltip on a highlighted point, and a legend when there is more than one series.
+- Choose the form from the question: change over time is a line or area (bars for few periods); comparison is sorted horizontal bars; share is a single stacked bar by default (a donut only for two to four parts).
+- Give every chart what is needed to read it: axis labels, direct value labels or a tooltip on a highlighted point, a legend when there is more than one series; gridlines only where values must be read across (none on a phone hero chart, `spec.md`).
 - One accent per chart: the series, bar or point that matters gets it and everything else sits in neutral steps. Several hues only when the chart must tell series apart, and even then one leads.
 - Show an incomplete period honestly (a lighter or hatched bar, a note).
 - Charts have a hierarchy: one main chart, clearly the largest thing on the screen and drawn with the most care; anything else that shows data is smaller and different in kind (a ranked list with thin bars, a short table), never a second chart of the same size.
@@ -97,12 +97,12 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
 
 **Anatomy of the main screen, top to bottom:**
 
-1. **Safe area and header, with the brand.** The greeting or page title is tertiary: 18 to 22px, weight 500 to 600, never as heavy as the screen's primary thing (the balance, today's session, the active order). Check the audit's gaze order: a greeting in first place means the hierarchy is upside down. The product's mark and name are visible on the home screen (in the header, or as the wordmark above the greeting): a product with no name on its main screen reads as a template. 12 to 16px top padding (plus `env(safe-area-inset-top)`). A header row: either a greeting ("Good morning, Sam" at 20 to 24px with the date in grey above or below) with a circular avatar or icon button on the right, or a page title with one or two round icon buttons (search, notifications, add). A small brand mark if there is no greeting.
+1. **Safe area and header, with the brand.** A greeting is a caption (13/18 in the secondary tone, `spec.md`) above the page title, never as heavy as the screen's primary thing (the balance, today's session, the active order). Check the audit's gaze order: a greeting in first place means the hierarchy is upside down. The product's mark and name are visible on the home screen (in the header, or as the wordmark above the greeting): a product with no name on its main screen reads as a template. 12 to 16px top padding (plus `env(safe-area-inset-top)`). A header row: either a greeting ("Good morning, Sam" at 20 to 24px with the date in grey above or below) with a circular avatar or icon button on the right, or a page title with one or two round icon buttons (search, notifications, add). A small brand mark if there is no greeting.
 2. **Optional date or filter strip.** A horizontal week strip (seven day pills with the day letter and number, today filled with the brand colour), or segmented tabs (Today / Week / Month) in a pill control.
 3. **The summary, unboxed** (see `showpiece.md`): on a phone the main thing sits directly on the canvas, not inside a card. The key figure (32 to 44px), a short line of context, and its visual in the brand colour, with a chart running the full width of the screen (edge to edge, or to the 16 to 20px gutter). A card around it costs 32 to 48px of width and adds a border for nothing: cards are for separating several peer groups, not for the one main thing.
 4. **One or two sections**, each with a title row (16 to 18px, weight 600) and a "See all" link on the right:
    - **A list of items** in white cards or one grouped white card with hairline separators. A row: a 40 to 44px icon chip (line icon or 3D emoji on a neutral grey chip, or a photo), the name (15 to 16px, weight 500) with one line of secondary text (13 to 14px grey), and on the right the main control or figure: a round check button, a value, a chevron, a small progress ring. Row height 56 to 72px.
-   - **A small stats grid** of two or three tiles (an icon chip, a label, a figure, a tiny bar or sparkline), or **one chart card** (weekly bars with the current day in the brand colour, a clean line chart).
+   - **A small stats grid** of two or three figures (a label, a figure and its change; a tiny bar only if the trend is the point), or **one chart card** (weekly bars with the current day in the brand colour, a clean line chart).
 5. **Bottom tab bar.** Four or five tabs with line icons and 11 to 12px labels, the active one in the brand colour, on a white bar with a top hairline or a floating rounded bar with a soft shadow. Often a central round add button in the brand colour. Leave enough bottom padding in the content so the bar never covers the last row. Content scrolls under the bar, so the bar needs something behind it: a solid white bar with a top hairline, or, for a floating bar, a fade from the canvas colour to transparent (about 24px tall) behind it. Rows peeking through a gap around a floating bar look like a collision in every screenshot. The same goes for a floating cart or action bar stacked above the tab bar: put both in one fixed dock with one backdrop, so nothing shows between them:
    ```css
    .dock { position: fixed; inset: auto 0 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom)); z-index: 20; }
@@ -112,7 +112,7 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
    ```
 
 **Each category has a signature moment** that popular shots almost always include. Build the one for your product as the summary card or right beneath it, drawn with care:
-- *Finance and banking (personal budgeting too):* a designed payment card as an object (graphite or metal, real card proportions, about a third of the screen width or a small stack), placed beside or below the balance on a neutral card, not a full-width block of colour; never put a chip on a total (brand gradient or deep solid colour, a subtle pattern or large soft shapes, chip, network mark drawn as simple circles, masked number, name), often slightly stacked over a second card; quick actions as round buttons below it; a category breakdown drawn as something other than a default donut (proportional bubbles, a segmented bar with labels, stacked pills).
+- *Finance and banking (personal budgeting too):* a designed payment card as an object (graphite or metal, real card proportions, about a third of the screen width or a small stack), placed beside or below the balance, not a full-width block of colour (the card itself: a brand gradient or deep solid colour, a subtle pattern or large soft shapes, chip, network mark drawn as simple circles, masked number, name), often slightly stacked over a second card; quick actions as round buttons below it; a category breakdown drawn as something other than a default donut (proportional bubbles, a segmented bar with labels, stacked pills).
 - *Finance stays restrained:* deep, calm colour (black, forest, navy, ink) with one accent; no candy pastels across the account tiles and no 3D objects stuck onto cards. A 3D object only belongs in an empty state or onboarding.
 - *Fitness and workout:* a large progress visual for today (ring or arc with the key figure), a weekly bar chart with the current bar highlighted, and an activity card with a small route map or a session timeline.
 - *Habits and wellness:* a week strip with per-day completion rings, colour-coded habit rows, and a streak or consistency chart.
@@ -124,8 +124,8 @@ For a tracker, to-do, wallet, workout log, timer or any personal tool. At the ba
 
 - **Open with data.** Ship believable sample data in a mid-use state (some done, some pending, a week of history) so the first view is full. Offer "Clear sample data" in a settings screen or menu; never put a sample-data note on the main screens. Design the empty state too.
 - **One dominant thing on the first screen.** The element the screen is about (the balance with its chart, today's session, the now-playing artwork, the active order) takes 35 to 50% of the first screen, drawn large and well; everything else is clearly smaller. It leads through size, a large figure and a large visual (chart, artwork, photo), not through a big fill of brand colour or black: a third of the screen in saturated orange, navy or purple feels loud and dated. A first screen of five medium cards of similar size has no focus, however neat. The main chart sits above the fold, not cut by the tab bar.
-- **Keep it calm.** One summary card, then white cards. Three to five things on the first screen, not ten. No module repeats information another already shows.
-- **Transaction rows lead with a clear mark:** a line icon for the category in a soft chip, or a person's avatar for transfers. Keep one style for every row.
+- **Keep it calm.** The summary first (unboxed on a phone, the first card on desktop), then the rest. Three to five things on the first screen, not ten. No module repeats information another already shows.
+- **Transaction rows lead with a clear mark:** a line icon for the category on a neutral chip, or a person's avatar for transfers. Keep one style for every row.
 - **Every item has its own icon.** Two different exercises, categories or accounts never share the same glyph; draw or pick a distinct one for each.
 - **Lists stay compact.** One row per item; details (a full history, settings) belong in a detail view or a bottom sheet opened by tapping the row.
 - **The main action is obvious.** The daily action (tick, log, add) is a clear round control on each row, with a satisfying checked state (fill with the brand or item colour, a check icon, a short scale animation). Completed items stay readable; do not grey them out heavily.
@@ -143,7 +143,7 @@ Build and look at each: first run or empty (designed, with illustration and an a
 
 ## Sample data
 
-Use names, products, places and prices that fit the domain and country. Series behind charts vary naturally from point to point (no long flat runs, no sudden cliff at the end unless the story is about it), as real data does. Make numbers reconcile across tiles, charts and tables. Include variety and edge cases. Keep dates relative to today. Say once, discreetly, that the data is sample data.
+Use names, products, places and prices that fit the domain and country. Series behind charts vary naturally from point to point (no long flat runs, no sudden cliff at the end unless the story is about it), as real data does. Make numbers reconcile across tiles, charts and tables. Include variety and edge cases. Keep dates relative to today. Mention that the data is sample data in the handoff or a settings screen, never on the main screens.
 
 ## Phone and desktop
 

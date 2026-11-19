@@ -1,15 +1,16 @@
-/* better-ui tokens: spacing, radius scale, motion and the phone type ramp. Copy verbatim first; then the chosen kit from assets/kits/ (which sets fonts, colours, radii and shadows and wins where they overlap).
-   Every value comes from references/spec.md. Build only from these; do not invent sizes or spaces. */
+/* better-ui tokens: spacing, radius scale, motion and the phone type ramp. Copy first; then the chosen kit from assets/kits/ (which sets fonts, colours, radii and shadows and wins where they overlap).
+   These are the defaults from references/spec.md. Values measured from the references (the reference spec) replace them;
+   the floors in spec.md (contrast, 44px targets, 16px inputs) always hold. Do not invent values that are in neither. */
 :root {
   /* COLOUR: paste the output of `node scripts/palette.cjs "<brand hex>"` ABOVE this file. It defines
      --b1..--b12, --n1..--n12, --ok/--warn/--bad, and the roles used below (--canvas, --surface, --well,
      --line, --text-1/2/3, --brand, --brand-ink, --brand-text, --tint, --callout, --focus, --up, --down,
-     shadows and --highlight). Never write a hex value for a neutral or a shade of the brand by hand. */
+     shadows and --highlight). Without a reference spec, never write a hex value for a neutral or a brand shade by hand; with one, use its measured neutrals (or tune palette.cjs --tint to match). */
   --accent: var(--b9);                       /* a second colour from look.cjs only if the look calls for one */
   --surface-2: var(--well);                  /* alias kept for older names */
   --brand-tint: var(--tint);                 /* alias */
 
-  /* spacing: the only values allowed */
+  /* spacing: the default scale (measured reference values, rounded to 2px, may replace it) */
   --s-0: 0; --s-2: 2px; --s-4: 4px; --s-8: 8px; --s-12: 12px; --s-16: 16px; --s-20: 20px; --s-24: 24px;
   --s-32: 32px; --s-40: 40px; --s-48: 48px; --s-64: 64px; --s-80: 80px; --s-96: 96px; --s-128: 128px;
 
@@ -26,7 +27,7 @@
 
 /* dark: palette.cjs prints the dark block (.theme-dark, :root[data-theme="dark"]); --dark puts it on :root. */
 
-/* type ramp, phone (spec.md): exactly 44, 28, 20, 16, 13 (+11 tab labels). Desktop 32/24/18/14/12 and landing 64/40/20/16/13 are in spec.md. */
+/* type ramp, phone (spec.md defaults, replaced by the reference spec's sizes): 44, 28, 20, 16, 13 (+11 tab labels). Desktop 32/24/18/14/12 and landing 64/40/20/16/13 are in spec.md. */
 .t-display  { font: 600 44px/48px var(--font); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .t-title    { font: 600 28px/34px var(--font); letter-spacing: -0.015em; }
 .t-headline { font: 600 20px/26px var(--font); letter-spacing: -0.01em; }

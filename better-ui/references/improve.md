@@ -28,7 +28,7 @@ Before designing, find and measure references exactly as in `references.md`: sea
 
 | The request | The audit | Scope |
 |:---|:---|:---|
-| "rapikan", "polish", "fix the spacing" | any | **Polish:** fix the listed problems in place; keep layout, palette and type |
+| "rapikan", "polish", "fix the spacing" | any | **Polish:** fix the listed problems in place; keep layout, palette and type. Polish still measures the main reference for the parts it touches (paddings, sizes, radii), so the fixes land on real values |
 | "bikin lebih bagus", "more modern", "more premium" | a few problems | **Refresh:** a new visual system (type, colour, spacing, components, imagery) on the same structure and sections |
 | "bikin lebih bagus" | many problems across areas | **Refresh plus:** the visual system, and re-composed sections where the structure itself is the problem (a hero with no visual, three equal cards, a link farm) |
 | "redesign total", "rombak total", "from scratch" | any | **Rebuild:** a new layout and art direction (`web-directions.md` for web pages), with the same content, brand and functions |
@@ -76,4 +76,5 @@ Follow the rest of `SKILL.md` within the chosen scope: references (step 3, `refe
 - Audit again with the same widths: `--out .ui-audit/after`.
 - Compare: broken items, font sizes, spacing off the scale, contrast failures, and the audit's **Generated** line (boxes, nested boxes, icon chips, pills, dots, mono, eyebrows), before and after. An improvement lowers those counts; if your version has more boxes, chips and pills than the original, it looks more generated, not more designed.
 - Look at before and after screenshots side by side at 375 and 1440px; the after must be clearly better at both.
-- Hand off: the scope you chose, what changed (by area), what was deliberately kept, the measured before and after, the checks from section 4, and recommendations beyond the scope.
+- Compare each changed main screen with its reference (`match.cjs compare`) and fix the differences; include the final comparison image.
+- Hand off: the scope you chose, the references and the reference spec, what changed (by area), what was deliberately kept, the measured before and after, the checks from section 4, and recommendations beyond the scope.

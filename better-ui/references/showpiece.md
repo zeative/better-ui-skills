@@ -238,7 +238,7 @@ A landing page's product mock should contain at least one chart.
 
 ## Avatars and people
 
-Real products show people as small circular avatars. Simple illustrated portraits look best in a showcase; initials on a light grey are also normal in real products. Pick one style per page.
+Real products show people as small circular avatars. Simple illustrated portraits look best in a showcase; initials on a light grey are normal in work tools and admin tables (`system.md`: not for the signed-in user in consumer apps). Pick one style per page.
 
 - **Illustrated portrait** (works from 28px to 96px): a tinted circle, shoulders, a head, and a hair shape. Vary background hue, skin tone, hair colour and hair shape per person so no two match.
   ```html
@@ -255,7 +255,7 @@ Real products show people as small circular avatars. Simple illustrated portrait
 
 ## Product thumbnails
 
-Lists of products, files, places or items need thumbnails. Draw small objects in SVG: three or four shapes, two tones of one hue plus a highlight, on a tinted rounded square.
+Lists of products, files, places or items need thumbnails. Use a real photograph (Unsplash, `system.md`) for products, food and places; draw an SVG object only without a network or for abstract items (files, plans): three or four shapes, two tones of one hue plus a highlight, on a tinted rounded square.
 
 ```html
 <!-- a bottle, 48×48 -->

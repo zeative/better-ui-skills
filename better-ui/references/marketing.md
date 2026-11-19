@@ -14,7 +14,7 @@ The first screen is the shot. It needs all of these:
 
 - **Navigation** with a designed wordmark (name in the UI sans at weight 600 plus a small glyph), four or five links, and a primary button. Often a floating pill or a glass bar.
 - **An eyebrow** when it carries real information (what is new, who it is for).
-- **A headline** of four to eight words that says what the product does or what the visitor gets, set large and tight, with one phrase emphasised. Cover the logo: would a stranger know what is being sold?
+- **A headline** of six to ten words (`copy.md`) that says what the product does or what the visitor gets, set large and tight, with one phrase emphasised. Cover the logo: would a stranger know what is being sold?
 - **A subhead** of one or two lines adding the next most important fact.
 - **Actions:** one primary button and one quiet secondary, with a line of reassurance beneath (free tier, no card, time to set up).
 - **A proof line** near the actions when you have one: an avatar stack with a count, a rating badge. Fictional placeholders are flagged in the handoff.
@@ -66,7 +66,7 @@ A pricing page is read by someone who already half wants the product and is now 
 **1. What will I pay?** Make the price concrete for this visitor:
 - A **calculator** when the price depends on usage or seats: a slider or stepper (editors, seats, invoices, GB) that updates every plan's total live, with the per-unit price and the yearly total in currency ("$1,152 a year for 8 editors"). This is the strongest single move on a pricing page.
 - A billing toggle that really changes the figures and states the saving in currency, not only as a percentage.
-- Prices large, in the display face or at the title size, tabular figures, with the period and the unit in small text beside them.
+- Prices large, at the title size in the UI sans (or the references' price style), tabular figures, with the period and the unit in small text beside them.
 
 **2. Which plan is mine?** Help the choice, do not just list:
 - Each plan names who it is for in its first line ("For one designer", "For product teams"), and its button says what happens ("Start free", "Start 14-day trial", "Talk to sales").

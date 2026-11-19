@@ -4,7 +4,7 @@ Professional interfaces get their quality from a small, strict system applied ev
 
 Contents: choose a look · type · colour · brand colour by category · surfaces and depth · radius and spacing · icons · imagery · starting tokens
 
-## Choose a look
+## Choose a look (the fallback when there are no references)
 
 A clean system with no point of view reads as a component-library template. Popular shots each have one recognisable, contemporary *look*: a palette and surface treatment, not a theme. Pick the one that suits the product and audience, and apply it consistently. These are styles, not concepts: nothing about the product's world is drawn into the interface.
 
@@ -37,7 +37,7 @@ Write the choice as one line in a comment at the top of the stylesheet ("Look: m
 - **One brand colour** (see below), used for: the primary button, the active tab and nav item, links, the main chart series, selected states, and small filled elements (a status pill, a small tile). Not large filled cards: big blocks of brand colour or black are loud. A light tint of it (6 to 10% opacity on the canvas) for chips and selected backgrounds.
 - **Semantic colours:** success green, warning amber, danger red, as coloured text with a dot or a very light pill (`#ECF7F0` background, `#15803D` text) for statuses and deltas. Never as large fills.
 - **Category colours** (habits, spending categories, muscle groups): five or six clear, mid-saturation hues used only as small marks: a dot, an icon's stroke, a chart series, a thin bar. Icon chips sit on a neutral grey (`#F2F2F0` on light, `#232326` on dark) with the icon in the category colour, not on a pastel square. Never as card backgrounds.
-- **Colour by area:** on a light screen, saturated or dark fills cover no more than about 10 to 15% of the first screen in total (buttons, pills, small tiles, a payment card object, a dark sidebar in a desktop shell). The rest is neutral, so the colour that is there reads as intentional.
+- **Colour by area:** follow the reference spec, otherwise the budget in `color.md` (section 8); by default saturated or dark fills cover no more than about 15% of a light first screen in total (buttons, pills, small tiles, a payment card object, a dark sidebar in a desktop shell). The rest is neutral, so the colour that is there reads as intentional.
 
 ## Brand colour by category
 

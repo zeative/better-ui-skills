@@ -10,9 +10,9 @@ Contents: spacing · phone app · desktop app and dashboard · professional data
 
 ## Spacing
 
-The only spacing values: **0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128** px. Nothing else (no 10, 14, 18, 28, 36).
+The default spacing scale: **0, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128** px. Do not use other values by habit (10, 14, 18, 28, 36); use them only when the reference spec measured them (rounded to 2px).
 
-Grouping is fixed:
+Default grouping:
 
 | Relationship | Space |
 |:---|:---|
@@ -36,7 +36,7 @@ Grouping is fixed:
 | Tab bar | 64 tall plus the safe area; 4 or 5 items; icon 24; label 11/13 weight 500; active item in the brand colour |
 | Space kept free above a bottom bar or dock | dock height plus 24 |
 
-**Type ramp** (size/line height, weight, tracking). Exactly five sizes exist (44, 28, 20, 16, 13) plus the tab label; nothing else.
+**Type ramp** (size/line height, weight, tracking). The default is five sizes (44, 28, 20, 16, 13) plus the tab label; the reference spec's sizes replace them.
 
 | Role | Value |
 |:---|:---|
@@ -57,15 +57,15 @@ A greeting is a caption (13/18 text-2) above the title or the hero, never a titl
 
 | Element | Value |
 |:---|:---|
-| Placement | directly on the canvas, never in a card |
+| Placement | by default directly on the canvas, not in a card |
 | Top space | 24 |
 | Label above the figure | caption 13/18 text-2, 4 above the figure |
 | Change line under the figure | mono meta, 8 below the figure, up colour or down colour on the change only |
-| Main chart | 200 tall, full screen width (0 gutter), 24 below the change line; one series in the brand colour 2px, the comparison 1.5px text-3 dashed; no gridlines, no box |
+| Main chart | 200 tall, full screen width (0 gutter), 24 below the change line; one series in the brand colour 2px, the comparison 1.5px text-3 dashed; by default no gridlines and no box |
 | Range control under the chart | 16 below the chart; segmented control 36 tall, segments 32 tall, mono meta 13/18 |
 | Quick actions | 24 below; round buttons 56 (icon 24), label caption 13/18, 8 between button and label; 3 or 4 actions |
 
-**Dashboards and data screens on a phone**: one hero metric at display size with the main chart (unboxed, as above); the other figures in a 2-column grid below it, each a caption label, the figure at headline 20/26 weight 600 tabular, and its change in mono meta. Never four equal tiles at the top: on a phone one number leads.
+**Dashboards and data screens on a phone**: one hero metric at display size with the main chart (unboxed, as above); the other figures in a 2-column grid below it, each a caption label, the figure at headline 20/26 weight 600 tabular, and its change in mono meta. By default never four equal tiles at the top: on a phone one number leads.
 
 **Components**
 
@@ -94,7 +94,7 @@ A greeting is a caption (13/18 text-2) above the title or the hero, never a titl
 | Content padding | 32; max content width 1280 |
 | Grid gap between cards | 24 |
 | Card | padding 24, radius 12, 1px line border, no shadow |
-| Type ramp | exactly five sizes: 32 (KPI figures), 24 (page title), 18 (card and section titles), 14 (body, table cells, buttons, inputs), 12 (captions, table headers, mono meta) |
+| Type ramp | default five sizes: 32 (KPI figures), 24 (page title), 18 (card and section titles), 14 (body, table cells, buttons, inputs), 12 (captions, table headers, mono meta) |
 | Page title | 24/32, 600, −0.015em |
 | Card or section title | 18/24, 600, −0.01em |
 | Body | 14/20, 400 |
@@ -130,7 +130,7 @@ These are the defaults for a landing page. A direction chosen from `web-directio
 | Element | Desktop | Phone |
 |:---|:---|:---|
 | Content width | 1200 max | gutter 20 |
-| Type ramp | exactly five sizes: 64, 40, 20, 16, 13 | exactly five: 40, 28, 18, 16, 13 |
+| Type ramp | default five sizes: 64, 40, 20, 16, 13 | exactly five: 40, 28, 18, 16, 13 |
 | Navigation | 72 tall; links 16/24 weight 500 | 64 tall, one menu button |
 | Section padding (top and bottom) | 128 | 80 |
 | Hero headline | 64/68, 600, −0.03em | 40/44, 600, −0.025em |
@@ -142,11 +142,11 @@ These are the defaults for a landing page. A direction chosen from `web-directio
 | Card body and body text | 16/26, text-2 for card body | 16/26 |
 | Eyebrow, caption, meta | 13/18, 500 | 13/18 |
 | Card | padding 32, radius 20, 24 between cards | padding 24 |
-| Headline face | the UI sans; for hospitality, food, travel, culture and editorial pages the display serif partner from `typography.md` (Instrument Serif or Newsreader) at weight 400 for the hero and section titles only | same |
+| Headline face | the UI sans; for hospitality, food, travel, culture and editorial pages the display serif of the references or the kit (`editorial`: Newsreader 400; `warm`: Fraunces 600), or Instrument Serif or Newsreader at 400, for the hero and section titles only | same |
 
 ## Colour roles and budget
 
-Every colour comes from `scripts/palette.cjs`, run with the brand colour (the exact command is printed by `look.cjs`). It builds a 12-step brand scale and a 12-step neutral scale tinted toward the brand hue, in OKLCH, and the roles below. Never write a hex for a grey or a brand shade by hand. How to use the steps so the screen has depth is in `color.md`.
+Every colour comes from `scripts/palette.cjs`, run with the brand colour (the exact command is printed by `look.cjs`). It builds a 12-step brand scale and a 12-step neutral scale tinted toward the brand hue, in OKLCH, and the roles below. Without a reference spec, never write a hex for a grey or a brand shade by hand; with one, use its measured neutrals and accent, or tune `palette.cjs --tint` until they match. How to use the steps so the screen has depth is in `color.md`.
 
 | Role | Token | Light | Dark |
 |:---|:---|:---|:---|
@@ -171,7 +171,7 @@ Every colour comes from `scripts/palette.cjs`, run with the brand colour (the ex
 
 **Budget per screen, by area:** neutrals 85 to 90%; tints and soft status backgrounds (b2 to b6, ok-3…) up to 10%; solid brand and other saturated fills up to 3 to 5%. At most three solid-brand elements on the first screen besides the chart. No pastel canvases or pastel cards. Up and down colours only on changes.
 
-**Never flat:** the brand appears at more than one strength on every screen: solid on the primary action, tinted on the selected or active state and the product's own icon chips, as text on links. Surfaces separate by a lightness step, a hairline and a tinted shadow together (`color.md`, section 3).
+**Never flat (by default):** unless the references are deliberately monochrome or flat, the brand appears at more than one strength on every screen: solid on the primary action, tinted on the selected or active state and the product's own feature icons, as text on links. Surfaces separate by a lightness step plus either a hairline or a soft tinted shadow, as the references or the kit do it (the desktop default is a hairline and no shadow; `color.md`, section 3).
 
 ## Radius, borders and depth
 
@@ -194,7 +194,7 @@ Hover and press 150ms; entering and leaving 240ms; easing `cubic-bezier(.2,.8,.2
 
 ## Budgets per screen
 
-| Thing | Maximum |
+| Thing | Default maximum (the reference spec may differ; say so in the handoff) |
 |:---|:---|
 | Font sizes on one screen (besides tab labels, mono meta included) | 5 |
 | Font weights | 400, 500, 600 |

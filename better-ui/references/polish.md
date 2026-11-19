@@ -1,12 +1,12 @@
 # Polish system
 
-Finish is a system, applied everywhere from the start. These recipes assume the tokens in `system.md`. Where the references show a different finish, follow the reference spec.
+Finish is a system, applied everywhere from the start. These recipes assume the tokens from `assets/tokens.css` and the chosen kit (`kits.md`). Where the references show a different finish, follow the reference spec.
 
 Contents: surfaces, not bare pages · shadows · borders and edges · surfaces and glass · type finishing · colour finishing · buttons and controls · micro-details · spacing rhythm · variety within sets · motion · dark directions
 
 ## Surfaces, not bare pages
 
-Content sits on surfaces: cards, panels, tiles, a shell. A page of text rows separated by hairlines directly on the background reads as a document, however good the typography. Establish at least three levels: the **ground** (page background, usually tinted), the **surface** (cards, clearly lighter or darker than the ground), and the **raised** level (popovers, floating cards, the featured item). Add one **contrast surface** per screen: a dark or accent-filled card that anchors the composition.
+In app shells (dashboards, admin, tools), give the page levels: the **ground** (page background), the **surface** (panels and the shell, a step lighter or darker), and the **raised** level (popovers, menus, the active item). On web pages and in lists, content sits directly on the page with type, space and hairlines; a box is for a real object (`critique.md`, "What reads as generated"). Follow the references' surface treatment where they show one.
 
 ## Shadows
 
@@ -50,7 +50,7 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 - **Landing headlines:** `font-size: clamp(36px, 5vw, 56px); line-height: 1.08; letter-spacing: -0.025em; text-wrap: balance;` in the UI sans at weight 500 or 600 (or the display face, if the page has one). Six to ten words over two lines. Product UI titles are 20 to 24px.
 - **Emphasis**, if any: one word or phrase of a landing headline in the brand colour or in the muted grey. Nothing on product UI.
 - **No pill above the headline** unless it announces something real and dated ("New in March: offline mode"); then plain small text, not a pill with a dot.
-- **Scale:** use the compact scale in `system.md`. Hierarchy comes from weight (400/500/600) and colour (text vs. muted grey) as much as size. The key figure in an app or dashboard is 28 to 36px; KPI figures 22 to 28px; labels 12 to 13px in muted grey.
+- **Scale:** use the reference spec's sizes, otherwise the defaults in `spec.md`. Hierarchy comes from weight (400/500/600) and colour (text vs. muted grey) as much as size. The key figure in an app or dashboard is 28 to 36px; KPI figures 22 to 28px; labels 12 to 13px in muted grey.
 - **Key numerals:** weight 600, slight negative tracking, decimals and currency signs smaller or muted, tabular figures.
 - **One family, plus a mono for meta.** Everything in the UI sans, with the mono partner only for meta (see `typography.md`). No display serif and no condensed headings on product UI.
 - **Small labels:** 12 to 13px, weight 500, sentence case, muted grey. Uppercase tracked labels are rare.
@@ -59,7 +59,7 @@ One blur at one opacity looks flat and dated. Use layered shadows: a tight one f
 
 ## Colour finishing
 
-- Roughly 60% ground and surfaces, 30% ink and neutrals, 10% accent. The accent is concentrated in a few strong places (primary button, key chart, active state, one feature card), not sprinkled.
+- Colour by area follows the reference spec, otherwise the budget in `color.md` (section 8). The accent is concentrated in a few strong places (primary button, key chart, active state, one feature card), not sprinkled.
 - Derive tints with `color-mix` instead of inventing new colours, and keep them small: 6 to 10% brand on surface for a selected row or a focus ring, never for whole cards.
 - A **category palette** for things that come in kinds (item types, statuses, team members): four to six clear hues at matched lightness and saturation, used as marks (dots, icon strokes, chart series), not pastel fills. Use it in small doses: the item's object or icon tile and its own data marks. Do not also tint the whole card, its border and its button, or the screen turns into a rainbow and loses its identity.
 - **One brand colour** defines the screen. Viewed as a thumbnail, the page reads as a neutral base with one colour, plus category colours as small sparks.

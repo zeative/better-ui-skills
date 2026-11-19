@@ -31,7 +31,7 @@ Contents: perception and grouping · attention and hierarchy · choice and memor
 | Principle | Rule | Check |
 |:---|:---|:---|
 | **Hick's law**: decision time grows with the number of choices | Few options at once: five to seven navigation items, one primary action per view, rare actions in a menu | Count the choices visible at once in each region |
-| **Miller's law / chunking**: working memory holds a handful of chunks | Group long lists and numbers into chunks (sections, card groups, `4821 0000 1234`); five to seven KPIs at most | Any list or row of more than about seven equal items without grouping? |
+| **Miller's law / chunking**: working memory holds a handful of chunks | Group long lists and numbers into chunks (sections, card groups, `4821 0000 1234`); up to four KPI tiles in a row (`spec.md`) and five to seven key figures on a screens at most | Any list or row of more than about seven equal items without grouping? |
 | **Jakob's law**: people expect your screen to work like the others they use | Use the conventional pattern for the kind of screen (tab bar, sidebar, listing page); put things where people look for them | Would a first-time user find search, settings and the main action without looking? |
 | **Cognitive load / Tesler's law**: complexity has to live somewhere; keep it off the user | Show the essential first and the rest on demand (details in a sheet, advanced filters folded) | Is anything on the first screen there "just in case"? |
 
@@ -56,6 +56,7 @@ Contents: perception and grouping · attention and hierarchy · choice and memor
 
 Review every render with this method, in order, instead of asking whether you like it:
 
+0. **Beside the reference.** Put the screen next to its main reference (`match.cjs compare`). If it is visibly weaker, fix that first; the rest of this method refines a screen that already holds its own.
 1. **Predicted gaze order.** Run the audit and read its gaze order: the first item must be the screen's primary thing, and the first two must not be near-equal. If they are wrong, change weight (size, weight, contrast), not colour.
 2. **Squint and grayscale test.** Open the audit's `*-squint.png` (the first screen in grayscale, blurred). You should see the primary, then the groups you intended, and nothing else. If the hierarchy only worked through colour, it disappears here.
 3. **Five-second test.** Look for five seconds, then say what the screen is for and what its main number or action is. If you cannot, the hierarchy is not doing its job.
