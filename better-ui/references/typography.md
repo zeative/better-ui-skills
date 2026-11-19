@@ -1,6 +1,6 @@
 # Typography
 
-Type is most of what a screen is made of, and most of what makes it read as elegant or cheap. Elegance here is not a fancy face: it is a good family, few sizes, restrained weights, tracking and leading set per size, and details that a default stylesheet never sets.
+Type is most of what a screen is made of, and most of what makes it read as elegant or cheap. Elegance here is not a fancy face: it is a good family, few sizes, restrained weights, tracking and leading set per size, and details that a default stylesheet never sets. When the references use a different face or scale, measure and follow them (`references.md`); these rules are the defaults and the check for what makes type look cheap.
 
 Contents: what the research says · choosing a face · pairing · weights · size, tracking and leading · details that make it look set · what makes type look cheap · loading
 

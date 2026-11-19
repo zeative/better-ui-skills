@@ -1,6 +1,6 @@
 # Building the showpiece and rich visuals in code
 
-Everything here is made with HTML, CSS and inline SVG, so it needs no image files and stays sharp at any size. The recipes are starting points: adapt colours to your tokens and fill them with this product's content.
+Everything here is made with HTML, CSS and inline SVG, so it needs no image files and stays sharp at any size. The recipes are starting points: adapt colours to your tokens and fill them with this product's content. Re-create the references' own visual moments first (`references.md`); these recipes are for what the references leave open.
 
 Contents: keep it real · the rule of detail · surfaces with material · a rendered object · the app summary card · product mock · floating detail cards · atmosphere · charts · avatars and people · product thumbnails · icons and icon chips · empty-state illustration · logos and proof · frames · on a phone
 

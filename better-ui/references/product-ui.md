@@ -1,6 +1,6 @@
 # Product UI: dashboards, admin, apps and mobile tools
 
-At the bar, product UI is both a pleasure to look at and genuinely useful. The look comes from a full shell, content on surfaces, imagery in every list and data drawn beautifully. The usefulness comes from leading with what the person needs to do.
+At the bar, product UI is both a pleasure to look at and genuinely useful. The look comes from a full shell, content on surfaces, imagery in every list and data drawn beautifully. The usefulness comes from leading with what the person needs to do. Use this as the checklist of what the screens must contain and how they behave; take their visual form (sizes, surfaces, density, components) from the references (`references.md`).
 
 Contents: the shell · lead with what matters · dense professional tools · modules · tiles and figures · charts · lists and tables · forms and controls · small apps and mobile-first tools · states · sample data · phone and desktop
 

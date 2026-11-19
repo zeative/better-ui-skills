@@ -2,7 +2,7 @@
 
 Designers do not start from a blank file. They collect references for the exact thing they are making (a clinic queue screen, a pricing table for an API product, a hotel booking hero), pick the two or three best, study how they are built, and then build their own screen to that standard. That last step is **slicing**: re-creating the composition, proportions, spacing rhythm, type scale and component shapes of the chosen references, piece by piece, for this product's content. A design built this way inherits decisions that a strong designer already made and tested; a design built from rules alone is only as good as the rules.
 
-Do this before step 4 for every new screen, page or redesign. It replaces guessing.
+This is step 3 of `SKILL.md`, for every new screen, page or redesign, before any tokens or layout. It replaces guessing.
 
 ## 1. Search
 

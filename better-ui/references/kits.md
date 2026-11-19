@@ -2,7 +2,7 @@
 
 Pages look "off" when type, colour, radius, shadow and shape are each chosen separately: an editorial serif with pill buttons, soft shadows with hairline-sharp cards, a bright green button on a muted heritage palette. Each choice is defensible; together they do not speak one language. Professional teams avoid this by working inside one system where those decisions were made together.
 
-A **kit** is that system: fonts, palette, radius, shadow, borders, buttons, inputs, links and the type scale, already tuned to each other. The files are in `assets/kits/`. Each was rendered and checked as a whole.
+With references (`references.md`), the system is the one in the references, measured; a kit is the starting point you adjust to it, and the fallback when there are no references. A **kit** is that system: fonts, palette, radius, shadow, borders, buttons, inputs, links and the type scale, already tuned to each other. The files are in `assets/kits/`. Each was rendered and checked as a whole.
 
 | Kit | Character | Fits | Shape and depth |
 |:---|:---|:---|:---|
@@ -18,7 +18,7 @@ A **kit** is that system: fonts, palette, radius, shadow, borders, buttons, inpu
 ## How to use a kit
 
 1. **Choose one** from the table by the product's kind and the character you wrote in step 2. `look.cjs` suggests two for the category. An existing product (`improve.md`) gets the kit closest to its current character, with its own brand colour.
-2. **Copy the kit file verbatim** into the stylesheet (and its `<link>` for the fonts), after `tokens.css`. Its variables (`--canvas`, `--surface`, `--ink`, `--ink-2`, `--line`, `--brand`, `--r-card`, `--shadow-card`…) and classes (`.display`, `.h1`, `.h2`, `.h3`, `.lead`, `.small`, `.label`, `.btn .btn-primary .btn-secondary`, `.card`, `.input`, `.link`) are the vocabulary for the page.
+2. **Copy the kit file** into the stylesheet (and its `<link>` for the fonts), after `tokens.css`. Its variables (`--canvas`, `--surface`, `--ink`, `--ink-2`, `--line`, `--brand`, `--r-card`, `--shadow-card`…) and classes (`.display`, `.h1`, `.h2`, `.h3`, `.lead`, `.small`, `.label`, `.btn .btn-primary .btn-secondary`, `.card`, `.input`, `.link`) are the vocabulary for the page.
 3. **Adjust to the references, otherwise only the brand.** When you have references (`references.md`), set the kit's fonts, radii, shadows and neutrals to the values measured from them, consistently for every element. Without references, customise only the brand: set `--brand` (and `--brand-ink` for text on it) to the brand colour, and `--accent` if the kit uses a separate link or highlight colour. For tints and states of the brand, run `palette.cjs` with the same colour and use its `--b*` steps. Keep the kit's neutrals, fonts, radii and shadows.
 4. **Stay inside its shape language.** Every new element takes the kit's radius, border and shadow rules: no pill badge in `editorial`, `swiss` or `civic`; no hairline-sharp card in `soft`; no drop shadow in `precision-dark`; no rounded photo in `editorial`. If an element does not exist in the kit, build it from the kit's variables.
 5. **Never mix two kits** on one page, and never add a second display face.

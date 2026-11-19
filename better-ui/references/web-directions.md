@@ -15,7 +15,7 @@ Sources: Awwwards Sites of the Day and annual winners 2025–2026, siteinspire, 
 3. **Score each 1 to 5** on: fit to the audience and brand; whether the content can carry it (no photographs means no cinematic direction); distinctiveness against section 5; buildable in the target stack with good accessibility.
 4. **Pick the highest. On a tie, take the bolder.** Say in one sentence why the others lost, and name the direction in the handoff.
 5. **Choose the kit** (`kits.md`) that fits the direction: a poster in `swiss`, an editorial spread in `editorial`, cinematic photography in `editorial` or `showroom`, a dark product in `precision-dark`, a live demo in `precision`. The direction decides composition; the kit decides type, colour, radius and depth.
-6. **Write a mini spec before code:** the grid, the image treatment, one signature motion, and which section pattern from section 3 replaces each default section. Type, colour, radius and depth come from the kit unchanged.
+6. **Write a mini spec before code:** the grid, the image treatment, one signature motion, and which section pattern from section 3 replaces each default section. Type, colour, radius and depth come from the reference spec, starting from the kit.
 7. **Carry it through.** The signature move appears in at least three places (hero, a mid-page section, the footer), so it reads as a system and not a hero trick. A bold hero followed by template sections is the most common way this fails.
 8. **Audit** with `--register showcase`, check the result against section 5, and check 375px, reduced motion and contrast.
 

@@ -1,6 +1,6 @@
 # Polish system
 
-Finish is a system, applied everywhere from the start. These recipes assume the tokens in `system.md`.
+Finish is a system, applied everywhere from the start. These recipes assume the tokens in `system.md`. Where the references show a different finish, follow the reference spec.
 
 Contents: surfaces, not bare pages · shadows · borders and edges · surfaces and glass · type finishing · colour finishing · buttons and controls · micro-details · spacing rhythm · variety within sets · motion · dark directions
 

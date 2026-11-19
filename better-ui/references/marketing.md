@@ -1,6 +1,6 @@
 # Marketing pages: landing, product, pricing
 
-A landing page has to stop a stranger, show them the product, and make the case. At the bar, every section has something worth looking at, and the page gets more convincing as it goes.
+A landing page has to stop a stranger, show them the product, and make the case. At the bar, every section has something worth looking at, and the page gets more convincing as it goes. Use this as the checklist of what the page must argue and contain; take its composition and finish from the references (`references.md`).
 
 Contents: the argument · the hero · the sections · proof · pricing · the closing band and footer · writing · rhythm · phone
 

@@ -1,6 +1,6 @@
 # Critique: would this pass as a real product?
 
-Use this to review rendered screenshots, your own or as an independent reviewer. The bar is the popular interface work on Dribbble and the products good teams ship. A designer scrolling past gives a shot about two seconds and asks two things: does it look professionally made, and does it look natural, like a real product rather than a costume or a template?
+Use this to review rendered screenshots, your own or as an independent reviewer. The bar is the popular interface work on Dribbble and the products good teams ship. A designer scrolling past gives a shot about two seconds and asks two things: does it look professionally made, and does it look natural, like a real product rather than a costume or a template? Start every review by putting the screen beside its main reference (`match.cjs compare`): a screen that is visibly weaker than its reference fails, whatever the checklist says.
 
 Contents: what the bar looks like · the two failures · how to review · the checklist · finishing pass · brief for an independent reviewer
 

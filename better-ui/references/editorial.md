@@ -1,6 +1,6 @@
 # Showcase sites: portfolios, studios, restaurants, fashion, events, personal sites
 
-Some sites exist to present work or a mood, not to sell software or run a task. Their bar is different, and almost the opposite of a product page: the best ones have very little interface. Applying landing-page furniture to them (pill navigation, feature tiles, three pricing cards, an accordion, rounded cards with glows) is the fastest way to miss.
+Some sites exist to present work or a mood, not to sell software or run a task. Their bar is different, and almost the opposite of a product page: the best ones have very little interface. Applying landing-page furniture to them (pill navigation, feature tiles, three pricing cards, an accordion, rounded cards with glows) is the fastest way to miss. Take the composition from the strongest references of the kind (`references.md`); the rules below are the defaults.
 
 Contents: what the bar looks like · the image leads · typography · composition · colour and finish · sections, re-set · when you have no photographs · phone
 

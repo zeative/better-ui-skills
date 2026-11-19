@@ -1,6 +1,6 @@
 # Hierarchy and sizing data
 
-What separates a designed interface from a decorated one is mostly invisible: the reader always knows where to look first, related things sit together, and every number is sized and aligned so it can be read and compared at a glance. These are the working rules behind that, with numbers. They come from long-standing practice (Gestalt grouping, Tufte's data-ink, Stephen Few's dashboard design, Fitts's and Hick's laws, the type ramps of Apple's and Google's design systems) and apply to every kind of screen.
+What separates a designed interface from a decorated one is mostly invisible: the reader always knows where to look first, related things sit together, and every number is sized and aligned so it can be read and compared at a glance. These are the working rules behind that, with numbers. They come from long-standing practice (Gestalt grouping, Tufte's data-ink, Stephen Few's dashboard design, Fitts's and Hick's laws, the type ramps of Apple's and Google's design systems) and apply to every kind of screen. The references' measured sizes win over the ratios here where they differ; the levels and grouping rules always apply.
 
 Contents: decide the levels · the type ramp · grouping and spacing · numbers · tables · charts · dashboards · controls · checks
 

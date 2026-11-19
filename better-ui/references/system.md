@@ -1,6 +1,6 @@
 # The system
 
-Professional interfaces get their quality from a small, strict system applied everywhere. Write these tokens as CSS custom properties at the top of the stylesheet and use nothing else.
+Professional interfaces get their quality from a small, strict system applied everywhere. Write the tokens as CSS custom properties at the top of the stylesheet and use nothing else. The system comes from the reference spec when there is one (`references.md`); the looks and rules below are the defaults.
 
 Contents: choose a look · type · colour · brand colour by category · surfaces and depth · radius and spacing · icons · imagery · starting tokens
 

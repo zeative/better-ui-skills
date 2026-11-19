@@ -1,6 +1,6 @@
 # Colour with depth
 
-A screen looks flat when every surface is the same untinted grey or white, the brand colour appears only on one button, and nothing between those two extremes exists. Well-made products (Linear, Stripe, Revolut, Robinhood, Apple's own apps) are not more colourful; they use a full scale of one hue, tinted neutrals, quiet surface steps and tinted shadows. This file is how to do that. The values come from `scripts/palette.cjs`, which turns one brand colour into the whole system.
+A screen looks flat when every surface is the same untinted grey or white, the brand colour appears only on one button, and nothing between those two extremes exists. Well-made products (Linear, Stripe, Revolut, Robinhood, Apple's own apps) are not more colourful; they use a full scale of one hue, tinted neutrals, quiet surface steps and tinted shadows. This file is how to do that. The values come from `scripts/palette.cjs`, which turns one brand colour into the whole system. These are defaults: when the references use colour differently (a dark canvas, a saturated field, a different area balance), follow the reference spec and keep the contrast floors.
 
 Contents: the scale and its jobs · neutrals that belong to the brand · surfaces and depth · where the brand tint goes · gradients that work · charts · dark themes · the area budget · what makes colour look cheap · checks
 

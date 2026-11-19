@@ -1,8 +1,10 @@
 # Spec: fixed values
 
-Every size, space, radius and colour role here is a single value, chosen from Apple's and Google's platform guidelines, Refactoring UI, Practical UI, Learn UI Design and Nielsen Norman Group research. Use these values exactly. Do not interpolate, do not pick "something between", and do not invent new ones. Where any other reference in this skill gives a range, this file decides.
+Every size, space, radius and colour role here is a single value, chosen from Apple's and Google's platform guidelines, Refactoring UI, Practical UI, Learn UI Design and Nielsen Norman Group research. They are the **defaults**: with a reference spec (`references.md`), the values measured from the references win for sizes, spacing, radii, type and colour; these fill whatever the references do not show. Do not interpolate between them or invent values that are in neither. Where another file in this skill gives a range, this file decides the default.
 
-Start every build by copying `assets/tokens.css` and then the chosen kit from `assets/kits/` (`kits.md`) into the stylesheet; the kit sets fonts, colours, radii and shadows, this file sets spacing and sizes. On web pages the kit's type scale replaces the landing ramp below. Build only from those tokens.
+**Floors that nothing overrides:** text contrast 4.5:1 (3:1 for 24px and up); touch targets 44px; inputs 16px on phones; body text 16px on phones and 14px on desktop at the smallest; no horizontal overflow or overlapping text at any width.
+
+Start every build by copying `assets/tokens.css` and then the chosen kit from `assets/kits/` (`kits.md`) into the stylesheet, with its variables set to the reference spec. On web pages the kit's or the references' type scale replaces the landing ramp below. Build only from those tokens.
 
 Contents: spacing · phone app · desktop app and dashboard · professional data tool · landing page · colour roles and budget · radius, borders and depth · motion · budgets per screen
 

@@ -6,18 +6,18 @@ license: MIT
 
 # Better UI
 
-The bar is the interface work that is popular on Dribbble, and the products good teams actually ship. Look at that work closely and it is not exotic. It is **familiar patterns executed with precision**: a clean sans-serif, a light neutral canvas, white cards, one brand colour, real-looking content, small consistent icons, generous but even spacing, and not one element out of place.
+The bar is the interface work that is popular in the design galleries, and the products good teams actually ship. Look at that work closely and it is not exotic. It is **familiar patterns executed with precision**: the standard layout of its kind, real-looking content, consistent sizes and spacing, a restrained palette, and not one element out of place. This skill reaches that bar by starting from that work: for every task it finds the strongest references of the same kind, measures them, and builds to their numbers.
 
 AI-built interfaces miss this bar in two opposite ways, and both are instantly recognisable:
 
 - **Too plain.** A page of text and default components. No brand, no hierarchy, no visual moment, nothing a designer drew. It reads as "rendered HTML".
 - **Too much.** An invented theme or metaphor pushed onto the interface (stamps, tickets, beads, paper, chalkboards), skeuomorphic textures, decorative display fonts, clever copy, every surface styled. It reads as a costume, and no real product team would ship it.
 
-The professional middle is narrow and specific: **the conventional layout for this kind of screen, done carefully, with one or two well-made visual moments and real content.** That is what this skill builds.
+The professional middle is narrow and specific: **the layout the best references of this kind use, done with their precision, with one or two well-made visual moments and real content.** That is what this skill builds.
 
 Two things are non-negotiable throughout: the interface must work (real states, responsive, readable contrast), and the content must be specific and honest.
 
-**Web pages are judged differently.** Landing pages, marketing sites, event pages, restaurants, portfolios and other sites people visit rather than use all day are compared with the best of Awwwards and Godly, where art direction wins and the conventional layout looks like a template. For these, explore before you build and commit to one bold direction (`references/web-directions.md`). The fixed values, budgets and audit in this skill are a **floor** (hierarchy, legibility, spacing, accessibility, no broken layout), **not a ceiling on creativity**: a chosen direction may bring its own display face and sizes, colour fields, full-bleed imagery, unusual grids and motion, as long as it stays legible, consistent and right for the brand.
+**Web pages are judged differently.** Landing pages, marketing sites, event pages, restaurants, portfolios and other sites people visit rather than use all day are compared with the best of Awwwards and Godly, where art direction wins and the conventional layout looks like a template. For these, find references of the strongest current sites of the kind, then commit to one bold direction they support (`references/web-directions.md`). The defaults, budgets and audit in this skill are a **floor** (hierarchy, legibility, spacing, accessibility, no broken layout), **not a ceiling on creativity**: a chosen direction may bring its own display face and sizes, colour fields, full-bleed imagery, unusual grids and motion, as long as it stays legible, consistent and right for the brand.
 
 ## The process you always follow
 
@@ -29,6 +29,17 @@ Every task, new or redesign, app or website, goes through these four steps. Skip
 4. **Compare** each main screen with its reference using `scripts/match.cjs compare` and fix every difference; then audit (step 7).
 
 The handoff shows the reference links, the spec table and the final comparison. If you cannot produce them, a step was skipped: go back and do it. Only without a network do you continue with the kits alone, and you say so.
+
+## Order of authority
+
+When two instructions disagree, the higher one wins:
+
+1. **The user's explicit direction, and the existing product's identity and function:** its brand, logo, content, links, forms and data (`improve.md`).
+2. **The floors**, which nothing overrides: contrast 4.5:1 for text, 44px touch targets, 16px inputs on phones, no overflow or overlap at any width, every state working (`craft.md`, the floors in `spec.md`).
+3. **The reference spec:** the numbers measured from the chosen references (layout, sizes, spacing, radii, type, borders, shadows, colours and their areas, texture, signature components). These win over every default below.
+4. **This skill's defaults:** the kits, the values in `spec.md`, the colour budgets in `color.md`, the type rules in `typography.md`, the anatomies in `product-ui.md`, `marketing.md`, `commerce.md` and `public-sector.md`, the directions, chart forms and visual moments. Use them where the references are silent, to choose between references, and when there is no network.
+
+The filters in `critique.md` ("What reads as generated") and the audit apply at every level: a reference that has the generated look is a bad reference, not a licence.
 
 ## 1. Find out whose design this is
 
@@ -87,24 +98,24 @@ Open each `board.png`, then the full images you choose. **Measure the main refer
 
 ## 4. Set up the system: tokens from the references, or a kit
 
-**Turn the references into tokens.** Start from the closest kit (`references/kits.md`) and set its fonts, radii, shadows and neutrals to what you measured in the references; with no usable references, use the kit as it is. A kit is fonts, palette, radius, shadow, borders, buttons, inputs and type scale already tuned to each other: `precision`, `precision-dark`, `editorial`, `swiss`, `soft`, `civic`, `showroom` or `warm`. Pages look assembled, not designed, when these are chosen one by one; a kit makes them one decision. `look.cjs` suggests a brand colour and two kits for the category:
+**Turn the reference spec into tokens.** Start from the kit closest to the references (`references/kits.md`) and set its variables (fonts, sizes, radii, borders, shadows, neutrals, accent) to the measured values, so every element uses the same ones. A kit is fonts, palette, radius, shadow, borders, buttons, inputs and type scale already tuned to each other: `precision`, `precision-dark`, `editorial`, `swiss`, `soft`, `civic`, `showroom` or `warm`. With no usable references, use the kit as it is: pages look assembled, not designed, when these are chosen one by one, and a kit makes them one decision. For a new product with no brand colour, `look.cjs` suggests one and two kits for the category:
 
 ```bash
 node <this-skill-dir>/scripts/look.cjs "<product name>" <finance|crypto|fitness|habits|wellness|sleep|health|productivity|commerce|saas|food|travel|media|government|other>
 ```
 
-Then, in this order at the top of the stylesheet: `assets/tokens.css` (spacing scale, motion), then the kit file from `assets/kits/` verbatim with its font `<link>`, with only `--brand`, `--brand-ink` and `--accent` set to the brand. Run `palette.cjs` with the same brand colour only when you need tints and states of it (`--b1`…`--b12`). An existing product (`improve.md`) gets the kit closest to its character, with its own brand colour, logo and fonts if they are good.
+Then, in this order at the top of the stylesheet: `assets/tokens.css` (spacing scale, motion), then the kit file from `assets/kits/` with its font `<link>`, its variables set to the reference spec (or, without references, only `--brand`, `--brand-ink` and `--accent` set to the brand). Run `palette.cjs` with the brand colour when you need tints and states of it (`--b1`…`--b12`). An existing product (`improve.md`) keeps its brand colour, logo and fonts if they are good.
 
-Stay inside the kit's shape language: every element takes its radius, border, shadow and type. Never mix two kits, never add a pill, gradient or soft shadow the kit does not have, never a second display face.
+One shape language per product: every element takes the same radius, border, shadow and type rules, the ones in the reference spec or the kit. Never mix two kits, never add a pill, gradient or soft shadow that neither the references nor the kit have, never a second display face.
 
-- **Sizes and spacing:** `references/spec.md` fixes spacing, component sizes and the type ramp for product UI (phone 44/28/20/16/13, desktop 32/24/18/14/12); on web pages the kit's type scale replaces the landing ramp. Never interpolate or invent a value.
+- **Sizes and spacing:** the reference spec first. `references/spec.md` gives the defaults (phone 44/28/20/16/13, desktop 32/24/18/14/12, spacing on a 4px scale) for whatever the references do not show, and its floors always hold. Do not invent values that are in neither.
 - **Type details:** `references/typography.md` for tracking, leading, figures and what makes type look cheap.
 - **Colour use:** `references/color.md`: the brand at more than one strength, 85 to 90% neutral by area, semantic colours for meaning only.
 - **Icons and imagery:** one line-icon set, inline at text size; real Unsplash photographs for food, products, hotels and places; a real map (Leaflet with CARTO tiles) wherever there is a location; 3D icons only for items in consumer apps (`system.md`).
 
-## 5. Use the conventional layout for this kind of screen
+## 5. Layout: the references' composition, checked against the anatomy
 
-Popular shots are not novel layouts; they are the standard layout of their kind, filled with real content and finished. Read the reference for your kind and follow its anatomy:
+Popular shots are not novel layouts; they are the standard layout of their kind, filled with real content and finished. Compose each screen like its main reference. Then read the anatomy for your kind as a checklist of what the screen must contain (states, navigation, the parts people look for), and fill any gap the references leave:
 
 - `references/product-ui.md` for mobile-first apps, dashboards and admin.
 - `references/web-directions.md` first for any web page (landing, marketing, event, showcase): choose and commit to a direction. Then `references/marketing.md` for landing and pricing pages (an event, conference, festival or venue page takes its poster hero, "When there is no software product").
@@ -112,9 +123,9 @@ Popular shots are not novel layouts; they are the standard layout of their kind,
 - `references/commerce.md` for shops: product pages, listings, the bag and checkout.
 - `references/public-sector.md` for government and public-service sites: top tasks, life events, an A–Z page instead of a link farm, identity from the emblem.
 
-Every screen also needs **one signature chart**: the main chart drawn in a form that current shots use rather than the library default. This period mirrored against the last (colour above the axis, grey below); series coloured to match dots shown beside their categories elsewhere on the screen; a hatched or striped bar for the current period among plain ones; ghost bars for the previous period; pill-shaped bars with a value chip above the highlighted one; a category breakdown as proportional bubbles or a segmented pill bar instead of a donut; radial segments; a single gradient-highlighted bar with a tooltip. Plain lines and plain donuts read as a template.
+Where a screen has a main chart, draw it the way the references draw theirs; if they show none worth slicing, use a **signature chart**: the main chart in a form that current shots use rather than the library default. This period mirrored against the last (colour above the axis, grey below); series coloured to match dots shown beside their categories elsewhere on the screen; a hatched or striped bar for the current period among plain ones; ghost bars for the previous period; pill-shaped bars with a value chip above the highlighted one; a category breakdown as proportional bubbles or a segmented pill bar instead of a donut; radial segments; a single gradient-highlighted bar with a tooltip. Plain lines and plain donuts read as a template.
 
-In a dashboard or app home the two moments are, by default: **a rendered object** in the card of any figure that counts a physical thing (payments or spend: a payment card; paid invoices: a receipt; bookings: a ticket; shipments: a label), and **the main chart in a designed form** (a mirrored comparison, ghost bars, series matching a legend). If a figure qualifies and the screen has no object, add it; if the main chart is a plain line or plain bars, redraw it. A large chart of plain bars is not a moment, however much space it fills. The bigger the main chart, the richer its form should be: when it takes a large part of the screen, draw this period mirrored against the last with smooth curves, or the series split by category in colours that match dots shown beside those categories; keep ghost bars and single highlighted bars for smaller charts.
+In a dashboard or app home without a stronger lead from the references, the two moments are, by default: **a rendered object** in the card of any figure that counts a physical thing (payments or spend: a payment card; paid invoices: a receipt; bookings: a ticket; shipments: a label), and **the main chart in a designed form** (a mirrored comparison, ghost bars, series matching a legend). If a figure qualifies and the screen has no object, add it; if the main chart is a plain line or plain bars, redraw it. A large chart of plain bars is not a moment, however much space it fills. The bigger the main chart, the richer its form should be: when it takes a large part of the screen, draw this period mirrored against the last with smooth curves, or the series split by category in colours that match dots shown beside those categories; keep ghost bars and single highlighted bars for smaller charts.
 
 Every screen still needs a clear first, second and third thing to look at. Read `references/hierarchy.md` for every screen: it sets out how to decide those levels and how to size and align figures, tables and charts (figure to label ratios, spacing inside and between groups, number alignment, chart sizes). It also needs **one or two visual moments** that a designer clearly made: a summary card that leads by size with a well-drawn chart in the brand colour, a product screenshot in a clean frame, a ring, a photo, a set of friendly item icons. `references/showpiece.md` explains how to draw these well in HTML, CSS and SVG. One or two, not ten: the rest of the screen stays calm so those moments carry.
 
@@ -138,7 +149,7 @@ node <this-skill-dir>/scripts/audit.cjs mail.html --widths 1280,1440            
 node <this-skill-dir>/scripts/audit.cjs site.html --register showcase             # a web page with an art direction (poster, editorial, colour field)
 ```
 
-The script screenshots the page at 375, 768 and 1440px and prints measured problems: overflow, contrast, focus, tap targets, clipped text, uneven gutters, near-miss alignment, awkward wraps. Fix everything under BROKEN and ACCESSIBILITY, and every spec item under CRAFT (spacing off the scale, more than five font sizes, a boxed main chart, colour blocks, pastel fills, squeezed text): those are measured breaches of `spec.md`, not suggestions. Then resolve the rest. Open every screenshot part, the phone ones included.
+The script screenshots the page at 375, 768 and 1440px and prints measured problems: overflow, contrast, focus, tap targets, clipped text, uneven gutters, near-miss alignment, awkward wraps. Fix everything under BROKEN and ACCESSIBILITY. Fix every spec item under CRAFT (spacing off the scale, more than five font sizes, a boxed main chart, colour blocks, pastel fills, squeezed text) unless the value comes from the reference spec, in which case say so in the handoff. Then resolve the rest. Open every screenshot part, the phone ones included.
 
 For a site with several pages, audit **every page after the last change**, not a sample, and do not hand off while any page still has a BROKEN item. If subagents build pages, each one audits its own pages, and you run the audit again on all pages at the end, because later fixes to shared CSS break pages that passed earlier. Overlapping text in a tab row or toolbar on a phone is the usual casualty: make such rows scroll sideways with `flex: none` items and `white-space: nowrap`.
 
@@ -154,16 +165,17 @@ Tell the user briefly: what you built, the references it was sliced from (with l
 
 - **A theme instead of a product.** The habit tracker becomes a stamp card, the budget an abacus, the workout a barbell. Real products use the standard pattern (a list, a ring, a progress bar) and get their character from colour, type, icons and finish. Drop the metaphor.
 - **Costume finishes on product UI.** Paper texture, grain, wood, brass, ticket notches, postmarks, chalk, neon glows, heavy offset shadows. Flat, clean surfaces. (A web page whose chosen direction is tactile or brutalist may use its finish deliberately and consistently.)
-- **Display fonts on product UI.** A serif or condensed display face for app headings and numbers. Use the one sans family; let size and weight do the work.
+- **Display fonts on product UI.** A serif or condensed display face for app headings and numbers when the references do not use one. Use the one sans family; let size and weight do the work.
 - **Clever copy.** Puns, metaphors and narrative labels ("Two to go", "postmark", "links closed"), or text that explains the design to the viewer. Write what a shipped app says.
-- **Too plain.** No brand mark, no header, no tab bar, rows of identical default cards, one colour used for everything, nothing a designer drew. Add the app chrome, a summary card, item icons and one clear visual moment.
-- **A component-library default.** Inter, grey-100 cards, an indigo-to-violet gradient card, emoji tiles for every category: correct but with no point of view. Choose a look, a font with a little character, and 3D icons or avatars, so the screen is recognisably designed.
+- **Too plain.** No brand mark, no header, no tab bar, rows of identical default cards, one colour used for everything, nothing a designer drew. Compare with the references: they have the chrome and a clear visual moment; slice both.
+- **A component-library default.** Inter, grey-100 cards, an indigo-to-violet gradient card, emoji tiles for every category: correct but with no point of view. It is what you get without references; slice from strong ones instead.
 - **Everything styled.** Every card a different colour or treatment, gradients on everything, five accent colours. One brand colour, quiet surfaces, colour where it means something.
 - **Dribbble-izing a professional tool.** A trading terminal or data tool turned into a consumer dashboard: a gradient hero card with a glow, a sparkline in every tile, letter-badge "logos" on every ticker, an "insights" card with coloured icon chips, half the rows it used to show. It looks like every generated fintech template and is worse to use. Pro tools stay dense, flat and tabular, and their main table or chart runs edge to edge instead of sitting inside a padded card.
 - **Oversized type in product UI.** A 96px number on a phone. Hero figures in apps are 28 to 44px. (On web pages, oversized type is a legitimate direction when it is the idea of the page.)
-- **The safe web page.** Centred headline, two buttons, a screenshot or stock photo, then rows of three cards: correct, and indistinguishable from every generated landing page. Pick a direction from `references/web-directions.md` and carry it through every section, not only the hero.
+- **The safe web page.** Centred headline, two buttons, a screenshot or stock photo, then rows of three cards: correct, and indistinguishable from every generated landing page. Slice from the strongest references of the kind and carry their direction through every section, not only the hero (`references/web-directions.md`).
 - **Browser defaults showing.** A native date picker, select arrow or checkbox inside an app screen. Style every control.
 - **Wireframe content.** "Item 1", lorem ipsum, a grey box labelled "chart". Real names, figures and a real chart.
 - **Decoration as filler.** A sparkline, icon chip and different hue on every stat tile, "New" badges, a promo card in the sidebar, a bento grid where each tile has its own gimmick. A stat tile is a label, a figure and its change; richness goes into one or two real moments, not spread over the chrome.
 - **Component confetti.** Rounded bordered cards around everything (often cards inside cards), a tinted icon square on every item, pills and status dots, mono captions, a small label above every section title. Each is fine once; together they are the most recognisable generated look. Set content on the page with type, space and hairlines, and keep boxes, icons, pills and mono for where they mean something (`critique.md`, "What reads as generated").
+- **References as decoration.** Searching for references, then building from habit anyway: no spec table, no comparison, a result that looks nothing like them. The references are the measure; compare and fix until the difference is gone.
 - **Stopping after the first render.** The first render is a draft.

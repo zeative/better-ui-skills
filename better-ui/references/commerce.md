@@ -1,6 +1,6 @@
 # Commerce: product pages, listings and the bag
 
-Shops are the one kind of web page where the conventional pattern is a feature: people buy faster on a page that works the way every good shop works. The difference between a generated shop and a good one is not the layout but the **photography, the buy box done precisely, and a brand voice carried around it**. Aesop, Allbirds, Glossier, Teenage Engineering, Arc'teryx, Kith, SSENSE and Apple all use the same anatomy and look nothing alike.
+Shops are the one kind of web page where the conventional pattern is a feature: people buy faster on a page that works the way every good shop works. The difference between a generated shop and a good one is not the layout but the **photography, the buy box done precisely, and a brand voice carried around it**. Aesop, Allbirds, Glossier, Teenage Engineering, Arc'teryx, Kith, SSENSE and Apple all use the same anatomy and look nothing alike. Use the anatomy below as the checklist; take the visual treatment from the references (`references.md`).
 
 Contents: the product page · imagery · the buy box · below the fold · listings · the bag · direction · what reads as generated
 
