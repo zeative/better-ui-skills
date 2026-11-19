@@ -65,7 +65,7 @@ After building, check each of these against the original (a quick diff of links,
 
 ## 7. Build
 
-Follow the rest of `SKILL.md` within the chosen scope: the spec and palette (step 3), the anatomy or direction (step 4, `web-directions.md` for landing pages, chosen to fit the existing brand), the finish (step 5). For a landing page that is safe and forgettable, the art direction is usually the biggest improvement; for a product screen, hierarchy, spacing and states usually are.
+Follow the rest of `SKILL.md` within the chosen scope: references (step 3, `references.md`: search for the best examples of this kind of page and slice from them), the tokens (step 4), the anatomy or direction (step 5, `web-directions.md` for landing pages, chosen to fit the existing brand), the finish (step 6). For a landing page that is safe and forgettable, the art direction is usually the biggest improvement; for a product screen, hierarchy, spacing and states usually are.
 
 ## 8. Prove it
 

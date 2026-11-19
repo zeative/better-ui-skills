@@ -319,6 +319,7 @@ better-ui/
 │   └── kits/                eight coherent design kits: precision, precision-dark, editorial, swiss, soft, civic, showroom, warm
 ├── references/
 │   ├── improve.md           improving an existing UI: measure, scope, keep what must not break, work in the stack
+│   ├── references.md        find references in design galleries, break them down, slice
 │   ├── kits.md              choosing and using a kit: one decision for type, colour, radius and depth
 │   ├── spec.md              one fixed value for every size, space, radius and colour role
 │   ├── color.md             colour with depth: scale steps and their jobs, surfaces, tints, charts
@@ -338,12 +339,13 @@ better-ui/
 │   ├── critique.md          the bar, the failure modes, the reviewer brief
 │   └── craft.md             contrast, layout, states, accessibility
 └── scripts/
+    ├── refs.cjs             searches Dribbble by topic and screenshots live sites into a reference board
     ├── audit.cjs            renders a page at 3 widths and reports measured problems
     ├── look.cjs             deals a contemporary look per category
     └── palette.cjs          turns one brand colour into the full colour system
 ```
 
-Markdown, one stylesheet and three Node scripts. No runtime dependencies.
+Markdown, stylesheets and four Node scripts. No runtime dependencies.
 
 <details>
 <summary><b><code>audit.cjs</code>: what it measures</b></summary>

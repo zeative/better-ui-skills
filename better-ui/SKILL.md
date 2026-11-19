@@ -63,9 +63,20 @@ Never show a note about sample data on the main screens. Put "Clear sample data"
 
 When the brief is thin, assume specifically, build, and list your assumptions at the end. Never use real company logos, real people's names or faces, or invented claims about real results; fictional names and example figures are fine.
 
-## 3. Set up the system: choose one kit
+## 3. Find references and break them down
 
-**Choose a design kit before anything else** (`references/kits.md`). A kit is fonts, palette, radius, shadow, borders, buttons, inputs and type scale already tuned to each other: `precision`, `precision-dark`, `editorial`, `swiss`, `soft`, `civic`, `showroom` or `warm`. Pages look assembled, not designed, when these are chosen one by one; a kit makes them one decision. `look.cjs` suggests a brand colour and two kits for the category:
+**Before designing anything, find references** (`references/references.md`). Search the design galleries for this exact topic and kind, pick the two or three strongest, and write down how they are built: layout, type sizes and weights, colour proportions, radii and shadows, signature components. Then build by **slicing**: re-create those decisions, measured from the images, with this product's content. A screen built from strong references is far better than one built from rules alone.
+
+```bash
+node <this-skill-dir>/scripts/refs.cjs "<topic> app" "<topic> <main screen>" "<hardest component>" --n 12 --out .refs
+node <this-skill-dir>/scripts/refs.cjs --site <an exemplary live site of this kind> --out .refs
+```
+
+Open each `board.png`, then the full images you choose. Never copy logos, illustrations, photographs or text; credit the references in the handoff. Without a network, say so and continue with the kits.
+
+## 4. Set up the system: tokens from the references, or a kit
+
+**Turn the references into tokens.** Start from the closest kit (`references/kits.md`) and set its fonts, radii, shadows and neutrals to what you measured in the references; with no usable references, use the kit as it is. A kit is fonts, palette, radius, shadow, borders, buttons, inputs and type scale already tuned to each other: `precision`, `precision-dark`, `editorial`, `swiss`, `soft`, `civic`, `showroom` or `warm`. Pages look assembled, not designed, when these are chosen one by one; a kit makes them one decision. `look.cjs` suggests a brand colour and two kits for the category:
 
 ```bash
 node <this-skill-dir>/scripts/look.cjs "<product name>" <finance|crypto|fitness|habits|wellness|sleep|health|productivity|commerce|saas|food|travel|media|government|other>
@@ -80,7 +91,7 @@ Stay inside the kit's shape language: every element takes its radius, border, sh
 - **Colour use:** `references/color.md`: the brand at more than one strength, 85 to 90% neutral by area, semantic colours for meaning only.
 - **Icons and imagery:** one line-icon set, inline at text size; real Unsplash photographs for food, products, hotels and places; a real map (Leaflet with CARTO tiles) wherever there is a location; 3D icons only for items in consumer apps (`system.md`).
 
-## 4. Use the conventional layout for this kind of screen
+## 5. Use the conventional layout for this kind of screen
 
 Popular shots are not novel layouts; they are the standard layout of their kind, filled with real content and finished. Read the reference for your kind and follow its anatomy:
 
@@ -96,7 +107,7 @@ In a dashboard or app home the two moments are, by default: **a rendered object*
 
 Every screen still needs a clear first, second and third thing to look at. Read `references/hierarchy.md` for every screen: it sets out how to decide those levels and how to size and align figures, tables and charts (figure to label ratios, spacing inside and between groups, number alignment, chart sizes). It also needs **one or two visual moments** that a designer clearly made: a summary card that leads by size with a well-drawn chart in the brand colour, a product screenshot in a clean frame, a ring, a photo, a set of friendly item icons. `references/showpiece.md` explains how to draw these well in HTML, CSS and SVG. One or two, not ten: the rest of the screen stays calm so those moments carry.
 
-## 5. Build it properly
+## 6. Build it properly
 
 - **Every width.** A mobile-first app is designed at 375px first and looks like a native app there: safe-area top padding, a header, content, a bottom tab bar. On desktop it becomes a sensible layout (a centred app column with side panels, or a proper shell), not a stretched phone.
 - **Every state** a person will meet: hover, focus, pressed, selected, empty, loading, error, long content. Controls on screen work. Data persists if the app stores anything.
@@ -104,7 +115,7 @@ Every screen still needs a clear first, second and third thing to look at. Read 
 - **The floor** in `references/craft.md`: contrast, focus, labels, 44px tap targets, one grid, no overflow.
 - **Finish:** `references/polish.md` covers alignment, spacing, shadows, type details and the small things that separate shipped work from a draft.
 
-## 6. Render, audit, review against real products, fix
+## 7. Render, audit, review against real products, fix
 
 You cannot judge a design from its source. Render it:
 
@@ -124,9 +135,9 @@ Then review with a method, not with taste: follow "The review method" in `refere
 
 Delete the audit folder when you are done unless the user wants it.
 
-## 7. Hand off plainly
+## 8. Hand off plainly
 
-Tell the user briefly: what you built, the assumptions you made, and what is placeholder (sample data, fictional names, links that go nowhere). No adjectives about the result.
+Tell the user briefly: what you built, the references it was sliced from (with links), the assumptions you made, and what is placeholder (sample data, fictional names, links that go nowhere). No adjectives about the result.
 
 ## Ways this goes wrong
 
