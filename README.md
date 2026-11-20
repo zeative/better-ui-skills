@@ -299,105 +299,37 @@ An earlier version was tested by hiding each page among eight popular Dribbble s
 
 ## How it works
 
+The skill is a working method, the same one designers use when they get great work out of Opus: replace defaults with decisions, build one screen to a finished standard, then look at it like an art director and fix what is weak.
+
 ```text
-1. Whose design is it?       existing product → fit its system · a brand → follow it · blank → continue
-2. Understand the job        what the screen is for and who uses it; write the real content first
-3. Set up the system         deal a look; the palette from one brand colour; fixed spec and tokens
-4. Layout or direction       app anatomy · dashboard shell · shop · a committed art direction for web pages
-5. Build it properly         every width, every state, the accessibility floor, the finish
-6. Render, audit, review     screenshots at 3 widths, measured problems, review by method, fix
-7. Hand off plainly          what was built and what is placeholder
+1. Understand        the product, the person, the scene, the one job of the screen; keep an existing product's identity
+2. Brief             150 words: audience, mood in three words, the one memorable thing, sections, the bar
+3. Three directions  background / accent / type / layout idea each; check them against the generic defaults; choose
+4. Tokens            4–6 colours with roles, one type scale, one radius family, one icon set: these and nothing else
+5. One screen first  the key screen to a finished standard, then the rest from the same tokens
+6. Real content      real copy, data that adds up, real photographs, working states
+7. Look and fix      screenshots at 390 (and 1440); the three weakest things, fixed; two or three rounds
+8. The floor         contrast, 44px hit areas, 16px input text, no overflow: built in, checked by the audit
 ```
 
 ## What's inside
 
 ```text
 better-ui/
-├── SKILL.md                 the process the agent follows
-├── assets/
-│   ├── tokens.css           spacing, radius, type ramp, motion: copied into every build
-│   └── kits/                eight coherent design kits: precision, precision-dark, editorial, swiss, soft, civic, showroom, warm
+├── SKILL.md                 the method, the modes (product UI, persuasion, reading) and the defaults to avoid
 ├── references/
-│   ├── improve.md           improving an existing UI: measure, scope, keep what must not break, work in the stack
-│   ├── references.md        find references in design galleries, break them down, slice
-│   ├── kits.md              choosing and using a kit: one decision for type, colour, radius and depth
-│   ├── spec.md              one fixed value for every size, space, radius and colour role
-│   ├── color.md             colour with depth: scale steps and their jobs, surfaces, tints, charts
-│   ├── web-directions.md    twelve art directions for web pages; explore three, commit to one
-│   ├── typography.md        faces, pairing, weights, tracking and leading by size
-│   ├── hierarchy.md         levels, grouping, numbers, tables, charts, button weight
-│   ├── ux-laws.md           Gestalt, Fitts, Hick and the method used to review every render
-│   ├── copy.md              copy that fits its layout; lengths per element, locale
-│   ├── system.md            looks, surfaces, icons, imagery, photos and maps
-│   ├── product-ui.md        mobile apps, dashboards, admin, dense pro tools
-│   ├── marketing.md         landing and pricing pages
-│   ├── commerce.md          product pages, listings, the bag and checkout
-│   ├── public-sector.md     government sites: top tasks, life events, identity from the emblem
-│   ├── editorial.md         portfolios, studios, restaurants and other image-led sites
-│   ├── showpiece.md         summary cards, product mocks, charts, avatars, icons in code
-│   ├── polish.md            micro-details, controls, motion
-│   ├── critique.md          the bar, the failure modes, the reviewer brief
-│   └── craft.md             contrast, layout, states, accessibility
+│   ├── improve.md           improving an existing UI without breaking links, forms, SEO or the build
+│   ├── copy.md              interface writing
+│   ├── commerce.md          what a product page, listing and bag must contain
+│   ├── public-sector.md     what a government or public-service page must contain
+│   └── references.md        working from references the user gives (find, measure, compare)
 └── scripts/
-    ├── refs.cjs             searches Dribbble by topic and screenshots live sites into a reference board
-    ├── match.cjs            maps a reference to tokens in your brand colours, measures it, and compares your screen: PASS or FAIL
-    ├── icons.cjs            icon styles board, search and sprite, to match the references' icons
-    ├── audit.cjs            renders a page at 3 widths and reports measured problems
-    ├── look.cjs             deals a contemporary look per category
-    └── palette.cjs          turns one brand colour into the full colour system
+    ├── audit.cjs            screenshots at any widths; reports what is broken or inaccessible
+    ├── icons.cjs            compare icon sets by style for your own words, then inline them
+    ├── palette.cjs          a full tonal scale from one brand colour
+    ├── refs.cjs             searches Dribbble and screenshots live sites into a reference board
+    └── match.cjs            maps a given reference to tokens and compares your screen with it
 ```
-
-Markdown, stylesheets and five Node scripts. No runtime dependencies.
-
-<details>
-<summary><b><code>audit.cjs</code>: what it measures</b></summary>
-
-<br>
-
-```bash
-node better-ui/scripts/audit.cjs path/to/index.html --out .ui-audit
-```
-
-| Group | Checks |
-|:---|:---|
-| Broken | horizontal overflow, console errors, text covered by other elements, content under fixed bars, failed requests |
-| Accessibility | WCAG AA contrast, visible focus, labels and names, tap targets, heading order |
-| Spec | spacing off the scale, more than five font sizes, a boxed main chart, colour blocks over 15%, pastel fills |
-| Colour | tinted backgrounds, coloured text, untinted greys, black shadows: flags flat colour |
-| Craft | near-miss alignment, uneven gutters, clipped text, awkward wraps, squeezed text columns |
-| Inventory | font sizes, families, weights, colours, radii, and a predicted gaze order with a squint screenshot |
-
-Options: `--register showcase` for web pages with an art direction, `--register dense` for professional data tools, `--widths 1280,1440` for desktop-only briefs, plus `--setup`, `--dark` and `--json`. It needs Node and a Chromium that Playwright can drive.
-
-</details>
-
-<details>
-<summary><b><code>look.cjs</code> and <code>palette.cjs</code>: a look and a colour system</b></summary>
-
-<br>
-
-```console
-$ node better-ui/scripts/look.cjs "Tally" finance
-look:    fresh gradient
-brand:   #1F4BFF
-accent:  #7DD3FC
-font:    Plus Jakarta Sans
-mono:    DM Mono (meta, axis labels, counts)
-how:     deep blue payment card with a soft sky gradient, white glassy cards
-palette: node better-ui/scripts/palette.cjs "#1F4BFF"
-```
-
-Same product name, same look, every time, so the agent does not land on the indigo every generated app uses. Categories: finance, crypto, fitness, habits, wellness, sleep, health, productivity, commerce, saas, food, travel, media, other.
-
-```bash
-node better-ui/scripts/palette.cjs "#1F4BFF"                     # light, plus a dark block
-node better-ui/scripts/palette.cjs "#A3E635" --dark              # dark-first
-node better-ui/scripts/palette.cjs "#16A34A" --solid "#111111"   # monochrome: black controls, green tints
-```
-
-`palette.cjs` builds a 12-step brand scale and a 12-step neutral scale tinted toward the brand hue (OKLCH, with the step roles of Radix Colors), status colours, role tokens and tinted shadows. It picks white or dark text for the brand by contrast, lifts a deep brand for dark themes, and prints the contrast of each text role.
-
-</details>
 
 ## FAQ
 

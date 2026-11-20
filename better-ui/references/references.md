@@ -1,8 +1,8 @@
-# Start from references, then slice
+# Working from references
 
 Designers do not start from a blank file. They collect references for the exact thing they are making (a clinic queue screen, a pricing table for an API product, a hotel booking hero), pick the two or three best, study how they are built, and then build their own screen to that standard. That last step is **slicing**: re-creating the composition, proportions, spacing rhythm, type scale and component shapes of the chosen references, piece by piece, for this product's content. A design built this way inherits decisions that a strong designer already made and tested; a design built from rules alone is only as good as the rules.
 
-This is step 3 of `SKILL.md`, for every new screen, page or redesign, before any tokens or layout. It replaces guessing.
+Use this file when the user gives references to match, asks you to find references, or asks for a screen "like" a named product. References teach how good work of the kind is built; the decisions (direction, tokens, the memorable thing) are still made for this product with the method in `SKILL.md`. When the user asks for a close match to a given screen, the measuring and comparing tools below make that match exact.
 
 ## 1. Search
 
@@ -25,7 +25,7 @@ Where to look by kind (open these with `--site` to capture a gallery page, then 
 | Hospitality, editorial, portfolios | godly.website, httpster.net, onepagelove.com | aesop.com, the best hotel or restaurant site of the region |
 | Government and public service | — | gov.uk, amsterdam.nl, hel.fi, designsystem.digital.gov |
 
-If the network is unavailable, say so and fall back to the kits and directions in this skill.
+If the network is unavailable, say so and continue with the method in `SKILL.md`.
 
 ## 2. Choose
 
@@ -111,7 +111,7 @@ Then fill the **Build** column with the values you will use: the reference's, wi
 
 Build each screen from the reference spec, not from memory:
 
-- **Use the measured values** for paddings, gaps, heights, radii, type sizes and weights, borders and shadows. Put them in the tokens (the kit's variables or the project's theme) so every screen uses the same ones.
+- **Use the measured values** for paddings, gaps, heights, radii, type sizes and weights, borders and shadows. Put them in the tokens (the CSS variables or the project's theme) so every screen uses the same ones.
 - **Match the colour proportions and tone:** the canvas, surfaces and accent at roughly the reference's shares of the area. The brand replaces the reference's accent at the same area **and the same tone**: if the reference's header is a deep, muted teal (L38, low chroma), the build's header is a deep, muted version of the brand (the `palette.cjs` step closest in lightness, with less chroma), not the bright brand blue. The exact brand colour stays on the logo and the primary button. `compare` checks the lightness and strength.
 - **Match the layout:** the blocks of the slice list, in order and at their heights; overlaps as in the reference (a search field across the header edge, a card half over a band).
 - **Match the texture:** if the reference has flat white cards on a tinted canvas with no borders, so does the build; if it has hairline lists and no cards, so does the build. Gradients, patterns, translucency and shadows as in the spec, not added and not dropped.
@@ -130,9 +130,6 @@ node <this-skill-dir>/scripts/match.cjs compare .refs/<query>/07.webp index.html
 
 It renders your screen beside the reference at the same width and compares colour (with `--brand`, against the recoloured reference, so every colour must match, accents included), layout (where the reference has a coloured band, card or section and yours does not, in px), content in every 40px window (how many items sit side by side, or empty space, so a search field replaced by a stats card or a missing category grid fails), gradients, padding (screen edge to cards and to text), line size and the gap between lines, each in px with a tolerance of 2 to 3px, and density (lines of content in the same height). It prints **RESULT: PASS** or **FAIL** with each difference and exits 1 on FAIL. Pass a screenshot of one screen with `--crop2` when your page shows several screens in device frames.
 
-The screen is not done until:
-
-- `compare` prints **PASS**, or every remaining FAIL line is required by a floor (`spec.md`: 44px targets, 16px inputs, 4.5:1 contrast), the user's direction or the product's content, and is listed with that reason in the handoff. "The skill's default is 20" is not a reason; the reference's value wins over defaults;
-- looking at the comparison image, you can list **no visible difference** in what the numbers cannot see: typeface character and weights, icon style and containers, shadow softness and tint, gradients, patterns and translucency, padding, radius and border. Write the differences as a list ("icons outline 1.5 vs the reference's duotone", "shadow grey vs teal-tinted", "title 600 vs 700"), fix them, and compare again. Two or three rounds is normal; one round is never enough.
+When the user asked for a close match, the screen is done when `compare` prints PASS (or each remaining line is required by the floor in `SKILL.md`, the user or the product's content) and, looking at the comparison image, you can list no visible difference in what the numbers cannot see: typeface character and weights, icon style and containers, shadow softness and tint, gradients, patterns and translucency, padding, radius and border. Write the differences as a list ("icons outline 1.5 vs the reference's duotone", "shadow grey vs teal-tinted", "title 600 vs 700"), fix them, and compare again. Two or three rounds is normal. When references were only inspiration, use the comparison to learn, not as a gate: the art-director review in `SKILL.md` step 7 decides.
 
 In the handoff, include the slice list, the reference spec table, the final `compare` result and image for the main screen, any deviations with their reasons, and the references' links.

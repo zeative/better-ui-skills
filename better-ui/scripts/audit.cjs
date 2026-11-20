@@ -42,6 +42,7 @@ function parseArgs(argv) {
     else if (v === '--dark') a.dark = true;
     else if (v === '--setup') a.setup = argv[++i];
     else if (v === '--register') a.register = argv[++i];
+    else if (v === '--all') a.all = true;
     else if (v === '--json') a.json = true;
     else if (v === '--no-shots') a.shots = false;
     else if (!a.target) a.target = v;
@@ -1359,7 +1360,7 @@ function report(results, facts, focus, runtime, args) {
   L.push(`  Interaction  ${widest.interactiveCount} interactive elements; ${facts.hover} :hover rules, ${facts.focusVisible} :focus-visible rules; reduced-motion ${facts.reducedMotion ? 'handled' : 'not handled'}; dark scheme ${facts.darkScheme ? 'defined' : 'not defined'}`);
   if (facts.unreadable) L.push(`  (${facts.unreadable} cross-origin stylesheet(s) could not be inspected)`);
   L.push('');
-  const order = ['BROKEN', 'ACCESS', 'TOUCH', 'RICHNESS', 'CRAFT'];
+  const order = args.all ? ['BROKEN', 'ACCESS', 'TOUCH', 'RICHNESS', 'CRAFT'] : ['BROKEN', 'ACCESS', 'TOUCH'];
   const titles = {
     BROKEN: 'BROKEN — fix these, no judgment needed',
     ACCESS: 'ACCESSIBILITY — fix these',
@@ -1367,15 +1368,17 @@ function report(results, facts, focus, runtime, args) {
     CRAFT: 'CRAFT — measured inconsistencies; fix or be able to say why not',
     RICHNESS: 'RICHNESS — below the bar as measured; a page can pass these and still be plain, so look at the screenshots',
   };
-  if (!P.length) L.push('No measurable problems found. That is the floor, not the bar: now critique the screenshots.');
+  const hidden = P.filter((p) => !order.includes(p.sev)).length;
+  if (!P.some((p) => order.includes(p.sev))) L.push('Nothing broken and no accessibility problems found. That is the floor, not the bar: now look at the screenshots as an art director.');
   for (const sev of order) {
     const items = P.filter((p) => p.sev === sev);
     if (!items.length) continue;
     L.push(titles[sev]);
-    items.forEach((p) => L.push('  • ' + p.msg));
+    items.forEach((p) => L.push('  • ' + p.msg.replace(/\s*\((?:see )?(?:references\/)?[a-z-]+\.md[^)]*\)/g, '').replace(/ ?(See|Read|Use) (?:references\/)?[a-z-]+\.md[^.]*\./g, '').replace(/\s*\(If this value was measured[^)]*\)/g, '')));
     L.push('');
   }
-  L.push('This report cannot judge whether the design looks like a real, professional product. Open the screenshots, compare the main screens with their references (scripts/match.cjs compare), then review them with references/critique.md.');
+  if (hidden) L.push(`${hidden} style observations hidden (counts of sizes, radii, shadows and the like); --all shows them. They are hints, not rules: the design decides.`);
+  L.push('This report checks the floor only. Whether the design is good is judged by looking: open the screenshots and review them as SKILL.md step 7 says.');
   return { text: L.join('\n'), problems: P };
 }
 

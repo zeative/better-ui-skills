@@ -18,7 +18,7 @@ Phone: the gallery as a full-width swipe with a dot or count indicator (1 / 6), 
 
 Product photographs are the page. Without them a shop looks like a wireframe.
 
-- Use real photographs from Unsplash (see `editorial.md`): choose shots **without a visible real brand logo**, on plain or simple grounds, in one consistent light and colour across the gallery and the listing. Several angles of one product are rarely available, so combine one hero shot of the product, a close detail, a shot in use (worn, on a desk, in a kitchen), and a material or texture close-up; say in the handoff which images are stand-ins.
+- Use real photographs from Unsplash: choose shots **without a visible real brand logo**, on plain or simple grounds, in one consistent light and colour across the gallery and the listing. Several angles of one product are rarely available, so combine one hero shot of the product, a close detail, a shot in use (worn, on a desk, in a kitchen), and a material or texture close-up; say in the handoff which images are stand-ins.
 - Never a drawn SVG of the product as the main image, and never an emoji. A rendered illustration is the fallback only without a network.
 - Colour swatches show the product in that colour (a small image or a two-tone chip), not a plain dot when the product has several colours on it.
 
@@ -55,7 +55,7 @@ In this order, each part exact:
 
 ## Direction
 
-The anatomy above is the default checklist; the look comes from the references. Pick a direction from `web-directions.md` that fits the brand and carry it through the header, the type, the image ground, the story section and the footer:
+The anatomy above is the default checklist; the look comes from the references. Choose a direction with the method in `SKILL.md` that fits the brand and carry it through the header, the type, the image ground, the story section and the footer:
 
 - **Editorial serif** for beauty, fashion, home and food (Aesop): serif product names, warm paper ground, long story sections.
 - **Swiss catalogue** for hardware, audio, furniture and tools (Teenage Engineering): mono labels, numbered specs, cut-out products on grey, one signal colour.
