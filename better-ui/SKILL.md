@@ -74,13 +74,16 @@ Render and look; never judge from the code.
 node <this-skill-dir>/scripts/audit.cjs index.html --widths 390,1440   # screenshots + anything broken or inaccessible
 ```
 
-Open the screenshots at phone width (and desktop for web). Review them as a senior art director would, in writing:
+You cannot see your own defaults; that is why they are defaults. So the first judge is not you:
+
+- **Fresh-eyes review (required).** Give the phone screenshot to a reviewer that has not seen your reasoning: a subagent (Task tool) or a new session, with only the image path and this prompt: *"Look at this app screen as a senior product designer. Was it made by an AI app builder? Name every element that gives it away, harshly and specifically. Then list the three changes that would make it look designed by a strong team."* Treat every tell it names as real.
+- **Then your own review** of the screenshots at phone width (and desktop for web), in writing, using `references/craft.md` (hierarchy, type, colour, spacing, depth, icons, composition) and these questions:
 
 1. **The three weakest things**, each with a specific fix in numbers or names: "the header takes 40% of the first screen: halve it", "two weights compete in the card title: drop the date to 400 and the muted ink", "the five quick actions are the same weight as the main card: make them plain icons with labels, no tiles". Not "make it pop".
 2. **Did anything from Defaults to avoid creep in?** Name it and replace it.
 3. **Does the memorable thing lead?** Squint: the eye should land on it first.
 
-Fix only those, render again, repeat. Two or three rounds is normal; stop when the remaining notes are matters of taste rather than flaws.
+Fix them, render again, and run the fresh-eyes review again. Two or three rounds is normal. You are done when the reviewer can no longer name an AI tell and you can find no flaw in `references/craft.md` terms, not when the page looks better than your first draft.
 
 ### 8. The floor: build it in, do not announce it
 
@@ -107,6 +110,7 @@ Say what you built, the direction and why, the tokens, which content is sample d
 These are what you produce when no decision was made. Any of them is fine when the brief asks for it; none of them is fine as a reflex. Replace each with a decision from the brief.
 
 - **The house style:** warm cream background (~#F4F1EA) with a serif display and a terracotta or amber accent; or near-black with one acid-green or neon accent; or a broadsheet of hairline rules and zero radius.
+- **The generated app home:** "Selamat pagi, [Nama]" or "Good morning" as the headline with an initials circle and a bell circle; a saturated hero card; a 4 or 5 tile quick-action grid; a stat strip of equal tiles; "Perlu perhatian" cards with a coloured icon each. Lead with the next action and its state, then what needs attention, then a plain list (`references/craft.md`, Composition).
 - **The Dribbble app kit:** a saturated full-width hero card with white text and a white pill button; a row of rounded-square icon tiles as quick actions; initials in a coloured circle and a bell in a circle as the header; a coloured icon chip on every row; status pills with dots; every corner at 20px or more with a soft shadow on a grey canvas. It is what an AI draws for every app home.
 - **The SaaS card kit:** everything chopped into identical rounded cards with the same soft grey shadow, cards inside cards, a tinted rounded-square icon tile above every heading, gradient washes as decoration.
 - **Template chrome:** a tracked ALL-CAPS eyebrow above every heading; one word of the headline in the accent colour or italics ("Selamat **pagi**"); meta joined with middle dots everywhere; monospace for small labels with no reason; `→` appended to every button; numbered 01 / 02 / 03 markers on content that is not a sequence.
@@ -129,6 +133,7 @@ If the user supplies screenshots or links to match, or asks you to find referenc
 
 ## Other files
 
+- `references/craft.md`: the habits of professional interface work (hierarchy, type, colour, spacing, depth, icons, home-screen composition, motion) and how to judge your own work honestly. Read it before step 7.
 - `references/native.md`: one possible direction for phone apps, the platform's own language (iOS values, icons, composition patterns), when the brief suits it.
 - `references/improve.md`: improving or redesigning an existing UI without breaking it.
 - `references/copy.md`: interface writing.

@@ -318,6 +318,7 @@ The skill is a working method, the same one designers use when they get great wo
 better-ui/
 ├── SKILL.md                 the method, the modes (product UI, persuasion, reading) and the defaults to avoid
 ├── references/
+│   ├── craft.md             habits of professional work and how to judge your own honestly
 │   ├── native.md            phone apps in the platform's own language: iOS values, icons, Apple's patterns
 │   ├── improve.md           improving an existing UI without breaking links, forms, SEO or the build
 │   ├── copy.md              interface writing
