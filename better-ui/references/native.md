@@ -2,7 +2,7 @@
 
 The most elegant phone apps (Apple Health, Wallet, Settings, Mail, Reminders, Things, Apple Store) do not look "designed". They look **native**: the platform's own type, lists, bars and sheets, executed exactly, with the product's colour used sparingly and the content arranged by typography. That restraint is what reads as professional. The generated look is the opposite: a saturated hero card, a row of icon tiles, coloured chips on every row, pills, big radii and shadows everywhere.
 
-Use this for phone apps unless the brief or the brand asks for something else. For Android-first products, use Material 3 with the same discipline (its type scale, list items, top app bar and navigation bar).
+This is one direction among others, not a default: use it when the brief calls for a calm, native feel, or as one of the three directions to compare. For Android-first products, use Material 3 with the same discipline (its type scale, list items, top app bar and navigation bar).
 
 ## The rules that make it native
 

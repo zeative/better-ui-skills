@@ -51,7 +51,7 @@ Turn the chosen direction into a compact system and use only these values everyw
 - **Colour:** 4 to 6 named hex values with roles (canvas, surface, ink, muted ink, line, accent, plus semantic success/warning/danger). Tint the greys toward the brand hue. `scripts/palette.cjs "<brand hex>"` builds a full tonal scale from one colour when you need more steps.
 - **Type:** one family for product UI (two only if clearly distinct, for a page with a display voice), loaded from Google Fonts or the product's own. A scale with clear steps (product UI: ratio 1.2 to 1.25, e.g. 12, 14, 16, 20, 24, 32; web display: larger jumps). Weights by role, tabular figures for numbers.
 - **Shape:** one radius family (small for controls, larger for cards), one spacing base (4px), one or two shadow levels (soft, offset, tinted with the hue).
-- **Icons:** one real icon set in one weight, chosen to fit the direction (Framework7 `f7:` for an iOS-native app): `scripts/icons.cjs board --words "<the product's own items>"` shows sets side by side (outline, bold, duotone, filled; Healthicons for medicine); `icons.cjs sprite` inlines them. Never emoji or Unicode glyphs as icons.
+- **Icons:** one real icon set in one weight, chosen to fit the direction: `scripts/icons.cjs board --words "<the product's own items>"` shows sets side by side (outline, bold, duotone, filled; Healthicons for medicine); `icons.cjs sprite` inlines them. Never emoji or Unicode glyphs as icons.
 
 Write the tokens as CSS variables at the top of the stylesheet.
 
@@ -98,7 +98,6 @@ Say what you built, the direction and why, the tokens, which content is sample d
 
 ## Modes: how bold to be
 
-- **Phone apps: native first.** The most elegant phone apps look native: the platform's type, grouped lists, bars and sheets executed exactly, one accent, typography carrying the hierarchy, hairlines instead of shadows. Read `references/native.md` and use it as the starting direction (at least one of the three directions, and the default) unless the brief or the brand asks for something else.
 - **Product UI (apps, dashboards, admin, tools, settings): precision and restraint.** The person is doing a task; the interface should feel instantly familiar and trustworthy. Standard patterns (tab bar, top bar, lists, sheets, tables) executed exactly. One well-tuned sans carries everything. The accent marks actions, the current selection and state, not decoration. Brand lives in the details: the colour of a selected row, the shape of the main card, a precise icon set. Density is fine when people need it. The memorable thing is usually the one card or figure that answers the screen's question.
 - **Persuasion (landing, marketing, pricing, events, shops): full commitment.** One bold idea carried through: a distinctive display face used decisively, real photography or a real product shot as the hero, one orchestrated motion moment, a layout that comes from the subject rather than the template (hero, three cards, testimonials, CTA).
 - **Reading (docs, articles, help):** measure 60 to 75 characters, generous line height, clear hierarchy, quiet chrome.
@@ -130,7 +129,7 @@ If the user supplies screenshots or links to match, or asks you to find referenc
 
 ## Other files
 
-- `references/native.md`: phone apps in the platform's own language (iOS values, icons, Apple's composition patterns).
+- `references/native.md`: one possible direction for phone apps, the platform's own language (iOS values, icons, composition patterns), when the brief suits it.
 - `references/improve.md`: improving or redesigning an existing UI without breaking it.
 - `references/copy.md`: interface writing.
 - `references/commerce.md`, `references/public-sector.md`: what a shop or a government service page must contain (content, not looks).
