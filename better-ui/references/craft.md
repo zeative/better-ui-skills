@@ -1,6 +1,6 @@
 # Craft: what professionals do that generated UI does not
 
-Collected from Refactoring UI, Erik Kennedy (Learn UI Design), Practical UI, Apple's HIG and WWDC design talks, Material 3, Rauno Freiberg, Emil Kowalski, Jakub Krehel, Josh Comeau, Vercel's interface guidelines, Linear's redesign notes, NN/g, and designers' teardowns of AI-generated interfaces. These are habits of good work, not a style: they hold in any direction.
+Collected from video tutorials by working designers (Kole Jain, Sajid, Michal Malewicz, Gary Simon, UXPeak), Refactoring UI, Erik Kennedy (Learn UI Design), Practical UI, Apple's HIG and WWDC design talks, Material 3, Rauno Freiberg, Emil Kowalski, Jakub Krehel, Josh Comeau, Vercel's interface guidelines, Linear's redesign notes, NN/g, and designers' teardowns of AI-generated interfaces. These are habits of good work, not a style: they hold in any direction.
 
 ## Hierarchy
 
@@ -22,6 +22,8 @@ Collected from Refactoring UI, Erik Kennedy (Learn UI Design), Practical UI, App
 ## Colour
 
 - **Colour belongs to content, not chrome.** Bars, backgrounds and most controls stay neutral; colour marks the one primary action, the current selection, state and data. Do not use one colour for two meanings (if the accent means "tappable", static text is never in the accent).
+- **A neutral ladder carries the screen:** a background a step off white (about 98%), white for cards, edges at about 85% instead of a dark border, headings around 10% lightness, body 15 to 20%, subtext 35 to 45%. In dark mode the steps double and nothing is pure black or white.
+- **Icons are colourless unless they show state.** The brand colour goes to the main button, links, focus and the selected item; destructive stays red.
 - **Greys are tinted** toward the brand hue (or cool, like #F2F2F7); never pure grey next to a coloured brand. Text on a coloured surface is a tint of that surface, not grey.
 - **Every colour maps to one state, used consistently.** If nothing changes state, there is no status dot and no badge.
 - Shades are designed, not computed with lighten/darken: darker shades lose brightness and gain saturation; lighter shades gain brightness and lose saturation.
@@ -31,7 +33,10 @@ Collected from Refactoring UI, Erik Kennedy (Learn UI Design), Practical UI, App
 
 - **Start with too much space and remove it.** Generated UI is usually cramped inside and loose between, or the same everywhere.
 - **No ambiguous spacing:** the gap between groups is clearly larger than the gap within a group (a label hugs its value; sections breathe).
-- A 4px base scale (4, 8, 12, 16, 20, 24, 32, 40, 48); padding inside a control about equal to its text height.
+- A 4px base scale (4, 8, 12, 16, 20, 24, 32, 40, 48), used in tiers: about 8 inside a group, 16 as the default, 24 to 32 between groups and sections. Uniform spacing everywhere is the beginner's tell.
+- **Inner spacing is never larger than outer spacing:** the icon-to-text gap is smaller than the button padding; a card's padding is smaller than the gap around the card's group. Horizontal button padding is larger than vertical.
+- **The receipt model:** left-align text, right-align numbers, and give every element at least two edges it shares with something else. Merge boxes inside boxes into one surface with sections.
+- Padding inside a control is about equal to its text height.
 - **Group with space first, then a background shift, then a hairline; a box is the last resort.** Cards are for items that act independently; NN/g: cards are less scannable than lists for items of the same kind.
 - Left-align anything longer than two lines; align everything to a few strong edges; hang icons and bullets outside the text edge.
 - **Concentric radii:** inner radius = outer radius − padding (a 20px card with 8px padding holds a 12px child). Capsules are height ÷ 2. Radius follows role, not one value everywhere.
