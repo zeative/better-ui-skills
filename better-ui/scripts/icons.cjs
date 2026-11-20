@@ -40,6 +40,8 @@ const FL = ['home-24', 'calendar-24', 'alert-24', 'person-24', 'search-24', 'hea
 const MS = ['home', 'calendar-month', 'notifications', 'person', 'search', 'favorite', 'description', 'settings'];
 const MG = ['home-3', 'calendar', 'notification', 'user-3', 'search', 'heart', 'file', 'settings-3'];
 const WORD_STYLES = [
+  ['iOS-like (SF Symbols style) · framework7', 'f7', (n) => !n.endsWith('-fill')],
+  ['iOS-like filled · framework7', 'f7', (n) => n.endsWith('-fill')],
   ['Outline · healthicons (medical)', 'healthicons', (n) => n.endsWith('-outline')],
   ['Filled · healthicons (medical)', 'healthicons', (n) => !/-(outline|negative)/.test(n)],
   ['Outline rounded · material symbols', 'material-symbols', (n) => n.endsWith('-outline-rounded')],
@@ -56,6 +58,7 @@ const WORD_STYLES = [
   ['Outline · material design icons', 'mdi', (n) => n.endsWith('-outline')],
 ];
 const STYLES = [
+  ['iOS-like (SF Symbols style) · framework7', C('f7', ['house', 'calendar', 'bell', 'person', 'search', 'heart', 'doc-text', 'gear'])],
   ['Outline thin · lucide', C('lucide', ['house', 'calendar', 'bell', 'user', 'search', 'heart', 'file-text', 'settings'])],
   ['Outline · tabler', C('tabler', ['home', 'calendar', 'bell', 'user', 'search', 'heart', 'file-text', 'settings'])],
   ['Outline rounded · hugeicons', C('hugeicons', ['home-01', 'calendar-03', 'notification-01', 'user', 'search-01', 'favourite', 'file-01', 'settings-01'])],
